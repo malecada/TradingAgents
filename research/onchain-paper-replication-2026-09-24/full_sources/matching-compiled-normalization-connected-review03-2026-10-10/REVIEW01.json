@@ -1,0 +1,376 @@
+{
+  "disposition": "WITHHOLD_SOURCE_ONLY_UNINSTALLED",
+  "candidate_manifest_sha256": "4070e2638527990cee09821bbe1820f42f4385cda857e411adfe20aefe60317b",
+  "candidate_result_sha256": "a1eabb677b96c2933df0de4c257ae664303252a0b003716855b68f93e153fc62",
+  "candidate_report_sha256": "7b09eb363987d79b94f7ffafbdf2d958d4c3391ba93636f6f23d0b5677c8ba94",
+  "checks": 194,
+  "owner_cases": 15,
+  "executor_controls": 2,
+  "findings": [
+    {
+      "severity": "P2",
+      "path": "matching-compiled-normalization-connected03-2026-10-10/batched_pair_executor.py",
+      "line": 79,
+      "additional_line": 81,
+      "new_dependency_lines": [
+        82,
+        94
+      ],
+      "title": "Unguarded cleanup annotation skips new owner finalization and replaces primary",
+      "counterexample": "Advance KeyboardInterrupt; engine close OSError; injected add_note MemoryError. Backend FD survives standalone executor return, closed=False, poisoned=True. Actual enclosing memo poison closes once but cannot restore primary identity.",
+      "whole_chain_fd_leak_claim": false,
+      "required_fix": "Best-effort annotation retaining primary and independently guaranteed original owner cleanup; no ambiguous-close retry."
+    }
+  ],
+  "body_references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/MANIFEST.json": {
+      "sha256": "4070e2638527990cee09821bbe1820f42f4385cda857e411adfe20aefe60317b",
+      "bytes": 11011
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/REPORT.md": {
+      "sha256": "7b09eb363987d79b94f7ffafbdf2d958d4c3391ba93636f6f23d0b5677c8ba94",
+      "bytes": 7933
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/RESULT01.json": {
+      "sha256": "a1eabb677b96c2933df0de4c257ae664303252a0b003716855b68f93e153fc62",
+      "bytes": 11890
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/backend_owner.fragment": {
+      "sha256": "a3b02bbd2284daf051818b8868298d70fd384639a4d7e5690cb6dd8e7a8fc161",
+      "bytes": 4783
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_execution.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_execution.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "4fc77bbf57a55e8e14830d77e66d862b4a87a12492e1dca26ea8f872562b19f7",
+      "bytes": 20116
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_reuse.py.from02.patch": {
+      "sha256": "ca94e8e81974df4cc6815bf5bf84b6ab72c29e2b283badbbeee255e31dbc5cdc",
+      "bytes": 5055
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_reuse.py.to02.inverse.patch": {
+      "sha256": "ead0430ce4e241245d3d695bb7beee7742f12534abc4156ceb4bffe971ae1071",
+      "bytes": 5055
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_pair_executor.py": {
+      "sha256": "6d34ef9a8be6bb831093dfd8643cf8708d744428e6dc3461b96f5accc955066b",
+      "bytes": 6275
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_pair_executor.py.from02.patch": {
+      "sha256": "e96f3a37bf97b42ed3d60c5e912e9f9a7bb71f2b393edcd323b64455bb20a3e4",
+      "bytes": 3831
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_pair_executor.py.to02.inverse.patch": {
+      "sha256": "7a0820d5fe0a6a4d7f231e3a1154e5806902e3aff09e24412909bb1a7b3ed4be",
+      "bytes": 3831
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/build_candidate.py": {
+      "sha256": "7eb1924a0ab821c8f4ffc7cc5c4c271b93a42dea100b9111996a644f56c2d2b8",
+      "bytes": 9289
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/check01.log": {
+      "sha256": "1369d237f4188d665619d246ce6bc375e7056dfbb90b26ff890933e69a0d5209",
+      "bytes": 105
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/check02.log": {
+      "sha256": "1faa67029642af5a02bcf472ac10e9823852f83400c45ec9912df004adbb9d59",
+      "bytes": 106
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/check03.log": {
+      "sha256": "cdfc73f4644eb5a31fbf3f855913024c5c44f533e9d09fb98a97fcfdaf7e7c69",
+      "bytes": 106
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/check04.log": {
+      "sha256": "2d8d0b5a15ca2d5c3d50595361bbc640cf74dfc90a5ce62eb62034730c98eec0",
+      "bytes": 106
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01",
+      "bytes": 10714
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_normalization_policy.py.from02.patch": {
+      "sha256": "aa82bc046563775532c330c4462d910e332b89295e922d7856dcce75441428b7",
+      "bytes": 7219
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_normalization_policy.py.to02.inverse.patch": {
+      "sha256": "f2eb1d7ddffcd0f3ec7acbdbc525d6cf6ae248b0942d8434c6539be061e809d1",
+      "bytes": 7219
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_small_lse.py": {
+      "sha256": "7f98ca93c5100e475c1a6de0280e4ce546c0adc26c3865820068b868014c496e",
+      "bytes": 7385
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_small_lse.py.from02.patch": {
+      "sha256": "7b123449d093c56c8070b9013dbef800622b608d4c0bd05f3628e20ac439672b",
+      "bytes": 823
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_small_lse.py.to02.inverse.patch": {
+      "sha256": "7083168b14579e68d40bfedf6b95ef80238d7a9b783fdbc5300930699fa04fb2",
+      "bytes": 823
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_annealing.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_annealing.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_checkpoint.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_checkpoint.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_immutable_session.py": {
+      "sha256": "3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa",
+      "bytes": 9879
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_immutable_session.py.from02.patch": {
+      "sha256": "7f60f44b04c8460389fb2360bb6f4b2645fa311083dd052fbb2a915ed5540051",
+      "bytes": 2754
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_immutable_session.py.to02.inverse.patch": {
+      "sha256": "cb57145d56dd219c7f00a74d11fb9b530a53c12901cf1e9746befeb8b1cc5c88",
+      "bytes": 2754
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/ordinary-fixture.txt": {
+      "sha256": "347521402a2c755c719716708f99325841eb849899da7f8907f01f45f3d45576",
+      "bytes": 35
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/REPORT.md": {
+      "sha256": "70c7d6767e6837634b094e869d4c6f21201ef1a5d8e73ff932c4a7d85805eb9a",
+      "bytes": 7199
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/RESULT01.json": {
+      "sha256": "ff080e94b1b1bd6c1c49f0c58ddc40f267f2e022eab11e20ade889ef6c9100b9",
+      "bytes": 11263
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/backend_owner.fragment": {
+      "sha256": "b21cfec101754641d9d11c3d9eb0d9ff06969e4e1985f8ca1cb93b8e62f934b5",
+      "bytes": 4757
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_execution.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_execution.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_reuse.py": {
+      "sha256": "92a8e45261906e7243081ee2ebff3db0fd1564c43660c4ef95e432773d95c057",
+      "bytes": 20116
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_reuse.py.from02.patch": {
+      "sha256": "9c15422bbd73a3ad71d838068a140c5b412614817b69b57fac5b2a441a00d3e5",
+      "bytes": 5055
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_numeric_reuse.py.to02.inverse.patch": {
+      "sha256": "5ab2a7edd8aba22354b5adf53350451f04c4274c44ef2a35e5b39abc6f53949f",
+      "bytes": 5055
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_pair_executor.py": {
+      "sha256": "6d34ef9a8be6bb831093dfd8643cf8708d744428e6dc3461b96f5accc955066b",
+      "bytes": 6275
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_pair_executor.py.from02.patch": {
+      "sha256": "e96f3a37bf97b42ed3d60c5e912e9f9a7bb71f2b393edcd323b64455bb20a3e4",
+      "bytes": 3831
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/batched_pair_executor.py.to02.inverse.patch": {
+      "sha256": "7a0820d5fe0a6a4d7f231e3a1154e5806902e3aff09e24412909bb1a7b3ed4be",
+      "bytes": 3831
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/build_candidate.py": {
+      "sha256": "156b1bfc827f9b8fc89ef59e5b37c4877257c9559502f620a8393a5cd4820e94",
+      "bytes": 9217
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/check01.log": {
+      "sha256": "1369d237f4188d665619d246ce6bc375e7056dfbb90b26ff890933e69a0d5209",
+      "bytes": 105
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/check02.log": {
+      "sha256": "1faa67029642af5a02bcf472ac10e9823852f83400c45ec9912df004adbb9d59",
+      "bytes": 106
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_normalization_policy.py": {
+      "sha256": "02c90e70ca423c3c274104f795e81a1f644f9204764f014a0d24044f4f3fb5df",
+      "bytes": 10688
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_normalization_policy.py.from02.patch": {
+      "sha256": "d1aa83e0535c9e92aa1de4c6256afa1995a46d51da706035d03a434e6be040ce",
+      "bytes": 7193
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_normalization_policy.py.to02.inverse.patch": {
+      "sha256": "17c48c2fd1d2ec82a106b92a75b394af35b82ee3b3ecf8282dd691a6e3e2517f",
+      "bytes": 7193
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_small_lse.py": {
+      "sha256": "5820d089cf7317cc9b0bfff62049de3d8a12e4985fc0458bd3d3ae2ffd599670",
+      "bytes": 7313
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_small_lse.py.from02.patch": {
+      "sha256": "8041c8f5425579ddc068844a8d509a6097a73306d3fd1133d6a05d7d625738c1",
+      "bytes": 749
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/compiled_small_lse.py.to02.inverse.patch": {
+      "sha256": "1153ac262b290867a337b11babd3e9afffbb1aa3f97a2662af4bbb937ece4129",
+      "bytes": 749
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_annealing.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_annealing.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_checkpoint.py.from02.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_checkpoint.py.to02.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_immutable_session.py": {
+      "sha256": "3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa",
+      "bytes": 9879
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_immutable_session.py.from02.patch": {
+      "sha256": "7f60f44b04c8460389fb2360bb6f4b2645fa311083dd052fbb2a915ed5540051",
+      "bytes": 2754
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/matching_immutable_session.py.to02.inverse.patch": {
+      "sha256": "cb57145d56dd219c7f00a74d11fb9b530a53c12901cf1e9746befeb8b1cc5c88",
+      "bytes": 2754
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/ordinary-fixture.txt": {
+      "sha256": "347521402a2c755c719716708f99325841eb849899da7f8907f01f45f3d45576",
+      "bytes": 35
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/predecessor-narrowed/verify_ownership01.py": {
+      "sha256": "5e38606aca3814aaddec3d502b85c2b56a9c7eaf96ab9953681a4084e9204421",
+      "bytes": 15604
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/verify_ownership01.py": {
+      "sha256": "c8b19b9d2f30a8e1e4ed309bd488a027d79908d4a2b0be9ba69f1cb9d8bc7a41",
+      "bytes": 17431
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review02-2026-10-10/REVIEW01.json": {
+      "sha256": "99138c00824f25bc6c6ac89abc2380bd1a9248fe15ecd8ac0616ad6bb890fc2d",
+      "bytes": 20861
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-library-mapping-lifetime-investigation01-2026-10-10/FINDINGS01.json": {
+      "sha256": "85d679a3914671bf8210b3c32f2491aa3977797a96b075912820f65fcb41ec2f",
+      "bytes": 9897
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "2afd2c2b4eba03ee6058e895d73be7d600f9414e5b5302fdd36646ea638e567a",
+      "bytes": 5673
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/compiled_small_lse.py": {
+      "sha256": "80b045d499136ba722402e9ae596411e109fcc00e70b445f5f7c3f2e82b3a422",
+      "bytes": 7014
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/matching_immutable_session.py": {
+      "sha256": "7f847b02d2c4ca4e17a0b0962a97c49498b0559268b1187aad682c446eec3460",
+      "bytes": 9555
+    },
+    "tradingagents/research/onchain_replication/matching_immutable_session.py": {
+      "sha256": "c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef",
+      "bytes": 6585
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_pair_executor.py": {
+      "sha256": "0fb7cad3bc767806471227e9c06c26e6dcc88288608b5f00ab500eab2046cdb4",
+      "bytes": 4805
+    },
+    "tradingagents/research/onchain_replication/batched_pair_executor.py": {
+      "sha256": "f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e",
+      "bytes": 4462
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "09e568c0056acdc0e34782cd9130ba2246b21fc79e89e3481a14a740caa6b59b",
+      "bytes": 18524
+    },
+    "tradingagents/research/onchain_replication/batched_numeric_reuse.py": {
+      "sha256": "378bfc2aa48ab71c41b1b48594be384bd7deda521acb387ce77b1057f40a10fc",
+      "bytes": 18108
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "tradingagents/research/onchain_replication/matching_annealing.py": {
+      "sha256": "b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e",
+      "bytes": 20878
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": {
+      "sha256": "309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a",
+      "bytes": 14088
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "tradingagents/research/onchain_replication/batched_numeric_execution.py": {
+      "sha256": "1a704a8ae50bcdcaa067737454f36ebf4b3c82c65313d645bf61f5764b0e1c3c",
+      "bytes": 22394
+    }
+  },
+  "result_sha256": "e1bf8e1909935c977044e6b07fb3608d52d71ee30861a9b94349373f14d20d5b",
+  "additional_sha256": "91b8a79f948bd01f7575ee19ad971b74671880e0d9651aac3184878cb5a27a54",
+  "report_sha256": "ccbe40f7cb54489f1be2b48d81e3e3c5047cff16716e28062d6befd37bf3fb81",
+  "deviations": [
+    "review01 AST selector failure retained; corrected review02",
+    "additional01 changed-method name detector failure retained; corrected additional02"
+  ],
+  "pending": [
+    "minimal corrected successor source review",
+    "actual installed source/runtime/policy/primitive/library acceptance",
+    "qualification successor binds corrected source",
+    "actual native FD/body/seals/lifetime and mapping observations",
+    "connected numerical checkpoint/state/assignment/score comparisons",
+    "performance and genuine admission remain separate"
+  ],
+  "native_or_numerical_execution": false,
+  "production_or_empirical_acceptance": false
+}

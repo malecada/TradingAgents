@@ -1,0 +1,21 @@
+# Candidate04 — cleanup annotations cannot interrupt owner finalization
+
+Frozen source candidate, uninstalled; independent review required. Candidate03 is permanently WITHHELD, not accepted. Its independent review is `../matching-compiled-normalization-connected-review03-2026-10-10/REVIEW01.json`, SHA256 `55d1418a7a52624ae29da26c299f58b6e827090c524dc5f867bba52a038ba959`. Review manifest SHA256 `5d67dce67bfe9f570003d3d3235d53ab0ba22fe8040ec7392acbc6687eccf8ae`; review report SHA256 `ccbe40f7cb54489f1be2b48d81e3e3c5047cff16716e28062d6befd37bf3fb81`. Both original reviewer harness failures and corrected fixtures remain preserved in that directory.
+
+The reproduced03 defect occurs when advance raises KeyboardInterrupt, engine cleanup raises OSError, and the primary's add_note raises MemoryError. The annotation exception replaces the primary before the new owner finalization block runs. The standalone executor then retains its backend descriptor. The actual enclosing memo poison subsequently closes it, but cannot recover the original primary. This is not a whole-chain descriptor-leak claim.
+
+Candidate04 changes only the two unguarded annotation statements in PairExecutor.__call__'s cleanup loop. Each now uses BaseException.add_note inside a BaseException catch, including message construction and repr. Annotation failure cannot replace the primary or interrupt remaining engine/backend cleanup at those sites. The original acquired cleanup capability and no-retry behavior for ambiguous close are unchanged. NumericReuse's single exact PairExecutor source-digest literal is updated. The other six module bodies are byte-identical03. Forward and inverse patches are supplied; count-checked construction plus focused AST/text inverse proves exact preservation outside the two annotations and required digest literal.
+
+`verify_cleanup01.py` runs extracted actual BackendOwner, ImmutablePairSession, PairExecutor and enclosing memo poison with explicit fake engine/loader seams and ordinary file descriptors. One finite run passed37checks. The reviewer-identical03RED is retained in RESULT01 alongside04GREEN, normal successful/primary controls, builtin annotation lookup/allocation failure, repr allocation failure, first fatal session-cleanup identity across later engine/backend errors, backend ambiguous closure and no retry. The session-close error controls wrap actual session close before injecting their error. The primary identity checks use object identity. Residual descriptors from intentionally ambiguous cleanup are independently closed by the harness and never reported as successfully closed by the candidate.
+
+Command already executed once:
+
+```sh
+taskset -c 3 nice -n 10 timeout 30 .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/verify_cleanup01.py
+```
+
+Limits: CPU20s, alarm25s/external30s, AS512MiB, individual file4MiB, CPU3/nice10. Observed elapsed215328685ns, peak RSS22068KiB. No failed implementation-fixture run occurred. No old119/194-check matrix was replayed. Unchanged03 ownership evidence is reused only for unchanged scopes; its overall disposition remains WITHHELD.
+
+All03 pre-empirical conditions remain: one lazy load attempt per numeric owner; initial clean disabled fallback persists even if the path recovers; a loaded owner's later missing/changed library reference refuses, whereas per-pair02 could cleanly fall back. Exact fixed-reference admission, native descriptor/seal/mapping lifetime, strict connected numerical/checkpoint comparisons, end-to-end timing and capacity remain unproved. Helper loader, numerical calculation, fallback and close bodies are unchanged. No dlclose, numerical tolerance, scientific/model/training, original32/512 or resource-cap change is introduced. Qualification01 remains frozen/unexecuted and its02 pins cannot admit04.
+
+Only this new04 directory was written. Main, Git, STATE, pilot29, historical candidates, reviews and qualification01 remain unchanged. No scientific/native/compiler import, numerical job, empirical arrays, network, Owner, Admission or claim was used. The fixture's source extraction is lifecycle evidence, not real package integration or scientific equivalence.

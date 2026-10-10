@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification-review01-2026-10-10/review01.py", line 90, in <module>
+    ok('no sourceguard mutation',not any(isinstance(n,(ast.Assign,ast.AnnAssign)) and any(isinstance(x,ast.Attribute) and isinstance(x.value,ast.Name) and x.value.id in {'engine','annealing','sessions','numeric','policy_module'} for x in ast.walk(n)) for n in ast.walk(ex)))
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification-review01-2026-10-10/review01.py", line 11, in ok
+    def ok(name,value=True):assert value,name;checks.append(name)
+                                   ^^^^^
+AssertionError: no sourceguard mutation

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/tools15/check01.py", line 55, in <module>
+    if stat.S_ISREG(st.st_mode):ck(st.st_nlink==1 and st.st_size<=64*1024**2,'finite singly linked actual member '+p.name)
+                                ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/tools15/check01.py", line 8, in ck
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: finite singly linked actual member reference-body.bin

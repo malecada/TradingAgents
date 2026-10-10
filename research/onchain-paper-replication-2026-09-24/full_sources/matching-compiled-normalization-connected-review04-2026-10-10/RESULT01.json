@@ -1,0 +1,490 @@
+{
+  "disposition": "ACCEPT_SOURCE_ONLY_UNINSTALLED",
+  "checks": [
+    "exact frozen04 manifest",
+    "manifest CHECK01.log",
+    "manifest REPORT.md",
+    "manifest RESULT01.json",
+    "manifest batched_numeric_execution.py",
+    "manifest batched_numeric_execution.py.from03.patch",
+    "manifest batched_numeric_execution.py.to03.inverse.patch",
+    "manifest batched_numeric_reuse.py",
+    "manifest batched_numeric_reuse.py.from03.patch",
+    "manifest batched_numeric_reuse.py.to03.inverse.patch",
+    "manifest batched_pair_executor.py",
+    "manifest batched_pair_executor.py.from03.patch",
+    "manifest batched_pair_executor.py.to03.inverse.patch",
+    "manifest build_candidate.py",
+    "manifest compiled_normalization_policy.py",
+    "manifest compiled_normalization_policy.py.from03.patch",
+    "manifest compiled_normalization_policy.py.to03.inverse.patch",
+    "manifest compiled_small_lse.py",
+    "manifest compiled_small_lse.py.from03.patch",
+    "manifest compiled_small_lse.py.to03.inverse.patch",
+    "manifest matching_annealing.py",
+    "manifest matching_annealing.py.from03.patch",
+    "manifest matching_annealing.py.to03.inverse.patch",
+    "manifest matching_checkpoint.py",
+    "manifest matching_checkpoint.py.from03.patch",
+    "manifest matching_checkpoint.py.to03.inverse.patch",
+    "manifest matching_immutable_session.py",
+    "manifest matching_immutable_session.py.from03.patch",
+    "manifest matching_immutable_session.py.to03.inverse.patch",
+    "manifest ordinary-source.txt",
+    "manifest verify_cleanup01.py",
+    "manifest ../matching-compiled-normalization-connected-review03-2026-10-10/REVIEW01.json",
+    "manifest ../matching-compiled-normalization-connected-review03-2026-10-10/MANIFEST01.json",
+    "manifest ../matching-compiled-normalization-connected-review03-2026-10-10/REPORT.md",
+    "frozen03 manifest",
+    "exact frozen03 source compiled_normalization_policy.py",
+    "reuse unchanged03 compiled_normalization_policy.py",
+    "exact frozen03 source compiled_small_lse.py",
+    "reuse unchanged03 compiled_small_lse.py",
+    "exact frozen03 source matching_immutable_session.py",
+    "reuse unchanged03 matching_immutable_session.py",
+    "exact frozen03 source matching_annealing.py",
+    "reuse unchanged03 matching_annealing.py",
+    "exact frozen03 source matching_checkpoint.py",
+    "reuse unchanged03 matching_checkpoint.py",
+    "exact frozen03 source batched_numeric_execution.py",
+    "reuse unchanged03 batched_numeric_execution.py",
+    "exact frozen03 source batched_pair_executor.py",
+    "exact frozen03 source batched_numeric_reuse.py",
+    "single mandatory dependent pin",
+    "one exact annotation replacement if primary is not None:primary.add_note('executor cleanup failed: '+repr(cleanup))",
+    "one exact annotation replacement else:cleanup_error.add_note('additional executor cleanup failed: '+repr(cleanup))",
+    "whole byte inverse outside two statements",
+    "actual forward patch batched_pair_executor.py",
+    "actual inverse patch batched_pair_executor.py",
+    "actual forward patch batched_numeric_reuse.py",
+    "actual inverse patch batched_numeric_reuse.py",
+    "accepted02 reference",
+    "original RED reproduced",
+    "actual memo retains received exception matching-compiled-normalization-connected03-2026-10-10original_red",
+    "no backend retry matching-compiled-normalization-connected03-2026-10-10original_red",
+    "original error identity original_red",
+    "independent cleanup and poison original_red",
+    "ordinary FD accounting original_red",
+    "override bypassed",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10original_red",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10original_red",
+    "original error identity primary_note_alloc",
+    "independent cleanup and poison primary_note_alloc",
+    "ordinary FD accounting primary_note_alloc",
+    "actual note assignment failure hit primary_note_alloc",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10primary_note_alloc",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10primary_note_alloc",
+    "original error identity primary_repr_fatal",
+    "independent cleanup and poison primary_repr_fatal",
+    "ordinary FD accounting primary_repr_fatal",
+    "actual repr fatal hit primary_repr_fatal",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10primary_repr_fatal",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10primary_repr_fatal",
+    "original error identity first_cleanup_note_alloc",
+    "independent cleanup and poison first_cleanup_note_alloc",
+    "ordinary FD accounting first_cleanup_note_alloc",
+    "actual note assignment failure hit first_cleanup_note_alloc",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10first_cleanup_note_alloc",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10first_cleanup_note_alloc",
+    "original error identity first_cleanup_repr_fatal",
+    "independent cleanup and poison first_cleanup_repr_fatal",
+    "ordinary FD accounting first_cleanup_repr_fatal",
+    "actual repr fatal hit first_cleanup_repr_fatal",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10first_cleanup_repr_fatal",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10first_cleanup_repr_fatal",
+    "original error identity ambiguous_note_alloc",
+    "independent cleanup and poison ambiguous_note_alloc",
+    "ordinary FD accounting ambiguous_note_alloc",
+    "actual note assignment failure hit ambiguous_note_alloc",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10ambiguous_note_alloc",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10ambiguous_note_alloc",
+    "ambiguous identity repeated",
+    "original error identity normal_primary",
+    "independent cleanup and poison normal_primary",
+    "ordinary FD accounting normal_primary",
+    "actual memo retains received exception matching-compiled-normalization-connected04-2026-10-10normal_primary",
+    "no backend retry matching-compiled-normalization-connected04-2026-10-10normal_primary",
+    "no prohibited imports",
+    "frozen04 unchanged"
+  ],
+  "check_count": 105,
+  "observations": [
+    {
+      "version": "03",
+      "mode": "original_red",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close"
+      ],
+      "note_events": [
+        "overridden_add_note"
+      ],
+      "error_type": "MemoryError",
+      "primary_identity": false,
+      "first_cleanup_identity": false,
+      "allocation_identity": true,
+      "closed": false,
+      "poisoned": true,
+      "fds_before_memo": 1,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "original_red",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [],
+      "error_type": "Primary",
+      "primary_identity": true,
+      "first_cleanup_identity": false,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "primary_note_alloc",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [
+        "notes_assignment_failure"
+      ],
+      "error_type": "Primary",
+      "primary_identity": true,
+      "first_cleanup_identity": false,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "primary_repr_fatal",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [
+        "repr_failure"
+      ],
+      "error_type": "Primary",
+      "primary_identity": true,
+      "first_cleanup_identity": false,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "first_cleanup_note_alloc",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [
+        "notes_assignment_failure"
+      ],
+      "error_type": "Primary",
+      "primary_identity": false,
+      "first_cleanup_identity": true,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "first_cleanup_repr_fatal",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [
+        "repr_failure"
+      ],
+      "error_type": "Primary",
+      "primary_identity": false,
+      "first_cleanup_identity": true,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    },
+    {
+      "version": "04",
+      "mode": "ambiguous_note_alloc",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [
+        "notes_assignment_failure",
+        "notes_assignment_failure"
+      ],
+      "error_type": "Primary",
+      "primary_identity": true,
+      "first_cleanup_identity": false,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 1,
+      "fds_after_memo": 1,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 1
+    },
+    {
+      "version": "04",
+      "mode": "normal_primary",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "note_events": [],
+      "error_type": "Primary",
+      "primary_identity": true,
+      "first_cleanup_identity": false,
+      "allocation_identity": false,
+      "closed": true,
+      "poisoned": true,
+      "fds_before_memo": 0,
+      "fds_after_memo": 0,
+      "backend_close_attempts": 1,
+      "harness_only_residual_closes": 0
+    }
+  ],
+  "body_references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/MANIFEST.json": {
+      "sha256": "f05c45c44699ca434ec620ff81d714d02f1a994b88f8e0c8402fe05066bd96b4",
+      "bytes": 5542
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/CHECK01.log": {
+      "sha256": "a85c8506e77922bec03440810bd5bf5d4b4b32bf9cb4a95722a44aef0be0d5aa",
+      "bytes": 107
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/REPORT.md": {
+      "sha256": "661f4a0f9d87ba46c5f4360730f49cd587009749f9512d071e0e4d6dc938e2db",
+      "bytes": 4259
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/RESULT01.json": {
+      "sha256": "2a1e099531b07c77030e6b8bb4eea3f5a7c57c53d98697cb8eeb8caf4232ea19",
+      "bytes": 7730
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_execution.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_execution.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "dabc42d5a83ed5ef31d1eb31985da1529acf604c6ce6354badf276e5c07a936a",
+      "bytes": 20116
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_reuse.py.from03.patch": {
+      "sha256": "b3e8cfd50b899dffdf66c866c779d06179856b2cfc051db4141b5afe8320bcbc",
+      "bytes": 722
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_numeric_reuse.py.to03.inverse.patch": {
+      "sha256": "41be54ab10e61d171981db5e2af4fe66bdbada0f22428126f0471b64eeab4558",
+      "bytes": 722
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_pair_executor.py": {
+      "sha256": "2e4c5b51f991e1c02eed00d1044a423222eebe77d0f540057f1108df562e34ff",
+      "bytes": 6461
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_pair_executor.py.from03.patch": {
+      "sha256": "634005fd2c9b5fc5f29a41c4212c205d7264873af84794bf074c249a17649096",
+      "bytes": 987
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/batched_pair_executor.py.to03.inverse.patch": {
+      "sha256": "9dc67e2c7d3eaa5bc69bb4e137bc7d755388ed516d639cb4271504b38294e8ef",
+      "bytes": 987
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/build_candidate.py": {
+      "sha256": "5bdca59ccdf49cb21877fb28b3647be2b1c4c452b8e2214e9394331af33e19b7",
+      "bytes": 1952
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01",
+      "bytes": 10714
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_normalization_policy.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_normalization_policy.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_small_lse.py": {
+      "sha256": "7f98ca93c5100e475c1a6de0280e4ce546c0adc26c3865820068b868014c496e",
+      "bytes": 7385
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_small_lse.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_small_lse.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_annealing.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_annealing.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_checkpoint.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_checkpoint.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_immutable_session.py": {
+      "sha256": "3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa",
+      "bytes": 9879
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_immutable_session.py.from03.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/matching_immutable_session.py.to03.inverse.patch": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/ordinary-source.txt": {
+      "sha256": "d63f0ee2304b2bab6c6e278fadbfafc4e80f5816f6e3fb3950d22f2c8e66745e",
+      "bytes": 28
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/verify_cleanup01.py": {
+      "sha256": "244867aa6ca0d80eceae0e4e4e14c324ee87093da3844514b9adaf3b6838d6db",
+      "bytes": 9952
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/REVIEW01.json": {
+      "sha256": "55d1418a7a52624ae29da26c299f58b6e827090c524dc5f867bba52a038ba959",
+      "bytes": 24305
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/MANIFEST01.json": {
+      "sha256": "5d67dce67bfe9f570003d3d3235d53ab0ba22fe8040ec7392acbc6687eccf8ae",
+      "bytes": 2426
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/REPORT.md": {
+      "sha256": "ccbe40f7cb54489f1be2b48d81e3e3c5047cff16716e28062d6befd37bf3fb81",
+      "bytes": 5785
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/MANIFEST.json": {
+      "sha256": "4070e2638527990cee09821bbe1820f42f4385cda857e411adfe20aefe60317b",
+      "bytes": 11011
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01",
+      "bytes": 10714
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/compiled_small_lse.py": {
+      "sha256": "7f98ca93c5100e475c1a6de0280e4ce546c0adc26c3865820068b868014c496e",
+      "bytes": 7385
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_immutable_session.py": {
+      "sha256": "3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa",
+      "bytes": 9879
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_pair_executor.py": {
+      "sha256": "6d34ef9a8be6bb831093dfd8643cf8708d744428e6dc3461b96f5accc955066b",
+      "bytes": 6275
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected03-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "4fc77bbf57a55e8e14830d77e66d862b4a87a12492e1dca26ea8f872562b19f7",
+      "bytes": 20116
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review02-2026-10-10/REVIEW01.json": {
+      "sha256": "99138c00824f25bc6c6ac89abc2380bd1a9248fe15ecd8ac0616ad6bb890fc2d",
+      "bytes": 20861
+    }
+  },
+  "native_or_numerical_execution": false,
+  "elapsed_ns": 193481038,
+  "peak_rss_kib": 22548,
+  "limits": {
+    "cpu_seconds": 15,
+    "alarm_seconds": 20,
+    "external_seconds": 25,
+    "address_space_bytes": 536870912,
+    "file_size_bytes": 4194304,
+    "cpu": 3
+  }
+}

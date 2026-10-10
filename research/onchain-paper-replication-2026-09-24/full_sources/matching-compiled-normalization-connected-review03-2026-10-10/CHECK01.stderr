@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/review01.py", line 130, in <module>
+    for mode in ('success','disabled','double_borrow','owner_method','lease_method','backend_method','client_redirect','parent_closed','ambiguous','backend_pin_failure','close_lookup_once','later_refs','later_body','loader_fatal','fatal_cleanup'):harness(mode)
+                                                                                                                                                                                                                                                       ~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/review01.py", line 88, in harness
+    Owner=extract('compiled_normalization_policy.py','BackendOwner',ns=ns)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/review01.py", line 49, in extract
+    node=next(n for n in t.body if n.name==cls and isinstance(n,ast.ClassDef)) if cls else t
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review03-2026-10-10/review01.py", line 49, in <genexpr>
+    node=next(n for n in t.body if n.name==cls and isinstance(n,ast.ClassDef)) if cls else t
+                                   ^^^^^^
+AttributeError: 'Expr' object has no attribute 'name'

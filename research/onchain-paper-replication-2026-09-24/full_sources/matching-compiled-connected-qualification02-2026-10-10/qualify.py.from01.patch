@@ -1,0 +1,162 @@
+--- qualify.py-01
++++ qualify.py-02
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ HERE=Path(__file__).resolve().parent
+ CHECKOUT=HERE.parents[3]
+-INPUT_PINS={'SOURCE_REQUIREMENTS.json':'0c241d8c780048201e3b60e4481a7c80b67c81d79eef1f7106b232ecb29c4610','CASES.json':'8b6d81174705241c4526bd0303f3a4dcd8c4c122f009f33d93eb02645e0a0724','matching-config.json':'b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e'}
++INPUT_PINS={'SOURCE_REQUIREMENTS.json':'a3c6400f925641b3c657674a2f89b0c2bcd847132c3ff286f82c2d6508c2620a','CASES.json':'8b6d81174705241c4526bd0303f3a4dcd8c4c122f009f33d93eb02645e0a0724','matching-config.json':'b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e'}
+ def need(value,message):
+     if not value:raise ValueError(message)
+ def sha(body):return hashlib.sha256(body).hexdigest()
+@@ -99,15 +99,17 @@
+     population=[(case,graph(case,case['n'],0),graph(case,case['m'],1)) for case in cases['graph_cases']]
+     pair_policy=dict(max_state_bytes=65536,normalization_chunk_entries=10,hardening_chunk_entries=3,hardening_buffer_bytes=65536,max_score_buffer_bytes=65536,chunk_edges=16,max_checkpoint_bytes=262144,max_publications=8,total_checkpoint_bytes=1048576)
+     engine_options={k:pair_policy[k] for k in ('max_state_bytes','normalization_chunk_entries','hardening_chunk_entries','hardening_buffer_bytes')}
+-    def checkpoint(state,path,a,b):
++    def checkpoint(state,path,a,b,*,retain=False):
+         disk_bound();before=state_body(state)
+         digest=engine.save(state,path,a,b,config,max_checkpoint_bytes=pair_policy['max_checkpoint_bytes'])
+-        restored=None
++        restored=None;transferred=False
+         try:
+             restored=engine.load(path,a,b,config,expected_sha256=digest,**engine_options)
+             need(before==state_body(restored),'checkpoint roundtrip state differs')
++            if retain:
++                disk_bound();transferred=True;return digest,restored
+         finally:
+-            if restored is not None:engine.close(restored)
++            if restored is not None and not transferred:engine.close(restored)
+         disk_bound();return digest
+     def kernel_backend(backend):
+         import inspect,fcntl
+@@ -127,6 +129,22 @@
+         try:os.fstat(fd)
+         except OSError as error:need(error.errno==errno.EBADF,'descriptor close uncertain')
+         else:raise ValueError('owned descriptor still open after close')
++    def numeric_backend(executor,selection,*,before=False):
++        import inspect
++        owner=executor.memo.executor._normalization_owner
++        if selection is None:
++            need(owner is None,'default numeric route unexpectedly owns backend');return None,None,None
++        need(owner is executor.memo.executor._normalization_owner_pin,'numeric normalization owner redirected')
++        owner.current()
++        closure=inspect.getclosurevars(owner.borrow).nonlocals
++        need(closure['active'] is None,'session lease remained active between numeric calls')
++        backend=closure['backend']
++        if before:
++            need(closure['opened'] is False and backend is None,'numeric constructor eagerly opened backend')
++            return owner,None,{'opened':False,'loaded':False}
++        need(closure['opened'] is True and backend is not None and backend.loaded(),'selected numeric backend unavailable')
++        need(backend.current(),'selected numeric backend currentness failed');fd,kernel=kernel_backend(backend)
++        return owner,backend,{'opened':True,'loaded':True,'fd':fd,'kernel':kernel}
+     try:
+         # New actual factory/native lifetime and narrow primitive gaps only.
+         owner=type('EngineeringSelection',(),{})();policy_module.attach(owner,selected)
+@@ -146,10 +164,11 @@
+         finally:backend.close()
+         closed_fd(fd);backend.close();record['descriptor_closed_no_retry']=True
+         # Full state logical advance comparison using actual sessions. Each
+-        # route has its own state; checkpoint load is compared and closed.
++        # route has its own state. Normalization/hardening restored states
++        # continue alongside both uninterrupted states through actual sessions.
+         reference_scores=[]
+         for index,(case,a,b) in enumerate(population):
+-            states=[];owned=[];step=0;roundtrips=0;observed=set();open_ns=[];fds=[]
++            states=[];owned=[];resumed=[];step=0;advance_calls=0;roundtrips=0;observed=set();open_ns=[];fds=[]
+             root=output/('direct-'+case['name']);root.mkdir()
+             try:
+                 for selection in (None,selected):
+@@ -162,25 +181,47 @@
+                 while states[0]['phase']!='done':
+                     need(step<cases['max_advances_per_pair'],'finite logical-advance cap')
+                     budget=1 if roundtrips==0 else cases['operation_budgets'][step%len(cases['operation_budgets'])]
++                    need(advance_calls+2+len(resumed)<=2*cases['max_advances_per_pair'],'original aggregate direct advance allowance exhausted by continuation')
+                     used=[s.advance(state,max_operations=budget) for s,state in zip(owned,states,strict=True)]
++                    advance_calls+=2
++                    for restored in resumed:
++                        resumed_used=owned[restored['route']].advance(restored['state'],max_operations=budget);advance_calls+=1
++                        need(resumed_used==used[restored['route']],'restored operation accounting differs')
++                        state_equal(restored['state'],states[restored['route']]);restored['continued_advances']+=1
+                     need(used[0]==used[1],'operation budget accounting differs');state_equal(*states)
+                     phase=states[0]['phase']+':'+states[0]['annealing']['phase'];observed.add(phase)
+                     trace.update(json.dumps(state_body(states[0]),sort_keys=True,separators=(',',':')).encode())
+                     if roundtrips<cases['max_direct_checkpoints_per_pair'] and ((roundtrips==0 and states[0]['annealing']['phase'].startswith('normalize')) or (roundtrips==1 and states[0]['phase']=='hardening') or (roundtrips==2 and states[0]['phase']=='done')):
+-                        for route,state in enumerate(states):checkpoint(state,root/('checkpoint-'+str(roundtrips)+'-'+str(route)),a,b)
++                        for route,state in enumerate(states):
++                            path=root/('checkpoint-'+str(roundtrips)+'-'+str(route))
++                            if roundtrips<2:
++                                digest,restored=checkpoint(state,path,a,b,retain=True)
++                                try:resumed.append({'route':route,'origin_phase':phase,'state':restored,'continued_advances':0,'checkpoint_sha256':digest})
++                                except BaseException:
++                                    engine.close(restored);raise
++                            else:checkpoint(state,path,a,b)
+                         roundtrips+=1
+                     step+=1
+                 left,right=[engine.result(state,a,b,config) for state in states]
+                 need(left.assignment.tobytes()==right.assignment.tobytes() and left.soft_assignment.tobytes()==right.soft_assignment.tobytes() and score(left)==score(right),'final assignment/soft/score differs')
+                 need(roundtrips==cases['max_direct_checkpoints_per_pair'],'required normalization/hardening/done checkpoint phases not observed')
++                need(len(resumed)==4,'both routes require normalization and hardening restoration')
++                resumed_records=[]
++                for restored in resumed:
++                    need(restored['continued_advances']>0 and restored['state']['phase']=='done','restored checkpoint did not continue to completion')
++                    state_equal(restored['state'],states[restored['route']])
++                    result=engine.result(restored['state'],a,b,config)
++                    expected=(left,right)[restored['route']]
++                    need(result.assignment.tobytes()==expected.assignment.tobytes() and result.soft_assignment.tobytes()==expected.soft_assignment.tobytes() and score(result)==score(expected),'restored final assignment/soft/score differs')
++                    resumed_records.append({k:v for k,v in restored.items() if k!='state'})
+                 reference_scores.append(tuple(score(left)))
+-                record['cases'].append({'name':case['name'],'advances':step,'roundtrips_per_route':roundtrips,'phases':sorted(observed),'trace_sha256':trace.hexdigest(),'score':score(left),'session_open_ns_default_selected':open_ns})
++                record['cases'].append({'name':case['name'],'advances':step,'roundtrips_per_route':roundtrips,'phases':sorted(observed),'trace_sha256':trace.hexdigest(),'score':score(left),'session_open_ns_default_selected':open_ns,'total_direct_advance_calls':advance_calls,'continued_checkpoints':resumed_records})
+             finally:
+                 primary=sys.exception();errors=[]
+                 for session in owned:
+                     try:session.close()
+                     except BaseException as error:errors.append(error)
+-                for state in states:
++                for state in states+[restored['state'] for restored in resumed]:
+                     try:engine.close(state)
+                     except BaseException as error:errors.append(error)
+                 if errors:
+@@ -192,23 +233,38 @@
+         schedule=dict(max_checkpoints=8,calls_per_checkpoint=64,operations_per_call=17,max_total_checkpoints=128,max_total_checkpoint_bytes=64*1024**2)
+         route_results=[]
+         for label,selection in (('default',None),('selected',selected)):
+-            root=output/('numeric-'+label);root.mkdir();cp=root/'checkpoints';cp.mkdir();events=[];results=[]
++            root=output/('numeric-'+label);root.mkdir();cp=root/'checkpoints';cp.mkdir();events=[];results=[];lifetime=[];held_owner=held_backend=None;held_fd=None
+             def save(purpose,ordinal,state,a,b,unused_config,unused_policy):
+                 need(len(events)<cases['max_numeric_checkpoints_per_route'],'finite numeric checkpoint cap')
+                 digest=checkpoint(state,cp/(purpose+'-'+str(ordinal)),a,b);events.append({'purpose':purpose,'ordinal':ordinal,'sha256':digest})
+             at=time.perf_counter_ns()
+             cells=len(population)*cases['numeric_repeats']
+             with numeric.NumericExecution(root,config,pair_policy,schedule,save,cells=cells,batch_cells=4,max_origin_bytes=9*cells,max_summary_bytes=16384,max_entries=8,max_retained_bytes=1048576,max_key_bytes=65536,authority_poll=None,binding_timing=None,binding_owner=None,edge_cache_policy=dict(annealing.ADAPTIVE_EDGE_POLICY),compiled_normalization_policy_value=selection) as executor:
++                observed_owner,unused_backend,initial=numeric_backend(executor,selection,before=True)
++                held_owner=observed_owner;lifetime.append({'stage':'constructed','observation':initial})
+                 per_occurrence=[]
+                 for repetition in range(cases['numeric_repeats']):
+                     for index,(case,a,b) in enumerate(population):
+                         at_pair=time.perf_counter_ns();value=executor(a,b,sha(('synthetic-purpose-'+str(repetition)+'-'+case['name']).encode()));per_occurrence.append(time.perf_counter_ns()-at_pair)
+                         encoded=(struct.pack('>d',value[0]).hex(),value[1],value[2]);need(encoded==reference_scores[index],'full numeric caller score differs from direct state');results.append(encoded)
++                        observed_owner,observed_backend,observed=numeric_backend(executor,selection)
++                        need(observed_owner is held_owner,'numeric backend owner changed between occurrences')
++                        if selection is not None:
++                            if held_backend is None:held_backend=observed_backend;held_fd=observed['fd']
++                            need(observed_backend is held_backend and observed['fd']==held_fd,'numeric backend/descriptor replaced within owner lifetime')
++                        lifetime.append({'stage':'after_occurrence','repetition':repetition,'case':case['name'],'observation':observed})
+                 binding=executor.finish()
+-            elapsed=time.perf_counter_ns()-at;closure=numeric.verify(root,binding)
++            elapsed=time.perf_counter_ns()-at
++            if selection is not None:
++                closed_fd(held_fd)
++                import inspect
++                closed=inspect.getclosurevars(held_owner.close).nonlocals
++                need(closed['closed'] is True and closed['close_attempted'] is True and closed['close_error'] is None,'numeric owner terminal cleanup not established')
++                lifetime.append({'stage':'closed','original_descriptor_closed':True})
++            closure=numeric.verify(root,binding)
+             need(binding['computed']==len(population) and binding['reused']==len(population),'genuine memo compute/reuse population differs')
+             write(root/'binding.json',binding)
+-            record['numeric'][label]={'wall_ns_including_construction_publication_close':elapsed,'per_occurrence_ns_including_session_load_on_miss':per_occurrence,'checkpoint_events':events,'closure':closure,'results':results}
++            record['numeric'][label]={'wall_ns_including_construction_publication_close':elapsed,'per_occurrence_ns_including_lazy_load_and_fresh_checks':per_occurrence,'shared_backend_lifetime':lifetime,'load_attempt_count':'NOT_OBSERVED; opened flag and stable backend/FD only; profiling forbidden by genuine guard','mapping_unload_claim':False,'timing_includes_readonly_observation_overhead':True,'checkpoint_events':events,'closure':closure,'results':results}
+             route_results.append(results);disk_bound()
+         need(route_results[0]==route_results[1],'selected/unselected full caller results differ')
+         record['status']='PASS_FINITE_SYNTHETIC_ONLY'

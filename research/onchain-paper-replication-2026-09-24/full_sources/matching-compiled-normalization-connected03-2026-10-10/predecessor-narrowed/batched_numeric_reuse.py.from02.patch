@@ -1,0 +1,89 @@
+--- batched_numeric_reuse.py-02
++++ batched_numeric_reuse.py-03
+@@ -16,9 +16,9 @@
+ 
+ MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy)
+ SOURCE_PINS=(
+-    (compiled_normalization_policy, '2afd2c2b4eba03ee6058e895d73be7d600f9414e5b5302fdd36646ea638e567a'),
++    (compiled_normalization_policy, '02c90e70ca423c3c274104f795e81a1f644f9204764f014a0d24044f4f3fb5df'),
+     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
+-    (accepted, '0fb7cad3bc767806471227e9c06c26e6dcc88288608b5f00ab500eab2046cdb4'),
++    (accepted, '6d34ef9a8be6bb831093dfd8643cf8708d744428e6dc3461b96f5accc955066b'),
+     (engine, '0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0'),
+     (engine.ann, 'eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+@@ -27,7 +27,7 @@
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, '7f847b02d2c4ca4e17a0b0962a97c49498b0559268b1187aad682c446eec3460'),
++    (immutable_session, '3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa'),
+ )
+ 
+ def require(ok,message):
+@@ -142,6 +142,7 @@
+             authority_poll=measured_poll
+         self.authority_poll=authority_poll
+         self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
++        self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
+         self.checkpoint_adapter=self.executor.checkpoint
+         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+@@ -159,6 +160,7 @@
+     @property
+     def retained_bytes(self):return self._bytes
+     def _current(self):
++        require(self.executor is self._executor_pin,'numeric executor replaced')
+         adaptive_edge_policy.join(self,self.executor)
+         compiled_normalization_policy.join(self,self.executor)
+         light_environment()
+@@ -223,8 +225,22 @@
+     def _clear(self):
+         while self.count:self._evict()
+     def _poison(self):
+-        if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None
+-        self.poisoned=True;self.executor.poisoned=True;self.active=False;self._clear();self.last_receipt=None
++        primary=sys.exception()
++        try:
++            if self._geometry is not None:self._geometry.poison();self.last_geometry_summary=None
++            self.poisoned=True;self._executor_pin.poisoned=True;self.active=False;self._clear();self.last_receipt=None
++        except BaseException as error:
++            if primary is None:primary=error
++            elif error is not primary:
++                try:BaseException.add_note(primary,'numeric poison cleanup failed: '+repr(error))
++                except BaseException:pass
++            raise primary
++        finally:
++            try:self._executor_cleanup()
++            except BaseException as cleanup:
++                if primary is None:raise
++                try:BaseException.add_note(primary,'numeric backend cleanup failed: '+repr(cleanup))
++                except BaseException:pass
+     def __call__(self,a,b,purpose_hash):
+         require(not self.closed and not self.poisoned and self.active,'active batch required')
+         self.last_receipt=None
+@@ -258,6 +274,23 @@
+         except BaseException:self._poison();raise
+     def close(self):
+         # Close does not silently turn an unfinished batch into an attested one.
++        primary=None
+         try:
+             if self.active and not self.poisoned:self.end_batch()
+-        finally:self._clear();self.last_receipt=None;self.closed=True
++        except BaseException as error:
++            primary=error;raise
++        finally:
++            cleanup_error=None
++            try:self._clear()
++            except BaseException as cleanup:cleanup_error=cleanup
++            self.last_receipt=None;self.closed=True
++            try:self._executor_cleanup()
++            except BaseException as cleanup:
++                if cleanup_error is None:cleanup_error=cleanup
++                else:
++                    try:BaseException.add_note(cleanup_error,'additional backend cleanup failed: '+repr(cleanup))
++                    except BaseException:pass
++            if cleanup_error is not None:
++                if primary is None:raise cleanup_error
++                try:BaseException.add_note(primary,'numeric close cleanup failed: '+repr(cleanup_error))
++                except BaseException:pass

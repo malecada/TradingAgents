@@ -1,0 +1,86 @@
+{
+  "actual_live_tool_chunk": "a71855",
+  "at": "2026-10-10T15:31:13.173806+00:00",
+  "fields": {
+    "child_exit_code": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 31976525824
+    },
+    "elapsed_seconds": 2313.1800327,
+    "host_mem_available_bytes": 7053963264,
+    "limit_reason": null,
+    "memory_current_bytes": 4933476352,
+    "memory_events": {
+      "high": 1036,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 5368373248,
+    "phase": "running"
+  },
+  "guard_bytes": 17765,
+  "guard_path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261009-29/guard/live.json",
+  "guard_sha256": "5c7f46c4795f62470ed0e25c0f8872d60c685978326294e1bc022dad0c5056da",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261009-29",
+  "matching_metadata": [
+    {
+      "bytes": 200,
+      "path": "research_artifacts/onchain_representations/5efca533e6c821207f9cdb0b69d090f6b6ae02ef4e32e89f4d7793c6cd9787b5/eth-paper-real-data-end-to-end-resource-20261009-29/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000000.pending.json",
+      "sha256": "a06c84335fefc793a465e4028c74ab05463ec87e45098e6a277609a9388ca0bc",
+      "value": {
+        "disposition": "attempted_unknown_without_complete",
+        "kind": "engineering_pending",
+        "schema": 3,
+        "start": 0,
+        "stop": 4096,
+        "workload_sha256": "feb0bce3ae8ea4ef64116345fddd4719b5c490f87ebd78c1cc62dfd435bd17e9"
+      }
+    }
+  ],
+  "optional_unit_memory": {
+    "anon_bytes": 3227340800,
+    "file_bytes": 1686368256,
+    "kernel_peak_bytes": 5370806272,
+    "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-517ecb96ed914ed6b135ecdf1a7e7287.service",
+    "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=986823\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=986823",
+    "swap_current_bytes": 0,
+    "unavailable": {}
+  },
+  "qualification": "Non-atomic live metadata. No payload arrays decoded, final peak, full MCM, numerical agreement, completed training or whole-capacity claim. New observations/candidates not externally recovered.",
+  "raw_copy": "GUARD_LIVE_SAMPLE03.json",
+  "review_joins": {
+    "claim-source-dedup-review01-2026-10-10/REVIEW01.json": {
+      "bytes": 17602,
+      "sha256": "75c631d9d6a76ccf248fbc3b54dbb6b252c4a3cf8bc3c1fca8b88896004bc260"
+    },
+    "matching-compiled-normalization-connected-review02-2026-10-10/REVIEW01.json": {
+      "bytes": 20861,
+      "sha256": "99138c00824f25bc6c6ac89abc2380bd1a9248fe15ecd8ac0616ad6bb890fc2d"
+    }
+  },
+  "same_root_session": 96601,
+  "source_commit": "21f6ca992f98d817f3eddcc3c3867674d0b3c942",
+  "storage": {
+    "allocated_bytes": 5152374784,
+    "elapsed_seconds": 0.18556132499998057,
+    "entries": 17709,
+    "logical_file_bytes": 5574245843
+  },
+  "stream_regular_file_sizes": [
+    {
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/5efca533e6c821207f9cdb0b69d090f6b6ae02ef4e32e89f4d7793c6cd9787b5/eth-paper-real-data-end-to-end-resource-20261009-29/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/closure-tokens.bin"
+    },
+    {
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/5efca533e6c821207f9cdb0b69d090f6b6ae02ef4e32e89f4d7793c6cd9787b5/eth-paper-real-data-end-to-end-resource-20261009-29/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-origins.bin"
+    },
+    {
+      "bytes": 0,
+      "path": "research_artifacts/onchain_representations/5efca533e6c821207f9cdb0b69d090f6b6ae02ef4e32e89f4d7793c6cd9787b5/eth-paper-real-data-end-to-end-resource-20261009-29/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/scores.f32"
+    }
+  ]
+}

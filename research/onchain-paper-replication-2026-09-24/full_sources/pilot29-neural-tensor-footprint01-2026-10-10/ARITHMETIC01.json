@@ -1,0 +1,409 @@
+{
+  "bound_exceeds_6GiB": false,
+  "bound_exceeds_nominal_16GB": false,
+  "bound_includes": "All retained resident numeric raw graph arrays plus largest layer h, out and one block messages. Excludes MCM page residency and all other overhead. This is a storage lower bound, not a measured cgroup resident-memory floor.",
+  "conservative_proven_simultaneous_storage_bytes": 2489469248,
+  "graphs": [
+    {
+      "E": 2518332,
+      "N": 1768268,
+      "U_range": [
+        2518332,
+        4286600
+      ],
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "layers": [
+        {
+          "clean_NF_bytes": 226338304,
+          "e_numer_attention_each_UH_bytes_range": [
+            40293312,
+            68585600
+          ],
+          "h_NHD_bytes": 452676608,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 452676608,
+          "proven_h_out_one_block_coexist_bytes": 922130432,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 28292288,
+          "source_target_each_int64_U_bytes_range": [
+            20146656,
+            34292800
+          ]
+        },
+        {
+          "clean_NF_bytes": 452676608,
+          "e_numer_attention_each_UH_bytes_range": [
+            10073328,
+            17146400
+          ],
+          "h_NHD_bytes": 226338304,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 226338304,
+          "proven_h_out_one_block_coexist_bytes": 461065216,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 7073072,
+          "source_target_each_int64_U_bytes_range": [
+            20146656,
+            34292800
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 226338304,
+      "mlp_N32_each_bytes": 226338304,
+      "mlp_N64_each_bytes": 452676608,
+      "original_edge_index_int64_2E_bytes": 40293312,
+      "raw_numeric_graph_arrays_bytes": 177464512,
+      "week": "2022-06-13T00:00:00Z"
+    },
+    {
+      "E": 3149567,
+      "N": 2265481,
+      "U_range": [
+        3149567,
+        5415048
+      ],
+      "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "layers": [
+        {
+          "clean_NF_bytes": 289981568,
+          "e_numer_attention_each_UH_bytes_range": [
+            50393072,
+            86640768
+          ],
+          "h_NHD_bytes": 579963136,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 579963136,
+          "proven_h_out_one_block_coexist_bytes": 1176703488,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 36247696,
+          "source_target_each_int64_U_bytes_range": [
+            25196536,
+            43320384
+          ]
+        },
+        {
+          "clean_NF_bytes": 579963136,
+          "e_numer_attention_each_UH_bytes_range": [
+            12598268,
+            21660192
+          ],
+          "h_NHD_bytes": 289981568,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 289981568,
+          "proven_h_out_one_block_coexist_bytes": 588351744,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 9061924,
+          "source_target_each_int64_U_bytes_range": [
+            25196536,
+            43320384
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 289981568,
+      "mlp_N32_each_bytes": 289981568,
+      "mlp_N64_each_bytes": 579963136,
+      "original_edge_index_int64_2E_bytes": 50393072,
+      "raw_numeric_graph_arrays_bytes": 223674608,
+      "week": "2022-05-09T00:00:00Z"
+    },
+    {
+      "E": 2779164,
+      "N": 1878300,
+      "U_range": [
+        2779164,
+        4657464
+      ],
+      "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "layers": [
+        {
+          "clean_NF_bytes": 240422400,
+          "e_numer_attention_each_UH_bytes_range": [
+            44466624,
+            74519424
+          ],
+          "h_NHD_bytes": 480844800,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 480844800,
+          "proven_h_out_one_block_coexist_bytes": 978466816,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 30052800,
+          "source_target_each_int64_U_bytes_range": [
+            22233312,
+            37259712
+          ]
+        },
+        {
+          "clean_NF_bytes": 480844800,
+          "e_numer_attention_each_UH_bytes_range": [
+            11116656,
+            18629856
+          ],
+          "h_NHD_bytes": 240422400,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 240422400,
+          "proven_h_out_one_block_coexist_bytes": 489233408,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 7513200,
+          "source_target_each_int64_U_bytes_range": [
+            22233312,
+            37259712
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 240422400,
+      "mlp_N32_each_bytes": 240422400,
+      "mlp_N64_each_bytes": 480844800,
+      "original_edge_index_int64_2E_bytes": 44466624,
+      "raw_numeric_graph_arrays_bytes": 193505472,
+      "week": "2022-05-02T00:00:00Z"
+    },
+    {
+      "E": 2426106,
+      "N": 1581441,
+      "U_range": [
+        2426106,
+        4007547
+      ],
+      "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "layers": [
+        {
+          "clean_NF_bytes": 202424448,
+          "e_numer_attention_each_UH_bytes_range": [
+            38817696,
+            64120752
+          ],
+          "h_NHD_bytes": 404848896,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 404848896,
+          "proven_h_out_one_block_coexist_bytes": 826475008,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 25303056,
+          "source_target_each_int64_U_bytes_range": [
+            19408848,
+            32060376
+          ]
+        },
+        {
+          "clean_NF_bytes": 404848896,
+          "e_numer_attention_each_UH_bytes_range": [
+            9704424,
+            16030188
+          ],
+          "h_NHD_bytes": 202424448,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 202424448,
+          "proven_h_out_one_block_coexist_bytes": 413237504,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 6325764,
+          "source_target_each_int64_U_bytes_range": [
+            19408848,
+            32060376
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 202424448,
+      "mlp_N32_each_bytes": 202424448,
+      "mlp_N64_each_bytes": 404848896,
+      "original_edge_index_int64_2E_bytes": 38817696,
+      "raw_numeric_graph_arrays_bytes": 167059200,
+      "week": "2022-05-30T00:00:00Z"
+    },
+    {
+      "E": 2642414,
+      "N": 1875043,
+      "U_range": [
+        2642414,
+        4517457
+      ],
+      "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "layers": [
+        {
+          "clean_NF_bytes": 240005504,
+          "e_numer_attention_each_UH_bytes_range": [
+            42278624,
+            72279312
+          ],
+          "h_NHD_bytes": 480011008,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 480011008,
+          "proven_h_out_one_block_coexist_bytes": 976799232,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 30000688,
+          "source_target_each_int64_U_bytes_range": [
+            21139312,
+            36139656
+          ]
+        },
+        {
+          "clean_NF_bytes": 480011008,
+          "e_numer_attention_each_UH_bytes_range": [
+            10569656,
+            18069828
+          ],
+          "h_NHD_bytes": 240005504,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 240005504,
+          "proven_h_out_one_block_coexist_bytes": 488399616,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 7500172,
+          "source_target_each_int64_U_bytes_range": [
+            21139312,
+            36139656
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 240005504,
+      "mlp_N32_each_bytes": 240005504,
+      "mlp_N64_each_bytes": 480011008,
+      "original_edge_index_int64_2E_bytes": 42278624,
+      "raw_numeric_graph_arrays_bytes": 186837248,
+      "week": "2022-05-23T00:00:00Z"
+    },
+    {
+      "E": 2812471,
+      "N": 2048710,
+      "U_range": [
+        2812471,
+        4861181
+      ],
+      "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "layers": [
+        {
+          "clean_NF_bytes": 262234880,
+          "e_numer_attention_each_UH_bytes_range": [
+            44999536,
+            77778896
+          ],
+          "h_NHD_bytes": 524469760,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 524469760,
+          "proven_h_out_one_block_coexist_bytes": 1065716736,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 32779360,
+          "source_target_each_int64_U_bytes_range": [
+            22499768,
+            38889448
+          ]
+        },
+        {
+          "clean_NF_bytes": 524469760,
+          "e_numer_attention_each_UH_bytes_range": [
+            11249884,
+            19444724
+          ],
+          "h_NHD_bytes": 262234880,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 262234880,
+          "proven_h_out_one_block_coexist_bytes": 532858368,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 8194840,
+          "source_target_each_int64_U_bytes_range": [
+            22499768,
+            38889448
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 262234880,
+      "mlp_N32_each_bytes": 262234880,
+      "mlp_N64_each_bytes": 524469760,
+      "original_edge_index_int64_2E_bytes": 44999536,
+      "raw_numeric_graph_arrays_bytes": 200557328,
+      "week": "2022-05-16T00:00:00Z"
+    },
+    {
+      "E": 2355230,
+      "N": 1581761,
+      "U_range": [
+        2355230,
+        3936991
+      ],
+      "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "layers": [
+        {
+          "clean_NF_bytes": 202465408,
+          "e_numer_attention_each_UH_bytes_range": [
+            37683680,
+            62991856
+          ],
+          "h_NHD_bytes": 404930816,
+          "head_width": 16,
+          "heads": 4,
+          "input_width": 32,
+          "one_full_block_message_BHD_bytes": 16777216,
+          "out_NHD_bytes": 404930816,
+          "proven_h_out_one_block_coexist_bytes": 826638848,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 25308176,
+          "source_target_each_int64_U_bytes_range": [
+            18841840,
+            31495928
+          ]
+        },
+        {
+          "clean_NF_bytes": 404930816,
+          "e_numer_attention_each_UH_bytes_range": [
+            9420920,
+            15747964
+          ],
+          "h_NHD_bytes": 202465408,
+          "head_width": 32,
+          "heads": 1,
+          "input_width": 64,
+          "one_full_block_message_BHD_bytes": 8388608,
+          "out_NHD_bytes": 202465408,
+          "proven_h_out_one_block_coexist_bytes": 413319424,
+          "source_score_target_score_maximum_denom_each_NH_bytes": 6327044,
+          "source_target_each_int64_U_bytes_range": [
+            18841840,
+            31495928
+          ]
+        }
+      ],
+      "mcm_float32_N32_mapped_bytes": 202465408,
+      "mlp_N32_each_bytes": 202465408,
+      "mlp_N64_each_bytes": 404930816,
+      "original_edge_index_int64_2E_bytes": 37683680,
+      "raw_numeric_graph_arrays_bytes": 163667392,
+      "week": "2022-06-06T00:00:00Z"
+    }
+  ],
+  "limitations": [
+    "U uses unknown original self-loop count; original graph edges must pass duplicate-free runtime check",
+    "Expanded index is a view, not U*H new int64 backing",
+    "torch.from_numpy aliases MCM/edge backing",
+    "Layer concat reshape may view or copy depending stride",
+    "Never sum all named shapes as peak",
+    "No measured allocator, checkpoint recomputation, unique/sort scratch, Python node-ID, mmap residency, gradient or optimizer peak"
+  ],
+  "scope": "Conditional source-level storage requirements if neural stage is reached; not observed RSS, peak, capacity or financial fit",
+  "totals": {
+    "E": 18683284,
+    "N": 12999004,
+    "mcm_mapped_payload_bytes": 1663872512,
+    "original_edge_index_bytes_included_in_raw": 298932544,
+    "raw_numeric_retained_bytes": 1312765760
+  }
+}

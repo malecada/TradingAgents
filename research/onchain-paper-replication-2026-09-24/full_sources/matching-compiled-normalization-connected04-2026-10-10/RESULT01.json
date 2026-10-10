@@ -1,0 +1,220 @@
+{
+  "status": "PASS_FOCUSED_ANNOTATION_CLEANUP",
+  "checks": [
+    "reviewer identical RED primary replaced",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected03-2026-10-10review_red",
+    "ambiguous closure is not claimed review_red",
+    "normal successful session retains parent backend",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10success",
+    "ambiguous closure is not claimed success",
+    "primary preserved and independent cleanup attempted normal_primary",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10normal_primary",
+    "ambiguous closure is not claimed normal_primary",
+    "primary preserved and independent cleanup attempted review_red",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10review_red",
+    "ambiguous closure is not claimed review_red",
+    "primary preserved and independent cleanup attempted builtin_note_failure",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10builtin_note_failure",
+    "ambiguous closure is not claimed builtin_note_failure",
+    "primary preserved and independent cleanup attempted repr_primary",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10repr_primary",
+    "ambiguous closure is not claimed repr_primary",
+    "first fatal cleanup preserved despite independent later failures two_cleanup_repr",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10two_cleanup_repr",
+    "ambiguous closure is not claimed two_cleanup_repr",
+    "primary preserved and independent cleanup attempted backend_repr",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10backend_repr",
+    "ambiguous closure is not claimed backend_repr",
+    "first fatal cleanup preserved despite independent later failures backend_fatal",
+    "owner original cleanup attempted exactly once matching-compiled-normalization-connected04-2026-10-10backend_fatal",
+    "ambiguous closure is not claimed backend_fatal",
+    "unchanged03 compiled_normalization_policy.py",
+    "unchanged03 compiled_small_lse.py",
+    "unchanged03 matching_immutable_session.py",
+    "unchanged03 matching_annealing.py",
+    "unchanged03 matching_checkpoint.py",
+    "unchanged03 batched_numeric_execution.py",
+    "only mandatory pair source pin",
+    "exact AST outside responsible finalization",
+    "exact text inverse outside two annotations",
+    "scientific/native modules absent"
+  ],
+  "count": 37,
+  "observations": [
+    {
+      "version": "matching-compiled-normalization-connected03-2026-10-10",
+      "mode": "review_red",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close"
+      ],
+      "exception": "MemoryError",
+      "primary_identity": false,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 1,
+      "survivors_before_memo": 1,
+      "closed": false,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "success",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close"
+      ],
+      "exception": null,
+      "primary_identity": false,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 1,
+      "closed": false,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "normal_primary",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "Primary",
+      "primary_identity": true,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 0,
+      "closed": true,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "review_red",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "Primary",
+      "primary_identity": true,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 0,
+      "closed": true,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "builtin_note_failure",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "Primary",
+      "primary_identity": true,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 0,
+      "closed": true,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "repr_primary",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "Primary",
+      "primary_identity": true,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 0,
+      "closed": true,
+      "survivors_after_memo": 0,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "two_cleanup_repr",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "KeyboardInterrupt",
+      "primary_identity": false,
+      "session_cleanup_identity": true,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 1,
+      "closed": true,
+      "survivors_after_memo": 1,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "backend_repr",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "Primary",
+      "primary_identity": true,
+      "session_cleanup_identity": false,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 1,
+      "closed": true,
+      "survivors_after_memo": 1,
+      "backend_close_attempts_after_memo": 1
+    },
+    {
+      "version": "matching-compiled-normalization-connected04-2026-10-10",
+      "mode": "backend_fatal",
+      "events_before_memo": [
+        "open",
+        "advance",
+        "session_close",
+        "engine_close",
+        "backend_close"
+      ],
+      "exception": "KeyboardInterrupt",
+      "primary_identity": false,
+      "session_cleanup_identity": true,
+      "annotation_override_calls": 0,
+      "survivors_before_memo": 1,
+      "closed": true,
+      "survivors_after_memo": 1,
+      "backend_close_attempts_after_memo": 1
+    }
+  ],
+  "elapsed_ns": 215328685,
+  "peak_rss_kib": 22068,
+  "affinity": [
+    3
+  ],
+  "native_numerical_execution": false
+}

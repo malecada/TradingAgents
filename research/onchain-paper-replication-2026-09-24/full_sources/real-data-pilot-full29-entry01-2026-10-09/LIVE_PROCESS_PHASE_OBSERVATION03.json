@@ -1,0 +1,89 @@
+{
+  "guard": {
+    "child_exit_code": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 31960485888
+    },
+    "elapsed_seconds": 4656.982692067,
+    "limit_reason": null,
+    "memory_current_bytes": 4744908800,
+    "memory_events": {
+      "high": 1036,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 5368373248,
+    "phase": "running",
+    "storage_peak_allocated_bytes": 5152661504,
+    "storage_peak_logical_file_bytes": 5574518880
+  },
+  "guard_sha256": "0dba60d9496dd9816ce7e2dd7ba0c7b0db89eb77bb01cf89b0464d9c8d395d5d",
+  "observation": "non-atomic proc and guard metadata; no arrays or empirical calculation",
+  "observed_utc": "2026-10-10T16:10:17.102223+00:00",
+  "phase_metadata": {
+    "matching": {
+      "entries": 3,
+      "first_names": [
+        "00000000.complete.json",
+        "00000000.pending.json",
+        "00000000.records.bin"
+      ]
+    },
+    "stream/numeric-batches": {
+      "entries": 1,
+      "first_names": [
+        "000000000000.json"
+      ]
+    }
+  },
+  "processes": {
+    "10197": {
+      "child_processes": {
+        "10200": {
+          "comm": "python\n",
+          "wchan": "0"
+        }
+      },
+      "io": "rchar: 824199427\nwchar: 2214\nsyscr: 92901\nsyscw: 3\nread_bytes: 0\nwrite_bytes: 4096\ncancelled_write_bytes: 0\n",
+      "stat": "10197 (python) S 4427 10197 10197 0 -1 4194304 4791 0 0 0 1606 242 0 0 20 0 1 0 13318 57221120 6591 18446744073709551615 4329472 33424632 140733002708592 0 0 0 0 16781312 16386 1 0 0 17 1 0 0 0 0 0 23068672 33424632 129196032 140733002710786 140733002711656 140733002711656 140733002715056 0\n",
+      "wchan": "hrtimer_nanosleep"
+    },
+    "10200": {
+      "child_processes": {},
+      "io": "rchar: 180754355307\nwchar: 141730201366\nsyscr: 27335894\nsyscw: 27528329\nread_bytes: 4107288576\nwrite_bytes: 724992\ncancelled_write_bytes: 4096\n",
+      "stat": "10200 (python) R 10197 10200 10200 0 -1 4194304 1140551 202855232 12 7 296702 23359 95265 76326 20 0 4 0 13355 8383070208 873492 18446744073709551615 4329472 33424632 140722413789456 0 0 0 0 16781312 16386 0 0 0 17 1 0 0 0 0 0 23068672 33424632 853377024 140722413797535 140722413797979 140722413797979 140722413801392 0\n",
+      "wchan": "0"
+    },
+    "8425": {
+      "child_processes": {
+        "9258": {
+          "comm": "python\n",
+          "wchan": "do_wait"
+        }
+      },
+      "io": "rchar: 700895084\nwchar: 506498527\nsyscr: 105939\nsyscw: 98182\nread_bytes: 707710976\nwrite_bytes: 36864\ncancelled_write_bytes: 8192\n",
+      "stat": "8425 (python) S 6083 8425 8425 0 -1 4194304 113234 800390 2623 1866 623 152 553 305 20 0 24 0 10763 6349291520 173746 18446744073709551615 4329472 33424632 140732546891072 0 0 0 0 16781312 2 0 0 0 17 4 0 0 0 0 0 23068672 33424632 201367552 140732546899761 140732546899898 140732546899898 140732546904039 0\n",
+      "wchan": "do_wait"
+    },
+    "9258": {
+      "child_processes": {
+        "9741": {
+          "comm": "python\n",
+          "wchan": "0"
+        }
+      },
+      "io": "rchar: 338497025\nwchar: 246633029\nsyscr: 51818\nsyscw: 47400\nread_bytes: 4096\nwrite_bytes: 8192\ncancelled_write_bytes: 4096\n",
+      "stat": "9258 (python) S 8425 8425 8425 0 -1 4194304 114993 361258 8 0 512 71 144 137 20 0 24 0 12151 6312304640 165375 18446744073709551615 4329472 33424632 140731624272816 0 0 0 0 16781312 16386 0 0 0 17 5 0 0 0 0 0 23068672 33424632 738553856 140731624275337 140731624275781 140731624275781 140731624279984 0\n",
+      "wchan": "do_wait"
+    },
+    "9741": {
+      "child_processes": {},
+      "io": "rchar: 538151381\nwchar: 432368350\nsyscr: 600645\nsyscw: 68115\nread_bytes: 1523712\nwrite_bytes: 212062208\ncancelled_write_bytes: 4096\n",
+      "stat": "9741 (python) R 9258 8425 8425 0 -1 4194304 106705 2367762 0 20 91399 104369 1279 2264 20 0 4 0 12732 5481172992 167346 18446744073709551615 4329472 33424632 140727633277264 0 0 0 0 16781312 16386 0 0 0 17 5 0 0 0 0 0 23068672 33424632 607617024 140727633282636 140727633283139 140727633283139 140727633289136 0\n",
+      "wchan": "0"
+    }
+  }
+}

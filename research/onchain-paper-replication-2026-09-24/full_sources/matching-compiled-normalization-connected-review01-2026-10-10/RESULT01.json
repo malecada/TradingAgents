@@ -1,0 +1,356 @@
+{
+  "decision": "WITHHOLD_SOURCE_ONLY_ACCEPTANCE",
+  "checks": [
+    "frozen manifest digest",
+    "manifest REPORT.md",
+    "manifest RESULT01.json",
+    "manifest RESULT02.json",
+    "manifest TEST01.log",
+    "manifest TEST02.log",
+    "manifest baseline_batched_numeric_execution.py",
+    "manifest baseline_batched_numeric_reuse.py",
+    "manifest baseline_batched_pair_executor.py",
+    "manifest baseline_matching_annealing.py",
+    "manifest baseline_matching_checkpoint.py",
+    "manifest baseline_matching_immutable_session.py",
+    "manifest batched_numeric_execution.py",
+    "manifest batched_numeric_execution.py.inverse.patch",
+    "manifest batched_numeric_execution.py.patch",
+    "manifest batched_numeric_reuse.py",
+    "manifest batched_numeric_reuse.py.inverse.patch",
+    "manifest batched_numeric_reuse.py.patch",
+    "manifest batched_pair_executor.py",
+    "manifest batched_pair_executor.py.inverse.patch",
+    "manifest batched_pair_executor.py.patch",
+    "manifest build_candidate.py",
+    "manifest compiled_normalization_policy.py",
+    "manifest compiled_small_lse.py",
+    "manifest matching_annealing.py",
+    "manifest matching_annealing.py.inverse.patch",
+    "manifest matching_annealing.py.patch",
+    "manifest matching_checkpoint.py",
+    "manifest matching_checkpoint.py.inverse.patch",
+    "manifest matching_checkpoint.py.patch",
+    "manifest matching_immutable_session.py",
+    "manifest matching_immutable_session.py.inverse.patch",
+    "manifest matching_immutable_session.py.patch",
+    "manifest verify_metadata01.py",
+    "current installed baseline batched_numeric_execution.py",
+    "forward exact patch batched_numeric_execution.py",
+    "inverse exact patch batched_numeric_execution.py",
+    "current installed baseline batched_numeric_reuse.py",
+    "forward exact patch batched_numeric_reuse.py",
+    "inverse exact patch batched_numeric_reuse.py",
+    "current installed baseline batched_pair_executor.py",
+    "forward exact patch batched_pair_executor.py",
+    "inverse exact patch batched_pair_executor.py",
+    "current installed baseline matching_immutable_session.py",
+    "forward exact patch matching_immutable_session.py",
+    "inverse exact patch matching_immutable_session.py",
+    "current installed baseline matching_checkpoint.py",
+    "forward exact patch matching_checkpoint.py",
+    "inverse exact patch matching_checkpoint.py",
+    "current installed baseline matching_annealing.py",
+    "forward exact patch matching_annealing.py",
+    "inverse exact patch matching_annealing.py",
+    "policy copies caller metadata",
+    "caller mutation does not change selection",
+    "policy refuses format='other'",
+    "policy refuses library_sha256='0000000000000000000000000000000000000000000000000000000000000000'",
+    "policy refuses source_sha256='0000000000000000000000000000000000000000000000000000000000000000'",
+    "policy refuses runtime_sha256='EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE'",
+    "policy refuses runtime_bytes=True",
+    "policy refuses runtime_bytes=0",
+    "policy refuses runtime_bytes=4097",
+    "policy refuses library_path='relative'",
+    "policy refuses source_path='/a/../x'",
+    "policy refuses runtime_path='/x//y'",
+    "policy refuses runtime_path='/x\\x00'",
+    "policy refuses extra fields",
+    "unselected no read/load None",
+    "unselected no read/load False",
+    "chain policy divergence refused",
+    "equal but replaced identity refused",
+    "runtime refuses python",
+    "runtime refuses numpy",
+    "runtime refuses scipy",
+    "runtime refuses platform",
+    "runtime refuses machine",
+    "runtime refuses byteorder",
+    "runtime refuses executable",
+    "runtime refuses runtime_inventory_sha256",
+    "bounded reference original",
+    "reference size mismatch",
+    "reference digest mismatch",
+    "reference oversize",
+    "symlink reference refused",
+    "hardlinked reference refused",
+    "unchanged compiled04 body _new_memfd",
+    "unchanged compiled04 body _load_sealed",
+    "unchanged compiled04 body _live",
+    "unchanged compiled04 body lse",
+    "unchanged compiled04 body close",
+    "fixed prior body reduction.c",
+    "fixed prior body reduction.so",
+    "accepted prior review exact",
+    "unchanged public/state/ranking AST matching_checkpoint.py",
+    "unchanged public/state/ranking AST matching_annealing.py",
+    "composite return and safe state",
+    "composite preserves backend/edge/budget",
+    "composite fatal leaves unsafe state",
+    "composite preserves backend/edge/budget",
+    "actual session/executor success closes owned fixture",
+    "RED reproduced normalizer_replaced",
+    "RED reproduced close_replaced",
+    "RED reproduced constructor_memoryerror",
+    "original fatal preserved and state cleanup attempted",
+    "no numeric/native imports"
+  ],
+  "check_count": 104,
+  "reds": [
+    {
+      "case": "normalizer_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization backend changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "ordinary_fixture_fds_left_open": 1,
+      "state_close_attempted": true,
+      "owned_backend_close_attempted": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "case": "close_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "replacement_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization function changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "ordinary_fixture_fds_left_open": 1,
+      "state_close_attempted": true,
+      "owned_backend_close_attempted": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "case": "constructor_memoryerror",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "ordinary_fixture_fds_left_open": 1,
+      "state_close_attempted": true,
+      "owned_backend_close_attempted": false,
+      "harness_residual_close_count": 1
+    }
+  ],
+  "body_references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/MANIFEST01.json": {
+      "sha256": "ebf102545bb67ba59856b09e43746552311558f3c57c5e53d8f68573c4dba151",
+      "bytes": 5373
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/REPORT.md": {
+      "sha256": "5407ea0757854bc28a6fd1886834d83fe6fc575afbae0d5f3953b6ea66502783",
+      "bytes": 7442
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/RESULT01.json": {
+      "sha256": "c8f7a3a360138db9a17e4890beea21ecea70d75039b20dd298830aa303dba89c",
+      "bytes": 2234
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/RESULT02.json": {
+      "sha256": "0e1b5e178f73779b5936e134f2b6e20ee4bcb687e2b546a42137a07586e254fd",
+      "bytes": 2846
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/TEST01.log": {
+      "sha256": "10530e898e267965730e737f9647121f04f2755b706cdc32dff8ffd8dcdc4b17",
+      "bytes": 1986
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/TEST02.log": {
+      "sha256": "95b069ece12a3811e2f28b16aecd20781b06e3016b1748954cc8a1a3a963fbce",
+      "bytes": 2546
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_batched_numeric_execution.py": {
+      "sha256": "1a704a8ae50bcdcaa067737454f36ebf4b3c82c65313d645bf61f5764b0e1c3c",
+      "bytes": 22394
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_batched_numeric_reuse.py": {
+      "sha256": "378bfc2aa48ab71c41b1b48594be384bd7deda521acb387ce77b1057f40a10fc",
+      "bytes": 18108
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_batched_pair_executor.py": {
+      "sha256": "f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e",
+      "bytes": 4462
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_matching_annealing.py": {
+      "sha256": "b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e",
+      "bytes": 20878
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_matching_checkpoint.py": {
+      "sha256": "309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a",
+      "bytes": 14088
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/baseline_matching_immutable_session.py": {
+      "sha256": "c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef",
+      "bytes": 6585
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_execution.py.inverse.patch": {
+      "sha256": "bddf4863bc44bd4053684989ca4f0a73a8d35a3e70d8ce584170af681c5c80b9",
+      "bytes": 8454
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_execution.py.patch": {
+      "sha256": "22cc88fb4b92b29966782ce4ab1a4a841b9c46b4679eb83032e156ae11ce2163",
+      "bytes": 8454
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "1aa9d28714d8761136a90eab7d8a633c4cfc59dd9f2fd194b4bd1a061431dce2",
+      "bytes": 18524
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_reuse.py.inverse.patch": {
+      "sha256": "d57724a77af43b5e3ed4c70baa535069f1a0994855f598cd85e8584df424c827",
+      "bytes": 4896
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_numeric_reuse.py.patch": {
+      "sha256": "93dde6ea824114fb8575bef90b56d78098910445ba4184928d2570f93ceccfeb",
+      "bytes": 4896
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_pair_executor.py": {
+      "sha256": "0fb7cad3bc767806471227e9c06c26e6dcc88288608b5f00ab500eab2046cdb4",
+      "bytes": 4805
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_pair_executor.py.inverse.patch": {
+      "sha256": "cfc32f01b3419d7111ab9a9b27cd34a454d77f2ead1890d259b241f997216993",
+      "bytes": 3037
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/batched_pair_executor.py.patch": {
+      "sha256": "e68136d98babb68b46de3eb1ef262af961fec38b9a73bf5109957f195bfdb7b6",
+      "bytes": 3037
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/build_candidate.py": {
+      "sha256": "05fe389b4b3fab53ebede035f23990eb483c3c8aa617be75492c79a303ec8632",
+      "bytes": 9200
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "2afd2c2b4eba03ee6058e895d73be7d600f9414e5b5302fdd36646ea638e567a",
+      "bytes": 5673
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/compiled_small_lse.py": {
+      "sha256": "80b045d499136ba722402e9ae596411e109fcc00e70b445f5f7c3f2e82b3a422",
+      "bytes": 7014
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_annealing.py": {
+      "sha256": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+      "bytes": 21168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_annealing.py.inverse.patch": {
+      "sha256": "68d257a1153810bb52d07bac86b737709397e77fb0da5f27fdf20f203048991e",
+      "bytes": 2094
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_annealing.py.patch": {
+      "sha256": "7cc6415e6c8ac7fbd0037ba061575e7f0d557028639b80e5f40b04c22240c48e",
+      "bytes": 2094
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_checkpoint.py": {
+      "sha256": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+      "bytes": 14168
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_checkpoint.py.inverse.patch": {
+      "sha256": "0c0f9eb86a3a33bcab3afe42424ee99f2a54382d4424b1ab48c20d4dac201772",
+      "bytes": 1306
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_checkpoint.py.patch": {
+      "sha256": "3f9f55ad604d206decbb6da66c71adfd13c07c95fa0f2b3a978c8e42f99d7f7f",
+      "bytes": 1306
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_immutable_session.py": {
+      "sha256": "d84dfc408a9f1779ec98038c99561474575305f01e1678d44a523b0f29d264c2",
+      "bytes": 7878
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_immutable_session.py.inverse.patch": {
+      "sha256": "d92938519db96ab958b4cb9ebf07160189fc0328171f30846c5253434f143f37",
+      "bytes": 3573
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/matching_immutable_session.py.patch": {
+      "sha256": "61e04791832c9dab88eb170420f8ea72bffb1bf291bdd5c556064206ec7c5230",
+      "bytes": 3573
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected01-2026-10-10/verify_metadata01.py": {
+      "sha256": "9a4b2e5d2b8d0b3f5fdb25be279e5025e191e034df305114ff49e66a4c02b18f",
+      "bytes": 13597
+    },
+    "tradingagents/research/onchain_replication/batched_numeric_execution.py": {
+      "sha256": "1a704a8ae50bcdcaa067737454f36ebf4b3c82c65313d645bf61f5764b0e1c3c",
+      "bytes": 22394
+    },
+    "tradingagents/research/onchain_replication/batched_numeric_reuse.py": {
+      "sha256": "378bfc2aa48ab71c41b1b48594be384bd7deda521acb387ce77b1057f40a10fc",
+      "bytes": 18108
+    },
+    "tradingagents/research/onchain_replication/batched_pair_executor.py": {
+      "sha256": "f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e",
+      "bytes": 4462
+    },
+    "tradingagents/research/onchain_replication/matching_immutable_session.py": {
+      "sha256": "c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef",
+      "bytes": 6585
+    },
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": {
+      "sha256": "309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a",
+      "bytes": 14088
+    },
+    "tradingagents/research/onchain_replication/matching_annealing.py": {
+      "sha256": "b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e",
+      "bytes": 20878
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/compiled_small_lse.py": {
+      "sha256": "aa28638c377904a4b765f04fe8889afc91ffb8e644b2fbf270ee1833aabdc9d1",
+      "bytes": 6185
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c": {
+      "sha256": "8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8",
+      "bytes": 828
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so": {
+      "sha256": "9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2",
+      "bytes": 15712
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-acceleration-candidates-combined-review02-2026-10-09/SOURCE_EVIDENCE_REVIEW01.json": {
+      "sha256": "6a812b8111d6441d5a78febae04779677b04788d0d981f2abbe98106dcfc4415",
+      "bytes": 15502
+    }
+  },
+  "affinity": [
+    3
+  ],
+  "elapsed_ns": 114492641,
+  "peak_rss_kib": 23100,
+  "numerical_imports": false,
+  "native_load": false,
+  "real_memfd_test": false,
+  "actual_admission": false
+}

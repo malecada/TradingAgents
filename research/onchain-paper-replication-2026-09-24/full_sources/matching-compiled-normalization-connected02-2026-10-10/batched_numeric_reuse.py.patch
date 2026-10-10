@@ -1,0 +1,64 @@
+--- batched_numeric_reuse.py-before
++++ batched_numeric_reuse.py-after
+@@ -2,6 +2,7 @@
+ import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
+ from pathlib import Path
+ from . import adaptive_edge_policy
++from . import compiled_normalization_policy
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+ from . import matching_checkpoint as engine
+@@ -13,19 +14,20 @@
+ from .geometry_summary import Geometry
+ from . import matching_immutable_session as immutable_session
+ 
+-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy)
++MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy)
+ SOURCE_PINS=(
++    (compiled_normalization_policy, '2afd2c2b4eba03ee6058e895d73be7d600f9414e5b5302fdd36646ea638e567a'),
+     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
+-    (accepted, 'f7c51b9423a45c0e61defd9260924acb1e0611d5c8727de8abb96e42d1ad147e'),
+-    (engine, '309f260cdd0956966ecbd588df9da11f9c45f241ddeab93fb280c96f8ddf9f4a'),
+-    (engine.ann, 'b9229da33098c6c00c2e0e85a0a25a7d1a6f7968befbf82e30a092c424dd967e'),
++    (accepted, '0fb7cad3bc767806471227e9c06c26e6dcc88288608b5f00ab500eab2046cdb4'),
++    (engine, '0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0'),
++    (engine.ann, 'eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
+     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'c3fc9b7a9a456f269eded17ba5ece492edccc91e2fc8e6563a0febcca80baeef'),
++    (immutable_session, '7f847b02d2c4ca4e17a0b0962a97c49498b0559268b1187aad682c446eec3460'),
+ )
+ 
+ def require(ok,message):
+@@ -95,8 +97,9 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None):
+         adaptive_edge_policy.attach(self,edge_cache_policy)
++        compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+@@ -138,7 +141,7 @@
+                         primary.add_note('authority timing failed: '+repr(timing_error))
+             authority_poll=measured_poll
+         self.authority_poll=authority_poll
+-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self))
++        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
+         self.checkpoint_adapter=self.executor.checkpoint
+         self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+         self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+@@ -157,6 +160,7 @@
+     def retained_bytes(self):return self._bytes
+     def _current(self):
+         adaptive_edge_policy.join(self,self.executor)
++        compiled_normalization_policy.join(self,self.executor)
+         light_environment()
+         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
+         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')

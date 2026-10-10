@@ -1,0 +1,657 @@
+{
+  "disposition": "ACCEPT_BOUNDED_SOURCE_HEADER_ARITHMETIC_ONLY",
+  "checks": [
+    "exact author manifest",
+    "author body ARITHMETIC01.json",
+    "author body GRAPH_HEADERS01.json",
+    "author body INPUTS01.json",
+    "author body REPORT.md",
+    "author body estimate.py",
+    "exact report",
+    "actual reference research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/gate04.json",
+    "actual reference research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population-binding.json",
+    "actual reference research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population.json",
+    "actual reference tradingagents/research/onchain_replication/model.py",
+    "actual29 source pin tradingagents/research/onchain_replication/model.py",
+    "actual reference tradingagents/research/onchain_replication/streamed_gat.py",
+    "actual29 source pin tradingagents/research/onchain_replication/streamed_gat.py",
+    "actual reference tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+    "actual29 source pin tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+    "actual reference tradingagents/research/onchain_replication/real_pilot_training.py",
+    "actual29 source pin tradingagents/research/onchain_replication/real_pilot_training.py",
+    "actual reference tradingagents/research/onchain_replication/evaluation.py",
+    "actual29 source pin tradingagents/research/onchain_replication/evaluation.py",
+    "actual reference tradingagents/research/onchain_replication/temporal.py",
+    "actual29 source pin tradingagents/research/onchain_replication/temporal.py",
+    "actual reference tradingagents/research/onchain_replication/pooling.py",
+    "actual29 source pin tradingagents/research/onchain_replication/pooling.py",
+    "actual reference tradingagents/research/onchain_replication/graph_store.py",
+    "actual29 source pin tradingagents/research/onchain_replication/graph_store.py",
+    "actual reference tradingagents/research/onchain_replication/compact_mcm_batched.py",
+    "actual29 source pin tradingagents/research/onchain_replication/compact_mcm_batched.py",
+    "actual reference tradingagents/research/onchain_replication/real_pilot_population.py",
+    "actual29 source pin tradingagents/research/onchain_replication/real_pilot_population.py",
+    "actual reference research/onchain-paper-replication-2026-09-24/config/model.json",
+    "actual29 input model",
+    "actual reference research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/pilot.json",
+    "actual29 input pilot",
+    "actual reference research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/resource_population_plan.json",
+    "actual29 input resource_population_plan",
+    "actual reference research/onchain-paper-replication-2026-09-24/config/training.json",
+    "actual29 input training",
+    "actual reference .venv/lib/python3.13/site-packages/torch/_torch_docs.py",
+    "exact selected model execution",
+    "exact model/training metadata",
+    "canonical population binding",
+    "population exact selected sequences",
+    "448 references seven actual graph objects",
+    "population plan and manifest binding",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+    "registered manifest 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "graph identity and week 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "header snapshot stable 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473banode_features",
+    "only exact captured header 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473banode_features",
+    "actual finite dtype/shape 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473banode_features",
+    "registered extent/body reference only 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473banode_features",
+    "header snapshot stable 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_index",
+    "only exact captured header 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_index",
+    "actual finite dtype/shape 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_index",
+    "registered extent/body reference only 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_index",
+    "header snapshot stable 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_features",
+    "only exact captured header 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_features",
+    "actual finite dtype/shape 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_features",
+    "registered extent/body reference only 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_features",
+    "header snapshot stable 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_aggregates",
+    "only exact captured header 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_aggregates",
+    "actual finite dtype/shape 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_aggregates",
+    "registered extent/body reference only 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473baedge_aggregates",
+    "graph row and U bounds 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "independent graph arithmetic 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+    "independent full layer arithmetic 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba4",
+    "independent full layer arithmetic 0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba1",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json",
+    "registered manifest 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+    "graph identity and week 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+    "header snapshot stable 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459node_features",
+    "only exact captured header 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459node_features",
+    "actual finite dtype/shape 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459node_features",
+    "registered extent/body reference only 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459node_features",
+    "header snapshot stable 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_index",
+    "only exact captured header 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_index",
+    "actual finite dtype/shape 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_index",
+    "registered extent/body reference only 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_index",
+    "header snapshot stable 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_features",
+    "only exact captured header 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_features",
+    "actual finite dtype/shape 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_features",
+    "registered extent/body reference only 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_features",
+    "header snapshot stable 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_aggregates",
+    "only exact captured header 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_aggregates",
+    "actual finite dtype/shape 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_aggregates",
+    "registered extent/body reference only 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459edge_aggregates",
+    "graph row and U bounds 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+    "independent graph arithmetic 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+    "independent full layer arithmetic 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf94563919974594",
+    "independent full layer arithmetic 0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf94563919974591",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json",
+    "registered manifest 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+    "graph identity and week 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+    "header snapshot stable 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531node_features",
+    "only exact captured header 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531node_features",
+    "actual finite dtype/shape 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531node_features",
+    "registered extent/body reference only 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531node_features",
+    "header snapshot stable 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_index",
+    "only exact captured header 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_index",
+    "actual finite dtype/shape 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_index",
+    "registered extent/body reference only 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_index",
+    "header snapshot stable 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_features",
+    "only exact captured header 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_features",
+    "actual finite dtype/shape 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_features",
+    "registered extent/body reference only 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_features",
+    "header snapshot stable 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_aggregates",
+    "only exact captured header 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_aggregates",
+    "actual finite dtype/shape 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_aggregates",
+    "registered extent/body reference only 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531edge_aggregates",
+    "graph row and U bounds 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+    "independent graph arithmetic 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+    "independent full layer arithmetic 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d8675314",
+    "independent full layer arithmetic 2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d8675311",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json",
+    "registered manifest 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+    "graph identity and week 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+    "header snapshot stable 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cnode_features",
+    "only exact captured header 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cnode_features",
+    "actual finite dtype/shape 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cnode_features",
+    "registered extent/body reference only 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cnode_features",
+    "header snapshot stable 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_index",
+    "only exact captured header 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_index",
+    "actual finite dtype/shape 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_index",
+    "registered extent/body reference only 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_index",
+    "header snapshot stable 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_features",
+    "only exact captured header 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_features",
+    "actual finite dtype/shape 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_features",
+    "registered extent/body reference only 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_features",
+    "header snapshot stable 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_aggregates",
+    "only exact captured header 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_aggregates",
+    "actual finite dtype/shape 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_aggregates",
+    "registered extent/body reference only 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781cedge_aggregates",
+    "graph row and U bounds 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+    "independent graph arithmetic 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+    "independent full layer arithmetic 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c4",
+    "independent full layer arithmetic 683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c1",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json",
+    "registered manifest 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+    "graph identity and week 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+    "header snapshot stable 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbnode_features",
+    "only exact captured header 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbnode_features",
+    "actual finite dtype/shape 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbnode_features",
+    "registered extent/body reference only 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbnode_features",
+    "header snapshot stable 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_index",
+    "only exact captured header 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_index",
+    "actual finite dtype/shape 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_index",
+    "registered extent/body reference only 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_index",
+    "header snapshot stable 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_features",
+    "only exact captured header 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_features",
+    "actual finite dtype/shape 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_features",
+    "registered extent/body reference only 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_features",
+    "header snapshot stable 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_aggregates",
+    "only exact captured header 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_aggregates",
+    "actual finite dtype/shape 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_aggregates",
+    "registered extent/body reference only 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cbedge_aggregates",
+    "graph row and U bounds 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+    "independent graph arithmetic 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+    "independent full layer arithmetic 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb4",
+    "independent full layer arithmetic 7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb1",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json",
+    "registered manifest 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+    "graph identity and week 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+    "header snapshot stable 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75node_features",
+    "only exact captured header 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75node_features",
+    "actual finite dtype/shape 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75node_features",
+    "registered extent/body reference only 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75node_features",
+    "header snapshot stable 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_index",
+    "only exact captured header 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_index",
+    "actual finite dtype/shape 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_index",
+    "registered extent/body reference only 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_index",
+    "header snapshot stable 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_features",
+    "only exact captured header 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_features",
+    "actual finite dtype/shape 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_features",
+    "registered extent/body reference only 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_features",
+    "header snapshot stable 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_aggregates",
+    "only exact captured header 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_aggregates",
+    "actual finite dtype/shape 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_aggregates",
+    "registered extent/body reference only 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75edge_aggregates",
+    "graph row and U bounds 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+    "independent graph arithmetic 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+    "independent full layer arithmetic 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc754",
+    "independent full layer arithmetic 825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc751",
+    "actual reference research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json",
+    "registered manifest efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+    "graph identity and week efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+    "header snapshot stable efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805node_features",
+    "only exact captured header efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805node_features",
+    "actual finite dtype/shape efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805node_features",
+    "registered extent/body reference only efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805node_features",
+    "header snapshot stable efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_index",
+    "only exact captured header efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_index",
+    "actual finite dtype/shape efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_index",
+    "registered extent/body reference only efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_index",
+    "header snapshot stable efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_features",
+    "only exact captured header efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_features",
+    "actual finite dtype/shape efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_features",
+    "registered extent/body reference only efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_features",
+    "header snapshot stable efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_aggregates",
+    "only exact captured header efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_aggregates",
+    "actual finite dtype/shape efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_aggregates",
+    "registered extent/body reference only efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805edge_aggregates",
+    "graph row and U bounds efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+    "independent graph arithmetic efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+    "independent full layer arithmetic efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f38054",
+    "independent full layer arithmetic efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f38051",
+    "complete seven graph denominator",
+    "independent totals",
+    "conditional simultaneous lower bound",
+    "selected GraphSnapshot contract",
+    "retained immutable numeric bodies and duplicate-free contract",
+    "distinct local simultaneous allocations",
+    "normalized edge vectors and expanded view",
+    "retained whole graph raw arrays through neural call",
+    "resident storage allocated and unicode converted",
+    "read-only mapped MCM reused",
+    "within-forward identity cache and checkpoint",
+    "CPUf32 no fixed-input gradients",
+    "resource update not100epochs and checkpoint file cap",
+    "no prohibited imports",
+    "author manifest unchanged"
+  ],
+  "check_count": 221,
+  "body_references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/MANIFEST01.json": {
+      "sha256": "c9ae2cf222af485585f28421f026f0fdae0297245fe74470d3dcacf7d6e7fac3",
+      "bytes": 829
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/ARITHMETIC01.json": {
+      "sha256": "2c2b9a2695ae92964f780f4f0fabfaa235299f33ecd9c9058536488c61a705de",
+      "bytes": 13441
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/GRAPH_HEADERS01.json": {
+      "sha256": "b343ef62f2487482ddbd6679bb2e6a8f3e46d7a3741a7b0f9cf7608f82965dd5",
+      "bytes": 37855
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/INPUTS01.json": {
+      "sha256": "eda9ee20aaff170b10a9d1f174246bf6e270958405049629a233412a4f2b22d5",
+      "bytes": 11563
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/REPORT.md": {
+      "sha256": "fdb8923a86aee755b5f35b257d132807aed2099388469215f89191ba5d12657a",
+      "bytes": 8248
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-neural-tensor-footprint01-2026-10-10/estimate.py": {
+      "sha256": "84175b1977172c6562d819236da347248b3ebde0f23fddbdcf0da96e87497f08",
+      "bytes": 3695
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/gate04.json": {
+      "sha256": "f6be8198d971451eea91647bf853de036b82405ffcb70e18db61ef204e76c898",
+      "bytes": 641992
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population-binding.json": {
+      "sha256": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e",
+      "bytes": 1180
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population.json": {
+      "sha256": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0",
+      "bytes": 215222
+    },
+    "tradingagents/research/onchain_replication/model.py": {
+      "sha256": "e15b1be0442437800a19a205ab048f5f6444b79c0811704ebbbcf72a37da2faa",
+      "bytes": 6537
+    },
+    "tradingagents/research/onchain_replication/streamed_gat.py": {
+      "sha256": "e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f",
+      "bytes": 8065
+    },
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": {
+      "sha256": "06b60d5e0741fe5a8734e8f1f71f9cc3079644075e0a27d03f678bb74ca52ca0",
+      "bytes": 43228
+    },
+    "tradingagents/research/onchain_replication/real_pilot_training.py": {
+      "sha256": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782",
+      "bytes": 15170
+    },
+    "tradingagents/research/onchain_replication/evaluation.py": {
+      "sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac",
+      "bytes": 16891
+    },
+    "tradingagents/research/onchain_replication/temporal.py": {
+      "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+      "bytes": 2397
+    },
+    "tradingagents/research/onchain_replication/pooling.py": {
+      "sha256": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+      "bytes": 838
+    },
+    "tradingagents/research/onchain_replication/graph_store.py": {
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da",
+      "bytes": 5296
+    },
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": {
+      "sha256": "5f3b842d65cb4ee78d07cc7f7340955518fbca36086b99586aaa5036f2aa0fe0",
+      "bytes": 41562
+    },
+    "tradingagents/research/onchain_replication/real_pilot_population.py": {
+      "sha256": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db",
+      "bytes": 7624
+    },
+    "research/onchain-paper-replication-2026-09-24/config/model.json": {
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d",
+      "bytes": 1628
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/pilot.json": {
+      "sha256": "57762b693787e770400dfcc89e112ba1d126bb8162f0bc5d9ad37f9e2b1de1fc",
+      "bytes": 32815
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/resource_population_plan.json": {
+      "sha256": "3265929788979c1b1a6bfa628798d68daff4b33847aeb76fca85d0040874d5b4",
+      "bytes": 610
+    },
+    "research/onchain-paper-replication-2026-09-24/config/training.json": {
+      "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0",
+      "bytes": 3934
+    },
+    ".venv/lib/python3.13/site-packages/torch/_torch_docs.py": {
+      "sha256": "57f06f0b850e89cc52c8e751f85f157f7d8c514a88de7ef5885bc97db0923e91",
+      "bytes": 435608
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json": {
+      "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/manifest.json": {
+      "sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/manifest.json": {
+      "sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/manifest.json": {
+      "sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/manifest.json": {
+      "sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/manifest.json": {
+      "sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04",
+      "bytes": 1604
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/manifest.json": {
+      "sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f",
+      "bytes": 1604
+    },
+    "tradingagents/research/onchain_replication/contracts.py": {
+      "sha256": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+      "bytes": 8253
+    }
+  },
+  "actual_header_observations": [
+    {
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "24cd994311dd5967ac029ebe3c28a2fcc969a57d7dc08e98854480e47c268024",
+      "data_extent_from_header": 56584576,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "c77356834b6fcb14e5a289e0fd0f2ff708dd8f118475dbf598565699412948f0"
+    },
+    {
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "b45ce4bc8d872d21bcf120820a3053ef932f374f58c759cd387a12615052aee9",
+      "data_extent_from_header": 40293312,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "6c4bd0c87fe1bd4f6863dcbd7a1c792df677752a025c9af092fd97c40d7dbd4d"
+    },
+    {
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "a42d3a38861e365031f9d8142d78f8cc82b34e2ad76ad33d619b4190cb6aa6a0",
+      "data_extent_from_header": 40293312,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "5ba9079bf2c985a826089a949a72e39a3a8791eb18af907930acc8971fdcd7fe"
+    },
+    {
+      "graph_hash": "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "a42d3a38861e365031f9d8142d78f8cc82b34e2ad76ad33d619b4190cb6aa6a0",
+      "data_extent_from_header": 40293312,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "bb07bd0d91eeeecc21fbb5a93b62a2cb54788f5eaa1c8c5201e4489efd511701"
+    },
+    {
+      "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "710213100d85033bbe8bf7e9a283682a347b8a94982749f00756f7b07598d974",
+      "data_extent_from_header": 72495392,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "0bca29fd2c158a801eb06b6b9a782803c429a0a11e965508c85ca848b2996cb2"
+    },
+    {
+      "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "46eb15fc574f562b83c8396b03de828d00af8064ad29dcc860c2ac091c1ae1ce",
+      "data_extent_from_header": 50393072,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "0d0cd56326b5d456c2d3d018530499a0c21d5a63d76f099f3ec4abc5cca9c543"
+    },
+    {
+      "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "51aed082a6bbb6d3c81b6de837ce8ef2cc640ef47e3c9fc6012997f9af67ca70",
+      "data_extent_from_header": 50393072,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "c6b4fad60dcc0c04cfae85dfe5b91969d869fce69e7a841e3c803f916321330b"
+    },
+    {
+      "graph_hash": "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220509-20261005-01/graph-2022-05-09/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "51aed082a6bbb6d3c81b6de837ce8ef2cc640ef47e3c9fc6012997f9af67ca70",
+      "data_extent_from_header": 50393072,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "e0b80f7c5950ff80b612fee733765ee7ff9caa5e1da07269e4297495a46aa84d"
+    },
+    {
+      "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "a84ba348d3ea94c41112278e7ca329c7cb369671beb6529295dc2e03bf9e2ab5",
+      "data_extent_from_header": 60105600,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "51dd5e0a9301749969a9acce989f668542c56559f2af98d7258e3d2e51b8150f"
+    },
+    {
+      "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "489b7e87f6d557be1a2621ae9317fc84c2d2ef8c60e1be867ce426ccd3dbb69d",
+      "data_extent_from_header": 44466624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "0d49c30575d6cd5f6237bb429fd1305a408c1c877e2b707e90accd76cbf0389a"
+    },
+    {
+      "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "36f322de7dedbaa646aaa02185cc7e9c38d984af3357917e3b166af7f63f1d1c",
+      "data_extent_from_header": 44466624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "fe7e3bf7135b68a00473ae4f5d172c70698f06b277e7c52e2bb82375b637665e"
+    },
+    {
+      "graph_hash": "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220502-20261005-01/graph-2022-05-02/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "36f322de7dedbaa646aaa02185cc7e9c38d984af3357917e3b166af7f63f1d1c",
+      "data_extent_from_header": 44466624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "afd3a329f0d6bef5465553894b3e14b43fbec96b208234b3521fe2bf1f0f8da6"
+    },
+    {
+      "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "04f16f69898a1bd467829b3c97a2fb581e65aec414baf2f7cbd02dee1704a4cc",
+      "data_extent_from_header": 50606112,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "7db2f4c43d40ca121e78f674ef892ebb00551386de1028103a5f5f7063df003e"
+    },
+    {
+      "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "d44f5ceea094543dabf99cbd77b54332891c26773a82ddee655e6f601ee69820",
+      "data_extent_from_header": 38817696,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "2ced523118223eecef41f2dc31166da9ca8b3bbe1a05893072337e9b05343fa7"
+    },
+    {
+      "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "16bf81a0416ee713450ae1f3144ac81704af7c87d7f5a609d5fb7fe56e49472c",
+      "data_extent_from_header": 38817696,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "2804f51bf19f3bf2ebb3c57b4b214e29d3ce55ccdac7d4920ca857d3d80e2a01"
+    },
+    {
+      "graph_hash": "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-may30-ledger-continuation-20261006-01/graph-2022-05-30/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "16bf81a0416ee713450ae1f3144ac81704af7c87d7f5a609d5fb7fe56e49472c",
+      "data_extent_from_header": 38817696,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "b473d9e40178aa68b3d70fc8506445c20a7fca6dcabdebca1e40ceced51856a7"
+    },
+    {
+      "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "503ec1f46c2a52b6f72250730fc57a38c864af4157b900a14bdfb1a92b8d323e",
+      "data_extent_from_header": 60001376,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "bf33ebca15fb4352ff585acdeb5896ff0c91e70ac0c8cf613afb1a75f6bfb676"
+    },
+    {
+      "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "3db10e8b68dd422de4399bd11bcc868d43b39192560d66d0cecbd0da8a42fc68",
+      "data_extent_from_header": 42278624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "7256c482ff85ddaa6fb24c0a8d6347d1485ec0b7d18c341c41727eb808c456ae"
+    },
+    {
+      "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "bf79d17a63cee7780dff32f7bbf3170501d8969d2d9cecbd9c00e504c95e2f2c",
+      "data_extent_from_header": 42278624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "9153890a9a1c0051095035499787d17333e078843b1900870cf3f84d76ca2088"
+    },
+    {
+      "graph_hash": "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220523-20261005-01/graph-2022-05-23/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "bf79d17a63cee7780dff32f7bbf3170501d8969d2d9cecbd9c00e504c95e2f2c",
+      "data_extent_from_header": 42278624,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "8354218ccd858164f71d5c09145983008d1a17797e9d44fb31357ebb3c8d7585"
+    },
+    {
+      "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "f501aec2ab4b5756d0520fb619beff5276c9a9fa21fe097d50ce6f010f031121",
+      "data_extent_from_header": 65558720,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "8daf460acd142a6ef5b5a690d789bb336f456ff94e6de57a85b91dd5e1013c09"
+    },
+    {
+      "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "35fe00225c465f072ea0f215531e134fcb4b3c2aca2608d804234e6a41cb5bf4",
+      "data_extent_from_header": 44999536,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "ad6674d06da19ed82b3edb17375840d49678bafab22cd65008761857400b016c"
+    },
+    {
+      "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "da85799ea64096dbbd0ceecde17d7329905546fb0c9eab89519129398252b32a",
+      "data_extent_from_header": 44999536,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "f36d977845d9f62012ac16042995e78323f77623ac249421865dd2dd58167428"
+    },
+    {
+      "graph_hash": "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220516-20261005-01/graph-2022-05-16/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "da85799ea64096dbbd0ceecde17d7329905546fb0c9eab89519129398252b32a",
+      "data_extent_from_header": 44999536,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "b1a498aa6c4e0db3d03e969403bd1dbdec052a21f5b37c862571df2c118147da"
+    },
+    {
+      "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "member": "node_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/node_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "2b7cce2f9eb133687a817503f43e860e2650aa2d31534370f253267ed8b52d7c",
+      "data_extent_from_header": 50616352,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "610e35b606df179edcb1c95a91ef3e8677b3c3a69784c88176a82f7963734608"
+    },
+    {
+      "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "member": "edge_index",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_index.npy",
+      "bytes_read": 128,
+      "header_sha256": "083d94dfb11b9d69889842ac211016675354131b6c52b57ba1edfc08ee7437fd",
+      "data_extent_from_header": 37683680,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "3366408e13a0b047108996c25aadf3f6d3d0481b3214ed7206566efacfee642b"
+    },
+    {
+      "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "member": "edge_features",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_features.npy",
+      "bytes_read": 128,
+      "header_sha256": "d79186ff7a6ed1a5aac2d5ac3d318713c9cc2749f915fd629b507a29cc9073d5",
+      "data_extent_from_header": 37683680,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "76fa5d82b60514e5b0624952b1e7a350bb9e0029b836dc627b41b9c43396b3d7"
+    },
+    {
+      "graph_hash": "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805",
+      "member": "edge_aggregates",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-real-pilot-graph-20220606-20261005-01/graph-2022-06-06/edge_aggregates.npy",
+      "bytes_read": 128,
+      "header_sha256": "d79186ff7a6ed1a5aac2d5ac3d318713c9cc2749f915fd629b507a29cc9073d5",
+      "data_extent_from_header": 37683680,
+      "payload_read": false,
+      "registered_full_body_sha256_unverified": "5ba79ada32e8f4d34dbb352fa0e8e92c10d07f84053b0a9e8e90fd5c609f0c75"
+    }
+  ],
+  "header_files": 28,
+  "header_bytes_read": 3584,
+  "totals": {
+    "N": 12999004,
+    "E": 18683284,
+    "raw_numeric_retained_bytes": 1312765760,
+    "mcm_mapped_payload_bytes": 1663872512,
+    "original_edge_index_bytes_included_in_raw": 298932544
+  },
+  "largest_local_coexistence_bytes": 1176703488,
+  "conditional_storage_lower_bound_bytes": 2489469248,
+  "payload_integrity_verified": false,
+  "rss_measured": false,
+  "complete_peak_estimated": false,
+  "actual_fit_established": false,
+  "numerical_native_execution": false,
+  "elapsed_ns": 15483552,
+  "peak_reviewer_rss_kib": 20108
+}

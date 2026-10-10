@@ -1,0 +1,131 @@
+{
+  "format": "public-outcome16-tools-source-preparation-v1",
+  "status": "FROZEN_SOURCE_ONLY_PENDING_CALLER_REVIEW",
+  "selection_executed": false,
+  "capture_executed": false,
+  "recovery_executed": false,
+  "git_or_ssh_executed": false,
+  "preservation_claim": false,
+  "baseline_source": "f58540f5e55ca701bab4b20969a5b77ad43e5260",
+  "owned_directories": [
+    "claim-source-dedup-candidate01-2026-10-10",
+    "claim-source-dedup-review01-2026-10-10",
+    "matching-compiled-connected-qualification-review01-2026-10-10",
+    "matching-compiled-connected-qualification-review02-2026-10-10",
+    "matching-compiled-connected-qualification01-2026-10-10",
+    "matching-compiled-connected-qualification02-2026-10-10",
+    "matching-compiled-library-mapping-lifetime-investigation01-2026-10-10",
+    "matching-compiled-normalization-connected-review01-2026-10-10",
+    "matching-compiled-normalization-connected-review02-2026-10-10",
+    "matching-compiled-normalization-connected-review03-2026-10-10",
+    "matching-compiled-normalization-connected-review04-2026-10-10",
+    "matching-compiled-normalization-connected01-2026-10-10",
+    "matching-compiled-normalization-connected02-2026-10-10",
+    "matching-compiled-normalization-connected03-2026-10-10",
+    "matching-compiled-normalization-connected04-2026-10-10",
+    "matching-compiled-runtime-input-review01-2026-10-10",
+    "matching-compiled-runtime-input01-2026-10-10",
+    "matching-compiled-runtime-policy-preparation01-2026-10-10",
+    "matching-compiled-runtime-policy-scope-review01-2026-10-10",
+    "pilot29-first-batch-metadata-review01-2026-10-10",
+    "pilot29-first-group-actual-recovery01-2026-10-10",
+    "pilot29-first-group-recovery-review01-2026-10-10",
+    "pilot29-first-group-review01-2026-10-10",
+    "pilot29-neural-tensor-footprint-review01-2026-10-10",
+    "pilot29-neural-tensor-footprint01-2026-10-10",
+    "pilot29-observed-overhead01-2026-10-11",
+    "pilot29-pre-mcm-io-investigation01-2026-10-10",
+    "pilot29-prior-throughput-investigation01-2026-10-10",
+    "pilot29-second-group-actual-recovery01-2026-10-10",
+    "pilot29-second-group-recovery-review01-2026-10-10",
+    "pilot29-terminal-outcome-review01-2026-10-11",
+    "pilot29-third-group-actual-recovery01-2026-10-10",
+    "pilot29-third-group-recovery-review01-2026-10-10",
+    "pilot29-training-handoff-readiness01-2026-10-09",
+    "real-data-pilot-full24-preparation-increment01-2026-10-09/outcome15",
+    "real-data-pilot-full29-entry01-2026-10-09"
+  ],
+  "excluded_synthetic_git_subtrees": [
+    "research/onchain-paper-replication-2026-09-24/full_sources/claim-source-dedup-candidate01-2026-10-10/tiny-repository01/.git",
+    "research/onchain-paper-replication-2026-09-24/full_sources/claim-source-dedup-candidate01-2026-10-10/tiny-repository02/.git",
+    "research/onchain-paper-replication-2026-09-24/full_sources/claim-source-dedup-review01-2026-10-10/synthetic-git01/.git"
+  ],
+  "original_alias_members": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review01-2026-10-10/reference-body.bin": {
+      "bytes": 14,
+      "device": 66310,
+      "inode": 7865445,
+      "mode": "0664",
+      "nlink": 2,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review01-2026-10-10/reference-body.bin",
+      "sha256": "881ae31e592d550b22be2352b13010241c0598cf2b8fffec8bfd9da0cb6a806e"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review01-2026-10-10/reference-hardlink": {
+      "bytes": 14,
+      "device": 66310,
+      "inode": 7865445,
+      "mode": "0664",
+      "nlink": 2,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected-review01-2026-10-10/reference-hardlink",
+      "sha256": "881ae31e592d550b22be2352b13010241c0598cf2b8fffec8bfd9da0cb6a806e"
+    }
+  },
+  "checks": [
+    "select16.py: genuine exact pair bounded body and before/after metadata",
+    "select16.py: refuses changed st_dev",
+    "select16.py: refuses changed st_ino",
+    "select16.py: refuses changed st_nlink",
+    "select16.py: refuses changed st_size",
+    "select16.py: refuses changed st_mode",
+    "only three exact synthetic Git subtrees excluded; working fixtures and arbitrary .git retain original guards",
+    "capture16.py: genuine exact pair bounded body and before/after metadata",
+    "capture16.py: refuses changed st_dev",
+    "capture16.py: refuses changed st_ino",
+    "capture16.py: refuses changed st_nlink",
+    "capture16.py: refuses changed st_size",
+    "capture16.py: refuses changed st_mode",
+    "general secret/.git/64MiB/PAX guard literals unchanged",
+    "exact inverse to all three withheld15 source bodies",
+    "AST syntax of all three scripts",
+    "baseline14 and seven actual29 scopes unchanged"
+  ],
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/outcome15/HELPERS_MANIFEST01.json": {
+      "sha256": "d25ceae72c82c6b62e6a785542b8000f5cf90da50b234cb5f3de5d42e7e6d702",
+      "bytes": 8376
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/tools15/REVIEW01.json": {
+      "sha256": "fe3742a9b795b5b6beee361f2355095c3e1a3fd7fb5a74b21f1ee78830c5bbfd",
+      "bytes": 139297
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/tools15/ALIAS_METADATA_SUPPLEMENT01.json": {
+      "sha256": "6268fc41d9883b91eb365b1e96471295135415c15146d315a8fb63788aa2ff30",
+      "bytes": 1537
+    }
+  },
+  "limitations": [
+    "outcome15 remains WITHHELD and all local originals immutable",
+    "exact aliases become two regular archive members; inode/nlink provenance only, no POSIX/hardlink reconstruction authority",
+    "three exact synthetic .git internal subtrees are excluded from recovery/deletion claims; working fixtures/source/reports/logs retained",
+    "no whole-store/runtime/empirical completeness or external preservation claim",
+    "Root caller review/selection/capture/external recovery still pending"
+  ],
+  "files": {
+    "select16.py": {
+      "sha256": "54bc4d481e8eee3ce0d2ada6d7e604716f7cd359941d09458b1c726aab36c7e2",
+      "bytes": 13018
+    },
+    "capture16.py": {
+      "sha256": "1223020261ca5f92d5bf425917559df9ff09014e70b827ca214e6cc2184e2a7b",
+      "bytes": 5294
+    },
+    "recover16.py": {
+      "sha256": "d23fed254a309b21f58106d93758373907c59e78f9d8bd6674e0f5c00661a859",
+      "bytes": 3796
+    },
+    "LITERAL_INVERSE01.json": {
+      "sha256": "c92ac9851941e59027246946268d8ac458e7a734cca157811f95dffb8223aaa8",
+      "bytes": 44057
+    }
+  }
+}

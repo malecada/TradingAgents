@@ -1,0 +1,26 @@
+{
+  "version": "SUCCESSOR02",
+  "case": "close_state_failure_cleanup_failure",
+  "events": [
+    "poll",
+    "backend_acquired",
+    "poll",
+    "advance",
+    "poll",
+    "poll",
+    "owned_close",
+    "state_close"
+  ],
+  "error": {
+    "type": "KeyboardInterrupt",
+    "message": "original primary",
+    "notes": [
+      "session close cleanup failed: OSError('injected close uncertain')"
+    ]
+  },
+  "executor_poisoned": true,
+  "open_descriptors_after_candidate": 1,
+  "primary_identity_preserved": true,
+  "cleanup_identity_preserved": false,
+  "harness_residual_close_count": 1
+}

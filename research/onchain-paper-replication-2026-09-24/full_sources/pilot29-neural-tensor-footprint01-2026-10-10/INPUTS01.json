@@ -1,0 +1,271 @@
+{
+  "at": "2026-10-10T17:17:35.856306+00:00",
+  "binding": {
+    "bytes": 1180,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population-binding.json",
+    "sha256": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e"
+  },
+  "commit_status_not_rechecked_frozen_main": true,
+  "gate": {
+    "bytes": 641992,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/gate04.json",
+    "sha256": "f6be8198d971451eea91647bf853de036b82405ffcb70e18db61ef204e76c898"
+  },
+  "graph_reference_counts": {
+    "0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba": 3,
+    "0e60be7088611cebfd04839fcc7bb4aa4fdd05a28d84e27aeaf9456391997459": 70,
+    "2c9ec1d381e8177a8b22e9dfd993302a00cae020c59c5127e8df0ecf9d867531": 21,
+    "683ed5f988ebdf4059ce3f0e361f3e31916cff9c75d83ba8edd76ae4f79a781c": 91,
+    "7d0a20456b83db5caf7d916be09ea9fec34bf60867fb5ff628a300b4681800cb": 112,
+    "825e2c15cf6126c684a90f2e29589cc4fd4914bc4699675ac6783e809817fc75": 109,
+    "efdd6d32f8f2457477e765a25f6ec03c75df8b90d69de21bf64b2cfa2d0f3805": 42
+  },
+  "graph_references": 448,
+  "inputs": {
+    "model": {
+      "bytes": 1628,
+      "path": "research/onchain-paper-replication-2026-09-24/config/model.json",
+      "sha256": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    },
+    "pilot": {
+      "bytes": 32815,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/pilot.json",
+      "sha256": "57762b693787e770400dfcc89e112ba1d126bb8162f0bc5d9ad37f9e2b1de1fc"
+    },
+    "resource_population_plan": {
+      "bytes": 610,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/resource_population_plan.json",
+      "sha256": "3265929788979c1b1a6bfa628798d68daff4b33847aeb76fca85d0040874d5b4"
+    },
+    "training": {
+      "bytes": 3934,
+      "path": "research/onchain-paper-replication-2026-09-24/config/training.json",
+      "sha256": "d5276b75491e130bd03d43de28120f72dd792e42af4446382a6c127d387b8ec0"
+    }
+  },
+  "model": {
+    "attention": "v^T tanh(W_query*h_last + W_key*h_j + bias); mask pads before softmax",
+    "attention_width": 32,
+    "edge_feature_count": 2,
+    "embedding_cache": "no learned embedding reuse across weight updates",
+    "gat_activation": [
+      "elu",
+      "identity"
+    ],
+    "gat_concatenate": [
+      true,
+      false
+    ],
+    "gat_dropout": 0.0,
+    "gat_heads": [
+      4,
+      1
+    ],
+    "gat_layers": 2,
+    "gat_neighbors": "incoming edges plus self exactly once",
+    "gat_widths": [
+      16,
+      32
+    ],
+    "gradient_path": "joint MLP,GAT,LSTM,attention,head; dictionary and raw similarities fixed",
+    "graph_vector_width": 32,
+    "heads": {
+      "classification": 2,
+      "regression": 1
+    },
+    "initialization": {
+      "attention": "linear rule above; final vector Xavier uniform gain1",
+      "gat_attention_vectors": "uniform(-sqrt(6/(2*head_width+1)),sqrt(6/(2*head_width+1)))",
+      "gat_projection": "Xavier uniform gain1",
+      "linear": "Xavier uniform gain1; biases zero",
+      "recurrent": "every weight uniform(-1/sqrt(hidden_width),+1/sqrt(hidden_width)); all biases zero, including forget gates",
+      "seed_derivation": "reset Python random, numpy PCG64 and torch manual_seed to cell seed before constructing fixed model module order; CUDA all devices same seed; dictionary has separate PCG64 seeded same value"
+    },
+    "leaky_relu_slope": 0.2,
+    "lookback_days": 28,
+    "lstm_depth": 1,
+    "lstm_width": 64,
+    "mcm_input": 32,
+    "mlp_activation": "relu",
+    "mlp_widths": [
+      64,
+      32
+    ],
+    "node_feature_count": 4,
+    "pooling": "arithmetic mean of valid node vectors after final GAT",
+    "price_input_width": 1,
+    "schema_version": 1
+  },
+  "model_execution": {
+    "backend": "streamed-gat-mulsum-v1",
+    "block_edges": 65536,
+    "graph_activation_checkpointing": true,
+    "schema_version": 2
+  },
+  "native_memory_max_bytes": 6442450944,
+  "nominal_physical_16GB_bytes": 16000000000,
+  "population": {
+    "bytes": 215222,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/outputs/resource-population.json",
+    "sha256": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0"
+  },
+  "population_canonical_sha256": "e5b7d6c40555bef51a5e633ec97cd49de0980488ec309fe2ed1dd08bdba3621c",
+  "population_digest_semantics": "canonical JSON sort_keys=True separators comma/colon, no newline; raw-file hash is separately retained",
+  "scope": "Source and metadata arithmetic only; no scientific/native imports, payload values or execution",
+  "source_commit_from_parent": "21f6ca992f98d817f3eddcc3c3867674d0b3c942",
+  "sources": [
+    {
+      "bytes": 6537,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/model.py",
+      "sha256": "e15b1be0442437800a19a205ab048f5f6444b79c0811704ebbbcf72a37da2faa"
+    },
+    {
+      "bytes": 8065,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/streamed_gat.py",
+      "sha256": "e8355dc4443dc40b64fe2fd0d22f764d47280c655f921e9f1705042e348ec21f"
+    },
+    {
+      "bytes": 43228,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "06b60d5e0741fe5a8734e8f1f71f9cc3079644075e0a27d03f678bb74ca52ca0"
+    },
+    {
+      "bytes": 15170,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/real_pilot_training.py",
+      "sha256": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782"
+    },
+    {
+      "bytes": 16891,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/evaluation.py",
+      "sha256": "1b2dd721423e0408d8e7ccea23a8cacacdd3d04b45ca9da85e35fd34c82e7fac"
+    },
+    {
+      "bytes": 2397,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/temporal.py",
+      "sha256": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+    },
+    {
+      "bytes": 838,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/pooling.py",
+      "sha256": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+    },
+    {
+      "bytes": 5296,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/graph_store.py",
+      "sha256": "a762aa9e8b19a1da1a41e27bf49fb047d0104bb009a6d35561b8774d8c2958da"
+    },
+    {
+      "bytes": 41562,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+      "sha256": "5f3b842d65cb4ee78d07cc7f7340955518fbca36086b99586aaa5036f2aa0fe0"
+    },
+    {
+      "bytes": 7624,
+      "matches_actual29_gate": true,
+      "path": "tradingagents/research/onchain_replication/real_pilot_population.py",
+      "sha256": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db"
+    }
+  ],
+  "torch_from_numpy_documentation": {
+    "bytes": 435608,
+    "path": ".venv/lib/python3.13/site-packages/torch/_torch_docs.py",
+    "sha256": "57f06f0b850e89cc52c8e751f85f157f7d8c514a88de7ef5885bc97db0923e91"
+  },
+  "training": {
+    "batch_size": 16,
+    "batch_unit": "chronological daily examples",
+    "best_seed_selection": false,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "deterministic": true,
+    "diagnostic_cells": [
+      "paper_reconstruction/ETH/2024/11/direction/constant_graph/whole",
+      "paper_reconstruction/ETH/2024/11/direction/mcm_without_gat/whole",
+      "paper_reconstruction/ETH/2024/11/direction/gat_without_mcm/whole",
+      "paper_reconstruction/ETH/2024/11/direction/training_label_permutation/whole",
+      "paper_reconstruction/ETH/2024/23/direction/constant_graph/whole",
+      "paper_reconstruction/ETH/2024/23/direction/mcm_without_gat/whole",
+      "paper_reconstruction/ETH/2024/23/direction/gat_without_mcm/whole",
+      "paper_reconstruction/ETH/2024/23/direction/training_label_permutation/whole",
+      "paper_reconstruction/ETH/2024/37/direction/constant_graph/whole",
+      "paper_reconstruction/ETH/2024/37/direction/mcm_without_gat/whole",
+      "paper_reconstruction/ETH/2024/37/direction/gat_without_mcm/whole",
+      "paper_reconstruction/ETH/2024/37/direction/training_label_permutation/whole",
+      "paper_reconstruction/ETH/2024/51/direction/constant_graph/whole",
+      "paper_reconstruction/ETH/2024/51/direction/mcm_without_gat/whole",
+      "paper_reconstruction/ETH/2024/51/direction/gat_without_mcm/whole",
+      "paper_reconstruction/ETH/2024/51/direction/training_label_permutation/whole",
+      "paper_reconstruction/ETH/2024/71/direction/constant_graph/whole",
+      "paper_reconstruction/ETH/2024/71/direction/mcm_without_gat/whole",
+      "paper_reconstruction/ETH/2024/71/direction/gat_without_mcm/whole",
+      "paper_reconstruction/ETH/2024/71/direction/training_label_permutation/whole"
+    ],
+    "diagnostics": {
+      "constant_graph": {
+        "dictionary": "none",
+        "graph_input": "all-zero32-vector at each valid timestep",
+        "trainable": "LSTM,attention,classification head only"
+      },
+      "gat_without_mcm": {
+        "dictionary": "none",
+        "graph_input": "four admitted node attributes\u2192GAT first input width4\u2192same GAT/pooling",
+        "trainable": "GAT,LSTM,attention,classification head"
+      },
+      "mcm_without_gat": {
+        "dictionary": "exact full-model asset/fold/seed training dictionary reuse",
+        "graph_input": "mean learned MLP output32 of per-node MCM32",
+        "trainable": "MLP,LSTM,attention,classification head"
+      },
+      "training_label_permutation": {
+        "dictionary": "same as full model",
+        "graph_input": "identical full model",
+        "permutation": "PCG64(20260924).permutation over training example indices sorted by decision_at; one permutation shared across all five model seeds; preserve validation/test labels",
+        "trainable": "all full-model blocks"
+      }
+    },
+    "early_stopping": "none; all fixed epochs",
+    "epochs": 100,
+    "epsilon": 1e-08,
+    "gradient_clip_norm": 1.0,
+    "hyperparameter_search": false,
+    "learning_rate": 0.001,
+    "losses": {
+      "classification": "two-logit cross entropy, labels down_or_tie=0/up=1",
+      "regression": "mean squared standardized price error"
+    },
+    "optimizer": "Adam",
+    "permutation_control_seed": 20260924,
+    "precision": "float32",
+    "price_scaler_ddof": 0,
+    "price_scaler_population": "unique admitted input-price dates inside training window referenced by training examples; sorted date order; no duplicated lookback weighting; no target-only dates; no test dates",
+    "price_scaling": "training-only mean/std; zero std rejected; inverse transform before metrics",
+    "scheduler": "none",
+    "schema_version": 1,
+    "seeds": [
+      11,
+      23,
+      37,
+      51,
+      71
+    ],
+    "shuffle": false,
+    "validation": "none",
+    "weight_decay": 0.0,
+    "zero_fit_controls": {
+      "last_direction": "probability is0 or1 from most recent available close change; unchanged0; no test-future price; retain undefined first context as unavailable",
+      "training_majority": "up probability=training up prevalence; class1 iff prevalence>0.5 (ties0)"
+    }
+  },
+  "unique_graphs": 7
+}

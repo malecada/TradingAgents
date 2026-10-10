@@ -1,0 +1,25 @@
+{
+  "additional_original_read_bytes": 149242,
+  "checks": [
+    "actual compact Owner record canonical body hash",
+    "external accepted first batch review hash",
+    "prior manifest exact review join",
+    "external original gate hash",
+    "actual claim retained unchanged",
+    "first original bytes prior evidence .pending.json",
+    "first original bytes prior evidence .records.bin",
+    "first original bytes prior evidence .complete.json"
+  ],
+  "claim_sha256": "5b81c3cb892f75a0b1505bb08049c5cc985b4dd43f01e38899c8f7abf54c2504",
+  "future_recovery_exact_receipt": {
+    "bytes": 3532800,
+    "format": "archive-chunk-v1",
+    "member": "ethpilot-20261009-29-14a7dd46d3839f6ac5f1ed6c1842a8011074b8011839c174637cec570efd61fa-p7483df1c23755607-000000000000/payload.bin",
+    "remote": "ethpilot-20261009-29-14a7dd46d3839f6ac5f1ed6c1842a8011074b8011839c174637cec570efd61fa-p7483df1c23755607-000000000000",
+    "schema_version": 1,
+    "scope": "1ed37d1f66f5351cb15f5810cbb1e9f35e8a76ae82584cb85dc28b7b2dbeeb80",
+    "source_sha256": "8a3b369dff972bed939fade9a32084200a7781722310f458adf736db99f1eb4e",
+    "transport_identity": "553a31d3776219f2ef54ba0eef449dba08746d0ea8cc6c68ca120a37fe86ac84"
+  },
+  "future_recovery_requirement": "Root must select the reviewed recovery route with the actual authenticated endpoint/transport identity and exactly this remote/member, receipt scope, original operation and manifest anchors; retain and authenticate 3532800 archive bytes, all 48 ordered member bytes/hashes, then pinned journal framing/purpose/closure before making a fresh recovery claim. No present remote listing or availability inferred; no fabricated Owner."
+}

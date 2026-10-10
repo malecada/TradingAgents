@@ -1,0 +1,30 @@
+--- matching_annealing.py-before
++++ matching_annealing.py-after
+@@ -166,7 +166,7 @@
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation budget required')
+     check(state,a,b,c)
+     return _advance_checked(state,a,b,c,max_operations=max_operations,**({'edge_cache_policy':edge_cache_policy} if edge_cache_policy is not None and edge_cache_policy is not False else {}))
+-def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None):
++def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None):
+     """Private body for an exclusively owned state checked in this same call.
+ 
+     The caller must validate state, inputs and positive operation budget before
+@@ -262,15 +262,15 @@
+                     limit=n*m;next_phase='normalize_rows'
+                 elif phase=='normalize_rows':
+                     end=min(n,start+max(1,cap//m));block=matrix[start:end]
+-                    block-=logsumexp(block,axis=1,keepdims=True)
++                    block-=(logsumexp(block,axis=1,keepdims=True) if normalizer is None else normalizer.lse(block,axis=1,keepdims=True,fallback=logsumexp))
+                     limit=n;next_phase='normalize_columns'
+                 elif phase=='normalize_columns':
+                     end=min(m,start+max(1,cap//n));block=matrix[:,start:end]
+                     if block.shape[1]==1 and m>1:
+                         padded=np.repeat(block,2,axis=1)
+-                        block-=logsumexp(padded,axis=0,keepdims=True)[:,:1]
++                        block-=(logsumexp(padded,axis=0,keepdims=True) if normalizer is None else normalizer.lse(padded,axis=0,keepdims=True,fallback=logsumexp))[:,:1]
+                     else:
+-                        block-=logsumexp(block,axis=0,keepdims=True)
++                        block-=(logsumexp(block,axis=0,keepdims=True) if normalizer is None else normalizer.lse(block,axis=0,keepdims=True,fallback=logsumexp))
+                     limit=m;next_phase='normalize_exp'
+                 else:
+                     end=min(n*m,start+cap)

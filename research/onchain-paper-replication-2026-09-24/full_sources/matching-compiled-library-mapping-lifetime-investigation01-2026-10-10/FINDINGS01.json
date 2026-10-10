@@ -1,0 +1,144 @@
+{
+  "created_at": "2026-10-10T15:44:22.699880+00:00",
+  "cpu_affinity": [
+    3
+  ],
+  "python_version": "3.13.13 (main, Apr 14 2026, 14:28:56) [Clang 22.1.3 ]",
+  "executable": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+  "scope": "Read-only source/metadata only; no ctypes import, native load, numerical execution or mapping experiment",
+  "evidence": {
+    "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ctypes/__init__.py": {
+      "sha256": "f9ae3729cdf1792f614f47b1008d82216f7db824cb26a01134de40a20aba9106",
+      "bytes": 19563
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/compiled_small_lse.py": {
+      "sha256": "80b045d499136ba722402e9ae596411e109fcc00e70b445f5f7c3f2e82b3a422",
+      "bytes": 7014
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "2afd2c2b4eba03ee6058e895d73be7d600f9414e5b5302fdd36646ea638e567a",
+      "bytes": 5673
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/matching_immutable_session.py": {
+      "sha256": "7f847b02d2c4ca4e17a0b0962a97c49498b0559268b1187aad682c446eec3460",
+      "bytes": 9555
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_pair_executor.py": {
+      "sha256": "0fb7cad3bc767806471227e9c06c26e6dcc88288608b5f00ab500eab2046cdb4",
+      "bytes": 4805
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_numeric_reuse.py": {
+      "sha256": "09e568c0056acdc0e34782cd9130ba2246b21fc79e89e3481a14a740caa6b59b",
+      "bytes": 18524
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/batched_numeric_execution.py": {
+      "sha256": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+      "bytes": 23417
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/MANIFEST01.json": {
+      "sha256": "d309ed04d988e7655628e4d42e6852d7ebc039cf08ef023a247b5dcdaa5dfc55",
+      "bytes": 10142
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/compiled_small_lse.py": {
+      "sha256": "aa28638c377904a4b765f04fe8889afc91ffb8e644b2fbf270ee1833aabdc9d1",
+      "bytes": 6185
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/REPORT.md": {
+      "sha256": "5c9baa6cda478aefc48814275e4f6e1d4b4afe2dae9ad127759768c4df6a8185",
+      "bytes": 2949
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/RESULT01.json": {
+      "sha256": "25bdc983db74d34db5f9b83b9bd578de3c04d6702fb1a4b378c49fa3a986548a",
+      "bytes": 3856
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/MANIFEST01.json": {
+      "sha256": "ced44f47082c5c66f14e18eeb955d6712dfe0a9a2388d822f60468249782bb24",
+      "bytes": 1390
+    }
+  },
+  "installed_python_source": {
+    "path": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ctypes/__init__.py",
+    "CDLL_lines": [
+      324,
+      422
+    ],
+    "CDLL_bases": [
+      "object"
+    ],
+    "module_dlclose_occurrences": 0,
+    "module___del___definitions": 0,
+    "handle_assignment_line": 361,
+    "linux_dlopen_return_line": 403,
+    "function_attribute_cache_lines": [
+      411,
+      416
+    ],
+    "function_pointer_construction_lines": [
+      418,
+      422
+    ],
+    "conclusion": "The installed Python CDLL class provides no implicit dlclose/finalizer on collection; _handle is stored from _dlopen. Dropping Python references is not evidence of unloading.",
+    "boundary": "Native _ctypes deallocation and system loader implementation not inspected or executed; no universal OS/load/unload proof."
+  },
+  "candidate_close": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected02-2026-10-10/compiled_small_lse.py",
+    "lines": [
+      104,
+      115
+    ],
+    "nonlocal_names": [
+      "_fn",
+      "_fd",
+      "_close_error"
+    ],
+    "actual_behavior": "Set _fn=None, set _fd=None before exactly one os.close attempt; preserve/rethrow ambiguous-close error without retry. No dlclose. Does not clear _ORIGINAL_FN or _lib.",
+    "retention": "_ORIGINAL_FN=_fn at line123 is referenced by lse at126; it remains captured while lse is retained. Session close lines179-191 retains normalizer and function-pin attributes. Python CDLL caches exported function attribute and creates pointer using (name,self); exact native reference/deallocation behavior unverified."
+  },
+  "opening_chain": [
+    "NumericExecution.__init__:75 creates one NumericReuse memo",
+    "NumericReuse.__init__:144 creates one PairExecutor",
+    "NumericReuse.__call__:245 computed branch invokes executor; immediately preceding cache reuse branch bypasses it",
+    "PairExecutor.__call__:40 creates ImmutablePairSession; finally62 closes it",
+    "ImmutablePairSession.__init__:123 calls policy.open_backend for each new selected session; stores original close:124 and function/code pins:127",
+    "compiled_normalization_policy.open_backend:78-96 checks policy/source/runtime/helper and calls helper.open_backend",
+    "compiled_small_lse._load_sealed:65 new memfd; :71 seals; :74 ctypes.CDLL(/proc/self/fd/N); :75 exported function; :98 loader called"
+  ],
+  "scale_qualification": {
+    "original_cells": 415968128,
+    "claim": "Potential opens scale with computed selected sessions that reach the loader, not necessarily all cells. Success requires supported loader path.",
+    "not_claimed": [
+      "one unique resident mapping per computed pair",
+      "415968128 guaranteed mappings",
+      "mapping bytes equal library file length",
+      "constant or linear memory accumulation",
+      "mapping release on backend close or garbage collection",
+      "actual performance change"
+    ],
+    "reason": "Memo hits bypass PairExecutor; early failures and unsupported loader routes vary; dlopen reference/path/handle reuse, descriptor-number reuse and system loader retention/unmapping remain unmeasured. Repeated loading without explicit unloading is an unbounded-risk source pattern, not measured accumulation."
+  },
+  "prior04_reuse": {
+    "status": "PASS_LIFECYCLE_ONLY",
+    "qualification": "Actual real-FD open/close states; synthetic loader/seal stand-ins only. Failed closes not credited as closed; harness explicitly releases residual fixture descriptors afterward.",
+    "elapsed_ns": 25074801,
+    "maxrss_kib": 18776,
+    "scope": "Real fixture FD open/close with synthetic loader/seal stand-ins. No actual dlopen mapping-lifetime evidence and no population bound."
+  },
+  "ownership_seam": {
+    "owner": "NumericExecution/NumericReuse private lifetime; exactly one selected backend owner, no global/process cache",
+    "opening": "Create lazily at first computed selected pair, retain backend for that numeric execution, close its FD exactly once on owner terminal cleanup. Constructor and failure paths transfer ownership only after all required initialization succeeds.",
+    "sessions": "PairExecutor passes a borrowed backend reference to each immutable session; session close disables/clears only session-local borrowing state, never closes shared backend. Prevent borrower use after owner poison/close; retain sequential ownership assumptions or explicitly refuse concurrent borrowers.",
+    "checks": "Retain policy.current/join and normalizer function/object/code pins at original session boundaries and advances. Split reference/runtime/helper/library validation from allocation so every existing per-session check remains at its original point; compare the fresh validated body with the owner sealed backend identity. Preserve _live descriptor/seal checks and all original authority callbacks/schedules.",
+    "cleanup": "NumericExecution.close already calls memo.close; add owned backend cleanup in that owner chain with original primary/fatal/ambiguous-close semantics and no retry. Owner poison disables borrowed use. Removing pair-local close must not mask failures elsewhere.",
+    "claim_limit": "Reduces loader attempts from per-computed-session to per-numeric-owner by construction if correctly implemented; does not establish OS unload, mapping size, speed, whole capacity or library numerical validity. Unimplemented."
+  },
+  "missing_evidence": {
+    "native_C_sources_checked_absent": [
+      "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/Modules/_ctypes/_ctypes.c",
+      "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/Modules/_ctypes/callproc.c",
+      "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/_ctypes.c",
+      "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/ctypes/_ctypes.c"
+    ],
+    "qualification": "Only listed installed-runtime source locations checked; not a universal filesystem absence result. No shared objects loaded or inspected.",
+    "remaining_measurement": "Separately authorized finite mapping/refcount/FD/RSS observation across repeated actual backend construction and cleanup, including reused FD paths, loader-handle reuse, exceptions, long-lived owner and process teardown; separate connected numerical/runtime qualification. No such measurement performed."
+  }
+}

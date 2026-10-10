@@ -1,0 +1,575 @@
+{
+  "status": "PASS_SYNTHETIC_SOURCE_TRANSPORT_ONLY",
+  "checks": [
+    "differential duplicate",
+    "differential unique",
+    "differential wrong_hash_first",
+    "differential missing_later",
+    "differential missing_only",
+    "differential nonblob_later",
+    "differential secret_later",
+    "differential newline",
+    "differential carriage",
+    "differential nonutf8",
+    "RED original transfers four duplicate bodies",
+    "GREEN candidate fresh four refs then one body",
+    "GREEN duplicate physical response reduced",
+    "same deadline for both transport phases",
+    "unique domain uses original body route",
+    "unique startup overhead retained as cost",
+    "nonUTF8 literal baseline batch preserved",
+    "no cross-call reuse",
+    "differential oversize_later_wronghash_first",
+    "differential oversize_first",
+    "differential aggregate_before_wronghash",
+    "earlier hash precedes later per-body oversize",
+    "first oversize uses old per-body refusal",
+    "aggregate refusal precedes first hash",
+    "fault routes through original hash order metadata_malformed",
+    "fault routes through original hash order metadata_missing",
+    "fault routes through original hash order metadata_nonblob",
+    "fault routes through original hash order metadata_extra",
+    "fault routes through original hash order metadata_oversized_header",
+    "fault routes through original hash order metadata_error",
+    "fault routes through original hash order body_wrong_oid",
+    "fault routes through original hash order body_short",
+    "fault routes through original hash order body_trailing",
+    "fault routes through original hash order body_error",
+    "fatal identity/no retry MemoryError",
+    "fatal identity/no retry KeyboardInterrupt",
+    "fatal identity/no retry _GitCleanupFailure",
+    "long path literal argv baseline_verify",
+    "long path literal argv verify",
+    "original128 flush boundary baseline_verify",
+    "original128 flush boundary verify",
+    "unchanged transport input bound 41",
+    "unchanged transport input bound 42",
+    "unchanged transport input bound 43",
+    "shared deadline does not reset across phases",
+    "expired final transport budget refuses before hashes",
+    "exact AST outside three changed scopes",
+    "exact inverse"
+  ],
+  "count": 48,
+  "measurements": {
+    "duplicate": {
+      "old": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 1056216,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1056216,
+        "elapsed_ns": 6903448
+      },
+      "candidate": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 4,
+            "bytes": 212,
+            "shared_deadline": 1635.736981679
+          },
+          {
+            "kind": "bodies",
+            "requests": 1,
+            "bytes": 264054,
+            "shared_deadline": 1635.736981679
+          }
+        ],
+        "response_bytes": 264266,
+        "elapsed_ns": 8762359
+      }
+    },
+    "unique": {
+      "old": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264625,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 264625,
+        "elapsed_ns": 3983011
+      },
+      "candidate": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 2,
+            "bytes": 103,
+            "shared_deadline": 1635.749718458
+          },
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264625,
+            "shared_deadline": 1635.749718458
+          }
+        ],
+        "response_bytes": 264728,
+        "elapsed_ns": 6908547
+      }
+    },
+    "wrong_hash_first": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 1056216,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1056216,
+        "elapsed_ns": 5002422
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 4,
+            "bytes": 212,
+            "shared_deadline": 1635.761648215
+          },
+          {
+            "kind": "bodies",
+            "requests": 1,
+            "bytes": 264054,
+            "shared_deadline": 1635.761648215
+          }
+        ],
+        "response_bytes": 264266,
+        "elapsed_ns": 8252234
+      }
+    },
+    "missing_later": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264111,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 264111,
+        "elapsed_ns": 4246454
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 2,
+            "bytes": 110,
+            "shared_deadline": 1635.774158148
+          },
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264111,
+            "shared_deadline": 1635.774158148
+          }
+        ],
+        "response_bytes": 264221,
+        "elapsed_ns": 6607458
+      }
+    },
+    "missing_only": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "Git batch object missing, malformed or non-blob"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264111,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 264111,
+        "elapsed_ns": 3523173
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "Git batch object missing, malformed or non-blob"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 2,
+            "bytes": 110,
+            "shared_deadline": 1635.784304843
+          },
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264111,
+            "shared_deadline": 1635.784304843
+          }
+        ],
+        "response_bytes": 264221,
+        "elapsed_ns": 5387950
+      }
+    },
+    "nonblob_later": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264105,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 264105,
+        "elapsed_ns": 3500404
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 2,
+            "bytes": 104,
+            "shared_deadline": 1635.793200599
+          },
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 264105,
+            "shared_deadline": 1635.793200599
+          }
+        ],
+        "response_bytes": 264209,
+        "elapsed_ns": 6365107
+      }
+    },
+    "secret_later": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 1,
+            "bytes": 264054,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 264054,
+        "elapsed_ns": 3884045
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 1,
+            "bytes": 264054,
+            "shared_deadline": 1635.803470634
+          }
+        ],
+        "response_bytes": 264054,
+        "elapsed_ns": 4076879
+      }
+    },
+    "newline": {
+      "old": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          },
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1040,
+        "elapsed_ns": 3559770
+      },
+      "candidate": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          },
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1040,
+        "elapsed_ns": 4524984
+      }
+    },
+    "carriage": {
+      "old": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          },
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1040,
+        "elapsed_ns": 3225227
+      },
+      "candidate": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          },
+          {
+            "kind": "argv",
+            "requests": 0,
+            "bytes": 520,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1040,
+        "elapsed_ns": 3098953
+      }
+    },
+    "nonutf8": {
+      "old": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 1142,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 1142,
+        "elapsed_ns": 3025689
+      },
+      "candidate": {
+        "outcome": [
+          "OK",
+          ""
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 2,
+            "bytes": 1142,
+            "shared_deadline": 1635.825017405
+          }
+        ],
+        "response_bytes": 1142,
+        "elapsed_ns": 3272301
+      }
+    },
+    "oversize_later_wronghash_first": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 3294,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 3294,
+        "elapsed_ns": 3197570
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "registered source/charter/selection hash mismatch"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 4,
+            "bytes": 202,
+            "shared_deadline": 1635.840524811
+          },
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 3294,
+            "shared_deadline": 1635.840524811
+          }
+        ],
+        "response_bytes": 3496,
+        "elapsed_ns": 6673319
+      }
+    },
+    "oversize_first": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "Git blob body ceiling exceeded"
+        ],
+        "calls": [
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 3294,
+            "shared_deadline": null
+          }
+        ],
+        "response_bytes": 3294,
+        "elapsed_ns": 3561655
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "Git blob body ceiling exceeded"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 4,
+            "bytes": 202,
+            "shared_deadline": 1635.850793449
+          },
+          {
+            "kind": "bodies",
+            "requests": 4,
+            "bytes": 3294,
+            "shared_deadline": 1635.850793449
+          }
+        ],
+        "response_bytes": 3496,
+        "elapsed_ns": 5890532
+      }
+    },
+    "aggregate_before_wronghash": {
+      "old": {
+        "outcome": [
+          "ValueError",
+          "Git aggregate output ceiling exceeded"
+        ],
+        "calls": [],
+        "response_bytes": 0,
+        "elapsed_ns": 2659857
+      },
+      "candidate": {
+        "outcome": [
+          "ValueError",
+          "Git aggregate output ceiling exceeded"
+        ],
+        "calls": [
+          {
+            "kind": "metadata",
+            "requests": 2,
+            "bytes": 100,
+            "shared_deadline": 1635.859345095
+          }
+        ],
+        "response_bytes": 100,
+        "elapsed_ns": 5625901
+      }
+    }
+  },
+  "elapsed_ns": 327817616,
+  "peak_rss_kib": 24108,
+  "affinity": [
+    3
+  ],
+  "numerical_imports": false,
+  "main_git_changed": false,
+  "actual_admission": false,
+  "fixture_commits": [
+    "24b0d77a09afc859a54104a8db0d77bde87126f8",
+    "d502dcd216a2f56c3a3ef72792f0c3e7d1757123"
+  ]
+}

@@ -1,0 +1,18 @@
+--- batched_pair_executor.py
++++ batched_pair_executor.py
+@@ -76,13 +76,9 @@
+                 try:action()
+                 except BaseException as cleanup:
+                     self.poisoned=True
+-                    if primary is not None:
+-                        try:BaseException.add_note(primary,'executor cleanup failed: '+repr(cleanup))
+-                        except BaseException:pass
++                    if primary is not None:primary.add_note('executor cleanup failed: '+repr(cleanup))
+                     elif cleanup_error is None:cleanup_error=cleanup
+-                    else:
+-                        try:BaseException.add_note(cleanup_error,'additional executor cleanup failed: '+repr(cleanup))
+-                        except BaseException:pass
++                    else:cleanup_error.add_note('additional executor cleanup failed: '+repr(cleanup))
+             if self.poisoned:
+                 self.closed=True
+                 try:self._normalization_cleanup()

@@ -1,0 +1,23 @@
+{
+  "case": "fatal_and_cleanup_failure",
+  "events": [
+    "poll",
+    "backend_acquired",
+    "poll",
+    "advance",
+    "owned_close",
+    "state_close"
+  ],
+  "error": {
+    "type": "KeyboardInterrupt",
+    "message": "original primary",
+    "notes": [
+      "executor cleanup failed: OSError('injected close uncertain')"
+    ]
+  },
+  "executor_poisoned": true,
+  "ordinary_fixture_fds_left_open": 1,
+  "state_close_attempted": true,
+  "owned_backend_close_attempted": true,
+  "harness_residual_close_count": 1
+}

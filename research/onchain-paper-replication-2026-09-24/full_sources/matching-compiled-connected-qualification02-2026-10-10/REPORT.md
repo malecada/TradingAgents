@@ -1,0 +1,31 @@
+# Qualification02 — prepared, numerical execution UNEXECUTED
+
+This successor binds the exact eight candidate04 bodies. Candidate04 manifest `f05c45c44699ca434ec620ff81d714d02f1a994b88f8e0c8402fe05066bd96b4` has independent source-only acceptance `a296744020b0169cbd2497da8b679abea35d31b0f2641dfb68922a0e05d5e6aa`. Neither source acceptance nor this harness creates installation, runtime admission, Owner or empirical authority. Current Main fails exact-body preflight before reading the absent Root policy or importing scientific code.
+
+Qualification01 manifest `1f22a56607ae914ba044c91e00bc550f536a34f44837af565f45a5ade6b4897b` and review `58f551ff6041cc0ea8ebcdffa28e4e78f8acb96978f225a5e8f0213b39e93c14` remain immutable. Its accepted source/entry structure is reused. CASES.json and matching-config.json are byte-identical01, including four graph pairs, four primitive cases, original operation budgets, strict byte equality and all finite resource/scratch caps. The retained CASES format name reflects its unchanged predecessor bytes. No historical numerical matrix is replayed during preparation.
+
+## Implemented changes
+
+The checkpoint helper can transfer an actual engine.load result to the direct comparison loop. At both normalization and hardening checkpoints, restored default and selected states are retained. The same genuine session for each route advances its uninterrupted and restored states sequentially with the same operation budget. Every restored step must use the same operation count and produce an identical whole state, including array/chunk bytes. All four restored states must advance at least once and reach completion, then match assignment, soft-assignment and float64 score bytes, iterations and convergence against uninterrupted default/selected results. The done checkpoint still performs a roundtrip check. All restored states are explicitly closed.
+
+Continuation receives no extra advance allowance: all direct uninterrupted/restored calls share the original two-route aggregate maximum of2×4096 calls per graph pair. The original4096 logical-step limit also remains. If this cannot complete the required normalization/hardening continuations, the harness refuses; it does not shorten matching, skip a restore, increase caps or loosen criteria. CPU120s, wall180s, AS3GiB, file4MiB, total scratch128MiB/512files remain unchanged.
+
+The actual NumericExecution default/selected route now observes its genuine memo's PairExecutor backend owner. Default must have no owner. Selected construction must have an unopened owner and no backend. After each of the eight fixed occurrences, the owner must have no active lease and must retain the same loaded backend object and descriptor. Existing same-kernel body/seal checks apply to the actual helper descriptor. Owner closure must report attempted terminal cleanup without an error, and the original descriptor must be closed after NumericExecution exits. Four computed pairs and four genuine memo reuses are still required by verified binding counters. No source guard, method, callback, Binding or Owner is replaced.
+
+These are read-only closure observations through inspect.getclosurevars, not an invented load counter. The genuine numerical guard rejects tracing/profiling; neither is installed. Exact factory-attempt count is therefore **NOT OBSERVED**: the harness records unopened→opened status, stable backend identity and actual FD/body/seals/lifetime only. No /proc mappings or unload/growth claim is produced. Existing standalone helper checks and primitive comparisons remain separate from the full numeric-owner wall measurement. Per-occurrence time includes actual lazy load/fresh checks; whole-owner wall time additionally includes the explicit read-only observation overhead and is labelled accordingly. Neither measurement establishes production saving or capacity.
+
+## Executed preparation checks
+
+One CPU3/nice10 stdlib run passed72checks in35843744ns, peak RSS22484KiB. CPU30s/wall30s/external35s, AS512MiB and file4MiB bounded the checks. Scientific/native imports were trapped. Checks cover exact04 requirements and manifest, unchanged cases/config/caps, original parser refusals for three invalid policies, current Main and tampered source refusal, real API and continued-state/lifetime AST seams, no trace/profile/authority/tolerance workaround, and the actual checkpoint helper's retain/close/error-cleanup behavior with metadata-only fake states. The tiny source-layout fixture is archived locally. No valid synthetic runtime policy was supplied and execute() was not called.
+
+## Queued command and remaining review
+
+Root may run this command only after pilot29 is terminal, exact04 installation and source/runtime/library acceptance, and independent changed-harness source/entry review. Placeholder paths must be replaced with a genuine bounded Root policy and a new absolute output directory:
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout 185 .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification02-2026-10-10/qualify.py --runtime-policy /ABSOLUTE/ROOT-RUNTIME-POLICY.json --output /ABSOLUTE/NEW-SYNTHETIC-OUTPUT --execute-after-terminal
+```
+
+execute() itself selects CPU3/nice10 and enforces the unchanged limits. Omitting the execute flag performs metadata preflight only and grants no runtime authority. Exact installed body hashes and the existing finite policy parser must pass before scientific imports. The source, runtime and library references must be genuine; missing native support, unsupported connected shape or strict numerical mismatch is failure/unavailable, not permission to alter fallback interpretation or tolerances.
+
+Reviewer attention: actual restored-state ownership and continued execution under the unchanged aggregate cap; read-only access to04 owner/helper closures; default zero owner and selected stable FD/body/seals; real NumericExecution finish/verify counters and close; strict unchanged numerical comparisons; refusal before imports. All connected numerical, native, hardening/normalization restore, runtime-currentness, FD/seal and timing observations remain unexecuted. No empirical graphs, network, Main/Git/STATE edits, claims or Admission were used. Frozen candidates01–04 and reviews remain preserved.

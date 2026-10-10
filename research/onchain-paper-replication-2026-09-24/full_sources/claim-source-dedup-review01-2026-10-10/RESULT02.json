@@ -1,0 +1,41 @@
+{
+  "checks": 2,
+  "logical_response_bytes": 8389174,
+  "actual_aggregate_cap": 8404992,
+  "oversize_body_bytes": 8388609,
+  "actual_body_cap": 8388608,
+  "cases": [
+    {
+      "first_hash_wrong": true,
+      "exception": "registered source/charter/selection hash mismatch",
+      "events": [
+        {
+          "metadata": true,
+          "request_matches_original": true
+        },
+        {
+          "metadata": false,
+          "request_matches_original": true
+        }
+      ]
+    },
+    {
+      "first_hash_wrong": false,
+      "exception": "Git blob body ceiling exceeded",
+      "events": [
+        {
+          "metadata": true,
+          "request_matches_original": true
+        },
+        {
+          "metadata": false,
+          "request_matches_original": true
+        }
+      ]
+    }
+  ],
+  "elapsed_ns": 25580655,
+  "peak_rss_kib": 43744,
+  "actual_git_transport_used": false,
+  "original_candidate_parser_used": true
+}

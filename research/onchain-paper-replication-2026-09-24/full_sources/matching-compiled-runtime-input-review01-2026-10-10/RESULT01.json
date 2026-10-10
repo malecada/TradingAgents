@@ -1,0 +1,212 @@
+{
+  "disposition": "ACCEPT_METADATA_SCOPED_RUNTIME_ENTRY_ONLY_UNEXECUTED",
+  "checks": [
+    "frozen input MANIFEST01.json",
+    "frozen input INVENTORY01.json",
+    "frozen input RUNTIME_REFERENCE01.json",
+    "frozen input POLICY01.json",
+    "manifest exact inventory",
+    "manifest exact runtime",
+    "manifest exact policy",
+    "external inventory-body digest join",
+    "policy exact runtime body join",
+    "exact observed metadata fields",
+    "actual pinned interpreter metadata",
+    "six explicitly listed bodies",
+    "actual body python3.130",
+    "recorded stable descriptor 0",
+    "actual resolved interpreter body",
+    "actual body METADATA1",
+    "recorded stable descriptor 1",
+    "distribution metadata version numpy",
+    "actual body RECORD2",
+    "recorded stable descriptor 2",
+    "actual body METADATA3",
+    "recorded stable descriptor 3",
+    "distribution metadata version scipy",
+    "actual body RECORD4",
+    "recorded stable descriptor 4",
+    "actual body environment.json5",
+    "recorded stable descriptor 5",
+    "RECORD joins actual METADATA only numpy",
+    "RECORD joins actual METADATA only scipy",
+    "actual metadata package set",
+    "actual29 environment pin",
+    "environment version join",
+    "accepted scope preserved",
+    "accepted exact04 parser",
+    "genuine eight-field policy parser",
+    "genuine nine-field runtime parser",
+    "exact original source",
+    "exact original library",
+    "metadata-only exclusions explicit",
+    "no financial authority",
+    "proposed output currently absent",
+    "no prohibited imports",
+    "input remains frozen MANIFEST01.json",
+    "input remains frozen INVENTORY01.json",
+    "input remains frozen RUNTIME_REFERENCE01.json",
+    "input remains frozen POLICY01.json"
+  ],
+  "check_count": 46,
+  "body_references": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/MANIFEST01.json": {
+      "sha256": "c4b2ac89dd60d1db4a40035d47d174e2165007c7424745d1e8809bb521b69d78",
+      "bytes": 1426
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/INVENTORY01.json": {
+      "sha256": "7f0cbd1a34389ac112c9e09241cb1bcab7b1972e77e5fe7d13dc124984266175",
+      "bytes": 3624
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json": {
+      "sha256": "247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366",
+      "bytes": 382
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/POLICY01.json": {
+      "sha256": "cf9cbe5ca7aa1a9e1849d59ec63916f8aa288b35a82d84f8b35c432c575506be",
+      "bytes": 950
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/gate04.json": {
+      "sha256": "f6be8198d971451eea91647bf853de036b82405ffcb70e18db61ef204e76c898",
+      "bytes": 641992
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-policy-scope-review01-2026-10-10/REVIEW01.json": {
+      "sha256": "9a82f6c58835f1c60a45992f329b939dc9424d16d2a46aa01c61a0dbf47b9ebe",
+      "bytes": 4629
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-normalization-connected04-2026-10-10/compiled_normalization_policy.py": {
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01",
+      "bytes": 10714
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c": {
+      "sha256": "8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8",
+      "bytes": 828
+    },
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so": {
+      "sha256": "9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2",
+      "bytes": 15712
+    }
+  },
+  "verified_actual_inventory_bodies": [
+    {
+      "path": "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13",
+      "sha256": "1b6373b55566df2953fe1e1345aec5df0d2e76c5e385871e68aa46c48020803d",
+      "bytes": 31510904,
+      "mode": 33277,
+      "nlink": 1,
+      "stat": [
+        66310,
+        6030698,
+        31510904,
+        1776419210346027255,
+        1776419210346027255
+      ]
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/numpy-2.3.0.dist-info/METADATA",
+      "sha256": "354540ba72b4a8d4d997afaa32848bc1f37d8e5daba4ea647d9702cd1faf5095",
+      "bytes": 62066,
+      "mode": 33204,
+      "nlink": 8,
+      "stat": [
+        66310,
+        6847128,
+        62066,
+        1780504106258760480,
+        1791642022611276019
+      ]
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/numpy-2.3.0.dist-info/RECORD",
+      "sha256": "f853d0b421c8551bd802920e6a63f6a1bed7567a135b473f1ee9bd338fc8d947",
+      "bytes": 83286,
+      "mode": 33204,
+      "nlink": 1,
+      "stat": [
+        66310,
+        8413186,
+        83286,
+        1789061280828846544,
+        1789061280828846544
+      ]
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/scipy-1.17.1.dist-info/METADATA",
+      "sha256": "7cdd5544eb610b86e000b6f0a21e86f84423faf0aacbb99990f3d41f25e1f314",
+      "bytes": 62142,
+      "mode": 33204,
+      "nlink": 7,
+      "stat": [
+        66310,
+        6847477,
+        62142,
+        1780504111165720712,
+        1791642022412274317
+      ]
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/scipy-1.17.1.dist-info/RECORD",
+      "sha256": "9629674f1d2e09c61114b1742964d0e99c9815a19f2c2095bc37be3957d3f7c2",
+      "bytes": 136085,
+      "mode": 33204,
+      "nlink": 1,
+      "stat": [
+        66310,
+        8413880,
+        136085,
+        1789061280904846143,
+        1789061280904846143
+      ]
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json",
+      "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc",
+      "bytes": 358,
+      "mode": 33060,
+      "nlink": 1,
+      "stat": [
+        66310,
+        10907962,
+        358,
+        1791258297195233738,
+        1791258383261915692
+      ]
+    }
+  ],
+  "total_inventory_body_bytes": 31854841,
+  "actual_interpreter_metadata": {
+    "python": "3.13.13",
+    "platform": "linux",
+    "machine": "x86_64",
+    "byteorder": "little",
+    "executable": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python"
+  },
+  "runtime": {
+    "byteorder": "little",
+    "executable": "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "format": "compiled-small-lse-runtime-reference-v1",
+    "machine": "x86_64",
+    "numpy": "2.3.0",
+    "platform": "linux",
+    "python": "3.13.13",
+    "runtime_inventory_sha256": "7f0cbd1a34389ac112c9e09241cb1bcab7b1972e77e5fe7d13dc124984266175",
+    "scipy": "1.17.1"
+  },
+  "policy": {
+    "format": "compiled-small-lse-prototype04-session-v1",
+    "library_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so",
+    "library_sha256": "9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2",
+    "runtime_bytes": 382,
+    "runtime_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json",
+    "runtime_sha256": "247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366",
+    "source_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c",
+    "source_sha256": "8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8"
+  },
+  "hardlinked_distribution_metadata_accepted_as_metadata_only": true,
+  "package_payloads_verified": false,
+  "loaded_numpy_scipy_versions_verified": false,
+  "numerical_native_execution": false,
+  "actual_admission": false,
+  "elapsed_ns": 41419645,
+  "peak_reviewer_rss_kib": 22608
+}

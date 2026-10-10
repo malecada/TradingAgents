@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "ssh",
+    "-p",
+    "23",
+    "-i",
+    "/home/malecada/.ssh/id_ed25519_storagebox_u676273",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "UserKnownHostsFile=/home/malecada/.ssh/known_hosts_storagebox_u676273",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "u676273@u676273.your-storagebox.de",
+    "cat ethpilot-20261009-29-14a7dd46d3839f6ac5f1ed6c1842a8011074b8011839c174637cec570efd61fa-p2c86a048a811c9df-000000000000/payload.bin"
+  ],
+  "at": "2026-10-10T20:27:31.567053+00:00",
+  "bounds": {
+    "cpu_seconds": 15,
+    "file_bytes": 4194304,
+    "wall_seconds": 60
+  },
+  "credential_contents_read": false,
+  "offload_sha256": "2624a5a9e11437e72e14cacfec5ca4d68dcc34dd5da62e26e03769348af0bfb4",
+  "receipt": {
+    "bytes": 3532800,
+    "format": "archive-chunk-v1",
+    "member": "ethpilot-20261009-29-14a7dd46d3839f6ac5f1ed6c1842a8011074b8011839c174637cec570efd61fa-p2c86a048a811c9df-000000000000/payload.bin",
+    "remote": "ethpilot-20261009-29-14a7dd46d3839f6ac5f1ed6c1842a8011074b8011839c174637cec570efd61fa-p2c86a048a811c9df-000000000000",
+    "schema_version": 1,
+    "scope": "20299d3935f2ef002fd596561e061a7e7668fb7bfec279817644cc08a964c022",
+    "source_sha256": "c0ac5130b73b8247acf57a629de360ef795579555e80326b617f0cf1b3d5649e",
+    "transport_identity": "553a31d3776219f2ef54ba0eef449dba08746d0ea8cc6c68ca120a37fe86ac84"
+  },
+  "scope": "Root fresh read-only retrieval of actual second-group increment; no claim, numerical execution or deletion",
+  "transport_identity": "553a31d3776219f2ef54ba0eef449dba08746d0ea8cc6c68ca120a37fe86ac84"
+}

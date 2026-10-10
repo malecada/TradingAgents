@@ -1,0 +1,46 @@
+--- batched_pair_executor.py
++++ baseline_batched_pair_executor.py
+@@ -1,7 +1,6 @@
+ """Engineering-only numeric route; no empirical/owner authority or pair receipts."""
+ import copy
+ from . import adaptive_edge_policy
+-from . import compiled_normalization_policy
+ from . import matching_checkpoint as engine
+ from tradingagents.research.onchain_replication import matching_pair as pair
+ from . import matching_annealing as annealing
+@@ -12,9 +11,8 @@
+ class CheckpointStop(RuntimeError): pass
+ 
+ class PairExecutor:
+-    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None,compiled_normalization_policy_value=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None):
+         adaptive_edge_policy.attach(self,edge_cache_policy)
+-        compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+         self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)
+         self.schedule=copy.deepcopy(schedule);self.checkpoint=checkpoint;self.poisoned=False;self.checkpoints=0;self.reserved_bytes=0
+         if authority_poll is not None and not callable(authority_poll):raise ValueError('optional authority poll must be callable')
+@@ -29,7 +27,6 @@
+         try:
+             if self.authority_poll is not None:self.authority_poll()
+             adaptive_edge_policy.current(self)
+-            compiled_normalization_policy.current(self)
+             pair.hash_string(purpose_hash)
+             pair.policy_check(a,b,self.config,self.policy,allow_checkpoint_layout=True)
+             reserved=self.policy['max_checkpoint_bytes']+2*pair.LIMIT
+@@ -37,7 +34,7 @@
+                     or self.reserved_bytes+self.schedule['max_checkpoints']*reserved>self.schedule['max_total_checkpoint_bytes']):
+                 raise ValueError('cumulative checkpoint allowance exceeded')
+             state=engine.create(a,b,self.config,**{k:self.policy[k] for k in pair.ENGINE_FIELDS})
+-            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
++            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self))
+             for ordinal in range(self.schedule['max_checkpoints']):
+                 for _ in range(self.schedule['calls_per_checkpoint']):
+                     if self.authority_poll is not None:self.authority_poll()
+@@ -49,7 +46,6 @@
+                     if self.authority_poll is not None:
+                         self.authority_poll();session.check(state)
+                     adaptive_edge_policy.join(self,session)
+-                    compiled_normalization_policy.join(self,session)
+                     return float(result.score),result.iterations,result.convergence
+                 self.checkpoints+=1;self.reserved_bytes+=reserved
+                 self.checkpoint(purpose_hash,ordinal,state,a,b,self.config,self.policy)

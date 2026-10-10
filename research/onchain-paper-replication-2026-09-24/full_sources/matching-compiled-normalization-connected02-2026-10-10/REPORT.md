@@ -1,0 +1,27 @@
+# Compiled normalization connection02 — lifecycle correction, UNINSTALLED
+
+Supersedes only the responsible lifecycle defects in permanently WITHHELD01 (manifest ebf102545bb67ba59856b09e43746552311558f3c57c5e53d8f68573c4dba151). Independent review14b7da52e75035d20cdd13b1d99d35e18bbc5f49f400ce452e3bd5cfb7828ef5 and its original check01 syntax failure, raw RED descriptors and completed check02 remain untouched. Dedup candidate ceb57a7e also remains frozen and unchanged.
+
+## Exact changes
+
+Only ImmutablePairSession.__init__ and close executable lifecycle bodies change. Before acquiring any backend, constructor allocates a terminal cleanup closure and publishes that closure on the session. The backend is then acquired inside a try block and its original close callable is retained in the closure, independently of the mutable checked _normalizer/close attributes. Every subsequent pin/attribute construction is guarded. Until constructor return transfers the session to PairExecutor, a failure attempts cleanup locally and rethrows the same primary exception. Failure to obtain the close attribute also receives an explicit cleanup lookup/attempt; cleanup failure is reported without claiming successful release. Notes are best effort and cannot mask the primary exception.
+
+Session.close invokes the retained original capability, even if the checked backend has been replaced or its exposed close attribute changed. Failure while invalidating/dropping session state still attempts backend cleanup and preserves the primary error. The closure records its one close attempt before calling it. Success is idempotent; an ambiguous close failure is retained and re-raised by identity on subsequent calls without retrying a possibly reused descriptor. A recorded failure does not mean the descriptor closed. No destructor, global registry or silent eventual cleanup is introduced.
+
+The existing PairExecutor finally block independently attempts session cleanup and engine state cleanup. It is byte-identical; it receives constructor exceptions before assignment exactly as before, but the constructor now handles its own acquired backend. Session input/function checks, numerical advance, public state/checkpoint schema, adaptive cache, ranking, callbacks, scientific method/tolerances, model/training and original32/512 remain unchanged.
+
+One mandatory non-behavioral source-guard correction accompanies the lifecycle patch: batched_numeric_reuse.py updates only the literal SHA256 for the corrected session source. Its entire executable body is otherwise byte-identical. The other four connected module copies and compiled helper/policy are byte-identical to01. Failing to update this one existing pin would make the actual source guard reject02. No source guard is removed or weakened.
+
+## Focused regression evidence
+
+One CPU3/nice10 stdlib-only run:42 checks passed,182407801ns,22904KiB peak RSS. AS512MiB/CPU30s/FSIZE4MiB/alarm30, external timeout35s. The actual full session class and actual PairExecutor call body are AST-extracted with fake numerical dependencies; backend close owns an ordinary real fixture descriptor. No NumPy/SciPy/Torch/ctypes/native/memfd/compiler or numerical job executes.
+
+Three reviewer cases reproduce RED on actual01: replacing _normalizer, replacing exposed close, and post-acquisition pin tuple MemoryError each omit original close and leave one real descriptor open. The identical three cases are GREEN on02: original owned close runs once, no descriptor remains, original refusal/MemoryError is retained, executor poisons and engine cleanup still runs. Raw observations for each source/case are retained separately.
+
+Additional seam-specific controls cover success, unselected backend, original fatal plus cleanup failure, constructor MemoryError plus fatal cleanup failure, failures assigning each post-acquisition session attribute, successful and ambiguous repeated close, and state-invalidation fatal with/without cleanup failure. Ambiguous-close controls correctly retain one open descriptor; independent harness cleanup is explicitly recorded and not credited to the candidate. Cleanup is attempted once, primary/fatal objects survive, and engine state cleanup remains independent. No new failing harness occurred. The old67 matrix is not replayed.
+
+AST outside constructor/close is identical. All six exact installed-baseline inverse patches restore the original baseline bytes; all six to01 inverse patches restore the frozen prior candidate bytes, including the one dependent pin literal. Unchanged modules/helper/policy are compared byte-for-byte. New source maps remain uninstalled; no Main/STATE/registration/Git integration, Owner/Admission, active pilot mutation, arrays or network access occurred.
+
+## Remaining gates
+
+This proves only the changed Python ownership seam with ordinary descriptors. Root must obtain independent02 review and actual source/runtime/Owner admission after pilot29 closes. Genuine sealed memfd/dlopen lifetime, loaded native dependencies, complete numerical connected execution, checkpoint/state/assignment/score equivalence under frozen criteria, numeric reuse binding behavior, per-pair loader cost and whole-runtime/physical capacity remain queued as in01. Accepted immutable prototype04 provides prior finite evidence only. No universal bitwise equivalence, real saving, scientific acceptance, or successful cleanup after an ambiguous close is asserted.

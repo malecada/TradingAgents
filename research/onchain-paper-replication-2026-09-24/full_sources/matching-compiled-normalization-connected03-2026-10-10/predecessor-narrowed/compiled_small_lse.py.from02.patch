@@ -1,0 +1,16 @@
+--- compiled_small_lse.py-02
++++ compiled_small_lse.py-03
+@@ -138,7 +138,12 @@
+         if status:return fallback(block,axis=axis,keepdims=keepdims)
+         return result
+ 
+-    try:return SimpleNamespace(lse=lse,close=close)
++    def current():
++        return (_fn is _ORIGINAL_FN and (_fn is None or
++            (_fn.argtypes==_ARGS and _fn.restype is ctypes.c_int and _live()))
++            and _original.__code__ is _CODE
++            and (np.geterr,np.isfinite,np.abs,np.all,np.empty,np.ndarray)==_NP_PINS)
++    try:return SimpleNamespace(lse=lse,close=close,current=current)
+     except BaseException as primary:
+         try:close()
+         except BaseException as cleanup:primary.add_note("backend construction cleanup: "+repr(cleanup))

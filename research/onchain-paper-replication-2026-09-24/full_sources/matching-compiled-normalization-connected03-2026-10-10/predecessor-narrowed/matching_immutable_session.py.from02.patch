@@ -1,0 +1,41 @@
+--- matching_immutable_session.py-02
++++ matching_immutable_session.py-03
+@@ -72,7 +72,7 @@
+ 
+ 
+ class ImmutablePairSession:
+-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None):
++    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None):
+         require(engine.ann is annealing and
+                 callable(getattr(engine, '_check_owned', None)) and
+                 callable(getattr(engine, '_advance_owned', None)) and
+@@ -120,11 +120,11 @@
+         self._normalizer_cleanup = owned_cleanup
+         normalizer = None
+         try:
+-            normalizer = compiled_normalization_policy.open_backend(self)
++            normalizer = compiled_normalization_policy.open_backend(self) if _normalization_owner is None else _normalization_owner.borrow(self)
+             owned_close = normalizer.close if normalizer is not None else None
+             self._normalizer = normalizer
+             self._normalizer_pin = normalizer
+-            self._normalizer_functions = tuple((name,getattr(normalizer,name),getattr(normalizer,name).__code__) for name in ("lse","close")) if normalizer is not None else ()
++            self._normalizer_functions = tuple((name,getattr(normalizer,name),getattr(normalizer,name).__code__) for name in (("lse","close") if _normalization_owner is None else ("lse","close","current"))) if normalizer is not None else ()
+         except BaseException as primary:
+             # Until this constructor returns, the executor has no session to
+             # close. Attempt acquired cleanup here, retaining the primary error.
+@@ -143,6 +143,7 @@
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+         for name,function,code in self._normalizer_functions:
+             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
++        if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
+         require(config_pin(self.config) == self.config_pin, 'matching config changed')
+         rejoin(self.a, self.pins[0]); rejoin(self.b, self.pins[1])
+         for module, name, dependency in self.dependencies:
+@@ -173,6 +174,7 @@
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+         for name,function,code in self._normalizer_functions:
+             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
++        if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
+         self.advances += 1
+         return result
+ 

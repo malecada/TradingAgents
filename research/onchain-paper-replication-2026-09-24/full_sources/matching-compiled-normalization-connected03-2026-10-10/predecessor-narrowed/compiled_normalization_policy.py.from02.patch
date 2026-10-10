@@ -1,0 +1,130 @@
+--- compiled_normalization_policy.py-02
++++ compiled_normalization_policy.py-03
+@@ -6,7 +6,7 @@
+ import hashlib,json,os,stat
+ from pathlib import Path
+ 
+-HELPER_SHA256 = '80b045d499136ba722402e9ae596411e109fcc00e70b445f5f7c3f2e82b3a422'
++HELPER_SHA256 = '5820d089cf7317cc9b0bfff62049de3d8a12e4985fc0458bd3d3ae2ffd599670'
+ LIBRARY_SHA256 = '9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2'
+ SOURCE_SHA256 = '8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8'
+ FORMAT = 'compiled-small-lse-prototype04-session-v1'
+@@ -45,11 +45,12 @@
+     current(owner);current(child)
+     require(owner._compiled_normalization_policy==child._compiled_normalization_policy,'compiled normalization chain changed')
+ 
+-def read_reference(path,expected,limit,exact_size=None):
++def read_reference(path,expected,limit,exact_size=None,*,owned=False):
+     """Bounded regular-file body check; no authority claim for its parent path."""
+     fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC|os.O_NONBLOCK)
+     try:
+         before=os.fstat(fd)
++        if owned:require(before.st_uid==os.getuid(),"library reference owner differs")
+         require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=limit,'bounded regular reference required')
+         if exact_size is not None:require(before.st_size==exact_size,'reference size differs')
+         chunks=[];remaining=before.st_size+1
+@@ -75,7 +76,7 @@
+             and digest(value['runtime_inventory_sha256']),'unsupported normalization runtime metadata')
+     return value
+ 
+-def open_backend(owner):
++def _backend_references(owner):
+     current(owner)
+     if owner._compiled_normalization_policy is None:return None
+     p=dict(owner._compiled_normalization_policy)
+@@ -93,4 +94,94 @@
+     # Original helper authenticates and seals this exact library body before dlopen.
+     # Unsupported loader conditions return its original SciPy fallback; fatal and
+     # ambiguous-cleanup errors propagate. No generated authority or build occurs.
+-    return compiled_small_lse.open_backend(p['library_path'],p['library_sha256'])
++    return p,compiled_small_lse
++
++def open_backend(owner):
++    references=_backend_references(owner)
++    if references is None:return None
++    p,helper=references
++    return helper.open_backend(p['library_path'],p['library_sha256'])
++
++class BackendOwner:
++    """One lazy load attempt, one sequential lease, one terminal cleanup.
++
++    All authority remains outside this engineering object. Closed or poisoned
++    owners never retry loading or ambiguous cleanup. No process-global cache.
++    """
++    def __init__(self, value):
++        from types import SimpleNamespace
++        import threading
++        attach(self,value)
++        require(self._compiled_normalization_policy is not None,'selected owner policy required')
++        thread=threading.get_ident()
++        opened=False;closed=False;active=None;backend=None;backend_pins=()
++        owned_close=None;close_attempted=False;close_error=None;pins=()
++        def close():
++            nonlocal closed,active,close_attempted,close_error
++            closed=True;active=None
++            if close_error is not None:raise close_error
++            if close_attempted:return
++            close_attempted=True
++            if owned_close is not None:
++                try:owned_close()
++                except BaseException as error:
++                    close_error=error;raise
++        def check():
++            require(threading.get_ident()==thread,'normalization owner thread differs')
++            require(not closed,'normalization owner closed')
++            current(self)
++            for name,function,code in pins:
++                require(getattr(self,name) is function and function.__code__ is code,'normalization owner method changed')
++            if backend is not None:
++                for name,function,code in backend_pins:
++                    require(getattr(backend,name) is function and function.__code__ is code,'owned normalization function changed')
++                require(backend.current(),'owned normalization seals/function state differs')
++        def borrow(client):
++            nonlocal opened,active,backend,backend_pins,owned_close
++            token=None;released=False;lease=None;lease_pins=()
++            def lease_check():
++                check();join(self,client)
++                require(not released and active is token,'normalization borrow expired or redirected')
++                for name,function,code in lease_pins:
++                    require(getattr(lease,name) is function and function.__code__ is code,'normalization borrow method changed')
++            def release():
++                nonlocal released,active
++                if released:return
++                released=True
++                if active is token:active=None
++                else:require(closed,'normalization borrow token changed')
++            def lse(block,*,axis,keepdims,fallback):
++                lease_check()
++                return backend.lse(block,axis=axis,keepdims=keepdims,fallback=fallback)
++            try:
++                check();join(self,client)
++                require(active is None,'normalization owner already borrowed')
++                token=object();active=token
++                # Lease allocation precedes backend allocation; publication is
++                # still guarded until the final return below.
++                lease=SimpleNamespace(lse=lse,close=release,current=lease_check)
++                lease_pins=tuple((name,getattr(lease,name),getattr(lease,name).__code__) for name in ('lse','close','current'))
++                p,helper=_backend_references(self)
++                if not opened:
++                    opened=True
++                    backend=helper.open_backend(p['library_path'],p['library_sha256'])
++                    owned_close=backend.close
++                    backend_pins=tuple((name,getattr(backend,name),getattr(backend,name).__code__) for name in ('lse','close','current'))
++                # Every lease freshly reads the exact original library reference,
++                # even though the already sealed backend is reused. A changed or
++                # unavailable reference refuses; it is never new load authority.
++                read_reference(p['library_path'],p['library_sha256'],65536,owned=True)
++                lease_check()
++                return lease
++            except BaseException as primary:
++                # Failure before a lease reaches the session is owner-owned.
++                # Retain originally acquired cleanup, including pin failures.
++                try:
++                    if backend is not None and owned_close is None:owned_close=backend.close
++                    close()
++                except BaseException as cleanup:
++                    try:BaseException.add_note(primary,'normalization owner cleanup failed: '+repr(cleanup))
++                    except BaseException:pass
++                raise
++        self.borrow=borrow;self.current=check;self.close=close
++        pins=tuple((name,getattr(self,name),getattr(self,name).__code__) for name in ('borrow','current','close'))

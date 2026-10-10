@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "frozen02 manifest",
+    "exact accepted02 body compiled_normalization_policy.py",
+    "exact accepted02 body compiled_small_lse.py",
+    "exact accepted02 body matching_immutable_session.py",
+    "exact accepted02 body batched_pair_executor.py",
+    "exact accepted02 body batched_numeric_reuse.py",
+    "exact accepted02 body matching_annealing.py",
+    "exact accepted02 body matching_checkpoint.py",
+    "exact accepted02 body batched_numeric_execution.py",
+    "remaining whole AST exact matching_immutable_session.py",
+    "remaining whole AST exact batched_pair_executor.py",
+    "remaining whole AST exact batched_numeric_reuse.py",
+    "unchanged roster covers new owner constructor",
+    "default constructs no backend owner",
+    "default closes",
+    "actual outer close chain",
+    "outer close descriptor actually closed",
+    "no native/scientific imports"
+  ],
+  "check_count": 18,
+  "events": [
+    "cache_clear",
+    "backend_cleanup"
+  ],
+  "native_or_numerical_execution": false
+}

@@ -1,0 +1,418 @@
+{
+  "status": "PASS_FOCUSED_LIFECYCLE_REGRESSION",
+  "checks": [
+    "exact independent review reference",
+    "RED reproduced normalizer_replaced",
+    "RED reproduced close_replaced",
+    "RED reproduced constructor_memoryerror",
+    "GREEN original owned cleanup normalizer_replaced",
+    "GREEN original owned cleanup close_replaced",
+    "GREEN construction/state failure constructor_memoryerror",
+    "positive success",
+    "positive unselected",
+    "primary plus cleanup identity fatal_and_cleanup_failure",
+    "primary plus cleanup identity constructor_cleanup_fatal",
+    "GREEN construction/state failure constructor_attr_normalizer",
+    "GREEN construction/state failure constructor_attr_pin",
+    "GREEN construction/state failure constructor_attr_functions",
+    "terminal close capability invoked once",
+    "positive repeat_close_success",
+    "repeat preserves close error object",
+    "repeat preserves close error object",
+    "terminal close capability invoked once",
+    "close failure does not forge closure",
+    "GREEN construction/state failure close_state_failure",
+    "primary plus cleanup identity close_state_failure_cleanup_failure",
+    "session unchanged outside constructor and close",
+    "byte-identical reuse matching_annealing.py",
+    "byte-identical reuse matching_checkpoint.py",
+    "byte-identical reuse batched_pair_executor.py",
+    "byte-identical reuse batched_numeric_execution.py",
+    "byte-identical reuse compiled_normalization_policy.py",
+    "byte-identical reuse compiled_small_lse.py",
+    "reuse only mandatory session source pin changed",
+    "exact installed inverse matching_checkpoint.py",
+    "exact withheld01 inverse matching_checkpoint.py",
+    "exact installed inverse batched_pair_executor.py",
+    "exact withheld01 inverse batched_pair_executor.py",
+    "exact installed inverse matching_annealing.py",
+    "exact withheld01 inverse matching_annealing.py",
+    "exact installed inverse matching_immutable_session.py",
+    "exact withheld01 inverse matching_immutable_session.py",
+    "exact installed inverse batched_numeric_execution.py",
+    "exact withheld01 inverse batched_numeric_execution.py",
+    "exact installed inverse batched_numeric_reuse.py",
+    "exact withheld01 inverse batched_numeric_reuse.py"
+  ],
+  "count": 42,
+  "observations": [
+    {
+      "version": "WITHHELD01",
+      "case": "normalizer_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization backend changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "WITHHELD01",
+      "case": "close_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "replacement_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization function changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "WITHHELD01",
+      "case": "constructor_memoryerror",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "normalizer_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization backend changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "close_replaced",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "ValueError",
+        "message": "normalization function changed",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "constructor_memoryerror",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "success",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": null,
+      "executor_poisoned": false,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "unselected",
+      "events": [
+        "poll",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "state_close"
+      ],
+      "error": null,
+      "executor_poisoned": false,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "fatal_and_cleanup_failure",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "KeyboardInterrupt",
+        "message": "original primary",
+        "notes": [
+          "executor cleanup failed: OSError('injected close uncertain')"
+        ]
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "constructor_cleanup_fatal",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": [
+          "session construction cleanup failed: KeyboardInterrupt('cleanup fatal')"
+        ]
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "constructor_attr_normalizer",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "constructor_attr_pin",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "constructor_attr_functions",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "MemoryError",
+        "message": "pin tuple allocation failure",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "repeat_close_success",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": null,
+      "executor_poisoned": false,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "repeat_close_failure",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "OSError",
+        "message": "injected close uncertain",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": false,
+      "cleanup_identity_preserved": true,
+      "harness_residual_close_count": 1
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "close_state_failure",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "KeyboardInterrupt",
+        "message": "original primary",
+        "notes": []
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 0,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 0
+    },
+    {
+      "version": "SUCCESSOR02",
+      "case": "close_state_failure_cleanup_failure",
+      "events": [
+        "poll",
+        "backend_acquired",
+        "poll",
+        "advance",
+        "poll",
+        "poll",
+        "owned_close",
+        "state_close"
+      ],
+      "error": {
+        "type": "KeyboardInterrupt",
+        "message": "original primary",
+        "notes": [
+          "session close cleanup failed: OSError('injected close uncertain')"
+        ]
+      },
+      "executor_poisoned": true,
+      "open_descriptors_after_candidate": 1,
+      "primary_identity_preserved": true,
+      "cleanup_identity_preserved": false,
+      "harness_residual_close_count": 1
+    }
+  ],
+  "elapsed_ns": 182407801,
+  "peak_rss_kib": 22904,
+  "affinity": [
+    3
+  ],
+  "numerical_backend_loaded": false,
+  "real_memfd": false,
+  "actual_admission": false
+}
