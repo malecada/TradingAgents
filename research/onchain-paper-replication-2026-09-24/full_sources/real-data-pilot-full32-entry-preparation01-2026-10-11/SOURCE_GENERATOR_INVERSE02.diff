@@ -1,0 +1,20 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full32-entry-preparation01-2026-10-11/prepare_source01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full32-entry-preparation01-2026-10-11/prepare_source02.py
+@@ -31,13 +31,13 @@
+     assert moved_line in after
+     after=after.replace(moved_line,'FROZEN_PREPARATION='+repr(ref(T/'PREPARED01.json')))
+     ast.parse(after)
+-    with (HERE/'preflight32_01.py').open('x') as stream: stream.write(after)
++    with (HERE/'preflight32_02.py').open('x') as stream: stream.write(after)
+     oldio=(OLD/'root_io31_03.py').read_text()
+-    newio=oldio.replace('from preflight30_05 import check','from preflight31_01 import check')
++    newio=oldio.replace('from preflight31_03 import check','from preflight32_02 import check')
+     assert oldio!=newio
+     ast.parse(newio)
+-    with (HERE/'root_io32_01.py').open('x') as stream: stream.write(newio)
+-    for oldname,newname in [('preflight31_03.py','preflight32_01.py'),('root_io31_03.py','root_io32_01.py')]:
++    with (HERE/'root_io32_02.py').open('x') as stream: stream.write(newio)
++    for oldname,newname in [('preflight31_03.py','preflight32_02.py'),('root_io31_03.py','root_io32_02.py')]:
+         a=(OLD/oldname).read_text().splitlines(True); b=(HERE/newname).read_text().splitlines(True)
+         with (HERE/(newname+'.diff')).open('x') as stream:
+             stream.write(''.join(difflib.unified_diff(a,b,fromfile=str(OLD/oldname),tofile=str(HERE/newname))))

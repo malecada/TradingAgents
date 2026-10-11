@@ -1,0 +1,13 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full32-entry-preparation01-2026-10-11/prepare_registration01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full32-entry-preparation01-2026-10-11/prepare_registration02.py
+@@ -17,7 +17,9 @@
+     bound=load(T/'BOUND01.json'); refs=load(T/'ALL_INPUT_REFS01.json')
+     assert bound['status']=='BOUND_DRAFT_NOT_REGISTERED_NOT_ADMITTED' and len(refs)==67
+     assert bound['source_request']['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-32-01'
+-    scratch=load(ROOT/refs['matching_ordered_edge_scratch']['path'])
++    baseline=load(OLD/'gate03.json')['experiments'][PRIOR]['inputs']['matching_ordered_edge_scratch']
++    assert ref(ROOT/baseline['path'])['sha256']==baseline['sha256']
++    scratch=load(ROOT/baseline['path'])
+     assert scratch['experiment']==PRIOR; scratch['experiment']=NAME
+     save(HERE/'MATCHING_SCRATCH_RESERVATION01.json',scratch)
+     pin=ref(HERE/'MATCHING_SCRATCH_RESERVATION01.json')
