@@ -1,0 +1,58 @@
+{
+  "checked_call_lines": [
+    501,
+    508,
+    510
+  ],
+  "corrected_failure_location": {
+    "boundary_ordinal": 2,
+    "caller": "compact_mcm_batched.py:508",
+    "earlier_boundary": "compact_mcm_batched.py:501 returned",
+    "identity_guard": "imported_authority_lease.py:117",
+    "not_reached": [
+      "compiled inputs:509",
+      "third extra lease:510",
+      "MCM publication directory:512"
+    ],
+    "preceding_work": [
+      "producer._prepare:499",
+      "validate:500",
+      "first extra lease:501",
+      "_modules:502",
+      "output policy:503-504",
+      "own source hash:505-507"
+    ],
+    "specific_loaded_object_delta": "Not recorded by actual traceback; source inference and synthetic investigation remain separate."
+  },
+  "decision": "CORRECT_FROZEN_REVIEW_LOCATOR_ONLY",
+  "evidence": [
+    {
+      "bytes": 38307,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-terminal-outcome-review01-2026-10-11/REVIEW01.json",
+      "sha256": "46ed6dfa24e83a0969ef3b69d95c9068eb5ef2e8dc365d436a08075f22cccc19"
+    },
+    {
+      "bytes": 2629,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-terminal-outcome-review01-2026-10-11/REPORT.md",
+      "sha256": "91cffbb2d36d583b5e77689722445520098619487989631cbac63670004d4092"
+    },
+    {
+      "bytes": 7531,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-terminal-outcome-review01-2026-10-11/MANIFEST01.json",
+      "sha256": "6d0170e5e439d200c9e2a9ecaafc41d42eccac5d52272a099c1ae239cda7665b"
+    },
+    {
+      "bytes": 46184,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-terminal-outcome-review01-2026-10-11/evidence/037-compact_mcm_batched.py",
+      "sha256": "e93d3b7073c8de5d1c3e7f5f30b55ba613b47a014f8fe449a0fe7e8a746941dd"
+    },
+    {
+      "bytes": 4069,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-terminal-outcome-review01-2026-10-11/evidence/026-child.log",
+      "sha256": "ab0ea297043a49b6d7163f3bd13a3024cb26015f25c7ce42061542c9bf116061"
+    }
+  ],
+  "explanation": "The prior reviewer correctly pinned traceback508 but incorrectly described its ordinal. Sequential original source proves the first boundary returned before reaching the second. No raw trace or frozen result is altered.",
+  "schema_version": 1,
+  "supersedes_only": "First added boundary wording in frozen outcome31 REPORT.md, REVIEW01 check labels and previous messages. Original hashes/counts/output dispositions/cleanup/accounting remain unchanged."
+}

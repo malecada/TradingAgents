@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 600, in <module>
+    result = globals()[args.mode](args)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 396, in worker
+    cells=route.execute(run,job['payload'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 641, in execute
+    if primary is not None: raise primary
+                            ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 612, in execute
+    try:archive_context.close(primary)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py", line 522, in close
+    if failure is not None:raise failure
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 562, in execute
+    result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+        **({'progress':progress} if progress is not None else {}),
+        **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 301, in produce_imported
+    return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 499, in produce
+    graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 174, in _prepare
+    dictionary.check()
+    ~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_mcm_identity.py", line 104, in check
+    target_lease(self,boundary=True)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_authority_lease.py", line 191, in target_lease
+    contract.target=target;contract.check(boundary=boundary)
+                           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_authority_lease.py", line 143, in check
+    self.scheduler.validate(full if _return_value else self._full,self._finger,self._live,boundary=boundary)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_authority_interval.py", line 44, in validate
+    try:freshness(full_done)
+        ~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_authority_interval.py", line 34, in freshness
+    require((now-origin)*1000<=self.policy['max_stale_ms'],'stale interval cannot refresh')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/imported_authority_interval.py", line 8, in require
+    if not ok:raise ValueError('import lease: '+why)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: import lease: stale interval cannot refresh
+import lease full boundary timing: full_callback_seconds=10.453950685994641; pre_callback_age_seconds=49.924078479001764; total_age_seconds=60.378029164996406

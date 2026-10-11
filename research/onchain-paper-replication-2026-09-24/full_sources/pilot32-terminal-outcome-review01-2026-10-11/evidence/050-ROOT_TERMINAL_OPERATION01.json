@@ -1,0 +1,65 @@
+{
+  "actual_root_exit": 1,
+  "actual_root_terminal_tool": "e58b5e",
+  "at": "2026-10-11T02:35:31.595999+00:00",
+  "closed_count": 72,
+  "complete_count": 33,
+  "failed_count": 39,
+  "highest_adopted": 103,
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-32",
+  "root_session": 8894,
+  "source": "f958c3dba16b3da7b33c548971ca427d3257880c",
+  "original_pids_absent": [
+    1710736,
+    1711601,
+    1712048,
+    1712471,
+    1712474
+  ],
+  "native_final_properties": "MainPID=0\nResult=exit-code\nExecMainStatus=1\nControlGroup=\nActiveState=failed\n",
+  "source_freeze_ended": true,
+  "failed_reason": "ValueError: import lease: stale interval cannot refresh",
+  "native": {
+    "child_exit_code": 1,
+    "elapsed_seconds": 1011.093177666,
+    "limit_reason": "RuntimeError: child or unit failed: {'Result': 'exit-code', 'ExecMainStatus': '1', 'ControlGroup': '', 'ActiveState': 'failed', 'SubState': 'failed'}",
+    "peak_sampled_memory_current_bytes": 5368881152,
+    "phase": "failed",
+    "storage_peak_allocated_bytes": 5157728256,
+    "storage_peak_logical_file_bytes": 5578820845
+  },
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 1998839808,
+    "memory_events": {
+      "high": 563,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 14475264,
+        "file_bytes": 1983840256,
+        "kernel_peak_bytes": 5370978304,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-224a5070913b4c9ca034c294303360c5.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=599538\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=599538",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4913455104,
+        "file_bytes": 4816834560,
+        "kernel_peak_bytes": 14419030016,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1881936\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1876845",
+        "swap_current_bytes": 654938112,
+        "unavailable": {}
+      }
+    }
+  },
+  "traceback_sha256": "19640081c33bc9692b704748da18657a0b4dcd0b17632285ebe7d72e0770150b",
+  "qualification": "Actual original Root exit and cleanup; permanent FAILED32 with all original nulls unchanged. Failure within compact_mcm._prepare174 before extra boundary501. No MCM batch, joint update, whole capacity or scientific success."
+}
