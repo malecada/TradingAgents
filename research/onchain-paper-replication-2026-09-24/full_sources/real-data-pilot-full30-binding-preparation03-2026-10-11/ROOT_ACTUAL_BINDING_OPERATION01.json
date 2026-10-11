@@ -1,0 +1,46 @@
+{
+  "actual_exit_code": 0,
+  "actual_tool_chunk": "8b5db9",
+  "all_input_roles": 67,
+  "at": "2026-10-11T00:29:17.718189+00:00",
+  "command": [
+    "taskset",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "10",
+    "prlimit",
+    "--cpu=30",
+    "--as=536870912",
+    "--fsize=4194304",
+    "--",
+    ".venv/bin/python",
+    "-B",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation03-2026-10-11/bind_actual01.py"
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-30",
+  "outputs": {
+    "ALL_INPUT_REFS01.json": {
+      "bytes": 15721,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation03-2026-10-11/ALL_INPUT_REFS01.json",
+      "sha256": "f1690d4b9f2641c9b4167ee128cc394f47254c8a5bb599c1d7a85c379f40fee5"
+    },
+    "BINDING_CHECK01.json": {
+      "bytes": 1384,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation03-2026-10-11/BINDING_CHECK01.json",
+      "sha256": "a657e5083d93666ddfa7d5e75d44790c56ac3bdb90a0946e5cc570908f466814"
+    },
+    "BOUND01.json": {
+      "bytes": 87864,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation03-2026-10-11/BOUND01.json",
+      "sha256": "2aae89273cae4c36f9d3116883af7de4cac518e0a17c8b9bb316060dbe7c8f2d"
+    }
+  },
+  "qualification": "Actual once-only original offline binder returned success; network/claim false. Public returned metadata only; private body not inspected.",
+  "source_review": {
+    "bytes": 4846,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-review03-2026-10-11/REVIEW01.json",
+    "sha256": "a177f73cc2c18e8d8f7fc8cd3b1576228ab3f57bee47bf14ed65671a21efcb4d"
+  }
+}

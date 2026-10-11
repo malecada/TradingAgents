@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/preflight30_04.py", line 335, in <module>
+    if __name__=='__main__':print(json.dumps(check()[1],sort_keys=True))
+                                             ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/preflight30_04.py", line 253, in check
+    admission,job=_admitted(args)
+                  ~~~~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py", line 145, in _admitted
+    route.admitted(admitted,job,fresh_archive=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 289, in admitted
+    require(type(numerical) is dict and set(numerical)=={'commit','files'} and type(numerical['files']) is dict and set(numerical['files'])==required_sources(),'numerical source closure differs')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 24, in require
+    raise ValueError(message)
+ValueError: numerical source closure differs
