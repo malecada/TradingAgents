@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification-source-review02-2026-10-11/check01.py", line 13, in <module>
+    ck(''.join(difflib.unified_diff(a.splitlines(True),b.splitlines(True),fromfile=first,tofile=last))==read(D/suffix),'exact '+suffix)
+    ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification-source-review02-2026-10-11/check01.py", line 8, in ck
+    def ck(v,n):checks.append({'name':n,'pass':bool(v)});assert v,n
+                                                                ^
+AssertionError: exact FORWARD.patch

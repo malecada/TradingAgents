@@ -1,0 +1,75 @@
+{
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "guard_sample": {
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 31326629888
+    },
+    "elapsed_seconds": 2594.335346373002,
+    "memory_current_bytes": 5231788032,
+    "memory_events": {
+      "high": 2,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 31326629888
+    },
+    "sample_seconds": 0.25,
+    "storage_peak_allocated_bytes": 5158273024,
+    "storage_peak_entries": 18057,
+    "storage_peak_logical_file_bytes": 5579092343
+  },
+  "observed_utc": "2026-10-11T04:35:50.636192+00:00",
+  "original_guard_ref": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-34/guard/live.json",
+    "sha256": "1cceccbb04775325770406e3fde44a9dbb92cb6feab1a100fe5aa9909c25c471"
+  },
+  "original_known_pid_cpu_samples": [
+    {
+      "comm": "python",
+      "pid": 1889468,
+      "state": "S",
+      "system_ticks": 81,
+      "ticks_per_second": 100,
+      "user_ticks": 520
+    },
+    {
+      "comm": "python",
+      "pid": 1889925,
+      "state": "S",
+      "system_ticks": 59013,
+      "ticks_per_second": 100,
+      "user_ticks": 50500
+    },
+    {
+      "comm": "python",
+      "pid": 1890374,
+      "state": "S",
+      "system_ticks": 120,
+      "ticks_per_second": 100,
+      "user_ticks": 872
+    },
+    {
+      "comm": "python",
+      "pid": 1890378,
+      "state": "R",
+      "system_ticks": 15395,
+      "ticks_per_second": 100,
+      "user_ticks": 117368
+    }
+  ],
+  "qualification": "Storage includes the whole watched union and historical contents; no per-pilot incremental or continuous peak claim. CPU snapshots are cumulative process counters, not attribution to a source function or monitor scan. No numeric arrays or outcomes read.",
+  "root_session": 30142,
+  "source": "1b72fe04f626711088064f3dc89140e7cc1f8649",
+  "storage_observation": {
+    "allocated_bytes": 5158273024,
+    "directories": 1395,
+    "elapsed_seconds": 0.19200786500005051,
+    "entries": 18057,
+    "logical_file_bytes": 5579092295,
+    "regular_files": 16664
+  }
+}

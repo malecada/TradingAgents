@@ -1,0 +1,13 @@
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c: In function ‘fill’:
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c:47:33: warning: unused parameter ‘self’ [-Wunused-parameter]
+   47 | static PyObject *fill(PyObject *self, PyObject *args) {
+      |                       ~~~~~~~~~~^~~~
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c: At top level:
+/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c:92:15: warning: missing initializer for field ‘m_slots’ of ‘struct PyModuleDef’ [-Wmissing-field-initializers]
+   92 | static struct PyModuleDef module={PyModuleDef_HEAD_INIT,"_edge_chunk",NULL,-1,methods};
+      |               ^~~~~~~~~~~
+In file included from /home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/include/python3.13/Python.h:96,
+                 from /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c:2:
+/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/include/python3.13/moduleobject.h:113:21: note: ‘m_slots’ declared here
+  113 |   PyModuleDef_Slot *m_slots;
+      |                     ^~~~~~~

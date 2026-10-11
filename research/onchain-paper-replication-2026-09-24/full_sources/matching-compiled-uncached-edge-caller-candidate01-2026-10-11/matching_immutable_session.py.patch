@@ -1,0 +1,94 @@
+--- matching_immutable_session.py
++++ matching_immutable_session.py
+@@ -10,6 +10,7 @@
+ import json
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
++from . import compiled_edge_owner
+ from types import MappingProxyType
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+@@ -72,7 +73,7 @@
+ 
+ 
+ class ImmutablePairSession:
+-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None):
++    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None):
+         require(engine.ann is annealing and
+                 callable(getattr(engine, '_check_owned', None)) and
+                 callable(getattr(engine, '_advance_owned', None)) and
+@@ -136,8 +137,58 @@
+                 except BaseException:pass
+             raise
+ 
++
++        try:
++            self._edge_lease = None
++            self._edge_pin = None
++            self._edge_functions = ()
++            if edge_chunk_owner is not None:
++                normal_cleanup = self._normalizer_cleanup
++                edge_close = None
++                def combined_cleanup():
++                    primary = None
++                    try:normal_cleanup()
++                    except BaseException as error:primary = error
++                    try:
++                        if edge_close is not None:edge_close()
++                    except BaseException as error:
++                        if primary is None:primary = error
++                        else:
++                            try:BaseException.add_note(primary, 'edge release failed: '+repr(error))
++                            except BaseException:pass
++                    if primary is not None:raise primary
++                self._normalizer_cleanup = combined_cleanup
++                lease = None
++                try:
++                    require(type(edge_chunk_owner) is compiled_edge_owner.EdgeOwner, 'typed authenticated edge owner required')
++                    lease = edge_chunk_owner.borrow(self)
++                    edge_close = lease.close
++                    self._edge_lease = self._edge_pin = lease
++                    self._edge_functions = tuple((name,getattr(lease,name),getattr(lease,name).__code__) for name in ('fill','current','close'))
++                except BaseException as primary:
++                    try:
++                        if lease is not None and edge_close is None:edge_close = lease.close
++                        combined_cleanup()
++                    except BaseException as error:
++                        try:BaseException.add_note(primary, 'edge session construction cleanup failed: '+repr(error))
++                        except BaseException:pass
++                    raise
++        except BaseException as primary:
++            try:self._normalizer_cleanup()
++            except BaseException as error:
++                try:BaseException.add_note(primary, 'edge setup cleanup failed: '+repr(error))
++                except BaseException:pass
++            raise
++
++    def _edge_current(self):
++        require(self._edge_lease is self._edge_pin, 'edge lease replaced')
++        for name,function,code in self._edge_functions:
++            require(getattr(self._edge_lease,name) is function and function.__code__ is code, 'edge lease method replaced')
++        if self._edge_lease is not None:self._edge_functions[1][1]()
++
+     def current(self):
+         require(not self.closed, 'matching session closed')
++        self._edge_current()
+         adaptive_edge_policy.current(self)
+         compiled_normalization_policy.current(self)
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+@@ -168,13 +219,14 @@
+                 'positive operation allowance required')
+         # No external callback between current-input/state check and body.
+         result = self.engine._advance_owned(
+-            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}))
++            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {}))
+         adaptive_edge_policy.current(self)
+         compiled_normalization_policy.current(self)
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+         for name,function,code in self._normalizer_functions:
+             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
+         if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
++        self._edge_current()
+         self.advances += 1
+         return result
+ 

@@ -1,0 +1,101 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-authority-fresh-serialization-candidate01-2026-10-11/original_import_preparation.py
++++ tradingagents/research/onchain_replication/original_import_preparation.py
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ from . import original_dictionary as original
+ from .cache import cache_key
+-from .provenance import canonical_bytes,thaw,file_hash,current_canonical_bytes
++from .provenance import canonical_bytes,thaw,file_hash
+ 
+ 
+ def require(value,message):
+@@ -53,7 +53,7 @@
+ 
+     def _configuration(self):
+         bound=self._bound;run=self._run
+-        return current_canonical_bytes({'binding':thaw(bound.record),'context':thaw(bound.context),'limits':thaw(bound.limits),
++        return canonical_bytes({'binding':thaw(bound.record),'context':thaw(bound.context),'limits':thaw(bound.limits),
+           'run_directory':str(run.directory),'claim':run._claim_sha256,
+           'snapshots':{str(p):v for p,v in bound._snapshots.items()},'job_input':self._job_input,
+           'input':self._input,'selection':self._selection,'source':self._source})
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-authority-fresh-serialization-candidate01-2026-10-11/imported_authority_lease.py
++++ tradingagents/research/onchain_replication/imported_authority_lease.py
+@@ -108,9 +108,9 @@
+         require(not self.closed and all(a is b for a,b in zip((e,e._owner,e._stage,e._stage.prepared,e._bound,e._bound._run,e._materialized,e._stage.prepared._cap),self.objects,strict=True)),'import authority objects changed')
+         require(not self.prepared._closed and not self.prepared._cap._closed and self.stage.closed and not self.owner.closed and not self.owner.poisoned,'import owner/prepared is closed/poisoned/incomplete')
+     def _finger(self):
+-        from .provenance import current_canonical_bytes,thaw
++        from .provenance import canonical_bytes,thaw
+         e=self.execution
+-        current=current_canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
++        current=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
+         require(current==self.configuration,'import interval baseline changed')
+         self._identity();require(tuple(fingerprint(p) for p in self.paths)==self.fingerprints,'source/input identity changed')
+         current=_loaded(self.run.admission.root,self.sources)
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/imported_mcm_identity.py
++++ tradingagents/research/onchain_replication/imported_mcm_identity.py
+@@ -2,7 +2,7 @@
+ from pathlib import Path
+ from . import original_import_stage,compact_owner,original_dictionary,job
+ from .cache import cache_key
+-from .provenance import canonical_bytes,thaw,file_hash,current_canonical_bytes
++from .provenance import canonical_bytes,thaw,file_hash
+ from .matching_pair import BACKEND
+ from .matching_identity import graph_identity
+ from .neighborhoods import graph_hash,node_order_hash
+@@ -65,8 +65,8 @@
+         require((id(self.execution),id(self.graph),id(self.owner),id(self.dictionary),self._arrays())==self._objects,'import target objects changed')
+         require(self.execution._owner is self.owner and self.execution._materialized._dictionary is self.dictionary and self.execution._stage.reference==self.receipt_sha256,'import target authority chain changed')
+         descriptor=self.execution._stage.prepared._selection['selected']['descriptor']
+-        require(current_canonical_bytes(descriptor['resource_graph_inputs'])==self._mapping and descriptor['resource_graph_inputs'][self.key]==self._input,'target input mapping changed')
+-        require(current_canonical_bytes(self._execution)==self._execution_pin and current_canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
++        require(canonical_bytes(descriptor['resource_graph_inputs'])==self._mapping and descriptor['resource_graph_inputs'][self.key]==self._input,'target input mapping changed')
++        require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
+ 
+     def derive_scope(self):
+         current=self._execution['current'];ordered=[graph_identity(m) for m in self.dictionary.representatives]
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/neighborhoods.py
++++ tradingagents/research/onchain_replication/neighborhoods.py
+@@ -27,7 +27,7 @@
+     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
+     from dataclasses import fields
+     from collections.abc import Mapping
+-    from .provenance import current_canonical_bytes as canonical_bytes
++    from .provenance import canonical_bytes
+     import hashlib
+     validate_graph(graph);h=hashlib.sha256()
+     def feed(value):
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/provenance.py
++++ tradingagents/research/onchain_replication/provenance.py
+@@ -9,31 +9,6 @@
+ 
+ def canonical_bytes(value) -> bytes:
+     return json.dumps(thaw(value), sort_keys=True, separators=(',', ':'), ensure_ascii=False,
+-                      allow_nan=False).encode('utf-8')
+-
+-
+-def current_canonical_bytes(value):
+-    """Fresh exact-JSON domain scan avoids thaw's copied container tree.
+-
+-    No eligibility or validation result is retained. Frozen mappings, custom
+-    containers/keys and unsupported values use the original serializer intact.
+-    Exact dict/list/tuple/scalars have no user iteration hooks in this domain.
+-    """
+-    import json
+-    def plain(item):
+-        kind=type(item)
+-        if kind is str or kind is int or kind is float or kind is bool or kind is type(None):return True
+-        if kind is dict:
+-            for key,child in item.items():
+-                if type(key) is not str or not plain(child):return False
+-            return True
+-        if kind is list or kind is tuple:
+-            for child in item:
+-                if not plain(child):return False
+-            return True
+-        return False
+-    if not plain(value):return canonical_bytes(value)
+-    return json.dumps(value,sort_keys=True,separators=(',', ':'),ensure_ascii=False,
+                       allow_nan=False).encode('utf-8')
+ 
+ 

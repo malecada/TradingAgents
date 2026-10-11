@@ -1,0 +1,14 @@
+import hashlib,json,os,resource
+from pathlib import Path
+os.sched_setaffinity(0,{3});os.nice(10)
+resource.setrlimit(resource.RLIMIT_CPU,(10,10));resource.setrlimit(resource.RLIMIT_AS,(512*1024**2,512*1024**2));resource.setrlimit(resource.RLIMIT_FSIZE,(4*1024**2,4*1024**2))
+P=Path(__file__).resolve().parent;F=P.parent;R=F.parents[2]
+def ref(path):
+    body=path.read_bytes();return {'path':str(path.relative_to(R)),'sha256':hashlib.sha256(body).hexdigest(),'bytes':len(body)}
+def write(name,value):
+    with (P/name).open('x') as f:json.dump(value,f,sort_keys=True,indent=2);f.write('\n')
+D=F/'matching-compiled-uncached-edge-caller-candidate02-2026-10-11'
+out={'schema_version':1,'decision':'REFUSED_SOURCE_CURRENTNESS_REPAIR_REQUIRED','reviewer':'independent outcome16_release_review','candidate_manifest':ref(D/'MANIFEST02.json'),'source_requirements':ref(D/'SOURCE_REQUIREMENTS01.json'),'lower_observations':ref(P/'LOWER_OBSERVATIONS01.json'),'upper_observations':ref(P/'UPPER_OBSERVATIONS01.json'),'counterexample':ref(P/'COUNTEREXAMPLE01.json'),'findings':[{'severity':'P1','path':str((D/'compiled_edge_owner.py').relative_to(R)),'line':102,'additional_locations':['batched_pair_executor.py:55','batched_pair_executor.py:78','matching_immutable_session.py:185'],'problem':'Owner method identities omit code identities; same-object current.__code__ mutation bypasses body/seal currentness through unchanged borrowed wrapper.','repair':'Pin and check owner function/code identities outside the invoked current function, including parent and borrow/session route; retain captured cleanup and primary exceptions.'}],'source_observation':'Five body reads per owner current; two currents per successful session advance. No measured slowdown. Any borrow-only original-role authentication changes pathname mutation detection cadence and needs explicit contract review.','coverage_refs':[ref(R/'tradingagents/research/onchain_replication/imported_authority_lease.py'),ref(R/'tradingagents/research/onchain_replication/compiled_normalization_policy.py')],'claims_not_tested':['native loading/ABI','numerical equivalence and exception prefixes through actual public session','actual FD/seal lifetime','registered five-role admission','genuine Research Owner/Lease execution','performance','financial/scientific outcomes'],'installation_or_launch_released':False,'preservation':'Original lower observations, candidate01/02 and all raw check outputs retained; only owned review directory changed.'}
+write('REVIEW01.json',out)
+write('MANIFEST01.json',{'status':out['decision'],'files':{p.name:{k:v for k,v in ref(p).items() if k!='path'} for p in sorted(P.iterdir()) if p.is_file() and p.name!='MANIFEST01.json'}})
+print(json.dumps({'review':ref(P/'REVIEW01.json'),'manifest':ref(P/'MANIFEST01.json')},sort_keys=True))

@@ -1,0 +1,65 @@
+{
+  "checkpoint_entries": 0,
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "guard_live_ref": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-34/guard/live.json",
+    "sha256": "fa84aca9e3cd76d39fcbbb0214f83d488fb97d0f5a17f031551bf0a479469db9"
+  },
+  "guard_sample": {
+    "elapsed_seconds": 5263.638721474999,
+    "limit_reason": null,
+    "memory_current_bytes": 5284401152,
+    "memory_events": {
+      "high": 2,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    }
+  },
+  "observed_utc": "2026-10-11T05:20:19.874512+00:00",
+  "pending": {
+    "bytes": 200,
+    "kind": "engineering_pending",
+    "path": "research_artifacts/onchain_representations/eab8d86b62c9274c2888e73538431496527fc376eb1f0f73ebd3c6f9ce1da778/eth-paper-real-data-end-to-end-resource-20261011-34/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000000.pending.json",
+    "sha256": "f87c2be3fff25764e728d2aef0d50f2b9d709191b72a13008e8d13f38c56985d",
+    "start": 0,
+    "stop": 4096
+  },
+  "qualification": "Pending is published before index construction. It proves reserved batch range only, not a completed cell, active execution phase, throughput, or capacity. Stream byte counts are metadata, not numeric-array reads.",
+  "root_session": 30142,
+  "source": "1b72fe04f626711088064f3dc89140e7cc1f8649",
+  "source_reports": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot34-driver-boundary-count01-2026-10-11/REPORT.md",
+      "sha256": "2ca19ae32671c8f77de85f0ad276bfc3e743b2dbcdda542bf8998def6506429e"
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot34-neighborhood-initialization-investigation01-2026-10-11/REPORT.md",
+      "sha256": "657d66eee15b405042c9cb53c5f4d3bc262d7f62c2cb93e5edf843b6d8304478"
+    }
+  ],
+  "stream_metadata": [
+    {
+      "bytes": 0,
+      "directory": false,
+      "name": "closure-tokens.bin"
+    },
+    {
+      "bytes": 4096,
+      "directory": true,
+      "name": "numeric-batches"
+    },
+    {
+      "bytes": 0,
+      "directory": false,
+      "name": "scores.f32"
+    },
+    {
+      "bytes": 0,
+      "directory": false,
+      "name": "numeric-origins.bin"
+    }
+  ]
+}

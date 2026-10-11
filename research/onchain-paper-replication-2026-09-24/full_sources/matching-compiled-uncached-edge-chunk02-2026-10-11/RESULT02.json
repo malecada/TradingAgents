@@ -1,0 +1,149 @@
+{
+  "status": "PASS_FOCUSED_SOURCE_REGRESSION",
+  "cases": [
+    {
+      "version": "old",
+      "case": "prefill",
+      "primary_identity": false,
+      "caught_type": "NameError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": false
+    },
+    {
+      "version": "new",
+      "case": "prefill",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "stale",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 3,
+      "used": 3,
+      "written_destinations": 3,
+      "passes": false
+    },
+    {
+      "version": "new",
+      "case": "stale",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "fatal",
+      "primary_identity": false,
+      "caught_type": "NameError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": false
+    },
+    {
+      "version": "new",
+      "case": "fatal",
+      "primary_identity": true,
+      "caught_type": "KeyboardInterrupt",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "fatal_stale",
+      "primary_identity": true,
+      "caught_type": "KeyboardInterrupt",
+      "cursor": 3,
+      "used": 3,
+      "written_destinations": 3,
+      "passes": false
+    },
+    {
+      "version": "new",
+      "case": "fatal_stale",
+      "primary_identity": true,
+      "caught_type": "KeyboardInterrupt",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "eligibility",
+      "primary_identity": false,
+      "caught_type": "NameError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": false
+    },
+    {
+      "version": "new",
+      "case": "eligibility",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 0,
+      "used": 0,
+      "written_destinations": 0,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "decline",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 2,
+      "used": 2,
+      "written_destinations": 2,
+      "passes": true
+    },
+    {
+      "version": "new",
+      "case": "decline",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 2,
+      "used": 2,
+      "written_destinations": 2,
+      "passes": true
+    },
+    {
+      "version": "old",
+      "case": "partial",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 2,
+      "used": 2,
+      "written_destinations": 2,
+      "passes": true
+    },
+    {
+      "version": "new",
+      "case": "partial",
+      "primary_identity": true,
+      "caught_type": "MemoryError",
+      "cursor": 2,
+      "used": 2,
+      "written_destinations": 2,
+      "passes": true
+    }
+  ],
+  "literal_inverse_to01": true,
+  "native_loaded": false,
+  "scientific_imports": false,
+  "numeric_fixture_executed": false
+}

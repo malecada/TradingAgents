@@ -1,0 +1,48 @@
+{
+  "accepted_seams": [
+    "Exclusive attempt and result refusal preserve spent output",
+    "Raw descriptor setup precedes loader/import",
+    "Original references and literal inverses match",
+    "Numerical case/criteria body unchanged"
+  ],
+  "candidate_manifest": {
+    "bytes": 1363,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/MANIFEST02.json",
+    "sha256": "d712c03de3815c63419bde120d2492828280feb358a532b1d41d493779b37a3b"
+  },
+  "decision": "REFUSED_FAILURE_REPORTING_REPAIR_REQUIRED",
+  "evidence": {
+    "bytes": 4924,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification-source-review02-2026-10-11/RESULT01.json",
+    "sha256": "6a65c9a91d050a66039bbc2a176cb3e47bb795809ebc3c802aca434cac47be9b"
+  },
+  "execution_released": false,
+  "findings": [
+    {
+      "issue": "Fallible traceback write precedes failure assignment; finally emits PASS after original exception when traceback storage fails.",
+      "line": 77,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/fixture02.py",
+      "repair": "Mark failure before all fallible reporting and retain primary/secondary failures; no success after any original or reporting failure.",
+      "severity": "P1"
+    }
+  ],
+  "fixture": {
+    "bytes": 5535,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/fixture02.py",
+    "sha256": "578673d7d8d4f98af0b86a595cccfcdd8767f60540abdc6b8efd6177c004505d"
+  },
+  "not_executed": [
+    "native or scientific imports",
+    "fixture or numerical cases",
+    "genuine authority",
+    "live process inspection"
+  ],
+  "prior_review": {
+    "bytes": 2740,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement-source-review01-2026-10-11/REVIEW01.json",
+    "sha256": "18d857ed5a419ef52c399024e685e0047b85cb42fe9e0c4ac0010bd93d0e8314"
+  },
+  "reviewer": "independent outcome16_release_review",
+  "reviewer_initial_failure": "Original checker expected different diff labels; preserved check01/stderr01. check02 only corrects header expectation.",
+  "schema_version": 1
+}

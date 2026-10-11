@@ -1,0 +1,63 @@
+{
+  "derived_component_measurements": {
+    "authority_poll_fraction_of_recorded_numeric_seconds": 0.5599895827337057,
+    "authority_poll_mean_seconds": 0.07615179175127627,
+    "authority_poll_seconds": 2192.790843478,
+    "numeric_cells_per_second": 1.0460264998367006,
+    "reuse_fraction": 0.0234375
+  },
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "first_batch_cumulative_counters": {
+    "accounted_cache_bytes": 66908566,
+    "authority_poll_calls": 28795,
+    "authority_poll_failures": 0,
+    "authority_poll_ns": 2192790843478,
+    "binding_first_guard_calls": 2140,
+    "binding_first_guard_failures": 0,
+    "binding_first_guard_ns": 5823705031,
+    "binding_journal_calls": 2140,
+    "binding_journal_failures": 0,
+    "binding_journal_ns": 144992783,
+    "binding_second_guard_calls": 2140,
+    "binding_second_guard_failures": 0,
+    "binding_second_guard_ns": 5036561351,
+    "binding_snapshots_calls": 2140,
+    "binding_snapshots_failures": 0,
+    "binding_snapshots_ns": 1960619720,
+    "binding_timing_closed": 0,
+    "evictions": 756,
+    "key_hashed_bytes": 147368064,
+    "lookup_probes": 789,
+    "lru_link_updates": 4948,
+    "source_guard_calls": 3,
+    "source_hashed_bytes": 310125
+  },
+  "matching_child_names": [
+    "00000000.complete.json",
+    "00000000.pending.json",
+    "00000000.records.bin"
+  ],
+  "numeric_batch_ref": {
+    "bytes": 3051,
+    "path": "research_artifacts/onchain_representations/eab8d86b62c9274c2888e73538431496527fc376eb1f0f73ebd3c6f9ce1da778/eth-paper-real-data-end-to-end-resource-20261011-34/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000000.json",
+    "sha256": "2e550257184769a2e9083ba9f56642c4ea217c879b516d215af4831402450a92"
+  },
+  "observed_utc": "2026-10-11T05:29:41.009293+00:00",
+  "per_batch": {
+    "batch": 0,
+    "computed": 4000,
+    "elapsed_seconds": 3915.7707769730914,
+    "format": "numeric-reuse-origins-v1",
+    "reused": 96,
+    "start": 0,
+    "stop": 4096
+  },
+  "qualifications": [
+    "First batch only; no representative sustained rate or whole-job ETA.",
+    "Timer includes memo numerical work and internal authority polls, excluding external preparation/driver/journal/offload boundaries.",
+    "Published numeric summary precedes journal completion and does not grant whole scientific stage or representation completion.",
+    "No numeric arrays, scores, labels, training losses or checkpoint bodies read."
+  ],
+  "root_session": 30142,
+  "source": "1b72fe04f626711088064f3dc89140e7cc1f8649"
+}

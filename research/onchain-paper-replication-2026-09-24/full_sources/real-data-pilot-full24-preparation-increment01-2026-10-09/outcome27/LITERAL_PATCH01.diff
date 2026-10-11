@@ -1,0 +1,130 @@
+--- select25.py
++++ select27.py
+@@ -16,22 +16,31 @@
+     return hashlib.sha256(path.read_bytes()).hexdigest()
+ 
+ 
+-prior = HERE.parent/'full33increment24/FRESH_GIT_RECOVERY24.json'
++prior = HERE.parent/'full34increment26/FRESH_GIT_RECOVERY26.json'
+ base = json.loads(prior.read_bytes())['source']
+ names = set(subprocess.check_output(
+     ['git', 'diff', '--name-only', base, 'HEAD'], cwd=ROOT, text=True).splitlines())
+-owned = ['real-data-pilot-full33-entry-preparation01-2026-10-11', 'pilot33-terminal-outcome-review01-2026-10-11', 'pilot33-outcome-increment-tools-review01-2026-10-11', 'pilot33-preparation-cadence-correction01-2026-10-11', 'pilot33-preparation-cadence-correction-review01-2026-10-11']
++owned = ['graph-hash-current-serialization-candidate01-2026-10-11', 'pilot34-terminal-state-consolidation01-2026-10-11', 'real-data-pilot-full34-entry-preparation01-2026-10-11', 'real-data-pilot-full34-binding-preparation01-2026-10-11', 'pilot34-terminal-outcome-review01-2026-10-11', 'pilot34-outcome-increment-tools-review01-2026-10-11', 'pilot34-five-module-serialization-bundle01-2026-10-11', 'pilot34-shared-serialization-integration01-2026-10-11', 'pilot34-authority-fresh-serialization-candidate01-2026-10-11', 'pilot34-authority-fresh-serialization-source-review01-2026-10-11', 'pilot34-acceleration-candidates-source-review01-2026-10-11', 'pilot34-acceleration-candidates-source-review02-2026-10-11', 'pilot34-serializer02-focused-timing01-2026-10-11', 'pilot34-native-owner-qualification01-2026-10-11', 'pilot34-native-owner-qualification02-2026-10-11', 'pilot34-measurement-locators01-2026-10-11', 'pilot34-resource-overhead-investigation01-2026-10-11', 'pilot34-numeric-authority-call-count01-2026-10-11', 'pilot34-driver-boundary-count01-2026-10-11', 'pilot34-neighborhood-initialization-investigation01-2026-10-11', 'pilot34-large-pair-acceleration-status01-2026-10-11', 'matching-compiled-uncached-edge-chunk01-2026-10-11', 'matching-compiled-uncached-edge-chunk02-2026-10-11', 'matching-compiled-uncached-edge-caller-candidate01-2026-10-11', 'matching-compiled-uncached-edge-caller-candidate02-2026-10-11', 'matching-compiled-uncached-edge-caller-candidate03-2026-10-11', 'matching-compiled-uncached-edge-caller-source-review01-2026-10-11', 'matching-compiled-uncached-edge-caller-source-review02-2026-10-11', 'matching-compiled-two-attribute-agreement01-2026-10-11', 'matching-compiled-two-attribute-agreement-source-review01-2026-10-11', 'matching-compiled-two-attribute-qualification02-2026-10-11', 'matching-compiled-two-attribute-qualification03-2026-10-11', 'matching-compiled-two-attribute-qualification-source-review02-2026-10-11', 'matching-compiled-two-attribute-qualification-source-review03-2026-10-11']
++scope_directories=set()
+ for name in owned:
+-    for path in (F/name).rglob('*'):
+-        if path.is_file():
++    root=F/name
++    assert root.is_dir() and not root.is_symlink(), 'required final public scope absent: '+name
++    scope_directories.add(root)
++    for path in root.rglob('*'):
++        if path.is_file() or path.is_symlink():
+             names.add(str(path.relative_to(ROOT)))
+-for name in ('capture25.py', 'recover25.py', 'select25.py', 'HELPERS_MANIFEST01.json', 'LITERAL_PATCH01.diff', 'LITERAL_INVERSE01.diff', 'AUTHOR_CHECK01.json', 'REPORT.md'):
++        elif path.is_dir():scope_directories.add(path)
++public_metadata_dependencies = {'research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json': {'sha256': '8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb', 'bytes': 345}, 'research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/LINEAGE01.json': {'sha256': '77e85c3e10c75d6d417cb215c6a121b43d19c4a41d8e52cd803589e6f4c9eb8b', 'bytes': 1280}, 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json': {'sha256': '3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc', 'bytes': 358}, 'research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/INVENTORY01.json': {'sha256': '7f0cbd1a34389ac112c9e09241cb1bcab7b1972e77e5fe7d13dc124984266175', 'bytes': 3624}, 'research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json': {'sha256': '247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366', 'bytes': 382}}
++for relative,reference in public_metadata_dependencies.items():
++    path=ROOT/relative
++    assert path.stat().st_size==reference['bytes'] and sha(path)==reference['sha256'], relative
++    names.add(relative)
++for name in ('capture27.py', 'recover27.py', 'select27.py', 'HELPERS_MANIFEST01.json', 'LITERAL_PATCH01.diff', 'LITERAL_INVERSE01.diff', 'AUTHOR_CHECK01.json', 'REPORT.md', 'CAPTURE_GENERATION_FAILURE01.txt', 'AUTHOR_CHECK_INITIAL01.json'):
+     names.add(str((HERE/name).relative_to(ROOT)))
+ # Exact current failed attempt and Root observations; no private runtime/history replay.
+ # Original failed28 scopes already actually recovered; no raw replay.
+-N='eth-paper-real-data-end-to-end-resource-20261011-33'
+-scopes=[ROOT/'research_runs'/N,ROOT/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/N,ROOT/'research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent'/N,ROOT/'research_artifacts/onchain_representations/302049e6d5d1f55046c6fc6dfeb187d8ea8903ac21a6444b0d19bcdc2031a02a'/N,ROOT/'research_artifacts/archive-dispatch-ethpilot-20261011-33']
+-scope_directories=set()
++N='eth-paper-real-data-end-to-end-resource-20261011-34'
++scopes=[ROOT/'research_runs'/N,ROOT/'research_artifacts/onchain-paper-replication-2026-09-24/runs'/N,ROOT/'research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent'/N,ROOT/'research_artifacts/onchain_representations/eab8d86b62c9274c2888e73538431496527fc376eb1f0f73ebd3c6f9ce1da778'/N,ROOT/'research_artifacts/archive-dispatch-ethpilot-20261011-34',ROOT/'research_artifacts/onchain_compact_mcm/eab8d86b62c9274c2888e73538431496527fc376eb1f0f73ebd3c6f9ce1da778'/N]
+ for scope in scopes:
+     if scope.exists():
+         assert scope.is_dir() and not scope.is_symlink(), str(scope)
+@@ -49,10 +58,12 @@
+     assert path.is_file() and sha(path)==prior_receipt['returned_archive']['sha256'], relative
+ 
+ # Only actual new or changed bodies; immutable prior recovered entry bodies are reused.
+-prior_selection=json.loads((prior.parent/'SELECTION24.json').read_bytes())
+-assert sha(prior.parent/'SELECTION24.json')==prior_capture['selection']['sha256']
++prior_selection=json.loads((prior.parent/'SELECTION26.json').read_bytes())
++assert sha(prior.parent/'SELECTION26.json')==prior_capture['selection']['sha256']
+ previous_rows={row['path']:row for row in prior_selection['rows']}
+ names.update(subprocess.check_output(['git','diff','--name-only','HEAD'],cwd=ROOT,text=True).splitlines())
++assert not (HERE/'SELECTION27.json').exists(), 'selection27 already spent'
++assert all(not (ROOT/relative).is_relative_to(HERE) or (ROOT/relative).name in ('capture27.py','recover27.py','select27.py','HELPERS_MANIFEST01.json','LITERAL_PATCH01.diff','LITERAL_INVERSE01.diff','AUTHOR_CHECK01.json','REPORT.md','CAPTURE_GENERATION_FAILURE01.txt','AUTHOR_CHECK_INITIAL01.json') for relative in names), 'generated outcome27 products are outside selection'
+ reused=[]
+ for relative in sorted(names-excluded):
+     old=previous_rows.get(relative);path=ROOT/relative
+@@ -98,12 +109,12 @@
+     'actual_scope_states': [{'path':str(scope.relative_to(ROOT)),'exists':scope.exists(),'empty_directories_included':True} for scope in scopes],
+     'exact_already_recovered_duplicate_exclusions':sorted(excluded),
+     'exact_unchanged_prior_rows_reused':reused,
+-    'selection_rule': 'Actual failed33 public outcomes, typed trees and Root entry/closure increments plus independent actual outcome review since recovered24; exact new/changed Git bodies and immutable prior row reuse. No private dispatch, scientific/raw/runtime store duplication, alias admission or deletion authority.',
++    'selection_rule': 'Actual failed34 public outcomes, typed trees and Root entry/closure increments plus independent actual outcome review since recovered26; exact new/changed Git bodies and immutable prior row reuse. No private dispatch, scientific/raw/runtime store duplication, alias admission or deletion authority.',
+     'files': len(rows), 'body_bytes': sum(r['bytes'] for r in rows),
+     'rows': rows, 'directories': dirs,
+     'symlinks': sum(r['type'] == 'symlink' for r in rows),
+     'qualification': 'Public incremental byte/name/type/mode selection only. Symlink targets are recorded without dereferencing; regular bodies have a 64MiB preservation bound independent of unchanged empirical native limits. No originals are copied or retired; no source/runtime/empirical store completeness beyond these selected new bodies is asserted.'}
+-with (HERE/'SELECTION25.json').open('x') as stream:
++with (HERE/'SELECTION27.json').open('x') as stream:
+     json.dump(selection, stream, indent=2, sort_keys=True)
+     stream.write('\n')
+ print(json.dumps({'selected_files': len(rows), 'selected_bytes': selection['body_bytes'],
+--- capture25.py
++++ capture27.py
+@@ -1,8 +1,8 @@
+ import datetime,hashlib,io,json,os,stat,tarfile
+ from pathlib import Path
+ R=Path.cwd();D=Path(__file__).resolve().parent
+-S=D/'SELECTION25.json'
+-sel=json.loads(S.read_bytes());p=D/'failed-outcome-increment25.tar';assert not p.exists()
++S=D/'SELECTION27.json'
++sel=json.loads(S.read_bytes());p=D/'failed-outcome-increment27.tar';assert not p.exists()
+ rows=sorted(sel['rows']+sel['directories'],key=lambda r:r['path'])
+ with tarfile.open(p,'x',format=tarfile.PAX_FORMAT) as t:
+  for r in rows:
+@@ -21,5 +21,5 @@
+   if r['type']=='directory':assert m.isdir()
+   elif r['type']=='symlink':assert m.issym() and m.linkname==r['linkname']
+   else:assert m.isfile() and m.size==r['bytes'] and hashlib.sha256(t.extractfile(m).read()).hexdigest()==r['sha256']
+-raw=p.read_bytes();v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'selection':{'path':str(S.relative_to(R)),'sha256':hashlib.sha256(S.read_bytes()).hexdigest()},'archive':{'path':str(p.relative_to(R)),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()},'files':sel['files'],'directories':len(sel['directories']),'regular_bytes':sel['body_bytes'],'actual_local_readback':True,'qualification':'Complete declared public failed33 outcome increment including original names/types/modes and opaque regular bodies. Private runtime, unchanged historical stores and scientific inputs excluded. Local capture does not establish external recovery, POSIX reconstruction, installed runtime or deletion authority.'}
+-(D/'CAPTURE25.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps(v))
++raw=p.read_bytes();v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'selection':{'path':str(S.relative_to(R)),'sha256':hashlib.sha256(S.read_bytes()).hexdigest()},'archive':{'path':str(p.relative_to(R)),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()},'files':sel['files'],'directories':len(sel['directories']),'regular_bytes':sel['body_bytes'],'actual_local_readback':True,'qualification':'Complete declared public failed34 outcome increment including original names/types/modes and opaque regular bodies. Private runtime, unchanged historical stores and scientific inputs excluded. Local capture does not establish external recovery, POSIX reconstruction, installed runtime or deletion authority.'}
++(D/'CAPTURE27.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps(v))
+--- recover26.py
++++ recover27.py
+@@ -1,9 +1,9 @@
+-"""Recover the one declared fresh34 preparation public increment from the actual remote."""
++"""Recover the one declared failed34 outcome public increment from the actual remote."""
+ import datetime,hashlib,json,os,subprocess
+ from pathlib import Path
+ R=Path.cwd();D=Path(__file__).resolve().parent
+-B=R.parent/'onchain-pilot-recovery/real-pilot-full34-preparation-20261011-26.git'
+-assert not B.exists() and not (D/'FRESH_GIT_RECOVERY26.json').exists()
++B=R.parent/'onchain-pilot-recovery/real-pilot-failed34-outcome-20261011-27.git'
++assert not B.exists() and not (D/'FRESH_GIT_RECOVERY27.json').exists()
+ ops=[]
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def run(name,args,cwd=R):
+@@ -11,16 +11,16 @@
+  for k,b in [('stdout',p.stdout),('stderr',p.stderr)]:
+   with (D/(name+'.'+k)).open('xb') as f:f.write(b)
+  ops.append({'operation':name,'exit_code':p.returncode,'stdout_bytes':len(p.stdout),'stdout_sha256':sha(p.stdout),'stderr_bytes':len(p.stderr),'stderr_sha256':sha(p.stderr)})
+- (D/'GIT_OPERATIONS26.json').write_text(json.dumps(ops,indent=2,sort_keys=True)+'\n')
++ (D/'GIT_OPERATIONS27.json').write_text(json.dumps(ops,indent=2,sort_keys=True)+'\n')
+  assert p.returncode==0,(name,p.returncode)
+  return p.stdout
+-cap=json.loads((D/'CAPTURE26.json').read_bytes());a=cap['archive'];source=run('local_head',['git','rev-parse','HEAD']).decode().strip();remote=run('remote_get_url',['git','remote','get-url','origin']).decode().strip();branch='refs/heads/research/onchain-paper-replication-2026-09-24'
++cap=json.loads((D/'CAPTURE27.json').read_bytes());a=cap['archive'];source=run('local_head',['git','rev-parse','HEAD']).decode().strip();remote=run('remote_get_url',['git','remote','get-url','origin']).decode().strip();branch='refs/heads/research/onchain-paper-replication-2026-09-24'
+ remotehead=run('remote_actual_branch_readback',['git','ls-remote','origin',branch]).decode().split()[0];assert remotehead==source
+ join=run('local_archive_git_tree_join',['git','ls-tree',source,'--',a['path']]).decode().strip();parts=join.split();assert parts[:2]==['100644','blob'] and parts[3]==a['path'];blob=parts[2]
+ run('fresh_bare_init',['git','init','--bare','--quiet',str(B)]);run('fresh_remote_add',['git','remote','add','origin',remote],B);run('set_promisor',['git','config','remote.origin.promisor','true'],B);run('set_tree_zero_filter',['git','config','remote.origin.partialclonefilter','tree:0'],B)
+ run('actual_external_commit_only_fetch',['git','fetch','--depth=1','--filter=tree:0','origin',source],B);head=run('fetched_head_readback',['git','rev-parse','FETCH_HEAD'],B).decode().strip();assert head==source
+ body=run('actual_external_commit_body',['git','cat-file','commit',source],B);assert body==subprocess.check_output(['git','cat-file','commit',source],cwd=R)
+ run('actual_external_selected_blob_fetch',['git','fetch','--no-tags','--no-write-fetch-head','--filter=tree:0','origin',blob],B);returned=run('actual_external_archive_blob_return',['git','cat-file','blob',blob],B);assert len(returned)==a['bytes'] and sha(returned)==a['sha256'];assert not (B/'objects/info/alternates').exists()
+-out=D/'fresh-git-recovered-preparation26.tar';out.write_bytes(returned)
+-v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'actual_external_source':remote,'actual_remote_head':remotehead,'actual_fetch_head':head,'fresh_bare':str(B),'archive_git_blob_oid':blob,'local_commit_tree_join':join,'commit_body_sha256':sha(body),'operations':ops,'no_alternates':True,'capture':{'path':str((D/'CAPTURE26.json').relative_to(R)),'sha256':sha((D/'CAPTURE26.json').read_bytes())},'returned_archive':{'path':str(out.relative_to(R)),'bytes':len(returned),'sha256':sha(returned)},'qualification':'Actual fresh remote commit-only/direct selected blob recovery. Complete declared fresh34 preparation public increment only; private runtime/scientific stores/whole tree/POSIX reconstruction/deletion excluded.'}
+-(D/'FRESH_GIT_RECOVERY26.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps({'status':'ACTUAL_SELECTED_EXTERNAL_RETURN','source':source,'bytes':len(returned),'sha256':sha(returned)}))
++out=D/'fresh-git-recovered-outcome27.tar';out.write_bytes(returned)
++v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'actual_external_source':remote,'actual_remote_head':remotehead,'actual_fetch_head':head,'fresh_bare':str(B),'archive_git_blob_oid':blob,'local_commit_tree_join':join,'commit_body_sha256':sha(body),'operations':ops,'no_alternates':True,'capture':{'path':str((D/'CAPTURE27.json').relative_to(R)),'sha256':sha((D/'CAPTURE27.json').read_bytes())},'returned_archive':{'path':str(out.relative_to(R)),'bytes':len(returned),'sha256':sha(returned)},'qualification':'Actual fresh remote commit-only/direct selected blob recovery. Complete declared failed34 outcome public increment only; private runtime/scientific stores/whole tree/POSIX reconstruction/deletion excluded.'}
++(D/'FRESH_GIT_RECOVERY27.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps({'status':'ACTUAL_SELECTED_EXTERNAL_RETURN','source':source,'bytes':len(returned),'sha256':sha(returned)}))

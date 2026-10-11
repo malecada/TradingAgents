@@ -1,0 +1,120 @@
+{
+  "checks": [
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 normal callback current",
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 three boundary outcomes current",
+    "refused/no-op callback did not validate matching-compiled-uncached-edge-caller-candidate02-2026-10-11current",
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 normal callback borrow",
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 three boundary outcomes borrow",
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 normal callback close",
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11 three boundary outcomes close",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 normal callback current",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 three boundary outcomes current",
+    "refused/no-op callback did not validate matching-compiled-uncached-edge-caller-candidate03-2026-10-11current",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 normal callback borrow",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 three boundary outcomes borrow",
+    "refused/no-op callback did not validate matching-compiled-uncached-edge-caller-candidate03-2026-10-11borrow",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 normal callback close",
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11 three boundary outcomes close",
+    "refused/no-op callback did not validate matching-compiled-uncached-edge-caller-candidate03-2026-10-11close",
+    "normal independent cleanup",
+    "normal independent cleanup",
+    "normal independent cleanup",
+    "single cleanup attempt despite replaced exposed code False",
+    "ambiguous identity retained",
+    "ambiguous identity retained",
+    "ambiguous identity retained",
+    "single cleanup attempt despite replaced exposed code True",
+    "current primary identity survives cleanup and annotation failure",
+    "both parent cleanup attempts preserve primary",
+    "requirement batched_numeric_execution.py",
+    "requirement batched_numeric_reuse.py",
+    "exact predecessor inverse batched_numeric_reuse.py.from02.patch",
+    "exact predecessor inverse batched_numeric_reuse.py.to02.patch",
+    "requirement batched_pair_executor.py",
+    "exact predecessor inverse batched_pair_executor.py.from02.patch",
+    "exact predecessor inverse batched_pair_executor.py.to02.patch",
+    "requirement compact_mcm_batched.py",
+    "requirement compiled_edge_owner.py",
+    "exact predecessor inverse compiled_edge_owner.py.from02.patch",
+    "exact predecessor inverse compiled_edge_owner.py.to02.patch",
+    "requirement edge_chunk_adapter.py",
+    "requirement matching_annealing.py",
+    "requirement matching_checkpoint.py",
+    "requirement matching_immutable_session.py",
+    "requirement real_pilot_import_caller.py",
+    "only two responsible bodies plus dependent pins changed",
+    "memo exact inverse changes only two source pins",
+    "role read sites unchanged metadata",
+    "role read sites unchanged acquire",
+    "role read sites unchanged current",
+    "role read sites unchanged borrow"
+  ],
+  "counterexample": {
+    "matching-compiled-uncached-edge-caller-candidate02-2026-10-11": [
+      {
+        "mutation": "current",
+        "owner_parent_session_accepted": [
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "mutation": "borrow",
+        "owner_parent_session_accepted": [
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "mutation": "close",
+        "owner_parent_session_accepted": [
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "matching-compiled-uncached-edge-caller-candidate03-2026-10-11": [
+      {
+        "mutation": "current",
+        "owner_parent_session_accepted": [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "mutation": "borrow",
+        "owner_parent_session_accepted": [
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "mutation": "close",
+        "owner_parent_session_accepted": [
+          false,
+          false,
+          false
+        ]
+      }
+    ]
+  },
+  "limits": {
+    "as_bytes": 536870912,
+    "cpu_affinity": [
+      3
+    ],
+    "cpu_seconds": 9,
+    "fsize_bytes": 4194304,
+    "nice": 10,
+    "wall_alarm_seconds": 12
+  },
+  "native_execution": false,
+  "real_owner_constructed": false,
+  "scientific_imports": false,
+  "status": "PASS_FOCUSED_SOURCE_ONLY"
+}

@@ -1,0 +1,20 @@
+--- matching_annealing.py
++++ matching_annealing.py
+@@ -221,15 +221,14 @@
+                             # Exact copy only: lazy population and ordered arithmetic remain below.
+                             weights[:]=cached[start:start+count]
+                         else:
+-                            offset=0;native_progress=None
++                            native_progress=None
+                             try:
+                                 native_used=False
+                                 if (edge_chunk_fill is not None and not reuse and _reuse_runtime()
+                                         and _immutable_edges(a) and _immutable_edges(b)):
+-                                    native_progress=[0]
++                                    native_progress=[None]
+                                     native_used=edge_chunk_fill(weights,a.edge_features,b.edge_features,left,right,count,agreement,native_progress)
+                                 if not native_used:
+-                                    native_progress=None
+                                     for offset in range(count):
+                                         position=start+offset
+                                         if reuse and cached is not None and valid[position]:

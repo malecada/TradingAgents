@@ -1,0 +1,29 @@
+{
+  "status": "PASS_SOURCE_REFUSAL_ONLY",
+  "checks": [
+    "syntax:matching_checkpoint.py",
+    "syntax:matching_annealing.py",
+    "syntax:edge_chunk_adapter.py",
+    "syntax:compiled_edge_owner.py",
+    "syntax:check_source01.py",
+    "syntax:matching_immutable_session.py",
+    "default_none_no_load",
+    "refuse:False",
+    "refuse:True",
+    "refuse:{}",
+    "refuse:[]",
+    "refuse:{'format': 'cpython-uncached-edge-owner-v1'}",
+    "refuse:{'format': 'wrong'}",
+    "bad_abi_refused",
+    "bad_abi_refused",
+    "bad_abi_refused",
+    "literal_inverse:matching_checkpoint.py",
+    "literal_inverse:matching_immutable_session.py",
+    "forward:matching_immutable_session.py",
+    "forward:matching_checkpoint.py"
+  ],
+  "native_load": false,
+  "scientific_import": false,
+  "actual_runtime_policy_supplied": false,
+  "selected_loader_or_session_executed": false
+}

@@ -1,0 +1,50 @@
+--- matching_annealing.py
++++ matching_annealing.py
+@@ -166,7 +166,7 @@
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation budget required')
+     check(state,a,b,c)
+     return _advance_checked(state,a,b,c,max_operations=max_operations,**({'edge_cache_policy':edge_cache_policy} if edge_cache_policy is not None and edge_cache_policy is not False else {}))
+-def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None,edge_chunk_fill=None):
++def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None):
+     """Private body for an exclusively owned state checked in this same call.
+ 
+     The caller must validate state, inputs and positive operation budget before
+@@ -221,28 +221,18 @@
+                             # Exact copy only: lazy population and ordered arithmetic remain below.
+                             weights[:]=cached[start:start+count]
+                         else:
+-                            offset=0;native_progress=None
+                             try:
+-                                native_used=False
+-                                if (edge_chunk_fill is not None and not reuse and _reuse_runtime()
+-                                        and _immutable_edges(a) and _immutable_edges(b)):
+-                                    native_progress=[0]
+-                                    native_used=edge_chunk_fill(weights,a.edge_features,b.edge_features,left,right,count,agreement,native_progress)
+-                                if not native_used:
+-                                    native_progress=None
+-                                    for offset in range(count):
+-                                        position=start+offset
+-                                        if reuse and cached is not None and valid[position]:
+-                                            weights[offset]=cached[position]
+-                                        else:
+-                                            weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
+-                                            if reuse:
+-                                                if cached is None:
+-                                                    cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
+-                                                cached[position]=weights[offset];valid[position]=True
++                                for offset in range(count):
++                                    position=start+offset
++                                    if reuse and cached is not None and valid[position]:
++                                        weights[offset]=cached[position]
++                                    else:
++                                        weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
++                                        if reuse:
++                                            if cached is None:
++                                                cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
++                                            cached[position]=weights[offset];valid[position]=True
+                             except BaseException:
+-                                if native_progress is not None and native_progress[0] is not None:
+-                                    offset=native_progress[0]
+                                 # Reproduce the scalar prefix and cursor on agreement failure.
+                                 for offset2 in range(offset):
+                                     k,l=left[offset2],right[offset2]

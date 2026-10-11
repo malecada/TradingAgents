@@ -1,0 +1,68 @@
+{
+  "candidate_manifest": {
+    "bytes": 5647,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate02-2026-10-11/MANIFEST02.json",
+    "sha256": "77cbfb67bff4346ae4fb35e5d07d750ff7db23ee7bf337a55cd61adcf1636818"
+  },
+  "claims_not_tested": [
+    "native loading/ABI",
+    "numerical equivalence and exception prefixes through actual public session",
+    "actual FD/seal lifetime",
+    "registered five-role admission",
+    "genuine Research Owner/Lease execution",
+    "performance",
+    "financial/scientific outcomes"
+  ],
+  "counterexample": {
+    "bytes": 853,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-source-review01-2026-10-11/COUNTEREXAMPLE01.json",
+    "sha256": "6b0870808b38dcc9d19591dc19e629f48a7e39b31fb9a376f8854d1e1e01a68d"
+  },
+  "coverage_refs": [
+    {
+      "bytes": 13673,
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "edd14622f3b5948a057e38bcce937c4080b9acc985c9a419fa0ac038aa158119"
+    },
+    {
+      "bytes": 10714,
+      "path": "tradingagents/research/onchain_replication/compiled_normalization_policy.py",
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01"
+    }
+  ],
+  "decision": "REFUSED_SOURCE_CURRENTNESS_REPAIR_REQUIRED",
+  "findings": [
+    {
+      "additional_locations": [
+        "batched_pair_executor.py:55",
+        "batched_pair_executor.py:78",
+        "matching_immutable_session.py:185"
+      ],
+      "line": 102,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate02-2026-10-11/compiled_edge_owner.py",
+      "problem": "Owner method identities omit code identities; same-object current.__code__ mutation bypasses body/seal currentness through unchanged borrowed wrapper.",
+      "repair": "Pin and check owner function/code identities outside the invoked current function, including parent and borrow/session route; retain captured cleanup and primary exceptions.",
+      "severity": "P1"
+    }
+  ],
+  "installation_or_launch_released": false,
+  "lower_observations": {
+    "bytes": 11110,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-source-review01-2026-10-11/LOWER_OBSERVATIONS01.json",
+    "sha256": "2ed7350f93720e5f47820f50e71816e59db2f0b898e4051d68cb708dab5cdc85"
+  },
+  "preservation": "Original lower observations, candidate01/02 and all raw check outputs retained; only owned review directory changed.",
+  "reviewer": "independent outcome16_release_review",
+  "schema_version": 1,
+  "source_observation": "Five body reads per owner current; two currents per successful session advance. No measured slowdown. Any borrow-only original-role authentication changes pathname mutation detection cadence and needs explicit contract review.",
+  "source_requirements": {
+    "bytes": 1811,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate02-2026-10-11/SOURCE_REQUIREMENTS01.json",
+    "sha256": "23c3f2837ee0bce2dc9176b0b48ed513d02d42c79c7844077227681fcc45b54c"
+  },
+  "upper_observations": {
+    "bytes": 22785,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-source-review01-2026-10-11/UPPER_OBSERVATIONS01.json",
+    "sha256": "3c96fc3dd883e0f682d309b67fbf6c09b8a23067d33671e8e71194ce4fb7b121"
+  }
+}

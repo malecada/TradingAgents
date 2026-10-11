@@ -1,0 +1,31 @@
+--- batched_pair_executor.py
++++ batched_pair_executor.py
+@@ -1,5 +1,5 @@
+ """Engineering-only numeric route; no empirical/owner authority or pair receipts."""
+-import copy,sys
++import copy,sys,types
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+ from . import compiled_edge_owner
+@@ -51,8 +51,9 @@
+             try:
+                 owner=compiled_edge_owner.EdgeOwner(dict(self._compiled_edge_policy),numpy=annealing.np,scipy=sys.modules['scipy'],agreement=annealing.agreement)
+                 edge_cleanup=owner.close
++                edge_cleanup=types.FunctionType(edge_cleanup.__code__,edge_cleanup.__globals__,closure=edge_cleanup.__closure__)
+                 self._edge_owner=self._edge_owner_pin=owner
+-                self._edge_methods=tuple((name,getattr(owner,name)) for name in ('current','borrow','close'))
++                self._edge_methods=tuple((name,getattr(owner,name),getattr(owner,name).__code__) for name in ('current','borrow','close'))
+             except BaseException as primary:
+                 try:
+                     if owner is not None and edge_cleanup is None:edge_cleanup=owner.close
+@@ -75,8 +76,8 @@
+             compiled_edge_owner.current_policy(self)
+             if self._edge_owner is not self._edge_owner_pin:raise ValueError('edge parent replaced')
+             if self._edge_owner is not None:
+-                for name,function in self._edge_methods:
+-                    if getattr(self._edge_owner,name) is not function:raise ValueError('edge parent method replaced')
++                for name,function,code in self._edge_methods:
++                    if getattr(self._edge_owner,name) is not function or function.__code__ is not code:raise ValueError('edge parent method replaced')
+                 self._edge_methods[0][1]()
+             if self._normalization_owner is not self._normalization_owner_pin:raise ValueError('normalization owner replaced')
+             if self._normalization_owner is not None:self._normalization_owner.current()

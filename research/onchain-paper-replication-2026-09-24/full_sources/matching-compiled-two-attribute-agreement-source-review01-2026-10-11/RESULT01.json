@@ -1,0 +1,206 @@
+{
+  "checks": [
+    {
+      "name": "exact candidate manifest",
+      "pass": true
+    },
+    {
+      "name": "textual evidence BUILD.stderr",
+      "pass": true
+    },
+    {
+      "name": "textual evidence BUILD.stdout",
+      "pass": true
+    },
+    {
+      "name": "textual evidence BUILD01.json",
+      "pass": true
+    },
+    {
+      "name": "textual evidence REPORT.md",
+      "pass": true
+    },
+    {
+      "name": "textual evidence SOURCE_RESULT01.json",
+      "pass": true
+    },
+    {
+      "name": "textual evidence build01.py",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk.c",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk.c.inverse.patch",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk.c.patch",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk_adapter.py",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk_adapter.py.inverse.patch",
+      "pass": true
+    },
+    {
+      "name": "textual evidence edge_chunk_adapter.py.patch",
+      "pass": true
+    },
+    {
+      "name": "textual evidence fixture01.py",
+      "pass": true
+    },
+    {
+      "name": "textual evidence source_check01.py",
+      "pass": true
+    },
+    {
+      "name": "exact changed inverse edge_chunk.c.patch",
+      "pass": true
+    },
+    {
+      "name": "exact changed inverse edge_chunk.c.inverse.patch",
+      "pass": true
+    },
+    {
+      "name": "exact changed inverse edge_chunk_adapter.py.patch",
+      "pass": true
+    },
+    {
+      "name": "exact changed inverse edge_chunk_adapter.py.inverse.patch",
+      "pass": true
+    },
+    {
+      "name": "retained exact original expression",
+      "pass": true
+    },
+    {
+      "name": "scalar reads conversions and Python numeric operator order",
+      "pass": true
+    },
+    {
+      "name": "prefix marker before potentially failing row arithmetic and write",
+      "pass": true
+    },
+    {
+      "name": "unsupported rows callback fallback; buffer errors not erased",
+      "pass": true
+    },
+    {
+      "name": "no new native arithmetic or explicit GIL release",
+      "pass": true
+    },
+    {
+      "name": "capability refusal occurs before eligibility/write path",
+      "pass": true
+    },
+    {
+      "name": "explicit currentness and two-attribute readonly contiguous domain",
+      "pass": true
+    },
+    {
+      "name": "confirmed fixture overwrites output without exclusive attempt guard",
+      "pass": true
+    },
+    {
+      "name": "old owner cannot select new source/adapter",
+      "pass": true
+    }
+  ],
+  "decision": "ACCEPTED_C_ADAPTER_SOURCE_ONLY_FIXTURE_EXECUTION_WITHHELD",
+  "findings": [
+    {
+      "file": "fixture01.py",
+      "issue": "Overwrite of prior numeric result; no exclusive attempt refusal before native load.",
+      "line": 54,
+      "repair": "Create exclusive attempt directory before imports/load and write result exclusively; retain raw parent exit including absent result after fatal termination.",
+      "severity": "P2"
+    }
+  ],
+  "native_library_read_or_loaded": false,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/BUILD.stderr": {
+      "bytes": 1743,
+      "sha256": "d3268a1405f58ca3d0909e7815b160eda8543ce44c3b2ec275a63625059d68f8"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/BUILD.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/BUILD01.json": {
+      "bytes": 867,
+      "sha256": "6846409b718955144407171ab2872144cec7385f41b53098073e979c34e5c5b2"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/MANIFEST01.json": {
+      "bytes": 2179,
+      "sha256": "445cb2fb0d266a5c17243ad1d1fc9f29cc8a8b5e3fbe1b8472cc98513aa58152"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/REPORT.md": {
+      "bytes": 4116,
+      "sha256": "9c2e8757cb8d37d2ab389aaa3024619afeb4665c604ab52b415422215a2e5508"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/SOURCE_RESULT01.json": {
+      "bytes": 647,
+      "sha256": "f4a20c4bf703af636ad46e224bb0e1a54bb1371f4dcf4528a3c3be22522c091b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/build01.py": {
+      "bytes": 835,
+      "sha256": "a1477d957680f61574f2e0a9a38abb5c4442399568f7e5b4015e48bad6245919"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c": {
+      "bytes": 4889,
+      "sha256": "7218b75e9d2b1f4f832418e1057a7085eeeaa20120a3dfbdcc57e303542ce9f6"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c.inverse.patch": {
+      "bytes": 5064,
+      "sha256": "e495160a4e726f2007892555d08b745d864a99e3cf8bdee817063a66d37de8b4"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c.patch": {
+      "bytes": 5064,
+      "sha256": "d90c269f9d89c91a2566f580cc06c15b9617238f12df7b1a474950ecc04336fd"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk_adapter.py": {
+      "bytes": 3459,
+      "sha256": "e93bc309b1e7a38dff37ba63fd12bb0a3dce3a6766f829d6583cb008361c4dc6"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk_adapter.py.inverse.patch": {
+      "bytes": 3764,
+      "sha256": "18248a30541b074d4539d9cd32e59884e5428629a5b190114daed5003f9e7d19"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk_adapter.py.patch": {
+      "bytes": 3764,
+      "sha256": "efbb29202511d4316f8fcddcb3097150579f86ceec4fe44f2065fda94b1b9fee"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/fixture01.py": {
+      "bytes": 3527,
+      "sha256": "7a7fdebcf236b59a357bdc217ab1b6224e5018bbdc37f924b6adc7cb09de612b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/source_check01.py": {
+      "bytes": 2734,
+      "sha256": "2d2b4d29aa6508a09690eb4620469c9083235231eb713c80e9c30e57d3014dfb"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate03-2026-10-11/compiled_edge_owner.py": {
+      "bytes": 11481,
+      "sha256": "bca5138427201d629fd1a014d9344593250f2b4cb828c6e5dceac6195b21df44"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate03-2026-10-11/edge_chunk_adapter.py": {
+      "bytes": 1416,
+      "sha256": "55f41c5e46ad893eacf9ac229b3e04bc444ec0626ce946cca98a32270ebb6eb2"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/edge_chunk.c": {
+      "bytes": 2451,
+      "sha256": "6b0391049ddff37892c74e074d1d7506c0a3527ae44aba013c06cb66295695b8"
+    },
+    "tradingagents/research/onchain_replication/matching_reference.py": {
+      "bytes": 4226,
+      "sha256": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+    }
+  },
+  "scientific_imports_or_numerical_execution": false
+}

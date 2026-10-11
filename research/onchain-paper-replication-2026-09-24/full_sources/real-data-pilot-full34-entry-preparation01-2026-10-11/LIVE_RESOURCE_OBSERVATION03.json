@@ -1,0 +1,49 @@
+{
+  "actual_root_session": 30142,
+  "at": "2026-10-11T04:01:07.253834+00:00",
+  "earlier_actual_tool_observations": [
+    {
+      "native_pids": [
+        1890374,
+        1890378,
+        1911208
+      ],
+      "tool_chunk": "e12354"
+    },
+    {
+      "native_pids": [
+        1890374,
+        1890378,
+        1915478
+      ],
+      "tool_chunk": "121470"
+    }
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "kernel_now": {
+    "cgroup.procs": "1890374\n1890378\n1918973",
+    "cpu.stat": "usage_usec 546401046\nuser_usec 401515310\nsystem_usec 144885736\ncore_sched.force_idle_usec 0",
+    "memory.current": "5098946560",
+    "memory.events": "low 0\nhigh 2\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "5368885248"
+  },
+  "live_json_sha256_at_sample": "988d32cfd544503d730cb64e1cabac36a3560443ccfbddcd4b6eb4d5aabeb72c",
+  "qualification": "Actual live preparation prefix observations only. Soft memoryhigh events are not OOM; no finalpeak/fullcapacity/MCM completion/throughput/training inferred. Earlier observed ephemeral PIDs preserved as observed, fullPIDhistory unknown.",
+  "representation_namespaces": [],
+  "sampled_native_fields": {
+    "elapsed_seconds": 510.8007021779995,
+    "limit_reason": null,
+    "memory_current_bytes": 5098332160,
+    "memory_events": {
+      "high": 2,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "peak_sampled_memory_current_bytes": 5326413824,
+    "storage_peak_allocated_bytes": 5158100992,
+    "storage_peak_logical_file_bytes": 5579036908
+  }
+}

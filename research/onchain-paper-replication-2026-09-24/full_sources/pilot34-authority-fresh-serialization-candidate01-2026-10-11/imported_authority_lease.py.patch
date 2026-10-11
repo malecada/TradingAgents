@@ -1,0 +1,14 @@
+--- tradingagents/research/onchain_replication/imported_authority_lease.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot34-authority-fresh-serialization-candidate01-2026-10-11/imported_authority_lease.py
+@@ -108,9 +108,9 @@
+         require(not self.closed and all(a is b for a,b in zip((e,e._owner,e._stage,e._stage.prepared,e._bound,e._bound._run,e._materialized,e._stage.prepared._cap),self.objects,strict=True)),'import authority objects changed')
+         require(not self.prepared._closed and not self.prepared._cap._closed and self.stage.closed and not self.owner.closed and not self.owner.poisoned,'import owner/prepared is closed/poisoned/incomplete')
+     def _finger(self):
+-        from .provenance import canonical_bytes,thaw
++        from .provenance import current_canonical_bytes,thaw
+         e=self.execution
+-        current=canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
++        current=current_canonical_bytes({'prepared':self.prepared._configuration().hex(),'execution':e._execution_pin.hex(),'claim':self.run._claim_sha256,'source':self.run.admission.source,'registration':self.run.admission.registration_sha256,'inputs':self.run.admission.inputs,'sources':self.run.admission.experiment['source_files'],'runtime':self.bound.context})
+         require(current==self.configuration,'import interval baseline changed')
+         self._identity();require(tuple(fingerprint(p) for p in self.paths)==self.fingerprints,'source/input identity changed')
+         current=_loaded(self.run.admission.root,self.sources)

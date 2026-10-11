@@ -1,0 +1,29 @@
+{
+  "actual_root_session": 30142,
+  "at": "2026-10-11T04:16:08.786725+00:00",
+  "elapsed_seconds": 1412.4758744659994,
+  "kernel_now": {
+    "cgroup.procs": "1890374\n1890378",
+    "cpu.stat": "usage_usec 1529832345\nuser_usec 1086043372\nsystem_usec 443788973\ncore_sched.force_idle_usec 0",
+    "memory.current": "5114355712",
+    "memory.events": "low 0\nhigh 2\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.peak": "5368885248"
+  },
+  "live_sha256_at_sample": "d48febe10e4c9f2074b36e634b962784b7885d70f20b517f62d1467bbc703ed5",
+  "process_counter_sample": {
+    "1890374": {
+      "comm": "python",
+      "io_counters": "rchar: 252076588\nwchar: 2218\nsyscr: 28329\nsyscw: 3\nread_bytes: 0\nwrite_bytes: 4096\ncancelled_write_bytes: 0",
+      "wchan": "hrtimer_nanosleep"
+    },
+    "1890378": {
+      "comm": "python",
+      "io_counters": "rchar: 81175235663\nwchar: 58881907826\nsyscr: 11106911\nsyscw: 11557819\nread_bytes: 2150764544\nwrite_bytes: 491520\ncancelled_write_bytes: 4096",
+      "wchan": "0"
+    },
+    "1977372": {
+      "ended_during_sample": true
+    }
+  },
+  "qualification": "Actual managed live process and kernel counter sample; no commandline/process memory/arrays inspected. Sourcephase identity and work completion not inferred from CPU or IO counters."
+}

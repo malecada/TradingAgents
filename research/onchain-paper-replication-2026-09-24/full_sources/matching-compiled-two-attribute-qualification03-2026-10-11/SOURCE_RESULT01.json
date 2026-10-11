@@ -1,0 +1,27 @@
+{
+  "status": "PASS_SOURCE_ONLY_RED_TO_GREEN",
+  "checks": [
+    "02 RED actual handler writes false PASS and masks original",
+    "03 GREEN traceback error keeps FAILED and original identity",
+    "secondary traceback failure retained in result and original note",
+    "primary retained ValueError",
+    "no false PASS ValueError",
+    "primary retained BadText",
+    "no false PASS BadText",
+    "failed formatting cannot emit PASS",
+    "primary retained KeyboardInterrupt",
+    "no false PASS KeyboardInterrupt",
+    "both reporting failures secondary, no fabricated result",
+    "unchanged successful disposition",
+    "success storage failure escapes without result",
+    "complete numerical criteria byte-identical",
+    "reservation references and exclusive raw setup unchanged",
+    "immutable reference manifest unchanged",
+    "exact FORWARD.patch",
+    "exact INVERSE.patch",
+    "actual attempt remains absent"
+  ],
+  "native_load": false,
+  "scientific_imports": false,
+  "numeric_execution": false
+}

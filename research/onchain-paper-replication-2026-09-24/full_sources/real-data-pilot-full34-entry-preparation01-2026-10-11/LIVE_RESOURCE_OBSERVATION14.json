@@ -1,0 +1,51 @@
+{
+  "actual_kernel_cgroup_files": {
+    "cgroup.procs": "1890374\n1890378",
+    "cpu.stat": "usage_usec 7894012136\nuser_usec 6139067214\nsystem_usec 1754944921\ncore_sched.force_idle_usec 0",
+    "memory.current": "5247537152",
+    "memory.events": "low 0\nhigh 9\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.high": "5368709120",
+    "memory.max": "6442450944",
+    "memory.peak": "5370580992",
+    "memory.swap.max": "0"
+  },
+  "diskfree_bytes": 31316066304,
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "guard_original_ref": {
+    "bytes": 17770,
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-34/guard/live.json",
+    "sha256": "d21ecdc59437965f62f14e2d079604e0e0c7e0c8e9e42692c6960a7f8e68348c"
+  },
+  "guard_selected": {
+    "elapsed_seconds": 7417.762031587998,
+    "limit_reason": null,
+    "memory_current_bytes": 5247537152,
+    "memory_events": {
+      "high": 9,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    }
+  },
+  "known_original_pids_present": {
+    "1889468": true,
+    "1889925": true,
+    "1890374": true,
+    "1890378": true
+  },
+  "observed_utc": "2026-10-11T05:56:14.102962+00:00",
+  "qualifications": [
+    "Selected original guard metadata and actual current kernel files sampled nonatomically.",
+    "Kernel memory.peak is partial while active, not final whole capacity.",
+    "Actual kernel cgroup files do not reconstruct complete historical PID membership.",
+    "No arrays, labels, checkpoint bodies or credentials inspected."
+  ],
+  "root_session": 30142,
+  "source": "1b72fe04f626711088064f3dc89140e7cc1f8649",
+  "terminal_markers": {
+    "complete.json": false,
+    "failed.json": false
+  }
+}

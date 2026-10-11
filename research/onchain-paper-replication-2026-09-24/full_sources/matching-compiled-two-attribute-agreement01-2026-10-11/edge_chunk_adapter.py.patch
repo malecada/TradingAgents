@@ -1,0 +1,50 @@
+--- edge_chunk_adapter.py
++++ edge_chunk_adapter.py
+@@ -1,23 +1,44 @@
+ """Explicit engineering-only adapter; caller supplies already loaded extension.
+ No library discovery, build, loading or authority capability is performed here.
+ """
+-import types
++import types,sys,builtins,math
+ 
+ def make_filler(native, np, agreement):
+     if type(native.fill) is not types.BuiltinFunctionType or native.fill.__module__ not in ('_edge_chunk',native.__name__):
+         raise ValueError('exact CPython extension function required')
++    if type(agreement) is not types.FunctionType:raise ValueError('original Python agreement required')
++    original_module=sys.modules.get('tradingagents.research.onchain_replication.matching_reference')
++    if original_module is None or original_module.agreement is not agreement or agreement.__globals__ is not vars(original_module):
++        raise ValueError('original agreement module required')
++    code=agreement.__code__;globals_=agreement.__globals__;math_module=math
++    fsum=math.fsum;exp=math.exp
++    for name,function in (('fsum',fsum),('exp',exp)):
++        if type(function) is not types.BuiltinFunctionType or function.__module__!='math' or function.__name__!=name:
++            raise ValueError('original math primitives required')
++    builtins_ = builtins.__dict__
++    primitives={name:builtins_[name] for name in ('float','zip','len')}
++    if primitives['float'] is not (0.).__class__:raise ValueError('original float required')
++    if agreement.__builtins__ is not builtins_:raise ValueError('original builtin namespace required')
++    if (type(primitives['zip']) is not type or primitives['zip'].__module__!='builtins' or primitives['zip'].__name__!='zip'
++        or type(primitives['len']) is not types.BuiltinFunctionType or primitives['len'].__module__!='builtins' or primitives['len'].__name__!='len'):
++        raise ValueError('original builtin operators required')
+     fill=native.fill
+     ndarray=np.ndarray;float64=np.dtype('float64');int64=np.dtype('int64')
+     def apply(weights,af,bf,left,right,count,callback,progress):
+         # All eligibility decisions precede native writes. Unsupported -> original.
++        if (agreement.__code__ is not code or agreement.__globals__ is not globals_
++            or sys.modules.get(original_module.__name__) is not original_module or original_module.agreement is not agreement
++            or sys.modules.get('math') is not math_module or globals_.get('math') is not math_module or math_module.fsum is not fsum or math_module.exp is not exp
++            or any(builtins_.get(name) is not value or globals_.get(name,value) is not value for name,value in primitives.items())):
++            raise ValueError('agreement function/global capability changed')
+         if callback is not agreement or native.fill is not fill:return False
+         if type(count) is not int or not 1<=count<=1024:return False
+         if any(type(x) is not ndarray for x in (weights,af,bf,left,right)):return False
+         if weights.dtype!=float64 or weights.shape!=(count,) or not weights.flags.writeable:return False
+-        if any(x.dtype!=float64 or x.ndim!=2 or x.flags.writeable for x in (af,bf)):return False
++        if any(x.dtype!=float64 or x.ndim!=2 or x.shape[1]!=2 or x.flags.writeable or not x.flags.c_contiguous for x in (af,bf)):return False
+         if any(x.dtype!=int64 or x.shape!=(count,) for x in (left,right)):return False
+         indices=tuple(range(count))
+         # After this point an error uses this index to replay the original prefix.
+         progress[0]=0
+-        return fill(weights,af,bf,left,right,count,callback,progress,indices)
++        return fill(weights,af,bf,left,right,count,callback,progress,indices,fsum,exp)
+     return apply

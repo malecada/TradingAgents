@@ -1,0 +1,49 @@
+{
+  "adapter": {
+    "bytes": 3459,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk_adapter.py",
+    "sha256": "e93bc309b1e7a38dff37ba63fd12bb0a3dce3a6766f829d6583cb008361c4dc6"
+  },
+  "candidate_manifest": {
+    "bytes": 2179,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/MANIFEST01.json",
+    "sha256": "445cb2fb0d266a5c17243ad1d1fc9f29cc8a8b5e3fbe1b8472cc98513aa58152"
+  },
+  "decision": "ACCEPTED_C_ADAPTER_SOURCE_ONLY_FIXTURE_EXECUTION_WITHHELD",
+  "execution_released": false,
+  "findings": [
+    {
+      "issue": "write_text overwrites prior result and no pre-load exclusive attempt namespace exists.",
+      "line": 54,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/fixture01.py",
+      "repair": "New fixture-only successor with exclusive attempt before native/science imports, exclusive result, retained raw outer exit.",
+      "severity": "P2"
+    }
+  ],
+  "fixture": {
+    "bytes": 3527,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/fixture01.py",
+    "sha256": "7a7fdebcf236b59a357bdc217ab1b6224e5018bbdc37f924b6adc7cb09de612b"
+  },
+  "limitations": [
+    "Tuple allocation and generator/zip/len elimination change allocation and tracing/profiling events; allocator timing equivalence excluded",
+    "Initial source/runtime ownership and existing outer currentness remain required",
+    "Old EdgeOwner03 hashes and argument signature cannot select candidate",
+    "Native binary bytes not independently read or loaded; compile receipt only inspected",
+    "Actual loader/numeric/prefix/full-chain integration/genuine authority/performance pending"
+  ],
+  "main_or_registration_changed": false,
+  "result": {
+    "bytes": 7922,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement-source-review01-2026-10-11/RESULT01.json",
+    "sha256": "c32dee9521609d9e3f30daf4093c5c72cfa74d12a84fd7aab9b455dfedce720a"
+  },
+  "reviewer": "independent outcome16_release_review",
+  "schema_version": 1,
+  "source": {
+    "bytes": 4889,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c",
+    "sha256": "7218b75e9d2b1f4f832418e1057a7085eeeaa20120a3dfbdcc57e303542ce9f6"
+  },
+  "source_scope": "Two-attribute readonly contiguous float64 arithmetic and existing prefix/error interface. Original Python arithmetic order retained; no actual numerical proof."
+}

@@ -1,0 +1,24 @@
+{
+  "actual_owner_constructed": false,
+  "counterexample": "Same function object __code__ replaced with equal-freevar no-op; exact owner guard, parent guard and session _edge_current accept; metadata counter remains one after borrowed current call.",
+  "guards_accepted": [
+    "EdgeOwner.metadata method identity loop",
+    "PairExecutor.__call__ parent method identity loop",
+    "ImmutablePairSession._edge_current wrapper function/code loop"
+  ],
+  "metadata_calls_after_borrowed_current": 1,
+  "metadata_calls_before_mutation": 1,
+  "native_or_science_executed": false,
+  "old_current_freevars": [
+    "attempted",
+    "close",
+    "fd",
+    "fdpin",
+    "metadata",
+    "module",
+    "native_fill",
+    "seals"
+  ],
+  "source_sha256": "8f239d1399d8e048e02ebc55f604bc22b3abd38bd0049388ea141a847e67d261",
+  "status": "CONFIRMED_CODE_IDENTITY_GAP"
+}

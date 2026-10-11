@@ -1,0 +1,11 @@
+--- adapter.py
++++ edge_chunk_adapter.py
+@@ -4,7 +4,7 @@
+ import types
+ 
+ def make_filler(native, np, agreement):
+-    if type(native.fill) is not types.BuiltinFunctionType or native.fill.__module__!='_edge_chunk':
++    if type(native.fill) is not types.BuiltinFunctionType or native.fill.__module__ not in ('_edge_chunk',native.__name__):
+         raise ValueError('exact CPython extension function required')
+     fill=native.fill
+     ndarray=np.ndarray;float64=np.dtype('float64');int64=np.dtype('int64')

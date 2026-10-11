@@ -1,0 +1,22 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/imported_mcm_identity.py
++++ tradingagents/research/onchain_replication/imported_mcm_identity.py
+@@ -2,7 +2,7 @@
+ from pathlib import Path
+ from . import original_import_stage,compact_owner,original_dictionary,job
+ from .cache import cache_key
+-from .provenance import canonical_bytes,thaw,file_hash,current_canonical_bytes
++from .provenance import canonical_bytes,thaw,file_hash
+ from .matching_pair import BACKEND
+ from .matching_identity import graph_identity
+ from .neighborhoods import graph_hash,node_order_hash
+@@ -65,8 +65,8 @@
+         require((id(self.execution),id(self.graph),id(self.owner),id(self.dictionary),self._arrays())==self._objects,'import target objects changed')
+         require(self.execution._owner is self.owner and self.execution._materialized._dictionary is self.dictionary and self.execution._stage.reference==self.receipt_sha256,'import target authority chain changed')
+         descriptor=self.execution._stage.prepared._selection['selected']['descriptor']
+-        require(current_canonical_bytes(descriptor['resource_graph_inputs'])==self._mapping and descriptor['resource_graph_inputs'][self.key]==self._input,'target input mapping changed')
+-        require(current_canonical_bytes(self._execution)==self._execution_pin and current_canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
++        require(canonical_bytes(descriptor['resource_graph_inputs'])==self._mapping and descriptor['resource_graph_inputs'][self.key]==self._input,'target input mapping changed')
++        require(canonical_bytes(self._execution)==self._execution_pin and canonical_bytes(self.scope)==self._scope_pin,'target execution/workload changed')
+ 
+     def derive_scope(self):
+         current=self._execution['current'];ordered=[graph_identity(m) for m in self.dictionary.representatives]

@@ -1,0 +1,90 @@
+--- qualify01.py
++++ qualify02.py
+@@ -71,6 +71,9 @@
+     phases = []
+     checks = []
+     failure = None
++    failed = False
++    primary = None
++    secondary = []
+     owner = lease = None
+     result_path = out/'RESULT01.json'
+     try:
+@@ -191,7 +194,13 @@
+         else:
+             raise AssertionError('expired borrow accepted')
+     except BaseException as error:
+-        failure = {'type': type(error).__name__, 'message': str(error), 'notes': list(getattr(error, '__notes__', ())) }
++        failed = True
++        primary = error
++        try:
++            failure = {'type': type(error).__name__, 'message': str(error),
++                       'notes': list(getattr(error, '__notes__', ()))}
++        except BaseException as reporting_error:
++            secondary.append(reporting_error)
+     finally:
+         for value in (lease, owner):
+             if value is None:
+@@ -199,23 +208,46 @@
+             try:
+                 value.close()
+             except BaseException as error:
+-                record = {'type': type(error).__name__, 'message': str(error)}
+-                if failure is None:
+-                    failure = record
++                failed = True
++                if primary is None:
++                    primary = error
+                 else:
+-                    failure.setdefault('cleanup_errors', []).append(record)
+-        result = {'identity': 'edge-owner-and-kernel-qualification-20261011-01',
+-                  'status': 'FAILED' if failure else 'PASS_FINITE_SYNTHETIC',
+-                  'checks': checks, 'phases': phases, 'failure': failure,
+-                  'elapsed_seconds': time.monotonic()-started,
+-                  'ru_maxrss_kib': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+-                  'actual_genuine_scientific_owner': None, 'actual_financial_trial': None,
+-                  'whole_graph_capacity': None, 'whole_pilot_complete': False}
+-        with result_path.open('xb') as handle:
+-            handle.write(encoded(result))
+-            handle.flush()
+-            os.fsync(handle.fileno())
+-    return 1 if failure else 0
++                    secondary.append(error)
++                try:
++                    record = {'type': type(error).__name__, 'message': str(error)}
++                    if failure is None:
++                        failure = record
++                    else:
++                        failure.setdefault('cleanup_errors', []).append(record)
++                except BaseException as reporting_error:
++                    secondary.append(reporting_error)
++        try:
++            result = {'identity': 'edge-owner-and-kernel-qualification-20261011-02',
++                      'status': 'FAILED' if failed else 'PASS_FINITE_SYNTHETIC',
++                      'checks': checks, 'phases': phases, 'failure': failure,
++                      'reporting_errors': [type(error).__name__ for error in secondary],
++                      'elapsed_seconds': time.monotonic()-started,
++                      'ru_maxrss_kib': resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
++                      'actual_genuine_scientific_owner': None, 'actual_financial_trial': None,
++                      'whole_graph_capacity': None, 'whole_pilot_complete': False}
++            with result_path.open('xb') as handle:
++                handle.write(encoded(result))
++                handle.flush()
++                os.fsync(handle.fileno())
++        except BaseException as reporting_error:
++            failed = True
++            if primary is None:
++                primary = reporting_error
++            else:
++                secondary.append(reporting_error)
++        if primary is not None:
++            for reporting_error in secondary:
++                try:
++                    BaseException.add_note(primary, 'qualification reporting failure: '+repr(reporting_error))
++                except BaseException:
++                    pass
++            raise primary
++    return 1 if failed else 0
+ 
+ 
+ if __name__ == '__main__':

@@ -1,0 +1,20 @@
+--- batched_numeric_reuse.py
++++ batched_numeric_reuse.py
+@@ -19,7 +19,7 @@
+ SOURCE_PINS=(
+     (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
+     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
+-    (accepted, 'eea5d79f8c5e686b750ef2db5e571dd01803bc193236b06bcfd2fd6b5f027cb8'),
++    (accepted, '42df0f26d6dc528af4c5fd529c615cb7437e4e5baffe3d9eea13e86849a3bd87'),
+     (engine, 'eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693'),
+     (engine.ann, '86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+@@ -55,7 +55,7 @@
+     selected_pins=()
+     if edge_policy is not None:
+         from . import edge_chunk_adapter
+-        selected_pins=((compiled_edge_owner,'bca5138427201d629fd1a014d9344593250f2b4cb828c6e5dceac6195b21df44'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
++        selected_pins=((compiled_edge_owner,'8f239d1399d8e048e02ebc55f604bc22b3abd38bd0049388ea141a847e67d261'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
+     for module,pin in SOURCE_PINS+selected_pins:
+         h=hashlib.sha256()
+         with Path(module.__file__).open('rb') as stream:

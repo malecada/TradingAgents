@@ -1,0 +1,33 @@
+--- compiled_edge_owner.py
++++ compiled_edge_owner.py
+@@ -99,7 +99,7 @@
+             import platform,sysconfig,struct
+             require(threading.get_ident()==thread and not closed,'edge owner unavailable')
+             require(self.policy is frozen,'edge policy replaced')
+-            for name,method in methods.items():require(getattr(self,name) is method,'edge owner capability replaced')
++            for name,(method,code) in methods.items():require(getattr(self,name) is method and method.__code__ is code,'edge owner capability replaced')
+             source=read_reference(p['source_path'],SOURCE,65536)
+             adapter=read_reference(p['adapter_path'],ADAPTER,65536)
+             runtime=references.runtime_metadata(read_reference(p['runtime_path'],p['runtime_sha256'],4096,p['runtime_bytes']))
+@@ -157,7 +157,10 @@
+             try:
+                 acquire();token=object();active=token;released=False
+                 def lease_current():
+-                    require(not released and active is token,'edge borrow expired');current()
++                    require(not released and active is token,'edge borrow expired')
++                    # Check the captured owner's code before invoking its current callback.
++                    for name,(method,code) in methods.items():require(getattr(self,name) is method and method.__code__ is code,'edge owner capability replaced')
++                    current()
+                 def release():
+                     nonlocal active,released
+                     if released:return
+@@ -178,5 +181,7 @@
+                 except BaseException as error:_note(primary,error)
+                 raise
+         native_fill=None;seals=None
+-        self.policy=frozen;self.current=current;self.borrow=borrow;self.close=close
+-        methods.update(current=current,borrow=borrow,close=close)
++        # Keep the private cleanup function independent of the exposed close code.
++        self.policy=frozen;self.current=current;self.borrow=borrow
++        self.close=types.FunctionType(close.__code__,close.__globals__,closure=close.__closure__)
++        methods.update((name,(getattr(self,name),getattr(self,name).__code__)) for name in ('current','borrow','close'))

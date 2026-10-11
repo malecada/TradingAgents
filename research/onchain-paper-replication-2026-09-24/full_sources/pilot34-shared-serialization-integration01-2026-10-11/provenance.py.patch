@@ -1,0 +1,34 @@
+--- tradingagents/research/onchain_replication/provenance.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/provenance.py
+@@ -9,6 +9,31 @@
+ 
+ def canonical_bytes(value) -> bytes:
+     return json.dumps(thaw(value), sort_keys=True, separators=(',', ':'), ensure_ascii=False,
++                      allow_nan=False).encode('utf-8')
++
++
++def current_canonical_bytes(value):
++    """Fresh exact-JSON domain scan avoids thaw's copied container tree.
++
++    No eligibility or validation result is retained. Frozen mappings, custom
++    containers/keys and unsupported values use the original serializer intact.
++    Exact dict/list/tuple/scalars have no user iteration hooks in this domain.
++    """
++    import json
++    def plain(item):
++        kind=type(item)
++        if kind is str or kind is int or kind is float or kind is bool or kind is type(None):return True
++        if kind is dict:
++            for key,child in item.items():
++                if type(key) is not str or not plain(child):return False
++            return True
++        if kind is list or kind is tuple:
++            for child in item:
++                if not plain(child):return False
++            return True
++        return False
++    if not plain(value):return canonical_bytes(value)
++    return json.dumps(value,sort_keys=True,separators=(',', ':'),ensure_ascii=False,
+                       allow_nan=False).encode('utf-8')
+ 
+ 

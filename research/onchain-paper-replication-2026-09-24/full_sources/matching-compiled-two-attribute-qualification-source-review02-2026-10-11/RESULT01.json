@@ -1,0 +1,142 @@
+{
+  "checks": [
+    {
+      "name": "exact successor manifest",
+      "pass": true
+    },
+    {
+      "name": "frozen member FORWARD.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen member INVERSE.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen member REFERENCES01.json",
+      "pass": true
+    },
+    {
+      "name": "frozen member REPORT.md",
+      "pass": true
+    },
+    {
+      "name": "frozen member SOURCE_RESULT01.json",
+      "pass": true
+    },
+    {
+      "name": "frozen member check_source01.py",
+      "pass": true
+    },
+    {
+      "name": "frozen member fixture02.py",
+      "pass": true
+    },
+    {
+      "name": "frozen member synthetic-reservation01/spent/NUMERIC_RESULT01.json",
+      "pass": true
+    },
+    {
+      "name": "exact FORWARD.patch",
+      "pass": true
+    },
+    {
+      "name": "exact INVERSE.patch",
+      "pass": true
+    },
+    {
+      "name": "unchanged numerical cases and criteria",
+      "pass": true
+    },
+    {
+      "name": "references match immutable candidate manifest; binary not read",
+      "pass": true
+    },
+    {
+      "name": "reservation and raw descriptor setup precede load",
+      "pass": true
+    },
+    {
+      "name": "repeated reserve refused",
+      "pass": true
+    },
+    {
+      "name": "repeated result refused",
+      "pass": true
+    },
+    {
+      "name": "spent synthetic failure retained",
+      "pass": true
+    },
+    {
+      "name": "reporting failure replaces primary raised error",
+      "pass": true
+    },
+    {
+      "name": "original error survives only as exception context",
+      "pass": true
+    },
+    {
+      "name": "confirmed false PASS result after original failure and traceback storage failure",
+      "pass": true
+    }
+  ],
+  "counterexample": {
+    "escaping_error": "OSError",
+    "original_error": "ValueError",
+    "written_result": {
+      "checks": [],
+      "elapsed_seconds": 0,
+      "failure": null,
+      "status": "PASS_FINITE_SYNTHETIC"
+    }
+  },
+  "decision": "REFUSED_FAILURE_REPORTING_REPAIR_REQUIRED",
+  "native_science_fixture_executed": false,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/MANIFEST01.json": {
+      "bytes": 2179,
+      "sha256": "445cb2fb0d266a5c17243ad1d1fc9f29cc8a8b5e3fbe1b8472cc98513aa58152"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/fixture01.py": {
+      "bytes": 3527,
+      "sha256": "7a7fdebcf236b59a357bdc217ab1b6224e5018bbdc37f924b6adc7cb09de612b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/FORWARD.patch": {
+      "bytes": 4207,
+      "sha256": "1fdd5a89a2665417ef35fd0806a8e333a2b6d7b751e355141d31249352b4b121"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/INVERSE.patch": {
+      "bytes": 4207,
+      "sha256": "b7d819caeb4a2007d7da965c7f06345af96464fdfa6501e8d0cef8997b1f10ee"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/MANIFEST02.json": {
+      "bytes": 1363,
+      "sha256": "d712c03de3815c63419bde120d2492828280feb358a532b1d41d493779b37a3b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/REFERENCES01.json": {
+      "bytes": 796,
+      "sha256": "cefcf4ab6e30f125f48cccccb880eb2e5a95574d0c1fc17fc448318339ecd834"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/REPORT.md": {
+      "bytes": 2320,
+      "sha256": "1951852686a266033834494064f54f53533e6d9a2731a548fd3ce2efdda3297d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/SOURCE_RESULT01.json": {
+      "bytes": 883,
+      "sha256": "9e913552e19d7bd3fdbb905b52641d7ca41f7c32ad5d19bc40124a13d5df3d6d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/check_source01.py": {
+      "bytes": 2837,
+      "sha256": "5ee11a31074fd227b8aed963324877ca079dd28aec8f1355c6124f116864769e"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/fixture02.py": {
+      "bytes": 5535,
+      "sha256": "578673d7d8d4f98af0b86a595cccfcdd8767f60540abdc6b8efd6177c004505d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-qualification02-2026-10-11/synthetic-reservation01/spent/NUMERIC_RESULT01.json": {
+      "bytes": 24,
+      "sha256": "efa82530f0281abdf7bff98dbf617ee4427f964100fa5fe3f2e8673792b268cf"
+    }
+  }
+}

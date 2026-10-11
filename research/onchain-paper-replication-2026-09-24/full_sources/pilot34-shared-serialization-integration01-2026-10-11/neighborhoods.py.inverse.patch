@@ -1,0 +1,11 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot34-shared-serialization-integration01-2026-10-11/neighborhoods.py
++++ tradingagents/research/onchain_replication/neighborhoods.py
+@@ -27,7 +27,7 @@
+     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
+     from dataclasses import fields
+     from collections.abc import Mapping
+-    from .provenance import current_canonical_bytes as canonical_bytes
++    from .provenance import canonical_bytes
+     import hashlib
+     validate_graph(graph);h=hashlib.sha256()
+     def feed(value):

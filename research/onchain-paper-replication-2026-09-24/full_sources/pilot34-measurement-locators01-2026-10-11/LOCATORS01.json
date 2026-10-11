@@ -1,0 +1,125 @@
+{
+  "graph_and_feature_stage_timing": {
+    "denominators": "Seven full graphs;32motifs/node; expected total=sum(expected_nodes*32) across seven unique graph hashes. Completed graph cells credited only after genuine retained verification; failed partial batches are not whole-graph completion. Resource scope one update,16decisions/28lookback/512originalsamples; not a completed fit.",
+    "feature_limitation": "Full MCM generation per graph is timed. Subsequent torch tensor views, edge conversions, tensor contract hashing and batch_factory setup have no dedicated feature-generation elapsed receipt. GAT and attention-LSTM feature work inside forward is not separately timed in these sources. Do not call numeric memo seconds whole feature-generation time.",
+    "fields": [
+      "throughput.graphs[].graph_hash",
+      "throughput.graphs[].expected_nodes",
+      "throughput.graphs[].motifs",
+      "throughput.graphs[].expected_motif_cells",
+      "throughput.graphs[].status",
+      "throughput.graphs[].elapsed_seconds",
+      "throughput.graphs[].completed_motif_cells",
+      "throughput.graph_denominator",
+      "throughput.complete_graphs",
+      "throughput.verified_completed_motif_cells",
+      "throughput.completed_mcm_seconds",
+      "throughput.attempted_mcm_seconds",
+      "events[].phase",
+      "events[].elapsed_seconds"
+    ],
+    "source_lines": [
+      "real_pilot_throughput.py:16-87",
+      "real_pilot_import_caller.py:493-505,558-625"
+    ],
+    "terminal_summary": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-34/outputs/pilot-summary.json",
+    "timing": "MCMMeasurements.begin immediately before produce_imported; completed after result.check and verify_retained. Thus each completed graph elapsed includes preparation, matching, boundaries, publication and retained verification, excluding preceding outer watch.check. Events are cumulative since caller began; original_import/mcm-{hash}/one_update_checkpoint_readback are milestones, not separate stopwatch values. Measurements/events live in memory until final summary publication, so absence during active job is normal."
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-34",
+  "joint_update_timing": {
+    "complete_path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-34/artifacts/real-pilot-one-update/complete.json",
+    "failure_path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-34/artifacts/real-pilot-one-update/failed.json",
+    "interpretation": "Before/after events bracket phase function with fsync overhead; authoritative seconds[phase] is function-only stopwatch, excludes surrounding authority_check. End-to-end training elapsed includes checks/setup/untimed gaps; sum phase seconds is not full training time. Forward/backward/clip/optimizer are joint model operations; no separate GAT/LSTM durations established. A before without after indicates unfinished or failed phase, not completed update. Complete requires optimizer_steps1 plus checkpoint/readback; failed optimizer_step_started distinguishes attempt from committed step. Read only time/status/count fields; do not inspect loss, gradients, checkpoint.pt, targets or prices.",
+    "jsonl_fields": [
+      "phase",
+      "state(before|after)",
+      "elapsed_seconds since training helper started"
+    ],
+    "live_path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-34/artifacts/real-pilot-one-update/phases.jsonl",
+    "phase_order": [
+      "graph_validation",
+      "model",
+      "batch",
+      "forward",
+      "backward",
+      "clip",
+      "optimizer",
+      "checkpoint",
+      "readback",
+      "final_graph_validation"
+    ],
+    "scalar_fields_only": [
+      "status",
+      "optimizer_steps",
+      "optimizer_step_started(if failure)",
+      "seconds",
+      "elapsed_seconds",
+      "checkpoint_exact_readback(if complete)",
+      "batch",
+      "lookback",
+      "unique_graphs",
+      "graph_references",
+      "financial_fit_complete"
+    ],
+    "source_lines": [
+      "real_pilot_training.py:106-130,158-166,183-242",
+      "real_pilot_import_caller.py:589-597"
+    ]
+  },
+  "legitimate_throughput_and_eta": {
+    "eta": "Only conditional same-regime ETA=(known expected cells-current published covered)/observed wall cells_per_second, reported with window and reuse fraction. Unknown active phase, absent prefix, changing graph shapes/reuse ratio or unmeasured publication/training prevents credible whole-job ETA. Numeric-only ETA omits mandatory overhead and cannot predict native deadline success. Prefer retain several actual windows; do not start a new monitor.",
+    "numeric_rate": "For a contiguous published prefix with positive sum(elapsed_seconds), covered/sum elapsed measures inclusive memo occurrence throughput; computed/sum elapsed is computed-cell throughput over mixed computed/reused work, not pure solve latency. Excludes batch guards, summary write/readback, graph loading and external offload.",
+    "prior29": "Prior29 report/index describes52 published batches,212992 covered (208448computed/4544reused) and cumulative-counter deltas. Reuse semantics only; compiled34/phase changes and different cache/graph state make those historical rates unsuitable as current throughput or full-population ETA.",
+    "wall_rate": "Root may compare covered stop deltas against its own two actual monotonic observations of same graph/owner; observation interval includes stall/guard/offload time but endpoints are publication snapshots. This is measured interval throughput, not a completion certificate."
+  },
+  "limits": [
+    "Exactly five frozen source files inspected; no active receipts/processes/arrays/testlabels queried, no monitoring launched.",
+    "No numerical/scientific imports, tests, Git, live source/registration/claim changes.",
+    "No observed pilot34 progress, actual ETA, speedup, training success or financial claim. Root remains sole actual process observer."
+  ],
+  "mcm_complete": {
+    "contract": "research_artifacts/onchain_representations/{actual_representation_namespace}/eth-paper-real-data-end-to-end-resource-20261011-34/compact/mcm-{graph_hash}/stage-complete.json",
+    "numeric_binding": "batched.numeric_execution fields cells/computed/reused/batches/elapsed_seconds/counters; computed+reused==cells. This is written only after execution finish and boundaries; final stage/output verification still follows.",
+    "producer_receipt_template": "research_artifacts/onchain_compact_mcm/{actual_workflow_identity}/eth-paper-real-data-end-to-end-resource-20261011-34/mcm-{graph_hash}/complete.json",
+    "producer_start_same_directory": "start.json contains rows,motifs,cells,scope; exists only after preparation and entry checks, not at graph attempt start. Producer directory expression is not re-opened in this five-source budget; resolve exact path from genuine public result/output receipt rather than infer workflow identity.",
+    "source_lines": [
+      "compact_mcm_batched.py:511-541"
+    ]
+  },
+  "mcm_numeric_progress": {
+    "counting": "Sum computed and reused separately over unique published batches. Covered cells=sum(computed+reused). Unpublished in-progress batch unknown; zero published files does not mean zero computation. Separate each graph/NumericExecution owner when resetting cumulative counters.",
+    "path_template": "research_artifacts/onchain_representations/{actual_representation_namespace}/eth-paper-real-data-end-to-end-resource-20261011-34/compact/mcm-{graph_hash}/stream/numeric-batches/{batch:012d}.json",
+    "publication": "_complete_batch first invokes memo.end_batch genuine guard, then writes+fsyncs origin bytes, writes exclusive JSON, readbacks+fsyncs directory. A file can be seen before writer readback finishes; a single live pathname alone is not completed stage authority. Read only bounded stable complete JSON, retain original hash, validate contiguous nonoverlapping batch/start/stop and computed+reused==stop-start. No numeric-origins.bin/score/array reading needed for observational progress; final verified binding establishes stronger completion.",
+    "schema": {
+      "batch": "zero-based batch ordinal",
+      "computed": "THIS batch original numerical computations",
+      "counters": "cumulative per NumericExecution owner; subtract successive samples, never sum cumulative values",
+      "elapsed_seconds": "THIS batch sum of perf_counter intervals directly around memo calls",
+      "format": "numeric-reuse-origins-v1",
+      "old_per_occurrence_execution_credit": false,
+      "origin_sha256": "hash of corresponding9-byte origin records",
+      "receipt_sha256": "framed provisional receipt hash",
+      "reused": "THIS batch reuse occurrences",
+      "start": "inclusive cell ordinal",
+      "stop": "exclusive cell ordinal"
+    },
+    "source_lines": [
+      "batched_numeric_execution.py:106-159",
+      "compact_mcm_batched.py:341,375,479"
+    ]
+  },
+  "namespace_rule": "Root must obtain actual34 representation namespace from genuine current public owner/entry receipt. Never substitute prior29/33 namespace. compact stage-root template follows prior29 actual receipt index and current _compute(stage.root) joining; no active34 directory was inspected here.",
+  "prior29_evidence_reused_by_reference": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-observed-overhead01-2026-10-11/MEASUREMENTS01.json": "87e30919ca06b925edda8a4d8c7c6659b1f0574e8de96ae0b4151d86210986f5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-observed-overhead01-2026-10-11/REPORT.md": "ece6d2feb41deef54331d93c86d2cae2e2526ee6a252294bb67fcfbf890c0d8f"
+  },
+  "source_file_count": 5,
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/batched_numeric_execution.py": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "e93d3b7073c8de5d1c3e7f5f30b55ba613b47a014f8fe449a0fe7e8a746941dd",
+    "tradingagents/research/onchain_replication/real_pilot_import_caller.py": "f65ff353315bfb9e4db80d326170e02e5b2ebc6da1e5d59e5a8e9243b4afd11a",
+    "tradingagents/research/onchain_replication/real_pilot_throughput.py": "8311d706c89aadabb967aaef0073f08b313976c62d2dbd35af3a5331731a8c63",
+    "tradingagents/research/onchain_replication/real_pilot_training.py": "ca77a32b0c7b882fed6e6af7f5929c16264aad1084e47d07b05ab52940d47782"
+  },
+  "status": "FROZEN_SOURCE_LOCATORS_ONLY_NO_LIVE_OBSERVATION"
+}

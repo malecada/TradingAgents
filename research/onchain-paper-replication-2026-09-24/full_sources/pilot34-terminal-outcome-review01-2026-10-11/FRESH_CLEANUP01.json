@@ -1,0 +1,28 @@
+{
+  "at_utc": "2026-10-11T07:00:37.313803+00:00",
+  "command": [
+    "systemctl",
+    "--user",
+    "show",
+    "onchain-replication-fe7cc2c021214ecd95832df0cf59b482.service",
+    "--property=ActiveState,SubState,MainPID,Result,ExecMainStatus,ControlGroup"
+  ],
+  "original_cgroup_present": false,
+  "original_pids_present": {
+    "1889468": false,
+    "1889925": false,
+    "1890374": false,
+    "1890378": false
+  },
+  "properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "MainPID": "0",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "MainPID=0\nResult=exit-code\nExecMainStatus=1\nControlGroup=\nActiveState=failed\nSubState=failed\n"
+}

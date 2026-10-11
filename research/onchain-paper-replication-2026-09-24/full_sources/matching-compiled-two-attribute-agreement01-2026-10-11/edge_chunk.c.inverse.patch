@@ -1,0 +1,97 @@
+--- edge_chunk.c
++++ edge_chunk.c
+@@ -1,57 +1,15 @@
+ #define PY_SSIZE_T_CLEAN
+ #include <Python.h>
+-#include <string.h>
+-/* Exact float Python operations. No native pow, exp, fsum or reassociation. */
+-static int two_row(PyObject *row) {
+-    Py_buffer v;
+-    if (PyObject_GetBuffer(row,&v,PyBUF_FORMAT|PyBUF_ND|PyBUF_STRIDES)<0) {
+-        /* Expected ndarray rows support this buffer request; other errors propagate. */
+-        return -1;
+-    }
+-    int yes=v.readonly && v.ndim==1 && v.shape && v.shape[0]==2 &&
+-        v.itemsize==8 && v.format && strcmp(v.format,"d")==0 &&
+-        PyBuffer_IsContiguous(&v,'C');
+-    PyBuffer_Release(&v);return yes;
+-}
+-static PyObject *two_agreement(PyObject *a,PyObject *b,PyObject *sum,
+-                               PyObject *exp,PyObject *two) {
+-    PyObject *terms=PyTuple_New(2),*total=NULL,*negative=NULL,*scaled=NULL,*out=NULL;
+-    if (!terms) return NULL;
+-    for (int i=0;i<2;i++) {
+-        PyObject *index=PyLong_FromLong(i),*x=NULL,*y=NULL,*fx=NULL,*fy=NULL,*delta=NULL,*square=NULL;
+-        if (!index) goto term_fail;
+-        /* zip obtains both scalar elements before the original float(x),float(y). */
+-        x=PyObject_GetItem(a,index);if (!x) goto term_fail;
+-        y=PyObject_GetItem(b,index);if (!y) goto term_fail;
+-        fx=PyNumber_Float(x);if (!fx) goto term_fail;
+-        fy=PyNumber_Float(y);if (!fy) goto term_fail;
+-        delta=PyNumber_Subtract(fx,fy);if (!delta) goto term_fail;
+-        square=PyNumber_Power(delta,two,Py_None);if (!square) goto term_fail;
+-        PyTuple_SET_ITEM(terms,i,square);
+-        Py_DECREF(delta);Py_DECREF(fy);Py_DECREF(fx);Py_DECREF(y);Py_DECREF(x);Py_DECREF(index);
+-        continue;
+-term_fail:
+-        Py_XDECREF(square);Py_XDECREF(delta);Py_XDECREF(fy);Py_XDECREF(fx);Py_XDECREF(y);Py_XDECREF(x);Py_XDECREF(index);
+-        goto done;
+-    }
+-    total=PyObject_CallOneArg(sum,terms);if (!total) goto done;
+-    negative=PyNumber_Negative(total);if (!negative) goto done;
+-    scaled=PyNumber_TrueDivide(negative,two);if (!scaled) goto done;
+-    out=PyObject_CallOneArg(exp,scaled);
+-done:
+-    Py_XDECREF(scaled);Py_XDECREF(negative);Py_XDECREF(total);Py_DECREF(terms);return out;
+-}
+-
+ /* No floating point kernel: preserve Python/NumPy indexing, callback and
+    multiplication/assignment semantics. GIL retained; never release ownership. */
+ static PyObject *fill(PyObject *self, PyObject *args) {
+-    PyObject *w,*af,*bf,*left,*right,*agreement,*progress,*indices,*sum,*exp;
++    PyObject *w,*af,*bf,*left,*right,*agreement,*progress,*indices;
+     Py_ssize_t count;
+-    if (!PyArg_ParseTuple(args,"OOOOOnOOOOO",&w,&af,&bf,&left,&right,&count,
+-                          &agreement,&progress,&indices,&sum,&exp)) return NULL;
++    if (!PyArg_ParseTuple(args,"OOOOOnOOO",&w,&af,&bf,&left,&right,&count,
++                          &agreement,&progress,&indices)) return NULL;
+     if (count<1 || count>1024 || !PyList_CheckExact(progress) ||
+         PyList_GET_SIZE(progress)!=1 || !PyTuple_CheckExact(indices) ||
+-        PyTuple_GET_SIZE(indices)!=count || !PyCallable_Check(agreement) || !PyCFunction_Check(sum) || !PyCFunction_Check(exp)) {
++        PyTuple_GET_SIZE(indices)!=count || !PyCallable_Check(agreement)) {
+         PyErr_SetString(PyExc_ValueError,"bounded adapter arguments required");return NULL;
+     }
+     for (Py_ssize_t i=0;i<count;i++) {
+@@ -63,8 +21,6 @@
+     }
+     PyObject *half=PyFloat_FromDouble(0.5);
+     if (!half) return NULL;
+-    PyObject *two=PyLong_FromLong(2);
+-    if (!two) {Py_DECREF(half);return NULL;}
+     for (Py_ssize_t i=0;i<count;i++) {
+         PyObject *index=PyTuple_GET_ITEM(indices,i),*li=NULL,*ri=NULL;
+         PyObject *av=NULL,*bv=NULL,*value=NULL,*weight=NULL;
+@@ -73,20 +29,16 @@
+         av=PyObject_GetItem(af,li); if (!av) goto fail;
+         ri=PyObject_GetItem(right,index); if (!ri) goto fail;
+         bv=PyObject_GetItem(bf,ri); if (!bv) goto fail;
+-        int ar=two_row(av);if (ar<0) goto fail;
+-        int br=two_row(bv);if (br<0) goto fail;
+-        if (ar && br) value=two_agreement(av,bv,sum,exp,two);
+-        else value=PyObject_CallFunctionObjArgs(agreement,av,bv,NULL);
+-        if (!value) goto fail;
++        value=PyObject_CallFunctionObjArgs(agreement,av,bv,NULL); if (!value) goto fail;
+         weight=PyNumber_Multiply(half,value); if (!weight) goto fail;
+         if (PyObject_SetItem(w,index,weight)<0) goto fail;
+         Py_DECREF(weight);Py_DECREF(value);Py_DECREF(bv);Py_DECREF(ri);Py_DECREF(av);Py_DECREF(li);
+         continue;
+ fail:
+         Py_XDECREF(weight);Py_XDECREF(value);Py_XDECREF(bv);Py_XDECREF(ri);Py_XDECREF(av);Py_XDECREF(li);
+-        Py_DECREF(two);Py_DECREF(half);return NULL;
++        Py_DECREF(half);return NULL;
+     }
+-    Py_DECREF(two);Py_DECREF(half);Py_RETURN_TRUE;
++    Py_DECREF(half);Py_RETURN_TRUE;
+ }
+ static PyMethodDef methods[]={{"fill",fill,METH_VARARGS,"Bounded ordered weight fill."},{NULL,NULL,0,NULL}};
+ static struct PyModuleDef module={PyModuleDef_HEAD_INIT,"_edge_chunk",NULL,-1,methods};

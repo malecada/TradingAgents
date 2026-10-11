@@ -1,0 +1,36 @@
+--- fixture.py
++++ fixture.py
+@@ -20,7 +20,7 @@
+     try:os.dup2(fd,descriptor)
+     finally:os.close(fd)
+ sys.path.insert(0,str(P.parents[3]))
+-start=time.monotonic();checks=[];failure=None
++start=time.monotonic();checks=[];failure=None;failed=False;primary=None;secondary=[]
+ try:
+     for name,reference in REFERENCES.items():
+         path=CANDIDATE/name
+@@ -74,8 +74,20 @@
+     finally:math.exp=original_exp
+     checks.append({'function_and_global_mutation_refused':True})
+ except BaseException as e:
+-    with (ATTEMPT/'failure.txt').open('x') as stream:traceback.print_exc(file=stream)
+-    failure={'type':type(e).__name__,'message':str(e)}
++    failed=True;primary=e
++    try:failure={'type':type(e).__name__,'message':str(e)}
++    except BaseException as reporting_error:secondary.append(reporting_error)
++    try:
++        with (ATTEMPT/'failure.txt').open('x') as stream:traceback.print_exc(file=stream)
++    except BaseException as reporting_error:secondary.append(reporting_error)
+ finally:
+-    write_result(ATTEMPT,{'status':'FAILED' if failure else 'PASS_FINITE_SYNTHETIC','checks':checks,'failure':failure,'elapsed_seconds':time.monotonic()-start})
+-if failure:raise SystemExit(1)
++    try:
++        write_result(ATTEMPT,{'status':'FAILED' if failed else 'PASS_FINITE_SYNTHETIC','checks':checks,'failure':failure,'reporting_errors':[type(error).__name__ for error in secondary],'elapsed_seconds':time.monotonic()-start})
++    except BaseException as reporting_error:
++        if primary is None:failed=True;primary=reporting_error
++        else:secondary.append(reporting_error)
++    if primary is not None:
++        for reporting_error in secondary:
++            try:BaseException.add_note(primary,'qualification reporting failure: '+repr(reporting_error))
++            except BaseException:pass
++        raise primary

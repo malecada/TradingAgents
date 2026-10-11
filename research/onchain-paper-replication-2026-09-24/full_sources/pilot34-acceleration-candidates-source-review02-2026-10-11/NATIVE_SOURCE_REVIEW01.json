@@ -1,0 +1,249 @@
+{
+  "candidate_source_sha256": "86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57",
+  "checks": [
+    {
+      "name": "exact frozen02 manifest",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member BASELINE.json",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member FORWARD.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member FROM01.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member INVERSE.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member LINEAGE01.json",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member REPORT.md",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member RESULT02.json",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member TO01.inverse.patch",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member adapter.py",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member build01.py",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member check02.py",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member edge_chunk.c",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member fixture01.py",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member matching_annealing.py",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member stderr02.txt",
+      "pass": true
+    },
+    {
+      "name": "frozen02 textual member stdout02.txt",
+      "pass": true
+    },
+    {
+      "name": "original independent refusal retained",
+      "pass": true
+    },
+    {
+      "name": "exact three-line inverse and candidate source",
+      "pass": true
+    },
+    {
+      "name": "unchanged original seam edge_chunk.c",
+      "pass": true
+    },
+    {
+      "name": "unchanged original seam adapter.py",
+      "pass": true
+    },
+    {
+      "name": "unchanged original seam fixture01.py",
+      "pass": true
+    },
+    {
+      "name": "unchanged original seam build01.py",
+      "pass": true
+    },
+    {
+      "name": "original exception identity and prefix prefill_fatal",
+      "pass": true
+    },
+    {
+      "name": "original exception identity and prefix eligibility",
+      "pass": true
+    },
+    {
+      "name": "original exception identity and prefix decline_then_error",
+      "pass": true
+    },
+    {
+      "name": "original exception identity and prefix partial_error",
+      "pass": true
+    }
+  ],
+  "controls": [
+    {
+      "case": "prefill_fatal",
+      "cursor": 0,
+      "prefix": 0,
+      "primary_identity": true,
+      "q_destinations": 0,
+      "type": "KeyboardInterrupt"
+    },
+    {
+      "case": "eligibility",
+      "cursor": 0,
+      "prefix": 0,
+      "primary_identity": true,
+      "q_destinations": 0,
+      "type": "MemoryError"
+    },
+    {
+      "case": "decline_then_error",
+      "cursor": 3,
+      "prefix": 3,
+      "primary_identity": true,
+      "q_destinations": 3,
+      "type": "MemoryError"
+    },
+    {
+      "case": "partial_error",
+      "cursor": 3,
+      "prefix": 3,
+      "primary_identity": true,
+      "q_destinations": 3,
+      "type": "MemoryError"
+    }
+  ],
+  "decision": "ACCEPT_EXACT02_PREFILL_EXCEPTION_SOURCE_REPAIR_ONLY",
+  "limits": [
+    "Original candidate01 P2/refusal retained.",
+    "Unchanged C/adapter/fixture source review reused; no native/scientific imports or arrays.",
+    "Function-scope changed branch with stale prior offset77 and four independent controls only; no full annealing equivalence claim.",
+    "Root build02 and actual numerical fixture, public Session/loader/policy/currentness/Owner/caller release remain pending.",
+    "No live job, source installation, timing, capacity, financial or recovery claim."
+  ],
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/adapter.py": {
+      "bytes": 1392,
+      "sha256": "24c259d59dfe45611272b5009ab94942ba056d224769ce4dda22f2b145a99774"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/build01.py": {
+      "bytes": 835,
+      "sha256": "a1477d957680f61574f2e0a9a38abb5c4442399568f7e5b4015e48bad6245919"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/edge_chunk.c": {
+      "bytes": 2451,
+      "sha256": "6b0391049ddff37892c74e074d1d7506c0a3527ae44aba013c06cb66295695b8"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/fixture01.py": {
+      "bytes": 4545,
+      "sha256": "ece21a16db1a7783852d76176122a93f9d66c148d03f4b8571321d20c2878912"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk01-2026-10-11/matching_annealing.py": {
+      "bytes": 21937,
+      "sha256": "ff3e93a1ccd60ff80b561034d46564e536bf2010afb89c036f0c2835417e903f"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/BASELINE.json": {
+      "bytes": 152,
+      "sha256": "03406f87393059262cc6f2865f1bb7dd7d5e1c91e8ecab83b2f668ae7675b73d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/FORWARD.patch": {
+      "bytes": 3724,
+      "sha256": "893690d45cc45ecbcfe74e663928c4f49ecfce4c4bc87235b73ae3526cd3aef6"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/FROM01.patch": {
+      "bytes": 1256,
+      "sha256": "0a0ad367ef8d78662afc381804ea7585a258ff7da9e491bb111e05965376bae7"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/INVERSE.patch": {
+      "bytes": 3724,
+      "sha256": "ff75e29ccdd72fc7b307af45c8cacfe8d0d3bda263340484c8dd14e1c877aaae"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/LINEAGE01.json": {
+      "bytes": 674,
+      "sha256": "c651f9cbeaed36224dd1b1085fc6e3bcf8fb00478d6a5ffcdbfd98fd38dafc53"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/MANIFEST02.json": {
+      "bytes": 2201,
+      "sha256": "2b566adc973e11d12d772c004ccb311eb084381afbe2f0975c5fd21a033f04ae"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/REPORT.md": {
+      "bytes": 3758,
+      "sha256": "9ff5846c7491486a3988fc50212a8eeed669ba962f9521964c2ea1836dfb2b62"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/RESULT02.json": {
+      "bytes": 3300,
+      "sha256": "b43d280d0d821e9a8a31a2d82d73b6009bcba0e2665548d57a15586b83bf60b2"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/TO01.inverse.patch": {
+      "bytes": 1256,
+      "sha256": "d8ccf42ee6f53179f7fecd032f1a35b73c98cd5585f7cdcae11992e36c9ae32e"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/adapter.py": {
+      "bytes": 1392,
+      "sha256": "24c259d59dfe45611272b5009ab94942ba056d224769ce4dda22f2b145a99774"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/build01.py": {
+      "bytes": 835,
+      "sha256": "a1477d957680f61574f2e0a9a38abb5c4442399568f7e5b4015e48bad6245919"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/check02.py": {
+      "bytes": 3562,
+      "sha256": "121325401cf7c2a441fb1d3ceb6eb00f0eaf311dd5098b472b7c00adda57fea7"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/edge_chunk.c": {
+      "bytes": 2451,
+      "sha256": "6b0391049ddff37892c74e074d1d7506c0a3527ae44aba013c06cb66295695b8"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/fixture01.py": {
+      "bytes": 4545,
+      "sha256": "ece21a16db1a7783852d76176122a93f9d66c148d03f4b8571321d20c2878912"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/matching_annealing.py": {
+      "bytes": 22000,
+      "sha256": "86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/stderr02.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-chunk02-2026-10-11/stdout02.txt": {
+      "bytes": 2470,
+      "sha256": "d054a690417e8668b3a53d8e280e1fcc16eec6918a80670dcfb59f115b03c987"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot34-acceleration-candidates-source-review01-2026-10-11/REVIEW01.json": {
+      "bytes": 15048,
+      "sha256": "4f92784b82f2f55b4f6ba8bfe185ea0735b7ef7b5614adaa195cc9d1b61562d4"
+    }
+  }
+}

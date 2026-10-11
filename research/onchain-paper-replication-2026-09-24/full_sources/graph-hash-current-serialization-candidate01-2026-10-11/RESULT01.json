@@ -1,0 +1,73 @@
+{
+  "actual_pilot_speed_or_memory_savings": null,
+  "candidate_sources": {
+    "neighborhoods.py": "65306b5697f6b066ccb2f3428dd4be7241e42a417cc034c28a392321ed4b6661",
+    "provenance.py": "3bb5cf4a64126521ece009890b9f53c68bbd7db6e125c0401d885469188fa31e"
+  },
+  "checks": [
+    "single graph hash serializer selection",
+    "provenance exact literal inverse",
+    "graph route exact literal inverse",
+    "accepted02 helper AST identical except public shared name",
+    "entire neighborhoods AST inverse including validate and sorting unchanged",
+    "exact fresh chunk bytes 0",
+    "exact fresh chunk bytes 1",
+    "exact fresh chunk bytes 2",
+    "exact fresh chunk bytes 3",
+    "exact fresh chunk bytes 4",
+    "exact fresh chunk bytes 5",
+    "exact fresh chunk bytes 6",
+    "exact fresh chunk bytes 7",
+    "exact multichunk framing/hash 1024",
+    "exact multichunk framing/hash 512",
+    "original unsupported/frozen/error bytes or refusal 0",
+    "original unsupported/frozen/error bytes or refusal 1",
+    "original unsupported/frozen/error bytes or refusal 2",
+    "original unsupported/frozen/error bytes or refusal 3",
+    "original unsupported/frozen/error bytes or refusal 4",
+    "original unsupported/frozen/error bytes or refusal 5",
+    "original unsupported/frozen/error bytes or refusal 6",
+    "unsupported original object fallback",
+    "plain emitted lists avoid thaw copy",
+    "fresh nested mutation observed",
+    "restoration exact"
+  ],
+  "component_measurement": {
+    "calls_per_sample": 30,
+    "classification": "SYNTHETIC_EMITTED_PLAIN_CHUNK_ONLY",
+    "scalars_per_chunk": 1023,
+    "wall_ns_samples": {
+      "candidate": [
+        7033851,
+        10155685,
+        8076022
+      ],
+      "original": [
+        18177651,
+        18080152,
+        19676793
+      ]
+    }
+  },
+  "full_graph_native_proof": false,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-current-pins-serialization-review02-2026-10-11/REPORT.md": {
+      "bytes": 1960,
+      "sha256": "8a2fa7315fb2172c1ea2d19fe269c68edf7a4ed2eb7020c1c538bac9c7f6f93a"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/authority-current-pins-serialization02-2026-10-11/imported_mcm_identity.py": {
+      "bytes": 9265,
+      "sha256": "e4bec3da9737e40e81bdeddc081ba64ff2be57007885e947e061710883f3014f"
+    },
+    "tradingagents/research/onchain_replication/neighborhoods.py": {
+      "bytes": 9380,
+      "sha256": "4f41912aa5d91e449eea4a30d813e5b57b65cbd7445e5ba153725e7bbe7ee00a"
+    },
+    "tradingagents/research/onchain_replication/provenance.py": {
+      "bytes": 2398,
+      "sha256": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+    }
+  },
+  "source_installation": false,
+  "status": "PASS_FOCUSED_STDLIB_CHUNK_DIFFERENTIAL"
+}
