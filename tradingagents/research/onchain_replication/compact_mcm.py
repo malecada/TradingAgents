@@ -112,14 +112,16 @@ def _prepare(dictionary, key, input_name, output_input):
     graph = dictionary._prepare_graph(key) if imported else _graph(dictionary,key)
     d = dictionary.dictionary
     rows = len(graph.node_ids); motifs = len(d.representatives); pairs = rows*motifs
-    matching = thaw(owner.matching); ordered = [graph_identity(g) for g in d.representatives]
-    order = node_order_hash(graph.node_ids)
-    scope = cache_key({'schema_version':1,'kind':'mcm','workflow':owner.bound.record['workflow_identity'],
-        'backend':BACKEND,'graph':key,'node_order':order,'dictionary':d.identity,
-        'ordered_motifs':ordered,'matching':matching,'dtype':'float32'})
-    expected = {'graph':key,'node_order':order,'dictionary':d.identity,
-        'ordered_motifs':cache_key(ordered),'matching':d.matching_config_hash,'workflow':scope}
-    if _imported(dictionary):expected=dictionary.derive_scope();require(expected==dictionary.scope,'imported producer scope differs')
+    if imported:
+        expected=dictionary.derive_scope();require(expected==dictionary.scope,'imported producer scope differs')
+    else:
+        matching = thaw(owner.matching); ordered = [graph_identity(g) for g in d.representatives]
+        order = node_order_hash(graph.node_ids)
+        scope = cache_key({'schema_version':1,'kind':'mcm','workflow':owner.bound.record['workflow_identity'],
+            'backend':BACKEND,'graph':key,'node_order':order,'dictionary':d.identity,
+            'ordered_motifs':ordered,'matching':matching,'dtype':'float32'})
+        expected = {'graph':key,'node_order':order,'dictionary':d.identity,
+            'ordered_motifs':cache_key(ordered),'matching':d.matching_config_hash,'workflow':scope}
     run = owner.bound._run; bound = owner.bound.record
     selected = json.loads(run.read_input(bound.get('job_input','execution_job')))['payload']['representation_jobs'][bound['representation']]
     item = json.loads(run.read_input(selected['plan_input']))['producers'][bound['producer']]
