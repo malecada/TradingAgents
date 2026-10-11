@@ -1,0 +1,47 @@
+{
+  "admission": false,
+  "at": "2026-10-11T08:30:35.491211+00:00",
+  "claim": false,
+  "draft_binding": {
+    "bytes": 24299,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/BINDING_DRAFT01.json",
+    "sha256": "e8ef96244e9944c5f8c6e0d1bcc6aca61cf50395681e82126a3b7cdc2dd0bdcf"
+  },
+  "gate": {
+    "bytes": 1520704,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/gate01.json",
+    "sha256": "4c784743a457344bddc8cb0f4af8aaa64577835a847291f8fa8296f0e5da0799"
+  },
+  "numerical": false,
+  "operations": [
+    {
+      "exit_code": 0,
+      "operation": "copy_exact_reviewed_entry_scripts",
+      "tool": "96067b"
+    },
+    {
+      "exit_code": 0,
+      "operation": "source35_preparation",
+      "stdout": "{\"status\": \"SOURCE_DRAFT_NOT_RELEASED\", \"source_bodies\": 423, \"changed_source\": 13, \"added_source\": 2, \"claim\": false}\n",
+      "tool": "083aa2"
+    },
+    {
+      "exit_code": 0,
+      "operation": "registration35_preparation",
+      "stdout": "{\"status\": \"DRAFT_NOT_RELEASED\", \"source_pins\": 806, \"input_roles\": 72, \"claim\": false}\n",
+      "tool": "4fee06"
+    }
+  ],
+  "source_anchor": "53b8890630765d06f8a44e3e8fbaee1f4b00bdfb",
+  "source_preparation": {
+    "bytes": 5289,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/SOURCE_PREPARATION01.json",
+    "sha256": "377ce941e8798d9cee37d7c7cd450ab698487d0e0ac7b332994ac060cf917e5f"
+  },
+  "source_review": {
+    "bytes": 209241,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot35-entry-source-review01-2026-10-11/REVIEW01.json",
+    "sha256": "9c637f38fd925c3ceeab8a8b62d8242825210cb955e7ecdd88d57a68f1857472"
+  },
+  "status": "ACTUAL_SOURCE_AND_REGISTRATION_DRAFT_COMPLETE_NOT_ADMITTED"
+}

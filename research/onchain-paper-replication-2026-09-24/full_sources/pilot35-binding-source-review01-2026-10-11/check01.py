@@ -1,0 +1,43 @@
+from pathlib import Path
+import ast,copy,json,hashlib,difflib
+R=Path.cwd();H=Path('research/onchain-paper-replication-2026-09-24/full_sources');B=H/'pilot35-binding-source-candidate01-2026-10-11';A=H/'real-data-pilot-full34-binding-preparation01-2026-10-11';O=H/'pilot35-binding-source-review01-2026-10-11';refs={};checks=[]
+def ref(p):
+ b=p.read_bytes();v={'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()};refs[str(p)]=v;return v
+def read(p):ref(p);return json.loads(p.read_text())
+def ck(v,n):assert v,n;checks.append(n)
+def raw(v):return (json.dumps(v,sort_keys=True,separators=(',',':'))+'\n').encode()
+def dump(p,v):p.write_text(json.dumps(v,sort_keys=True,indent=2)+'\n')
+m=read(B/'MANIFEST01.json');ck(refs[str(B/'MANIFEST01.json')]['sha256'].startswith('4c602b4b'),'exact frozen candidate')
+for n,v in m['files'].items():a=ref(B/n);ck(all(a[k]==v[k] for k in ('bytes','sha256')),'member '+n)
+fw='';iv=''
+for n in ('build_public01.py','bind_actual01.py'):
+ a=(A/n).read_text();b=(B/n).read_text();ref(A/n);ast.parse(b);fw+=''.join(difflib.unified_diff(a.splitlines(True),b.splitlines(True),fromfile=n,tofile=n));iv+=''.join(difflib.unified_diff(b.splitlines(True),a.splitlines(True),fromfile=n,tofile=n))
+ck(fw==(B/'FORWARD.patch').read_text() and iv==(B/'INVERSE.patch').read_text(),'complete exact source diffs')
+w=(B/'bind_actual01.py').read_text();ck(w.replace('20261011-35','20261011-34').replace('len(refs)==72','len(refs)==67')==(A/'bind_actual01.py').read_text(),'wrapper exact identity/count inverse')
+binder=H/'real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py';ck(ref(binder)['sha256']=='bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb','unchanged accepted actual binder')
+s=(B/'build_public01.py').read_text();tree=ast.parse(s);env={'ROOT':R};nodes=[n for n in tree.body if isinstance(n,ast.Assign) and isinstance(n.targets[0],ast.Name) and n.targets[0].id in ('NAME','PRIOR','EXPECTED_ANCHOR','PRIOR_MANIFEST','JOIN_PINS','JOIN_REFS','EDGE_REFS')];exec(compile(ast.Module(body=nodes,type_ignores=[]),'<public-literals>','exec'),env)
+ck(env['NAME'].endswith('20261011-35') and env['PRIOR'].endswith('20261011-34') and env['EXPECTED_ANCHOR']=='53b8890630765d06f8a44e3e8fbaee1f4b00bdfb','fresh35 and original34 current anchor')
+ck(ref(A/'MANIFEST01.json')['sha256']==env['PRIOR_MANIFEST'],'prior34 manifest authenticated')
+for p,h in env['JOIN_PINS'].items():ck(ref(R/p)['sha256']==h,'accepted installed join pin '+Path(p).name)
+base={p.stem:read(p) for p in (A/'public01').glob('*.json')};ck(len(base)==12,'original twelve publicdocs');docs=copy.deepcopy(base);joins=read(env['JOIN_REFS'])
+for role,q in joins.items():ck(ref(R/q['path'])['sha256']==q['sha256'],'committed public body '+role);docs[role]=read(R/q['path'])
+pre=copy.deepcopy(docs);files=docs['pair_policy']['numerical_source']['files'];ck(len(files)==200 and docs['pair_policy']['numerical_source']['commit']==env['EXPECTED_ANCHOR'],'exact installed200 closure')
+ck(all(ref(R/p)['sha256']==h for p,h in files.items()),'all200 actual current source bodies')
+edge=read(env['EDGE_REFS']);oldrefs=read(A/'PUBLIC_INPUT_REFS_DRAFT01.json');ck(len(oldrefs)==66 and len(edge)==5 and not set(oldrefs)&set(edge) and len(oldrefs|edge)==71,'66plus5draft71 bound72')
+selected=docs['mcm_policy']['batched']['execution'];ck(set(selected['compiled_edge_inputs'].values())==set(edge),'exact selected five role names')
+for kind,role in selected['compiled_edge_inputs'].items():
+ q=edge[role];ck(ref(R/q['path'])['sha256']==q['sha256']==selected['compiled_edge_policy'][kind+'_sha256'] and str(R/q['path'])==selected['compiled_edge_policy'][kind+'_path'],'genuine selected path hash '+kind)
+main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main');loops=[n for n in main.body if isinstance(n,ast.For) and isinstance(n.target,ast.Name) and n.target.id in ('policy','item')];docs['archive_policy']['remote_namespace']='ethpilot-20261011-35';docs['archive_transport']['namespace']='ethpilot-20261011-35';env.update(docs=docs,raw=raw,hashlib=hashlib);exec(compile(ast.Module(body=loops,type_ignores=[]),'<exact-public-rebase-loops>','exec'),env)
+ck(docs['execution_job']['resources']==docs['pilot']['resource_policy'],'resource policy mirrored')
+for name in ('execution_job','pilot'):
+ resources=copy.deepcopy(docs[name]['resources' if name=='execution_job' else 'resource_policy']);resources['storage_budget']['experiment']=env['PRIOR'];resources['storage_budget']['roots'][1]=str(R/'research_runs'/env['PRIOR']);ck(resources==pre[name]['resources' if name=='execution_job' else 'resource_policy'],'all resource scalar caps inverse '+name)
+for n in ('producer_plan','execution_job'):
+ item=docs[n]['producers']['original32'] if n=='producer_plan' else docs[n]['payload']['representation_jobs']['original32']
+ for role,key in (('pair_policy','pair_execution'),('archive_policy','compact_archive_execution')):ck(item['descriptor'][key]['policy_sha256']==hashlib.sha256(raw(docs[role])).hexdigest(),'both new policy digest joins '+n+'/'+role)
+for n in ('compact_policy','mcm_output_policy','original_import','resource_population_plan','typed_payload'):ck(docs[n]==base[n],'unchanged scientific '+n)
+ck(docs['mcm_policy']==pre['mcm_policy'] and docs['pair_policy']==pre['pair_policy'],'accepted selected mcm and numerical source unchanged')
+ck("HERE.name=='real-data-pilot-full35-binding-preparation01-2026-10-11'" in s and 'anchor==EXPECTED_ANCHOR' in s and "['git', 'rev-parse', 'HEAD']" in s,'builder requires exact installationdir and actual HEAD')
+ck("'research_artifacts/archive-dispatch-ethpilot-20261011-35'" in s and 'pilot-transport-20261011-35-01' in s and "'archive-dispatch-ethpilot-20261011-35'" in w,'exact fresh35 archive/private guards')
+ck("if k != 'archive_policy'" in s and "== 11" in s and "'archive_transport' not in refs" in s,'prepared11 and opaque67th successor72 separation')
+result={'decision':'accepted','scope':'Exact frozen fresh35 builder and offline binder-wrapper source/command preparation only.','checks':checks,'references':refs,'builder_source_sha256':ref(B/'build_public01.py')['sha256'],'wrapper_source_sha256':ref(B/'bind_actual01.py')['sha256'],'required_anchor':env['EXPECTED_ANCHOR'],'counts':{'numerical_sources':200,'public_json':12,'prepared_roles':11,'draft_refs':71,'prospective_bound_refs':72},'conditions':['Root copies exact two scripts into NEW actualfull35 preparation directory then runs reviewed builder once at exact53b889 HEAD.','Actual generated public bodies/source joins require independent review before one-use opaque binder; no current35 namespace reservation claimed.','Fresh capacity/source423 and independently accepted106 proposal, genuine new gate/binding/release and externalpreparation recovery remain separate.'],'commands':{'builder':'taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/build_public01.py --anchor '+env['EXPECTED_ANCHOR'],'binder_after_generated_review':'taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/bind_actual01.py'},'limits':['No Git/builder/binder/native/science/authority execution; no privatebody or connection/key inspection.','Metadata AST loops executed only against public in-memory copies.','Actual committed blob joins and fresh namespace absence are enforced by future builder, not independently observed here.','Preserved prefreeze author failures remain evidence; no empirical completion or speed/capacity claim.']}
+dump(O/'REVIEW01.json',result);(O/'REPORT.md').write_text('Accepted exact prospective fresh35 builder and binder-wrapper source. Actual200current source hashes, accepted committed public joins, selected fivebackend roles,71draft/72bound counts and exact original binderbcca verified. Wrapper restores original34 with only identity/count inverse. Extracted public loops retain all resource scalar caps and original scientific docs; both producer/job pair/archive hashes rejoin. Root must copy exact scripts into new T35, runbuilder once at fixed53b889, then obtain actualgenerated-public review before opaque binder. No builder/binder/Git/privatebody/numerical execution here.\n');dump(O/'MANIFEST01.json',{'status':'FROZEN_FRESH35_SOURCE_REVIEW','files':{p.name:ref(p) for p in O.iterdir()}});print(json.dumps({'review':ref(O/'REVIEW01.json'),'manifest':ref(O/'MANIFEST01.json'),'checks':len(checks)}))

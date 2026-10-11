@@ -1,0 +1,269 @@
+--- candidate35/prepare_source01.py
++++ full34/prepare_source01.py
+@@ -1,16 +1,14 @@
+-"""Root-only fresh35 source builder; requires actual Root capacity, never launches."""
++"""Root source-only successor; no binder, admission, numerical imports or claim."""
+ from pathlib import Path
+ import ast, datetime, difflib, hashlib, json, subprocess, sys
+ 
+ ROOT=Path.cwd().resolve(); HERE=Path(__file__).resolve().parent; F=HERE.parent
+-OLD=F/'real-data-pilot-full34-entry-preparation01-2026-10-11'
+-T=F/'real-data-pilot-full35-binding-preparation01-2026-10-11'
+-EXPECTED_HERE=F/'real-data-pilot-full35-entry-preparation01-2026-10-11'
+-NAME='eth-paper-real-data-end-to-end-resource-20261011-35'
+-SOURCE='53b8890630765d06f8a44e3e8fbaee1f4b00bdfb'
+-assert len(sys.argv)==3, 'actual source anchor and actual Root capacity SHA required'
+-ANCHOR,CAPACITY_SHA=sys.argv[1:]
+-assert ANCHOR==SOURCE and len(CAPACITY_SHA)==64 and all(c in '0123456789abcdef' for c in CAPACITY_SHA)
++OLD=F/'real-data-pilot-full33-entry-preparation01-2026-10-11'
++T=F/'real-data-pilot-full34-binding-preparation01-2026-10-11'
++NAME='eth-paper-real-data-end-to-end-resource-20261011-34'
++assert len(sys.argv)==2
++ANCHOR=sys.argv[1]
++assert len(ANCHOR)==40 and all(c in '0123456789abcdef' for c in ANCHOR)
+ 
+ def load(p): return json.loads(p.read_bytes())
+ def ref(p):
+@@ -19,75 +17,40 @@
+ def save(p,value):
+     with p.open('xb') as stream: stream.write((json.dumps(value,sort_keys=True,indent=2)+'\n').encode())
+ def main():
+-    assert HERE==EXPECTED_HERE, 'copy reviewed candidate into exact Root E35 before execution'
+     assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==ANCHOR
+     assert not (ROOT/'research_runs'/NAME).exists()
+-    # Root owns the declaration. Never manufacture an accepted capacity result.
+-    capacity_path=HERE/'CAPACITY_DECLARATION_ROOT01.json'
+-    assert ref(capacity_path)['sha256']==CAPACITY_SHA
+-    capacity=load(capacity_path)
+-    assert capacity['identity']==NAME and capacity['source_anchor']==ANCHOR and capacity['decision']=='accepted'
+-    before=(OLD/'preflight34_01.py').read_text(); after=before
+-    changes=[('20261011-34','20261011-35'),('effective_attempt_budget!=105','effective_attempt_budget!=106'),
+-             ("'effective_attempt_budget':105","'effective_attempt_budget':106"),
+-             ('genuine budget105','genuine budget106'),('exact reviewed full34','exact reviewed full35'),
+-             ('len(actual)==67','len(actual)==72'),("public['all_input_roles']==67","public['all_input_roles']==72"),
+-             ('exact genuine67-role','exact genuine72-role'),('len(pins)>=365','len(pins)==423')]
++    before=(OLD/'preflight33_01.py').read_text(); after=before
++    changes=[('20261011-33','20261011-34'),('effective_attempt_budget!=104','effective_attempt_budget!=105'),
++             ("'effective_attempt_budget':104","'effective_attempt_budget':105"),
++             ('genuine budget104','genuine budget105'),('exact reviewed full33','exact reviewed full34')]
+     for old,new in changes:
+         assert old in after,old
+         after=after.replace(old,new)
++    # The immutable preparation is a complete literal dict, not just a new path.
+     old_line=next(line for line in before.splitlines() if line.startswith('FROZEN_PREPARATION='))
+-    moved_line=old_line.replace('20261011-34','20261011-35')
++    moved_line=old_line.replace('20261011-33','20261011-34')
+     assert moved_line in after
+     after=after.replace(moved_line,'FROZEN_PREPARATION='+repr(ref(T/'PREPARED01.json')))
+-    selected=load(T/'public01/mcm_policy.json')['batched']['execution']
+-    edge_policy=selected['compiled_edge_policy'];edge_inputs=selected['compiled_edge_inputs']
+-    expected_inputs={kind:'compiled_edge_'+kind for kind in ('source','adapter','library','runtime','abi')}
+-    assert edge_inputs==expected_inputs and edge_policy['format']=='cpython-two-attribute-edge-owner-v1'
+-    literal=next(line for line in after.splitlines() if line.startswith('COMPILED_INPUTS='))
+-    after=after.replace(literal,literal+'\nEDGE_POLICY='+repr(edge_policy)+'\nEDGE_INPUTS='+repr(edge_inputs))
+-    seam="    need(execution['max_summary_bytes']==144998400,'original per-stage summary cap differs')"
+-    assert after.count(seam)==1
+-    added="""    need(execution.get('compiled_edge_policy')==EDGE_POLICY,'exact selected edge policy differs')
+-    need(execution.get('compiled_edge_inputs')==EDGE_INPUTS,'exact five edge roles differ')
+-    for kind,role in EDGE_INPUTS.items():
+-        need(actual[role]['sha256']==EDGE_POLICY[kind+'_sha256']
+-             and str(ROOT/actual[role]['path'])==EDGE_POLICY[kind+'_path'],
+-             'edge source/adapter/library/runtime/ABI role does not join policy')
+-"""
+-    after=after.replace(seam,added+seam)
+     ast.parse(after)
+-    with (HERE/'preflight35_01.py').open('x') as stream: stream.write(after)
+-    oldio=(OLD/'root_io34_01.py').read_text()
+-    newio=oldio.replace('from preflight34_01 import check','from preflight35_01 import check')
++    with (HERE/'preflight34_01.py').open('x') as stream: stream.write(after)
++    oldio=(OLD/'root_io33_01.py').read_text()
++    newio=oldio.replace('from preflight33_01 import check','from preflight34_01 import check')
+     assert oldio!=newio
+     ast.parse(newio)
+-    with (HERE/'root_io35_01.py').open('x') as stream: stream.write(newio)
+-    for oldname,newname in [('preflight34_01.py','preflight35_01.py'),('root_io34_01.py','root_io35_01.py')]:
++    with (HERE/'root_io34_01.py').open('x') as stream: stream.write(newio)
++    for oldname,newname in [('preflight33_01.py','preflight34_01.py'),('root_io33_01.py','root_io34_01.py')]:
+         a=(OLD/oldname).read_text().splitlines(True); b=(HERE/newname).read_text().splitlines(True)
+         with (HERE/(newname+'.diff')).open('x') as stream:
+             stream.write(''.join(difflib.unified_diff(a,b,fromfile=str(OLD/oldname),tofile=str(HERE/newname))))
+-    mapping=load(OLD/'CAPACITY_SOURCE_MAP01.json'); pins=mapping['source_files'];assert len(pins)==421
+-    serializer=F/'pilot34-serializer-postclosure-install01-2026-10-11/INTEGRATION01.json'
+-    native=F/'pilot34-two-attribute-main-adoption01-2026-10-11/INTEGRATION01.json'
+-    assert ref(serializer)['sha256']=='bbab2992398b06cd8a9fd583f95cc973d7944364279ccfb2bffdf0a3f5b9da59'
+-    assert ref(native)['sha256']=='f33fb952c5115b440dce1eb8f1ee10449d1a76268379561ada23ade0594153ec'
+-    s=load(serializer)['modules'];n=load(native)['modules'];assert len(s)==5 and len(n)==10
+-    expected={m['destination']['path']:m['destination']['sha256'] for m in s}
+-    assert not set(expected)&{m['destination'] for m in n}
+-    expected.update({m['destination']:m['installed_sha256'] for m in n})
+-    added_paths={'tradingagents/research/onchain_replication/'+name for name in ('compiled_edge_owner.py','edge_chunk_adapter.py')}
+-    assert set(expected)-set(pins)==added_paths and len(expected)==15
++    mapping=load(OLD/'CAPACITY_SOURCE_MAP01.json'); pins=mapping['source_files']
+     changed=[]
+     for path,old in list(pins.items()):
+         actual=ref(ROOT/path)['sha256']
+         if actual!=old: changed.append({'path':path,'old':old,'new':actual}); pins[path]=actual
+-    assert len(changed)==13 and {x['path'] for x in changed}==set(expected)-added_paths
+-    assert all(x['new']==expected[x['path']] for x in changed)
+-    for path in sorted(added_paths):
+-        actual=ref(ROOT/path)['sha256'];assert actual==expected[path];pins[path]=actual
+-    assert len(pins)==423 and capacity['source_body_pins']==pins
+-    # Authenticate all423 actual bodies against the installed committed source.
++    assert len(pins)==421 and len(changed)==1
++    assert changed[0]['path']=='tradingagents/research/onchain_replication/compact_mcm.py'
++    assert changed[0]['new']=='abd86e24681f0df4ef3ca82cfb016662d9af5a46a38a32bafc65e7c92f2dacf8'
++    # Authenticate all 421 real bodies at the actual committed source once.
+     output=subprocess.check_output(['git','-c','core.packedGitWindowSize=16m','-c','core.packedGitLimit=64m','cat-file','--batch'],input=('\n'.join(ANCHOR+':'+p for p in pins)+'\n').encode())
+     pos=0
+     for path,digest in pins.items():
+@@ -97,28 +60,22 @@
+         assert output[pos:pos+1]==b'\n'; pos+=1
+         assert body==(ROOT/path).read_bytes() and hashlib.sha256(body).hexdigest()==digest,path
+     assert pos==len(output)
+-    numerical=load(T/'public01/pair_policy.json')['numerical_source']
+-    assert numerical['commit']==ANCHOR and len(numerical['files'])==200 and all(pins.get(p)==h for p,h in numerical['files'].items())
+-    assert len(load(T/'PUBLIC_INPUT_REFS_DRAFT01.json'))==71
+     mapping['source_anchor']=ANCHOR
+-    mapping['qualification']='Actual423 Git/local body joins: original421 paths with13 accepted installed changes plus2 native helpers; exact5 serializer and10 native module adoption. Read-only source closure, not live capacity eligibility.'
++    mapping['qualification']='Actual421 Git/local body joins at '+ANCHOR+'; only independently reviewed imported-only inter-phase validation changed. New entry files excluded. Not live resource eligibility.'
+     save(HERE/'CAPACITY_SOURCE_MAP01.json',mapping)
+-    old_capacity=load(OLD/'CAPACITY_DECLARATION_ROOT01.json')
+-    for key in ('new_logical_growth_bytes','new_allocated_growth_bytes','non_directory_new_allocated_growth_bytes','new_entries','directory_allocated_bound_bytes','other_writer_reserved_bytes','allocation_semantics','directory_and_other_writers_included','runtime_residuals_included'):
+-        assert capacity[key]==old_capacity[key],key
+-    assert capacity['owned_paths']==[p.replace('20261011-34','20261011-35') for p in old_capacity['owned_paths']]
++    capacity=load(OLD/'CAPACITY_DECLARATION_ROOT01.json')
++    capacity['identity']=NAME; capacity['at']=datetime.datetime.now(datetime.timezone.utc).isoformat()
++    capacity['source_anchor']=ANCHOR; capacity['source_body_pins']=pins
++    capacity['owned_paths']=[p.replace('20261011-33','20261011-34') for p in capacity['owned_paths']]
++    capacity['qualification']='Successor34 prospective declaration reuses all unchanged growth terms and caps; reviewed cadence source bytes are read-only outside writable union. Original failed33 retained bytes remain in actual baseline. Existing additional1MiB metadata headroom retained. Not whole capacity, external reservation or empirical saving.'
++    save(HERE/'CAPACITY_DECLARATION_ROOT01.json',capacity)
+     core=load(OLD/'CORE_MANIFEST01.json')
+-    for role,pin in core['inputs'].items():
+-        original=load(ROOT/pin['path']);current=load(T/'public01'/(role+'.json'))
+-        if role=='mcm_policy':
+-            current['batched']['execution'].pop('compiled_edge_policy');current['batched']['execution'].pop('compiled_edge_inputs')
+-        assert current==original,'scientific core changed: '+role
+     core['inputs']={role:ref(T/'public01'/(role+'.json')) for role in core['inputs']}
+     core['source']={p:ref(ROOT/p)['sha256'] for p in core['source']}
+-    core['scope']='Four original scientific core policies preserved except explicit reviewed five-role native edge selection; accepted5 serializers and10 native source bodies installed; scientific method/resources/60s lease unchanged. No empirical speed or capacity claim.'
++    core['scope']='Exact unchanged four scientific policy bodies and current installed source after independently accepted imported-only preparation validation cadence correction; all three lease boundaries remain; no empirical speed or capacity claim.'
+     save(HERE/'CORE_MANIFEST01.json',core)
+-    save(HERE/'SOURCE_PREPARATION01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'source_anchor':ANCHOR,'capacity_source_bodies':423,'numerical_source_bodies':200,'changed_source':changed,'added_source_paths':sorted(added_paths),'serializer_installation':ref(serializer),'native_installation':ref(native),'capacity_declaration':ref(capacity_path),'baseline_preflight':ref(OLD/'preflight34_01.py'),'baseline_root_io':ref(OLD/'root_io34_01.py'),'numerical_imports':False,'admission':False,'claim':False,'launch':False})
++    save(HERE/'SOURCE_PREPARATION01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'source_anchor':ANCHOR,'capacity_source_bodies':421,'changed_source':changed,'baseline_preflight':ref(OLD/'preflight33_01.py'),'baseline_root_io':ref(OLD/'root_io33_01.py'),'numerical_imports':False,'admission':False,'claim':False,'launch':False})
+     files={p.name:ref(p) for p in HERE.iterdir() if p.is_file()}
+     save(HERE/'SOURCE_MANIFEST01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'files':files})
+-    print(json.dumps({'status':'SOURCE_DRAFT_NOT_RELEASED','source_bodies':423,'changed_source':len(changed),'added_source':2,'claim':False}))
++    print(json.dumps({'status':'SOURCE_DRAFT_NOT_RELEASED','source_bodies':421,'changed_source':len(changed),'claim':False}))
+ if __name__=='__main__': main()
+--- candidate35/prepare_registration01.py
++++ full34/prepare_registration01.py
+@@ -1,72 +1,46 @@
+-"""Root-only concrete35 registration draft; no admission, claim or launch."""
++"""Root-only concrete33 registration draft; no admission, claim or launch."""
+ from pathlib import Path
+-import copy, hashlib, json, sys
++import copy, hashlib, json
+ ROOT=Path.cwd().resolve(); HERE=Path(__file__).resolve().parent; F=HERE.parent
+-OLD=F/'real-data-pilot-full34-entry-preparation01-2026-10-11'
+-T=F/'real-data-pilot-full35-binding-preparation01-2026-10-11'
+-BUDGET=F/'real-data-pilot-full35-cumulative-preparation01-2026-10-11'
+-NAME='eth-paper-real-data-end-to-end-resource-20261011-35'
+-PRIOR='eth-paper-real-data-end-to-end-resource-20261011-34'
+-EXPECTED_HERE=F/'real-data-pilot-full35-entry-preparation01-2026-10-11'
+-assert len(sys.argv)==2, 'actual accepted106 review SHA required'
+-REVIEW_SHA=sys.argv[1]
+-assert len(REVIEW_SHA)==64 and all(c in '0123456789abcdef' for c in REVIEW_SHA)
++OLD=F/'real-data-pilot-full33-entry-preparation01-2026-10-11'
++T=F/'real-data-pilot-full34-binding-preparation01-2026-10-11'
++BUDGET=F/'real-data-pilot-full34-cumulative-preparation01-2026-10-11'
++NAME='eth-paper-real-data-end-to-end-resource-20261011-34'
++PRIOR='eth-paper-real-data-end-to-end-resource-20261011-33'
+ def load(p): return json.loads(p.read_bytes())
+ def ref(p):
+     b=p.read_bytes(); return {'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b)}
+ def save(p,x):
+     with p.open('xb') as stream: stream.write((json.dumps(x,sort_keys=True,indent=2)+'\n').encode())
+ def main():
+-    assert HERE==EXPECTED_HERE, 'copy reviewed candidate into exact Root E35 before execution'
+-    review_path=F/'pilot35-cumulative-machine-review01-2026-10-11/EXTENSION106_REVIEW01.json'
+-    assert ref(review_path)['sha256']==REVIEW_SHA
+-    review=load(review_path)
+-    assert set(review)=={'schema_version','decision','extension_sha256','reviewer','scope'} and review['decision']=='accepted'
+-    extension=ref(BUDGET/'EXTENSION_PROPOSED106_01.json')
+-    assert extension['sha256']==review['extension_sha256']=='e0a1e3f89926094373e6c58022627e5861cda03064657e88a245129756810b9a'
+-    assert ref(BUDGET/'CUMULATIVE_ALLOCATION_PROPOSED106_01.json')['sha256']=='0320608cc703f7c8c2e4f1867bfc478a51efcd62ac70d318b409bd49c55815db'
+-    source_preparation=load(HERE/'SOURCE_PREPARATION01.json')
+-    assert source_preparation['source_anchor']=='53b8890630765d06f8a44e3e8fbaee1f4b00bdfb' and source_preparation['capacity_source_bodies']==423 and source_preparation['numerical_source_bodies']==200
+     assert not (ROOT/'research_runs'/NAME).exists()
+     bound=load(T/'BOUND01.json'); refs=load(T/'ALL_INPUT_REFS01.json')
+-    assert bound['status']=='BOUND_DRAFT_NOT_REGISTERED_NOT_ADMITTED' and len(refs)==72
+-    assert len(load(T/'PUBLIC_INPUT_REFS_DRAFT01.json'))==71
+-    assert set(refs)==set(load(T/'PUBLIC_INPUT_REFS_DRAFT01.json'))|{'archive_transport'}
+-    assert bound['source_request']['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-35-01'
++    assert bound['status']=='BOUND_DRAFT_NOT_REGISTERED_NOT_ADMITTED' and len(refs)==67
++    assert bound['source_request']['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-34-01'
+     baseline=load(OLD/'gate01.json')['experiments'][PRIOR]['inputs']['matching_ordered_edge_scratch']
+     assert ref(ROOT/baseline['path'])['sha256']==baseline['sha256']
+     scratch=load(ROOT/baseline['path'])
+     assert scratch['experiment']==PRIOR; scratch['experiment']=NAME
+-    kernel='tradingagents/research/onchain_replication/matching_annealing.py'
+-    assert scratch['installed_source']['path']==kernel
+-    assert ref(ROOT/kernel)['sha256']=='86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57'
+-    scratch['installed_source']['sha256']=ref(ROOT/kernel)['sha256']
+     save(HERE/'MATCHING_SCRATCH_RESERVATION01.json',scratch)
+     pin=ref(HERE/'MATCHING_SCRATCH_RESERVATION01.json')
+     refs['matching_ordered_edge_scratch']={k:pin[k] for k in ('path','sha256')}; refs['matching_ordered_edge_scratch']['dataset']='eth'
+     gate=load(OLD/'gate01.json'); assert NAME not in gate['experiments']
+     experiment=copy.deepcopy(gate['experiments'][PRIOR]); gate['experiments'][NAME]=experiment
+     experiment['parent']=PRIOR; experiment['inputs']=refs; experiment['charter']=ref(BUDGET/'CHARTER01.md')
+-    experiment['question']='Measure full original seven-WHOLE-graph MCM and GAT/attention-LSTM real joint update/checkpoint with the exact reviewed installed two-attribute native edge backend and five fresh serializers, using unchanged scientific method, model training, compiled normalization, 60s lease and native limits.'
++    experiment['question']='Measure full original seven-WHOLE-graph MCM and GAT/attention-LSTM real joint update/checkpoint after exact accepted imported-only inter-phase preparation validation checks, using unchanged scientific method, compiled route and native limits.'
+     evidence={
+-        'budget_review':ref(F/'pilot35-cumulative-machine-review01-2026-10-11/EXTENSION106_REVIEW01.json'),
++        'budget_review':ref(F/'pilot34-cumulative-machine-review01-2026-10-11/EXTENSION105_REVIEW01.json'),
+         'capacity_observation':ref(HERE/'CAPACITY_DECLARATION_ROOT01.json'),
+-        'prior_outcome_review':ref(F/'pilot34-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
+-        'prior_root_closure_review':ref(F/'pilot34-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
+-        'prior_preservation_complete':ref(F/'real-data-pilot-full24-preparation-increment01-2026-10-09/outcome27/FRESH_GIT_RECOVERY27.json'),
+-        'prior_recovery_review':ref(F/'pilot34-outcome-increment-return-review01-2026-10-11/REVIEW01.json'),
+-        'integration_review':ref(F/'pilot34-two-attribute-main-integration-review01-2026-10-11/REVIEW01.json'),
+-        'prior_outcome_locator_correction':ref(F/'pilot31-terminal-locator-correction01-2026-10-11/CORRECTION01.json'),
+-        'native_outcome_review':ref(F/'pilot34-native-owner03-outcome-review01-2026-10-11/REVIEW01.json'),
+-        'native_preservation_complete':ref(F/'real-data-pilot-full24-preparation-increment01-2026-10-09/nativeoutcome29/FRESH_GIT_RECOVERY29.json'),
+-        'native_recovery_review':ref(F/'pilot34-native03-increment-return-review01-2026-10-11/REVIEW01.json'),
+-        'native_installation':ref(F/'pilot34-two-attribute-main-adoption01-2026-10-11/INTEGRATION01.json'),
+-        'serializer_installation':ref(F/'pilot34-serializer-postclosure-install01-2026-10-11/INTEGRATION01.json')}
++        'prior_outcome_review':ref(F/'pilot33-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
++        'prior_root_closure_review':ref(F/'pilot33-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
++        'prior_preservation_complete':ref(F/'real-data-pilot-full24-preparation-increment01-2026-10-09/outcome25/FRESH_GIT_RECOVERY25.json'),
++        'prior_recovery_review':ref(F/'pilot33-outcome-increment-return-review01-2026-10-11/REVIEW01.json'),
++        'integration_review':ref(F/'pilot33-preparation-cadence-correction-review01-2026-10-11/REVIEW01.json'),
++        'prior_outcome_locator_correction':ref(F/'pilot31-terminal-locator-correction01-2026-10-11/CORRECTION01.json')}
+     evidence['budget_review']={k:evidence['budget_review'][k] for k in ('path','sha256')}
+-    experiment['cumulative_budget_extension']={role:{k:pin[k] for k in ('path','sha256')} for role,pin in {'extension':ref(BUDGET/'EXTENSION_PROPOSED106_01.json'),'review':evidence['budget_review']}.items()}
++    experiment['cumulative_budget_extension']={role:{k:pin[k] for k in ('path','sha256')} for role,pin in {'extension':ref(BUDGET/'EXTENSION_PROPOSED105_01.json'),'review':evidence['budget_review']}.items()}
+     pins=experiment['source_files']; public_pins=load(HERE/'CAPACITY_SOURCE_MAP01.json')['source_files']
+-    assert len(public_pins)==423
+-    for name in ('EXTENSION_PROPOSED106_01.json','CUMULATIVE_ALLOCATION_PROPOSED106_01.json'):
++    for name in ('EXTENSION_PROPOSED105_01.json','CUMULATIVE_ALLOCATION_PROPOSED105_01.json'):
+         pin=ref(BUDGET/name);pins[pin['path']]=pin['sha256']
+     pins.update(public_pins)
+     for path,digest in pins.items(): assert ref(ROOT/path)['sha256']==digest,path
+@@ -75,7 +49,7 @@
+     for p in sorted(HERE.iterdir()):
+         if p.is_file(): pins[str(p.relative_to(ROOT))]=ref(p)['sha256']
+     for p in evidence.values(): pins[p['path']]=p['sha256']
+-    public={'experiment':NAME,'all_input_roles':72,'source_pins':public_pins,'status':'DRAFT_NOT_RELEASED'}
++    public={'experiment':NAME,'all_input_roles':67,'source_pins':public_pins,'status':'DRAFT_NOT_RELEASED'}
+     save(HERE/'PUBLIC_MANIFEST01.json',public)
+     pins[str((HERE/'PUBLIC_MANIFEST01.json').relative_to(ROOT))]=ref(HERE/'PUBLIC_MANIFEST01.json')['sha256']
+     save(HERE/'gate01.json',gate)
+@@ -87,6 +61,6 @@
+              'binding_readback':ref(T/'BINDING_CHECK01.json'),'input_refs':{role:{k:v[k] for k in ('path','sha256')} for role,v in refs.items()},
+              'binding_review':None,**evidence}
+     save(HERE/'BINDING_DRAFT01.json',binding)
+-    save(HERE/'REGISTRATION_DRAFT01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'gate':ref(HERE/'gate01.json'),'source_pins':len(pins),'input_roles':72,'claim':False,'admission':False})
+-    print(json.dumps({'status':'DRAFT_NOT_RELEASED','source_pins':len(pins),'input_roles':72,'claim':False}))
++    save(HERE/'REGISTRATION_DRAFT01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'gate':ref(HERE/'gate01.json'),'source_pins':len(pins),'input_roles':67,'claim':False,'admission':False})
++    print(json.dumps({'status':'DRAFT_NOT_RELEASED','source_pins':len(pins),'input_roles':67,'claim':False}))
+ if __name__=='__main__':main()
