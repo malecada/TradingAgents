@@ -1,0 +1,3 @@
+Accepted source-only increment30 tools and prospective Root commands. 81 focused checks passed. Capture/recovery literal and AST inverses reproduce accepted29. Selector preserves typed/mode/hash/currentness and reuse core; exact 15 public roots, ten installed source pins, 34 prior names, five final E35 files, and three authenticated archive aliases. No empirical scope is traversed.
+
+Root must freeze complete accepted final entry/review bodies before one-use select/capture, then commit/push before fresh recovery. This review does not establish actual capture/recovery or empirical release. No helpers, Git, network or scientific modules were executed.
