@@ -1,0 +1,131 @@
+--- tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ tradingagents/research/onchain_replication/compact_mcm_batched.py
+@@ -12,7 +12,6 @@
+ from pathlib import Path
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner
+ import numpy as np
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+@@ -44,9 +43,8 @@
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
+     execution=b['execution']
+-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()),'explicit numeric execution schema required')
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()),'explicit numeric execution schema required')
+     _compiled_policy(execution)
+-    _edge_policy(execution)
+     if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
+     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
+     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
+@@ -96,41 +94,7 @@
+     return value
+ 
+ 
+-
+-def _edge_policy(execution):
+-    if 'compiled_edge_policy' not in execution:
+-        require('compiled_edge_inputs' not in execution,'edge roles without selection')
+-        return None
+-    value=compiled_edge_owner.freeze(execution['compiled_edge_policy'])
+-    require(value is not None,'explicit edge selection required')
+-    roles=execution.get('compiled_edge_inputs')
+-    require(type(roles) is dict and set(roles)=={'source','adapter','library','runtime','abi'},'exact five edge roles required')
+-    require(all(type(role) is str and 0<len(role)<=128 and role.isascii() and all(c.isalnum() or c in '_-' for c in role) for role in roles.values()) and len(set(roles.values()))==5 and 'environment' not in roles.values(),'distinct finite edge roles required')
+-    return value
+-
+-def _edge_inputs(execution,run):
+-    value=_edge_policy(execution)
+-    if value is None:return None
+-    policy=dict(value);ad=run.admission;runtime=None
+-    for kind in ('source','adapter','library','runtime','abi'):
+-        role=execution['compiled_edge_inputs'][kind]
+-        require(role in ad.inputs,'edge role not admitted')
+-        info=ad.inputs[role];path=ad.root/info['path']
+-        require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'edge registered path/hash differs')
+-        limit=4096 if kind in ('runtime','abi') else 65536
+-        size=policy[kind+'_bytes'] if kind in ('runtime','abi') else ((21920 if policy['format']=='cpython-two-attribute-edge-owner-v1' and policy['library_sha256']=='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97' else 17072) if kind=='library' else None)
+-        body=compiled_edge_owner.read_reference(path,info['sha256'],limit,size,owned=kind=='library')
+-        require(run.read_input(role)==body,'edge genuine input body differs')
+-        if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(body)
+-        if kind=='abi':compiled_edge_owner.abi_metadata(body)
+-        if kind=='adapter':
+-            require(path==ad.root/'tradingagents/research/onchain_replication/edge_chunk_adapter.py' and ad.experiment['source_files'].get('tradingagents/research/onchain_replication/edge_chunk_adapter.py')==info['sha256'],'edge adapter input/source join differs')
+-    require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'edge runtime inventory/environment differs')
+-    info=ad.inputs['environment'];body=compiled_edge_owner.read_reference(ad.root/info['path'],info['sha256'],1024**2)
+-    require(run.read_input('environment')==body,'edge environment genuine input differs')
+-    return value
+-
+-def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False):
++def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False):
+     import importlib
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+@@ -140,7 +104,6 @@
+         if geometry:names+=('geometry_summary','geometry_publication')
+         if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
+         if compiled:names+=('compiled_normalization_policy','compiled_small_lse','matching_annealing','matching_checkpoint')
+-        if edge:names+=('compiled_edge_owner','edge_chunk_adapter','compiled_normalization_policy','matching_annealing','matching_checkpoint')
+         for name in names:
+             module=importlib.import_module(PACKAGE+'.'+name)
+             relative='tradingagents/research/onchain_replication/'+name+'.py'
+@@ -267,7 +230,6 @@
+         require(io._signature((root/'matching').lstat())[:2]==tuple(binding['journal_inode']),'matching root inode differs')
+         _children(root/'stream',{'closure-tokens.bin','scores.f32','numeric-origins.bin','numeric-batches'},directories={'numeric-batches'})
+         require(compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))==compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy')),'batched/numeric normalization selection differs')
+-        require(compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))==compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy')),'batched/numeric edge selection differs')
+         numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])
+         require(numeric['cells']==binding['cells'] and binding['numeric_execution']['batch_cells']==binding['batch_cells'],'numeric occurrence/full MCM denominator differs')
+         if binding['retention']=='local-v2':
+@@ -355,10 +317,6 @@
+         policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
+         execution=validate(policy,binding['cells'])['execution']
+         require(_compiled_inputs(execution,stage.owner.bound._run)==compiled_normalization_policy.freeze(binding['compiled_normalization_policy']),'closed normalization policy differs from admitted input')
+-    if 'compiled_edge_policy' in binding:
+-        policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
+-        execution=validate(policy,binding['cells'])['execution']
+-        require(_edge_inputs(execution,stage.owner.bound._run)==compiled_edge_owner.freeze(binding['compiled_edge_policy']),'closed edge policy differs from admitted input')
+     return verify_content(stage.root,contract,stage.reference)
+ 
+ 
+@@ -414,7 +372,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}))
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -541,7 +499,7 @@
+         graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+         b=validate(policy,start['cells'])
+         _entry_lease(target,b['execution'])
+-        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'])
++        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'])
+         output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+         require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+         own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
+@@ -549,7 +507,6 @@
+         require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
+         _entry_lease(target,b['execution'])
+         normalization=_compiled_inputs(b['execution'],owner.bound._run)
+-        edge_selection=_edge_inputs(b['execution'],owner.bound._run)
+         _entry_lease(target,b['execution'])
+         owner.boundary();target.check()
+         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
+@@ -561,13 +518,10 @@
+         def boundary():
+             held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)
+             require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')
+-            require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
+             require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
+         boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
+         require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')
+-        require(compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy'))==edge_selection,'completed numeric edge selection differs')
+         if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)
+-        if edge_selection is not None:binding['compiled_edge_policy']=dict(edge_selection)
+         binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])
+         contract={'owner':owner.identity,'scope':thaw(stage.scope),'policy':thaw(owner.policy),'kind':'mcm','pairs':start['cells'],'batched':binding}
+         stage.closing=True;sr,sd=io._open(stage.root)

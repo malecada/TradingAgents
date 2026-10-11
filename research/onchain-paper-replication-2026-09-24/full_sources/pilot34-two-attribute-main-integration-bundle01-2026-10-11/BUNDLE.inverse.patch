@@ -1,0 +1,939 @@
+--- tradingagents/research/onchain_replication/batched_numeric_execution.py
++++ tradingagents/research/onchain_replication/batched_numeric_execution.py
+@@ -3,7 +3,6 @@
+ from pathlib import Path
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner
+ from . import batched_numeric_reuse as reuse
+ from . import geometry_publication, matching_owner
+ 
+@@ -44,7 +43,7 @@
+     return value
+ 
+ class NumericExecution:
+-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
++    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None):
+         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
+         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
+         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
+@@ -54,7 +53,6 @@
+         try:
+             adaptive_edge_policy.attach(self,edge_cache_policy)
+             compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+-            compiled_edge_owner.attach(self,compiled_edge_policy_value)
+             require(type(cells) is int and 0<cells<2**63 and type(batch_cells) is int and 0<batch_cells<=4096,'finite numeric range required')
+             require(type(max_origin_bytes) is int and 9*cells<=max_origin_bytes<2**63 and type(max_summary_bytes) is int and 0<max_summary_bytes<2**63,'numeric storage reservation required')
+             self.batches=(cells+batch_cells-1)//batch_cells
+@@ -74,13 +72,11 @@
+             self.batches_fd=os.open('numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=self.fd);self.batches_pin=sig(os.fstat(self.batches_fd))[:2]
+             self.origins_fd=os.open('numeric-origins.bin',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
+             self.origin_sig=sig(os.fstat(self.origins_fd));os.fsync(self.fd)
+-            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
++            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
+         except BaseException as primary:
+             self.poisoned=True
+             try:self.close()
+-            except BaseException as cleanup:
+-                try:BaseException.add_note(primary,'numeric constructor cleanup: '+repr(cleanup))
+-                except BaseException:pass
++            except BaseException as cleanup:primary.add_note('numeric constructor cleanup: '+repr(cleanup))
+             raise
+     def _timing_current(self):
+         owner=self.binding_owner;observer=self._timing_observer
+@@ -113,13 +109,11 @@
+             self._origin_current()
+             adaptive_edge_policy.join(self,self.memo)
+             compiled_normalization_policy.join(self,self.memo)
+-            compiled_edge_owner.join(self,self.memo)
+             if not self.buffer:self.memo.begin_batch()
+             started=time.perf_counter();result=self.memo(a,b,purpose);elapsed=time.perf_counter()-started
+             require(math.isfinite(elapsed) and elapsed>=0,'numeric timing invalid')
+             adaptive_edge_policy.join(self,self.memo)
+             compiled_normalization_policy.join(self,self.memo)
+-            compiled_edge_owner.join(self,self.memo)
+             receipt=self.memo.last_receipt
+             expected={'schema_version','kind','ordinal','purpose_sha256','mode','origin_purpose_sha256','origin_ordinal','score_f64_be','iterations','convergence','cached','checkpoint_attempt_delta','checkpoint_reserved_byte_delta','retained_cache_bytes','old_per_occurrence_execution_credit','boundary_validated_batch_complete'}
+             require(type(receipt) is dict and set(receipt)==expected and receipt['schema_version']==2 and receipt['kind']=='engineering_numeric_occurrence' and type(receipt['ordinal']) is int and receipt['ordinal']==self.ordinal and receipt['purpose_sha256']==purpose,'fresh provisional occurrence required')
+@@ -143,13 +137,11 @@
+             self._timing_snapshot=raw(matching_owner.binding_timing_counters(self._timing_observer.snapshot()))
+         adaptive_edge_policy.join(self,self.memo)
+         compiled_normalization_policy.join(self,self.memo)
+-        compiled_edge_owner.join(self,self.memo)
+         start=self.ordinal-len(self.buffer)//9
+         summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':self._counters(),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
+         if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)
+         if self._edge_cache_policy is not None:summary['edge_cache_policy']=dict(self._edge_cache_policy)
+         if self._compiled_normalization_policy is not None:summary['compiled_normalization_policy']=dict(self._compiled_normalization_policy)
+-        if self._compiled_edge_policy is not None:summary['compiled_edge_policy']=dict(self._compiled_edge_policy)
+         body=raw(summary);require(len(body)<=SUMMARY_LIMIT and self.summary_bytes+len(body)<=self.max_summary_bytes and 9*self.ordinal<=self.max_origin_bytes,'numeric retained byte cap')
+         self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
+         self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+@@ -177,10 +169,8 @@
+             if self.binding_timing is not None:binding['binding_timing']=dict(self.binding_timing)
+             adaptive_edge_policy.join(self,self.memo)
+             compiled_normalization_policy.join(self,self.memo)
+-            compiled_edge_owner.join(self,self.memo)
+             if self._edge_cache_policy is not None:binding['edge_cache_policy']=dict(self._edge_cache_policy)
+             if self._compiled_normalization_policy is not None:binding['compiled_normalization_policy']=dict(self._compiled_normalization_policy)
+-            if self._compiled_edge_policy is not None:binding['compiled_edge_policy']=dict(self._compiled_edge_policy)
+             verify(self.root,binding);self.finished=True;return binding
+         except BaseException:self._poison();raise
+     def close(self):
+@@ -197,9 +187,7 @@
+             try:action()
+             except BaseException as error:
+                 if primary is None:primary=error
+-                else:
+-                    try:BaseException.add_note(primary,'additional numeric cleanup: '+repr(error))
+-                    except BaseException:pass
++                else:primary.add_note('additional numeric cleanup: '+repr(error))
+         self.buffer=bytearray();self.closed=True
+         if primary is not None:raise primary
+     def __enter__(self):return self
+@@ -218,7 +206,6 @@
+         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
+         selected=adaptive_edge_policy.freeze(binding.get('edge_cache_policy'))
+         normalization=compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))
+-        edge_selection=compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))
+         timing=matching_owner.binding_timing_policy(binding.get('binding_timing'))
+         if timing is not None:require(binding['max_summary_bytes']>=batches*SUMMARY_LIMIT,'binding timing summary reservation differs')
+         geometry=geometry_publication.policy(binding.get('geometry'))
+@@ -244,7 +231,6 @@
+             else:require(not ({'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')})&set(s['counters']),'unselected binding timing counters')
+             require(adaptive_edge_policy.freeze(s.get('edge_cache_policy'))==selected,'numeric summary adaptive policy differs')
+             require(compiled_normalization_policy.freeze(s.get('compiled_normalization_policy'))==normalization,'numeric summary normalization policy differs')
+-            require(compiled_edge_owner.freeze(s.get('compiled_edge_policy'))==edge_selection,'numeric summary edge policy differs')
+             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
+             nc=nr=0
+             for ordinal,(mode,source) in enumerate(RECORD.iter_unpack(chunk),start):
+--- tradingagents/research/onchain_replication/batched_numeric_reuse.py
++++ tradingagents/research/onchain_replication/batched_numeric_reuse.py
+@@ -3,7 +3,6 @@
+ from pathlib import Path
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner, edge_chunk_adapter
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+ from . import matching_checkpoint as engine
+@@ -15,20 +14,20 @@
+ from .geometry_summary import Geometry
+ from . import matching_immutable_session as immutable_session
+ 
+-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter)
++MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy)
+ SOURCE_PINS=(
+     (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
+     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
+-    (accepted, 'eea5d79f8c5e686b750ef2db5e571dd01803bc193236b06bcfd2fd6b5f027cb8'),
+-    (engine, 'eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693'),
+-    (engine.ann, '86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57'),
++    (accepted, '2e4c5b51f991e1c02eed00d1044a423222eebe77d0f540057f1108df562e34ff'),
++    (engine, '0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0'),
++    (engine.ann, 'eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43'),
+     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
+     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
+     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'b790d85e42c415fef23454a7a4fdca23758e6ef0aaf3f4089f526178c3e75c45'),
++    (immutable_session, '3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa'),
+ )
+ 
+ def require(ok,message):
+@@ -48,15 +47,11 @@
+ DIRECT=(np.asarray,np.empty,np.zeros,np.exp,np.multiply,np.add,math.exp,math.fsum)
+ ROUND=ctypes.CDLL(None).fegetround;ROUND.argtypes=[];ROUND.restype=ctypes.c_int
+ 
+-def attest(counters,edge_policy=None):
++def attest(counters):
+     counters['source_guard_calls']+=1
+     require(roster()==ROSTER,'numeric runtime function/code changed')
+     light_environment()
+-    selected_pins=()
+-    if edge_policy is not None:
+-        from . import edge_chunk_adapter
+-        selected_pins=((compiled_edge_owner,'fdbe614ff0b9f75fea6f64ce5ea6e84f03ad1835a23e42ead18fc3ddaba9e8a1'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
+-    for module,pin in SOURCE_PINS+selected_pins:
++    for module,pin in SOURCE_PINS:
+         h=hashlib.sha256()
+         with Path(module.__file__).open('rb') as stream:
+             for chunk in iter(lambda:stream.read(65536),b''):
+@@ -102,10 +97,9 @@
+ 
+ class NumericReuseExecutor:
+     """Explicit batches; source/runtime attestation is NOT continuous authority."""
+-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None):
+         adaptive_edge_policy.attach(self,edge_cache_policy)
+         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+-        compiled_edge_owner.attach(self,compiled_edge_policy_value)
+         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
+         require(type(max_retained_bytes) is int and 1024<=max_retained_bytes<=64*1024**2,'retained cache bound required')
+         require(type(max_key_bytes) is int and 0<max_key_bytes<=min(max_retained_bytes,8*1024**2),'bounded exact key required')
+@@ -114,7 +108,7 @@
+         self._geometry=Geometry(max_geometry_summary_bytes) if geometry is True else None
+         self.last_geometry_summary=None
+         self.counters=dict(source_guard_calls=0,source_hashed_bytes=0,key_hashed_bytes=0,lookup_probes=0,lru_link_updates=0,evictions=0)
+-        attest(self.counters,self._compiled_edge_policy);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
++        attest(self.counters);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+         if authority_poll is not None:
+             require(callable(authority_poll),'optional authority poll must be callable')
+             original_poll=authority_poll;clock=time.perf_counter_ns
+@@ -144,40 +138,31 @@
+                         self.counters.update(dict(zip(names,totals)))
+                     except BaseException as timing_error:
+                         if primary is None:raise
+-                        compiled_edge_owner._note(primary,timing_error)
++                        primary.add_note('authority timing failed: '+repr(timing_error))
+             authority_poll=measured_poll
+         self.authority_poll=authority_poll
+-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+-        cleanup=self.executor.close
+-        try:
+-            self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
+-            self.checkpoint_adapter=self.executor.checkpoint
+-            self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
+-            self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
+-            buckets=1
+-            while buckets<2*max_entries:buckets*=2
+-            self._slots=[None]*max_entries
+-            self._heads=array.array('i',[-1])*buckets
+-            self._hp=array.array('i',[-1])*max_entries;self._hn=array.array('i',range(1,max_entries+1));self._hn[-1]=-1
+-            self._lp=array.array('i',[-1])*max_entries;self._ln=array.array('i',[-1])*max_entries
+-            self._base_bytes=sum(sys.getsizeof(v) for v in (self._slots,self._heads,self._hp,self._hn,self._lp,self._ln))
+-            require(self._base_bytes<=max_retained_bytes,'fixed tables exceed cache allowance')
+-            self._bytes=self._base_bytes;self.counters['accounted_cache_bytes']=self._bytes;self._free=0;self._oldest=self._newest=-1;self.count=0
+-            self.poisoned=False;self.closed=False;self.active=False;self.occurrences=0;self.computed=0;self.reused=0;self.last_receipt=None
+-            self._pins=(accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)
+-        except BaseException as primary:
+-            try:cleanup()
+-            except BaseException as error:
+-                try:BaseException.add_note(primary,'numeric parent construction cleanup failed: '+repr(error))
+-                except BaseException:pass
+-            raise
++        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self))
++        self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
++        self.checkpoint_adapter=self.executor.checkpoint
++        self.policy_pin=raw(self.executor.policy);self.schedule_pin=raw(self.executor.schedule)
++        self.max_entries=max_entries;self.max_retained_bytes=max_retained_bytes;self.max_key_bytes=max_key_bytes
++        buckets=1
++        while buckets<2*max_entries:buckets*=2
++        self._slots=[None]*max_entries
++        self._heads=array.array('i',[-1])*buckets
++        self._hp=array.array('i',[-1])*max_entries;self._hn=array.array('i',range(1,max_entries+1));self._hn[-1]=-1
++        self._lp=array.array('i',[-1])*max_entries;self._ln=array.array('i',[-1])*max_entries
++        self._base_bytes=sum(sys.getsizeof(v) for v in (self._slots,self._heads,self._hp,self._hn,self._lp,self._ln))
++        require(self._base_bytes<=max_retained_bytes,'fixed tables exceed cache allowance')
++        self._bytes=self._base_bytes;self.counters['accounted_cache_bytes']=self._bytes;self._free=0;self._oldest=self._newest=-1;self.count=0
++        self.poisoned=False;self.closed=False;self.active=False;self.occurrences=0;self.computed=0;self.reused=0;self.last_receipt=None
++        self._pins=(accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)
+     @property
+     def retained_bytes(self):return self._bytes
+     def _current(self):
+         require(self.executor is self._executor_pin,'numeric executor replaced')
+         adaptive_edge_policy.join(self,self.executor)
+         compiled_normalization_policy.join(self,self.executor)
+-        compiled_edge_owner.join(self,self.executor)
+         light_environment()
+         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
+         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')
+@@ -185,21 +170,21 @@
+     def begin_batch(self):
+         require(not self.closed and not self.poisoned and not self.active,'batch entry unavailable')
+         try:
+-            attest(self.counters,self._compiled_edge_policy);self._current();self.active=True
++            attest(self.counters);self._current();self.active=True
+             if self._geometry is not None:
+                 self.last_geometry_summary=None;self._geometry_counts=(self.computed,self.reused);self._geometry.begin(self.occurrences)
+         except BaseException:self._poison();raise
+     def end_batch(self):
+         require(not self.closed and not self.poisoned and self.active,'batch final unavailable')
+         try:
+-            self._current();attest(self.counters,self._compiled_edge_policy);self.active=False
++            self._current();attest(self.counters);self.active=False
+             if self._geometry is not None:
+                 self.last_geometry_summary=self._geometry.finish(self.occurrences,self.computed-self._geometry_counts[0],self.reused-self._geometry_counts[1])
+         except BaseException:self._poison();raise
+     def _checkpoint(self,*args):
+-        self._current();attest(self.counters,self._compiled_edge_policy)
++        self._current();attest(self.counters)
+         self.checkpoint(*args)
+-        self._current();attest(self.counters,self._compiled_edge_policy)
++        self._current();attest(self.counters)
+     def _bucket(self,hashed):return hashed&(len(self._heads)-1)
+     def _find(self,key,hashed):
+         i=self._heads[self._bucket(hashed)]
+--- tradingagents/research/onchain_replication/batched_pair_executor.py
++++ tradingagents/research/onchain_replication/batched_pair_executor.py
+@@ -1,8 +1,7 @@
+ """Engineering-only numeric route; no empirical/owner authority or pair receipts."""
+-import copy,sys,types
++import copy
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner
+ from . import matching_checkpoint as engine
+ from tradingagents.research.onchain_replication import matching_pair as pair
+ from . import matching_annealing as annealing
+@@ -13,10 +12,9 @@
+ class CheckpointStop(RuntimeError): pass
+ 
+ class PairExecutor:
+-    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
++    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None,compiled_normalization_policy_value=None):
+         adaptive_edge_policy.attach(self,edge_cache_policy)
+         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+-        compiled_edge_owner.attach(self,compiled_edge_policy_value)
+         self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)
+         self.schedule=copy.deepcopy(schedule);self.checkpoint=checkpoint;self.poisoned=False;self.checkpoints=0;self.reserved_bytes=0
+         if authority_poll is not None and not callable(authority_poll):raise ValueError('optional authority poll must be callable')
+@@ -30,38 +28,6 @@
+             if self._compiled_normalization_policy is not None else None)
+         self._normalization_owner_pin=self._normalization_owner
+         self._normalization_cleanup=self._normalization_owner.close if self._normalization_owner is not None else lambda:None
+-        self._edge_owner=None;self._edge_owner_pin=None
+-        if self._compiled_edge_policy is not None:
+-            normal_cleanup=self._normalization_cleanup
+-            edge_cleanup=None
+-            def combined_cleanup():
+-                primary=None
+-                try:normal_cleanup()
+-                except BaseException as error:primary=error
+-                try:
+-                    if edge_cleanup is not None:edge_cleanup()
+-                except BaseException as error:
+-                    if primary is None:primary=error
+-                    else:
+-                        try:BaseException.add_note(primary,'edge owner cleanup failed: '+repr(error))
+-                        except BaseException:pass
+-                if primary is not None:raise primary
+-            self._normalization_cleanup=combined_cleanup
+-            owner=None
+-            try:
+-                owner=compiled_edge_owner.EdgeOwner(dict(self._compiled_edge_policy),numpy=annealing.np,scipy=sys.modules['scipy'],agreement=annealing.agreement)
+-                edge_cleanup=owner.close
+-                edge_cleanup=types.FunctionType(edge_cleanup.__code__,edge_cleanup.__globals__,closure=edge_cleanup.__closure__)
+-                self._edge_owner=self._edge_owner_pin=owner
+-                self._edge_methods=tuple((name,getattr(owner,name),getattr(owner,name).__code__) for name in ('current','borrow','close'))
+-            except BaseException as primary:
+-                try:
+-                    if owner is not None and edge_cleanup is None:edge_cleanup=owner.close
+-                    combined_cleanup()
+-                except BaseException as error:
+-                    try:BaseException.add_note(primary,'edge parent construction failed: '+repr(error))
+-                    except BaseException:pass
+-                raise
+     def close(self):
+         self.closed=True
+         self._normalization_cleanup()
+@@ -73,12 +39,6 @@
+             if self.authority_poll is not None:self.authority_poll()
+             adaptive_edge_policy.current(self)
+             compiled_normalization_policy.current(self)
+-            compiled_edge_owner.current_policy(self)
+-            if self._edge_owner is not self._edge_owner_pin:raise ValueError('edge parent replaced')
+-            if self._edge_owner is not None:
+-                for name,function,code in self._edge_methods:
+-                    if getattr(self._edge_owner,name) is not function or function.__code__ is not code:raise ValueError('edge parent method replaced')
+-                self._edge_methods[0][1]()
+             if self._normalization_owner is not self._normalization_owner_pin:raise ValueError('normalization owner replaced')
+             if self._normalization_owner is not None:self._normalization_owner.current()
+             pair.hash_string(purpose_hash)
+@@ -88,7 +48,7 @@
+                     or self.reserved_bytes+self.schedule['max_checkpoints']*reserved>self.schedule['max_total_checkpoint_bytes']):
+                 raise ValueError('cumulative checkpoint allowance exceeded')
+             state=engine.create(a,b,self.config,**{k:self.policy[k] for k in pair.ENGINE_FIELDS})
+-            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**({"_normalization_owner":self._normalization_owner} if self._normalization_owner is not None else {}),**({"edge_chunk_owner":self._edge_owner} if self._edge_owner is not None else {}))
++            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**({"_normalization_owner":self._normalization_owner} if self._normalization_owner is not None else {}))
+             for ordinal in range(self.schedule['max_checkpoints']):
+                 for _ in range(self.schedule['calls_per_checkpoint']):
+                     if self.authority_poll is not None:self.authority_poll()
+@@ -101,7 +61,6 @@
+                         self.authority_poll();session.check(state)
+                     adaptive_edge_policy.join(self,session)
+                     compiled_normalization_policy.join(self,session)
+-                    compiled_edge_owner.join(self,session)
+                     return float(result.score),result.iterations,result.convergence
+                 self.checkpoints+=1;self.reserved_bytes+=reserved
+                 self.checkpoint(purpose_hash,ordinal,state,a,b,self.config,self.policy)
+--- tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ tradingagents/research/onchain_replication/compact_mcm_batched.py
+@@ -12,7 +12,6 @@
+ from pathlib import Path
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner
+ import numpy as np
+ from . import compact_owner as owners, compact_mcm as producer
+ from . import compact_mcm_publication as publication, score_batches as io
+@@ -44,9 +43,8 @@
+         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
+     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
+     execution=b['execution']
+-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()),'explicit numeric execution schema required')
++    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()),'explicit numeric execution schema required')
+     _compiled_policy(execution)
+-    _edge_policy(execution)
+     if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
+     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
+     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
+@@ -96,41 +94,7 @@
+     return value
+ 
+ 
+-
+-def _edge_policy(execution):
+-    if 'compiled_edge_policy' not in execution:
+-        require('compiled_edge_inputs' not in execution,'edge roles without selection')
+-        return None
+-    value=compiled_edge_owner.freeze(execution['compiled_edge_policy'])
+-    require(value is not None,'explicit edge selection required')
+-    roles=execution.get('compiled_edge_inputs')
+-    require(type(roles) is dict and set(roles)=={'source','adapter','library','runtime','abi'},'exact five edge roles required')
+-    require(all(type(role) is str and 0<len(role)<=128 and role.isascii() and all(c.isalnum() or c in '_-' for c in role) for role in roles.values()) and len(set(roles.values()))==5 and 'environment' not in roles.values(),'distinct finite edge roles required')
+-    return value
+-
+-def _edge_inputs(execution,run):
+-    value=_edge_policy(execution)
+-    if value is None:return None
+-    policy=dict(value);ad=run.admission;runtime=None
+-    for kind in ('source','adapter','library','runtime','abi'):
+-        role=execution['compiled_edge_inputs'][kind]
+-        require(role in ad.inputs,'edge role not admitted')
+-        info=ad.inputs[role];path=ad.root/info['path']
+-        require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'edge registered path/hash differs')
+-        limit=4096 if kind in ('runtime','abi') else 65536
+-        size=policy[kind+'_bytes'] if kind in ('runtime','abi') else ((21920 if policy['format']=='cpython-two-attribute-edge-owner-v1' and policy['library_sha256']=='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97' else 17072) if kind=='library' else None)
+-        body=compiled_edge_owner.read_reference(path,info['sha256'],limit,size,owned=kind=='library')
+-        require(run.read_input(role)==body,'edge genuine input body differs')
+-        if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(body)
+-        if kind=='abi':compiled_edge_owner.abi_metadata(body)
+-        if kind=='adapter':
+-            require(path==ad.root/'tradingagents/research/onchain_replication/edge_chunk_adapter.py' and ad.experiment['source_files'].get('tradingagents/research/onchain_replication/edge_chunk_adapter.py')==info['sha256'],'edge adapter input/source join differs')
+-    require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'edge runtime inventory/environment differs')
+-    info=ad.inputs['environment'];body=compiled_edge_owner.read_reference(ad.root/info['path'],info['sha256'],1024**2)
+-    require(run.read_input('environment')==body,'edge environment genuine input differs')
+-    return value
+-
+-def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False):
++def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False):
+     import importlib
+     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
+     # ONE packaged journal class is shared with the exact typed semantics helper.
+@@ -140,7 +104,6 @@
+         if geometry:names+=('geometry_summary','geometry_publication')
+         if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
+         if compiled:names+=('compiled_normalization_policy','compiled_small_lse','matching_annealing','matching_checkpoint')
+-        if edge:names+=('compiled_edge_owner','edge_chunk_adapter','compiled_normalization_policy','matching_annealing','matching_checkpoint')
+         for name in names:
+             module=importlib.import_module(PACKAGE+'.'+name)
+             relative='tradingagents/research/onchain_replication/'+name+'.py'
+@@ -267,7 +230,6 @@
+         require(io._signature((root/'matching').lstat())[:2]==tuple(binding['journal_inode']),'matching root inode differs')
+         _children(root/'stream',{'closure-tokens.bin','scores.f32','numeric-origins.bin','numeric-batches'},directories={'numeric-batches'})
+         require(compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))==compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy')),'batched/numeric normalization selection differs')
+-        require(compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))==compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy')),'batched/numeric edge selection differs')
+         numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])
+         require(numeric['cells']==binding['cells'] and binding['numeric_execution']['batch_cells']==binding['batch_cells'],'numeric occurrence/full MCM denominator differs')
+         if binding['retention']=='local-v2':
+@@ -355,10 +317,6 @@
+         policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
+         execution=validate(policy,binding['cells'])['execution']
+         require(_compiled_inputs(execution,stage.owner.bound._run)==compiled_normalization_policy.freeze(binding['compiled_normalization_policy']),'closed normalization policy differs from admitted input')
+-    if 'compiled_edge_policy' in binding:
+-        policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
+-        execution=validate(policy,binding['cells'])['execution']
+-        require(_edge_inputs(execution,stage.owner.bound._run)==compiled_edge_owner.freeze(binding['compiled_edge_policy']),'closed edge policy differs from admitted input')
+     return verify_content(stage.root,contract,stage.reference)
+ 
+ 
+@@ -414,7 +372,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}))
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -541,7 +499,7 @@
+         graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+         b=validate(policy,start['cells'])
+         _entry_lease(target,b['execution'])
+-        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'])
++        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'])
+         output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+         require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+         own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
+@@ -549,7 +507,6 @@
+         require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
+         _entry_lease(target,b['execution'])
+         normalization=_compiled_inputs(b['execution'],owner.bound._run)
+-        edge_selection=_edge_inputs(b['execution'],owner.bound._run)
+         _entry_lease(target,b['execution'])
+         owner.boundary();target.check()
+         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
+@@ -561,13 +518,10 @@
+         def boundary():
+             held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)
+             require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')
+-            require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
+             require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
+         boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
+         require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')
+-        require(compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy'))==edge_selection,'completed numeric edge selection differs')
+         if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)
+-        if edge_selection is not None:binding['compiled_edge_policy']=dict(edge_selection)
+         binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])
+         contract={'owner':owner.identity,'scope':thaw(stage.scope),'policy':thaw(owner.policy),'kind':'mcm','pairs':start['cells'],'batched':binding}
+         stage.closing=True;sr,sd=io._open(stage.root)
+--- tradingagents/research/onchain_replication/compiled_edge_owner.py
++++ /dev/null
+@@ -1,195 +0,0 @@
+-"""Finite engineering native owner; never an Admission, Owner or runtime grant.
+-No import-time scientific imports, native load, source reads or compilation.
+-"""
+-import hashlib,json,os,stat,sys,types
+-from pathlib import Path
+-from . import compiled_normalization_policy as references
+-
+-SOURCE='7218b75e9d2b1f4f832418e1057a7085eeeaa20120a3dfbdcc57e303542ce9f6'
+-LIBRARY='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97'
+-ADAPTER='e93bc309b1e7a38dff37ba63fd12bb0a3dce3a6766f829d6583cb008361c4dc6'
+-FORMAT='cpython-two-attribute-edge-owner-v1'
+-FIELDS={'format','source_path','source_sha256','adapter_path','adapter_sha256','library_path','library_sha256','runtime_path','runtime_sha256','runtime_bytes','abi_path','abi_sha256','abi_bytes'}
+-
+-def require(value,message):
+-    if not value:raise ValueError(message)
+-
+-def freeze(value):
+-    if value is None:return None
+-    require(type(value) is dict and set(value)==FIELDS,'exact edge policy fields required')
+-    require(all(type(value[k]) is str for k in FIELDS-{'runtime_bytes','abi_bytes'}),'plain edge policy required')
+-    require(value['format']==FORMAT and value['source_sha256']==SOURCE and value['adapter_sha256']==ADAPTER and value['library_sha256']==LIBRARY,'unsupported edge bodies')
+-    for prefix in ('source','adapter','library','runtime','abi'):
+-        path=value[prefix+'_path'];digest=value[prefix+'_sha256']
+-        require(path.startswith('/') and len(path)<=4096 and '\0' not in path and str(Path(path))==path and '..' not in Path(path).parts,'canonical absolute role path required')
+-        require(len(digest)==64 and all(c in '0123456789abcdef' for c in digest),'exact role hash required')
+-    for k in ('runtime_bytes','abi_bytes'):require(type(value[k]) is int and 0<value[k]<=4096,'bounded metadata role required')
+-    return tuple(sorted(value.items()))
+-
+-
+-def attach(owner,value):
+-    owner._compiled_edge_policy=freeze(value)
+-    owner._compiled_edge_policy_pin=owner._compiled_edge_policy
+-
+-def current_policy(owner):
+-    require(owner._compiled_edge_policy is owner._compiled_edge_policy_pin,'edge policy replaced')
+-
+-def options(owner):
+-    current_policy(owner)
+-    return {'compiled_edge_policy_value':dict(owner._compiled_edge_policy)} if owner._compiled_edge_policy is not None else {}
+-
+-def join(owner,child):
+-    current_policy(owner);current_policy(child)
+-    require(owner._compiled_edge_policy==child._compiled_edge_policy,'edge policy chain differs')
+-
+-def abi_metadata(body):
+-    value=json.loads(body)
+-    require(type(value) is dict and value=={'format':'cpython-edge-abi-v1','implementation':'cpython','cache_tag':'cpython-313','soabi':'cpython-313-x86_64-linux-gnu','ext_suffix':'.cpython-313-x86_64-linux-gnu.so','pointer_bits':64},'unsupported exact CPython ABI')
+-    return value
+-
+-def _note(primary,error):
+-    try:BaseException.add_note(primary,'edge cleanup failed; no retry: '+repr(error))
+-    except BaseException:pass
+-
+-def read_reference(path,expected,limit,exact_size=None,*,owned=False):
+-    """Original bounded body/signature algorithm; preserve primary on close failure."""
+-    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC|os.O_NONBLOCK)
+-    primary=None;close=os.close
+-    try:
+-        before=os.fstat(fd)
+-        require(not owned or before.st_uid==os.getuid(),'library owner differs')
+-        require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and 0<before.st_size<=limit,'bounded regular role required')
+-        require(exact_size is None or before.st_size==exact_size,'role extent differs')
+-        parts=[];remaining=before.st_size+1
+-        while remaining:
+-            block=os.read(fd,remaining)
+-            if not block:break
+-            parts.append(block);remaining-=len(block)
+-        body=b''.join(parts);after=os.fstat(fd)
+-        fields=('st_dev','st_ino','st_size','st_mtime_ns','st_ctime_ns')
+-        require(tuple(getattr(before,k) for k in fields)==tuple(getattr(after,k) for k in fields) and len(body)==before.st_size and hashlib.sha256(body).hexdigest()==expected,'role body differs')
+-        return body
+-    except BaseException as error:primary=error;raise
+-    finally:
+-        try:close(fd)
+-        except BaseException as error:
+-            if primary is None:raise
+-            _note(primary,error)
+-
+-class EdgeOwner:
+-    """One lazy attempt, one sequential session borrow, retained captured cleanup."""
+-    def __init__(self,policy,*,numpy,scipy,agreement):
+-        import threading
+-        frozen=freeze(policy);require(frozen is not None,'explicit selected policy required')
+-        require(type(numpy) is types.ModuleType and numpy is sys.modules.get('numpy') and type(scipy) is types.ModuleType and scipy is sys.modules.get('scipy'),'original loaded scientific modules required')
+-        require(type(agreement) is types.FunctionType and agreement.__module__=='tradingagents.research.onchain_replication.matching_reference' and agreement.__name__=='agreement','original agreement role required')
+-        p=dict(frozen);thread=threading.get_ident();np=numpy;sp=scipy;original=agreement
+-        fd=None;fdpin=None;module=None;fill=None;active=None;attempted=False;closed=False;close_error=None
+-        close_fd=os.close
+-        methods={}
+-        def close():
+-            nonlocal fd,closed,close_error,active
+-            closed=True;active=None
+-            if close_error is not None:raise close_error
+-            if fd is not None:
+-                value=fd;fd=None
+-                try:close_fd(value)
+-                except BaseException as error:close_error=error;raise
+-        def metadata():
+-            import platform,sysconfig,struct
+-            require(threading.get_ident()==thread and not closed,'edge owner unavailable')
+-            require(self.policy is frozen,'edge policy replaced')
+-            for name,(method,code) in methods.items():require(getattr(self,name) is method and method.__code__ is code,'edge owner capability replaced')
+-            source=read_reference(p['source_path'],SOURCE,65536)
+-            adapter=read_reference(p['adapter_path'],ADAPTER,65536)
+-            runtime=references.runtime_metadata(read_reference(p['runtime_path'],p['runtime_sha256'],4096,p['runtime_bytes']))
+-            abi=abi_metadata(read_reference(p['abi_path'],p['abi_sha256'],4096,p['abi_bytes']))
+-            actual=dict(python=platform.python_version(),numpy=np.__version__,scipy=sp.__version__,platform=sys.platform,machine=platform.machine(),byteorder=sys.byteorder,executable=sys.executable)
+-            require(all(runtime[k]==v for k,v in actual.items()),'runtime reference differs')
+-            require(sys.implementation.name==abi['implementation'] and sys.implementation.cache_tag==abi['cache_tag'] and sysconfig.get_config_var('SOABI')==abi['soabi'] and sysconfig.get_config_var('EXT_SUFFIX')==abi['ext_suffix'] and struct.calcsize('P')*8==abi['pointer_bits'],'CPython ABI differs')
+-            raw=read_reference(p['library_path'],LIBRARY,65536,21920,owned=True)
+-            return adapter,raw
+-        def current():
+-            try:
+-                metadata()
+-                if attempted:
+-                    import fcntl
+-                    require(fd is not None and module is not None and module.fill is native_fill,'edge backend unavailable/replaced')
+-                    s=os.fstat(fd);require((s.st_dev,s.st_ino,s.st_size)==fdpin and fcntl.fcntl(fd,1034)==seals,'sealed backend changed')
+-            except BaseException as primary:
+-                try:close()
+-                except BaseException as error:_note(primary,error)
+-                raise
+-        def acquire():
+-            nonlocal attempted,fd,fdpin,module,fill,native_fill,seals
+-            adapter,raw=metadata()
+-            if attempted:current();return
+-            attempted=True
+-            try:
+-                require(sys.platform=='linux','Linux sealed backend required')
+-                import ctypes,fcntl,importlib.util,importlib.machinery,uuid
+-                seals=15  # Linux UAPI: SEAL_SEAL|SHRINK|GROW|WRITE.
+-                libc=ctypes.CDLL(None,use_errno=True)
+-                create=libc.memfd_create
+-                create.argtypes=(ctypes.c_char_p,ctypes.c_uint);create.restype=ctypes.c_int
+-                allocated=create(b'uncached-edge',3)  # MFD_CLOEXEC|MFD_ALLOW_SEALING.
+-                if allocated<0:
+-                    error=ctypes.get_errno()
+-                    raise OSError(error,os.strerror(error))
+-                fd=allocated
+-                view=memoryview(raw)
+-                while view:
+-                    n=os.write(fd,view);require(n>0,'short sealed write');view=view[n:]
+-                fcntl.fcntl(fd,1033,seals)
+-                require(fcntl.fcntl(fd,1034)==seals and os.pread(fd,len(raw)+1,0)==raw,'sealed same-kernel body differs')
+-                info=os.fstat(fd);fdpin=(info.st_dev,info.st_ino,info.st_size)
+-                # Unique full name avoids reuse of a prior extension cache key
+-                # when a descriptor pathname is recycled; final ABI name retained.
+-                name='_owned_edge_'+uuid.uuid4().hex+'._edge_chunk';path='/proc/self/fd/'+str(fd)
+-                loader=importlib.machinery.ExtensionFileLoader(name,path)
+-                spec=importlib.util.spec_from_file_location(name,path,loader=loader)
+-                require(spec is not None,'native spec unavailable')
+-                module=importlib.util.module_from_spec(spec);loader.exec_module(module)
+-                native_fill=module.fill
+-                namespace={'__name__':'_authenticated_edge_adapter'}
+-                exec(compile(adapter,p['adapter_path'],'exec',dont_inherit=True),namespace)
+-                fill=namespace['make_filler'](module,np,original)
+-                current()
+-            except BaseException as primary:
+-                try:close()
+-                except BaseException as error:_note(primary,error)
+-                raise
+-        def borrow(client):
+-            nonlocal active
+-            require(active is None,'only one edge session borrow allowed')
+-            try:
+-                acquire();token=object();active=token;released=False
+-                def lease_current():
+-                    require(not released and active is token,'edge borrow expired')
+-                    # Check the captured owner's code before invoking its current callback.
+-                    for name,(method,code) in methods.items():require(getattr(self,name) is method and method.__code__ is code,'edge owner capability replaced')
+-                    current()
+-                def release():
+-                    nonlocal active,released
+-                    if released:return
+-                    released=True
+-                    require(active is token or closed,'edge borrow replaced')
+-                    active=None
+-                def apply(*args):
+-                    # Session.current already performed fresh body/runtime joins.
+-                    require(not closed and not released and active is token and module.fill is native_fill,'edge borrow unavailable')
+-                    return fill(*args)
+-                try:return types.SimpleNamespace(fill=apply,current=lease_current,close=release)
+-                except BaseException as primary:
+-                    try:release()
+-                    except BaseException as error:_note(primary,error)
+-                    raise
+-            except BaseException as primary:
+-                try:close()
+-                except BaseException as error:_note(primary,error)
+-                raise
+-        native_fill=None;seals=None
+-        # Keep the private cleanup function independent of the exposed close code.
+-        self.policy=frozen;self.current=current;self.borrow=borrow
+-        self.close=types.FunctionType(close.__code__,close.__globals__,closure=close.__closure__)
+-        methods.update((name,(getattr(self,name),getattr(self,name).__code__)) for name in ('current','borrow','close'))
+--- tradingagents/research/onchain_replication/edge_chunk_adapter.py
++++ /dev/null
+@@ -1,44 +0,0 @@
+-"""Explicit engineering-only adapter; caller supplies already loaded extension.
+-No library discovery, build, loading or authority capability is performed here.
+-"""
+-import types,sys,builtins,math
+-
+-def make_filler(native, np, agreement):
+-    if type(native.fill) is not types.BuiltinFunctionType or native.fill.__module__ not in ('_edge_chunk',native.__name__):
+-        raise ValueError('exact CPython extension function required')
+-    if type(agreement) is not types.FunctionType:raise ValueError('original Python agreement required')
+-    original_module=sys.modules.get('tradingagents.research.onchain_replication.matching_reference')
+-    if original_module is None or original_module.agreement is not agreement or agreement.__globals__ is not vars(original_module):
+-        raise ValueError('original agreement module required')
+-    code=agreement.__code__;globals_=agreement.__globals__;math_module=math
+-    fsum=math.fsum;exp=math.exp
+-    for name,function in (('fsum',fsum),('exp',exp)):
+-        if type(function) is not types.BuiltinFunctionType or function.__module__!='math' or function.__name__!=name:
+-            raise ValueError('original math primitives required')
+-    builtins_ = builtins.__dict__
+-    primitives={name:builtins_[name] for name in ('float','zip','len')}
+-    if primitives['float'] is not (0.).__class__:raise ValueError('original float required')
+-    if agreement.__builtins__ is not builtins_:raise ValueError('original builtin namespace required')
+-    if (type(primitives['zip']) is not type or primitives['zip'].__module__!='builtins' or primitives['zip'].__name__!='zip'
+-        or type(primitives['len']) is not types.BuiltinFunctionType or primitives['len'].__module__!='builtins' or primitives['len'].__name__!='len'):
+-        raise ValueError('original builtin operators required')
+-    fill=native.fill
+-    ndarray=np.ndarray;float64=np.dtype('float64');int64=np.dtype('int64')
+-    def apply(weights,af,bf,left,right,count,callback,progress):
+-        # All eligibility decisions precede native writes. Unsupported -> original.
+-        if (agreement.__code__ is not code or agreement.__globals__ is not globals_
+-            or sys.modules.get(original_module.__name__) is not original_module or original_module.agreement is not agreement
+-            or sys.modules.get('math') is not math_module or globals_.get('math') is not math_module or math_module.fsum is not fsum or math_module.exp is not exp
+-            or any(builtins_.get(name) is not value or globals_.get(name,value) is not value for name,value in primitives.items())):
+-            raise ValueError('agreement function/global capability changed')
+-        if callback is not agreement or native.fill is not fill:return False
+-        if type(count) is not int or not 1<=count<=1024:return False
+-        if any(type(x) is not ndarray for x in (weights,af,bf,left,right)):return False
+-        if weights.dtype!=float64 or weights.shape!=(count,) or not weights.flags.writeable:return False
+-        if any(x.dtype!=float64 or x.ndim!=2 or x.shape[1]!=2 or x.flags.writeable or not x.flags.c_contiguous for x in (af,bf)):return False
+-        if any(x.dtype!=int64 or x.shape!=(count,) for x in (left,right)):return False
+-        indices=tuple(range(count))
+-        # After this point an error uses this index to replay the original prefix.
+-        progress[0]=0
+-        return fill(weights,af,bf,left,right,count,callback,progress,indices,fsum,exp)
+-    return apply
+--- tradingagents/research/onchain_replication/matching_annealing.py
++++ tradingagents/research/onchain_replication/matching_annealing.py
+@@ -166,7 +166,7 @@
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation budget required')
+     check(state,a,b,c)
+     return _advance_checked(state,a,b,c,max_operations=max_operations,**({'edge_cache_policy':edge_cache_policy} if edge_cache_policy is not None and edge_cache_policy is not False else {}))
+-def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None,edge_chunk_fill=None):
++def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None):
+     """Private body for an exclusively owned state checked in this same call.
+ 
+     The caller must validate state, inputs and positive operation budget before
+@@ -221,28 +221,18 @@
+                             # Exact copy only: lazy population and ordered arithmetic remain below.
+                             weights[:]=cached[start:start+count]
+                         else:
+-                            offset=0;native_progress=None
+                             try:
+-                                native_used=False
+-                                if (edge_chunk_fill is not None and not reuse and _reuse_runtime()
+-                                        and _immutable_edges(a) and _immutable_edges(b)):
+-                                    native_progress=[0]
+-                                    native_used=edge_chunk_fill(weights,a.edge_features,b.edge_features,left,right,count,agreement,native_progress)
+-                                if not native_used:
+-                                    native_progress=None
+-                                    for offset in range(count):
+-                                        position=start+offset
+-                                        if reuse and cached is not None and valid[position]:
+-                                            weights[offset]=cached[position]
+-                                        else:
+-                                            weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
+-                                            if reuse:
+-                                                if cached is None:
+-                                                    cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
+-                                                cached[position]=weights[offset];valid[position]=True
++                                for offset in range(count):
++                                    position=start+offset
++                                    if reuse and cached is not None and valid[position]:
++                                        weights[offset]=cached[position]
++                                    else:
++                                        weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
++                                        if reuse:
++                                            if cached is None:
++                                                cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
++                                            cached[position]=weights[offset];valid[position]=True
+                             except BaseException:
+-                                if native_progress is not None and native_progress[0] is not None:
+-                                    offset=native_progress[0]
+                                 # Reproduce the scalar prefix and cursor on agreement failure.
+                                 for offset2 in range(offset):
+                                     k,l=left[offset2],right[offset2]
+--- tradingagents/research/onchain_replication/matching_checkpoint.py
++++ tradingagents/research/onchain_replication/matching_checkpoint.py
+@@ -70,14 +70,14 @@
+     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation allowance required')
+     return _advance_owned(s,a,b,c,max_operations=max_operations)
+ 
+-def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None,edge_chunk_fill=None):
++def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None):
+     """Private body; composite/input/budget checks precede entry, no callbacks."""
+     selected=adaptive_edge_policy.freeze(edge_cache_policy)
+     s['safe']=False
+     try:
+         used=0
+         if s['phase']=='annealing':
+-            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}),**({'normalizer':normalizer} if normalizer is not None else {}),**({'edge_chunk_fill':edge_chunk_fill} if edge_chunk_fill is not None else {}))
++            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}),**({'normalizer':normalizer} if normalizer is not None else {}))
+             if s['annealing']['phase']=='done':
+                 matrix=s['annealing']['M'];digest=matrix_identity(matrix)
+                 h=hard.create(matrix,max_pair_entries=c['max_pair_entries'],max_explicit_bytes=s['policy']['hardening_buffer_bytes'])
+--- tradingagents/research/onchain_replication/matching_immutable_session.py
++++ tradingagents/research/onchain_replication/matching_immutable_session.py
+@@ -10,7 +10,6 @@
+ import json
+ from . import adaptive_edge_policy
+ from . import compiled_normalization_policy
+-from . import compiled_edge_owner
+ from types import MappingProxyType
+ import numpy as np
+ from tradingagents.research.onchain_replication.contracts import AttributedGraph
+@@ -73,7 +72,7 @@
+ 
+ 
+ class ImmutablePairSession:
+-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None):
++    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None):
+         require(engine.ann is annealing and
+                 callable(getattr(engine, '_check_owned', None)) and
+                 callable(getattr(engine, '_advance_owned', None)) and
+@@ -81,8 +80,6 @@
+                 'explicit changed engine required')
+         adaptive_edge_policy.attach(self,edge_cache_policy)
+         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
+-        require(edge_chunk_owner is None or type(edge_chunk_owner) is compiled_edge_owner.EdgeOwner, "typed edge owner required")
+-        compiled_edge_owner.attach(self,None if edge_chunk_owner is None else dict(edge_chunk_owner.policy))
+         self.engine, self.annealing = engine, annealing
+         self.a, self.b, self.config = a, b, config
+         self.config_pin = config_pin(config)
+@@ -139,59 +136,8 @@
+                 except BaseException:pass
+             raise
+ 
+-
+-        try:
+-            self._edge_lease = None
+-            self._edge_pin = None
+-            self._edge_functions = ()
+-            if edge_chunk_owner is not None:
+-                normal_cleanup = self._normalizer_cleanup
+-                edge_close = None
+-                def combined_cleanup():
+-                    primary = None
+-                    try:normal_cleanup()
+-                    except BaseException as error:primary = error
+-                    try:
+-                        if edge_close is not None:edge_close()
+-                    except BaseException as error:
+-                        if primary is None:primary = error
+-                        else:
+-                            try:BaseException.add_note(primary, 'edge release failed: '+repr(error))
+-                            except BaseException:pass
+-                    if primary is not None:raise primary
+-                self._normalizer_cleanup = combined_cleanup
+-                lease = None
+-                try:
+-                    require(type(edge_chunk_owner) is compiled_edge_owner.EdgeOwner, 'typed authenticated edge owner required')
+-                    lease = edge_chunk_owner.borrow(self)
+-                    edge_close = lease.close
+-                    self._edge_lease = self._edge_pin = lease
+-                    self._edge_functions = tuple((name,getattr(lease,name),getattr(lease,name).__code__) for name in ('fill','current','close'))
+-                except BaseException as primary:
+-                    try:
+-                        if lease is not None and edge_close is None:edge_close = lease.close
+-                        combined_cleanup()
+-                    except BaseException as error:
+-                        try:BaseException.add_note(primary, 'edge session construction cleanup failed: '+repr(error))
+-                        except BaseException:pass
+-                    raise
+-        except BaseException as primary:
+-            try:self._normalizer_cleanup()
+-            except BaseException as error:
+-                try:BaseException.add_note(primary, 'edge setup cleanup failed: '+repr(error))
+-                except BaseException:pass
+-            raise
+-
+-    def _edge_current(self):
+-        compiled_edge_owner.current_policy(self)
+-        require(self._edge_lease is self._edge_pin, 'edge lease replaced')
+-        for name,function,code in self._edge_functions:
+-            require(getattr(self._edge_lease,name) is function and function.__code__ is code, 'edge lease method replaced')
+-        if self._edge_lease is not None:self._edge_functions[1][1]()
+-
+     def current(self):
+         require(not self.closed, 'matching session closed')
+-        self._edge_current()
+         adaptive_edge_policy.current(self)
+         compiled_normalization_policy.current(self)
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+@@ -222,14 +168,13 @@
+                 'positive operation allowance required')
+         # No external callback between current-input/state check and body.
+         result = self.engine._advance_owned(
+-            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {}))
++            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}))
+         adaptive_edge_policy.current(self)
+         compiled_normalization_policy.current(self)
+         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
+         for name,function,code in self._normalizer_functions:
+             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
+         if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
+-        self._edge_current()
+         self.advances += 1
+         return result
+ 
+--- tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -401,7 +401,7 @@
+     return value
+ 
+ 
+-def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False):
++def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False):
+     """Load the selected pilot's deferred modules before its immutable roster.
+ 
+     Imports only: no model/graph construction, claims or authority refresh.
+@@ -427,8 +427,6 @@
+             # Freeze selected helper identities before genuine Lease activation.
+             # Importing these definitions does not open a native backend.
+             from . import compiled_normalization_policy, compiled_small_lse
+-        if edge:
+-            from . import compiled_edge_owner, edge_chunk_adapter
+ 
+ 
+ def execute(run, payload):
+@@ -540,7 +538,7 @@
+             from .imported_authority_lease import activate
+             if diagnostic is not None:diagnostic.startup_enter('lease_activation')
+             selected_mcm=_read(run.admission,s['compact_mcm_input'])
+-            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'])
++            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'])
+             activate(execution,p['imported_authority_lease_input'])
+             if diagnostic is not None:diagnostic.startup_complete()
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
