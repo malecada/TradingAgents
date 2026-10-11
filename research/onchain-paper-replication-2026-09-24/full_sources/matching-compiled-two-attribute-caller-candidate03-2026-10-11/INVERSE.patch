@@ -1,0 +1,50 @@
+--- batched_numeric_reuse.py
++++ batched_numeric_reuse.py
+@@ -55,7 +55,7 @@
+     selected_pins=()
+     if edge_policy is not None:
+         from . import edge_chunk_adapter
+-        selected_pins=((compiled_edge_owner,'fdbe614ff0b9f75fea6f64ce5ea6e84f03ad1835a23e42ead18fc3ddaba9e8a1'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
++        selected_pins=((compiled_edge_owner,'7e70ddff4edb3bda2498f323bd31384a468a9206165bb7cd66ad22d905e9e0d4'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
+     for module,pin in SOURCE_PINS+selected_pins:
+         h=hashlib.sha256()
+         with Path(module.__file__).open('rb') as stream:
+--- compiled_edge_owner.py
++++ compiled_edge_owner.py
+@@ -115,7 +115,7 @@
+                 if attempted:
+                     import fcntl
+                     require(fd is not None and module is not None and module.fill is native_fill,'edge backend unavailable/replaced')
+-                    s=os.fstat(fd);require((s.st_dev,s.st_ino,s.st_size)==fdpin and fcntl.fcntl(fd,1034)==seals,'sealed backend changed')
++                    s=os.fstat(fd);require((s.st_dev,s.st_ino,s.st_size)==fdpin and fcntl.fcntl(fd,fcntl.F_GET_SEALS)==seals,'sealed backend changed')
+             except BaseException as primary:
+                 try:close()
+                 except BaseException as error:_note(primary,error)
+@@ -126,22 +126,14 @@
+             if attempted:current();return
+             attempted=True
+             try:
+-                require(sys.platform=='linux','Linux sealed backend required')
+-                import ctypes,fcntl,importlib.util,importlib.machinery,uuid
+-                seals=15  # Linux UAPI: SEAL_SEAL|SHRINK|GROW|WRITE.
+-                libc=ctypes.CDLL(None,use_errno=True)
+-                create=libc.memfd_create
+-                create.argtypes=(ctypes.c_char_p,ctypes.c_uint);create.restype=ctypes.c_int
+-                allocated=create(b'uncached-edge',3)  # MFD_CLOEXEC|MFD_ALLOW_SEALING.
+-                if allocated<0:
+-                    error=ctypes.get_errno()
+-                    raise OSError(error,os.strerror(error))
+-                fd=allocated
++                import fcntl,importlib.util,importlib.machinery,uuid
++                seals=fcntl.F_SEAL_WRITE|fcntl.F_SEAL_GROW|fcntl.F_SEAL_SHRINK|fcntl.F_SEAL_SEAL
++                fd=os.memfd_create('uncached-edge',os.MFD_CLOEXEC|os.MFD_ALLOW_SEALING)
+                 view=memoryview(raw)
+                 while view:
+                     n=os.write(fd,view);require(n>0,'short sealed write');view=view[n:]
+-                fcntl.fcntl(fd,1033,seals)
+-                require(fcntl.fcntl(fd,1034)==seals and os.pread(fd,len(raw)+1,0)==raw,'sealed same-kernel body differs')
++                fcntl.fcntl(fd,fcntl.F_ADD_SEALS,seals)
++                require(fcntl.fcntl(fd,fcntl.F_GET_SEALS)==seals and os.pread(fd,len(raw)+1,0)==raw,'sealed same-kernel body differs')
+                 info=os.fstat(fd);fdpin=(info.st_dev,info.st_ino,info.st_size)
+                 # Unique full name avoids reuse of a prior extension cache key
+                 # when a descriptor pathname is recycled; final ABI name retained.

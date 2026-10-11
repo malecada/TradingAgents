@@ -1,0 +1,87 @@
+--- batched_numeric_reuse.py
++++ batched_numeric_reuse.py
+@@ -55,7 +55,7 @@
+     selected_pins=()
+     if edge_policy is not None:
+         from . import edge_chunk_adapter
+-        selected_pins=((compiled_edge_owner,'7e70ddff4edb3bda2498f323bd31384a468a9206165bb7cd66ad22d905e9e0d4'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
++        selected_pins=((compiled_edge_owner,'bca5138427201d629fd1a014d9344593250f2b4cb828c6e5dceac6195b21df44'),(edge_chunk_adapter,compiled_edge_owner.ADAPTER))
+     for module,pin in SOURCE_PINS+selected_pins:
+         h=hashlib.sha256()
+         with Path(module.__file__).open('rb') as stream:
+--- compiled_edge_owner.py
++++ compiled_edge_owner.py
+@@ -5,10 +5,10 @@
+ from pathlib import Path
+ from . import compiled_normalization_policy as references
+ 
+-SOURCE='7218b75e9d2b1f4f832418e1057a7085eeeaa20120a3dfbdcc57e303542ce9f6'
+-LIBRARY='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97'
+-ADAPTER='e93bc309b1e7a38dff37ba63fd12bb0a3dce3a6766f829d6583cb008361c4dc6'
+-FORMAT='cpython-two-attribute-edge-owner-v1'
++SOURCE='6b0391049ddff37892c74e074d1d7506c0a3527ae44aba013c06cb66295695b8'
++LIBRARY='a97c0b503ae749216636db96b0243af835da4c7c016fbb05d31eeda2e4623e98'
++ADAPTER='55f41c5e46ad893eacf9ac229b3e04bc444ec0626ce946cca98a32270ebb6eb2'
++FORMAT='cpython-uncached-edge-owner-v1'
+ FIELDS={'format','source_path','source_sha256','adapter_path','adapter_sha256','library_path','library_sha256','runtime_path','runtime_sha256','runtime_bytes','abi_path','abi_sha256','abi_bytes'}
+ 
+ def require(value,message):
+@@ -107,7 +107,7 @@
+             actual=dict(python=platform.python_version(),numpy=np.__version__,scipy=sp.__version__,platform=sys.platform,machine=platform.machine(),byteorder=sys.byteorder,executable=sys.executable)
+             require(all(runtime[k]==v for k,v in actual.items()),'runtime reference differs')
+             require(sys.implementation.name==abi['implementation'] and sys.implementation.cache_tag==abi['cache_tag'] and sysconfig.get_config_var('SOABI')==abi['soabi'] and sysconfig.get_config_var('EXT_SUFFIX')==abi['ext_suffix'] and struct.calcsize('P')*8==abi['pointer_bits'],'CPython ABI differs')
+-            raw=read_reference(p['library_path'],LIBRARY,65536,21920,owned=True)
++            raw=read_reference(p['library_path'],LIBRARY,65536,17072,owned=True)
+             return adapter,raw
+         def current():
+             try:
+--- edge_chunk_adapter.py
++++ edge_chunk_adapter.py
+@@ -1,44 +1,23 @@
+ """Explicit engineering-only adapter; caller supplies already loaded extension.
+ No library discovery, build, loading or authority capability is performed here.
+ """
+-import types,sys,builtins,math
++import types
+ 
+ def make_filler(native, np, agreement):
+     if type(native.fill) is not types.BuiltinFunctionType or native.fill.__module__ not in ('_edge_chunk',native.__name__):
+         raise ValueError('exact CPython extension function required')
+-    if type(agreement) is not types.FunctionType:raise ValueError('original Python agreement required')
+-    original_module=sys.modules.get('tradingagents.research.onchain_replication.matching_reference')
+-    if original_module is None or original_module.agreement is not agreement or agreement.__globals__ is not vars(original_module):
+-        raise ValueError('original agreement module required')
+-    code=agreement.__code__;globals_=agreement.__globals__;math_module=math
+-    fsum=math.fsum;exp=math.exp
+-    for name,function in (('fsum',fsum),('exp',exp)):
+-        if type(function) is not types.BuiltinFunctionType or function.__module__!='math' or function.__name__!=name:
+-            raise ValueError('original math primitives required')
+-    builtins_ = builtins.__dict__
+-    primitives={name:builtins_[name] for name in ('float','zip','len')}
+-    if primitives['float'] is not (0.).__class__:raise ValueError('original float required')
+-    if agreement.__builtins__ is not builtins_:raise ValueError('original builtin namespace required')
+-    if (type(primitives['zip']) is not type or primitives['zip'].__module__!='builtins' or primitives['zip'].__name__!='zip'
+-        or type(primitives['len']) is not types.BuiltinFunctionType or primitives['len'].__module__!='builtins' or primitives['len'].__name__!='len'):
+-        raise ValueError('original builtin operators required')
+     fill=native.fill
+     ndarray=np.ndarray;float64=np.dtype('float64');int64=np.dtype('int64')
+     def apply(weights,af,bf,left,right,count,callback,progress):
+         # All eligibility decisions precede native writes. Unsupported -> original.
+-        if (agreement.__code__ is not code or agreement.__globals__ is not globals_
+-            or sys.modules.get(original_module.__name__) is not original_module or original_module.agreement is not agreement
+-            or sys.modules.get('math') is not math_module or globals_.get('math') is not math_module or math_module.fsum is not fsum or math_module.exp is not exp
+-            or any(builtins_.get(name) is not value or globals_.get(name,value) is not value for name,value in primitives.items())):
+-            raise ValueError('agreement function/global capability changed')
+         if callback is not agreement or native.fill is not fill:return False
+         if type(count) is not int or not 1<=count<=1024:return False
+         if any(type(x) is not ndarray for x in (weights,af,bf,left,right)):return False
+         if weights.dtype!=float64 or weights.shape!=(count,) or not weights.flags.writeable:return False
+-        if any(x.dtype!=float64 or x.ndim!=2 or x.shape[1]!=2 or x.flags.writeable or not x.flags.c_contiguous for x in (af,bf)):return False
++        if any(x.dtype!=float64 or x.ndim!=2 or x.flags.writeable for x in (af,bf)):return False
+         if any(x.dtype!=int64 or x.shape!=(count,) for x in (left,right)):return False
+         indices=tuple(range(count))
+         # After this point an error uses this index to replay the original prefix.
+         progress[0]=0
+-        return fill(weights,af,bf,left,right,count,callback,progress,indices,fsum,exp)
++        return fill(weights,af,bf,left,right,count,callback,progress,indices)
+     return apply

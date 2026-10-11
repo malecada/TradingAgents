@@ -1,0 +1,11 @@
+--- compact_mcm_batched.py
++++ compact_mcm_batched.py
+@@ -118,7 +118,7 @@
+         info=ad.inputs[role];path=ad.root/info['path']
+         require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'edge registered path/hash differs')
+         limit=4096 if kind in ('runtime','abi') else 65536
+-        size=policy[kind+'_bytes'] if kind in ('runtime','abi') else (17072 if kind=='library' else None)
++        size=policy[kind+'_bytes'] if kind in ('runtime','abi') else ((21920 if policy['format']=='cpython-two-attribute-edge-owner-v1' and policy['library_sha256']=='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97' else 17072) if kind=='library' else None)
+         body=compiled_edge_owner.read_reference(path,info['sha256'],limit,size,owned=kind=='library')
+         require(run.read_input(role)==body,'edge genuine input body differs')
+         if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(body)
