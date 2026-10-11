@@ -14,6 +14,7 @@ from . import adaptive_edge_policy
 from . import phase_timing
 from . import compiled_normalization_policy
 from . import compiled_edge_owner
+from . import matching_numeric_policy
 import numpy as np
 from . import compact_owner as owners, compact_mcm as producer
 from . import compact_mcm_publication as publication, score_batches as io
@@ -37,7 +38,7 @@ def validate(policy, pairs):
     require(selected(policy) and set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'}, 'batched MCM policy schema')
     b = policy['batched']
     grouped=policy['schema_version']==6
-    require(type(b) is dict and set(b) == {'format','authority_boundaries','batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes','retention','max_spool_bytes','max_offload_metadata_bytes','max_offload_entries','max_offload_anchor_bytes','execution'} | ({'group_batches'} if grouped else set()), 'batched bounds schema')
+    require(type(b) is dict and set(b) == {'format','authority_boundaries','batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes','retention','max_spool_bytes','max_offload_metadata_bytes','max_offload_entries','max_offload_anchor_bytes','execution'} | ({'group_batches'} if grouped else set()) | ({'continuation'} if 'continuation' in b else set()), 'batched bounds schema')
     require(b['format'] == FORMAT and b['authority_boundaries'] == 'entry-batch-checkpoint-final', 'explicit operational deviation required')
     require(b['retention'] in (('typed-grouped-recover-before-retire-v1',) if grouped else ('local-v2','typed-recover-before-retire-v2')),'explicit batched retention route required')
     if grouped:require(type(b['group_batches']) is int and b['group_batches']==16,'explicit sixteen batch groups required')
@@ -46,16 +47,18 @@ def validate(policy, pairs):
         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
     execution=b['execution']
-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'backend_input_policy'} if 'backend_input_policy' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()),'explicit numeric execution schema required')
+    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'backend_input_policy'} if 'backend_input_policy' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()) | ({'numeric_kernel_policy'} if 'numeric_kernel_policy' in execution else set()),'explicit numeric execution schema required')
     _compiled_policy(execution)
     _edge_policy(execution)
     _backend_input_policy(execution)
+    _numeric_policy(execution)
     if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
     require(1<=execution['max_entries']<=4096 and 1024<=execution['max_retained_bytes']<=64*1024**2 and 0<execution['max_key_bytes']<=min(execution['max_retained_bytes'],8*1024**2),'bounded exact result cache required')
     require(9*pairs<=execution['max_origin_bytes']<2**63 and 0<execution['max_summary_bytes']<2**63,'full numeric provenance reservation required')
     count = (pairs+b['batch_cells']-1)//b['batch_cells']
+    _continuation_policy(b,count)
     if 'binding_timing' in execution:
         require(grouped and matching_owner.binding_timing_policy(execution['binding_timing']) is not None,'selected schema6 binding timing required')
         require(execution['max_summary_bytes']>=count*8192,'full timing summary reservation required')
@@ -65,6 +68,34 @@ def validate(policy, pairs):
     require(type(b['max_offload_anchor_bytes']) is int and 0 <= b['max_offload_anchor_bytes'] <= 16*1024**2 and (b['retention']=='local-v2' or ((count+15)//16 if grouped else count)*32<=b['max_offload_anchor_bytes']),'offload anchor memory allowance exceeded')
     require(count*168 <= b['max_closure_token_bytes'] and count*(2*b['max_body_bytes']+92)+pairs*53 <= b['max_journal_bytes'], 'full batch denominator not reserved')
     return b
+
+
+def _continuation_policy(b,count):
+    if 'continuation' not in b:return None
+    value=b['continuation']
+    require(type(value) is dict and set(value)=={'format','manifest_input','max_commit_bytes'} | ({'graph_manifest_inputs'} if 'graph_manifest_inputs' in value else set())
+            and value['format']=='completed-prefix-v1','explicit continuation selection required')
+    role=value['manifest_input']
+    require(role is None or type(role) is str and 0<len(role)<=128 and role.isascii()
+            and all(c.isalnum() or c in '_-' for c in role),'finite continuation input required')
+    graph_roles=value.get('graph_manifest_inputs',{})
+    require(type(graph_roles) is dict and len(graph_roles)<=7 and all(
+        type(graph) is str and len(graph)==64 and all(c in '0123456789abcdef' for c in graph)
+        and type(name) is str and 0<len(name)<=128 and name.isascii()
+        and all(c.isalnum() or c in '_-' for c in name) for graph,name in graph_roles.items()),
+        'finite graph-specific continuation inputs required')
+    require(role is None or not graph_roles,'single and graph-specific continuation routes conflict')
+    require(type(value['max_commit_bytes']) is int and count*b['max_body_bytes']<=value['max_commit_bytes']<2**63,
+            'complete prefix commit reservation required')
+    require(count*(3*b['max_body_bytes']+92)+53*pairs_for_batches(b,count)<=b['max_journal_bytes'],
+            'prefix commits exceed journal reservation')
+    return tuple(sorted((key,tuple(sorted(item.items())) if key=='graph_manifest_inputs' else item)
+                        for key,item in value.items()))
+
+
+def pairs_for_batches(b,count):
+    # Conservative full last batch: logical reservation, never completed credit.
+    return count*b['batch_cells']
 
 
 def _compiled_policy(execution):
@@ -140,6 +171,13 @@ def _backend_input_policy(execution):
     return True
 
 
+def _numeric_policy(execution):
+    if 'numeric_kernel_policy' not in execution:return None
+    value=matching_numeric_policy.freeze(execution['numeric_kernel_policy'])
+    require(value is not None,'explicit fixed C05 numeric selection required')
+    return value
+
+
 def _backend_inputs(execution,run):
     """Opt-in compound admission; retain each original bounded role readback.
 
@@ -160,7 +198,7 @@ def _backend_inputs(execution,run):
         return _compiled_inputs(execution,run,registered=registered),_edge_inputs(execution,run,registered=registered)
 
 
-def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False):
+def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False, numeric=False, continuation=False):
     import importlib
     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
     # ONE packaged journal class is shared with the exact typed semantics helper.
@@ -171,11 +209,31 @@ def _modules(root, admission=None, *, grouped=False, geometry=False, binding_tim
         if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
         if compiled:names+=('compiled_normalization_policy','compiled_small_lse','matching_annealing','matching_checkpoint')
         if edge:names+=('compiled_edge_owner','edge_chunk_adapter','compiled_normalization_policy','matching_annealing','matching_checkpoint')
+        if numeric:names+=('matching_numeric_policy','matching_numeric_kernel','matching_annealing','matching_checkpoint')
+        if continuation:names+=('batched_continuation',)
         for name in names:
             module=importlib.import_module(PACKAGE+'.'+name)
             relative='tradingagents/research/onchain_replication/'+name+'.py'
             require(Path(module.__file__).resolve()==root/relative and admission.experiment['source_files'].get(relative)==file_hash(root/relative),'batched installed source not registered/current')
     return result
+
+
+def _continuation_contract(target,start,policy,descriptor):
+    """Stable scientific identity and separately reviewed current execution pins."""
+    owner=target.owner;ad=owner.bound._run.admission;p=thaw(owner.policy)
+    extraction=thaw(target.dictionary.config)
+    extraction['maximum_neighborhood_nodes']=policy['numeric']['extraction_limit']
+    scientific={'graph_hash':start['graph_hash'],'node_order_hash':start['scope']['node_order'],
+        'dictionary_sha256':target.dictionary.identity,'ordered_motifs_sha256':start['scope']['ordered_motifs'],
+        'matching':target.dictionary.matching_config_hash,'extraction':extraction,
+        'schedule':p['schedule'],'execution_matching':compact_policy.effective_matching(thaw(owner.matching),p['pair']),
+        'precision':{'internal':'float64','output':'float32','atol':1e-8,'rtol':1e-6}}
+    return {'source_sha256':cache_key(ad.experiment['source_files']),
+        'config_sha256':cache_key({'mcm':policy,'owner':p,'matching':thaw(owner.matching)}),
+        'dictionary_sha256':target.dictionary.identity,'graph_hash':start['graph_hash'],
+        'node_order_hash':start['scope']['node_order'],'descriptor_sha256':io._hash(io._json(descriptor)),
+        'workflow_identity':start['scope']['workflow'],'cells':start['cells'],
+        'batch_cells':policy['batched']['batch_cells'],'numerical_contract_sha256':io._hash(io._json(scientific))}
 
 
 @contextmanager
@@ -279,6 +337,68 @@ def _tokens(root, binding, modules, records=False):
     finally:io._release(lambda:os.close(fd))
 
 
+def _prefix_names(root,binding):
+    if 'continuation_contract' not in binding:return ()
+    names=[]
+    for index in range(binding['batches']):
+        regular=f'{index:08d}.prefix.json';legacy=f'{index:08d}.legacy-prefix-counter.json'
+        first=os.path.lexists(root/'matching'/regular);second=os.path.lexists(root/'matching'/legacy)
+        require(first!=second,'exactly one durable prefix body required')
+        names.append(regular if first else legacy)
+    return tuple(names)
+
+
+def _prefix_inventory(root,binding,modules):
+    """Join retained controls to original score tokens and actual numeric bodies."""
+    names=_prefix_names(root,binding);digest=hashlib.sha256();total=legacy=0
+    token_fd=origin_fd=summary_fd=None;primary=None
+    try:
+        token_fd,token_sig=_token_file(root,binding)
+        origin_fd=os.open(root/'stream/numeric-origins.bin',os.O_RDONLY|os.O_NOFOLLOW)
+        numeric_signature=modules['numeric_execution'].sig
+        origin_sig=numeric_signature(os.fstat(origin_fd))
+        require(list(origin_sig)==binding['numeric_execution']['origin_signature'],'prefix origin signature differs')
+        summary_fd=os.open(root/'stream/numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        summary_sig=numeric_signature(os.fstat(summary_fd))
+        require(list(summary_sig)==binding['numeric_execution']['batches_signature'],
+                'prefix numeric directory signature differs')
+        with _reader(root/'matching',binding,modules) as journal:
+            for index,name in enumerate(names):
+                raw,pin=journal._read(name);value=json.loads(raw)
+                require(io._json(value)==raw,'canonical prefix control required')
+                token=os.read(token_fd,168);require(len(token)==168,'short prefix score tokens')
+                hashes=[modules['driver'].TOKEN.unpack_from(token,offset*56)[3].hex() for offset in range(3)]
+                summary,_=modules['numeric_execution'].read_file(summary_fd,f'{index:012d}.json',8192)
+                counters=json.loads(summary);start=index*binding['batch_cells'];stop=min(binding['cells'],start+binding['batch_cells'])
+                origins=os.pread(origin_fd,9*(stop-start),9*start)
+                old=name.endswith('.legacy-prefix-counter.json');legacy+=old
+                require(value['policy']==('legacy-recovered-prefix-v1' if old else 'completed-prefix-v1')
+                    and value['batch']==index and value['start']==start and value['stop']==stop
+                    and value['contract_sha256']==binding['continuation_contract']['numerical_contract_sha256']
+                    and value['score_sha256']==hashes and value['summary_sha256']==io._hash(summary)
+                    and value['origin_sha256']==io._hash(origins)==counters['origin_sha256']
+                    and value['counters']==counters['counters'],'prefix score/numeric/contract join differs')
+                journal._read(name,raw,pin=pin)
+                digest.update(io._json({'name':name,'sha256':io._hash(raw),'inode':list(pin),'bytes':len(raw)}));total+=len(raw)
+        require(token_sig==io._signature(os.fstat(token_fd))==io._signature((root/'stream/closure-tokens.bin').lstat())
+            and not os.read(token_fd,1),'prefix tokens changed')
+        require(origin_sig==numeric_signature(os.fstat(origin_fd))==numeric_signature((root/'stream/numeric-origins.bin').lstat()),'prefix origins changed')
+        require(summary_sig==numeric_signature(os.fstat(summary_fd))==numeric_signature((root/'stream/numeric-batches').lstat()),
+                'prefix numeric directory changed')
+        return {'files':len(names),'bytes':total,'sha256':digest.hexdigest(),'legacy_counter_files':legacy}
+    except BaseException as error:primary=error;raise
+    finally:
+        failure=None
+        for descriptor in (token_fd,origin_fd,summary_fd):
+            if descriptor is not None:
+                try:os.close(descriptor)
+                except BaseException as error:
+                    if primary is not None:primary.add_note('prefix descriptor cleanup: '+type(error).__name__)
+                    elif failure is None:failure=error
+                    else:failure.add_note('prefix descriptor cleanup: '+type(error).__name__)
+        if primary is None and failure is not None:raise failure
+
+
 def verify_content(root, contract, reference, modules=None):
     require(contract.get('batched',{}).get('format') == FORMAT, 'explicit batched closure required')
     root = Path(root);path,fd=io._open(root)
@@ -299,16 +419,17 @@ def verify_content(root, contract, reference, modules=None):
         _children(root/'stream',{'closure-tokens.bin','scores.f32','numeric-origins.bin','numeric-batches'},directories={'numeric-batches'})
         require(compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))==compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy')),'batched/numeric normalization selection differs')
         require(compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))==compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy')),'batched/numeric edge selection differs')
+        require(matching_numeric_policy.freeze(binding.get('numeric_kernel_policy'))==matching_numeric_policy.freeze(binding['numeric_execution'].get('numeric_kernel_policy')),'batched/numeric kernel selection differs')
         numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])
         require(numeric['cells']==binding['cells'] and binding['numeric_execution']['batch_cells']==binding['batch_cells'],'numeric occurrence/full MCM denominator differs')
         if binding['retention']=='local-v2':
-            _children(root/'matching',(f'{i:08d}'+suffix for i in range(binding['batches']) for suffix in modules['driver'].SUFFIXES))
+            _children(root/'matching',tuple(f'{i:08d}'+suffix for i in range(binding['batches']) for suffix in modules['driver'].SUFFIXES)+_prefix_names(root,binding))
             for _ in _tokens(root,binding,modules):pass
         elif binding['retention']=='typed-grouped-recover-before-retire-v1':
             _verify_grouped(root,contract,binding)
         else:
             require(binding['retention']=='typed-recover-before-retire-v2','retention schema differs')
-            _children(root/'matching',())
+            _children(root/'matching',_prefix_names(root,binding))
             external=binding['external']
             require(external['coverage']['owner']==contract['owner'] and external['coverage']['cells']==contract['pairs'] and external['coverage']['batches']==binding['batches'],'external owner/full coverage differs')
             from . import registered_offload as offload
@@ -334,6 +455,8 @@ def verify_content(root, contract, reference, modules=None):
                 require(cursor==binding['cells'] and aggregate.hexdigest()==external['coverage']['original_and_fresh_history_aggregate_sha256'],'external aggregate/full denominator differs')
                 require(digest.hexdigest()==binding['tokens_sha256'] and token_sig==io._signature(os.fstat(token_fd))==io._signature((root/'stream/closure-tokens.bin').lstat()),'original tokens changed')
             finally:os.close(token_fd)
+        if 'continuation_contract' in binding:
+            require(_prefix_inventory(root,binding,modules)==binding['prefix_inventory'],'retained prefix controls changed')
         for _ in _spool(root,binding):pass
         io._root(path,fd)
         return {'completed_pairs':contract['pairs'],'rows':binding['rows'],'motifs':32,'scope':binding['scientific_scope'],'chunk_cells':binding['batch_cells']}
@@ -342,7 +465,7 @@ def verify_content(root, contract, reference, modules=None):
 
 def _verify_grouped(root,contract,binding):
     from . import grouped_offload as offload
-    _children(root/'matching',())
+    _children(root/'matching',_prefix_names(root,binding))
     external=binding['external'];coverage=external['coverage'];work=Path(external['directory'])
     groups=(binding['batches']+15)//16
     require(external['group_batches']==16 and coverage['format']=='registered-grouped-final-coverage-v1' and coverage['groups']==groups and coverage['owner']==contract['owner'] and coverage['stage']==root.name and coverage['cells']==binding['cells'] and coverage['batches']==binding['batches'],'grouped owner/full coverage differs')
@@ -424,10 +547,11 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
             allowance=pair_policy['max_checkpoint_bytes']+2*io.META_LIMIT
             require(checkpoint_bytes+allowance<=b['max_checkpoint_bytes'],'batched checkpoint retention exhausted')
             checkpoint_bytes+=allowance
-            path=checkpoints/f'pair-{pair_ordinal:012d}-checkpoint-{ordinal:08d}'
+            current_ordinal=executor.ordinal if 'continuation' in b else pair_ordinal
+            path=checkpoints/f'pair-{current_ordinal:012d}-checkpoint-{ordinal:08d}'
             reference=engine.save(state,path,a,m,config,max_checkpoint_bytes=pair_policy['max_checkpoint_bytes'],**({'checkpoint_layout':pair_policy['checkpoint_layout']} if 'checkpoint_layout' in pair_policy else {}))
             require(file_hash(path/'manifest.json')==reference,'actual checkpoint manifest readback differs')
-            meta={'schema_version':1,'purpose_sha256':purpose,'pair_ordinal':pair_ordinal,'checkpoint_ordinal':ordinal,'manifest_sha256':reference,'resumable':False}
+            meta={'schema_version':1,'purpose_sha256':purpose,'pair_ordinal':current_ordinal,'checkpoint_ordinal':ordinal,'manifest_sha256':reference,'resumable':False}
             q,fd=io._open(checkpoints)
             try:io._write(fd,path.name+'.json',io._json(meta))
             finally:io._release(lambda:os.close(fd))
@@ -446,7 +570,7 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
         execution=b['execution']
-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}))
+        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}))
         external=None;post_batch=final_batches=None
         if b['retention']=='typed-recover-before-retire-v2':
             from . import registered_offload as offload
@@ -512,21 +636,31 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
                 boundary();require(_checkpoint_inventory(work,max_entries=b['max_offload_entries'])==inventory,'external closure changed after final boundary')
         def sink(ordinal,center,motif,payload):
             nonlocal seen
-            require(ordinal==seen and ordinal==center*32+motif and 0<len(payload)<=128 and len(payload)%4==0,'ordered bounded publication sink differs')
-            view=memoryview(payload)
-            while view:
-                written=os.write(spool_fd,view);require(written>0,'short spool write');view=view[written:]
-            spool_hash.update(payload);seen+=len(payload)//4
-            require(4*seen<=b['max_spool_bytes'],'spool reservation exceeded')
-            if seen==journal.cells:
-                batch=journal.batch-1;records=journal.read_complete(batch)
-                token=modules['driver']._capture(journal,batch,records,original)
-                view=memoryview(token)
+            with phase_timing.measure('publication'):
+                require(ordinal==seen and ordinal==center*32+motif and 0<len(payload)<=128 and len(payload)%4==0,'ordered bounded publication sink differs')
+                view=memoryview(payload)
                 while view:
-                    n=os.write(fd,view);require(n>0,'zero token write');view=view[n:]
-                token_hash.update(token);os.fsync(fd)
+                    written=os.write(spool_fd,view);require(written>0,'short spool write');view=view[written:]
+                spool_hash.update(payload);seen+=len(payload)//4
+                require(4*seen<=b['max_spool_bytes'],'spool reservation exceeded')
+                if seen==journal.cells:
+                    batch=journal.batch-1;records=journal.read_complete(batch)
+                    token=modules['driver']._capture(journal,batch,records,original)
+                    view=memoryview(token)
+                    while view:
+                        n=os.write(fd,view);require(n>0,'zero token write');view=view[n:]
+                    token_hash.update(token);os.fsync(fd)
         descriptor={'rows':start['rows'],'cells':start['cells'],'motifs':32,'graph_hash':start['graph_hash'],'node_order_hash':start['scope']['node_order'],'workload_sha256':start['scope']['workflow'],'purpose_schema_version':2}
-        result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll)
+        continuation=None;prefix=None;continuation_options={}
+        if 'continuation' in b:
+            from . import batched_continuation
+            continuation=_continuation_contract(target,start,policy,descriptor)
+            role=b['continuation'].get('graph_manifest_inputs',{}).get(start['graph_hash'],b['continuation']['manifest_input'])
+            if role is not None:
+                prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation)
+            continuation_options={'completed_prefix':prefix,'numeric':executor,
+                'continuation_contract_sha256':continuation['numerical_contract_sha256']}
+        result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)
         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
         numeric_binding=executor.finish()
         os.fsync(spool_fd)
@@ -550,7 +684,12 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
                 elif cleanup_error is None:cleanup_error=failure
                 else:cleanup_error.add_note('Batched resource cleanup failed: '+repr(failure))
         if primary is None and cleanup_error is not None:raise cleanup_error
-    return {'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'numeric_execution':numeric_binding,'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
+    binding={'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'numeric_execution':numeric_binding,'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
+    if continuation is not None:
+        binding['continuation_contract']=continuation
+        binding['prefix_inventory']=_prefix_inventory(stage.root,binding,modules)
+        require(binding['prefix_inventory']['bytes']<=b['continuation']['max_commit_bytes'],'prefix commit reservation exceeded')
+    return binding
 
 
 def _entry_lease(target, execution):
@@ -575,7 +714,7 @@ def produce(target, *, graph_hash,input_name,output_input,held):
             b=validate(policy,start['cells'])
             _entry_lease(target,b['execution'])
             with phase_timing.measure('module_auth'):
-                modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'])
+                modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'],numeric='numeric_kernel_policy' in b['execution'],continuation='continuation' in b)
             output_policy,_=publication._output_policy(owner,output_input,start['cells'])
             require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
             own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
@@ -583,6 +722,7 @@ def produce(target, *, graph_hash,input_name,output_input,held):
             require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
             _entry_lease(target,b['execution'])
             normalization,edge_selection=_backend_inputs(b['execution'],owner.bound._run)
+            numeric_selection=_numeric_policy(b['execution'])
             _entry_lease(target,b['execution'])
             owner.boundary();target.check()
         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
@@ -592,32 +732,37 @@ def produce(target, *, graph_hash,input_name,output_input,held):
         stage=owner._begin('mcm-'+graph_hash,start['scope']['workflow'],start['cells'],None,retention_selection=selection)
         require(b['max_journal_bytes']+b['max_closure_token_bytes']+b['max_checkpoint_bytes']+b['max_spool_bytes']+b['max_offload_metadata_bytes']+b['execution']['max_origin_bytes']+b['execution']['max_summary_bytes']+4*io.META_LIMIT<=stage.reservation,'new batched retained bytes exceed genuine stage reservation')
         def boundary():
-            held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)
-            require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')
-            require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
-            require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
+            with phase_timing.measure('authority_boundary'):
+                held.check(owner);target.check();owner.boundary();stage.lease();target.final();io._root(root,fd)
+                require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')
+                require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
+                require(_numeric_policy(b['execution'])==numeric_selection,'batched numeric selection changed')
+                require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
         boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
         require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')
         require(compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy'))==edge_selection,'completed numeric edge selection differs')
         if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)
         if edge_selection is not None:binding['compiled_edge_policy']=dict(edge_selection)
+        require(matching_numeric_policy.freeze(binding['numeric_execution'].get('numeric_kernel_policy'))==numeric_selection,'completed numeric kernel selection differs')
+        if numeric_selection is not None:binding['numeric_kernel_policy']=dict(numeric_selection)
         binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])
-        contract={'owner':owner.identity,'scope':thaw(stage.scope),'policy':thaw(owner.policy),'kind':'mcm','pairs':start['cells'],'batched':binding}
-        stage.closing=True;sr,sd=io._open(stage.root)
-        try:reference=io._write(sd,'stage-complete.json',io._json(contract))
-        finally:io._release(lambda:os.close(sd))
-        verify_content(stage.root,contract,reference,modules);boundary()
-        stage.reference=reference;stage.contract=freeze(contract);stage.closed=True;owner.active=None
-        ticket=publication._publish(owner,stage,output_input=output_input,expected_scope=start['scope'])
-        attempt,args,proof,lease=publication._prepare(owner,stage,output_input,start['scope'])
-        artifact=Path(ticket['directory'])/'artifact';matrix_fd=os.open(artifact/'matrix.f32',os.O_RDONLY|os.O_NOFOLLOW)
-        try:
-            require(os.fstat(matrix_fd).st_size==4*start['cells'],'published matrix extent differs')
-            mapped=mmap.mmap(matrix_fd,0,access=mmap.ACCESS_READ)
-        finally:io._release(lambda:os.close(matrix_fd))
-        matrix=np.ndarray((start['rows'],32),dtype='<f4',buffer=mapped)
-        record=start|{'start_sha256':start_sha,'stage_sha256':reference,'stage_inode':list(stage.inode),'matrix_sha256':producer._matrix(matrix,start['rows'],32),'completed_cells':start['cells'],'completed_rows':start['rows'],'output':ticket,'output_args':args|{'stage_root':str(args['stage_root'])},'output_proof':proof}
-        receipt=io._write(fd,'complete.json',io._json(record))
+        with phase_timing.measure('publication'):
+            contract={'owner':owner.identity,'scope':thaw(stage.scope),'policy':thaw(owner.policy),'kind':'mcm','pairs':start['cells'],'batched':binding}
+            stage.closing=True;sr,sd=io._open(stage.root)
+            try:reference=io._write(sd,'stage-complete.json',io._json(contract))
+            finally:io._release(lambda:os.close(sd))
+            verify_content(stage.root,contract,reference,modules);boundary()
+            stage.reference=reference;stage.contract=freeze(contract);stage.closed=True;owner.active=None
+            ticket=publication._publish(owner,stage,output_input=output_input,expected_scope=start['scope'])
+            attempt,args,proof,lease=publication._prepare(owner,stage,output_input,start['scope'])
+            artifact=Path(ticket['directory'])/'artifact';matrix_fd=os.open(artifact/'matrix.f32',os.O_RDONLY|os.O_NOFOLLOW)
+            try:
+                require(os.fstat(matrix_fd).st_size==4*start['cells'],'published matrix extent differs')
+                mapped=mmap.mmap(matrix_fd,0,access=mmap.ACCESS_READ)
+            finally:io._release(lambda:os.close(matrix_fd))
+            matrix=np.ndarray((start['rows'],32),dtype='<f4',buffer=mapped)
+            record=start|{'start_sha256':start_sha,'stage_sha256':reference,'stage_inode':list(stage.inode),'matrix_sha256':producer._matrix(matrix,start['rows'],32),'completed_cells':start['cells'],'completed_rows':start['rows'],'output':ticket,'output_args':args|{'stage_root':str(args['stage_root'])},'output_proof':proof}
+            receipt=io._write(fd,'complete.json',io._json(record))
         result=producer.Produced(target,graph,stage,matrix,policy,start,record,root,inode,receipt);result._check();return result
     except BaseException as error:
         if fd is not None:

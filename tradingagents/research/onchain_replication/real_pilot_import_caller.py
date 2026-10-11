@@ -333,6 +333,16 @@ def admitted(ad, job, *, fresh_archive=False):
     require(all(item.get(k) == v for k,v in s.items()) and item['binding_output'] == p['outputs']['binding']
             and item['journal_output'] == p['outputs']['journal'], 'producer/selected pilot mismatch')
     roles = set(p['graph_inputs'].values()) | {p[k] for k in ('population_plan_input','model_input','training_input')}
+    mcm=_read(ad,s['compact_mcm_input'])
+    if type(mcm.get('schema_version')) is int and mcm['schema_version'] in (5,6):
+        from .compact_mcm_batched import _continuation_policy
+        b=mcm['batched']
+        if 'continuation' in b:
+            _continuation_policy(b,1)
+            continuation=b['continuation'];graph_roles=continuation.get('graph_manifest_inputs',{})
+            require(set(graph_roles)<=set(p['graph_inputs']),'continuation graph outside registered population')
+            roles.update(graph_roles.values())
+            if continuation['manifest_input'] is not None:roles.add(continuation['manifest_input'])
     if p.get('imported_authority_lease_input') is not None:
         from .imported_authority_interval import policy
         policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])
@@ -352,7 +362,6 @@ def admitted(ad, job, *, fresh_archive=False):
         _archive_namespace(ad,s,p,fresh=fresh_archive)
         from .real_pilot_reservations import validate as reservations
         output=_read(ad,s['compact_mcm_output_input'])
-        mcm=_read(ad,s['compact_mcm_input'])
         batched=type(mcm.get('schema_version')) is int and mcm['schema_version'] in (5,6)
         if batched:
             from . import compact_policy, matching_pair
@@ -414,7 +423,7 @@ def _close(journal, owner, targets, reference, binding, plan, training, artifact
     return value
 
 
-def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False):
+def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False, numeric=False, continuation=False):
     """Load the selected pilot's deferred modules before its immutable roster.
 
     Imports only: no model/graph construction, claims or authority refresh.
@@ -443,6 +452,10 @@ def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge
             from . import compiled_normalization_policy, compiled_small_lse
         if edge:
             from . import compiled_edge_owner, edge_chunk_adapter
+        if numeric:
+            from . import matching_numeric_policy, matching_numeric_kernel
+        if continuation:
+            from . import batched_continuation
 
 
 def execute(run, payload):
@@ -532,7 +545,8 @@ def execute(run, payload):
             terminal = training = None; primary = None
             def mark(phase):
                 events.append({'phase':phase,'elapsed_seconds':time.monotonic()-began})
-            try:
+        try:
+            with phase_timing.measure('entry'):
                 if 'scoring_diagnostic' in p:
                     from .real_pilot_partial_progress import ScoringDiagnostic
                     require(min(len(g.node_ids)*32 for g in graphs.values())>p['scoring_diagnostic']['max_completed_pairs'], 'diagnostic must stop inside first full graph')
@@ -567,7 +581,7 @@ def execute(run, payload):
                     from .imported_authority_lease import activate
                     if diagnostic is not None:diagnostic.startup_enter('lease_activation')
                     selected_mcm=_read(run.admission,s['compact_mcm_input'])
-                    _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'])
+                    _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'],numeric=selected_mcm.get('schema_version') in (5,6) and 'numeric_kernel_policy' in selected_mcm['batched']['execution'],continuation=selected_mcm.get('schema_version') in (5,6) and 'continuation' in selected_mcm['batched'])
                     activate(execution,p['imported_authority_lease_input'])
                     if diagnostic is not None:diagnostic.startup_complete()
                 require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
@@ -584,91 +598,91 @@ def execute(run, payload):
                     if diagnostic is not None:diagnostic.startup_enter('prepare',graph_index)
                     compact_mcm._prepare(target,target.key,s['compact_mcm_input'],s['compact_mcm_output_input'])
                     if diagnostic is not None:diagnostic.startup_complete()
-                for graph_index,(key,g) in enumerate(graphs.items()):
-                    watch.check()
-                    measurements.begin(key)
-                    if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
-                    result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
-                        **({'progress':progress} if progress is not None else {}),
-                        **({'diagnostic':diagnostic} if diagnostic is not None else {}))
-                    if diagnostic is not None:diagnostic.startup_complete()
-                    targets.append(result); result.check()
-                    retained = resource_fixture.verify_retained(result,owner)
-                    measurements.completed(key,retained)
-                    mark('mcm-'+key)
-                import torch
-                torch.set_num_threads(2)
-                from .evaluation import batch_factory
-                features = {}; contracts = {}
-                for (key,g), result in zip(graphs.items(),targets,strict=True):
-                    # Complete existing arrays, no node/edge/motif subset or fabricated fill.
-                    mcm = torch.from_numpy(result.matrix)
-                    edges = torch.from_numpy(g.edge_index)
-                    features[key] = {'mcm':mcm,'edge_index':edges}
-                    contracts[key] = {'nodes':len(g.node_ids),'edges':g.edge_index.shape[1],
-                                      'mcm_sha256':training_helper._tensor_hash(mcm),
-                                      'edge_index_sha256':training_helper._tensor_hash(edges)}
-                batch = batch_factory('proposed','direction',examples.train,scaler,features)
-                def authority():
-                    run._active(); bound.check(); execution.check(); watch.check()
-                    require(owner.bound is bound and bound._run is run and not owner.closed and not owner.poisoned, 'live genuine import chain required')
-                    for target in targets: target.check()
-                artifact = run.directory/'artifacts'
-                durable_mkdir(artifact)
-                training = training_helper.run_one_update(model_factory=lambda:ReplicationModel(model_config,'classification',execution=selected_execution),
-                    batch_factory=batch,indices=indices,graph_features=features,graph_contracts=contracts,
-                    graph_sequences=p['graph_sequences'],model_config=model_config,training_config=training_config,
-                    provenance={'claim_sha256':run._claim_sha256,'pilot_input_sha256':run.admission.inputs[s['real_pilot_input']]['sha256'],
-                                'original_dictionary':control['dictionary_identity'],'original_samples':control['sample_identity'],
-                                'source':run.admission.source,'train_hash':examples.train_hash,'resource_only':True},
-                    directory=artifact/'real-pilot-one-update',authority_check=authority,max_checkpoint_bytes=p['max_checkpoint_bytes'],
-                    task='classification',seed=11,model_execution=p['model_execution'])
-                mark('one_update_checkpoint_readback')
-                authority()
-                with compact_owner._held(owner): reference = owner._finish()
-                terminal = _close(journal,owner,targets,reference,binding,p,training,artifact/'real-pilot-one-update')
-            except BaseException as error:
-                primary = error
-                if diagnostic is not None:
-                    try:diagnostic.startup_failed(error)
-                    except BaseException as later:primary = resource_fixture._preserve_terminal(primary,later)
-                try: measurements.failed(error)
-                except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
-                if journal is not None and not journal.sealed:
-                    try: journal.seal('failed',reason=type(error).__name__+': '+str(error)[:1024])
-                    except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
-            if archive_context is not None:
-                try:archive_context.close(primary)
-                except BaseException as later:primary=resource_fixture._preserve_terminal(primary,later)
-            throughput = None
-            try: throughput = measurements.summary(training)
-            except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
-            # Independently attempt each remaining publication; retain the first fatal.
-            row = {'id':p['cell_id'],'status':'complete' if primary is None else 'failed','resource_only':True,
-                   'financial_fit_complete':False,'paper_financial_fits':0}
-            if primary is not None: row['reason'] = type(primary).__name__+': '+str(primary)[:1024]
-            summary = {'schema_version':1,'kind':KIND,'cell':row,'original_samples':512,'original_motifs':32,
-                       'full_graphs':7,'retained_target_count':len(targets),'training':training,'events':events,
-                       'throughput':throughput,
-                       'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
-            if progress is not None:summary['partial_mcm_progress'] = progress.summary()
-            diagnostic_summary = None
+            for graph_index,(key,g) in enumerate(graphs.items()):
+                watch.check()
+                measurements.begin(key)
+                if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
+                result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+                    **({'progress':progress} if progress is not None else {}),
+                    **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+                if diagnostic is not None:diagnostic.startup_complete()
+                targets.append(result); result.check()
+                retained = resource_fixture.verify_retained(result,owner)
+                measurements.completed(key,retained)
+                mark('mcm-'+key)
+            import torch
+            torch.set_num_threads(2)
+            from .evaluation import batch_factory
+            features = {}; contracts = {}
+            for (key,g), result in zip(graphs.items(),targets,strict=True):
+                # Complete existing arrays, no node/edge/motif subset or fabricated fill.
+                mcm = torch.from_numpy(result.matrix)
+                edges = torch.from_numpy(g.edge_index)
+                features[key] = {'mcm':mcm,'edge_index':edges}
+                contracts[key] = {'nodes':len(g.node_ids),'edges':g.edge_index.shape[1],
+                                  'mcm_sha256':training_helper._tensor_hash(mcm),
+                                  'edge_index_sha256':training_helper._tensor_hash(edges)}
+            batch = batch_factory('proposed','direction',examples.train,scaler,features)
+            def authority():
+                run._active(); bound.check(); execution.check(); watch.check()
+                require(owner.bound is bound and bound._run is run and not owner.closed and not owner.poisoned, 'live genuine import chain required')
+                for target in targets: target.check()
+            artifact = run.directory/'artifacts'
+            durable_mkdir(artifact)
+            training = training_helper.run_one_update(model_factory=lambda:ReplicationModel(model_config,'classification',execution=selected_execution),
+                batch_factory=batch,indices=indices,graph_features=features,graph_contracts=contracts,
+                graph_sequences=p['graph_sequences'],model_config=model_config,training_config=training_config,
+                provenance={'claim_sha256':run._claim_sha256,'pilot_input_sha256':run.admission.inputs[s['real_pilot_input']]['sha256'],
+                            'original_dictionary':control['dictionary_identity'],'original_samples':control['sample_identity'],
+                            'source':run.admission.source,'train_hash':examples.train_hash,'resource_only':True},
+                directory=artifact/'real-pilot-one-update',authority_check=authority,max_checkpoint_bytes=p['max_checkpoint_bytes'],
+                task='classification',seed=11,model_execution=p['model_execution'])
+            mark('one_update_checkpoint_readback')
+            authority()
+            with compact_owner._held(owner): reference = owner._finish()
+            terminal = _close(journal,owner,targets,reference,binding,p,training,artifact/'real-pilot-one-update')
+        except BaseException as error:
+            primary = error
             if diagnostic is not None:
-                try:
-                    diagnostic_summary = diagnostic.summary();summary['scoring_diagnostic'] = diagnostic_summary
+                try:diagnostic.startup_failed(error)
                 except BaseException as later:primary = resource_fixture._preserve_terminal(primary,later)
-            terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
-            actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),
-                       lambda:run.write_json(p['outputs']['journal'],terminal),
-                       lambda:run.write_json(p['outputs']['ledger'],[row]),lambda:run.write_json(p['outputs']['summary'],summary)]
-            if diagnostic is not None:
-                if diagnostic_summary is not None:actions.append(lambda:run.write_json(p['outputs']['diagnostic'],diagnostic_summary))
-                actions.append(diagnostic.close)
-            for action in actions:
-                try: action()
+            try: measurements.failed(error)
+            except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+            if journal is not None and not journal.sealed:
+                try: journal.seal('failed',reason=type(error).__name__+': '+str(error)[:1024])
                 except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
-            if primary is not None: raise primary
-            return [row]
+        if archive_context is not None:
+            try:archive_context.close(primary)
+            except BaseException as later:primary=resource_fixture._preserve_terminal(primary,later)
+        throughput = None
+        try: throughput = measurements.summary(training)
+        except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+        # Independently attempt each remaining publication; retain the first fatal.
+        row = {'id':p['cell_id'],'status':'complete' if primary is None else 'failed','resource_only':True,
+               'financial_fit_complete':False,'paper_financial_fits':0}
+        if primary is not None: row['reason'] = type(primary).__name__+': '+str(primary)[:1024]
+        summary = {'schema_version':1,'kind':KIND,'cell':row,'original_samples':512,'original_motifs':32,
+                   'full_graphs':7,'retained_target_count':len(targets),'training':training,'events':events,
+                   'throughput':throughput,
+                   'financial_fit_complete':False,'full_size_capacity':False,'final_outer_inventory_required':True}
+        if progress is not None:summary['partial_mcm_progress'] = progress.summary()
+        diagnostic_summary = None
+        if diagnostic is not None:
+            try:
+                diagnostic_summary = diagnostic.summary();summary['scoring_diagnostic'] = diagnostic_summary
+            except BaseException as later:primary = resource_fixture._preserve_terminal(primary,later)
+        terminal = terminal or {'schema_version':1,'kind':KIND,'status':'failed','resource_only':True,'reason':row['reason']}
+        actions = [lambda:watch.check(),lambda:run.write_json(p['outputs']['binding'],terminal),
+                   lambda:run.write_json(p['outputs']['journal'],terminal),
+                   lambda:run.write_json(p['outputs']['ledger'],[row]),lambda:run.write_json(p['outputs']['summary'],summary)]
+        if diagnostic is not None:
+            if diagnostic_summary is not None:actions.append(lambda:run.write_json(p['outputs']['diagnostic'],diagnostic_summary))
+            actions.append(diagnostic.close)
+        for action in actions:
+            try: action()
+            except BaseException as later: primary = resource_fixture._preserve_terminal(primary,later)
+        if primary is not None: raise primary
+        return [row]
     if 'phase_timing_policy' not in p:return operation()
     from .phase_timing import run_profiled
     return run_profiled(operation,lambda value:run.write_json(p['outputs']['timing'],value))

@@ -1,0 +1,1532 @@
+{
+  "authority": false,
+  "format": "finite-full-solver-c05-v1",
+  "native_policy": {
+    "abi_bytes": 191,
+    "abi_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot34-native-owner-qualification01-2026-10-11/ABI_ROLE01.json",
+    "abi_sha256": "4c3080e6a8b2b628f2e52a057f9f7f8cf89621a1f3d4217f7b1da92966a96a06",
+    "adapter_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/edge_chunk_adapter.py",
+    "adapter_sha256": "e93bc309b1e7a38dff37ba63fd12bb0a3dce3a6766f829d6583cb008361c4dc6",
+    "format": "cpython-two-attribute-edge-owner-v1",
+    "library_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/_edge_chunk.cpython-313-x86_64-linux-gnu.so",
+    "library_sha256": "adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97",
+    "runtime_bytes": 345,
+    "runtime_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json",
+    "runtime_sha256": "8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb",
+    "source_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-two-attribute-agreement01-2026-10-11/edge_chunk.c",
+    "source_sha256": "7218b75e9d2b1f4f832418e1057a7085eeeaa20120a3dfbdcc57e303542ce9f6"
+  },
+  "node_agreement": "unchanged scalar",
+  "normalization_policy": {
+    "format": "compiled-small-lse-prototype04-session-v1",
+    "library_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so",
+    "library_sha256": "9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2",
+    "runtime_bytes": 345,
+    "runtime_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json",
+    "runtime_sha256": "8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb",
+    "source_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c",
+    "source_sha256": "8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8"
+  },
+  "numeric_policy": {
+    "atol": 1e-08,
+    "format": "bounded-numpy-agreement-c05-v1",
+    "max_chunk_entries": 1024,
+    "max_index_bytes": 16384,
+    "min_chunk_entries": 256,
+    "rtol": 1e-06
+  },
+  "offload_measured": false,
+  "peak_rss_kib": 383884,
+  "rows": [
+    {
+      "edges": 7,
+      "n": 3,
+      "runs": [
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.012097208000000026,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 0.0001008299999999962,
+                  "failures": 0,
+                  "wall_seconds": 0.0001014300005408586
+                }
+              }
+            },
+            "wall": 0.013135379999766883
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.008824666999999953,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 7.387900000005443e-05,
+                  "failures": 0,
+                  "wall_seconds": 7.444899983966025e-05
+                }
+              }
+            },
+            "wall": 0.008824258999993617
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.008733214000000045,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 7.197600000002913e-05,
+                  "failures": 0,
+                  "wall_seconds": 7.252599971252494e-05
+                }
+              }
+            },
+            "wall": 0.008733267999559757
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.01012701399999999,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.77940000000399e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.880400011752499e-05
+                }
+              }
+            },
+            "wall": 0.01013925100050983
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.009632233999999962,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.00809999999541e-05,
+                  "failures": 0,
+                  "wall_seconds": 8.060199979809113e-05
+                }
+              }
+            },
+            "wall": 0.009632471999793779
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.009136230999999995,
+            "cursor": [
+              [
+                2601,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                4,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 58,
+                "agreement_scalar_entries": 58,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.113299999995549e-05,
+                  "failures": 0,
+                  "wall_seconds": 8.183299996744609e-05
+                }
+              }
+            },
+            "wall": 0.00915076000001136
+          }
+        }
+      ],
+      "selected_cells_per_second": 109.28054063255496,
+      "speedup": 1.052641747765412,
+      "width": 2
+    },
+    {
+      "edges": 81,
+      "n": 9,
+      "runs": [
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.11108710500000002,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.22740000000033e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.39150004342082e-05
+                }
+              }
+            },
+            "wall": 0.11109413899976062
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.11146759099999998,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.708199999997058e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.898400003294228e-05
+                }
+              }
+            },
+            "wall": 0.11152674900040438
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.10716997299999997,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.356700000011763e-05,
+                  "failures": 0,
+                  "wall_seconds": 8.433800030616112e-05
+                }
+              }
+            },
+            "wall": 0.10716930200032948
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.11139420300000002,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 0.00010745200000006339,
+                  "failures": 0,
+                  "wall_seconds": 0.00010876400028791977
+                }
+              }
+            },
+            "wall": 0.11139262799952121
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 0.10826266600000001,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.436600000001238e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.67010000749724e-05
+                }
+              }
+            },
+            "wall": 0.10831914500067796
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 0,
+              "numpy_chunks": 0,
+              "numpy_entries": 0
+            },
+            "cpu": 0.10696461700000004,
+            "cursor": [
+              [
+                315249,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                9,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 6642,
+                "agreement_scalar_entries": 6642,
+                "chunk_256to1023_calls": 1200,
+                "chunk_8to255_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.956800000003984e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.168199994746828e-05
+                }
+              }
+            },
+            "wall": 0.10696317600013572
+          }
+        }
+      ],
+      "selected_cells_per_second": 8.977254760560081,
+      "speedup": 0.972408560117134,
+      "width": 2
+    },
+    {
+      "edges": 144,
+      "n": 12,
+      "runs": [
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 1.153593253,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.867599999995424e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.074999979929999e-05
+                }
+              }
+            },
+            "wall": 1.1537861169999815
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.26348923499999977,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.782499999959725e-05,
+                  "failures": 0,
+                  "wall_seconds": 8.999799956654897e-05
+                }
+              }
+            },
+            "wall": 0.2634831929999564
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 1.1959855830000001,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 0.0001420080000000823,
+                  "failures": 0,
+                  "wall_seconds": 0.00014566300069418503
+                }
+              }
+            },
+            "wall": 1.1963624500003789
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.27745176900000024,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.474799999997785e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.697200039227027e-05
+                }
+              }
+            },
+            "wall": 0.27747078699940175
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 1.1756028629999995,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.667100000010365e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.912500081554754e-05
+                }
+              }
+            },
+            "wall": 1.175647461999688
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.2787054769999999,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.541899999998549e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.721199967316352e-05
+                }
+              }
+            },
+            "wall": 0.2787292539996997
+          }
+        }
+      ],
+      "selected_cells_per_second": 3.6039830023697452,
+      "speedup": 4.237013469826007,
+      "width": 2
+    },
+    {
+      "edges": 256,
+      "n": 16,
+      "runs": [
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 3.9566945649999994,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.0002521219999982449,
+                  "failures": 0,
+                  "wall_seconds": 0.0002586539994808845
+                }
+              }
+            },
+            "wall": 4.05396541600021
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 2,
+              "index_bytes": 50324192,
+              "numpy_chunks": 3073,
+              "numpy_entries": 3145262
+            },
+            "cpu": 0.8464422030000005,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_fallback_chunks": 2,
+                "agreement_native_chunks": 2,
+                "agreement_native_entries": 466,
+                "agreement_numpy_chunks": 3073,
+                "agreement_numpy_entries": 3145262,
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.00025085099999877514,
+                  "failures": 0,
+                  "wall_seconds": 0.00025892400117299985
+                }
+              }
+            },
+            "wall": 0.8465167469994412
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 3.7746662829999984,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.0002365239999999602,
+                  "failures": 0,
+                  "wall_seconds": 0.00024156199924618704
+                }
+              }
+            },
+            "wall": 3.775640879999628
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 2,
+              "index_bytes": 50324192,
+              "numpy_chunks": 3073,
+              "numpy_entries": 3145262
+            },
+            "cpu": 0.8059760239999996,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_fallback_chunks": 2,
+                "agreement_native_chunks": 2,
+                "agreement_native_entries": 466,
+                "agreement_numpy_chunks": 3073,
+                "agreement_numpy_entries": 3145262,
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.00021556399999766995,
+                  "failures": 0,
+                  "wall_seconds": 0.00021950200152787147
+                }
+              }
+            },
+            "wall": 0.8059806419996676
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 4.193687884000001,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.00034592899999630333,
+                  "failures": 0,
+                  "wall_seconds": 0.000352349999047874
+                }
+              }
+            },
+            "wall": 4.196956526000577
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 2,
+              "index_bytes": 50324192,
+              "numpy_chunks": 3073,
+              "numpy_entries": 3145262
+            },
+            "cpu": 0.8926632170000026,
+            "cursor": [
+              [
+                1000000,
+                "annealing",
+                16628,
+                15
+              ],
+              [
+                1000000,
+                "annealing",
+                33513,
+                30
+              ],
+              [
+                1000000,
+                "annealing",
+                50398,
+                45
+              ],
+              [
+                146224,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                16,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_fallback_chunks": 2,
+                "agreement_native_chunks": 2,
+                "agreement_native_entries": 466,
+                "agreement_numpy_chunks": 3073,
+                "agreement_numpy_entries": 3145262,
+                "agreement_scalar_chunks": 256,
+                "agreement_scalar_entries": 256,
+                "chunk_1024_calls": 3069,
+                "chunk_256to1023_calls": 4,
+                "chunk_8to255_calls": 2
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 5,
+                  "cpu_seconds": 0.00344537500000186,
+                  "failures": 0,
+                  "wall_seconds": 0.003461078999862366
+                }
+              }
+            },
+            "wall": 0.8935453450003479
+          }
+        }
+      ],
+      "selected_cells_per_second": 1.1813115375975665,
+      "speedup": 4.788996118942566,
+      "width": 2
+    },
+    {
+      "edges": 144,
+      "n": 12,
+      "runs": [
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 3.0366649919999986,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 995472,
+                "agreement_scalar_entries": 995472,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.739299999722562e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.911600045597879e-05
+                }
+              }
+            },
+            "wall": 3.0367684450002344
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.29431577500000117,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.428699999958212e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.597899952495936e-05
+                }
+              }
+            },
+            "wall": 0.29436061599972163
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 3.0606853990000005,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 995472,
+                "agreement_scalar_entries": 995472,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.623100000055729e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.797299935598858e-05
+                }
+              }
+            },
+            "wall": 3.060813527999926
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.2812503669999984,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 8.871699999701832e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.028899967233883e-05
+                }
+              }
+            },
+            "wall": 0.28127700300046854
+          }
+        },
+        {
+          "current": {
+            "adapter": {},
+            "cpu": 3.0986684880000013,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_scalar_chunks": 995472,
+                "agreement_scalar_entries": 995472,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.183299999904193e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.378600043419283e-05
+                }
+              }
+            },
+            "wall": 3.098998911000308
+          },
+          "selected": {
+            "adapter": {
+              "fallback_chunks": 0,
+              "index_bytes": 15925248,
+              "numpy_chunks": 1008,
+              "numpy_entries": 995328
+            },
+            "cpu": 0.28051279299999976,
+            "cursor": [
+              [
+                995712,
+                "hardening",
+                0,
+                48
+              ],
+              [
+                12,
+                "done",
+                0,
+                48
+              ]
+            ],
+            "telemetry": {
+              "authority": false,
+              "counters": "cumulative/exclusive/process-local",
+              "format": "exclusive-wall-cpu-v1",
+              "invalid_measurements": 0,
+              "numeric_counts": {
+                "agreement_numpy_chunks": 1008,
+                "agreement_numpy_entries": 995328,
+                "agreement_scalar_chunks": 144,
+                "agreement_scalar_entries": 144,
+                "chunk_1024_calls": 960,
+                "chunk_256to1023_calls": 48
+              },
+              "phases": {
+                "state_scan": {
+                  "bytes": 0,
+                  "calls": 2,
+                  "cpu_seconds": 9.575099999992176e-05,
+                  "failures": 0,
+                  "wall_seconds": 9.765300001163268e-05
+                }
+              }
+            },
+            "wall": 0.28055440000025555
+          }
+        }
+      ],
+      "selected_cells_per_second": 3.55521421706251,
+      "speedup": 10.881847770522596,
+      "width": 4
+    }
+  ],
+  "source": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-solver-qualification-2026-10-11/qualify.py": "957d9f04c7ca8f5473a5c2dd57b9a8c10055e4fb63c298fba39d9e912d4197b2",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_annealing.py": "7fca3d74ef2187cbcbb137790ff7c00555920c8e727deae45059b6b6b4a42762",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_numeric_policy.py": "cd3000fc02d126026b1ba3e6fbe779e92b1fcd516abfbcbf563ccf3479b02b03"
+  }
+}

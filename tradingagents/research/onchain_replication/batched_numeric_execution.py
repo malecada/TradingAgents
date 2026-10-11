@@ -2,6 +2,7 @@
 from . import phase_timing
 import hashlib,json,math,os,stat,struct,time
 from pathlib import Path
+from . import matching_numeric_policy
 from . import adaptive_edge_policy
 from . import compiled_normalization_policy
 from . import compiled_edge_owner
@@ -45,7 +46,7 @@ def counters(memo):
     return value
 
 class NumericExecution:
-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
+    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
@@ -54,6 +55,7 @@ class NumericExecution:
         self.batch_computed=self.batch_reused=0;self.batch_elapsed=0.0
         try:
             adaptive_edge_policy.attach(self,edge_cache_policy)
+            matching_numeric_policy.attach(self,numeric_kernel_policy)
             compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
             compiled_edge_owner.attach(self,compiled_edge_policy_value)
             require(type(cells) is int and 0<cells<2**63 and type(batch_cells) is int and 0<batch_cells<=4096,'finite numeric range required')
@@ -75,7 +77,7 @@ class NumericExecution:
             self.batches_fd=os.open('numeric-batches',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW,dir_fd=self.fd);self.batches_pin=sig(os.fstat(self.batches_fd))[:2]
             self.origins_fd=os.open('numeric-origins.bin',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
             self.origin_sig=sig(os.fstat(self.origins_fd));os.fsync(self.fd)
-            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+            self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
         except BaseException as primary:
             self.poisoned=True
             try:self.close()
@@ -89,7 +91,12 @@ class NumericExecution:
         observer._check(owner.bound)
 
     def _counters(self):
+        if hasattr(self,'continuation') and self.continuation['imported_cells']==self.cells:
+            return json.loads(self.last_imported_summary)['counters']
         value=counters(self.memo)
+        if hasattr(self,'continuation'):
+            value.update({name:getattr(self.memo.executor,name) for name in
+                ('checkpoints','reserved_bytes','completed_operations','advance_calls','abandoned_call_operation_limit')})
         if self.binding_timing is not None:
             require(type(self._timing_snapshot) is bytes,'attested timing snapshot missing')
             timing=json.loads(self._timing_snapshot)
@@ -112,6 +119,7 @@ class NumericExecution:
         require(not self.closed and not self.poisoned and not self.finished and self.ordinal<self.cells,'numeric execution unavailable')
         try:
             self._origin_current()
+            matching_numeric_policy.join(self,self.memo)
             adaptive_edge_policy.join(self,self.memo)
             compiled_normalization_policy.join(self,self.memo)
             compiled_edge_owner.join(self,self.memo)
@@ -120,6 +128,7 @@ class NumericExecution:
             with phase_timing.measure('pair_numeric'):result=self.memo(a,b,purpose)
             elapsed=time.perf_counter()-started
             require(math.isfinite(elapsed) and elapsed>=0,'numeric timing invalid')
+            matching_numeric_policy.join(self,self.memo)
             adaptive_edge_policy.join(self,self.memo)
             compiled_normalization_policy.join(self,self.memo)
             compiled_edge_owner.join(self,self.memo)
@@ -144,46 +153,85 @@ class NumericExecution:
         if self.binding_timing is not None:
             self._timing_current()
             self._timing_snapshot=raw(matching_owner.binding_timing_counters(self._timing_observer.snapshot()))
+        matching_numeric_policy.join(self,self.memo)
         adaptive_edge_policy.join(self,self.memo)
         compiled_normalization_policy.join(self,self.memo)
         compiled_edge_owner.join(self,self.memo)
         start=self.ordinal-len(self.buffer)//9
         summary={'format':FORMAT,'batch':self.batch,'start':start,'stop':self.ordinal,'computed':self.batch_computed,'reused':self.batch_reused,'origin_sha256':hashlib.sha256(self.buffer).hexdigest(),'receipt_sha256':self.receipts.hexdigest(),'receipt_framing':'u64be-length/canonical-json-newline','counters':self._counters(),'elapsed_seconds':self.batch_elapsed,'old_per_occurrence_execution_credit':False}
+        if self._numeric_kernel_policy is not None:summary['numeric_kernel_policy']=dict(self._numeric_kernel_policy)
         if self.geometry is not None:summary['geometry']=geometry_publication.completed(self.memo.last_geometry_summary,self.geometry,start,self.ordinal,self.batch_computed,self.batch_reused)
         if self._edge_cache_policy is not None:summary['edge_cache_policy']=dict(self._edge_cache_policy)
         if self._compiled_normalization_policy is not None:summary['compiled_normalization_policy']=dict(self._compiled_normalization_policy)
         if self._compiled_edge_policy is not None:summary['compiled_edge_policy']=dict(self._compiled_edge_policy)
+        phases=phase_timing.current_snapshot()
+        if phases is not None:summary['phase_totals']=phases
         body=raw(summary);require(len(body)<=SUMMARY_LIMIT and self.summary_bytes+len(body)<=self.max_summary_bytes and 9*self.ordinal<=self.max_origin_bytes,'numeric retained byte cap')
-        self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
-        self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
-        require(os.pread(self.origins_fd,len(self.buffer),9*start)==self.buffer,'numeric origin write readback differs')
-        name=f'{self.batch:012d}.json';child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.batches_fd)
-        primary=None
-        try:write_all(child,body);os.fsync(child)
-        except BaseException as error:
-            primary=error;raise
-        finally:
-            try:os.close(child)
-            except BaseException as cleanup:
-                if primary is None:raise
-                primary.add_note('numeric summary cleanup: '+repr(cleanup))
-        readback,file_signature=read_file(self.batches_fd,name,SUMMARY_LIMIT);require(readback==body,'numeric summary readback differs');os.fsync(self.batches_fd);self._root()
+        with phase_timing.measure('publication'):
+            self._origin_current();write_all(self.origins_fd,self.buffer);os.fsync(self.origins_fd)
+            self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+            require(os.pread(self.origins_fd,len(self.buffer),9*start)==self.buffer,'numeric origin write readback differs')
+            name=f'{self.batch:012d}.json';child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.batches_fd)
+            primary=None
+            try:write_all(child,body);os.fsync(child)
+            except BaseException as error:
+                primary=error;raise
+            finally:
+                try:os.close(child)
+                except BaseException as cleanup:
+                    if primary is None:raise
+                    primary.add_note('numeric summary cleanup: '+repr(cleanup))
+            readback,file_signature=read_file(self.batches_fd,name,SUMMARY_LIMIT);require(readback==body,'numeric summary readback differs');os.fsync(self.batches_fd);self._root()
         self.summary_inventory.update(raw({'name':name,'signature':file_signature}));self.origin_hash.update(self.buffer);self.summary_hash.update(struct.pack('>Q',len(body)));self.summary_hash.update(body);self.summary_bytes+=len(body);self.batch+=1
         self.elapsed_seconds+=self.batch_elapsed;self.buffer.clear();self.receipts=hashlib.sha256();self.batch_computed=self.batch_reused=0;self.batch_elapsed=0.0
+    def import_completed_batch(self, origins, summary):
+        """Restore immutable numeric provenance without importing cache/cost credit."""
+        require(not self.closed and not self.poisoned and not self.finished and not self.buffer
+                and not self.memo.active and self.memo.occurrences == 0, 'fresh numeric import required')
+        value=json.loads(summary)
+        require(raw(value)==summary and value['batch']==self.batch and value['start']==self.ordinal
+                and value['stop']==min(self.ordinal+self.batch_cells,self.cells)
+                and len(origins)==9*(value['stop']-self.ordinal)
+                and hashlib.sha256(origins).hexdigest()==value['origin_sha256'], 'import numeric boundary differs')
+        require(len(summary)<=SUMMARY_LIMIT and self.summary_bytes+len(summary)<=self.max_summary_bytes
+                and 9*value['stop']<=self.max_origin_bytes, 'import numeric storage cap')
+        with phase_timing.measure('publication'):
+            self._origin_current();write_all(self.origins_fd,origins);os.fsync(self.origins_fd)
+            self.origin_sig=sig(os.fstat(self.origins_fd));self._origin_current()
+            require(os.pread(self.origins_fd,len(origins),9*self.ordinal)==origins, 'import origins readback differs')
+            name=f'{self.batch:012d}.json'
+            child=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.batches_fd)
+            try:write_all(child,summary);os.fsync(child)
+            finally:os.close(child)
+            readback,signature=read_file(self.batches_fd,name,SUMMARY_LIMIT)
+            require(readback==summary,'import summary readback differs');os.fsync(self.batches_fd)
+        self.summary_inventory.update(raw({'name':name,'signature':signature}))
+        self.origin_hash.update(origins);self.summary_hash.update(struct.pack('>Q',len(summary)));self.summary_hash.update(summary)
+        self.summary_bytes+=len(summary);self.elapsed_seconds+=value['elapsed_seconds']
+        self.ordinal=value['stop'];self.batch+=1;self.computed+=value['computed'];self.reused+=value['reused']
+        self.last_imported_summary=summary
+
     def finish(self):
         require(not self.closed and not self.poisoned and not self.finished,'numeric finish unavailable')
         try:
             require(self.ordinal==self.cells and self.batch==self.batches and not self.buffer and not self.memo.active,'numeric range incomplete')
             self._origin_current();os.fsync(self.origins_fd)
             binding={'format':FORMAT,'cells':self.cells,'batch_cells':self.batch_cells,'batches':self.batches,'computed':self.computed,'reused':self.reused,'origin_bytes':9*self.cells,'origin_sha256':self.origin_hash.hexdigest(),'origin_signature':list(self.origin_sig),'stream_inode':list(self.root_pin),'batches_inode':list(self.batches_pin),'batches_signature':list(sig(os.fstat(self.batches_fd))),'summary_bytes':self.summary_bytes,'summary_sha256':self.summary_hash.hexdigest(),'summary_inventory_sha256':self.summary_inventory.hexdigest(),'max_origin_bytes':self.max_origin_bytes,'max_summary_bytes':self.max_summary_bytes,'counters':self._counters(),'elapsed_seconds':self.elapsed_seconds,'old_per_occurrence_execution_credit':False,'independent_key_equivalence_recomputed':False,'resume_supported':False}
+            if self._numeric_kernel_policy is not None:binding['numeric_kernel_policy']=dict(self._numeric_kernel_policy)
             if self.geometry is not None:binding['geometry']=dict(self.geometry)
             if self.binding_timing is not None:binding['binding_timing']=dict(self.binding_timing)
+            matching_numeric_policy.join(self,self.memo)
             adaptive_edge_policy.join(self,self.memo)
             compiled_normalization_policy.join(self,self.memo)
             compiled_edge_owner.join(self,self.memo)
             if self._edge_cache_policy is not None:binding['edge_cache_policy']=dict(self._edge_cache_policy)
             if self._compiled_normalization_policy is not None:binding['compiled_normalization_policy']=dict(self._compiled_normalization_policy)
             if self._compiled_edge_policy is not None:binding['compiled_edge_policy']=dict(self._compiled_edge_policy)
+            if hasattr(self,'continuation'):
+                binding['continuation']={**self.continuation,'newly_computed':self.computed-self.continuation['imported_computed'],
+                    'newly_reused':self.reused-self.continuation['imported_reused'],'new_cost_counters':counters(self.memo),
+                    'new_checkpoint_attempts':self.memo.executor.checkpoints,'new_checkpoint_reserved_bytes':self.memo.executor.reserved_bytes,
+                    'new_operation_counters':{k:getattr(self.memo.executor,k) for k in ('completed_operations','advance_calls','abandoned_call_operation_limit')}}
             verify(self.root,binding);self.finished=True;return binding
         except BaseException:self._poison();raise
     def close(self):
@@ -219,6 +267,13 @@ def verify(stream_root,binding):
     try:
         require(binding['format']==FORMAT and type(binding['cells']) is int and 0<binding['cells']<2**63 and type(binding['batch_cells']) is int and 0<binding['batch_cells']<=4096,'numeric binding format/range')
         cells=binding['cells'];batch_cells=binding['batch_cells'];batches=(cells+batch_cells-1)//batch_cells
+        kernel_selection=matching_numeric_policy.freeze(binding.get('numeric_kernel_policy'))
+        continuation=binding.get('continuation')
+        imported_cells=0 if continuation is None else continuation['imported_cells']
+        require(type(imported_cells) is int and 0<=imported_cells<=cells and (imported_cells==cells or imported_cells%batch_cells==0),'numeric imported boundary differs')
+        if continuation is not None:
+            require(continuation['policy']=='completed-prefix-v1' and type(continuation['manifest_sha256']) is str
+                    and len(continuation['manifest_sha256'])==64 and continuation['memo_reset_count']==1,'numeric continuation metadata differs')
         selected=adaptive_edge_policy.freeze(binding.get('edge_cache_policy'))
         normalization=compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))
         edge_selection=compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))
@@ -239,15 +294,23 @@ def verify(stream_root,binding):
         for index in range(batches):
             start=index*batch_cells;stop=min(cells,start+batch_cells);body,signature=read_file(bd,f'{index:012d}.json',SUMMARY_LIMIT);s=json.loads(body)
             require(raw(s)==body and s['format']==FORMAT and s['batch']==index and s['start']==start and s['stop']==stop and s['old_per_occurrence_execution_credit'] is False and s['receipt_framing']=='u64be-length/canonical-json-newline' and len(s['receipt_sha256'])==64 and all(c in '0123456789abcdef' for c in s['receipt_sha256']),'numeric summary range/framing')
-            if geometry is not None:geometry_publication.check(s.get('geometry'),geometry,start,stop,s['computed'],s['reused'])
-            else:require('geometry' not in s,'unselected geometry summary')
-            if timing is not None:
+            imported=start<imported_cells
+            require(imported or matching_numeric_policy.freeze(s.get('numeric_kernel_policy'))==kernel_selection,'numeric summary kernel policy differs')
+            matching_numeric_policy.freeze(s.get('numeric_kernel_policy'))
+            if 'phase_totals' in s:validate_phase_totals(s['phase_totals'])
+            if geometry is not None and (not imported or 'geometry' in s):geometry_publication.check(s.get('geometry'),geometry,start,stop,s['computed'],s['reused'])
+            elif not imported:require('geometry' not in s,'unselected geometry summary')
+            has_imported_timing=imported and 'binding_timing_closed' in s['counters']
+            if (timing is not None and not imported) or has_imported_timing:
                 names={'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')}
                 matching_owner.binding_timing_counters({k:s['counters'][k] for k in names})
-            else:require(not ({'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')})&set(s['counters']),'unselected binding timing counters')
-            require(adaptive_edge_policy.freeze(s.get('edge_cache_policy'))==selected,'numeric summary adaptive policy differs')
-            require(compiled_normalization_policy.freeze(s.get('compiled_normalization_policy'))==normalization,'numeric summary normalization policy differs')
-            require(compiled_edge_owner.freeze(s.get('compiled_edge_policy'))==edge_selection,'numeric summary edge policy differs')
+            elif not imported:require(not ({'binding_timing_closed'}|{'binding_'+p+'_'+x for p in matching_owner._LEASE_TIMING_PHASES for x in ('calls','ns','failures')})&set(s['counters']),'unselected binding timing counters')
+            prior_edge=adaptive_edge_policy.freeze(s.get('edge_cache_policy'))
+            prior_normalization=compiled_normalization_policy.freeze(s.get('compiled_normalization_policy'))
+            prior_compiled=compiled_edge_owner.freeze(s.get('compiled_edge_policy'))
+            require(imported or prior_edge==selected,'numeric summary adaptive policy differs')
+            require(imported or prior_normalization==normalization,'numeric summary normalization policy differs')
+            require(imported or prior_compiled==edge_selection,'numeric summary edge policy differs')
             chunk=os.pread(origin,9*(stop-start),9*start);require(len(chunk)==9*(stop-start) and hashlib.sha256(chunk).hexdigest()==s['origin_sha256'],'numeric origin range hash')
             nc=nr=0
             for ordinal,(mode,source) in enumerate(RECORD.iter_unpack(chunk),start):
@@ -274,3 +337,19 @@ def verify(stream_root,binding):
                     elif cleanup_error is None:cleanup_error=error
                     else:cleanup_error.add_note('additional numeric verifier cleanup: '+repr(error))
         if primary is None and cleanup_error is not None:raise cleanup_error
+
+
+def validate_phase_totals(value):
+    require(type(value) is dict and set(value)=={'format','phases','numeric_counts','invalid_measurements','counters','authority'}
+            and value['format']==phase_timing.FORMAT and value['authority'] is False
+            and value['counters']=='cumulative/exclusive/process-local', 'numeric phase schema differs')
+    require(type(value['invalid_measurements']) is int and value['invalid_measurements']>=0
+            and type(value['phases']) is dict and set(value['phases'])<=phase_timing.PHASES
+            and type(value['numeric_counts']) is dict and set(value['numeric_counts'])<=phase_timing.NUMERIC_COUNTS,
+            'numeric phase fields differ')
+    for row in value['phases'].values():
+        require(type(row) is dict and set(row)=={'calls','failures','wall_seconds','cpu_seconds','bytes'}, 'numeric phase row differs')
+        require(all(type(row[k]) is int and 0<=row[k]<2**127 for k in ('calls','failures','bytes'))
+                and row['failures']<=row['calls']
+                and all(type(row[k]) in (int,float) and math.isfinite(row[k]) and row[k]>=0 for k in ('wall_seconds','cpu_seconds')), 'numeric phase values differ')
+    require(all(type(v) is int and 0<=v<2**127 for v in value['numeric_counts'].values()),'numeric phase count differs')

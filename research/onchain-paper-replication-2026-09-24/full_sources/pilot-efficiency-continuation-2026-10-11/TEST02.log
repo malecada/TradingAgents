@@ -1,0 +1,27 @@
+
+==================================== ERRORS ====================================
+_ ERROR collecting tests/research/onchain_replication/test_batched_continuation.py _
+ImportError while importing test module '/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_batched_continuation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tests/research/onchain_replication/test_batched_continuation.py:8: in <module>
+    from tradingagents.research.onchain_replication import batched_continuation as c
+tradingagents/research/onchain_replication/batched_continuation.py:13: in <module>
+    from . import batched_numeric_execution as numeric_format
+tradingagents/research/onchain_replication/batched_numeric_execution.py:10: in <module>
+    from . import geometry_publication, matching_owner
+tradingagents/research/onchain_replication/matching_owner.py:20: in <module>
+    from .feature_journal import FeatureJournal,required_set
+tradingagents/research/onchain_replication/feature_journal.py:4: in <module>
+    from .component_store import save_component,load_component,reference_bytes,materialize_component
+tradingagents/research/onchain_replication/component_store.py:11: in <module>
+    import torch
+.venv/lib/python3.13/site-packages/torch/__init__.py:436: in <module>
+    from torch._C import *  # noqa: F403
+    ^^^^^^^^^^^^^^^^^^^^^^
+E   ImportError: libtorch_cpu.so: failed to map segment from shared object
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+ERROR tests/research/onchain_replication/test_batched_continuation.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.51s

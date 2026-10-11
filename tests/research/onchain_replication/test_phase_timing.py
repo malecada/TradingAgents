@@ -80,3 +80,41 @@ def test_successful_profile_retains_result_and_refuses_missing_publication():
     assert run_profiled(operation,seen.append) is sentinel
     assert seen[0]['authority'] is False
     with pytest.raises(OSError):run_profiled(operation,lambda value:(_ for _ in ()).throw(OSError('disk')))
+
+
+def test_fixed_chunk_counters_are_bounded_and_cumulative():
+    from tradingagents.research.onchain_replication.phase_timing import PhaseTotals
+    totals=PhaseTotals()
+    totals.add_count('agreement_numpy_chunks',1)
+    totals.add_count('agreement_numpy_entries',256)
+    totals.add_count('chunk_256to1023_calls',1)
+    totals.add_count('agreement_numpy_entries',1024)
+    snapshot=totals.snapshot()
+    assert snapshot['numeric_counts']=={'agreement_numpy_chunks':1,
+        'agreement_numpy_entries':1280,'chunk_256to1023_calls':1}
+    snapshot['numeric_counts']['agreement_numpy_chunks']=99
+    assert totals.snapshot()['numeric_counts']['agreement_numpy_chunks']==1
+    for name,count in [('unbounded-label',1),('agreement_numpy_chunks',True),
+                       ('agreement_numpy_chunks',-1),('agreement_numpy_chunks',2**127)]:
+        with pytest.raises(ValueError):totals.add_count(name,count)
+
+
+def test_numeric_counters_are_noop_without_selected_collector():
+    from tradingagents.research.onchain_replication.phase_timing import PhaseTotals,activate,add_count
+    totals=PhaseTotals()
+    add_count('agreement_scalar_chunks',1)
+    assert totals.snapshot()['numeric_counts']=={}
+    with activate(totals):add_count('agreement_scalar_chunks',1)
+    add_count('agreement_scalar_chunks',100)
+    assert totals.snapshot()['numeric_counts']=={'agreement_scalar_chunks':1}
+
+
+def test_current_snapshot_is_available_only_at_completed_phase_boundary():
+    from tradingagents.research.onchain_replication.phase_timing import PhaseTotals,activate,measure,current_snapshot
+    assert current_snapshot() is None
+    totals=PhaseTotals()
+    with activate(totals):
+        with measure('publication'):
+            with pytest.raises(ValueError,match='active phase'):current_snapshot()
+        assert current_snapshot()['phases']['publication']['calls']==1
+    assert current_snapshot() is None

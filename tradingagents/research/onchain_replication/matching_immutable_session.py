@@ -8,7 +8,7 @@ the unchanged public save API and its full checks. Source/runtime authority is
 the caller's entry/checkpoint/batch/final responsibility.
 """
 import json
-from . import adaptive_edge_policy
+from . import adaptive_edge_policy, matching_numeric_policy, phase_timing
 from . import compiled_normalization_policy
 from . import compiled_edge_owner
 from types import MappingProxyType
@@ -73,12 +73,19 @@ def rejoin(graph, pin):
 
 
 class ImmutablePairSession:
-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None):
+    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None,numeric_kernel_policy=None):
         require(engine.ann is annealing and
                 callable(getattr(engine, '_check_owned', None)) and
                 callable(getattr(engine, '_advance_owned', None)) and
                 callable(getattr(annealing, '_check_state_identity', None)),
                 'explicit changed engine required')
+        matching_numeric_policy.attach(self,numeric_kernel_policy)
+        self._numeric_adapter = None if numeric_kernel_policy is None else matching_numeric_policy.NumericAgreementAdapter(numeric_kernel_policy)
+        self._numeric_pin = self._numeric_adapter
+        self._numeric_class = matching_numeric_policy.NumericAgreementAdapter
+        self._numeric_methods = tuple((name,getattr(self._numeric_class,name),getattr(self._numeric_class,name).__code__) for name in ("__init__","fill","current","snapshot"))
+        self._fill_edge_function = type(self)._fill_edge
+        self._fill_edge_code = self._fill_edge_function.__code__
         adaptive_edge_policy.attach(self,edge_cache_policy)
         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         require(edge_chunk_owner is None or type(edge_chunk_owner) is compiled_edge_owner.EdgeOwner, "typed edge owner required")
@@ -191,6 +198,15 @@ class ImmutablePairSession:
 
     def current(self):
         require(not self.closed, 'matching session closed')
+        matching_numeric_policy.current(self)
+        require(self._numeric_adapter is self._numeric_pin, 'numeric adapter replaced')
+        require(matching_numeric_policy.NumericAgreementAdapter is self._numeric_class, 'numeric class replaced')
+        for name,function,code in self._numeric_methods:
+            require(getattr(self._numeric_class,name) is function and function.__code__ is code, 'numeric method replaced')
+            if self._numeric_adapter is not None:
+                require(name not in vars(self._numeric_adapter), 'numeric method shadowed')
+        require(type(self)._fill_edge is self._fill_edge_function and type(self)._fill_edge.__code__ is self._fill_edge_code and '_fill_edge' not in vars(self), 'numeric fill seam changed')
+        if self._numeric_adapter is not None:self._numeric_adapter.current()
         self._edge_current()
         adaptive_edge_policy.current(self)
         compiled_normalization_policy.current(self)
@@ -214,7 +230,21 @@ class ImmutablePairSession:
                     'matching session redirected')
             self.annealing._check_state_identity(
                 inner, a, b, config, lambda: self.identity)
-        self.engine._check_owned(state, self.a, self.b, self.config, checked)
+        with phase_timing.measure("state_scan"):
+            self.engine._check_owned(state, self.a, self.b, self.config, checked)
+
+    def _fill_edge(self, out, left, right, li, ri, count, scalar, progress):
+        if self._numeric_adapter.fill(out,left,right,li,ri,count,scalar,progress):
+            progress.append('telemetry_recorded')
+            return True
+        if self._edge_lease is not None:
+            accepted=self._edge_functions[0][1](out,left,right,li,ri,count,scalar,progress)
+            if accepted is True:
+                phase_timing.add_count('agreement_native_chunks',1)
+                phase_timing.add_count('agreement_native_entries',count)
+                progress.append('telemetry_recorded')
+            return accepted
+        return False
 
     def advance(self, state, *, max_operations):
         self.check(state)
@@ -222,7 +252,7 @@ class ImmutablePairSession:
                 'positive operation allowance required')
         # No external callback between current-input/state check and body.
         result = self.engine._advance_owned(
-            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {}))
+            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._fill_edge} if self._numeric_adapter is not None else ({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {})))
         adaptive_edge_policy.current(self)
         compiled_normalization_policy.current(self)
         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
@@ -230,6 +260,8 @@ class ImmutablePairSession:
             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
         if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
         self._edge_current()
+        matching_numeric_policy.current(self)
+        if self._numeric_adapter is not None:self._numeric_adapter.current()
         self.advances += 1
         return result
 

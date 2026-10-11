@@ -1,0 +1,55 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-review-2026-10-11/reproduce_open_phase02.py", line 10, in <module>
+    test_complete_compute_retains_commits_and_joins_numeric_score_bodies(root,False,False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_pilot_efficiency_selection.py", line 91, in test_complete_compute_retains_commits_and_joins_numeric_score_bodies
+    binding=batched._compute(target,stage,g,policy,start,modules,lambda:None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 663, in _compute
+    result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_driver.py", line 156, in drive
+    records = journal.run_batch_stream(count, tasks, executor, descriptor)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_journal.py", line 143, in run_batch_stream
+    try:score,iterations,status=executor(a,b,key.hex())
+                                ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py", line 147, in __call__
+    if len(self.buffer)==9*self.batch_cells or self.ordinal==self.cells:self._complete_batch()
+                                                                        ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py", line 167, in _complete_batch
+    phases=phase_timing.current_snapshot()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/phase_timing.py", line 113, in current_snapshot
+    return None if totals is None else totals.snapshot()
+                                       ~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/phase_timing.py", line 75, in snapshot
+    if self._stack:raise ValueError('active phase snapshot unavailable')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: active phase snapshot unavailable
+MCM delivery incomplete: {"attempted_sink_cells": 0, "confirmed_post_sink_cells": 0, "journal_completed_cells": 0, "remaining_disposition": "unavailable; current sink chunk may be partial; no retry"}
+retained_first_score_complete False
+retained_first_prefix_commit False
+retained_numeric_summary False
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-review-2026-10-11/reproduce_open_phase02.py", line 10, in <module>
+    test_complete_compute_retains_commits_and_joins_numeric_score_bodies(root,False,False)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_pilot_efficiency_selection.py", line 91, in test_complete_compute_retains_commits_and_joins_numeric_score_bodies
+    binding=batched._compute(target,stage,g,policy,start,modules,lambda:None)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 663, in _compute
+    result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_driver.py", line 156, in drive
+    records = journal.run_batch_stream(count, tasks, executor, descriptor)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_journal.py", line 143, in run_batch_stream
+    try:score,iterations,status=executor(a,b,key.hex())
+                                ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py", line 147, in __call__
+    if len(self.buffer)==9*self.batch_cells or self.ordinal==self.cells:self._complete_batch()
+                                                                        ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/batched_numeric_execution.py", line 167, in _complete_batch
+    phases=phase_timing.current_snapshot()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/phase_timing.py", line 113, in current_snapshot
+    return None if totals is None else totals.snapshot()
+                                       ~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/phase_timing.py", line 75, in snapshot
+    if self._stack:raise ValueError('active phase snapshot unavailable')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: active phase snapshot unavailable
+MCM delivery incomplete: {"attempted_sink_cells": 0, "confirmed_post_sink_cells": 0, "journal_completed_cells": 0, "remaining_disposition": "unavailable; current sink chunk may be partial; no retry"}

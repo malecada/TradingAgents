@@ -1,5 +1,6 @@
 """Engineering-only numeric route; no empirical/owner authority or pair receipts."""
 import copy,sys,types
+from . import matching_numeric_policy
 from . import adaptive_edge_policy
 from . import compiled_normalization_policy
 from . import compiled_edge_owner
@@ -13,12 +14,13 @@ EXECUTION_ROUTE = "immutable-input-session-v1"
 class CheckpointStop(RuntimeError): pass
 
 class PairExecutor:
-    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
+    def __init__(self,config,policy,schedule,checkpoint,*,authority_poll=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
         adaptive_edge_policy.attach(self,edge_cache_policy)
+        matching_numeric_policy.attach(self,numeric_kernel_policy)
         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         compiled_edge_owner.attach(self,compiled_edge_policy_value)
         self.config=copy.deepcopy(config);self.policy=copy.deepcopy(policy)
-        self.schedule=copy.deepcopy(schedule);self.checkpoint=checkpoint;self.poisoned=False;self.checkpoints=0;self.reserved_bytes=0
+        self.schedule=copy.deepcopy(schedule);self.checkpoint=checkpoint;self.poisoned=False;self.checkpoints=0;self.reserved_bytes=0;self.completed_operations=0;self.advance_calls=0;self.abandoned_call_operation_limit=0
         if authority_poll is not None and not callable(authority_poll):raise ValueError('optional authority poll must be callable')
         self.authority_poll=authority_poll
         if not callable(checkpoint):raise ValueError('checkpoint callback required')
@@ -88,17 +90,25 @@ class PairExecutor:
                     or self.reserved_bytes+self.schedule['max_checkpoints']*reserved>self.schedule['max_total_checkpoint_bytes']):
                 raise ValueError('cumulative checkpoint allowance exceeded')
             state=engine.create(a,b,self.config,**{k:self.policy[k] for k in pair.ENGINE_FIELDS})
-            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**({"_normalization_owner":self._normalization_owner} if self._normalization_owner is not None else {}),**({"edge_chunk_owner":self._edge_owner} if self._edge_owner is not None else {}))
+            session=ImmutablePairSession(a,b,self.config,engine=engine,annealing=annealing,**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**({"_normalization_owner":self._normalization_owner} if self._normalization_owner is not None else {}),**({"edge_chunk_owner":self._edge_owner} if self._edge_owner is not None else {}))
             for ordinal in range(self.schedule['max_checkpoints']):
                 for _ in range(self.schedule['calls_per_checkpoint']):
                     if self.authority_poll is not None:self.authority_poll()
-                    session.advance(state,max_operations=self.schedule['operations_per_call'])
+                    self.advance_calls+=1
+                    try:used=session.advance(state,max_operations=self.schedule['operations_per_call'])
+                    except BaseException:
+                        self.abandoned_call_operation_limit+=self.schedule['operations_per_call']
+                        raise
+                    if type(used) is not int or not 0<=used<=self.schedule['operations_per_call']:
+                        raise ValueError('numeric operation counter differs')
+                    self.completed_operations+=used
                     if state['phase']=='done':break
                 if state['phase']=='done':
                     if self.authority_poll is not None:self.authority_poll()
                     result=engine.score_only(state,a,b,self.config,max_buffer_bytes=self.policy['max_score_buffer_bytes'],chunk_edges=self.policy['chunk_edges'])
                     if self.authority_poll is not None:
                         self.authority_poll();session.check(state)
+                    matching_numeric_policy.join(self,session)
                     adaptive_edge_policy.join(self,session)
                     compiled_normalization_policy.join(self,session)
                     compiled_edge_owner.join(self,session)

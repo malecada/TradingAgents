@@ -13,6 +13,7 @@ import os
 import numpy as np
 import sys
 from . import checkpoint_chunks as chunks
+from . import phase_timing
 from scipy.special import logsumexp
 from tradingagents.research.onchain_replication.matching_reference import validate_pair,agreement,harden,score_assignment,MatchResult
 from . import matching_identity as typed_identity
@@ -183,6 +184,7 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
         if adaptive:reuse=True
     feature_pins=(a.edge_features,b.edge_features);cached=valid=None
     state['safe']=False
+    scalar_entries=scalar_chunks=0
     try:
         used=0
         while used<max_operations and state['phase']!='done':
@@ -190,6 +192,7 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
             if phase=='nodes':
                 u,i=divmod(state['cursor'],m)
                 state['V'][u,i]=agreement(a.node_features[u],b.node_features[i]);state['cursor']+=1;used+=1
+                scalar_entries+=1;scalar_chunks+=1
                 if state['cursor']==n*m:
                     state['M'][:]=state['V'];state.update(phase='outer',cursor=0)
             elif phase=='outer':
@@ -203,6 +206,7 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
                 # Bounded ordered edge accumulation; no agreement approximation.
                 # Keep single-operation and nonstandard error-mode calls scalar.
                 count=min(256 if adaptive and reuse else 1024,total-state['cursor'],max_operations-used)
+                phase_timing.add_count('chunk_'+('lt8' if count<8 else '8to255' if count<256 else '256to1023' if count<1024 else '1024')+'_calls',1)
                 if (count>=8 and a.edge_features.dtype==np.float64 and b.edge_features.dtype==np.float64
                         and np.geterr()['under']=='ignore'
                         and all(mode in ('ignore','warn') for mode in np.geterr().values())):
@@ -228,6 +232,11 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
                                         and _immutable_edges(a) and _immutable_edges(b)):
                                     native_progress=[0]
                                     native_used=edge_chunk_fill(weights,a.edge_features,b.edge_features,left,right,count,agreement,native_progress)
+                                    # Selected adapter appends a telemetry-only success
+                                    # marker after recording its actual backend.
+                                    if native_used is True and len(native_progress)==1:
+                                        phase_timing.add_count('agreement_native_chunks',1)
+                                        phase_timing.add_count('agreement_native_entries',count)
                                 if not native_used:
                                     native_progress=None
                                     for offset in range(count):
@@ -236,6 +245,7 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
                                             weights[offset]=cached[position]
                                         else:
                                             weights[offset]=.5*agreement(a.edge_features[left[offset]],b.edge_features[right[offset]])
+                                            scalar_entries+=1;scalar_chunks+=1
                                             if reuse:
                                                 if cached is None:
                                                     cached=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
@@ -257,6 +267,7 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
                         continue
                 k,l=divmod(state['cursor'],right_edges);u,v=a.edge_index[:,k];i,j=b.edge_index[:,l]
                 state['Q'][u,i]+=.5*agreement(a.edge_features[k],b.edge_features[l])*state['M'][v,j]
+                scalar_entries+=1;scalar_chunks+=1
                 state['cursor']+=1;used+=1
                 if state['cursor']==total:state.update(phase='normalize_scale',cursor=0)
             elif phase in NORMALIZATION:
@@ -296,7 +307,9 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
     except BaseException:
         state['safe']=False
         raise
-
+    finally:
+        phase_timing.add_count('agreement_scalar_entries',scalar_entries)
+        phase_timing.add_count('agreement_scalar_chunks',scalar_chunks)
 
 
 def result(state,a,b,c):

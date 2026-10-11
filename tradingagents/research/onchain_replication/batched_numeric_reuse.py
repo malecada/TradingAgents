@@ -2,6 +2,7 @@
 from . import phase_timing
 import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
 from pathlib import Path
+from . import matching_numeric_policy, matching_numeric_kernel
 from . import adaptive_edge_policy
 from . import compiled_normalization_policy
 from . import compiled_edge_owner, edge_chunk_adapter
@@ -16,20 +17,22 @@ from . import batched_pair_executor as accepted
 from .geometry_summary import Geometry
 from . import matching_immutable_session as immutable_session
 
-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter)
+MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter,matching_numeric_policy,matching_numeric_kernel)
 SOURCE_PINS=(
+    (matching_numeric_policy, 'cd3000fc02d126026b1ba3e6fbe779e92b1fcd516abfbcbf563ccf3479b02b03'),
+    (matching_numeric_kernel, 'd98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd'),
     (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
-    (accepted, 'eea5d79f8c5e686b750ef2db5e571dd01803bc193236b06bcfd2fd6b5f027cb8'),
+    (accepted, '0d1c7a14866b53e6bde4b9db6e3eff4740190d16bc3db0f6532d60afd3142005'),
     (engine, 'eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693'),
-    (engine.ann, '86ccc3a471827bdce7784145914240d04416d2cc0023e8acb77fb26ae473df57'),
+    (engine.ann, '1f8e45c4997691d561b498467ea2cbac284fc2e0747b495e81bf97ff189146bf'),
     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
-    (immutable_session, 'b790d85e42c415fef23454a7a4fdca23758e6ef0aaf3f4089f526178c3e75c45'),
+    (immutable_session, 'f5adccc5fcff36ec68892f775cac7d7569ed36338cfd79d049448278ad7c2eb4'),
 )
 
 def require(ok,message):
@@ -104,8 +107,9 @@ def entry_size(entry):
 
 class NumericReuseExecutor:
     """Explicit batches; source/runtime attestation is NOT continuous authority."""
-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None):
+    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
         adaptive_edge_policy.attach(self,edge_cache_policy)
+        matching_numeric_policy.attach(self,numeric_kernel_policy)
         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         compiled_edge_owner.attach(self,compiled_edge_policy_value)
         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
@@ -149,7 +153,7 @@ class NumericReuseExecutor:
                         compiled_edge_owner._note(primary,timing_error)
             authority_poll=measured_poll
         self.authority_poll=authority_poll
-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
         cleanup=self.executor.close
         try:
             self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
@@ -177,6 +181,7 @@ class NumericReuseExecutor:
     def retained_bytes(self):return self._bytes
     def _current(self):
         require(self.executor is self._executor_pin,'numeric executor replaced')
+        matching_numeric_policy.join(self,self.executor)
         adaptive_edge_policy.join(self,self.executor)
         compiled_normalization_policy.join(self,self.executor)
         compiled_edge_owner.join(self,self.executor)
@@ -184,6 +189,14 @@ class NumericReuseExecutor:
         require((accepted.PairExecutor.__call__,accepted.PairExecutor.__call__.__code__,reference.validate_pair,reference.validate_pair.__code__,pair.policy_check,pair.policy_check.__code__,engine.ann.typed_identity.graph_identity,engine.ann.typed_identity.graph_identity.__code__)==self._pins,'occurrence function pins changed')
         require(self.executor.authority_poll is self.authority_poll,'authority poll changed')
         require(not self.executor.poisoned and config_bytes(self.executor.config)==self.configuration and raw(self.executor.policy)==self.policy_pin and raw(self.executor.schedule)==self.schedule_pin and self.executor.checkpoint is self.checkpoint_adapter and self.checkpoint is self._user_checkpoint,'executor/config/policy/schedule changed')
+    def restore_ordinal(self, ordinal):
+        """Fresh successor cache only; parent work is never refunded or cached."""
+        require(type(ordinal) is int and 0 < ordinal < 2**64 and self.occurrences == 0
+                and not self.count and not self.active and not self.closed and not self.poisoned,
+                'fresh memo required for continuation')
+        self._current()
+        self.occurrences = ordinal
+
     def begin_batch(self):
         require(not self.closed and not self.poisoned and not self.active,'batch entry unavailable')
         try:

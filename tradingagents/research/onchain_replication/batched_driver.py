@@ -4,6 +4,7 @@ import json
 import math
 import struct
 import numpy as np
+from . import phase_timing
 from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
 from tradingagents.research.onchain_replication.neighborhoods import graph_hash, node_order_hash
 from tradingagents.research.onchain_replication.matching_identity import graph_identity
@@ -14,19 +15,22 @@ def require(ok, message):
         raise ValueError(message)
 
 
-def _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll=None):
+def _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll=None, start_ordinal=0):
     """One driver-owned local; consumer must drop prior task before next()."""
     if authority_poll is not None:authority_poll()
-    with ArrayNeighborhoodIndex(graph, max_buffer_bytes=policy['max_buffer_bytes'],
-                                edge_chunk=policy['edge_chunk']) as index:
+    with phase_timing.measure('row_extraction'):
+        index = ArrayNeighborhoodIndex(graph, max_buffer_bytes=policy['max_buffer_bytes'],edge_chunk=policy['edge_chunk'])
+    with index:
         if authority_poll is not None:authority_poll()
-        for center in range(len(graph.node_ids)):
+        for center in range(start_ordinal//32, len(graph.node_ids)):
             if authority_poll is not None:authority_poll()
-            local = index.neighborhood(center, extraction)
+            with phase_timing.measure('row_extraction'):
+                local = index.neighborhood(center, extraction)
             try:
                 if authority_poll is not None:authority_poll()
-                local_id = graph_identity(local)
-                for motif in range(32):
+                with phase_timing.measure('row_extraction'):
+                    local_id = graph_identity(local)
+                for motif in range(start_ordinal%32 if center==start_ordinal//32 else 0,32):
                     purpose = {'schema_version':2,'kind':'mcm',
                         'workload_sha256':descriptor['workload_sha256'],
                         'graph_hash':descriptor['graph_hash'],'center_index':center,
@@ -84,7 +88,7 @@ def _rejoin(journal, batch, tokens, original):
 
 
 def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
-          max_chunk_bytes, max_closure_token_bytes, post_batch=None, final_batches=None, authority_poll=None):
+          max_chunk_bytes, max_closure_token_bytes, post_batch=None, final_batches=None, authority_poll=None, completed_prefix=None, numeric=None, continuation_contract_sha256=None):
     """Consume a fresh journal; consumer(ordinal,center,motif_start,f32_bytes).
 
     Consumer must synchronously copy/persist chunks, treating everything as
@@ -127,7 +131,22 @@ def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
         extraction['maximum_neighborhood_nodes'] = policy['extraction_limit']
         typed = [graph_identity(m) for m in motifs]
         descriptor = dict(descriptor)
-        upstream = _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll)
+        if completed_prefix is not None:
+            from .batched_continuation import restore_prefix, verify_purposes
+            require(numeric is executor and completed_prefix.graph_hash==descriptor['graph_hash']
+                    and completed_prefix.numerical_contract_sha256==continuation_contract_sha256,
+                    'continuation driver contract differs')
+            def prefix_tasks(batch,parent_descriptor):
+                return _tasks(graph,motifs,extraction,policy,parent_descriptor or descriptor,typed,
+                              authority_poll,batch.records[0][0])
+            verify_purposes(completed_prefix,prefix_tasks)
+            restore_prefix(completed_prefix,journal,numeric,consumer)
+            delivered=journal.cells;attempted_sink_cells=journal.cells
+            for prior in range(journal.batch):
+                token=_capture(journal,prior,journal.read_complete(prior),original_root)
+                tokens[prior*3*TOKEN.size:(prior+1)*3*TOKEN.size]=token
+                if post_batch is not None:post_batch(journal,prior,token,original_root)
+        upstream = _tasks(graph, motifs, extraction, policy, descriptor, typed, authority_poll, journal.cells)
         while journal.cells < n*32:
             start = journal.cells
             count = min(journal.batch_cells, n*32-start)
@@ -159,6 +178,10 @@ def drive(graph, dictionary, *, descriptor, policy, journal, executor, consumer,
                 consumer(ordinal, center, motif, payload)
                 offset += width
             _rejoin(journal, batch, token, original_root)
+            if continuation_contract_sha256 is not None:
+                from .batched_continuation import commit_batch
+                require(numeric is executor,'continuation numeric executor differs')
+                commit_batch(journal,numeric,continuation_contract_sha256)
             if post_batch is not None:post_batch(journal,batch,token,original_root)
             delivered += count
         try:

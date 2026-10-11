@@ -1,5 +1,6 @@
 """Engineering-only binary batch journal; no old stream/authority receipt credit."""
 import hashlib,json,math,os,stat,struct
+from . import phase_timing
 from pathlib import Path
 RECORD=struct.Struct('>Q32sdIB') # ordinal, purpose SHA, exact f64, iterations, status
 HEADER=struct.Struct('>8sIQQ32s32s') # magic, width, range, pending SHA, actual purpose aggregate
@@ -56,21 +57,23 @@ class BatchJournal:
         finally:os.close(fd)
         self._root();return result
     def _write(self,name,raw,limit):
-        self._root();require(len(raw)<=limit and self.bytes+len(raw)<=self.max_bytes,'journal byte allowance exceeded')
-        fd=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
-        try:
-            os.fchmod(fd,0o600);s=os.fstat(fd);pin=(s.st_dev,s.st_ino);self.bytes+=len(raw)
-            view=memoryview(raw)
-            while view:
-                n=os.write(fd,view);require(n>0,'zero write');view=view[n:]
-            os.fsync(fd)
-        finally:os.close(fd)
-        self._read(name,raw,pin=pin);os.fsync(self.fd);return pin
+        with phase_timing.measure('publication'):
+            self._root();require(len(raw)<=limit and self.bytes+len(raw)<=self.max_bytes,'journal byte allowance exceeded')
+            fd=os.open(name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=self.fd)
+            try:
+                os.fchmod(fd,0o600);s=os.fstat(fd);pin=(s.st_dev,s.st_ino);self.bytes+=len(raw)
+                view=memoryview(raw)
+                while view:
+                    n=os.write(fd,view);require(n>0,'zero write');view=view[n:]
+                os.fsync(fd)
+            finally:os.close(fd)
+            self._read(name,raw,pin=pin);os.fsync(self.fd);return pin
     def _publish(self,tmp,final,raw,pin):
-        self._read(tmp,raw,pin=pin);self._root()
-        os.link(tmp,final,src_dir_fd=self.fd,dst_dir_fd=self.fd,follow_symlinks=False)
-        self._read(tmp,raw,links=2,pin=pin);self._read(final,raw,links=2,pin=pin);os.fsync(self.fd)
-        os.unlink(tmp,dir_fd=self.fd);os.fsync(self.fd);self._read(final,raw,pin=pin)
+        with phase_timing.measure('publication'):
+            self._read(tmp,raw,pin=pin);self._root()
+            os.link(tmp,final,src_dir_fd=self.fd,dst_dir_fd=self.fd,follow_symlinks=False)
+            self._read(tmp,raw,links=2,pin=pin);self._read(final,raw,links=2,pin=pin);os.fsync(self.fd)
+            os.unlink(tmp,dir_fd=self.fd);os.fsync(self.fd);self._read(final,raw,pin=pin)
     def _pending(self,stem,raw,pin):self._read(stem+'.pending.json',raw,pin=pin)
     def read_complete(self,ordinal):
         require(not self.closed and not self.poisoned,'journal unavailable')

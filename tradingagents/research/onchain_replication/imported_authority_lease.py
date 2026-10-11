@@ -5,7 +5,7 @@ from . import phase_timing
 from pathlib import Path
 from .imported_authority_interval import Interval,fingerprint,policy,require
 
-AUTHORITY_CLASSES={'ImportedOriginal','PreparedImport','MaterializedOriginal','ImportStage','ImportedExecution','Binding','Owner','Stage','Target','Lease','Interval','BindingLeaseTiming','PhaseTotals'}
+AUTHORITY_CLASSES={'ImportedOriginal','PreparedImport','MaterializedOriginal','ImportStage','ImportedExecution','Binding','Owner','Stage','Target','Lease','Interval','BindingLeaseTiming','PhaseTotals','NumericAgreementAdapter'}
 
 def _loaded(root,sources):
     result={}
