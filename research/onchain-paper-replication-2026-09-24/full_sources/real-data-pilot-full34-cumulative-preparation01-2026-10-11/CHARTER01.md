@@ -1,0 +1,7 @@
+# Fresh34 full real-data pilot preparation — proposed only
+
+The original33 identity is permanently failed and spent. Its 63.157813070-second preparation interval exceeded the unchanged60-second lease; no MCM stage or joint update completed. The proposed correction inserts three genuine imported-target full checks between preparation phases. Entry/final checks, fatal refusals, scheduler/clock, original numerical method and legacy behavior remain fixed. Actual phase durations, speed and capacity remain unmeasured; any indivisible phase exceeding the deadline still refuses.
+
+One separately unused fixed identity is proposed for the complete seven-graph MCM followed by a real GAT/attention-LSTM joint update and checkpoint. Original32motifs/512spent samples, frozenmodel20f451/trainingd527, full415968128cells and native6GiBmax/5GiBhigh/swap0/twoCPU/8hours/10GiBfloor remain. This resource allowance does not grant new financial fits or alter the pending1420fit scope.
+
+The cumulative proposal105 retains73spent,28unchanged pending and3closed preclaim reserved allowances, plus one fresh34. No refund, transfer, rerun, cap ladder, resampling, reclustering, test tuning or narrower pilot is permitted. Independent exact source, cumulative allowance and caller reviews plus actual complete failed33 outcome recovery must precede empirical execution. This proposal has not been adopted, released or claimed.

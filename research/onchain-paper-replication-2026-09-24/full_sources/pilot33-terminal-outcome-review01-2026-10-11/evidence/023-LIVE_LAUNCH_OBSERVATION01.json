@@ -1,0 +1,78 @@
+{
+  "actual_monitor": {
+    "parent_pid": 1801972,
+    "pid": 1802462,
+    "start_ticks": "4430137",
+    "state": "S"
+  },
+  "actual_native_processes": [
+    {
+      "parent_pid": 4427,
+      "pid": 1802890,
+      "start_ticks": "4430844",
+      "state": "S"
+    },
+    {
+      "parent_pid": 1802890,
+      "pid": 1802893,
+      "start_ticks": "4430882",
+      "state": "S"
+    },
+    {
+      "parent_pid": 1802893,
+      "pid": 1809618,
+      "start_ticks": "4438905",
+      "state": "R"
+    }
+  ],
+  "actual_root": {
+    "parent_pid": 6083,
+    "pid": 1801052,
+    "start_ticks": "4428027",
+    "state": "S"
+  },
+  "actual_supervisor": {
+    "parent_pid": 1801052,
+    "pid": 1801972,
+    "start_ticks": "4429441",
+    "state": "S"
+  },
+  "at": "2026-10-11T03:10:15.902255+00:00",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d7e615434a874de689d1a2a2ba7cc69e.service",
+  "claim": {
+    "effective_attempt_budget": 104,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-33/claim.json",
+    "sha256": "3f810d32d71adbfc625716e157cf061a0c4587a2e2319ab58b310a771a84f0ce",
+    "started_at": "2026-10-11T03:09:12.913520+00:00"
+  },
+  "guard_sample": {
+    "elapsed_seconds": 80.79045215099904,
+    "kernel_controls": {
+      "memory.high": "5368709120",
+      "memory.max": "6442450944",
+      "memory.swap.max": "0"
+    },
+    "limit_reason": null,
+    "memory_current_bytes": 440160256,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "sampled_peak_memory_current_bytes": null,
+    "storage_peak_allocated_bytes": 5157609472,
+    "storage_peak_logical_file_bytes": 5578678143
+  },
+  "guard_sample_sha256": "e3be459fa2a133024bfd8300450b600b611fc3dff2fd3f7f336f58ee995d0550",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-33",
+  "kernel_current_bytes": 441593856,
+  "kernel_peak_bytes": 446451712,
+  "native_unit": "onchain-replication-d7e615434a874de689d1a2a2ba7cc69e.service",
+  "qualification": "Actual active claimed33 and original processes/cgroup observed once. Partial startup resource sample only; no complete MCM, throughput, joint update or full capacity. Root session47250 must only be polled, never duplicated/relaunched.",
+  "root_io_launch_tool": "b1ec8a",
+  "root_io_session": 47250,
+  "source": "2358fca94e45c3416d94a3d9bbfb57c27da25d12"
+}

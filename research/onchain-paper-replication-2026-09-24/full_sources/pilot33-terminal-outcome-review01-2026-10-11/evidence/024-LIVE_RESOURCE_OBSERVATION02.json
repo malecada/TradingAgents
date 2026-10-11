@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-11T03:16:15.236554+00:00",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d7e615434a874de689d1a2a2ba7cc69e.service",
+  "current_kernel_bytes": 5119721472,
+  "guard_sample_sha256": "8e604af219437d9d7b9650c1d94ef574676cfdfe390ac76ac33bd35ef3c70399",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-33",
+  "kernel_peak_bytes": 5370646528,
+  "observed_guard": {
+    "child_exit_code": null,
+    "elapsed_seconds": 439.85795227700146,
+    "kernel_controls": {
+      "memory.high": "5368709120",
+      "memory.max": "6442450944",
+      "memory.swap.max": "0"
+    },
+    "limit_reason": null,
+    "memory_current_bytes": 5119320064,
+    "memory_events": {
+      "high": 305,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 31375560704
+    },
+    "storage_peak_allocated_bytes": 5157830656,
+    "storage_peak_logical_file_bytes": 5578894564,
+    "unit": "onchain-replication-d7e615434a874de689d1a2a2ba7cc69e.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d7e615434a874de689d1a2a2ba7cc69e.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    }
+  },
+  "qualification": "Actual active33 partial resource observation. Kernel peak belongs to this still-active native unit; current/sampled storage are non-atomic observations. No stage throughput, full MCM, training time, whole capacity or memory saving follows.",
+  "root_io_session": 47250
+}
