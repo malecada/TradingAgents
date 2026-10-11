@@ -1,0 +1,1 @@
+Prepared bounded increment18 returned-byte verifier, adapted from accepted tools16/returned01/check01.py. Not executed. No actual18 return or acceptance is claimed. Actual observation pins must be supplied in EXPECTED_RETURN18.json after Root reports successful recovery. No source helpers, Git operations, numerical or private bodies will be executed/read.
