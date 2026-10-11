@@ -1,0 +1,47 @@
+[research/onchain-paper-replication-2026-09-24 4c9029af4] research: freeze pilot36 entry and incremental recovery
+ 51 files changed, 4318 insertions(+), 32 deletions(-)
+ rewrite research/onchain-paper-replication-2026-09-24/full_sources/parallel-execution-2026-10-02/COORDINATION.md (99%)
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/GREEN01.log
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/REMOTE_CONFIRMATION03.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/remote_readback03.stderr
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/remote_readback03.stdout
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/root_commit03.stderr
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/root_commit03.stdout
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/root_push03.stderr
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-fixture-fix-2026-10-11/root_push03.stdout
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/CHECK01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/CHECK01.txt
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/FINDING01.md
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/FIX_FOLLOWUP01.txt
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/FIX_FOLLOWUP02.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/FIX_FOLLOWUP02.txt
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/MISSING_RECOVERY_RED01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/PRE_FIX_PREFLIGHT01.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/REPORT.md
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/SOURCE_SNAPSHOT01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/check01.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/fix_followup01.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-entry-integration-review-2026-10-11/fix_followup02.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/BASELINE_CONTROL_FAILURE01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/CHECK03.txt
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/CHECK04.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/CHECK04.txt
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/CONTROL_FAILURE02.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/PRE_FIX_SELECT32.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/PRIVATE_SCOPE_RED01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/REPORT.md
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/final_check01.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/pilot36-increment32-tools-review-2026-10-11/final_check02.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/CAPTURE32.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/HELPERS_MANIFEST01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/LITERAL_INVERSE01.diff
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/LITERAL_PATCH01.diff
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/ROOT_CAPTURE_OPERATIONS32.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/SELECTION32.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/TOOL_SCOPE01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/capture32.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/pilot36-preparation-increment32.tar
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/recover32.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full36increment32/select32.py
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-entry-preparation01-2026-10-11/METADATA_ADMISSION_PRE_GUARD_FIX01.json
+ create mode 100644 research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-entry-preparation01-2026-10-11/RECOVERY_GUARD_PATCH01.diff
