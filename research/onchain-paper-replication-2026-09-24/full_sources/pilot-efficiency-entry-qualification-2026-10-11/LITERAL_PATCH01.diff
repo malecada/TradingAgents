@@ -1,0 +1,88 @@
+--- 86700550:tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ tradingagents/research/onchain_replication/compact_mcm_batched.py
+@@ -7,6 +7,7 @@
+ import json
+ import mmap
+ import os
++import re
+ import stat
+ from contextlib import contextmanager
+ from pathlib import Path
+@@ -28,6 +29,59 @@
+ MODULES = {'driver':'batched_driver','journal':'batched_journal','executor':'batched_pair_executor','numeric_execution':'batched_numeric_execution','numeric_reuse':'batched_numeric_reuse'}
+ BACKEND_INPUT_POLICY = 'source-checked-backend-role-bundle-v1'
+ require = io._require
++ENTRY_QUALIFICATION = 'genuine-mcm-entry-preparation-only-v1'
++
++
++class EntryPreparationComplete(RuntimeError):
++    """Registered engineering stop; outer attempt remains FAILED and spent."""
++
++
++def _entry_qualification(policy):
++    if 'entry_qualification' not in policy:return None
++    value=policy['entry_qualification']
++    require(type(value) is dict and set(value)=={'format','experiment_id','graph_hash'}
++        and type(value['format']) is str and value['format']==ENTRY_QUALIFICATION,
++        'explicit entry qualification required')
++    require(type(value['experiment_id']) is str and re.fullmatch(
++        r'eth-paper-real-data-end-to-end-resource-[0-9]{8}-[0-9]{2}',value['experiment_id']) is not None,
++        'fixed resource qualification identity required')
++    require(type(value['graph_hash']) is str and len(value['graph_hash'])==64
++        and all(c in '0123456789abcdef' for c in value['graph_hash']),
++        'fixed entry graph required')
++    batched=policy.get('batched');execution=batched.get('execution') if type(batched) is dict else None
++    require(type(policy.get('schema_version')) is int and policy['schema_version']==6
++        and type(execution) is dict and 'compiled_normalization_policy' in execution,
++        'entry qualification requires selected serial backend route')
++    return tuple(sorted(value.items()))
++
++
++def _stop_after_entry(target,policy):
++    selected=_entry_qualification(policy)
++    if selected is None:return
++    from .imported_mcm_identity import Target
++    from .imported_authority_lease import Lease
++    require(type(target) is Target,'genuine qualification Target required')
++    value=dict(selected);ad=target.owner.bound._run.admission
++    require(ad.experiment_id==value['experiment_id'] and target.key==value['graph_hash'],
++        'qualification experiment/first graph differs')
++    lease=getattr(target.execution,'_sampled_authority_lease',None)
++    require(type(lease) is Lease and not lease.closed and not lease.scheduler.closed,
++        'genuine live qualification lease required')
++    require(lease.execution is target.execution and lease.owner is target.owner
++        and lease.target is target and lease.targets.get(id(target)) is target,
++        'qualification target/lease join differs')
++    lease._identity()
++    owner=target.owner
++    require(owner.active is None and len(owner.required)>1
++        and owner.required[:2]==('dictionary-import','mcm-'+target.key)
++        and set(owner.stages)=={'dictionary-import'} and owner.stages['dictionary-import'].closed,
++        'qualification requires first unstarted MCM after imported dictionary')
++    scheduler=lease.scheduler
++    require(scheduler.policy['max_stale_ms']==60000 and scheduler.full is not None,
++        'qualification requires unchanged60s full validation')
++    require(0<=(scheduler.now()-scheduler.full)*1000<=60000,
++        'qualification entry became stale')
++    raise EntryPreparationComplete('registered first-graph entry prepared; no MCM stage or financial fit completed')
+ 
+ 
+ def selected(policy):
+@@ -35,7 +89,8 @@
+ 
+ 
+ def validate(policy, pairs):
+-    require(selected(policy) and set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'}, 'batched MCM policy schema')
++    require(selected(policy) and set(policy) == {'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'} | ({'entry_qualification'} if 'entry_qualification' in policy else set()), 'batched MCM policy schema')
++    _entry_qualification(policy)
+     b = policy['batched']
+     grouped=policy['schema_version']==6
+     require(type(b) is dict and set(b) == {'format','authority_boundaries','batch_cells','max_journal_bytes','max_body_bytes','max_closure_token_bytes','max_checkpoint_bytes','retention','max_spool_bytes','max_offload_metadata_bytes','max_offload_entries','max_offload_anchor_bytes','execution'} | ({'group_batches'} if grouped else set()) | ({'continuation'} if 'continuation' in b else set()), 'batched bounds schema')
+@@ -725,6 +780,7 @@
+             numeric_selection=_numeric_policy(b['execution'])
+             _entry_lease(target,b['execution'])
+             owner.boundary();target.check()
++        _stop_after_entry(target,policy)
+         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
+         start_sha=io._write(fd,'start.json',io._json(start))
+         from . import stage_retention

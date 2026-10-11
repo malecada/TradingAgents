@@ -1,0 +1,63 @@
+"""Finite Root108 accounting preparation; reads metadata only, never claims."""
+import copy
+import hashlib
+import json
+import os
+from pathlib import Path
+
+ROOT=Path.cwd().resolve();HERE=Path(__file__).resolve().parent;F=HERE.parent
+OLD=F/'real-data-pilot-full35-cumulative-preparation01-2026-10-11'
+NAMES=['eth-paper-real-data-end-to-end-resource-20261011-36','eth-paper-real-data-end-to-end-resource-20261011-37']
+def read(p):
+    assert p.resolve(strict=True)==p and p.is_file() and not p.is_symlink() and p.stat().st_size<=4*1024**2
+    def identity(s):return (s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+    before=identity(p.stat());b=p.read_bytes();assert len(b)<=4*1024**2 and before==identity(p.stat());return b
+def load(p):return json.loads(read(p))
+def pin(p):return {'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(read(p)).hexdigest()}
+def save(n,x):
+    with (HERE/n).open('x') as h:json.dump(x,h,sort_keys=True,indent=2);h.write('\n')
+def main():
+    assert HERE==F/'real-data-pilot-full36-cumulative-preparation01-2026-10-11'
+    extension=load(OLD/'EXTENSION_PROPOSED106_01.json');allocation=load(OLD/'CUMULATIVE_ALLOCATION_PROPOSED106_01.json')
+    assert pin(OLD/'EXTENSION_PROPOSED106_01.json')['sha256']=='e0a1e3f89926094373e6c58022627e5861cda03064657e88a245129756810b9a'
+    assert pin(OLD/'CUMULATIVE_ALLOCATION_PROPOSED106_01.json')['sha256']=='0320608cc703f7c8c2e4f1867bfc478a51efcd62ac70d318b409bd49c55815db'
+    assert len(extension['claims'])==57 and extension['consumed_before']==74 and extension['cumulative_ceiling']==106
+    base=extension['base_family'];assert base['prior_attempts']==17 and base['attempt_budget']==51
+    records=copy.deepcopy(extension['claims']);name='eth-paper-real-data-end-to-end-resource-20261011-35';directory=ROOT/'research_runs'/name
+    claim=load(directory/'claim.json');assert claim['family']==base and claim['effective_attempt_budget']==106
+    records.append({'experiment':name,'claim_sha256':pin(directory/'claim.json')['sha256'],'terminal_sha256':pin(directory/'failed.json')['sha256'],'terminal_status':'failed'})
+    seen=set();dispositions={'complete':0,'failed':0};latest=base['attempt_budget']
+    for item in records:
+        name=item['experiment'];assert name not in seen;seen.add(name);d=ROOT/'research_runs'/name
+        cb=read(d/'claim.json');tb=read(d/(item['terminal_status']+'.json'));c=json.loads(cb);t=json.loads(tb)
+        assert hashlib.sha256(cb).hexdigest()==item['claim_sha256'] and hashlib.sha256(tb).hexdigest()==item['terminal_sha256']
+        assert c['experiment_id']==t['experiment_id']==name and c['program_id']==extension['program_id'] and c['family']==base
+        assert t['claim_sha256']==item['claim_sha256'] and t['status']==item['terminal_status']
+        assert not (d/({'complete':'failed.json','failed':'complete.json'}[item['terminal_status']])).exists()
+        latest=max(latest,c.get('effective_attempt_budget',base['attempt_budget']));dispositions[item['terminal_status']]+=1
+    assert len(records)==58 and latest==106 and dispositions=={'complete':20,'failed':38}
+    actual=set()
+    for d in (ROOT/'research_runs').iterdir():
+        p=d/'claim.json'
+        if not d.is_dir() or not p.is_file():continue
+        c=load(p)
+        if c.get('program_id')==extension['program_id'] and c.get('family')==base:actual.add(c['experiment_id'])
+    assert actual==seen
+    history_path=ROOT/'research/onchain-paper-replication-2026-09-24/history.json';history=load(history_path)
+    assert history['prior_attempts']==17 and len(history['lineage'])==17
+    for path,digest in history['metadata_hashes'].items():assert pin(ROOT/path)['sha256']==digest
+    historical={'complete':0,'failed':0}
+    for name in history['lineage']:
+        d=ROOT/'research_runs'/name;found=[status for status in historical if (d/(status+'.json')).is_file()];assert len(found)==1
+        status=found[0];c=load(d/'claim.json');t=load(d/(status+'.json'))
+        assert c['experiment_id']==t['experiment_id']==name and t['claim_sha256']==pin(d/'claim.json')['sha256'] and t['status']==status
+        historical[status]+=1
+    assert historical=={'complete':13,'failed':4}
+    assert all(not os.path.lexists(ROOT/'research_runs'/n) for n in NAMES)
+    reason='PROPOSED_UNUSED. Two fixed fresh resource attempts for accepted efficiency source:36 genuine first-graph preparation-only qualification under unchanged60000ms, ending as registered EntryPreparationComplete/outer FAILED/spent before any MCM stage;37 unchanged seven WHOLE graphs415968128cells and actual GAT/attention-LSTM joint update/checkpoint, dependent on independently accepted and recovered36 component qualification. Original35 permanently FAILED after entry staleness with no batches/training. Preserve17historical+58actualclosed, all106old allocations,28pending and3closed preclaim reserved. Original32motifs/512spent samples/model/training/protocol/physical caps remain; explicit fixed C05 numerical reassociation and fresh durable progress controls are operational deviations. No financial fits granted, refund, transfer, cap ladder, resampling/reclustering, test tuning or scope reduction. Concrete committed source/runtime/binding/gate, cumulative machine review, actual new incremental recovery and final release precede execution.'
+    allocation.update(status='PROPOSED_UNUSED',closed_claims=records,consumed_before=75,prior_adopted_cumulative_ceiling=106,prior_reviewed_reserved_ceiling=106,proposed_cumulative_ceiling=108,identities=NAMES,new_fixed_allocation={'first_graph_entry_preparation_qualification_claims':1,'full_seven_graph_joint_update_resource_pilot_claims':1},equation='108 =75permanently spent (17historical +58actualclosed) +28unchanged pending +3preserved closed preclaim reserved +2fresh fixed engineering/resource claims',question='Measure genuine serial entry after efficiency integration, then whole seven-graph real-data throughput/capacity and actual joint training update.',qualification=reason)
+    save('CUMULATIVE_ALLOCATION_PROPOSED108_01.json',allocation)
+    extension.update(cumulative_ceiling=108,consumed_before=75,initial_experiment=NAMES[0],allocation=pin(HERE/'CUMULATIVE_ALLOCATION_PROPOSED108_01.json'),claims=records,reason=reason);save('EXTENSION_PROPOSED108_01.json',extension)
+    save('ACTUAL_ACCOUNTING_READBACK01.json',{'status':'DRAFT_NOT_RELEASED','base_family':base,'actual_original_claims':58,'actual_dispositions':dispositions,'historical_prior_attempts':17,'historical_dispositions':historical,'historical_metadata':pin(history_path),'closed_cumulative':75,'cumulative_dispositions':{k:historical[k]+dispositions[k] for k in historical},'highest_actual_claim_ceiling':latest,'all_actual_same_family_claims_matched':True,'preserved_previous_allocation':pin(OLD/'CUMULATIVE_ALLOCATION_PROPOSED106_01.json'),'preserved_previous_extension':pin(OLD/'EXTENSION_PROPOSED106_01.json'),'unchanged_pending':28,'unchanged_preclaim_reserved':3,'new_fixed':2,'proposed':108,'new_claim':False,'actual_raw_claim_terminal_checks':records})
+    print(json.dumps({'actual_claims':58,'historical':17,'closed':75,'actual_dispositions':dispositions,'historical_dispositions':historical,'highest':latest,'proposed':108,'claim':False}))
+if __name__=='__main__':main()

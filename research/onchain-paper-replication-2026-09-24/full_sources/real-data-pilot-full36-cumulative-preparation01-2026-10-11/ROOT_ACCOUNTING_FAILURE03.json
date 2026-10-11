@@ -1,0 +1,12 @@
+{
+  "actual": {
+    "chunk_id": "a70b85",
+    "wall_time_seconds": 0.000017002,
+    "exit_code": 1,
+    "original_token_count": 317,
+    "output": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-cumulative-preparation01-2026-10-11/prepare108_01.py\", line 62, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-cumulative-preparation01-2026-10-11/prepare108_01.py\", line 42, in main\n    c=load(p)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-cumulative-preparation01-2026-10-11/prepare108_01.py\", line 14, in load\n    def load(p):return json.loads(read(p))\n                                  ~~~~^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full36-cumulative-preparation01-2026-10-11/prepare108_01.py\", line 13, in read\n    before=p.stat();b=p.read_bytes();assert len(b)<=4*1024**2 and before==p.stat();return b\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "cause": "Root compared all stat fields, including read-access time. Metadata reading can change atime. The finite read now compares original identity/mode/link/size/mtime/ctime fields; hashes and cumulative accounting remain unchanged.",
+  "files_published_before_failure": [],
+  "claim_or_adoption": false
+}
