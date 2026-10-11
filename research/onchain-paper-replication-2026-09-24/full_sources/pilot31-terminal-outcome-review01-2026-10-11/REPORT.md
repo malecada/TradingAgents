@@ -1,0 +1,13 @@
+# Independent actual pilot31 terminal review
+
+Accepted as a genuine failed and closed attempt, with original dispositions retained. The bounded checker passed140 checks, authenticated all8 original output bodies, and retained exact source/receipt/log snapshots. No experiment or historical cohort was rerun.
+
+The original traceback fails at compact_mcm_batched.py:508, the first added full entry lease after producer._prepare, in imported_authority_lease.py:117 (“loaded module/function identity changed”). Exact installed source e93d3b70 and claim/source5cda5d94 join. The specific changed loaded object is not recorded; causal identity details and any remedy remain unproved. This is different from pilot30's stale-interval refusal.
+
+Native child and original Root parent exited1. Root supervisor was reaped and log handles closed. Independent current PID and cgroup checks pass; the exact native unit is failed, MainPID0, ControlGroup empty. Recorded5GiB high/6GiB max/swap0/two CPUs/8h/1GiB FSIZE remain. Guard runtime1013.937068334s and attempted MCM stage267.035675279s include preparation and failure; neither is numerical throughput. No OOM/max event was recorded; memory.high events846 and final kernel peak5370859520B do not establish cause or full-run capacity.
+
+All7 graph outcomes remain: first failed, six unavailable, expected denominator415968128 cells. Verified completed graphs/cells are0; partial computed counts remain null. No MCM/stage/checkpoint/training completion exists. The dictionary import retains32 historical motifs but explicitly owner_stage_completed=false, current_matching_pairs0 and mcm_execution_admitted=false. Claim bindings and representation workflow nulls remain alongside actual compact Binding/Owner metadata. Worker failed cell and outer unavailable postmortem cell are separate original outputs. Genuine archive context has zero declared commands/bytes, no acknowledged control records and no remote-return claim.
+
+Accounting reuses accepted pilot30 baseline70closed/33complete/37failed/highest101, adding only this genuine failed claim:71closed/33complete/38failed/0active, highest adopted ceiling102. No refund, reopened identity or fresh-sample assertion follows.
+
+No Git/network/native/scientific execution, private dispatch/connection/credential inspection, array or label reads, source mutation, registration or ledger write occurred. Timing leakage, financial return/cashflow conventions, fees/funding, scaler correctness and universal numerical/authority architecture correctness were not retested. Root handles separately reviewed preservation and any later correction.

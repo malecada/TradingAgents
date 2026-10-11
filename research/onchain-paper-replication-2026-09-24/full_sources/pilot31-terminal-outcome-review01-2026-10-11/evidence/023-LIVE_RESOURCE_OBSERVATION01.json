@@ -1,0 +1,32 @@
+{
+  "actual_native_cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-5b9965c375b342818e7c2e319f571be2.service",
+  "actual_worker_pid": 1621875,
+  "at": "2026-10-11T01:33:08.086063+00:00",
+  "claim": {
+    "effective_attempt_budget": 102,
+    "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-31/claim.json",
+    "sha256": "d7be5f9651cc70ab52aa1df4c70b0ca665ae5c90e0b3942a9f081850390c4388",
+    "started_at": "2026-10-11T01:32:02.834594+00:00"
+  },
+  "guard_files": [
+    "release.json",
+    "child.log",
+    "cpu_ready.json",
+    "live.json"
+  ],
+  "identity": "eth-paper-real-data-end-to-end-resource-20261011-31",
+  "kernel": {
+    "cgroup.procs": "1621872\n1621875\n1629344",
+    "memory.current": "436924416",
+    "memory.events": "low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0",
+    "memory.high": "5368709120",
+    "memory.max": "6442450944",
+    "memory.peak": "443109376",
+    "memory.swap.max": "0"
+  },
+  "native_properties": "RuntimeMaxUSec=8h\nMainPID=1621872\nControlGroup=/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-5b9965c375b342818e7c2e319f571be2.service\nMemoryHigh=5368709120\nMemoryMax=6442450944\nMemorySwapMax=0\nLimitFSIZE=1073741824\nLimitFSIZESoft=1073741824\nCPUAffinity=\nActiveState=active\n",
+  "qualification": "Actual live claimed worker/native kernel resource observations only. No wholeMCM/update/throughput or fullcapacity claim; keep same active process.",
+  "root_session": 64419,
+  "source": "5cda5d948e401ffd03b1a4ed0baa65f06d5783f9",
+  "unit": "onchain-replication-5b9965c375b342818e7c2e319f571be2.service"
+}
