@@ -1,0 +1,11 @@
+# Actual increment22 declared preparation return
+
+ACCEPTED:172 regular public bodies,23 typed directories,3,291,274 body bytes. Both3,624,960-byte archives match SHA256a15adc19299b7b140df0ed48bc7d00ef6085e5ffbb0698c3d0a34a5dbf2d045f. All195 names/types/modes/body hashes and complete independent PAX reencoding pass.
+
+All13 retained Git operations and raw stdout/stderr hashes join source/remote/fetch1d074ddf77552d8c4cb897527bf37ea729f24e4f. Independent commit/blob encoding, exact fresh bare path and absence of alternates pass. Root direct coordination reports actual recovery92028 exit0/f316fb. Authentic post-return ROOT_ACTUAL_OPERATIONS22 SHA363dea3aef8ccdfde9e6f6fb815c97d0c8d46a99ea6c4052c56296fbfc815aae joins selection/capture/recovery receipts as local evidence only; its absent tool-chunk field stays absent, and it was not represented as archived.
+
+Different-author tools acceptancee449b0ac and accepted actual outcome21 returnf7366927 are reused. No prior archive matrix rerun. Zero reused rows; exact three prior archive exclusions; no empirical scopes. Releaseb9e3a97b, binding7f91934f, gate01, preflight32_02 and root_io32_02 join returned/current public bodies. The release records620sources/67inputs; source bodies and runtime/scientific input bodies were not reopened to recreate its authority review.
+
+Initial verifier assumed the different-author helper-manifest reference included bytes; its legitimate schema has only path/sha256. Original CHECK01 KeyError and check22.py remain. New check22_corrected01.py authenticates the complete manifest by exact SHA256 with existing bounded read, retaining all per-helper extent/hash checks. CHECK02 exit0/tool0e959b under CPU3/nice10/CPU30s/wall45s/AS384MiB/file4MiB. No raw mutation, Git/network/numerical/claim execution. This agent authored the original22 helper candidates; their source acceptance was by a different author, reused here. This actual-return checker independently recomputes returned bytes and object/PAX encoding.
+
+Declared public increment only: no broad private/scientific/runtime/history completeness, POSIX reconstruction, deletion authority, future remote availability or launch admission. Frozen after report/manifest.
