@@ -1,0 +1,77 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/preflight30_05.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-entry-preparation02-2026-10-11/preflight31_01.py
+@@ -20,13 +20,13 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-NAME='eth-paper-real-data-end-to-end-resource-20261011-30'
+-GATE=str((HERE/'gate03.json').relative_to(ROOT))
+-EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261011-30', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261011-30'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
++NAME='eth-paper-real-data-end-to-end-resource-20261011-31'
++GATE=str((HERE/'gate01.json').relative_to(ROOT))
++EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261011-31', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261011-31'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
+ INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py', 'sha256': 'f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb'}
+ BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
+ OPAQUE_ROLE='archive_transport'
+-FROZEN_PREPARATION={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation03-2026-10-11/PREPARED01.json', 'bytes': 87021, 'sha256': '1fe13134527703e2f84137b86b918732128aace21f3dc75088f6a2e021cbda51'}
++FROZEN_PREPARATION={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-binding-preparation03-2026-10-11/PREPARED01.json', 'sha256': '38e44a08c8b9f94123e9f1dd862beb3d0054edd8c6f62515eaaa5f8b4616bfb9', 'bytes': 87021}
+ COMPILED_POLICY={'format': 'compiled-small-lse-prototype04-session-v1', 'library_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so', 'library_sha256': '9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2', 'runtime_bytes': 345, 'runtime_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json', 'runtime_sha256': '8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb', 'source_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c', 'source_sha256': '8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8'}
+ COMPILED_INPUTS={'library': 'compiled_normalization_library', 'runtime': 'compiled_normalization_runtime', 'source': 'compiled_normalization_source'}
+ 
+@@ -175,9 +175,9 @@
+     need(set(prior)==set(actual)-{OPAQUE_ROLE},'public04 original role roster differs')
+     for role,ref in prior.items():
+         if role not in changed:need(actual[role]['sha256']==ref['sha256'],'unrelated public04 input changed: '+role)
+-    need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget101 review differs')
++    need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget102 review differs')
+     prepared=read(binding['preparation']);unbound=read(binding['unbound_archive'])
+-    need(binding['preparation']==FROZEN_PREPARATION,'exact reviewed full30 public preparation differs')
++    need(binding['preparation']==FROZEN_PREPARATION,'exact reviewed full31 public preparation differs')
+     need(bound['source_request']['prepared']==binding['preparation'] and bound['source_request']['archive_policy']==binding['unbound_archive'],'actual binder source request differs')
+     need(prepared['builder03_spec']['references']['archive_policy']==binding['unbound_archive'],'unbound archive role differs')
+     binder_body=read_path(reference(BINDER));need(hashlib.sha256(binder_body).hexdigest()==BINDER['sha256'] and release['evidence'].get(BINDER['path'])==BINDER['sha256'],'unchanged accepted binder source required')
+@@ -229,9 +229,9 @@
+ 
+ 
+ def check(*,binding_ref=None,release_ref=None):
+-    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING03.json','fixed binding path differs')
+-    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW03.json','fixed release path differs')
+-    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING03.json'))
++    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING01.json','fixed binding path differs')
++    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW01.json','fixed release path differs')
++    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING01.json'))
+     need(binding['identity']==NAME and binding['schema_version']==1,'fixed final binding required')
+     for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review'):
+         reference(binding.get(role))
+@@ -239,19 +239,19 @@
+     for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review'):reference(binding[role])
+     need(binding['gate']['path']==GATE,'fixed gate path differs')
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+-    release_path=HERE/'RELEASE_REVIEW03.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
++    release_path=HERE/'RELEASE_REVIEW01.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
+     need(release.get('decision')=='accepted' and release['identity']==NAME,'exact source/entry review missing')
+     refs=dict(release['evidence'])
+     for ref in binding.values():
+         if type(ref) is dict and set(ref)>={'path','sha256'}:need(refs.get(ref['path'])==ref['sha256'],'final binding ref not independently released')
+-    for path in (release_path,HERE/'BINDING03.json',Path(__file__)):
++    for path in (release_path,HERE/'BINDING01.json',Path(__file__)):
+         relative=str(path.relative_to(ROOT));digest=hashlib.sha256(read_path(path)).hexdigest()
+         if path!=release_path:need(refs.get(relative)==digest,'exact entry/binding not independently released')
+         refs[relative]=digest
+     authenticate_committed(source,committed_refs(refs,binding))
+     args=SimpleNamespace(root=ROOT,registration=GATE,experiment=NAME,source=source)
+     admission,job=_admitted(args)
+-    if not admission.ready or admission.effective_attempt_budget!=101:raise ValueError('exact pilot admission/budget differs')
++    if not admission.ready or admission.effective_attempt_budget!=102:raise ValueError('exact pilot admission/budget differs')
+     need(len(admission.experiment['source_files'])>=365,'complete installed source plus entry registration pins required')
+     for relative,expected in admission.experiment['source_files'].items():
+         _path_envelope(str(ROOT/relative))
+@@ -325,7 +325,7 @@
+     if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
+     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+     return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
+-        'registration_sha256':file_hash(HERE/'gate03.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':101,
++        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':102,
+         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+         'index_capacity':index_capacity,'projected_reservations':scopes,'host_mem_available_bytes':available,'free_disk_bytes':free,
+         'startup_free_requirement_bytes':startup,'storage_observation':storage,

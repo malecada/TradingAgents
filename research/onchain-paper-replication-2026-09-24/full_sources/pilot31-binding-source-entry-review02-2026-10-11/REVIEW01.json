@@ -1,0 +1,56 @@
+{
+  "binder": {
+    "bytes": 10598,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py",
+    "sha256": "bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb"
+  },
+  "decision": "refused",
+  "finding": {
+    "correction": "Preserve02. Narrow fresh successor must exclude archive_policy only from builder03_result.inputs while preserving separate public archive_policy and request reference. Rehash PREPARED, REQUEST and manifest/derived public pins; use exact unchanged binder and retain all198/source/namespace/method checks. No private body or binder execution is required to establish this defect.",
+    "guard": "need(roles['archive'] not in docs, 'archive role collision')",
+    "observation": "Actual PREPARED01.builder03_result.inputs includes archive_policy among all12 public input documents. Unchanged binder transform first copies those inputs and later requires archive_policy absent before inserting the separately authenticated bound archive policy. Actual command would refuse archive role collision.",
+    "severity": "blocking",
+    "source_line": 119
+  },
+  "manifest": {
+    "bytes": 2469,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-binding-preparation02-2026-10-11/MANIFEST01.json",
+    "sha256": "03ef69127c7492e1751b6a330b0475fbc0f638e3537822cd5e52d8d68540442a"
+  },
+  "not_executed": [
+    "binder/helper",
+    "authority/claim",
+    "native/science/numerics",
+    "network",
+    "private/connection/key target access",
+    "Main/Git/STATE mutation"
+  ],
+  "observation_method": "Finite stdlib metadata and one read-only local Git tree join; no empirical or financial result.",
+  "passing_observations": [
+    "Frozen manifest/member hashes and wrapper02 literal inverse pass.",
+    "Corrected b87 anchor and all198 declared current public source hashes match actual local Git tree blobs, including legitimate tradingagents/__init__.py. Timing module is exactly e93.",
+    "Only02 public changes from01 are numerical_source.commit and two pair descriptor hashes.",
+    "Current declared job/producer/pilot resources, same31 namespace, original seven graphs512/32 and pair limits join. Public claim/dispatch and new output artifacts were absent.",
+    "Unchanged binder body matches bcca66a6. Connection reference unchanged; target uninspected."
+  ],
+  "prepared": {
+    "bytes": 87555,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-binding-preparation02-2026-10-11/PREPARED01.json",
+    "sha256": "07f9ad6d7f7520b1d2bf8e105805fa6e942815034f8ecb2d686dff2b376ee68d"
+  },
+  "preserved_check_diagnostics": [
+    "Prepared-vs-archive-excluded expected input set failed and revealed real binder collision.",
+    "Pre-binding PUBLIC_INPUT_REFS draft still has old archive/pair refs; this alone is not a defect because wrapper replaces every bound.inputs role with actual published hashes. Actual post-bind67 must nevertheless be reviewed."
+  ],
+  "request": {
+    "bytes": 843,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-binding-preparation02-2026-10-11/REQUEST01.json",
+    "sha256": "6a732ccb47ed03f4c4ec42ab9a8f162235380957a2edc9de8c71620e21083336"
+  },
+  "retained_prior_refusal": {
+    "bytes": 2761,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot31-binding-source-entry-review01-2026-10-11/REVIEW01.json",
+    "sha256": "9fc73d1d2020c0644d0ee9b2581b49ec6f38f0a7afef63eb2a2093aef5ea70af"
+  },
+  "scope": "Actual frozen pilot31 preparation02 source/offline binder entry review"
+}
