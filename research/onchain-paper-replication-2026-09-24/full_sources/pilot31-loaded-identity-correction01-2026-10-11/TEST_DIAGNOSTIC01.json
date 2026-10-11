@@ -1,0 +1,7 @@
+{
+  "correction": "Use an added code constant to exercise structural-code mutation; both _loaded baseline comparison and _authenticate_loaded reject. Candidate production source unchanged during test correction.",
+  "final_checks": 18,
+  "initial_synthetic_check": "code_mutation_detected=false for co_filename-only mutation; _authenticate_loaded still refused filename mismatch.",
+  "reason": "CPython code equality excludes co_filename; expecting _loaded structural-code comparison to reject that alone was a test expectation error.",
+  "status": "PASS_FOCUSED_SYNTHETIC_IDENTITY"
+}

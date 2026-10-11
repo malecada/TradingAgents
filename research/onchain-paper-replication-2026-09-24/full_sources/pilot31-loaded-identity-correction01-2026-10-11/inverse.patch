@@ -1,0 +1,31 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot31-loaded-identity-correction01-2026-10-11/real_pilot_import_caller.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -401,7 +401,7 @@
+     return value
+ 
+ 
+-def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False):
++def _prepare_lease_modules(*, batched=False, grouped=False):
+     """Load the selected pilot's deferred modules before its immutable roster.
+ 
+     Imports only: no model/graph construction, claims or authority refresh.
+@@ -423,10 +423,6 @@
+         from . import batched_pilot_reservations
+         if grouped:
+             from . import grouped_offload, grouped_offload_semantics
+-        if compiled:
+-            # Freeze selected helper identities before genuine Lease activation.
+-            # Importing these definitions does not open a native backend.
+-            from . import compiled_normalization_policy, compiled_small_lse
+ 
+ 
+ def execute(run, payload):
+@@ -538,7 +534,7 @@
+             from .imported_authority_lease import activate
+             if diagnostic is not None:diagnostic.startup_enter('lease_activation')
+             selected_mcm=_read(run.admission,s['compact_mcm_input'])
+-            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'])
++            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6)
+             activate(execution,p['imported_authority_lease_input'])
+             if diagnostic is not None:diagnostic.startup_complete()
+         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
