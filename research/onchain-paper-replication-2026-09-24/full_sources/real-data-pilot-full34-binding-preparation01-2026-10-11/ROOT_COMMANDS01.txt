@@ -1,0 +1,4 @@
+After actual install+commit, Root must replace ACTUAL_COMMITTED_ANCHOR with the exact40hex commit; placeholder refuses:
+taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full34-binding-preparation01-2026-10-11/build_public01.py --anchor ACTUAL_COMMITTED_ANCHOR
+After independent generated public-source/caller approval ONLY:
+taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full34-binding-preparation01-2026-10-11/bind_actual01.py

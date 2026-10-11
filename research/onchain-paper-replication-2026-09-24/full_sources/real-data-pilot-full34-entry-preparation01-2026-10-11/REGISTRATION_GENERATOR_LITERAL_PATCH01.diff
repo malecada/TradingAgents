@@ -1,0 +1,58 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full33-entry-preparation01-2026-10-11/prepare_registration01.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full34-entry-preparation01-2026-10-11/prepare_registration01.py
+@@ -2,11 +2,11 @@
+ from pathlib import Path
+ import copy, hashlib, json
+ ROOT=Path.cwd().resolve(); HERE=Path(__file__).resolve().parent; F=HERE.parent
+-OLD=F/'real-data-pilot-full32-entry-preparation01-2026-10-11'
+-T=F/'real-data-pilot-full33-binding-preparation01-2026-10-11'
+-BUDGET=F/'real-data-pilot-full33-cumulative-preparation01-2026-10-11'
+-NAME='eth-paper-real-data-end-to-end-resource-20261011-33'
+-PRIOR='eth-paper-real-data-end-to-end-resource-20261011-32'
++OLD=F/'real-data-pilot-full33-entry-preparation01-2026-10-11'
++T=F/'real-data-pilot-full34-binding-preparation01-2026-10-11'
++BUDGET=F/'real-data-pilot-full34-cumulative-preparation01-2026-10-11'
++NAME='eth-paper-real-data-end-to-end-resource-20261011-34'
++PRIOR='eth-paper-real-data-end-to-end-resource-20261011-33'
+ def load(p): return json.loads(p.read_bytes())
+ def ref(p):
+     b=p.read_bytes(); return {'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b)}
+@@ -16,7 +16,7 @@
+     assert not (ROOT/'research_runs'/NAME).exists()
+     bound=load(T/'BOUND01.json'); refs=load(T/'ALL_INPUT_REFS01.json')
+     assert bound['status']=='BOUND_DRAFT_NOT_REGISTERED_NOT_ADMITTED' and len(refs)==67
+-    assert bound['source_request']['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-33-01'
++    assert bound['source_request']['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-34-01'
+     baseline=load(OLD/'gate01.json')['experiments'][PRIOR]['inputs']['matching_ordered_edge_scratch']
+     assert ref(ROOT/baseline['path'])['sha256']==baseline['sha256']
+     scratch=load(ROOT/baseline['path'])
+@@ -27,20 +27,20 @@
+     gate=load(OLD/'gate01.json'); assert NAME not in gate['experiments']
+     experiment=copy.deepcopy(gate['experiments'][PRIOR]); gate['experiments'][NAME]=experiment
+     experiment['parent']=PRIOR; experiment['inputs']=refs; experiment['charter']=ref(BUDGET/'CHARTER01.md')
+-    experiment['question']='Measure full original seven-WHOLE-graph MCM and GAT/attention-LSTM real joint update/checkpoint after exact accepted removal of discarded imported-route legacy scope construction, using unchanged scientific method, compiled route and native limits.'
++    experiment['question']='Measure full original seven-WHOLE-graph MCM and GAT/attention-LSTM real joint update/checkpoint after exact accepted imported-only inter-phase preparation validation checks, using unchanged scientific method, compiled route and native limits.'
+     evidence={
+-        'budget_review':ref(F/'pilot33-cumulative-machine-review01-2026-10-11/EXTENSION104_REVIEW01.json'),
++        'budget_review':ref(F/'pilot34-cumulative-machine-review01-2026-10-11/EXTENSION105_REVIEW01.json'),
+         'capacity_observation':ref(HERE/'CAPACITY_DECLARATION_ROOT01.json'),
+-        'prior_outcome_review':ref(F/'pilot32-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
+-        'prior_root_closure_review':ref(F/'pilot32-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
+-        'prior_preservation_complete':ref(F/'real-data-pilot-full24-preparation-increment01-2026-10-09/outcome23/FRESH_GIT_RECOVERY23.json'),
+-        'prior_recovery_review':ref(F/'pilot32-outcome-increment-return-review01-2026-10-11/REVIEW01.json'),
+-        'integration_review':ref(F/'pilot32-preparation-interval-correction-review01-2026-10-11/REVIEW01.json'),
++        'prior_outcome_review':ref(F/'pilot33-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
++        'prior_root_closure_review':ref(F/'pilot33-terminal-outcome-review01-2026-10-11/REVIEW01.json'),
++        'prior_preservation_complete':ref(F/'real-data-pilot-full24-preparation-increment01-2026-10-09/outcome25/FRESH_GIT_RECOVERY25.json'),
++        'prior_recovery_review':ref(F/'pilot33-outcome-increment-return-review01-2026-10-11/REVIEW01.json'),
++        'integration_review':ref(F/'pilot33-preparation-cadence-correction-review01-2026-10-11/REVIEW01.json'),
+         'prior_outcome_locator_correction':ref(F/'pilot31-terminal-locator-correction01-2026-10-11/CORRECTION01.json')}
+     evidence['budget_review']={k:evidence['budget_review'][k] for k in ('path','sha256')}
+-    experiment['cumulative_budget_extension']={role:{k:pin[k] for k in ('path','sha256')} for role,pin in {'extension':ref(BUDGET/'EXTENSION_PROPOSED104_01.json'),'review':evidence['budget_review']}.items()}
++    experiment['cumulative_budget_extension']={role:{k:pin[k] for k in ('path','sha256')} for role,pin in {'extension':ref(BUDGET/'EXTENSION_PROPOSED105_01.json'),'review':evidence['budget_review']}.items()}
+     pins=experiment['source_files']; public_pins=load(HERE/'CAPACITY_SOURCE_MAP01.json')['source_files']
+-    for name in ('EXTENSION_PROPOSED104_01.json','CUMULATIVE_ALLOCATION_PROPOSED104_01.json'):
++    for name in ('EXTENSION_PROPOSED105_01.json','CUMULATIVE_ALLOCATION_PROPOSED105_01.json'):
+         pin=ref(BUDGET/name);pins[pin['path']]=pin['sha256']
+     pins.update(public_pins)
+     for path,digest in pins.items(): assert ref(ROOT/path)['sha256']==digest,path

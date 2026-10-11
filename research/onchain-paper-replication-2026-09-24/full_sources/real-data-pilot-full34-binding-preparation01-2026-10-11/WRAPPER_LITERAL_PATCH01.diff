@@ -1,0 +1,22 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full33-binding-preparation01-2026-10-11/bind_actual01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full34-binding-preparation01-2026-10-11/bind_actual01.py
+@@ -5,7 +5,7 @@
+ HERE=Path(__file__).resolve().parent
+ BINDER=HERE.parent/'real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py'
+ EXPECTED='bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'
+-NAME='eth-paper-real-data-end-to-end-resource-20261011-33'
++NAME='eth-paper-real-data-end-to-end-resource-20261011-34'
+ def require(ok,message):
+  if not ok: raise ValueError(message)
+ def raw(x): return (json.dumps(x,sort_keys=True,separators=(',',':'))+'\n').encode()
+@@ -24,8 +24,8 @@
+  require(ref(BINDER)['sha256']==EXPECTED,'accepted binder changed')
+  request=load(HERE/'REQUEST01.json')
+  parent=ROOT/request['private_parent']
+- require(request['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-33-01','private route changed')
+- for p in (ROOT/'research_runs'/NAME,ROOT/'research_artifacts'/'archive-dispatch-ethpilot-20261011-33',parent,HERE/'BOUND01.json',HERE/'inputs01',HERE/'ALL_INPUT_REFS01.json',HERE/'BINDING_CHECK01.json'):
++ require(request['private_parent']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-34-01','private route changed')
++ for p in (ROOT/'research_runs'/NAME,ROOT/'research_artifacts'/'archive-dispatch-ethpilot-20261011-34',parent,HERE/'BOUND01.json',HERE/'inputs01',HERE/'ALL_INPUT_REFS01.json',HERE/'BINDING_CHECK01.json'):
+   require(not os.path.lexists(p),'fresh route already used: '+str(p))
+  require(parent.parent.resolve()==parent.parent and parent.parent.is_dir(),'canonical private scaffold required')
+  module=types.ModuleType('accepted_opaque_binder'); module.__file__=str(BINDER)
