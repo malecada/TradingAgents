@@ -1,0 +1,95 @@
+{
+  "hypothetical_segmented_GREEN": {
+    "closed": false,
+    "events": [
+      "initial_live",
+      "initial_full",
+      "initial_finger",
+      "live",
+      "full_phase_0",
+      "finger",
+      "live",
+      "live",
+      "full_phase_1",
+      "finger",
+      "live",
+      "live",
+      "full_phase_2",
+      "finger",
+      "live",
+      "live",
+      "full_phase_3",
+      "finger",
+      "live"
+    ],
+    "full": 87.1105531980138,
+    "segments": [
+      10.0,
+      12.0,
+      20.0,
+      10.085896457996569
+    ],
+    "time": 87.1105531980138
+  },
+  "inactive_route_noop": true,
+  "new_complete_boundaries": 3,
+  "qualification": "Clock/callback fixtures are synthetic, not fake genuine authority. Actual phase times and end-to-end success remain unmeasured; indivisible >60s work still refuses.",
+  "recorded_age_RED": {
+    "closed": true,
+    "error": "import lease: stale interval cannot refresh",
+    "full": 0.0,
+    "notes": [
+      "import lease full boundary timing: full_callback_seconds=8.756164185004309; pre_callback_age_seconds=52.08589645799657; total_age_seconds=60.84206064300088"
+    ],
+    "time": 60.84206064300088
+  },
+  "refusals": {
+    "already_stale": {
+      "error": "import lease: stale interval cannot refresh",
+      "events": [
+        "initial_live",
+        "initial_full",
+        "initial_finger"
+      ],
+      "full_unchanged": true
+    },
+    "callback_crosses_expiry": {
+      "error": "import lease: stale interval cannot refresh",
+      "events": [
+        "initial_live",
+        "initial_full",
+        "initial_finger",
+        "live",
+        "full"
+      ],
+      "full_unchanged": true
+    },
+    "finger": {
+      "closed": true,
+      "full_unchanged": true,
+      "primary_identity": true
+    },
+    "full": {
+      "closed": true,
+      "full_unchanged": true,
+      "primary_identity": true
+    },
+    "indivisible_group": {
+      "error": "import lease: stale interval cannot refresh",
+      "events": [
+        "initial_live",
+        "initial_full",
+        "initial_finger"
+      ],
+      "full_unchanged": true
+    },
+    "live": {
+      "closed": true,
+      "full_unchanged": true,
+      "primary_identity": true
+    }
+  },
+  "scheduler_and_policy_unchanged": true,
+  "source_ast_inverse": true,
+  "status": "PASS_FOCUSED_SYNTHETIC_SCHEDULER"
+}

@@ -1,0 +1,39 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot30-entry-lease-timing-correction01-2026-10-11/compact_mcm_batched.py
+@@ -479,35 +479,19 @@
+     return {'child_directories':{name:list(io._signature((stage.root/name).lstat())) for name in ('matching','stream')},'numeric_execution':numeric_binding,'retention':b['retention'],'external':external,'spool_inode':list(spool_pin),'spool_sha256':spool_hash.hexdigest(),'format':FORMAT,'rows':start['rows'],'cells':start['cells'],'batch_cells':b['batch_cells'],'batches':journal.batch,'max_body_bytes':b['max_body_bytes'],'journal_inode':list(original[1]),'token_inode':list(token_pin),'tokens_sha256':token_hash.hexdigest(),'stage_inode':list(stage.inode),'scientific_scope':start['scope'],'checkpoint_inventory':checkpoint_inventory,'checkpoint_count':checkpoint_count,'checkpoint_reserved_bytes':checkpoint_bytes,'restart_permitted':False,'authority_boundaries':'entry-batch-checkpoint-final'}
+ 
+ 
+-def _entry_lease(target, execution):
+-    """Complete genuine validation between selected entry preparation phases.
+-
+-    The original scheduler owns all timestamps and rejects already stale work.
+-    No grace period, clock assignment or previous validation is reused here.
+-    """
+-    if 'compiled_normalization_policy' not in execution:return
+-    if getattr(target.execution,'_sampled_authority_lease',None) is None:return
+-    from .imported_authority_lease import target_lease
+-    target_lease(target,boundary=True)
+-
+-
+ def produce(target, *, graph_hash,input_name,output_input,held):
+     from .imported_mcm_identity import Target
+     require(type(target) is Target,'genuine imported Target required')
+     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
+     try:
+         graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+-        b=validate(policy,start['cells'])
+-        _entry_lease(target,b['execution'])
+-        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'])
++        b=validate(policy,start['cells']);modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'])
+         output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+         require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+         own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
+         ad=owner.bound._run.admission
+         require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
+-        _entry_lease(target,b['execution'])
+         normalization=_compiled_inputs(b['execution'],owner.bound._run)
+-        _entry_lease(target,b['execution'])
+         owner.boundary();target.check()
+         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
+         start_sha=io._write(fd,'start.json',io._json(start))
