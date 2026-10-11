@@ -1,0 +1,13 @@
+# Pilot34 conditional binding and final entry review
+
+Accepted the exact actual binding and conditional final Root caller.129 binding/source checks and44 final checks passed once. No checker failure occurred. All preparation-only observations, checker sources, expected original anchors and raw outputs are retained. No claim or launcher was executed.
+
+The742 source pins reuse677 exact accepted33 references and authenticate65 new/changed public bodies. The421 capacity roster changes only compact_mcm to separately accepted abd86 cadence source; existing f65 preload and e93 batched boundaries remain. Independent binder-source review1901c912 supplies the198 numerical Git/current joins. Exact literal and AST preflight inverse changes only34 identity, preparation reference and105 budget; RootIO changes only its preflight import. Historical gates, original scientific cell/method,60-second scheduler and resource caps remain.
+
+Actual bound67 roles match the gate and final binding, with only the explicitly reviewed fresh scratch reservation substitution. The actual pure prepared_inputs function passed all body inverses, core/policy/capacity joins and opaque-reference checks. Private transport, historical arrays and native library bodies were not inspected. The original33 failed review and independent outcome25 recovery60606981 are linked; this does not substitute for new current-entry recovery.
+
+Actual BINDING01 SHA46f2c5e38ea65a0873bf3e6659c87500d68aeb330e2e1fcddca76aa1775eedad differs from reviewed draft only in status and binding_review. Genuine metadata-only admission used source866a297da2c65b2cbd07d24d5617bf9d34dc38f1 and exited0 in Root session97485, terminal92cda6. Original ADMISSION01 actual_returncode/outputs schema, raw ready=true/status=metadata_admitted stdout, empty stderr and ROOT_ADMISSION_OPERATIONS01 agree. empirical_inputs_opened=false and run_started=false remain explicit.
+
+The exact release body must be copied unmodified into the entry, committed and frozen. Complete declared current public preparation must then be externally preserved, freshly recovered and independently accepted. A fresh genuine whole-entry preflight and source freeze must precede one unused34 launch. This review does not make future resource, private-runtime, process eligibility or recovery observations.
+
+No Main, registration, ledger or prior artifacts were modified. No Git/network, native/Owner/claim, numerical module or array operation was performed. Actual phase timing, saving, capacity and full-run success remain unproven; financial timing leakage, returns/cashflows, fees/funding and scientific validity were not tested. Cumulative105 budget acceptance is separate from adoption.
