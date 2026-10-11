@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot33-binding-source-review01-2026-10-11/check01.py", line 68, in <module>
+    patch=''.join(''.join(difflib.unified_diff((O/name).read_text().splitlines(True),(D/name).read_text().splitlines(True),fromfile=str((O/name).relative_to(R)),tofile=str((D/name).relative_to(R)))) for name in ['PREPARED01.json','REQUEST01.json','PUBLIC_INPUT_REFS_DRAFT01.json','bind_actual01.py']+['public01/'+p.name for p in sorted((D/'public01').glob('*.json'))]);ck(patch==rb(D/'LITERAL_PATCH01.diff').decode(),'independent whole literal public/caller patch regenerated')
+                                                                                                                                                                                                                                                                                                                                                                                 ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot33-binding-source-review01-2026-10-11/check01.py", line 15, in ck
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: independent whole literal public/caller patch regenerated
