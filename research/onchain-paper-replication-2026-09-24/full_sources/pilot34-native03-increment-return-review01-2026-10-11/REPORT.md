@@ -1,0 +1,7 @@
+Actual nativeoutcome29 declared return accepted. All 116 regular bodies, 14 directories, 972,080 body bytes and zero symlinks match the selected names/types/modes and original opaque bodies. The complete 1,198,080-byte PAX archive re-encodes exactly to 63bba897fb69335b94f51441fb1cb0e1170a90416f9cbdbe54496a0d0f548bfc.
+
+All six finite public root censuses match. Ten unchanged prior28 bodies remain explicit; eight prior27 and 67 earlier inherited references retain accepted28 receipt continuity without old scientific-scope or archive replay. Exact native03 outcome and integration review bodies are present, alongside the new integration bundle. The three excluded prior28 archive aliases retain their original size/hash.
+
+Original13 Git-operation output bodies/exits and commit/tree/blob encodings join source, remote and fetch f8222a31bab1bc40caebddf9a160eb20fc174e96. Original staging failure5490ee and corrected commit7a9aa5 remain recorded; actual push45287c and fresh recovery2f1a58 succeeded. The staging refusal, Root post-capture operation receipts and this independent review are later increments, not falsely included in archive29.
+
+One bounded verifier execution passed, exit0 with empty stderr. No Git/network/native/scientific execution was performed. Acceptance covers preservation only; no Main installation, numerical validity, real-data speed, financial authority, full runtime completeness or deletion claim follows.

@@ -401,7 +401,7 @@ def _close(journal, owner, targets, reference, binding, plan, training, artifact
     return value
 
 
-def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False):
+def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False):
     """Load the selected pilot's deferred modules before its immutable roster.
 
     Imports only: no model/graph construction, claims or authority refresh.
@@ -427,6 +427,8 @@ def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False):
             # Freeze selected helper identities before genuine Lease activation.
             # Importing these definitions does not open a native backend.
             from . import compiled_normalization_policy, compiled_small_lse
+        if edge:
+            from . import compiled_edge_owner, edge_chunk_adapter
 
 
 def execute(run, payload):
@@ -538,7 +540,7 @@ def execute(run, payload):
             from .imported_authority_lease import activate
             if diagnostic is not None:diagnostic.startup_enter('lease_activation')
             selected_mcm=_read(run.admission,s['compact_mcm_input'])
-            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'])
+            _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'])
             activate(execution,p['imported_authority_lease_input'])
             if diagnostic is not None:diagnostic.startup_complete()
         require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
