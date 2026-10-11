@@ -1,4 +1,5 @@
 """Explicit numeric-reuse occurrence closure; no Owner or scientific authority."""
+from . import phase_timing
 import hashlib,json,math,os,stat,struct,time
 from pathlib import Path
 from . import adaptive_edge_policy
@@ -115,7 +116,9 @@ class NumericExecution:
             compiled_normalization_policy.join(self,self.memo)
             compiled_edge_owner.join(self,self.memo)
             if not self.buffer:self.memo.begin_batch()
-            started=time.perf_counter();result=self.memo(a,b,purpose);elapsed=time.perf_counter()-started
+            started=time.perf_counter()
+            with phase_timing.measure('pair_numeric'):result=self.memo(a,b,purpose)
+            elapsed=time.perf_counter()-started
             require(math.isfinite(elapsed) and elapsed>=0,'numeric timing invalid')
             adaptive_edge_policy.join(self,self.memo)
             compiled_normalization_policy.join(self,self.memo)

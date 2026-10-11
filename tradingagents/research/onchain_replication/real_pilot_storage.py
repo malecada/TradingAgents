@@ -1,4 +1,5 @@
 """Exact pilot writable closure; historical claim siblings are read-only inputs."""
+from . import phase_timing
 import os,re,stat,time
 from pathlib import Path
 from types import MappingProxyType
@@ -84,6 +85,80 @@ def residual_check(root,*,begin=None,identities=None,experiment=EXPERIMENT):
     return result
 
 
+# Metadata-only root pinning surrounds the shared descriptor traversal. Root
+# birth is still prospective; observed identity loss/replacement is fatal.
+def _residual_roots(root,experiment,identities):
+    result={}
+    for domain,paths in residual_paths(root,experiment=experiment).items():
+        for path in paths:
+            key=str(path)
+            try:info=path.lstat()
+            except FileNotFoundError:
+                if key in identities:raise ValueError('residual root disappeared after birth')
+                if path.resolve(strict=False)!=path:raise ValueError('residual missing route redirected')
+                result[key]=(domain,None);continue
+            if not stat.S_ISDIR(info.st_mode) or path.resolve(strict=True)!=path or info.st_dev!=root.stat().st_dev:
+                raise ValueError('residual root type/route/volume differs')
+            identity=(info.st_dev,info.st_ino)
+            if key in identities and identities[key]!=identity:raise ValueError('residual root replaced after birth')
+            identities[key]=identity;result[key]=(domain,identity)
+    return result
+
+class _ResidualCounters:
+    """Fixed pilot subdomains, fed only already authenticated traversal stats."""
+    def __init__(self,root,pins,accepted,identities):
+        self.root=root;self.pins=pins;self.identities=identities
+        self.routes=[(key,domain,identity,Path(key).relative_to(root).parts)
+            for key,(domain,identity) in pins.items() if Path(key).is_relative_to(root)]
+        self.counts={k:dict(v) for k,v in accepted.items()}
+    def account(self,info,relative):
+        parts=relative.parts
+        for key,domain,identity,prefix in self.routes:
+            if parts[:len(prefix)]!=prefix:continue
+            at_root=parts==prefix
+            if at_root:
+                identity=self.identities.get(key,identity)
+                if identity is not None and (info.st_dev,info.st_ino)!=identity:
+                    raise ValueError('residual root changed while observing')
+                if not stat.S_ISDIR(info.st_mode):raise ValueError('residual root type differs')
+                # Birth observed even in a discarded attempt remains pinned.
+                self.identities[key]=(info.st_dev,info.st_ino)
+            seen=self.counts.setdefault(key,{k:0 for k in (*COUNTS,'regular_files','directories')})
+            seen['entries']+=int(not at_root)
+            seen['allocated_bytes']+=info.st_blocks*512
+            if stat.S_ISREG(info.st_mode):
+                seen['regular_files']+=1;seen['logical_file_bytes']+=info.st_size
+            else:seen['directories']+=1
+            policy=RESIDUAL_POLICY[domain]
+            aggregate={k:sum(v[k] for name,v in self.counts.items() if self.pins[name][0]==domain) for k in seen}
+            allocated=policy['logical_bytes']+policy['regular_files']*(4095+512)+policy['directories']*4096
+            limits={'allocated_bytes':allocated,'logical_file_bytes':policy['logical_bytes'],
+                'entries':policy['regular_files']+policy['directories'],
+                'regular_files':policy['regular_files'],'directories':policy['directories']}
+            for field,maximum in limits.items():
+                if aggregate[field]>maximum:raise StorageLimit('residual aggregate '+field,{'domain':domain,**aggregate})
+            if stat.S_ISREG(info.st_mode) and info.st_size>policy['max_file_bytes']:
+                raise StorageLimit('domain file bytes',{'residual_domain':domain,**aggregate})
+    def result(self):return self.counts
+
+def _residual_result(pins,counts):
+    result={}
+    for domain,policy in RESIDUAL_POLICY.items():
+        seen={k:0 for k in (*COUNTS,'regular_files','directories')};roots=[]
+        for key,(name,identity) in pins.items():
+            if name!=domain:continue
+            if key not in counts:
+                roots.append({'root':key,'state':'observed-absent-before-birth','identity':None});continue
+            row=counts[key]
+            for k in seen:seen[k]+=row[k]
+            roots.append({**row,'root':key,'root_device':identity[0],'root_inode':identity[1],
+                'qualification':'Counters from the shared non-atomic writable-union traversal.'})
+        result[domain]={**seen,'roots':roots,'policy':dict(policy),'observed_monotonic_seconds':time.monotonic(),
+            'allocated_threshold_bytes':policy['logical_bytes']+policy['regular_files']*(4095+512)+policy['directories']*4096,
+            'qualification':'Sampled subset totals from the same fresh traversal as the writable union, never charged twice. Includes scratch/partial files; still non-atomic, not a quota or inter-sample growth bound.'}
+    return result
+
+
 def validate(budget,root,*,experiment=EXPERIMENT):
     experiment=experiment_name(experiment)
     root=Path(root)
@@ -130,9 +205,11 @@ class WritableUnion:
         self.identities[1]={'root':str(self.target),'device':s.st_dev,'inode':s.st_ino,'state':'observed-born'}
         return s
     def check(self):
-        return self._check(time.monotonic(),retry_birth=True)
+        with phase_timing.measure('storage_scan'):
+            return self._check(time.monotonic(),retry_birth=True)
     def _check(self,begin,*,retry_birth):
-        residuals=residual_check(self.root,begin=begin,identities=self.residual_identities,experiment=self.target.name)
+        pins=_residual_roots(self.root,self.target.name,self.residual_identities)
+        residual_counts={}
         total={k:0 for k in (*COUNTS,'regular_files','directories')};observations=[]
         def enforce():
             for key,limit in COUNTS.items():
@@ -160,7 +237,7 @@ class WritableUnion:
             for key,limit in COUNTS.items():
                 remaining[limit]-=total[key]
                 if remaining[limit]<=0:raise StorageLimit('aggregate '+key,{**total,'roots':observations})
-            current=StorageWatch(path,remaining)
+            current=StorageWatch(path,remaining,_subdomain_factory=lambda: _ResidualCounters(path,pins,residual_counts,self.residual_identities))
             if current.identity!=identity:raise ValueError('watched writer root replaced')
             root_begin=time.monotonic()
             try:obs=current._check(begin,[])
@@ -171,6 +248,7 @@ class WritableUnion:
                     if not isinstance(error,Exception) or isinstance(error,MemoryError):raise error
                     raise later from error
                 raise
+            residual_counts=obs.pop('_subdomains')
             obs['shared_scan_elapsed_seconds']=time.monotonic()-begin;obs['elapsed_seconds']=time.monotonic()-root_begin;observations.append(obs)
             for k in total:total[k]+=obs[k]
             enforce()
@@ -186,11 +264,18 @@ class WritableUnion:
         total['allocated_bytes']+=max(0,(l.st_blocks-lock_start.st_blocks)*512)
         total['logical_file_bytes']+=max(0,l.st_size-lock_start.st_size)
         enforce()
-        if birth_during_scan:
+        final_pins=_residual_roots(self.root,self.target.name,self.residual_identities)
+        residual_birth=any(pins[k][1] is None and v[1] is not None for k,v in final_pins.items())
+        for key,(_,identity) in pins.items():
+            if identity is not None and key not in residual_counts:
+                raise ValueError('residual root absent from complete observation')
+        if birth_during_scan or residual_birth:
             if not retry_birth:raise ValueError('experiment born during scan; complete new observation required')
             # Discard all first-pass totals. The complete new observation retains
             # the original deadline and every identity pinned during this pass.
             return self._check(begin,retry_birth=False)
+        residuals=_residual_result(final_pins,residual_counts)
+        enforce()
         return {**total,'residual_domains':residuals,'roots':observations,'root_identities':[dict(x) for x in self.identities],'shared_parent_identity':list(self.parent_identity),'authority_root':str(self.root),'elapsed_seconds':time.monotonic()-begin,'qualification':'Sampled exact writer closure including shared parent directory allocation and lock. Historical claim siblings/source/runtime outside writer scope; no kernel quota, atomic snapshot, or absent-tree allocation credit.'}
 
 def environment(root,original):

@@ -1,0 +1,509 @@
+{
+  "scope": "metadata-only helper timing; SimpleNamespace carries cache context, never a Lease or authority",
+  "success": true,
+  "rows": [
+    {
+      "name": "original_first",
+      "wall_seconds": 0.004907123002340086,
+      "cpu_seconds": 0.004006612,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00024228100664913654,
+            "cpu_seconds": 0.0010007660000000002,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.004441630007931963,
+            "cpu_seconds": 0.0030058459999999995,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0001919939968502149,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_first_build",
+      "wall_seconds": 0.007564447994809598,
+      "cpu_seconds": 0.0069993799999999995,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.002946674998383969,
+            "cpu_seconds": 0.002004016999999997,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0044139749952591956,
+            "cpu_seconds": 0.004995363000000003,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00018577900482341647,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_0",
+      "wall_seconds": 0.00462866599264089,
+      "cpu_seconds": 0.0049981429999999966,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00020198199490550905,
+            "cpu_seconds": 0.0,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.004225890981615521,
+            "cpu_seconds": 0.0049981429999999966,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0001850090193329379,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_0",
+      "wall_seconds": 0.0028621679957723245,
+      "cpu_seconds": 0.0030004750000000024,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.0026736660074675456,
+            "cpu_seconds": 0.002000186000000001,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00017334699805360287,
+            "cpu_seconds": 0.0010002890000000014,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_1",
+      "wall_seconds": 0.002761177995125763,
+      "cpu_seconds": 0.002998988000000008,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.0026064089906867594,
+            "cpu_seconds": 0.002998988000000008,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0001421979977749288,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_1",
+      "wall_seconds": 0.005340978008462116,
+      "cpu_seconds": 0.005001218999999987,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00023452599998563528,
+            "cpu_seconds": 0.0010017339999999902,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.004910336996545084,
+            "cpu_seconds": 0.003999484999999997,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00017753700376488268,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_2",
+      "wall_seconds": 0.005683829003828578,
+      "cpu_seconds": 0.005998773000000013,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.0002354350290261209,
+            "cpu_seconds": 0.0,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0052026219927938655,
+            "cpu_seconds": 0.005998773000000013,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00022167697898112237,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_2",
+      "wall_seconds": 0.002842543995939195,
+      "cpu_seconds": 0.003001571999999994,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.002673527007573284,
+            "cpu_seconds": 0.003001571999999994,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00015288199938368052,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_3",
+      "wall_seconds": 0.002737991002504714,
+      "cpu_seconds": 0.0019987800000000056,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.002582243992947042,
+            "cpu_seconds": 0.0019987800000000056,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00014296600420493633,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_3",
+      "wall_seconds": 0.004703885002527386,
+      "cpu_seconds": 0.005004921999999995,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00018933899991679937,
+            "cpu_seconds": 0.0,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.004329885996412486,
+            "cpu_seconds": 0.005004921999999995,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00017173901142086834,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_4",
+      "wall_seconds": 0.005586679995758459,
+      "cpu_seconds": 0.005996548000000004,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00024144299095496535,
+            "cpu_seconds": 0.0,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.005140880995895714,
+            "cpu_seconds": 0.005996548000000004,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.0001848700048867613,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_4",
+      "wall_seconds": 0.004929193004500121,
+      "cpu_seconds": 0.005000714999999989,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.004673785006161779,
+            "cpu_seconds": 0.005000714999999989,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00023284999770112336,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "selected_repeat_5",
+      "wall_seconds": 0.0046369070041691884,
+      "cpu_seconds": 0.003997975000000001,
+      "audit_counts": {
+        "compile_events": 0,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.004447148021426983,
+            "cpu_seconds": 0.003997975000000001,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00017432398453820497,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    },
+    {
+      "name": "original_repeat_5",
+      "wall_seconds": 0.005012933004763909,
+      "cpu_seconds": 0.005000500000000005,
+      "audit_counts": {
+        "compile_events": 3,
+        "source_open_events": 3
+      },
+      "phase_timing": {
+        "format": "exclusive-wall-cpu-v1",
+        "phases": {
+          "module_auth": {
+            "calls": 1,
+            "failures": 0,
+            "wall_seconds": 0.00022740400163456798,
+            "cpu_seconds": 0.001994686999999995,
+            "bytes": 0
+          },
+          "source_compile": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00458208100462798,
+            "cpu_seconds": 0.00300581300000001,
+            "bytes": 0
+          },
+          "source_read": {
+            "calls": 3,
+            "failures": 0,
+            "wall_seconds": 0.00018619699403643608,
+            "cpu_seconds": 0.0,
+            "bytes": 30759
+          }
+        },
+        "invalid_measurements": 0,
+        "counters": "cumulative/exclusive/process-local",
+        "authority": false
+      }
+    }
+  ],
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": "e6f115620ffe7f8ef1252fe83984c14adef5e98ba2269e3f52d6797129c22c67",
+    "tradingagents/research/onchain_replication/imported_authority_interval.py": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f",
+    "tradingagents/research/onchain_replication/phase_timing.py": "97a6c5041914f27bae4b9fcbd81b6cf6bb0cdc90ae5315859c8df52794b1367f"
+  },
+  "policy_sha256": "71cd2eef2c44915cc994b0e72ec32b501d49f51997b7f4b8a53d1e0b9eda3178",
+  "loaded_module_count": 3,
+  "loaded_function_entries": 35,
+  "retained_code_objects": 55,
+  "source_read_includes": "Path.read_bytes plus full SHA256 and comparison; no hash-only timer",
+  "module_auth_exclusive_includes": "code-table walking/comparison and selected scope/policy checks, not a pure code-comparison timer",
+  "repeat_count_per_route": 6,
+  "scientific_imported": false
+}

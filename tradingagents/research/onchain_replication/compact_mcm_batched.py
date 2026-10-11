@@ -11,6 +11,7 @@ import stat
 from contextlib import contextmanager
 from pathlib import Path
 from . import adaptive_edge_policy
+from . import phase_timing
 from . import compiled_normalization_policy
 from . import compiled_edge_owner
 import numpy as np
@@ -24,6 +25,7 @@ from .provenance import freeze, thaw, durable_mkdir, file_hash
 FORMAT = 'ordered-mcm-batch-closure-v2'
 PACKAGE = 'tradingagents.research.onchain_replication'
 MODULES = {'driver':'batched_driver','journal':'batched_journal','executor':'batched_pair_executor','numeric_execution':'batched_numeric_execution','numeric_reuse':'batched_numeric_reuse'}
+BACKEND_INPUT_POLICY = 'source-checked-backend-role-bundle-v1'
 require = io._require
 
 
@@ -44,9 +46,10 @@ def validate(policy, pairs):
         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
     execution=b['execution']
-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()),'explicit numeric execution schema required')
+    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'backend_input_policy'} if 'backend_input_policy' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()),'explicit numeric execution schema required')
     _compiled_policy(execution)
     _edge_policy(execution)
+    _backend_input_policy(execution)
     if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')
@@ -76,7 +79,7 @@ def _compiled_policy(execution):
     return value
 
 
-def _compiled_inputs(execution,run):
+def _compiled_inputs(execution,run,*,registered=None):
     value=_compiled_policy(execution)
     if value is None:return None
     policy=dict(value);ad=run.admission;runtime=None
@@ -87,12 +90,12 @@ def _compiled_inputs(execution,run):
         require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'normalization registered path/hash differs')
         limit=4096 if kind=='runtime' else 65536
         bounded=compiled_normalization_policy.read_reference(path,info['sha256'],limit,policy['runtime_bytes'] if kind=='runtime' else None,owned=kind=='library')
-        require(run.read_input(role)==bounded,'normalization genuine input bytes differ')
+        require((run.read_input(role) if registered is None else registered[role])==bounded,'normalization genuine input bytes differ')
         if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(bounded)
     require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'normalization inventory not joined to genuine environment input')
     environment=ad.inputs['environment'];path=ad.root/environment['path']
     bounded=compiled_normalization_policy.read_reference(path,environment['sha256'],1024**2)
-    require(run.read_input('environment')==bounded,'normalization environment input changed')
+    require((run.read_input('environment') if registered is None else registered['environment'])==bounded,'normalization environment input changed')
     return value
 
 
@@ -108,7 +111,7 @@ def _edge_policy(execution):
     require(all(type(role) is str and 0<len(role)<=128 and role.isascii() and all(c.isalnum() or c in '_-' for c in role) for role in roles.values()) and len(set(roles.values()))==5 and 'environment' not in roles.values(),'distinct finite edge roles required')
     return value
 
-def _edge_inputs(execution,run):
+def _edge_inputs(execution,run,*,registered=None):
     value=_edge_policy(execution)
     if value is None:return None
     policy=dict(value);ad=run.admission;runtime=None
@@ -120,22 +123,49 @@ def _edge_inputs(execution,run):
         limit=4096 if kind in ('runtime','abi') else 65536
         size=policy[kind+'_bytes'] if kind in ('runtime','abi') else ((21920 if policy['format']=='cpython-two-attribute-edge-owner-v1' and policy['library_sha256']=='adead75d8f74f77b7d70164dab5465fef8a0e7ec06255b3dcd599f721745df97' else 17072) if kind=='library' else None)
         body=compiled_edge_owner.read_reference(path,info['sha256'],limit,size,owned=kind=='library')
-        require(run.read_input(role)==body,'edge genuine input body differs')
+        require((run.read_input(role) if registered is None else registered[role])==body,'edge genuine input body differs')
         if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(body)
         if kind=='abi':compiled_edge_owner.abi_metadata(body)
         if kind=='adapter':
             require(path==ad.root/'tradingagents/research/onchain_replication/edge_chunk_adapter.py' and ad.experiment['source_files'].get('tradingagents/research/onchain_replication/edge_chunk_adapter.py')==info['sha256'],'edge adapter input/source join differs')
     require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'edge runtime inventory/environment differs')
     info=ad.inputs['environment'];body=compiled_edge_owner.read_reference(ad.root/info['path'],info['sha256'],1024**2)
-    require(run.read_input('environment')==body,'edge environment genuine input differs')
+    require((run.read_input('environment') if registered is None else registered['environment'])==body,'edge environment genuine input differs')
     return value
+
+def _backend_input_policy(execution):
+    if 'backend_input_policy' not in execution:return False
+    require(type(execution['backend_input_policy']) is str and execution['backend_input_policy']==BACKEND_INPUT_POLICY,'unsupported backend input selection')
+    require(_compiled_policy(execution) is not None or _edge_policy(execution) is not None,'backend input bundle requires selected backend')
+    return True
+
+
+def _backend_inputs(execution,run):
+    """Opt-in compound admission; retain each original bounded role readback.
+
+    Only the genuine run owns the two fresh source checks. The returned bytes
+    replace repeated admissions, never registered paths, hashes or ABI checks.
+    """
+    with phase_timing.measure('backend_setup'):
+        if not _backend_input_policy(execution):
+            return _compiled_inputs(execution,run),_edge_inputs(execution,run)
+        roles={'environment'}
+        if _compiled_policy(execution) is not None:roles.update(execution['compiled_normalization_inputs'].values())
+        if _edge_policy(execution) is not None:roles.update(execution['compiled_edge_inputs'].values())
+        names=tuple(sorted(roles))
+        require(all(name in run.admission.inputs for name in names),'backend bundle role not admitted')
+        registered=run.read_inputs(names,max_each_bytes=2*1024**2,max_total_bytes=4*1024**2)
+        require(type(registered) is dict and set(registered)==roles and all(type(body) is bytes for body in registered.values()),'backend bundle exact immutable role bodies required')
+        phase_timing.add_bytes('backend_setup',sum(len(body) for body in registered.values()))
+        return _compiled_inputs(execution,run,registered=registered),_edge_inputs(execution,run,registered=registered)
+
 
 def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False):
     import importlib
     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
     # ONE packaged journal class is shared with the exact typed semantics helper.
     if admission is not None:
-        names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations','adaptive_edge_policy')
+        names=tuple(MODULES.values())+('matching_immutable_session','compact_mcm_batched','registered_offload','batched_offload_semantics','typed_payload_policy','typed_payload_operations','adaptive_edge_policy','phase_timing')
         if grouped:names+=('grouped_offload','grouped_offload_semantics')
         if geometry:names+=('geometry_summary','geometry_publication')
         if binding_timing:names+=('matching_owner','compact_owner','imported_authority_lease')
@@ -164,37 +194,38 @@ def _reader(root, binding, modules):
 
 def _checkpoint_inventory(root, *, max_entries=65536):
     """Typed complete tree, including empty dirs; bounded opaque-body hashing."""
-    require(root.is_dir() and root.resolve()==root,'inventory root redirected')
-    digest=hashlib.sha256();files=total=directories=entries=0
-    def visit(path):
-        nonlocal files,total,directories,entries
-        entries+=1;require(entries<=max_entries,'inventory entry ceiling exceeded')
-        st=path.lstat();relative=str(path.relative_to(root))
-        require(not stat.S_ISLNK(st.st_mode),'inventory symlink refused')
-        row={'name':relative,'identity':list(io._signature(st))}
-        if stat.S_ISDIR(st.st_mode):
-            row['type']='directory';directories+=1;digest.update(io._json(row))
-            with os.scandir(path) as scan:
-                names=[]
-                for entry in scan:
-                    require(len(names)<min(max_entries,400000) and len(entry.name)<=128,'directory entry/name ceiling exceeded');names.append(entry.name)
-            for name in sorted(names):visit(path/name)
-        else:
-            require(stat.S_ISREG(st.st_mode) and st.st_nlink==1,'inventory special/link refused')
-            body_hash=hashlib.sha256();child=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
-            try:stream=os.fdopen(child,'rb')
-            except BaseException as primary:
-                try:os.close(child)
-                except BaseException as failure:primary.add_note('Inventory acquisition cleanup failed: '+repr(failure))
-                raise
-            with stream:
-                require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened inode differs')
-                for block in iter(lambda:stream.read(262144),b''):body_hash.update(block)
-                require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened body changed')
-            row.update(type='regular',sha256=body_hash.hexdigest());digest.update(io._json(row));files+=1;total+=st.st_size
-        require(io._signature(path.lstat())==io._signature(st),'inventory changed during hash')
-    visit(root)
-    return {'files':files,'directories':directories,'entries':entries,'bytes':total,'sha256':digest.hexdigest()}
+    with phase_timing.measure('checkpoint_inventory'):
+        require(root.is_dir() and root.resolve()==root,'inventory root redirected')
+        digest=hashlib.sha256();files=total=directories=entries=0
+        def visit(path):
+            nonlocal files,total,directories,entries
+            entries+=1;require(entries<=max_entries,'inventory entry ceiling exceeded')
+            st=path.lstat();relative=str(path.relative_to(root))
+            require(not stat.S_ISLNK(st.st_mode),'inventory symlink refused')
+            row={'name':relative,'identity':list(io._signature(st))}
+            if stat.S_ISDIR(st.st_mode):
+                row['type']='directory';directories+=1;digest.update(io._json(row))
+                with os.scandir(path) as scan:
+                    names=[]
+                    for entry in scan:
+                        require(len(names)<min(max_entries,400000) and len(entry.name)<=128,'directory entry/name ceiling exceeded');names.append(entry.name)
+                for name in sorted(names):visit(path/name)
+            else:
+                require(stat.S_ISREG(st.st_mode) and st.st_nlink==1,'inventory special/link refused')
+                body_hash=hashlib.sha256();child=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+                try:stream=os.fdopen(child,'rb')
+                except BaseException as primary:
+                    try:os.close(child)
+                    except BaseException as failure:primary.add_note('Inventory acquisition cleanup failed: '+repr(failure))
+                    raise
+                with stream:
+                    require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened inode differs')
+                    for block in iter(lambda:stream.read(262144),b''):body_hash.update(block)
+                    require(io._signature(os.fstat(stream.fileno()))==io._signature(st),'inventory opened body changed')
+                row.update(type='regular',sha256=body_hash.hexdigest());digest.update(io._json(row));files+=1;total+=st.st_size
+            require(io._signature(path.lstat())==io._signature(st),'inventory changed during hash')
+        visit(root)
+        return {'files':files,'directories':directories,'entries':entries,'bytes':total,'sha256':digest.hexdigest()}
 
 
 def _children(root, expected, *, directories=()):
@@ -386,22 +417,23 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
     checkpoint_bytes=0;pair_ordinal=0;checkpoint_count=0
     checkpoint_inventory=_checkpoint_inventory(checkpoints)
     def checkpoint(purpose,ordinal,state,a,m,config,pair_policy):
-        nonlocal checkpoint_bytes,checkpoint_count,checkpoint_inventory
-        boundary()
-        require(_checkpoint_inventory(checkpoints)==checkpoint_inventory,'prior checkpoint changed')
-        allowance=pair_policy['max_checkpoint_bytes']+2*io.META_LIMIT
-        require(checkpoint_bytes+allowance<=b['max_checkpoint_bytes'],'batched checkpoint retention exhausted')
-        checkpoint_bytes+=allowance
-        path=checkpoints/f'pair-{pair_ordinal:012d}-checkpoint-{ordinal:08d}'
-        reference=engine.save(state,path,a,m,config,max_checkpoint_bytes=pair_policy['max_checkpoint_bytes'],**({'checkpoint_layout':pair_policy['checkpoint_layout']} if 'checkpoint_layout' in pair_policy else {}))
-        require(file_hash(path/'manifest.json')==reference,'actual checkpoint manifest readback differs')
-        meta={'schema_version':1,'purpose_sha256':purpose,'pair_ordinal':pair_ordinal,'checkpoint_ordinal':ordinal,'manifest_sha256':reference,'resumable':False}
-        q,fd=io._open(checkpoints)
-        try:io._write(fd,path.name+'.json',io._json(meta))
-        finally:io._release(lambda:os.close(fd))
-        checkpoint_count+=1;checkpoint_inventory=_checkpoint_inventory(checkpoints)
-        require(checkpoint_inventory['bytes']<=checkpoint_bytes,'actual checkpoint bytes exceed reservation')
-        boundary();require(_checkpoint_inventory(checkpoints)==checkpoint_inventory,'checkpoint changed at boundary')
+        with phase_timing.measure('checkpoint'):
+            nonlocal checkpoint_bytes,checkpoint_count,checkpoint_inventory
+            boundary()
+            require(_checkpoint_inventory(checkpoints)==checkpoint_inventory,'prior checkpoint changed')
+            allowance=pair_policy['max_checkpoint_bytes']+2*io.META_LIMIT
+            require(checkpoint_bytes+allowance<=b['max_checkpoint_bytes'],'batched checkpoint retention exhausted')
+            checkpoint_bytes+=allowance
+            path=checkpoints/f'pair-{pair_ordinal:012d}-checkpoint-{ordinal:08d}'
+            reference=engine.save(state,path,a,m,config,max_checkpoint_bytes=pair_policy['max_checkpoint_bytes'],**({'checkpoint_layout':pair_policy['checkpoint_layout']} if 'checkpoint_layout' in pair_policy else {}))
+            require(file_hash(path/'manifest.json')==reference,'actual checkpoint manifest readback differs')
+            meta={'schema_version':1,'purpose_sha256':purpose,'pair_ordinal':pair_ordinal,'checkpoint_ordinal':ordinal,'manifest_sha256':reference,'resumable':False}
+            q,fd=io._open(checkpoints)
+            try:io._write(fd,path.name+'.json',io._json(meta))
+            finally:io._release(lambda:os.close(fd))
+            checkpoint_count+=1;checkpoint_inventory=_checkpoint_inventory(checkpoints)
+            require(checkpoint_inventory['bytes']<=checkpoint_bytes,'actual checkpoint bytes exceed reservation')
+            boundary();require(_checkpoint_inventory(checkpoints)==checkpoint_inventory,'checkpoint changed at boundary')
     executor=None
     def execute(a,m,purpose):
         nonlocal pair_ordinal
@@ -538,20 +570,21 @@ def produce(target, *, graph_hash,input_name,output_input,held):
     require(type(target) is Target,'genuine imported Target required')
     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
     try:
-        graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
-        b=validate(policy,start['cells'])
-        _entry_lease(target,b['execution'])
-        modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'])
-        output_policy,_=publication._output_policy(owner,output_input,start['cells'])
-        require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
-        own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
-        ad=owner.bound._run.admission
-        require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
-        _entry_lease(target,b['execution'])
-        normalization=_compiled_inputs(b['execution'],owner.bound._run)
-        edge_selection=_edge_inputs(b['execution'],owner.bound._run)
-        _entry_lease(target,b['execution'])
-        owner.boundary();target.check()
+        with phase_timing.measure('entry'):
+            graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+            b=validate(policy,start['cells'])
+            _entry_lease(target,b['execution'])
+            with phase_timing.measure('module_auth'):
+                modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'])
+            output_policy,_=publication._output_policy(owner,output_input,start['cells'])
+            require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
+            own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
+            ad=owner.bound._run.admission
+            require(ad.experiment['source_files'].get(own_source)==file_hash(ad.root/own_source),'batched adapter source not installed/registered')
+            _entry_lease(target,b['execution'])
+            normalization,edge_selection=_backend_inputs(b['execution'],owner.bound._run)
+            _entry_lease(target,b['execution'])
+            owner.boundary();target.check()
         root=producer.directory(target,graph_hash);durable_mkdir(root.parent);root.mkdir();root,fd=io._open(root);inode=io._signature(os.fstat(fd))[:2]
         start_sha=io._write(fd,'start.json',io._json(start))
         from . import stage_retention

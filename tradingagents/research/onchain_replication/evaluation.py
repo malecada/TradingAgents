@@ -19,6 +19,7 @@ from .cells import lifecycle_cell_id
 from .cache import read_artifact
 from .baselines import permute_training_labels
 from .metrics import classification_metrics,regression_metrics
+from .failure_reporting import exception_message,record_failure
 
 
 def batch_factory(arm,task,examples,scaler,features,*,permuted=False,observation=None):
@@ -116,8 +117,11 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
                 x,_=test(list(range(len(examples.test))));x=x['x'].numpy().reshape(len(examples.test),-1)
                 prediction=expit(model.decision_function(x)) if task=='direction' else scaler.inverse(model.predict(x))
             except BaseException as error:
-                _immutable(directory/'failed.json',{'reason':type(error).__name__+': '+str(error)})
-                if not (fit_directory/'complete.json').exists():_immutable(fit_directory/'failed.json',{'reason':type(error).__name__+': '+str(error)})
+                record_failure(error, (
+                    lambda: _immutable(directory/'failed.json',{'reason':type(error).__name__+': '+exception_message(error)}),
+                    lambda: _immutable(fit_directory/'failed.json',{'reason':type(error).__name__+': '+exception_message(error)})
+                        if not (fit_directory/'complete.json').exists() else None,
+                ))
                 raise
         else:
             fitted=fit_cell(run,registered_id,provenance,factory,train,len(examples.train),'classification' if task=='direction' else 'regression',cell['seed'],training_config,continuation=continuation)
@@ -133,7 +137,11 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
         _immutable(directory/'cell.json',{'id':cell['id'],'lifecycle_id':registered_id,'status':'complete','provenance':provenance,'test_mask_hash':examples.test_mask_hash,'train_hash':examples.train_hash,'scaler':asdict(scaler),'prediction_hash':file_hash(directory/'predictions.json'),'checkpoint_hash':checkpoint_hash,'metrics':summary,'probability_qualification':'uncalibrated sigmoid SVC margin' if arm=='svm' and task=='direction' else 'softmax' if task=='direction' else None})
         return rows,summary
     except BaseException as error:
-        if not (directory/'failed.json').exists():_immutable(directory/'failed.json',{'reason':type(error).__name__+': '+str(error),'scientific_id':cell['id'],'lifecycle_id':registered_id,'fit_may_already_be_complete':True,'next_action':'Inspect immutable fit completion; only a new registered continuation or prediction-only recovery may proceed.'})
+        record_failure(error, (lambda: _immutable(directory/'failed.json',
+            {'reason':type(error).__name__+': '+exception_message(error),
+             'scientific_id':cell['id'],'lifecycle_id':registered_id,'fit_may_already_be_complete':True,
+             'next_action':'Inspect immutable fit completion; only a new registered continuation or prediction-only recovery may proceed.'})
+            if not (directory/'failed.json').exists() else None,))
         raise
 
 

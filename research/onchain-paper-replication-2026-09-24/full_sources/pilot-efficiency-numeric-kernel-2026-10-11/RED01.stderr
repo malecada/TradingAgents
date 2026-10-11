@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import os,resource,runpy; os.sched_setaffinity(0,{3});os.nice(10);resource.setrlimit(resource.RLIMIT_CPU,(10,10));resource.setrlimit(resource.RLIMIT_AS,(536870912,536870912));resource.setrlimit(resource.RLIMIT_FSIZE,(4194304,4194304));runpy.run_path("tests/research/onchain_replication/test_numeric_kernel_contract.py",run_name="__main__")
+                                                                                                                                                                                                                                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "tests/research/onchain_replication/test_numeric_kernel_contract.py", line 5, in <module>
+    from tradingagents.research.onchain_replication.matching_numeric_kernel import fill_agreement
+ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.matching_numeric_kernel'

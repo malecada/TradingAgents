@@ -1,0 +1,7 @@
+{
+  "assumption": "Expected source code is compiled once per loaded module per activation. Repeated compile/audit/profiling and compiler-warning side effects are intentionally not equivalent; no absence of hooks is asserted. Every authentication still freshly reads and hashes source and checks current loaded capabilities. No validation success, stat or resolved-path cache.",
+  "kind": "activation-owned-expected-code-v1",
+  "max_code_objects": 262144,
+  "max_loaded_modules": 2048,
+  "schema_version": 1
+}

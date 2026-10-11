@@ -1,0 +1,72 @@
+{
+  "decision": "accepted",
+  "scope": "increment31 source tools only, conditional final Root scope freeze",
+  "at": "2026-10-11T13:14:49.943629+00:00",
+  "sources": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/HELPERS_MANIFEST01.json",
+      "sha256": "b37eb6ec7c50a3c09d815fe599864ffb5fe889dc398ceeae21c9e19366ece074",
+      "bytes": 4101
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/select31.py",
+      "sha256": "06093744793f89e02a16c225b9038d7a66b25ef4ecbe2e7d6f7600d9ed83e676",
+      "bytes": 18103
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/capture31.py",
+      "sha256": "2bca0a09524ef91874652aa348625c33a6710b6c58f4ff4a1d387f80983301df",
+      "bytes": 2499
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/recover31.py",
+      "sha256": "16e649428a1d1646ee866ba602948c9ab554ab0dfd960be5fb8767487681a184",
+      "bytes": 3604
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/CAPTURE_RECOVERY_LITERAL_MAP01.json",
+      "sha256": "b5c929fca2ff3e1fe95a2a7ce5b195fd77adc1f3cdc5d22fc69080da816e288a",
+      "bytes": 961
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/PROSPECTIVE_ROSTER01.json",
+      "sha256": "1129c59a00b291a13884d4623ac7b79d24050191f91c339f0442437ea0a9162d",
+      "bytes": 6239
+    }
+  ],
+  "checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot35-efficiency-increment31-tools-review-2026-10-11/CHECK01.json",
+    "sha256": "65c9966ea454af93a0a383c2b87051ce106c5bfb23627027f9c80b396fd998a7",
+    "bytes": 1773
+  },
+  "root_commands": [
+    [
+      ".venv/bin/python",
+      "-B",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/select31.py"
+    ],
+    [
+      ".venv/bin/python",
+      "-B",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/capture31.py"
+    ],
+    [
+      ".venv/bin/python",
+      "-B",
+      "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full35outcome31/recover31.py"
+    ]
+  ],
+  "conditions": [
+    "Freeze all named public evidence including offline log/docs and this review before select",
+    "Keep all selected originals immutable through capture/returned-byte review",
+    "Commit/push exact selected scope and archive before fresh recovery",
+    "Independent actual returned-byte verification after real recovery"
+  ],
+  "limitations": [
+    "No helper executed",
+    "No raw scopes or archive aliases read",
+    "No private/runtime or undeclared-store completeness",
+    "No POSIX reconstruction or deletion authority",
+    "No empirical admission or Main review supersession"
+  ]
+}

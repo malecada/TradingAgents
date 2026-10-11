@@ -1,0 +1,52 @@
+{
+  "classification": "SYNTHETIC_COMPONENT_ONLY",
+  "files": 256,
+  "samples": [
+    {
+      "shared_walk": {
+        "wall_seconds": 0.005356734007364139,
+        "process_cpu_seconds": 0.005999118999999997
+      },
+      "separate_residual_walk_only": {
+        "wall_seconds": 0.0026421880029374734,
+        "process_cpu_seconds": 0.0019994450000000025
+      },
+      "json_write_file_and_directory_fsync": {
+        "wall_seconds": 0.03156643999682274,
+        "process_cpu_seconds": 0.0010136530000000032
+      },
+      "union_entries": 264
+    },
+    {
+      "shared_walk": {
+        "wall_seconds": 0.005123461000039242,
+        "process_cpu_seconds": 0.00479173799999999
+      },
+      "separate_residual_walk_only": {
+        "wall_seconds": 0.002566758994362317,
+        "process_cpu_seconds": 0.0020012210000000114
+      },
+      "json_write_file_and_directory_fsync": {
+        "wall_seconds": 0.010611496996716596,
+        "process_cpu_seconds": 0.0012784220000000013
+      },
+      "union_entries": 264
+    },
+    {
+      "shared_walk": {
+        "wall_seconds": 0.0052141860069241375,
+        "process_cpu_seconds": 0.004445839999999993
+      },
+      "separate_residual_walk_only": {
+        "wall_seconds": 0.00252094300230965,
+        "process_cpu_seconds": 0.002999709000000003
+      },
+      "json_write_file_and_directory_fsync": {
+        "wall_seconds": 0.00979225299670361,
+        "process_cpu_seconds": 0.000584828999999995
+      },
+      "union_entries": 264
+    }
+  ],
+  "qualification": "Same tiny synthetic tree, sequential warm-cache samples. Extra standalone walk is separately measured removed work, not an exact old-algorithm timing or monitor-process profile. No real-data saving, contention or capacity claim."
+}

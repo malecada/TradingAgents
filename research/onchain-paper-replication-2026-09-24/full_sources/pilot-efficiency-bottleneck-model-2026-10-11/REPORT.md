@@ -1,0 +1,45 @@
+# Conditional bottleneck model
+
+Read-only assessment of retained public scalar metadata and current narrow source. Only this directory was written. No tests, numerical execution, scientific arrays, empirical replay, Main/Git/registration changes or external work. SCENARIOS01.json contains ordinary arithmetic on already retained counters, not new observations.
+
+## What throughput is actually known
+
+Pilot34 terminal review records36,864 published cells across9 partial batches and10,775.518 guard seconds: **3.421 published cells per guard second**. This includes startup, boundaries and eventual interruption; it is not a completed graph, MCM or training throughput. Dividing the same cells by summed numeric timer5,215.995 gives **7.067 cells/s**, a different denominator.
+
+The retained SIX_BATCH_WINDOW_OBSERVATION16 contains a more local window: batches1–5 published20,480 cells over2,642.355 seconds between file mtimes, **7.751 cells/s**. Individual numeric rates were28.48–37.78 cells/s. Their summed numeric time641.872 seconds is24.29% of that publication window. Differencing original cumulative authority counters gives425.475 internal-authority seconds; other numeric time is216.397 seconds,8.19% of the window. The remaining~75.71% is outside that numeric timer, not identified as a particular removable cost. File mtimes are a wall proxy, not a monotonic phase trace; boundary placement, filesystem publication, scheduling and differing geometry limit interpretation.
+
+First batch was very different:4,096 cells/4,000 computed/96 reused took3,915.771 numeric seconds (1.046 cells/s). Its2,192.791 internal-authority seconds were56.00% of that timer. That fraction is **one batch**, not a universal overhead share. The later retained window happens to contain additional authority deltas, but those also do not establish future or whole-population shares. Pilot35 did not reach numeric publication, so there is no current installed-path end-to-end rate. Pilot34 predates subsequent native/serialization integrations; it is context rather than a controlled current-baseline benchmark.
+
+## Component timing and cardinality are different units
+
+The new helper's retained timing compares100 complete calls per shape against scalar agreement loops. With1,024 attribute-row pairs, width2 helper averaged86.95 microseconds versus2,274.01 scalar; width4 averaged89.59 versus2,632.85 microseconds. Ratios26.15/29.39 include helper validation/gather/output, but exclude caller index creation, authority, state scans, assignment and checkpoints. At8 pairs it was slower:41.64 versus18.39 microseconds (width2),38.20 versus20.79 (width4). There is no measured crossover or256-pair timing.
+
+One MCM **cell** is a complete neighborhood–motif matching invocation, not one helper row-pair. A numeric **batch** of4,096 cells is not four helper calls. For a matching pair with n,m nodes, initialization has n*m node agreements. Each annealing iteration traverses E=e_left*e_right ordered edge pairs; normalization/hardening add separate work. The source still uses the original iteration limit. Reuse can avoid whole pair execution or reuse edge weights; multiplying1024-pair speed by4,096cells is invalid.
+
+`matching_annealing.py:205–206` selects edge count `min(256 if adaptive-and-reuse else1024, E-cursor, remaining-operation-budget)`; counts<8 remain scalar. Tail chunks and advance budgets can yield any smaller count. Adaptive reuse applies only4096<E≤16384 with sufficient advance budget; original reuse applies E≤4096. Cached entries avoid agreement evaluation, so accelerating them has no original agreement time to save. There is no retained actual chunk-size histogram or native/fallback cost histogram in the inspected metadata. Exact current chunk counts therefore remain unknown.
+
+Retained STATE_HISTORY01/public prior status reports Root's first-batch scalar geometry: max left nodes59,825, max left edges65,342, max matrix product1,435,800 and2,268/4,096 static tiny-normalizer shape eligibility. These are maxima/static eligibility, not observed helper calls. A matrix with1,435,800 node entries would require1,403 maximally packed1024-entry fills (last152), **if** all its entries were evaluated through this helper and no tighter advance boundaries intervened. This is a conditional cardinality, not a measured count. Static compiled-normalization eligibility does not measure eligibility for this new agreement helper.
+
+## Concrete possible call sites, and remaining mismatch
+
+1. **Edge agreement scratch:** `matching_annealing.py:218–253` already creates bounded `weights` and paired `left/right` indices. The helper could fill those agreements before the original0.5 multiplication, old-M multiplication and ordered `np.add.at`. Preserve that order; helper output is unscaled agreement, whereas the existing edge adapter fills0.5*agreement. Current `np.divmod` indices at:209 are writable owning arrays. `matching_numeric_kernel.py:47–50` requires immutable bytes-backed indices, so a direct call currently refuses. A bounded index freeze/copy or separately reviewed private-index contract is required; its overhead is absent from the existing benchmark. The currently installed native branch already accelerates eligible uncached width2 work, so the relevant future comparator is that complete current route, not the old scalar loop.
+2. **Node initialization:** `matching_annealing.py:190–194` currently makes one agreement call per row-major V entry. A bounded row-major index adapter could fill a scratch then commit V/cursor/used under the unchanged operation budget. Width4 is relevant here. There is no such selected current call; index generation, copying and state-prefix accounting require implementation/review. Unsupported values must retain the original route before modifying state.
+
+The helper requires immutable contiguous float64 features of width2/4 and selected finite abs≤256/default error policy. It uses NumPy reduction/exp, with C05 tolerance rather than scalar bitwise/error-prefix equality. It does not authenticate original callback globals, source, Owner or runtime. Current caller authority and fallback capability checks must remain. Whole assignment, score, checkpoint restoration and near-tie behavior need independent qualification; eight helper tests alone cannot release a solver. No current call site uses this helper.
+
+## Defensible scenarios, not forecasts
+
+For replaceable baseline wall fraction f and component speedup s, holding all other work fixed and assuming no new overhead, total speedup is `1/(1-f+f/s)`. With s=26, fractions1%,5%,10%,25% yield **1.010×,1.051×,1.106×,1.316×**. Neither f nor s is established for actual integrated matching. Short chunks, index conversion and an already-native comparator can reduce or reverse s.
+
+Using the first-batch56% authority share purely as a counterfactual, accelerating **all** remaining44% by26× would yield only1.733× numeric speed. Agreement is only part of that44%, so this is an intentionally optimistic illustration, not an estimate.
+
+For the later mtime window, accelerating **all**216.397 non-authority numeric seconds by26× while leaving2,425.958 other seconds unchanged would move7.751 to **8.413 cells/s** (~1.085×). Even eliminating all641.872 numeric seconds would reach only **10.238 cells/s** under these fixed-window assumptions. This demonstrates how publication/authority work can dominate; it is not a rigorous future bound because scheduled validations and phase durations interact. No graph/full-run ETA or prediction for415,968,128 requested cells is defensible from this partial window.
+
+## Minimum telemetry before choosing the integration
+
+- Per published batch, monotonic start/end and nested nonoverlapping durations for preparation/row extraction, numeric work, internal authority, journal/publication/offload and final boundary. Preserve separate first-batch startup.
+- Per phase, total node/edge entries, actual chunk-count histogram (1–7,8–31,32–255,256–1023,1024), computed versus pair-cache-hit occurrences and edge-weight cache hits. Record actual native/helper accepted/refused counts and categorical reasons; no arrays/labels needed.
+- Complete current agreement route time including index construction/freeze, eligibility, source/owner checks, fill and downstream accumulation; separately timed state scans, normalization, hardening and checkpoint inventory. Avoid nested timer double-counting.
+- Geometry denominators per batch (node products/edge products and feature widths) and existing operation/advance counts. Pair weighting must be by time/entries, not merely count of small eligible cells.
+
+First implement/qualify an opt-in bounded adapter only after source review and the selected tolerance/prefix contract is explicit. Measure one controlled synthetic complete-current-versus-candidate path at relevant chunk sizes before any fresh admitted pilot. Do not remove authority checks or generalize one batch's overhead share to make the component ratio an end-to-end promise.

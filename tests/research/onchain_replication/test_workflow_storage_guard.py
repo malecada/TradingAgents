@@ -50,3 +50,17 @@ def test_registered_storage_policy_rejects_foreign_or_invalid_scope(tmp_path):
     with pytest.raises(ValueError,match='storage'):resource_policy(value,nested)
     value={**policy(tmp_path),'storage_budget':{'root':str(tmp_path),'limits':{'max_entries':True}}}
     with pytest.raises(ValueError,match='storage'):resource_policy(value,tmp_path)
+
+
+def test_subdomain_observer_failure_closes_descriptors(tmp_path,monkeypatch):
+    from tradingagents.research.onchain_replication import workflow_storage as storage
+    import os
+    policy=budget(tmp_path);closed=[];real_close=os.close
+    def close(fd):closed.append(fd);real_close(fd)
+    class Refusal:
+        def account(self,*args):raise ValueError('subdomain refused')
+    monkeypatch.setattr(storage.os,'close',close)
+    watch=storage.StorageWatch(Path(policy['root']),policy['limits'],_subdomain_factory=Refusal)
+    import pytest
+    with pytest.raises(ValueError,match='subdomain refused'):watch.check()
+    assert len(closed)==1

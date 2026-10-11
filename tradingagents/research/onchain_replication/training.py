@@ -8,6 +8,7 @@ from ..lifecycle import ResearchRun,_lock,_immutable
 from .provenance import canonical_bytes,digest,durable_mkdir,sync_directory,file_hash
 from .checkpoints import seed_all,save_checkpoint,load_checkpoint
 from . import financial_execution as financial
+from .failure_reporting import exception_message,record_failure
 
 
 @dataclass
@@ -94,7 +95,9 @@ def fit_cell(run,cell_id,provenance,model_factory,batch_factory,n_examples,task,
         _immutable(directory/'complete.json',{'checkpoint':str(checkpoint),'sha256':file_hash(checkpoint),'epochs':epoch})
         return FitResult(model,checkpoint,file_hash(checkpoint),logs)
     except BaseException as error:
-        _immutable(directory/'failed.json',{'type':type(error).__name__,'reason':str(error),'last_checkpoint':str(checkpoint) if checkpoint else None})
+        record_failure(error, (lambda: _immutable(directory/'failed.json',
+            {'type':type(error).__name__,'reason':exception_message(error),
+             'last_checkpoint':str(checkpoint) if checkpoint else None}),))
         raise
 
 

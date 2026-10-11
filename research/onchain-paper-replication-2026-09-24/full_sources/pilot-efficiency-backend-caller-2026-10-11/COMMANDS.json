@@ -1,0 +1,30 @@
+[
+  {
+    "stage": "RED01",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_backend_input_selection.py",
+    "exit_code": 1,
+    "result": "12 failed in2.52s (helper/schema not yet implemented)",
+    "log": "RED01.log"
+  },
+  {
+    "stage": "GREEN01",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_backend_input_selection.py tests/research/onchain_replication/test_backend_entry_bundle.py",
+    "exit_code": 0,
+    "result": "28 passed in3.78s",
+    "log": "GREEN01.log"
+  },
+  {
+    "stage": "RED_TIMING01",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_backend_input_selection.py -k timing",
+    "exit_code": 1,
+    "result": "1failed/12deselected in2.31s (no backend_setup timing row yet)",
+    "log": "RED_TIMING01.log"
+  },
+  {
+    "stage": "GREEN02",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_backend_input_selection.py tests/research/onchain_replication/test_backend_entry_bundle.py tests/research/onchain_replication/test_phase_timing.py",
+    "exit_code": 0,
+    "result": "34 passed in3.73s",
+    "log": "GREEN02.log"
+  }
+]

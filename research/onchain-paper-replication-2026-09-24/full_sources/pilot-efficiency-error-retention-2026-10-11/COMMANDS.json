@@ -1,0 +1,23 @@
+[
+  {
+    "stage": "RED01",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_training_failure_retention.py",
+    "exit_code": 1,
+    "result": "8 failed in9.07s;6 intended failures,2 prediction cases initially failed early because fixture had onlyone class; original log retained",
+    "log": "RED01.log"
+  },
+  {
+    "stage": "RED02",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_training_failure_retention.py -k prediction",
+    "exit_code": 1,
+    "result": "2 failed,6 deselected in3.36s; corrected40-row existing synthetic population reaches intended prediction/reporting failure",
+    "log": "RED02.log"
+  },
+  {
+    "stage": "GREEN01",
+    "command": "env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 RUN_ONLINE_TESTS=0 PYTEST_ADDOPTS= OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider --import-mode=importlib tests/research/onchain_replication/test_training_failure_retention.py tests/research/onchain_replication/test_training.py tests/research/onchain_replication/test_evaluation.py",
+    "exit_code": 0,
+    "result": "21 passed in15.83s",
+    "log": "GREEN01.log"
+  }
+]

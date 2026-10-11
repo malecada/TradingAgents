@@ -231,7 +231,7 @@ def _close_owned(descriptors,io):
     io._cleanup(tuple(lambda fd=fd:os.close(fd) for fd in descriptors))
 
 
-def _read_registered(run,name):
+def _read_registered(run,name,*,max_bytes=2*1024**2):
     """Bounded descriptor-relative exact read with one owned cleanup boundary.
 
     _open/_root are reused. _read is deliberately not delegated because its
@@ -242,8 +242,9 @@ def _read_registered(run,name):
     import stat
     from tradingagents.research.onchain_replication import score_batches as io
     require(type(name) is str and name in run.admission.inputs,'registered import input required')
+    require(type(max_bytes) is int and 0<max_bytes<=2*1024**2,'finite registered metadata bound required')
     root=run.admission.root.resolve();info=run.admission.inputs[name]
-    path=root/info['path'];limit=2*1024**2
+    path=root/info['path'];limit=max_bytes
     require(path.is_relative_to(root) and path.resolve()==path,'registered import path redirected')
     parent,fd=io._open(path.parent);child=None
     try:

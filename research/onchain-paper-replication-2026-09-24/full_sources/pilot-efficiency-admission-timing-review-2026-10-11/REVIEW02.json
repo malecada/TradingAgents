@@ -1,0 +1,111 @@
+{
+  "decision": "accepted",
+  "scope": "combined changed-seam source/integration only; no empirical release",
+  "at": "2026-10-11T12:51:37.664961+00:00",
+  "sources": [
+    {
+      "path": "tradingagents/research/onchain_replication/phase_timing.py",
+      "sha256": "97a6c5041914f27bae4b9fcbd81b6cf6bb0cdc90ae5315859c8df52794b1367f",
+      "bytes": 4283
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "e6f115620ffe7f8ef1252fe83984c14adef5e98ba2269e3f52d6797129c22c67",
+      "bytes": 21910
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "sha256": "f97c8960c0cf4c018b59af4fa93eaa2cee0875c65fb5129d0ccf9fbd4d8d751e",
+      "bytes": 47498
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/original_dictionary.py",
+      "sha256": "cdc4c753645859312cc9ef439d44c2d45f9f92e90dfa7c51d089e070fb85e0b1",
+      "bytes": 22277
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+      "sha256": "4cd753b29068aead097b609319d3165612108d597d1774f0a433664268f964c7",
+      "bytes": 52927
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/batched_numeric_execution.py",
+      "sha256": "a897ec57934ed2059ac1e4c706dfd7012aa0c1087977600928f46075f40cef3b",
+      "bytes": 24508
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/batched_numeric_reuse.py",
+      "sha256": "be98fdd022140325c8b3c5a59c957780a5837c43693effacb9f239cb446b436d",
+      "bytes": 21292
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/grouped_offload.py",
+      "sha256": "e11ca240b89ab611c521f68adda38322ff191d17e11f6c64387b230b3708aed2",
+      "bytes": 6969
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "sha256": "c52806aec23ebc52661b02f76868919d00cf6c646e1b311e985f6ddbdec1dc6c",
+      "bytes": 12100
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_storage.py",
+      "sha256": "5a1597a2b28895d7bd1cba5eaf375a54bc77d169a7a500a2ee02d10b7c30a078",
+      "bytes": 21272
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/failure_reporting.py",
+      "sha256": "9518a12cda242a284fdebe74a9c35b28ae010c8c782d31c32b4861a5edcb7b8a",
+      "bytes": 1041
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/training.py",
+      "sha256": "f413aeb89d72de563640b8b5fdb2bdf1159729d18f8d1de2a74733a116c3def0",
+      "bytes": 8262
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/evaluation.py",
+      "sha256": "b002b7bbff472b520581e24e480e8339d8711c4c710e2fbcd47678bf5138e7d3",
+      "bytes": 17213
+    },
+    {
+      "path": "tradingagents/research/lifecycle.py",
+      "sha256": "e45e53661e212d55da56565372c6ff2cada93f002160f555966523cb6eee40d3",
+      "bytes": 13475
+    }
+  ],
+  "independent_checks": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-admission-timing-review-2026-10-11/CHECK02.json",
+    "sha256": "c2c10ce47da75c31ca5fff77c2a6ca0814f31bc3be6fae49ce2da3f8048e9eef",
+    "bytes": 815
+  },
+  "prior_independent_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-admission-timing-review-2026-10-11/REVIEW01.json",
+    "sha256": "323760239fd675c3a0e16ca177629a09f1bfde9977a56a2c29ec02e6e93ddd91",
+    "bytes": 3925
+  },
+  "reused_evidence": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-storage-scan-2026-10-11/GREEN03.log",
+      "sha256": "e98ef4bbbe90bf87b1881d69d337a2a1f8d8768a5318da1732d4a335c967851c",
+      "bytes": 186
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-error-retention-2026-10-11/GREEN01.log",
+      "sha256": "3ced7a4b750fc9354eb6e5931d708201ec9ba0b003bccea0846e7a5c1947690e",
+      "bytes": 187
+    }
+  ],
+  "blockers": [],
+  "limitations": [
+    "partial exclusive telemetry; state_scan/publication not emitted",
+    "entry and pair_numeric are unclassified residual categories, not solver CPU",
+    "no real-data speed/RAM/capacity or deadline-success proof",
+    "compile/audit event cadence explicitly changes for selected cache",
+    "grouped source admission and shared storage observation remain non-atomic",
+    "storage Task3 author evidence reused, not independent implementation review",
+    "future registered source/module closure and selected roles still required"
+  ],
+  "read_only_main": true,
+  "science_imported": false
+}

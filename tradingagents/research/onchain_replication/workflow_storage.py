@@ -7,6 +7,7 @@ runner must pair it with bounded writes, checkpoint/event reservations and the
 outer free-disk guard, and retain any observed breach as terminal evidence.
 """
 from __future__ import annotations
+from . import phase_timing
 import os
 import hashlib
 import json
@@ -59,13 +60,14 @@ def _annotate(error,observed,history):
         error.add_note('storage diagnostic attachment unavailable: '+repr(secondary))
 
 class StorageWatch:
-    def __init__(self,root,limits,*,entry_limits=None):
+    def __init__(self,root,limits,*,entry_limits=None,_subdomain_factory=None):
         if type(limits) is not dict or set(limits)!=FIELDS or any(type(n) is not int or n<=0 for n in limits.values()):
             raise ValueError('positive integer storage limits required')
         if limits['max_depth']>64 or limits['max_scan_seconds']>5:
             raise ValueError('storage traversal depth/time limits too large')
         if entry_limits is not None and (type(entry_limits) is not dict or set(entry_limits)!={'regular_files','directories','max_file_bytes'} or any(type(n) is not int or n<=0 for n in entry_limits.values())):
             raise ValueError('positive sampled entry limits required')
+        self._subdomain_factory=_subdomain_factory
         self.entry_limits=None if entry_limits is None else MappingProxyType(dict(entry_limits))
         self.limits=MappingProxyType(dict(limits));self.root=Path(root)
         if not self.root.is_absolute() or self.root.resolve(strict=True)!=self.root:
@@ -75,11 +77,12 @@ class StorageWatch:
         self.identity=(info.st_dev,info.st_ino)
 
     def check(self):
-        begin=time.monotonic();history=[]
-        try:return self._check(begin,history)
-        except BaseException as error:
-            prior=getattr(error.__cause__ or error.__context__,'observation',{})
-            _annotate(error,prior,history);raise
+        with phase_timing.measure('storage_scan'):
+            begin=time.monotonic();history=[]
+            try:return self._check(begin,history)
+            except BaseException as error:
+                prior=getattr(error.__cause__ or error.__context__,'observation',{})
+                _annotate(error,prior,history);raise
 
     def _check(self,begin,history):
         for attempt in range(3):
@@ -117,6 +120,9 @@ class StorageWatch:
     def _scan(self,begin):
         observed={'allocated_bytes':0,'logical_file_bytes':0,'regular_files':0,'directories':0,'entries':0}
         limits=self.limits
+        # A new observer belongs to each scan attempt. Discard it on any
+        # failure, including cleanup failure; never carry partial counters.
+        subdomains=None if self._subdomain_factory is None else self._subdomain_factory()
         def enforce():
             for key,cap,reason in (('allocated_bytes','max_allocated_bytes','allocated'),('logical_file_bytes','max_logical_bytes','logical'),('entries','max_entries','entries')):
                 if observed[key]>limits[cap]:raise StorageLimit(reason,observed)
@@ -134,6 +140,16 @@ class StorageWatch:
                     if observed[key]>self.entry_limits[key]:raise StorageLimit('domain '+key,observed)
                 if stat.S_ISREG(info.st_mode) and info.st_size>self.entry_limits['max_file_bytes']:
                     raise StorageLimit('domain file bytes',observed)
+            if subdomains is not None:
+                try:subdomains.account(info,relative)
+                except StorageLimit as error:
+                    # Preserve subset evidence separately; outer union failure
+                    # accounting must add these full-root partial counters.
+                    error.residual_observation=dict(error.observation)
+                    error.residual_domain=error.observation.get('domain',error.observation.get('residual_domain'))
+                    error.observation={**observed,'residual_domain':error.residual_domain,
+                        'residual_observation':error.residual_observation}
+                    raise
             enforce()
         def descendant(action,relative):
             try:return action()
@@ -175,7 +191,7 @@ class StorageWatch:
             if not stat.S_ISDIR(current.st_mode) or (current.st_dev,current.st_ino)!=self.identity or self.root.resolve(strict=True)!=self.root:
                 raise ValueError('owned storage root changed during observation')
             enforce()
-            return {**observed,'elapsed_seconds':time.monotonic()-begin,'root':str(self.root),
+            return {**observed,**({} if subdomains is None else {'_subdomains':subdomains.result()}),'elapsed_seconds':time.monotonic()-begin,'root':str(self.root),
                 'root_device':self.identity[0],'root_inode':self.identity[1],
                 'qualification':'Sampled non-atomic st_blocks accounting, including directories; no hard filesystem quota or inter-sample growth guarantee.'}
         except BaseException as error:

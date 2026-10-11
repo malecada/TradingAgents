@@ -1,4 +1,5 @@
 """Explicit engineering result reuse; never old per-occurrence execution credit."""
+from . import phase_timing
 import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
 from pathlib import Path
 from . import adaptive_edge_policy
@@ -88,13 +89,14 @@ def immutable(graph):
 
 def numeric_key(a,b,configuration,limit):
     # Exact ordered framing, no hash-only equivalence and no retained graph refs.
-    arrays=[getattr(g,n) for g in (a,b) for n in ('node_features','edge_index','edge_features')]
-    headers=[raw({'dtype':x.dtype.str,'shape':list(x.shape)}) for x in arrays]
-    size=8+len(configuration)+sum(16+len(h)+x.nbytes for h,x in zip(headers,arrays,strict=True))
-    if size>limit:return None
-    parts=[struct.pack('>Q',len(configuration)),configuration]
-    for header,array in zip(headers,arrays,strict=True):parts.extend((struct.pack('>Q',len(header)),header,struct.pack('>Q',array.nbytes),array.tobytes(order='C')))
-    result=b''.join(parts);require(len(result)==size,'key extent differs');return result
+    with phase_timing.measure('cache_key'):
+        arrays=[getattr(g,n) for g in (a,b) for n in ('node_features','edge_index','edge_features')]
+        headers=[raw({'dtype':x.dtype.str,'shape':list(x.shape)}) for x in arrays]
+        size=8+len(configuration)+sum(16+len(h)+x.nbytes for h,x in zip(headers,arrays,strict=True))
+        if size>limit:return None
+        parts=[struct.pack('>Q',len(configuration)),configuration]
+        for header,array in zip(headers,arrays,strict=True):parts.extend((struct.pack('>Q',len(header)),header,struct.pack('>Q',array.nbytes),array.tobytes(order='C')))
+        result=b''.join(parts);require(len(result)==size,'key extent differs');return result
 
 def entry_size(entry):
     key,value,hashed=entry

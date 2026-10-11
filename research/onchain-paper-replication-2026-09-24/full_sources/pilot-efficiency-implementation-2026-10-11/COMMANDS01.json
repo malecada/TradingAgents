@@ -1,0 +1,74 @@
+{
+  "at": "2026-10-11T13:06:54.771351+00:00",
+  "commands": [
+    {
+      "actual_session": 81846,
+      "actual_terminal_chunk": "bfc2dd",
+      "command": ".venv/bin/python -B -m pytest -q tests/research/onchain_replication/test_backend_entry_bundle.py tests/research/onchain_replication/test_phase_timing.py",
+      "exit_code": 0,
+      "log": "TIMING_BUNDLE_RED02.log",
+      "result": "7 failed,14 passed (retained execution-phase RED; shell wrapper logged pytest failures and exited0)"
+    },
+    {
+      "actual_session": 76147,
+      "actual_terminal_chunk": "155f0d",
+      "command": "Focused source/timer seams (three files)",
+      "exit_code": 0,
+      "log": "ENTRY_TIMING_GREEN03.log",
+      "result": "36 passed/3.89s"
+    },
+    {
+      "actual_session": 66027,
+      "actual_terminal_chunk": "302666",
+      "command": "Combined focused changes (seven files)",
+      "exit_code": 2,
+      "log": "COMBINED_GREEN01.log",
+      "result": "Retained collection failure: timing import before future import; fixed by reordering."
+    },
+    {
+      "actual_session": 45137,
+      "actual_terminal_chunk": "0afd1a",
+      "command": "Combined focused changes (eight files)",
+      "exit_code": 0,
+      "log": "COMBINED_GREEN02.log",
+      "result": "79 passed/10.14s"
+    },
+    {
+      "actual_terminal_chunk": "d34af7",
+      "command": "Phase timing and profile-plan focused checks",
+      "exit_code": 0,
+      "log": "PROFILE_PLAN_GREEN01.log",
+      "result": "13 passed/0.13s"
+    },
+    {
+      "actual_terminal_chunk": "51a700",
+      "command": ".venv/bin/python -B scripts/research_runtime.py --check",
+      "exit_code": 0,
+      "log": "RUNTIME01.log",
+      "result": "Pinned interpreter/runtime check"
+    },
+    {
+      "actual_session": 15904,
+      "actual_terminal_chunk": "96bc71",
+      "command": ".venv/bin/python -B scripts/verify_offline.py",
+      "exit_code": 2,
+      "interruption": {
+        "actual_operation_chunk": "5475a9",
+        "pid": 2888876,
+        "reason": "Stop at first failure to limit repeated verification cost and diagnose exact synthetic cause.",
+        "signal": "SIGINT"
+      },
+      "log": "OFFLINE01.log",
+      "result": "Standard2841passed/97subtests/968.22s; neural stopped by Root SIGINT after first failure:1failed,213passed,4skipped,7subtests/711.13s. Neural suite incomplete."
+    },
+    {
+      "actual_session": 33174,
+      "actual_terminal_chunk": "558580",
+      "command": "Pinned pytest diagnostic for existing archive late-mutation synthetic test; selective exception tracing only, Main source unchanged",
+      "exit_code": 1,
+      "log": "NEURAL_FAILURE_DIAGNOSTIC01.log",
+      "result": "1failed/82.19s; exact earlier cause TypeError from obsolete zero-argument _kernel fixture. Production compact_mcm unchanged from prior HEAD."
+    }
+  ],
+  "qualification": "Tool-session terminal facts and actual retained test log outcomes are distinct. No empirical/source admission follows."
+}

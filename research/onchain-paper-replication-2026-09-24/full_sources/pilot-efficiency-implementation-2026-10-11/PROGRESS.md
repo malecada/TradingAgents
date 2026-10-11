@@ -1,0 +1,36 @@
+# Pilot efficiency implementation — 2026-10-11
+
+The user authorized the saved efficiency plan and requested better bottleneck attribution. Ordinary engineering is performed without a new financial registration. One progress directory and one combined changed-source review replace redundant skill task/review scaffolding; accepted immutable evidence is reused. No empirical pilot, new study claim, resampling, budget amendment or numerical-source freeze occurred.
+
+## Implemented
+
+- Opt-in `source-checked-backend-role-bundle-v1`: a sorted/deduplicated bounded role transaction uses fresh genuine admission at entry and exit. Every exact body is rejoined after the exit check. The selected backend parsers retain bounded path/hash/source/runtime/ABI checks. Legacy per-role traffic and all three entry lease boundaries remain. Ten slow reads versus two full validations is demonstrated on invented disposable Git inputs; this does not prove the real preparation fits its unchanged 60-second interval.
+- Training/evaluation retain the original fatal and attempt independent failure reports, including ENOSPC/unprintable-exception paths. Existing completed fit/checkpoint history is preserved.
+- Writable union/residual accounting uses one checked traversal, including discarded-attempt resets, birth identity, retry, cleanup and deadlines. Simultaneous-breach precedence and residual observation formatting are explicit operational changes. Observation remains non-atomic. Root separately inspected the storage author's implementation and focused evidence; the combined reviewer was also its author and does not supply a second independent storage review.
+- The independently accepted expected-code candidate02 is installed as an explicit selected input policy. Repeated source reads/hashes and current loaded-code/scope comparisons remain; compilation occurs once per activation/module. Compiler audit/profiling/warning cadence is deliberately different. Absent policy preserves original authentication. The historical candidate manifest's stale self-entry remains recorded and is not trusted.
+- Optional `phase_timing_policy=exclusive-wall-cpu-v1` requires a distinct registered `timing` output. A lexically owned admitted continuation records cumulative exclusive process wall/CPU time; the primary survives timing publication failure. Inline source/admission/role/lease/backend/numeric/cache/checkpoint/offload/worker-storage scopes preserve authored function identity. Pre-selection admission and final timing publication are excluded. `entry` and `pair_numeric` include unclassified remainders; `state_scan`/`publication` labels have no separate emission sites. Bytes across phase categories can overlap. Monitor-process work and native/chunk histograms are not yet measured by this process-local collector.
+- New bounded NumPy agreement helper is implemented and tested, but remains unselected. It uses the prospective C05 tolerance contract, not scalar bitwise/error-prefix identity. Its index/cursor/prefix, source/runtime and full-solver integration are pending; current writable indices would refuse its immutable-index contract.
+
+## Evidence and verification
+
+Retained RED/failed fixture/collection diagnostics are kept alongside GREEN results; none are erased. Root's collection error from placing a timing import before a future import was fixed by reordering it.
+
+- Entry/timer seam: 36 passed/3.89s; worker caller evidence: 34 passed/3.73s at its earlier snapshot.
+- Combined focused engineering: 79 passed/10.14s. Additional profile-plan tests are recorded separately after the lexical caller consolidation.
+- Error worker: 21 passed/15.83s. Storage worker: 44 passed/0.50s. Numeric helper: 8 passed/0.013s.
+- Independent review01 `323760239fd675c3a0e16ca177629a09f1bfde9977a56a2c29ec02e6e93ddd91`; final combined review02 `c233d54df005750d81ba18ff73e8b88c4116c16cdd9432796ce3e559145a320e`: 14 independent stdlib checks, exact inverse of nine lease routines and the entire admitted caller body after removing timing. Genuine loaded-function authenticator accepts the timing class/contextmanager functions. Accepted with the stated partial-telemetry limits.
+- Pinned runtime check exited0. Standard offline batch:2,841 passed/97 subtests in968.22s. The neural batch encountered `test_late_archive_mcm_mutation_preserves_spent_claims` failure (`KeyError: ledger` after an earlier caught producer error). Root stopped that actual test process once with SIGINT to limit cost:1 failed,213 passed,4 skipped,7 subtests/711.13s, outer exit2. This is incomplete neural verification, not a full pass. One focused diagnostic retained the earlier cause: the obsolete injected zero-argument `_kernel` lambda was called with `dictionary` (TypeError). Production `compact_mcm.py` is unchanged from13bb. Diagnostic exited1/82.19s, preserving the original failure. The current reviewed source is preserved first; the fixture signature then receives a focused fix/check. This does not establish a complete neural-suite pass.
+
+## Measurements, not forecasts
+
+Three actual loaded metadata modules/35 function entries: repeated helper authentication 5.159→3.462ms (1.49×; about33% lower), source reads/hashes unchanged18 per route, repeated compiles18→0. Initial cache build 7.564ms versus original4.907ms. Original helper time is predominantly compilation; residual cached time combines loaded-scope enumeration and code comparison. This is not a genuine Lease/whole-authority or 60-second capacity measurement.
+
+New 1024-pair helper is26–29× faster than scalar agreement in its synthetic component fixture, but slower at8 pairs. Actual chunk weighting, index-copy cost and current already-native comparator are unknown. No whole matching speedup follows.
+
+Retained pilot34 post-first window:7.751 published cells/s; numeric elapsed is24.29% of that window. An optimistic26× replacement of all non-authority numeric work while holding the rest fixed gives8.413 cells/s, not a forecast. Even removing all numeric time gives only10.238/s under those fixed-window assumptions. The first batch's56% authority share cannot be generalized. Full415,968,128-cell feasibility and training time remain unmeasured.
+
+## Next executable requirements
+
+Pilot35's permanent FAILED terminal outcome now has independent acceptance `7224646b35c3fe8094c19288ad81be7c1650be458b7a3723198e82bc1a86aba4`:71 checks/40 public reference bodies. It is never relaunched. Its actual five raw roots and absent sixth path need the reviewed incremental external preservation/recovery before an empirical successor.
+
+The neural failure is scoped to an obsolete injected test signature. Commit/push and actually recover this exact changed-source/failed35 increment, then correct the fixture and run the affected control. Then implement authenticated completed-prefix continuation under a fresh identity, integrate/qualify the numeric adapter against the complete current solver, measure useful bounded-worker capacity, and freeze one coherent successor registration/entry/source/runtime closure. Original seven WHOLE graphs,32 motifs/512 spent samples, method/model/tolerances and all spent outcomes remain fixed. No real pilot or paper financial fit is complete.

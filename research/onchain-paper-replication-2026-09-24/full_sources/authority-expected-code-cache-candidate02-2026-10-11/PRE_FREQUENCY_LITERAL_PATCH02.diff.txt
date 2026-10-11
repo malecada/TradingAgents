@@ -1,0 +1,191 @@
+--- tradingagents/research/onchain_replication/imported_authority_lease.py
++++ imported_authority_lease.py
+@@ -1,5 +1,6 @@
+ """Opt-in genuine imported authority with explicit sampled detection timing."""
+ import contextlib,hashlib,json,sys,types
++import builtins
+ from pathlib import Path
+ from .imported_authority_interval import Interval,fingerprint,policy,require
+ 
+@@ -72,6 +73,82 @@
+                 require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')
+             else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes.get(code.co_name,())),'loaded code not bound to authenticated source: '+label)
+ 
++
++_EXPECTED_COMPILE = builtins.compile
++EXPECTED_POLICY = {'schema_version': 1, 'kind': 'activation-owned-expected-code-v1', 'max_loaded_modules': 2048, 'max_code_objects': 262144, 'assumption': 'Expected source code is compiled once per loaded module per activation. Repeated compile/audit/profiling and compiler-warning side effects are intentionally not equivalent; no absence of hooks is asserted. Every authentication still freshly reads and hashes source and checks current loaded capabilities. No validation success, stat or resolved-path cache.'}
++
++def expected_code_policy(value):
++    if value is None:return None
++    require(type(value) is dict and set(value)==set(EXPECTED_POLICY), 'exact expected-code policy required')
++    require(all(type(value[k]) is type(v) and value[k]==v for k,v in EXPECTED_POLICY.items()), 'unsupported expected-code contract')
++    return tuple(sorted(value.items()))
++
++def _expected_context(lease,selected):
++    compiler=builtins.compile
++    require(compiler is _EXPECTED_COMPILE and type(compiler) is types.BuiltinFunctionType
++            and compiler.__module__=='builtins' and compiler.__name__=='compile'
++            and globals().get('compile',compiler) is compiler, 'captured builtin compiler required')
++    require(len(lease.loaded)<=dict(selected)['max_loaded_modules'], 'expected module allowance exceeded')
++    scope=tuple((name,module,path,functions) for name,(module,path,functions) in lease.loaded.items())
++    return (compiler,sys.flags.optimize,lease.loaded,tuple(lease.sources.items()),lease.run.admission.root,scope)
++
++def _expected_current(lease):
++    require(lease._expected_policy is lease._expected_policy_pin, 'expected-code policy replaced')
++    if lease._expected_policy is None:return
++    require(expected_code_policy(dict(lease._expected_policy))==lease._expected_policy, 'expected-code policy changed')
++    context=lease._expected_context
++    require(context is lease._expected_context_pin and lease._expected_tables is lease._expected_tables_pin, 'expected-code table/context replaced')
++    compiler,optimize,loaded,sources,root,scope=context
++    require(builtins.compile is compiler and _EXPECTED_COMPILE is compiler
++            and globals().get('compile',compiler) is compiler and sys.flags.optimize==optimize, 'expected-code compiler/optimization changed')
++    require(lease.loaded is loaded and tuple(lease.sources.items())==sources
++            and lease.run.admission.root==root, 'expected-code source scope changed')
++    require(len(loaded)==len(scope), 'expected-code loaded roster changed')
++    for name,module,path,functions in scope:
++        require(name in loaded and loaded[name][0] is module and loaded[name][1]==path
++                and loaded[name][2] is functions and sys.modules.get(name) is module, 'expected-code module scope changed')
++        for label,fn,code in functions:
++            require(fn.__code__ is code, 'expected-code loaded function code changed: '+label)
++
++def _authenticate_expected(lease):
++    _expected_current(lease)
++    compiler,optimize,loaded,source_items,root,scope=lease._expected_context
++    sources=lease.sources;expected=lease._expected_tables;tables=[];total_codes=0
++    require(_loaded(root,sources)==loaded, 'expected-code current loaded scope differs')
++    for index,(module,p,functions) in enumerate(loaded.values()):
++        raw=p.read_bytes();require(hashlib.sha256(raw).hexdigest()==sources[str(p.relative_to(root))],'loaded source body differs')
++        if expected is None:
++            compiled=compiler(raw,str(p),'exec',dont_inherit=True,optimize=optimize);codes={}
++            def walk(code):
++                codes.setdefault(code.co_name,[]).append(code)
++                for value in code.co_consts:
++                    if type(value) is types.CodeType:walk(value)
++            walk(compiled)
++            total_codes+=sum(len(v) for v in codes.values())
++            require(total_codes<=dict(lease._expected_policy)['max_code_objects'], 'expected code allowance exceeded')
++            frozen=types.MappingProxyType({name:tuple(values) for name,values in codes.items()})
++            tables.append((p,sources[str(p.relative_to(root))],frozen))
++        else:
++            require(len(expected)==len(loaded), 'expected table extent changed')
++            path,digest,codes=expected[index]
++            require(path==p and digest==sources[str(p.relative_to(root))], 'expected table path/hash differs')
++        for label,fn,code in functions:
++            if label.endswith('.metadata_generated'):
++                require(module.__name__=='tradingagents.research.onchain_replication.typed_tail_binding'
++                        and label in {'Binding.'+attr+'.metadata_generated' for attr in
++                            ('__init__','__repr__','__eq__','__setattr__','__delattr__','__hash__','__replace__')}
++                        and fn is vars(module.Binding).get(label.split('.')[1])
++                        and code.co_filename!=str(p), 'generated metadata boundary differs')
++                # Generated metadata methods retain identity/code snapshot checks;
++                # their bodies are runtime-generated, not source-authored authority.
++                continue
++            if label.endswith('.contextmanager'):
++                wrapped=getattr(fn,'__wrapped__',None)
++                require(type(wrapped) is types.FunctionType and fn.__code__ is contextlib.contextmanager(wrapped).__code__ and fn.__globals__ is vars(contextlib) and len(fn.__closure__ or ())==1 and fn.__closure__[0].cell_contents is wrapped,'contextmanager changed')
++            else:require(code.co_filename==str(p) and any(code==candidate for candidate in codes.get(code.co_name,())),'loaded code not bound to authenticated source: '+label)
++    _expected_current(lease)
++    return tuple(tables) if expected is None else expected
++
+ def _checked_value(raw,baseline,current,current_pin,original):
+     """Callback-free metadata rejoin; grants no authority by itself."""
+     from .provenance import canonical_bytes
+@@ -86,7 +163,7 @@
+ 
+ _TOKEN=object()
+ class Lease:
+-    def __init__(self,token,execution,selected):
++    def __init__(self,token,execution,selected,expected_policy=None):
+         require(token is _TOKEN,'use genuine registered activation')
+         from .provenance import canonical_bytes,thaw
+         self.execution=execution;self.owner=execution._owner;self.stage=execution._stage;self.prepared=self.stage.prepared;self.bound=execution._bound;self.run=self.bound._run
+@@ -98,12 +175,22 @@
+         paths.update(root/v['path'] for v in self.run.admission.inputs.values())
+         paths.add(root/'uv.lock');require(len(paths)<=2048,'bounded evidence roster exceeded')
+         self.paths=tuple(sorted(paths));self.fingerprints=tuple(fingerprint(p) for p in self.paths)
+-        self.loaded=_loaded(root,self.sources);_authenticate_loaded(self.loaded,self.sources,root)
++        self.loaded=_loaded(root,self.sources)
++        self._expected_policy=expected_code_policy(expected_policy);self._expected_policy_pin=self._expected_policy
++        self._expected_context=self._expected_context_pin=None
++        self._expected_tables=self._expected_tables_pin=None
++        if self._expected_policy is None:
++            _authenticate_loaded(self.loaded,self.sources,root)
++        else:
++            self._expected_context=self._expected_context_pin=_expected_context(self,self._expected_policy)
++            self._expected_tables=self._expected_tables_pin=_authenticate_expected(self)
++            _expected_current(self)
+         self.value=canonical_bytes(execution.check())
+         self.scheduler.validate(self._full,self._finger,self._live,boundary=True)
+     def _identity(self):
+         from .provenance import canonical_bytes,thaw
+         e=self.execution
++        _expected_current(self)
+         require(self.scheduler is self._scheduler_pin and self.scheduler.policy is self._policy_pin and self.scheduler.clock is self._clock_pin,'registered scheduler/policy/clock changed')
+         require(not self.closed and all(a is b for a,b in zip((e,e._owner,e._stage,e._stage.prepared,e._bound,e._bound._run,e._materialized,e._stage.prepared._cap),self.objects,strict=True)),'import authority objects changed')
+         require(not self.prepared._closed and not self.prepared._cap._closed and self.stage.closed and not self.owner.closed and not self.owner.poisoned,'import owner/prepared is closed/poisoned/incomplete')
+@@ -115,11 +202,15 @@
+         self._identity();require(tuple(fingerprint(p) for p in self.paths)==self.fingerprints,'source/input identity changed')
+         current=_loaded(self.run.admission.root,self.sources)
+         require(current==self.loaded,'loaded module/function identity changed')
++        _expected_current(self)
+     def _full(self):
+         from .provenance import canonical_bytes
+         self._identity();value=canonical_bytes(self.execution.check())
+         require(value==self.value,'full imported baseline differs')
+-        _authenticate_loaded(self.loaded,self.sources,self.run.admission.root)
++        if self._expected_policy is None:
++            _authenticate_loaded(self.loaded,self.sources,self.run.admission.root)
++        else:
++            require(_authenticate_expected(self) is self._expected_tables,'expected table replaced by authentication')
+         if self.target is not None:self.target.final(full_graph=False)
+         return value
+     def _live(self):
+@@ -168,7 +259,13 @@
+     job=json.loads(run.read_input('execution_job'));_,_,plan=admitted(run.admission,job)
+     require(plan['schema_version']==2 and plan.get('imported_authority_lease_input')==input_name and input_name in run.admission.inputs,'explicit registered schema2 interval input required')
+     selected=policy(json.loads(run.read_input(input_name)))
+-    contract=Lease(_TOKEN,execution,selected);execution._sampled_authority_lease=contract
++    expected=None
++    if 'expected_code_cache_input' in plan:
++        role=plan['expected_code_cache_input']
++        require(role in run.admission.inputs and role!=input_name,'distinct admitted expected-code input required')
++        expected=expected_code_policy(json.loads(run.read_input(role)))
++        require(expected is not None,'explicit expected-code selection required')
++    contract=Lease(_TOKEN,execution,selected,**({'expected_policy':dict(expected)} if expected is not None else {}));execution._sampled_authority_lease=contract
+     return contract
+ 
+ def check(execution,*,boundary=False,_return_value=False):
+--- tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ real_pilot_import_caller.py
+@@ -47,6 +47,11 @@
+         require(full and type(refs) is dict and set(refs)=={'policy_input','transport_input'} and all(type(v) is str and v for v in refs.values()) and len(set(refs.values()))==2,'explicit schema2 archive input pair required')
+     interval='imported_authority_lease_input' in p
+     require(not interval or (full and type(p['imported_authority_lease_input']) is str and bool(p['imported_authority_lease_input'])),'explicit schema2 interval input required')
++    code_cache='expected_code_cache_input' in p
++    require(not code_cache or (interval and full and type(p['expected_code_cache_input']) is str
++            and 0<len(p['expected_code_cache_input'])<=128 and p['expected_code_cache_input'].isascii()
++            and all(c.isalnum() or c in '_-' for c in p['expected_code_cache_input'])
++            and p['expected_code_cache_input']!=p['imported_authority_lease_input']), 'explicit distinct expected-code input required')
+     partial = 'partial_progress' in p
+     if partial:
+         from .real_pilot_partial_progress import policy
+@@ -59,7 +64,7 @@
+         diagnostic_policy(p['scoring_diagnostic'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -327,6 +332,10 @@
+     if p.get('imported_authority_lease_input') is not None:
+         from .imported_authority_interval import policy
+         policy(_read(ad,p['imported_authority_lease_input']));roles.add(p['imported_authority_lease_input'])
++    if 'expected_code_cache_input' in p:
++        from .imported_authority_lease import expected_code_policy
++        require(expected_code_policy(_read(ad,p['expected_code_cache_input'])) is not None,'explicit expected-code selection required')
++        roles.add(p['expected_code_cache_input'])
+     if 'archive_inputs' in p:roles.update(p['archive_inputs'].values())
+     if '0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba' in p['graph_inputs']:
+         from .real_pilot_legacy_graph import registered
