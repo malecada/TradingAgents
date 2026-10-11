@@ -1,0 +1,305 @@
+{
+  "correction": {
+    "reason": "Earlier draft misidentified second boundary; current REPORT01 corrects to third553 and ten intervening admissions.",
+    "superseded": "WITHDRAWN_DRAFT01.md"
+  },
+  "exclusions": [
+    "No strategy/financial validity",
+    "No new eligibility or admission",
+    "No process lifetime history proof",
+    "No remote free-space or external recovery proof",
+    "No population ETA or speedup",
+    "No benchmark execution"
+  ],
+  "findings": [
+    {
+      "anchors": [
+        "compact_mcm_batched.py:543",
+        "compact_mcm_batched.py:550",
+        "compact_mcm_batched.py:551",
+        "compact_mcm_batched.py:552",
+        "compact_mcm_batched.py:553",
+        "lifecycle.py:156"
+      ],
+      "classification": "confirmed source route; latency attribution unknown",
+      "facts": "Third boundary553 failed at interval freshness entry; ten fresh run.read_input admissions between completed550 and553: four normalization, six edge. Earlier three output-policy reads are outside failing gap.",
+      "id": "entry",
+      "unknown": "Individual or summed exclusive admission cost; numerical acceleration cannot fix this pre-matching failure."
+    },
+    {
+      "classification": "confirmed duplicate subset traversal; cost unknown",
+      "facts": "Residual scan precedes encompassing union scan, metadata not payload hashing. Merge requires preserving all sublimits, race/refusal/deadline semantics and review of changed observation timing.",
+      "id": "storage"
+    },
+    {
+      "classification": "explicit unsupported capability",
+      "facts": "Mathematical checkpoints exist; whole job explicitly nonresumable. Terminal35 cannot reopen. Two grouped recoveries are required by present closure contract, not removable accidental duplication.",
+      "id": "resume"
+    },
+    {
+      "classification": "prospective feasibility unknown",
+      "facts": "At most two bounded local pair workers under same6GiB/twoCPU cap; parent original ordered cache/checkpoint/publication/accounting and genuine authority retained. Parent waits must service validation; speculative work and interleaved callbacks require explicit reviewed opt-in contract.",
+      "id": "multiprocessing"
+    },
+    {
+      "classification": "measured sample and declared bounds distinguished",
+      "facts": "Physical16GB does not enlarge6GiB job cap. Worker runtime/IPC/checkpoint overlap unknown. Historical55.44GB supplied figure not remeasured or adopted as current requirement.",
+      "id": "capacity",
+      "job_memory_max_bytes": 6442450944,
+      "oom_events": 0,
+      "sample_to_high_difference_bytes": 47091712,
+      "sample_to_max_difference_bytes": 1120833536,
+      "sampled_job_memory_peak_bytes": 5321617408
+    }
+  ],
+  "fresh_host_observation": {
+    "MemAvailable_bytes": 10972692480,
+    "MemTotal_bytes": 16135782400,
+    "at": "2026-10-11T09:27:03.387476+00:00",
+    "disk_free_bytes": 31165001728,
+    "disk_total_bytes": 324237488128,
+    "disk_used_bytes": 276527222784,
+    "qualification": "Instantaneous host observation, not reservation or future capacity."
+  },
+  "implementation_stop": {
+    "main_modified": false,
+    "multiprocessing_files_created": false,
+    "numerical_jobs_run": false,
+    "worker_tests_run": false
+  },
+  "proposed_sequence": [
+    "Preserve/recover original35; measure exact entry and monitor exclusive costs.",
+    "Review plan before implementation; one narrow serial reliability/cost correction with unchanged scientific method and freshness.",
+    "After serial preparation reaches first numeric publication, implement optional bounded two-worker route only under reviewed authority/ordering semantics.",
+    "Finite fake IPC controls then separately authorized numerical equality, memory and end-to-end scaling qualification.",
+    "One coherent source closure, changed-seam review, final gate/binding/admission and actual recovery; no deletion before verified full scope return."
+  ],
+  "recorded_at_utc": "2026-10-11T09:27:03.387476+00:00",
+  "ref_semantics": "Fresh file hashes; filesystem mtime is observed metadata, not publication/availability proof. Terminal event times are original recorded observations. No installed arrays or private transport bodies inspected.",
+  "source_refs": [
+    {
+      "bytes": 36922,
+      "mtime_ns_observed": 1791488656336549847,
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "2f0f33fe858dfcd2b5f1d76f8aaefe3ba87a333992cf89183f0fa254d17380f0"
+    },
+    {
+      "bytes": 52034,
+      "mtime_ns_observed": 1791488656358549922,
+      "path": "tradingagents/research/onchain_replication/resources.py",
+      "sha256": "7bd0fad9e790be8a024b490bdd604d7aeda146e00d21b095f4b21c1391147f7a"
+    },
+    {
+      "bytes": 15891,
+      "mtime_ns_observed": 1791488656349549892,
+      "path": "tradingagents/research/onchain_replication/real_pilot_storage.py",
+      "sha256": "5c9e6a8e9c26d85065f60b52ef65581b5d2a3379be4ccfb2a2b3efd264aa941e"
+    },
+    {
+      "bytes": 10946,
+      "mtime_ns_observed": 1791277005417485951,
+      "path": "tradingagents/research/onchain_replication/workflow_storage.py",
+      "sha256": "deff02766685c1e7fb8628766acf0e0c36dc324da4672f3adc094bfac3e24a74"
+    },
+    {
+      "bytes": 50323,
+      "mtime_ns_observed": 1791705459063843224,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+      "sha256": "6348998a36acf005af8bd5d2980d7e3961d08a510d7f45fb10d1f5b6e1f43957"
+    },
+    {
+      "bytes": 11390,
+      "mtime_ns_observed": 1791244883731622152,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_publication.py",
+      "sha256": "713d92d8aee98ae3ab8b8cdd6b47b10369c3e2a62ea5ea3fc5ca6a2730467b46"
+    },
+    {
+      "bytes": 10883,
+      "mtime_ns_observed": 1791542497170547378,
+      "path": "tradingagents/research/onchain_replication/batched_driver.py",
+      "sha256": "047a0762cc0eee53e0ad440339238baeb527158c3a2f33293164e0b91b7a395b"
+    },
+    {
+      "bytes": 21193,
+      "mtime_ns_observed": 1791705459063843224,
+      "path": "tradingagents/research/onchain_replication/batched_numeric_reuse.py",
+      "sha256": "083ec7d86633ed2fea4b2c50f39bae65bd08952ed0c57a1dc06e49822f75c66d"
+    },
+    {
+      "bytes": 24415,
+      "mtime_ns_observed": 1791705459063843224,
+      "path": "tradingagents/research/onchain_replication/batched_numeric_execution.py",
+      "sha256": "1b7aa26e5feeff15c796336baadf117cb0f80bf069bc386c7ee299ee257e30da"
+    },
+    {
+      "bytes": 9013,
+      "mtime_ns_observed": 1791705459063843224,
+      "path": "tradingagents/research/onchain_replication/batched_pair_executor.py",
+      "sha256": "eea5d79f8c5e686b750ef2db5e571dd01803bc193236b06bcfd2fd6b5f027cb8"
+    },
+    {
+      "bytes": 14268,
+      "mtime_ns_observed": 1791705459063843224,
+      "path": "tradingagents/research/onchain_replication/matching_checkpoint.py",
+      "sha256": "eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693"
+    },
+    {
+      "bytes": 8081,
+      "mtime_ns_observed": 1791468806546559864,
+      "path": "tradingagents/research/onchain_replication/matching_hardening.py",
+      "sha256": "3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c"
+    },
+    {
+      "bytes": 8253,
+      "mtime_ns_observed": 1790695965496618875,
+      "path": "tradingagents/research/onchain_replication/contracts.py",
+      "sha256": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a"
+    },
+    {
+      "bytes": 6624,
+      "mtime_ns_observed": 1791558057220360044,
+      "path": "tradingagents/research/onchain_replication/grouped_offload.py",
+      "sha256": "9ebb628a35feca852475b5e255d4ddf952d383b7a5f1a2fc08ad0054c90da3ea"
+    },
+    {
+      "bytes": 7680,
+      "mtime_ns_observed": 1791513459063642447,
+      "path": "tradingagents/research/onchain_replication/registered_offload.py",
+      "sha256": "0066bf2479211dc5bb8b96dc2dea621cdb8f3f77c60879b66a3a34db0954e7ee"
+    },
+    {
+      "bytes": 9067,
+      "mtime_ns_observed": 1791516005531343724,
+      "path": "tradingagents/research/onchain_replication/batched_pilot_reservations.py",
+      "sha256": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6"
+    },
+    {
+      "bytes": 7159,
+      "mtime_ns_observed": 1791516005531343724,
+      "path": "tradingagents/research/onchain_replication/real_pilot_reservations.py",
+      "sha256": "9670b15ff6a21e20c300020476f9cc746860972b079ea32525dee3d113a1e6d7"
+    },
+    {
+      "bytes": 15453,
+      "mtime_ns_observed": 1791244883744621937,
+      "path": "tradingagents/research/onchain_replication/score_tail_archive.py",
+      "sha256": "dbd6c4ca56ca2ae30f7c0f779b5a62a81258654c4c82802cdbc2d5ebeb78f20c"
+    },
+    {
+      "bytes": 4566,
+      "mtime_ns_observed": 1791303956995796665,
+      "path": "tradingagents/research/onchain_replication/imported_authority_interval.py",
+      "sha256": "e61ef97f883ed9d27107f6316b774697b8949d83c313928150a0ae717b283f6f"
+    },
+    {
+      "bytes": 13689,
+      "mtime_ns_observed": 1791702936907321300,
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "aa7e99a3903407294d352c42f24c9b9730f95af365503b9de053e06bd5b11b36"
+    },
+    {
+      "bytes": 10509,
+      "mtime_ns_observed": 1790936947397528570,
+      "path": "tradingagents/research/lifecycle.py",
+      "sha256": "88589c2dab53954711a66a22f2bf7e134a6e7d21072c5b7b508d11f04c6490dc"
+    },
+    {
+      "bytes": 20076,
+      "mtime_ns_observed": 1791527652936187617,
+      "path": "tradingagents/research/admission.py",
+      "sha256": "90bb459bcc7d9f73dda6965c59bf3d6f3bf75f3cbb8bd0ff3b869f7f8b76c930"
+    },
+    {
+      "bytes": 4273,
+      "mtime_ns_observed": 1791710504387577723,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/ROOT_TERMINAL_OPERATION01.json",
+      "sha256": "d30e5e42db78e1fdb53368253c18f5c967d04a1d7f35f2071879eb4b26d5fef6"
+    },
+    {
+      "bytes": 1575,
+      "mtime_ns_observed": 1791709869564104333,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/child_exit.json",
+      "sha256": "7497e339d555366cbef4a93cff101f1c44cd23cbf660794ae67ded76e7c18d88"
+    },
+    {
+      "bytes": 1112,
+      "mtime_ns_observed": 1791709868527118654,
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-35/failed.json",
+      "sha256": "f0b8d8f035cc3c5a4d04eeb1d35470125752e9be7a5196412537f154e6840a00"
+    },
+    {
+      "bytes": 9616,
+      "mtime_ns_observed": 1791709871506077518,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/FINAL_STORAGE01.json",
+      "sha256": "940165695ea1f15373e504eba1643c3c96387260e9e92a212930b9a7e40b009a"
+    },
+    {
+      "bytes": 19499,
+      "mtime_ns_observed": 1791709870073097304,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/final.json",
+      "sha256": "b318246ada68ba0d3bea9743cb8221c8694366c08754e7cc9d70a5aee892de7c"
+    },
+    {
+      "bytes": 173,
+      "mtime_ns_observed": 1791709871316080141,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/ROOT_IO_CLOSED01.json",
+      "sha256": "21972e95a7d0353729a854aac38eb70a0bc506595522155aeade30cee91b1865"
+    },
+    {
+      "bytes": 4612,
+      "mtime_ns_observed": 1791709868518118779,
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-35/outputs/pilot-summary.json",
+      "sha256": "fde6081ccbdc54214c452db31924358116c4672eabafc76074d8f5355dd17095"
+    },
+    {
+      "bytes": 4043,
+      "mtime_ns_observed": 1791709868531118599,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/child.log",
+      "sha256": "48e2d845fe5c8490842e4d39edb64626f7f1d1fda9981fc718ef581891698ff7"
+    },
+    {
+      "bytes": 77993,
+      "mtime_ns_observed": 1791706376354346602,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/CAPACITY_DECLARATION_ROOT01.json",
+      "sha256": "ab58496b354cd4b0bd97fa514d715383fb578235f53e8462ad52940f4647b179"
+    },
+    {
+      "bytes": 9023,
+      "mtime_ns_observed": 1791709700208470874,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot35-monitor-cost-investigation01-2026-10-11/FINDINGS01.json",
+      "sha256": "57428897ab53d1ef472f9c6877bd70e40dc7e520425aed628e496c993b4caaaa"
+    },
+    {
+      "bytes": 6143,
+      "mtime_ns_observed": 1791706265526737247,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/public01/execution_job.json",
+      "sha256": "3dc3542d0f1070892653e4f2ab0a6ede71174b9b1a2eb50ff2e55d231b8350e9"
+    },
+    {
+      "bytes": 3948,
+      "mtime_ns_observed": 1791706265526737247,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/public01/mcm_policy.json",
+      "sha256": "00f55f744d5e6c27dbd6f8a494663c36646d067b75912ef6b8b17ab1f5e6becd"
+    },
+    {
+      "bytes": 26936,
+      "mtime_ns_observed": 1791706265526737247,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/public01/pair_policy.json",
+      "sha256": "60278cd0e1f6f58f2a3b224f8b3db83f085e0a92c615555dbfe2b9fa4d210852"
+    },
+    {
+      "bytes": 1265,
+      "mtime_ns_observed": 1791706265527737234,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/public01/compact_policy.json",
+      "sha256": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada"
+    },
+    {
+      "bytes": 5265,
+      "mtime_ns_observed": 1791706265526737247,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-binding-preparation01-2026-10-11/public01/typed_payload.json",
+      "sha256": "5902c014c2569aad172df3ad6ec0a202c20145db33647a5dfc2204e623514f23"
+    }
+  ],
+  "status": "READ_ONLY_ANALYSIS_AND_PROPOSED_PLAN_NOT_IMPLEMENTATION_OR_LAUNCH_RELEASE",
+  "terminal_receipt_join_count": 7
+}

@@ -1,0 +1,105 @@
+{
+  "actual_output_joins": {
+    "archive-receipt.json": {
+      "bytes": 878,
+      "sha256": "ee445b6555fefd3669bab299d3ac992aa0ddf3249e7f54af00d707212f7aac28"
+    },
+    "archive-terminal.json": {
+      "bytes": 882,
+      "sha256": "0443594a9d4e7560663accec23c9d746f757bbc342be5ba26c652688087384fd"
+    },
+    "cell-ledger.json": {
+      "bytes": 261,
+      "sha256": "25dd82ecaf69fd15e107d7c5720bc5b5cd46232518f9ad1fd257212a496f3d93"
+    },
+    "pilot-summary.json": {
+      "bytes": 4612,
+      "sha256": "fde6081ccbdc54214c452db31924358116c4672eabafc76074d8f5355dd17095"
+    },
+    "resource-binding.json": {
+      "bytes": 192,
+      "sha256": "fa40899a60cd15be57b007fc9c815ff32879fcd3fdd23fecea32b2cd67f24a7f"
+    },
+    "resource-journal.json": {
+      "bytes": 192,
+      "sha256": "fa40899a60cd15be57b007fc9c815ff32879fcd3fdd23fecea32b2cd67f24a7f"
+    },
+    "resource-population-binding.json": {
+      "bytes": 1180,
+      "sha256": "363b51245af7a38217ccba9b6c8d0cf9283e38cd4fc0b03e1e4498a82555aa5e"
+    },
+    "resource-population.json": {
+      "bytes": 215222,
+      "sha256": "2bba5228869300fe51c40ce62ae482a23afd65d5a49b69d605e1f0e6b99101b0"
+    }
+  },
+  "actual_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "MainPID": "0",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "at": "2026-10-11T09:21:44.388579+00:00",
+  "observed_pid_sample_absent": [
+    2449406,
+    2450350,
+    2450878,
+    2451329,
+    2451332
+  ],
+  "original_cgroup_absent": true,
+  "original_experiment": "eth-paper-real-data-end-to-end-resource-20261011-35",
+  "original_failure": {
+    "claim_sha256": "de47bdf7a4bd05b65e5b335054830dc67f3410c85525ff84aa2a246af290d8a5",
+    "ended_at": "2026-10-11T09:11:08.527720+00:00",
+    "reason": "ValueError: import lease: stale interval cannot refresh"
+  },
+  "original_receipts": {
+    "child_exit": {
+      "bytes": 1575,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/child_exit.json",
+      "sha256": "7497e339d555366cbef4a93cff101f1c44cd23cbf660794ae67ded76e7c18d88"
+    },
+    "failed": {
+      "bytes": 1112,
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-35/failed.json",
+      "sha256": "f0b8d8f035cc3c5a4d04eeb1d35470125752e9be7a5196412537f154e6840a00"
+    },
+    "final_storage": {
+      "bytes": 9616,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/FINAL_STORAGE01.json",
+      "sha256": "940165695ea1f15373e504eba1643c3c96387260e9e92a212930b9a7e40b009a"
+    },
+    "guard": {
+      "bytes": 19499,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/final.json",
+      "sha256": "b318246ada68ba0d3bea9743cb8221c8694366c08754e7cc9d70a5aee892de7c"
+    },
+    "root_io": {
+      "bytes": 173,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full35-entry-preparation01-2026-10-11/ROOT_IO_CLOSED01.json",
+      "sha256": "21972e95a7d0353729a854aac38eb70a0bc506595522155aeade30cee91b1865"
+    },
+    "summary": {
+      "bytes": 4612,
+      "path": "research_runs/eth-paper-real-data-end-to-end-resource-20261011-35/outputs/pilot-summary.json",
+      "sha256": "fde6081ccbdc54214c452db31924358116c4672eabafc76074d8f5355dd17095"
+    },
+    "traceback": {
+      "bytes": 4043,
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35/guard/child.log",
+      "sha256": "48e2d845fe5c8490842e4d39edb64626f7f1d1fda9981fc718ef581891698ff7"
+    }
+  },
+  "outcome": "PERMANENT_FAILED_SPENT",
+  "pid_history_qualification": "Known observed sample only; no complete lifetime PID history is invented.",
+  "qualification": "Actual terminal, original immutable outputs, reaped parent/log closure, absent cgroup and known PID sample. Not independent review, full external recovery, MCM completion or fitting.",
+  "root_exec_terminal": {
+    "actual_exit_code": 1,
+    "actual_terminal_tool_chunk": "accf42",
+    "session_id": 4521
+  },
+  "source_freeze": "ENDED_AFTER_ACTUAL_CLOSURE"
+}

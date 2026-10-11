@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "scope": "read_only_scientific_source_data_and_evidence_audit",
+  "decision": "analysis_and_plan_only_no_execution_or_admission",
+  "findings": [
+    {
+      "id": "F1",
+      "classification": "observed_operational_blocker",
+      "location": "tradingagents/research/onchain_replication/compact_mcm_batched.py:550",
+      "claim": "Actual third lease boundary failed after policy input construction; ten fresh read_input admissions lie in preceding gap; timings do not attribute sole cause."
+    },
+    {
+      "id": "F2",
+      "classification": "definite_source_failure_path",
+      "location": "tradingagents/research/onchain_replication/training.py:96",
+      "claim": "Unprotected exception formatting and failure publication may replace primary training exception."
+    },
+    {
+      "id": "F3",
+      "classification": "source_guarantee_limit",
+      "location": "tradingagents/research/onchain_replication/training.py:91",
+      "claim": "Checkpoint interval checked only after complete batch, not hard wall-time bound."
+    },
+    {
+      "id": "F4",
+      "classification": "definite_documentation_drift",
+      "location": "research/onchain-paper-replication-2026-09-24/fidelity.json",
+      "claim": "Historical pending target and interim checkpoint statuses require current applicability index; do not mutate frozen history."
+    },
+    {
+      "id": "F5",
+      "classification": "evidence_gap",
+      "location": "research/onchain-paper-replication-2026-09-24/full_sources/pilot35-throughput-telemetry-investigation01-2026-10-11/OBSERVATION_MAP01.json",
+      "claim": "Selected native policy lacks actual production hit/fallback telemetry; no real speed claim."
+    }
+  ],
+  "no_new_tests_run": true,
+  "actual_data_bodies_inspected": false,
+  "full_replication_proved": false
+}
