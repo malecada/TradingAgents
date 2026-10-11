@@ -1,0 +1,11 @@
+--- pre-review/preflight36_01.py
++++ preflight36_01.py
+@@ -256,7 +256,7 @@
+     for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review'):
+         reference(binding.get(role))
+     # Unknown draft references refuse before admission, subprocesses or scans.
+-    for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review'):reference(binding[role])
++    for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review','complete_increment_recovery','new_increment_recovery_review'):reference(binding[role])
+     need(binding['gate']['path']==GATE,'fixed gate path differs')
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+     release_path=HERE/'RELEASE_REVIEW01.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))

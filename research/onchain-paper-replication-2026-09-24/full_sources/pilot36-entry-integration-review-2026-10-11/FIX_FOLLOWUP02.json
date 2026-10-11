@@ -1,0 +1,36 @@
+{
+  "status": "PASS_FOCUSED_CHANGED_FIX_ONLY",
+  "source_sha256": "b00449135a348f5393afef09acadda02bab0cc2c60cf00f5abaa75f92ae72138",
+  "literal_inverse": true,
+  "ast_inverse": true,
+  "negative_controls": [
+    {
+      "missing": "complete_increment_recovery",
+      "form": "null",
+      "refused_before_source_lookup": true
+    },
+    {
+      "missing": "complete_increment_recovery",
+      "form": "absent",
+      "refused_before_source_lookup": true
+    },
+    {
+      "missing": "new_increment_recovery_review",
+      "form": "null",
+      "refused_before_source_lookup": true
+    },
+    {
+      "missing": "new_increment_recovery_review",
+      "form": "absent",
+      "refused_before_source_lookup": true
+    }
+  ],
+  "positive_prefix_ends_at_blocked_lookup": true,
+  "genuine_recovery_bodies_created": false,
+  "admission_called": false,
+  "native_called": false,
+  "claim_called": false,
+  "fixed_source_committed_by_review": false,
+  "release": false,
+  "gate_sha256": "20f769eea62240230e8353cf35988d2b58cbcbf25a91bdfcf32a59a4e4e6e228"
+}

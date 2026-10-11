@@ -1,0 +1,201 @@
+--- select31.py
++++ select32.py
+@@ -16,14 +16,14 @@
+     return hashlib.sha256(path.read_bytes()).hexdigest()
+ 
+ 
+-prior = HERE.parent/'full35increment30/FRESH_GIT_RECOVERY30.json'
+-assert sha(prior)=='32023dba761dbdcfc0fccd9bb9749a5320bdd345efa26a22411ca58be0f15d62', 'actual30 baseline receipt changed'
+-review=F/'pilot35-preparation-increment-return-review01-2026-10-11/REVIEW01.json'
+-assert sha(review)=='170c85ab7eb08000467d7eeec098e1feb153ce8675b687d99f959728767dfbed', 'accepted30 return review changed'
++prior = HERE.parent/'full35outcome31/FRESH_GIT_RECOVERY31.json'
++assert sha(prior)=='527f22e70b79a040928a56dea2d7dbccb127ef1d9cc615fe042a67780a889083', 'actual31 baseline receipt changed'
++review=F/'pilot35-efficiency-increment31-return-review-2026-10-11/REPORT01.md'
++assert sha(review)=='9c41681cf63bb49df02873061f11bf245dab4ad6e440cb7532e9bc887d296100', 'accepted31 return review changed'
+ base = json.loads(prior.read_bytes())['source']
+ names = set(subprocess.check_output(
+     ['git', 'diff', '--name-only', base, 'HEAD'], cwd=ROOT, text=True).splitlines())
+-owned=['pilot-efficiency-implementation-2026-10-11', 'pilot-efficiency-admission-timing-review-2026-10-11', 'pilot-efficiency-authority-profile-2026-10-11', 'pilot-efficiency-backend-caller-2026-10-11', 'pilot-efficiency-bottleneck-model-2026-10-11', 'pilot-efficiency-error-retention-2026-10-11', 'pilot-efficiency-expected-code-review-2026-10-11', 'pilot-efficiency-numeric-kernel-2026-10-11', 'pilot-efficiency-storage-scan-2026-10-11', 'authority-expected-code-cache-candidate02-2026-10-11', 'implementation-audit-performance-2026-10-11', 'implementation-audit-science-data-2026-10-11', 'implementation-audit-runtime-storage-2026-10-11', 'pilot35-stale-boundary-investigation01-2026-10-11', 'pilot35-terminal-outcome-review-2026-10-11', 'real-data-pilot-full35-entry-preparation01-2026-10-11', 'pilot35-efficiency-increment31-tools-review-2026-10-11', 'pilot35-preparation-increment-return-review01-2026-10-11']
++owned=['pilot-efficiency-continuation-2026-10-11', 'pilot-efficiency-entry-qualification-2026-10-11', 'pilot-efficiency-entry-qualification-review-2026-10-11', 'pilot-efficiency-fixture-fix-2026-10-11', 'pilot-efficiency-integration-2026-10-11', 'pilot-efficiency-integration-review-2026-10-11', 'pilot-efficiency-solver-qualification-2026-10-11', 'pilot35-efficiency-increment31-return-review-2026-10-11', 'pilot36-entry-integration-review-2026-10-11', 'pilot36-increment32-tools-review-2026-10-11', 'pilot36-public-cumulative-review-2026-10-11', 'real-data-pilot-full36-binding-preparation01-2026-10-11', 'real-data-pilot-full36-cumulative-preparation01-2026-10-11', 'real-data-pilot-full36-entry-preparation01-2026-10-11']
+ scope_directories=set()
+ for name in owned:
+     root=F/name
+@@ -33,62 +33,49 @@
+         if path.is_file() or path.is_symlink():
+             names.add(str(path.relative_to(ROOT)))
+         elif path.is_dir():scope_directories.add(path)
+-# Exact generated30 receipts/raw operations only. Never traverse historical H.
+-prior_generated_names=['SELECTION30.json', 'CAPTURE30.json', 'FRESH_GIT_RECOVERY30.json', 'GIT_OPERATIONS30.json', 'ROOT_ACTUAL_OPERATIONS30.json', 'root_commit30.stdout', 'root_commit30.stderr', 'local_head.stdout', 'local_head.stderr', 'remote_get_url.stdout', 'remote_get_url.stderr', 'remote_actual_branch_readback.stdout', 'remote_actual_branch_readback.stderr', 'local_archive_git_tree_join.stdout', 'local_archive_git_tree_join.stderr', 'fresh_bare_init.stdout', 'fresh_bare_init.stderr', 'fresh_remote_add.stdout', 'fresh_remote_add.stderr', 'set_promisor.stdout', 'set_promisor.stderr', 'set_tree_zero_filter.stdout', 'set_tree_zero_filter.stderr', 'actual_external_commit_only_fetch.stdout', 'actual_external_commit_only_fetch.stderr', 'fetched_head_readback.stdout', 'fetched_head_readback.stderr', 'actual_external_commit_body.stdout', 'actual_external_commit_body.stderr', 'actual_external_selected_blob_fetch.stdout', 'actual_external_selected_blob_fetch.stderr', 'actual_external_archive_blob_return.stdout', 'actual_external_archive_blob_return.stderr']
++# Exact generated31 receipts/raw operations only. Never traverse historical H.
++prior_generated_names=['SELECTION31.json', 'CAPTURE31.json', 'FRESH_GIT_RECOVERY31.json', 'GIT_OPERATIONS31.json', 'ROOT_ACTUAL_OPERATIONS31.json', 'root_commit31.stdout', 'root_commit31.stderr', 'root_push31.stdout', 'root_push31.stderr', 'local_head.stdout', 'local_head.stderr', 'remote_get_url.stdout', 'remote_get_url.stderr', 'remote_actual_branch_readback.stdout', 'remote_actual_branch_readback.stderr', 'local_archive_git_tree_join.stdout', 'local_archive_git_tree_join.stderr', 'fresh_bare_init.stdout', 'fresh_bare_init.stderr', 'fresh_remote_add.stdout', 'fresh_remote_add.stderr', 'set_promisor.stdout', 'set_promisor.stderr', 'set_tree_zero_filter.stdout', 'set_tree_zero_filter.stderr', 'actual_external_commit_only_fetch.stdout', 'actual_external_commit_only_fetch.stderr', 'fetched_head_readback.stdout', 'fetched_head_readback.stderr', 'actual_external_commit_body.stdout', 'actual_external_commit_body.stderr', 'actual_external_selected_blob_fetch.stdout', 'actual_external_selected_blob_fetch.stderr', 'actual_external_archive_blob_return.stdout', 'actual_external_archive_blob_return.stderr']
+ for name in prior_generated_names:
+     path=prior.parent/name
+-    assert path.is_file() and not path.is_symlink(), 'required actual30 receipt absent: '+name
++    assert path.is_file() and not path.is_symlink(), 'required actual31 receipt absent: '+name
+     names.add(str(path.relative_to(ROOT)))
+-helper_names=('select31.py', 'capture31.py', 'recover31.py', 'prepare31.py', 'check_source31.py', 'CAPTURE_RECOVERY_LITERAL_MAP01.json', 'HELPERS_MANIFEST01.json', 'AUTHOR_CHECK01.json', 'PROSPECTIVE_ROSTER01.json', 'LITERAL_PATCH01.diff', 'LITERAL_INVERSE01.diff', 'REPORT.md')
++helper_names=('select32.py', 'capture32.py', 'recover32.py', 'TOOL_SCOPE01.json', 'HELPERS_MANIFEST01.json', 'LITERAL_PATCH01.diff', 'LITERAL_INVERSE01.diff')
+ for name in helper_names:names.add(str((HERE/name).relative_to(ROOT)))
+-fixed_public_names=['research/onchain-paper-replication-2026-09-24/STATE.md', 'research/onchain-paper-replication-2026-09-24/full_sources/parallel-execution-2026-10-02/COORDINATION.md', 'research/onchain-paper-replication-2026-09-24/IMPLEMENTATION_REVIEW_2026-10-11.md', 'docs/superpowers/plans/2026-10-11-onchain-pilot-efficiency.md']
++fixed_public_names=['research/onchain-paper-replication-2026-09-24/full_sources/parallel-execution-2026-10-02/COORDINATION.md', 'docs/superpowers/plans/2026-10-11-onchain-pilot-efficiency.md', 'research/onchain-paper-replication-2026-09-24/CURRENT_IMPLEMENTATION.md', 'research/onchain-paper-replication-2026-09-24/STATE.md']
+ for relative in fixed_public_names:
+     assert (ROOT/relative).is_file() and not (ROOT/relative).is_symlink(), relative
+     names.add(relative)
+-main_source_names=['tests/research/onchain_replication/test_backend_entry_bundle.py', 'tests/research/onchain_replication/test_backend_input_selection.py', 'tests/research/onchain_replication/test_numeric_kernel_contract.py', 'tests/research/onchain_replication/test_phase_timing.py', 'tests/research/onchain_replication/test_pilot_storage_single_pass.py', 'tests/research/onchain_replication/test_real_pilot_phase_profile.py', 'tests/research/onchain_replication/test_training_failure_retention.py', 'tests/research/onchain_replication/test_workflow_storage_guard.py', 'tradingagents/research/lifecycle.py', 'tradingagents/research/onchain_replication/batched_numeric_execution.py', 'tradingagents/research/onchain_replication/batched_numeric_reuse.py', 'tradingagents/research/onchain_replication/compact_mcm_batched.py', 'tradingagents/research/onchain_replication/evaluation.py', 'tradingagents/research/onchain_replication/failure_reporting.py', 'tradingagents/research/onchain_replication/grouped_offload.py', 'tradingagents/research/onchain_replication/imported_authority_lease.py', 'tradingagents/research/onchain_replication/matching_numeric_kernel.py', 'tradingagents/research/onchain_replication/original_dictionary.py', 'tradingagents/research/onchain_replication/phase_timing.py', 'tradingagents/research/onchain_replication/real_pilot_import_caller.py', 'tradingagents/research/onchain_replication/real_pilot_storage.py', 'tradingagents/research/onchain_replication/training.py', 'tradingagents/research/onchain_replication/workflow_storage.py']
+-# Exact original35 scope from independently accepted terminal metadata.
+-terminal_review=F/'pilot35-terminal-outcome-review-2026-10-11/REVIEW01.json'
+-assert sha(terminal_review)=='7224646b35c3fe8094c19288ad81be7c1650be458b7a3723198e82bc1a86aba4'
+-raw_scope_states=[{'empty_directories_required': True, 'exists': True, 'path': 'research_runs/eth-paper-real-data-end-to-end-resource-20261011-35'}, {'empty_directories_required': True, 'exists': True, 'path': 'research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-35'}, {'empty_directories_required': True, 'exists': True, 'path': 'research_artifacts/onchain-paper-replication-2026-09-24/pilot-parent/eth-paper-real-data-end-to-end-resource-20261011-35'}, {'empty_directories_required': True, 'exists': True, 'path': 'research_artifacts/onchain_representations/fc3ffe1ecb66f7f7ea20dd78b8a5e6e531c596c227344d3555fc72b257b4c5ab/eth-paper-real-data-end-to-end-resource-20261011-35'}, {'empty_directories_required': True, 'exists': True, 'path': 'research_artifacts/archive-dispatch-ethpilot-20261011-35'}, {'empty_directories_required': True, 'exists': False, 'path': 'research_artifacts/onchain_compact_mcm/fc3ffe1ecb66f7f7ea20dd78b8a5e6e531c596c227344d3555fc72b257b4c5ab/eth-paper-real-data-end-to-end-resource-20261011-35'}]
+-assert json.loads(terminal_review.read_bytes())['incremental_raw_scopes']==raw_scope_states
+-scopes=[]
+-for row in raw_scope_states:
+-    root=ROOT/row['path']
+-    if not row['exists']:
+-        assert not root.exists() and not root.is_symlink(), 'originally absent sixth scope appeared: '+row['path']
+-        continue
+-    assert root.is_dir() and not root.is_symlink() and root.resolve(strict=True)==root, row['path']
+-    scopes.append(root);scope_directories.add(root)
+-    for path in root.rglob('*'):
+-        if path.is_file() or path.is_symlink():names.add(str(path.relative_to(ROOT)))
+-        elif path.is_dir():scope_directories.add(path)
+-# Source snapshot is the engineering body roster, not original pilot35 source.
+-snapshot=F/'pilot-efficiency-implementation-2026-10-11/SOURCE_SNAPSHOT01.json'
+-assert sha(snapshot)=='a871be53c02a690cb286c5a85bc5fa626f9153529d731224a74d0518ce807d79', 'reviewed engineering snapshot changed'
+-# Already returned preparation30 archive/blob stdout stay immutable at original
++main_source_names=['tests/research/onchain_replication/test_archive_producer_integration.py', 'tests/research/onchain_replication/test_batched_continuation.py', 'tests/research/onchain_replication/test_entry_preparation_stop.py', 'tests/research/onchain_replication/test_matching_numeric_policy.py', 'tests/research/onchain_replication/test_phase_timing.py', 'tests/research/onchain_replication/test_pilot_efficiency_selection.py', 'tradingagents/research/onchain_replication/batched_continuation.py', 'tradingagents/research/onchain_replication/batched_driver.py', 'tradingagents/research/onchain_replication/batched_journal.py', 'tradingagents/research/onchain_replication/batched_numeric_execution.py', 'tradingagents/research/onchain_replication/batched_numeric_reuse.py', 'tradingagents/research/onchain_replication/batched_pair_executor.py', 'tradingagents/research/onchain_replication/compact_mcm_batched.py', 'tradingagents/research/onchain_replication/imported_authority_lease.py', 'tradingagents/research/onchain_replication/matching_annealing.py', 'tradingagents/research/onchain_replication/matching_immutable_session.py', 'tradingagents/research/onchain_replication/matching_numeric_policy.py', 'tradingagents/research/onchain_replication/phase_timing.py', 'tradingagents/research/onchain_replication/real_pilot_import_caller.py']
++# No historical raw scopes are traversed; only the new bound opaque envelope.
++scopes=[ROOT/'research_artifacts/real_pilot_runtime/pilot-transport-20261011-36-01']
++private=ROOT/'research_artifacts/real_pilot_runtime/pilot-transport-20261011-36-01/archive_transport01.json'
++assert private.is_file() and not private.is_symlink()
++private_relative=str(private.relative_to(ROOT))
++names.add(private_relative);scope_directories.add(private.parent)
++# Already returned failed35 archive/blob stdout stay immutable at original
+ # paths and the verified remote object; new receipt bodies are included.
+ prior_receipt=json.loads(prior.read_bytes())
+-assert prior_receipt['capture']['path']==str((prior.parent/'CAPTURE30.json').relative_to(ROOT))
+-assert sha(ROOT/prior_receipt['capture']['path'])==prior_receipt['capture']['sha256'], 'actual30 capture receipt changed'
++assert prior_receipt['capture']['path']==str((prior.parent/'CAPTURE31.json').relative_to(ROOT))
++assert sha(ROOT/prior_receipt['capture']['path'])==prior_receipt['capture']['sha256'], 'actual31 capture receipt changed'
+ prior_capture=json.loads((ROOT/prior_receipt['capture']['path']).read_bytes())
+ excluded={prior_capture['archive']['path'],prior_receipt['returned_archive']['path'],str((prior.parent/'actual_external_archive_blob_return.stdout').relative_to(ROOT))}
+-assert excluded=={str((prior.parent/name).relative_to(ROOT)) for name in ('full35-preparation-increment30.tar','fresh-git-recovered-full35increment30.tar','actual_external_archive_blob_return.stdout')}
++assert excluded=={str((prior.parent/name).relative_to(ROOT)) for name in ('failed35-outcome-increment31.tar','fresh-git-recovered-full35outcome31.tar','actual_external_archive_blob_return.stdout')}
+ for relative in excluded:
+     path=ROOT/relative
+     assert path.is_file() and not path.is_symlink() and path.stat().st_size==prior_receipt['returned_archive']['bytes'] and sha(path)==prior_receipt['returned_archive']['sha256'], relative
+ 
+ # Only actual new or changed bodies; immutable prior recovered entry bodies are reused.
+-prior_selection=json.loads((prior.parent/'SELECTION30.json').read_bytes())
+-assert sha(prior.parent/'SELECTION30.json')==prior_capture['selection']['sha256']
++prior_selection=json.loads((prior.parent/'SELECTION31.json').read_bytes())
++assert sha(prior.parent/'SELECTION31.json')==prior_capture['selection']['sha256']
+ previous_rows={row['path']:row for row in prior_selection['rows']}
+ names.update(subprocess.check_output(['git','diff','--name-only','HEAD'],cwd=ROOT,text=True).splitlines())
+-assert not (HERE/'SELECTION31.json').exists(), 'selection31 already spent'
+-assert all(not (ROOT/relative).is_relative_to(HERE) or (ROOT/relative).name in helper_names for relative in names), 'generated full35outcome31 products are outside selection'
++assert not (HERE/'SELECTION32.json').exists(), 'selection32 already spent'
++assert all(not (ROOT/relative).is_relative_to(HERE) or (ROOT/relative).name in helper_names for relative in names), 'generated full36increment32 products are outside selection'
+ # Bound actual committed/working Git deltas to this declared finite increment.
+-allowed_files=set(fixed_public_names+main_source_names)|{str((prior.parent/name).relative_to(ROOT)) for name in prior_generated_names}|{str((HERE/name).relative_to(ROOT)) for name in helper_names}
+-allowed_roots=[F/name for name in owned]+scopes
+-assert all(relative in allowed_files or relative in excluded or any((ROOT/relative).is_relative_to(root) for root in allowed_roots) for relative in names), 'Git delta outside declared full35outcome31 scope'
+-main_source_pins={'tests/research/onchain_replication/test_backend_entry_bundle.py': '4c21a52461b8b9d0a410bf29bf9dad28a732a0ad04b90c96693ff36e49d48409', 'tests/research/onchain_replication/test_backend_input_selection.py': '439f91f95d1e6a6e4eba2d088fd240b0e23cccfb457913c71f6c47fb6b4bfdaa', 'tests/research/onchain_replication/test_numeric_kernel_contract.py': '95f7dcf94fd8d7f506bb22872db2242e1a5d331f4cbf50f50e7c42ef3569c3b1', 'tests/research/onchain_replication/test_phase_timing.py': 'e9c180473a77c9ecb040f65d963fec23a5c8e748b569dc74e0e9dfc0c63b75d4', 'tests/research/onchain_replication/test_pilot_storage_single_pass.py': '61633f96e1aa34c07a06e5c9d5a703a77c6df14ac7edb216bec25e90d3b9bdc6', 'tests/research/onchain_replication/test_real_pilot_phase_profile.py': 'b33c3c21c2c5b3d7cf115ad80c4d4d2fa4ea108af81034f33a8ae67bd9da077e', 'tests/research/onchain_replication/test_training_failure_retention.py': '4586b8c9b4014f700696726e2b187719c6ad8f6d35bce908785124f12d471052', 'tests/research/onchain_replication/test_workflow_storage_guard.py': '1e13749b0e696d9d02c2547284f3e114d5960a874473360f592d77476a6d796f', 'tradingagents/research/lifecycle.py': 'e45e53661e212d55da56565372c6ff2cada93f002160f555966523cb6eee40d3', 'tradingagents/research/onchain_replication/batched_numeric_execution.py': 'a897ec57934ed2059ac1e4c706dfd7012aa0c1087977600928f46075f40cef3b', 'tradingagents/research/onchain_replication/batched_numeric_reuse.py': 'be98fdd022140325c8b3c5a59c957780a5837c43693effacb9f239cb446b436d', 'tradingagents/research/onchain_replication/compact_mcm_batched.py': '4cd753b29068aead097b609319d3165612108d597d1774f0a433664268f964c7', 'tradingagents/research/onchain_replication/evaluation.py': 'b002b7bbff472b520581e24e480e8339d8711c4c710e2fbcd47678bf5138e7d3', 'tradingagents/research/onchain_replication/failure_reporting.py': '9518a12cda242a284fdebe74a9c35b28ae010c8c782d31c32b4861a5edcb7b8a', 'tradingagents/research/onchain_replication/grouped_offload.py': 'e11ca240b89ab611c521f68adda38322ff191d17e11f6c64387b230b3708aed2', 'tradingagents/research/onchain_replication/imported_authority_lease.py': 'e6f115620ffe7f8ef1252fe83984c14adef5e98ba2269e3f52d6797129c22c67', 'tradingagents/research/onchain_replication/matching_numeric_kernel.py': 'd98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd', 'tradingagents/research/onchain_replication/original_dictionary.py': 'cdc4c753645859312cc9ef439d44c2d45f9f92e90dfa7c51d089e070fb85e0b1', 'tradingagents/research/onchain_replication/phase_timing.py': '97a6c5041914f27bae4b9fcbd81b6cf6bb0cdc90ae5315859c8df52794b1367f', 'tradingagents/research/onchain_replication/real_pilot_import_caller.py': 'f97c8960c0cf4c018b59af4fa93eaa2cee0875c65fb5129d0ccf9fbd4d8d751e', 'tradingagents/research/onchain_replication/real_pilot_storage.py': '5a1597a2b28895d7bd1cba5eaf375a54bc77d169a7a500a2ee02d10b7c30a078', 'tradingagents/research/onchain_replication/training.py': 'f413aeb89d72de563640b8b5fdb2bdf1159729d18f8d1de2a74733a116c3def0', 'tradingagents/research/onchain_replication/workflow_storage.py': 'c52806aec23ebc52661b02f76868919d00cf6c646e1b311e985f6ddbdec1dc6c'}
++allowed_files={private_relative}|set(fixed_public_names+main_source_names)|{str((prior.parent/name).relative_to(ROOT)) for name in prior_generated_names}|{str((HERE/name).relative_to(ROOT)) for name in helper_names}
++allowed_roots=[F/name for name in owned]
++assert all(relative in allowed_files or relative in excluded or any((ROOT/relative).is_relative_to(root) for root in allowed_roots) for relative in names), 'Git delta outside declared full36increment32 scope'
++main_source_pins={'tests/research/onchain_replication/test_archive_producer_integration.py': '1c60955988e2689df3492bed7be3b413265aed3da60ecbb2fd5c683d88b768eb', 'tests/research/onchain_replication/test_batched_continuation.py': 'e2acc34138370117b77e73a637b294884b2b4f1d3e922969766f59dd298d341d', 'tests/research/onchain_replication/test_entry_preparation_stop.py': '88e4584a59420001f5731c446b174c9f190a961d0b2707dc0c65e8e17e993ffb', 'tests/research/onchain_replication/test_matching_numeric_policy.py': '7b5437ba86a7f186ab8edb0c456b95d857be8d8f58c9908a4dc0a66b04b2d49d', 'tests/research/onchain_replication/test_phase_timing.py': '1c436c800fcf09df4b07832bb2524aa0dd7be61c35fe8cdb369658d666c5bcd4', 'tests/research/onchain_replication/test_pilot_efficiency_selection.py': '3f660cfd8e3d1b24554a9bebd94e1b300a861ed1ce7771f5d9ebe9abfaf5ccfc', 'tradingagents/research/onchain_replication/batched_continuation.py': '1accf714c9853766f9ffa48c1191fe0706d4b397599c14b7aa8d302cc09d331b', 'tradingagents/research/onchain_replication/batched_driver.py': 'f8fe3e83d4d7d55e477cc054659dd8335034f872ce7ab589573ad6cd3ee53335', 'tradingagents/research/onchain_replication/batched_journal.py': 'a550157d767f0c78dfdfdefa6fe5e46ec037e4cc2c885d9f23d330c1400b5678', 'tradingagents/research/onchain_replication/batched_numeric_execution.py': '6284a216957b50e4b5a9f0ca0640f88ef8d9e719b235d089903429b1b8a76916', 'tradingagents/research/onchain_replication/batched_numeric_reuse.py': '1362725cdf967cd4f324e0c5e410fee1971ff07610c3d2b5efb5978e96469586', 'tradingagents/research/onchain_replication/batched_pair_executor.py': '0d1c7a14866b53e6bde4b9db6e3eff4740190d16bc3db0f6532d60afd3142005', 'tradingagents/research/onchain_replication/compact_mcm_batched.py': 'dc14816d304dde383b7a10dd55558fe72d95e5c1da870a721ab512126943bae6', 'tradingagents/research/onchain_replication/imported_authority_lease.py': '926a1af06037746b095bd89faa161f74ad5e47af4512e033596a0858fd073896', 'tradingagents/research/onchain_replication/matching_annealing.py': '1f8e45c4997691d561b498467ea2cbac284fc2e0747b495e81bf97ff189146bf', 'tradingagents/research/onchain_replication/matching_immutable_session.py': 'f5adccc5fcff36ec68892f775cac7d7569ed36338cfd79d049448278ad7c2eb4', 'tradingagents/research/onchain_replication/matching_numeric_policy.py': 'cd3000fc02d126026b1ba3e6fbe779e92b1fcd516abfbcbf563ccf3479b02b03', 'tradingagents/research/onchain_replication/phase_timing.py': 'a15fd9ef808252fda0cc386e6b0f862312c56aa92a51c45b4f4e614d94a9f61a', 'tradingagents/research/onchain_replication/real_pilot_import_caller.py': '02ca18cd68375a07a6176081309469277f7b74be285a3b29d93af2fd052206ae'}
+ for relative,expected in main_source_pins.items():
+     assert (ROOT/relative).is_file() and not (ROOT/relative).is_symlink() and sha(ROOT/relative)==expected, relative
+     names.add(relative)
+@@ -106,7 +93,7 @@
+     assert path.parent.resolve(strict=True) == path.parent, relative
+     assert not ({'.git', '.venv', 'node_modules', 'keys', 'apis'} & set(path.parts)), relative
+     assert path.name not in ('.env', 'hf_token.txt', 'connection.json', 'id_ed25519_storagebox_u676273'), relative
+-    assert not relative.startswith(('research_artifacts/', 'research_runs/')) or any(path.is_relative_to(scope) for scope in scopes), relative
++    assert not relative.startswith(('research_artifacts/', 'research_runs/')) or relative==private_relative, relative
+     before = path.lstat()
+     if stat.S_ISLNK(before.st_mode):
+         target = os.readlink(path)
+@@ -136,21 +123,19 @@
+     'baseline_actual_recovery': {'path': str(prior.relative_to(ROOT)), 'sha256': sha(prior)},
+     'baseline_source': base,
+     'baseline_accepted_review': {'path':str(review.relative_to(ROOT)), 'sha256':sha(review)},
+-    'terminal_review': {'path':str(terminal_review.relative_to(ROOT)), 'sha256':sha(terminal_review)},
+-    'engineering_source_snapshot': {'path':str(snapshot.relative_to(ROOT)), 'sha256':sha(snapshot)},
+     'prior_inherited_reuse_preserved_by_receipt':prior_selection['exact_unchanged_prior_rows_reused'],
+     'earlier_inherited_reuse_preserved_by_receipt':prior_selection['prior_inherited_reuse_preserved_by_receipt'],
+     'mandatory_public_roots':owned,
+     'prior_generated_files':prior_generated_names,
+-    'actual_scope_states': raw_scope_states,
++    'actual_scope_states': [{'path':str(scopes[0].relative_to(ROOT)), 'exists':True,'qualification':'One new bound opaque envelope only; no connection reference target, credential body or historical store is read.'}],
+     'exact_already_recovered_duplicate_exclusions':sorted(excluded),
+     'exact_unchanged_prior_rows_reused':reused,
+-    'selection_rule': 'Finite failed35 five original raw scopes as opaque bodies, sixth absent; exact23 reviewed engineering source/tests, named docs/public evidence and actual30 postcapture receipts. Prior rows reused only on exact typed body match; inherited coverage retained through authenticated actual30 receipt. No private runtime, unrelated historical raw traversal or deletion authority.',
++    'selection_rule': 'Finite new efficiency and36 preparation bodies, exact changed source/tests, public/binding/entry/amendment reviews and actual31 postcapture receipts. Only the newly bound opaque dispatch envelope is selected from private runtime; its referenced connection path is never read. Prior typed bodies reused through actual31 recovery. No historical raw-store traversal, credential-body access or deletion authority.',
+     'files': len(rows), 'body_bytes': sum(r['bytes'] for r in rows),
+     'rows': rows, 'directories': dirs,
+     'symlinks': sum(r['type'] == 'symlink' for r in rows),
+     'qualification': 'Public incremental byte/name/type/mode selection only. Symlink targets are recorded without dereferencing; regular bodies have a 64MiB preservation bound independent of unchanged empirical native limits. No originals are copied or retired; no source/runtime/empirical store completeness beyond these selected new bodies is asserted.'}
+-with (HERE/'SELECTION31.json').open('x') as stream:
++with (HERE/'SELECTION32.json').open('x') as stream:
+     json.dump(selection, stream, indent=2, sort_keys=True)
+     stream.write('\n')
+ print(json.dumps({'selected_files': len(rows), 'selected_bytes': selection['body_bytes'],
+--- capture31.py
++++ capture32.py
+@@ -1,8 +1,8 @@
+ import datetime,hashlib,io,json,os,stat,tarfile
+ from pathlib import Path
+ R=Path.cwd();D=Path(__file__).resolve().parent
+-S=D/'SELECTION31.json'
+-sel=json.loads(S.read_bytes());p=D/'failed35-outcome-increment31.tar';assert not p.exists()
++S=D/'SELECTION32.json'
++sel=json.loads(S.read_bytes());p=D/'pilot36-preparation-increment32.tar';assert not p.exists()
+ rows=sorted(sel['rows']+sel['directories'],key=lambda r:r['path'])
+ with tarfile.open(p,'x',format=tarfile.PAX_FORMAT) as t:
+  for r in rows:
+@@ -21,5 +21,5 @@
+   if r['type']=='directory':assert m.isdir()
+   elif r['type']=='symlink':assert m.issym() and m.linkname==r['linkname']
+   else:assert m.isfile() and m.size==r['bytes'] and hashlib.sha256(t.extractfile(m).read()).hexdigest()==r['sha256']
+-raw=p.read_bytes();v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'selection':{'path':str(S.relative_to(R)),'sha256':hashlib.sha256(S.read_bytes()).hexdigest()},'archive':{'path':str(p.relative_to(R)),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()},'files':sel['files'],'directories':len(sel['directories']),'regular_bytes':sel['body_bytes'],'actual_local_readback':True,'qualification':'Complete declared public full35outcome31 increment including original names/types/modes and opaque regular bodies. Private runtime and unchanged historical stores excluded; the five declared failed35 raw roots are retained as opaque bodies. Local capture does not establish external recovery, POSIX reconstruction, installed runtime or deletion authority.'}
+-(D/'CAPTURE31.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps(v))
++raw=p.read_bytes();v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'selection':{'path':str(S.relative_to(R)),'sha256':hashlib.sha256(S.read_bytes()).hexdigest()},'archive':{'path':str(p.relative_to(R)),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()},'files':sel['files'],'directories':len(sel['directories']),'regular_bytes':sel['body_bytes'],'actual_local_readback':True,'qualification':'Complete declared public full36increment32 increment including original names/types/modes and opaque regular bodies. Other private runtime, referenced connection/credential targets and unchanged historical stores excluded; the one new bound dispatch envelope is retained as an opaque body; referenced connection and credential targets are excluded. Local capture does not establish external recovery, POSIX reconstruction, installed runtime or deletion authority.'}
++(D/'CAPTURE32.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps(v))
+--- recover31.py
++++ recover32.py
+@@ -1,9 +1,9 @@
+-"""Recover the one declared full35outcome31 public increment from the actual remote."""
++"""Recover the one declared full36increment32 public increment from the actual remote."""
+ import datetime,hashlib,json,os,subprocess
+ from pathlib import Path
+ R=Path.cwd();D=Path(__file__).resolve().parent
+-B=R.parent/'onchain-pilot-recovery/real-pilot-failed35-outcome-20261011-31.git'
+-assert not B.exists() and not (D/'FRESH_GIT_RECOVERY31.json').exists()
++B=R.parent/'onchain-pilot-recovery/real-pilot-preparation36-20261011-32.git'
++assert not B.exists() and not (D/'FRESH_GIT_RECOVERY32.json').exists()
+ ops=[]
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def run(name,args,cwd=R):
+@@ -11,16 +11,16 @@
+  for k,b in [('stdout',p.stdout),('stderr',p.stderr)]:
+   with (D/(name+'.'+k)).open('xb') as f:f.write(b)
+  ops.append({'operation':name,'exit_code':p.returncode,'stdout_bytes':len(p.stdout),'stdout_sha256':sha(p.stdout),'stderr_bytes':len(p.stderr),'stderr_sha256':sha(p.stderr)})
+- (D/'GIT_OPERATIONS31.json').write_text(json.dumps(ops,indent=2,sort_keys=True)+'\n')
++ (D/'GIT_OPERATIONS32.json').write_text(json.dumps(ops,indent=2,sort_keys=True)+'\n')
+  assert p.returncode==0,(name,p.returncode)
+  return p.stdout
+-cap=json.loads((D/'CAPTURE31.json').read_bytes());a=cap['archive'];source=run('local_head',['git','rev-parse','HEAD']).decode().strip();remote=run('remote_get_url',['git','remote','get-url','origin']).decode().strip();branch='refs/heads/research/onchain-paper-replication-2026-09-24'
++cap=json.loads((D/'CAPTURE32.json').read_bytes());a=cap['archive'];source=run('local_head',['git','rev-parse','HEAD']).decode().strip();remote=run('remote_get_url',['git','remote','get-url','origin']).decode().strip();branch='refs/heads/research/onchain-paper-replication-2026-09-24'
+ remotehead=run('remote_actual_branch_readback',['git','ls-remote','origin',branch]).decode().split()[0];assert remotehead==source
+ join=run('local_archive_git_tree_join',['git','ls-tree',source,'--',a['path']]).decode().strip();parts=join.split();assert parts[:2]==['100644','blob'] and parts[3]==a['path'];blob=parts[2]
+ run('fresh_bare_init',['git','init','--bare','--quiet',str(B)]);run('fresh_remote_add',['git','remote','add','origin',remote],B);run('set_promisor',['git','config','remote.origin.promisor','true'],B);run('set_tree_zero_filter',['git','config','remote.origin.partialclonefilter','tree:0'],B)
+ run('actual_external_commit_only_fetch',['git','fetch','--depth=1','--filter=tree:0','origin',source],B);head=run('fetched_head_readback',['git','rev-parse','FETCH_HEAD'],B).decode().strip();assert head==source
+ body=run('actual_external_commit_body',['git','cat-file','commit',source],B);assert body==subprocess.check_output(['git','cat-file','commit',source],cwd=R)
+ run('actual_external_selected_blob_fetch',['git','fetch','--no-tags','--no-write-fetch-head','--filter=tree:0','origin',blob],B);returned=run('actual_external_archive_blob_return',['git','cat-file','blob',blob],B);assert len(returned)==a['bytes'] and sha(returned)==a['sha256'];assert not (B/'objects/info/alternates').exists()
+-out=D/'fresh-git-recovered-full35outcome31.tar';out.write_bytes(returned)
+-v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'actual_external_source':remote,'actual_remote_head':remotehead,'actual_fetch_head':head,'fresh_bare':str(B),'archive_git_blob_oid':blob,'local_commit_tree_join':join,'commit_body_sha256':sha(body),'operations':ops,'no_alternates':True,'capture':{'path':str((D/'CAPTURE31.json').relative_to(R)),'sha256':sha((D/'CAPTURE31.json').read_bytes())},'returned_archive':{'path':str(out.relative_to(R)),'bytes':len(returned),'sha256':sha(returned)},'qualification':'Actual fresh remote commit-only/direct selected blob recovery. Complete declared full35outcome31 public increment only; private runtime/undeclared scientific stores/whole tree/POSIX reconstruction/deletion excluded.'}
+-(D/'FRESH_GIT_RECOVERY31.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps({'status':'ACTUAL_SELECTED_EXTERNAL_RETURN','source':source,'bytes':len(returned),'sha256':sha(returned)}))
++out=D/'fresh-git-recovered-full36increment32.tar';out.write_bytes(returned)
++v={'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'actual_external_source':remote,'actual_remote_head':remotehead,'actual_fetch_head':head,'fresh_bare':str(B),'archive_git_blob_oid':blob,'local_commit_tree_join':join,'commit_body_sha256':sha(body),'operations':ops,'no_alternates':True,'capture':{'path':str((D/'CAPTURE32.json').relative_to(R)),'sha256':sha((D/'CAPTURE32.json').read_bytes())},'returned_archive':{'path':str(out.relative_to(R)),'bytes':len(returned),'sha256':sha(returned)},'qualification':'Actual fresh remote commit-only/direct selected blob recovery. Complete declared full36increment32 public increment only; other private runtime/referenced connection and credential targets/undeclared scientific stores/whole tree/POSIX reconstruction/deletion excluded.'}
++(D/'FRESH_GIT_RECOVERY32.json').write_text(json.dumps(v,indent=2,sort_keys=True)+'\n');print(json.dumps({'status':'ACTUAL_SELECTED_EXTERNAL_RETURN','source':source,'bytes':len(returned),'sha256':sha(returned)}))

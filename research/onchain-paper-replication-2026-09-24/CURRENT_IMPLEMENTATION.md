@@ -1,5 +1,7 @@
 # Current implementation and evidence route
 
+Latest concrete preparation: [pilot36 entry review](full_sources/pilot36-entry-integration-review-2026-10-11/REPORT.md) and [public/cumulative review](full_sources/pilot36-public-cumulative-review-2026-10-11/REPORT.md) accept current205/428/73/9 bindings, preparation-only stop and proposed108. Actual new external recovery/final release/native measurement remain pending; no fit has started. Full37 capacity work continues in a separate bounded directory.
+
 The representative real-data pilot is incomplete. STATE.md owns current jobs/accounting; source, paper coverage and numerical agreement remain distinct.
 
 The [current18-body source snapshot](full_sources/pilot-efficiency-integration-2026-10-11/SOURCE_SNAPSHOT01.json) and [independent source review](full_sources/pilot-efficiency-integration-review-2026-10-11/REPORT.md) replace the earlier unselected-helper/unimplemented-continuation status. [Integrated progress](full_sources/pilot-efficiency-integration-2026-10-11/PROGRESS.md) records actual source changes, checks, deviations and next execution requirements. This is not an installed/admitted empirical capsule.
