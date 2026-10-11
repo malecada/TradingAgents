@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot31-final-entry-review01-2026-10-11/check_binding03.py", line 28, in <module>
+    read(binderreview['binder']);receipt=read(binding['binding_readback']);ck(receipt['actual_opaque_input']==bound['private_input'] and receipt['all_input_roles']==67 and all(receipt[k] is False for k in ('claim','launch','network')),'original actual binder receipt joins')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot31-final-entry-review01-2026-10-11/check_binding03.py", line 17, in read
+    b=rb(R/ref['path']);ck(sha(b)==ref['sha256'] and ('bytes' not in ref or len(b)==ref['bytes']),'authenticated public ref '+ref['path']);return json.loads(b)
+                                                                                                                                                  ~~~~~~~~~~^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/json/decoder.py", line 348, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 3 (char 2)

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot31-final-entry-review01-2026-10-11/check_binding02.py", line 35, in <module>
+    oldscratch=R/oldexp['inputs']['matching_ordered_edge_scratch']['path'];ck(rb(R/actual['matching_ordered_edge_scratch']['path'])==rb(oldscratch).replace(b'20261011-30',b'20261011-31'),'scratch identity-only change')
+                                                                           ~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot31-final-entry-review01-2026-10-11/check_binding02.py", line 10, in ck
+    if not v:raise AssertionError(n)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: scratch identity-only change

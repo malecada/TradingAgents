@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-11T01:21:15.392453+00:00",
+  "claim": false,
+  "command": [
+    "taskset",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "10",
+    "timeout",
+    "60s",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research",
+    "check",
+    "--root",
+    ".",
+    "--registration",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full31-entry-preparation02-2026-10-11/gate03.json",
+    "--experiment",
+    "eth-paper-real-data-end-to-end-resource-20261011-31",
+    "--source",
+    "84f6b523ddf8db74fea63fa0f25f55e9e98f5bf3"
+  ],
+  "exit_code": 0,
+  "gate": "gate03.json",
+  "launch": false,
+  "read_only": true,
+  "source": "84f6b523ddf8db74fea63fa0f25f55e9e98f5bf3"
+}
