@@ -128,7 +128,7 @@ def test_late_archive_mcm_mutation_preserves_spent_claims(admitted, monkeypatch)
             holder['matrix'][0, 0] += .125
         return value
     monkeypatch.setattr(kernel, 'mcm', calculate)
-    monkeypatch.setattr(compact_mcm, '_kernel', lambda: kernel)
+    monkeypatch.setattr(compact_mcm, '_kernel', lambda dictionary=None: kernel)
     monkeypatch.setattr(archive_owner_stage, '_execute_locked', seal)
     with pytest.raises(native.api().CompactProducerError):
         native.api().produce(t.run, 'r', job, graphs, examples, archive_transport=transport)

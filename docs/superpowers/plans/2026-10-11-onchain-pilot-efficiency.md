@@ -48,14 +48,16 @@ env PYTHONPATH=. PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 
 Run the named `scripts/research_runtime.py --check` before numerical qualification. Use `scripts/verify_offline.py` at the coherent integration checkpoint, rather than on every doc edit. Unknown or empirical tests are not admitted by their filename.
 
+Current implementation/evidence is indexed in [CURRENT_IMPLEMENTATION.md](../../../research/onchain-paper-replication-2026-09-24/CURRENT_IMPLEMENTATION.md). Source work is partly complete: Tasks1–3, selected expected-code caching and partial phase telemetry are implemented; the NumPy helper remains unselected. Task4 continuation, full solver qualification, multiprocessing capacity and the whole pilot remain unfinished. Checkboxes below reflect only completed steps, not empirical acceptance.
+
 ## Task0: Close the factual baseline and preserve the failed increment
 
 **Files:** Update study `STATE.md`, short `full_sources/parallel-execution-2026-10-02/COORDINATION.md`, current applicability index `CURRENT_IMPLEMENTATION.md` (new), and a new pilot35 outcome selection using the existing reviewed incremental capture/return tools. Preserve all old evidence bodies.
 
 **Deliverable:** One current source/evidence/resource route; pilot35 permanently FAILED; no invented receipts or reopened claim. Financial/resource milestones remain distinct.
 
-- [ ] Verify the original terminal operation SHA `d30e5e42…`, failed/summary/guard/Root closure joins and current unit/known-PID absence. Carry forward75closed=33COMPLETE42FAILED/highest adopted106; keep28pending+3preclaimreserved and separate paper accounting unchanged.
-- [ ] Independently review the actual attempted/unavailable outcome and preserve/recover only its actual new declared increment with the existing tools. Retain postcapture review receipts for the next increment. Do not recopy old stores or claim installed-runtime/raw-store recovery from compact Git availability.
+- [x] Verify the original terminal operation SHA `d30e5e42…`, failed/summary/guard/Root closure joins and current unit/known-PID absence. Carry forward75closed=33COMPLETE42FAILED/highest adopted106; keep28pending+3preclaimreserved and separate paper accounting unchanged.
+- [x] Independently review the actual attempted/unavailable outcome and preserve/recover only its actual new declared increment with the existing tools. Retain postcapture review receipts for the next increment. Do not recopy old stores or claim installed-runtime/raw-store recovery from compact Git availability.
 - [ ] Index current installed source, original protocol/model/training identities, applicable gate/resource limits, installed versus source-only accelerators, and F/C evidence. Update `fidelity.json` only with accepted dispositions; historical `completion-interim-*` remains immutable. Label stale protocol resource paragraphs as superseded, not silently rewritten history.
 
 **Acceptance:** A reader can find one executable route and the exact35 terminal disposition without rereading every historical review. Actual35 recovery remains an empirical-successor gate; it need not block independent source engineering.
@@ -114,9 +116,9 @@ except BaseException as primary:
 
 Format the primary reason with a guarded helper: use class name and a fixed `unprintable exception` fallback if `str(primary)` raises. Each existing publication is a separate action. Missing failed publication remains visible uncertainty in outer receipts; never synthesize a terminal or overwrite existing completion.
 
-- [ ] Write a fixture where the first batch raises a distinct exception, its `__str__` raises, both publications fail with ENOSPC, and a checkpoint already exists. Assert the same primary object/traceback escapes; both reporting actions were attempted; checkpoint bytes and prior claim remain unchanged. Also cover successful failure publication and SVM fit/evaluation marker combinations.
-- [ ] Implement the helper and replace only affected except blocks. Retain original failed/complete immutability and continuation rules.
-- [ ] Run focused error-retention/training/evaluation tests. Commit this independent reliability fix without waiting for matching optimization.
+- [x] Write a fixture where the first batch raises a distinct exception, its `__str__` raises, both publications fail with ENOSPC, and a checkpoint already exists. Assert the same primary object/traceback escapes; both reporting actions were attempted; checkpoint bytes and prior claim remain unchanged. Also cover successful failure publication and SVM fit/evaluation marker combinations.
+- [x] Implement the helper and replace only affected except blocks. Retain original failed/complete immutability and continuation rules.
+- [x] Run focused error-retention/training/evaluation tests. Commit this independent reliability fix without waiting for matching optimization.
 
 **Acceptance:** Secondary publication/cleanup failure cannot replace the actual numerical/training cause. No claim of guaranteed disk publication when the disk is unavailable.
 
@@ -126,8 +128,8 @@ Format the primary reason with a guarded helper: use class name and a fixed `unp
 
 **Interface:** Extend `StorageWatch` traversal with an optional fixed set of descendant subdomain counters. `WritableUnion.check()` returns the existing union observation plus independently checked residual totals from that same traversal. Standalone `residual_check()` remains for other callers.
 
-- [ ] Build synthetic union fixtures with nested residual roots, a prospective lifecycle directory, shared lock and historical siblings. Compare all bytes/entries/files/directories against the old algorithm. Test residual violation below the union cap; late birth/rebirth; symlink/hardlink/device/type refusal; directory change; retry/discard; descriptor-close failure; and the same shared5s deadline.
-- [ ] Accumulate each nested residual count during one fresh walk; do not skip historical writable scopes, cache mutable stat totals, lower the scan rate or weaken disk/native guards. Explicitly document that two separate observations become one shared traversal, still non-atomic across the live tree.
+- [x] Build synthetic union fixtures with nested residual roots, a prospective lifecycle directory, shared lock and historical siblings. Compare all bytes/entries/files/directories against the old algorithm. Test residual violation below the union cap; late birth/rebirth; symlink/hardlink/device/type refusal; directory change; retry/discard; descriptor-close failure; and the same shared5s deadline.
+- [x] Accumulate each nested residual count during one fresh walk; do not skip historical writable scopes, cache mutable stat totals, lower the scan rate or weaken disk/native guards. Explicitly document that two separate observations become one shared traversal, still non-atomic across the live tree.
 - [ ] Measure monitor process CPU, walk duration/entry count and publication/fsync time with a finite synthetic tree. Review the changed scan semantics and run both focused storage files.
 
 **Acceptance:** Same original scopes/sublimits and refusal cases, one traversal, bounded telemetry overhead. Do not infer saving from fewer function calls alone.
