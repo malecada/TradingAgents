@@ -7,7 +7,7 @@ import hashlib
 from pathlib import Path
 from . import original_dictionary as original
 from .cache import cache_key
-from .provenance import canonical_bytes,thaw,file_hash
+from .provenance import canonical_bytes,thaw,file_hash,current_canonical_bytes
 
 
 def require(value,message):
@@ -53,7 +53,7 @@ class PreparedImport:
 
     def _configuration(self):
         bound=self._bound;run=self._run
-        return canonical_bytes({'binding':thaw(bound.record),'context':thaw(bound.context),'limits':thaw(bound.limits),
+        return current_canonical_bytes({'binding':thaw(bound.record),'context':thaw(bound.context),'limits':thaw(bound.limits),
           'run_directory':str(run.directory),'claim':run._claim_sha256,
           'snapshots':{str(p):v for p,v in bound._snapshots.items()},'job_input':self._job_input,
           'input':self._input,'selection':self._selection,'source':self._source})

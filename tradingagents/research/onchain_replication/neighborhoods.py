@@ -27,7 +27,7 @@ def graph_hash(graph):
     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
     from dataclasses import fields
     from collections.abc import Mapping
-    from .provenance import canonical_bytes
+    from .provenance import current_canonical_bytes as canonical_bytes
     import hashlib
     validate_graph(graph);h=hashlib.sha256()
     def feed(value):

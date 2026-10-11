@@ -1,0 +1,47 @@
+{
+  "headers": [
+    {
+      "bytes": 4251,
+      "original_path": "/usr/include/linux/fcntl.h",
+      "relevant_lines": [
+        "#define F_SETLEASE\t(F_LINUX_SPECIFIC_BASE + 0)",
+        "#define F_GETLEASE\t(F_LINUX_SPECIFIC_BASE + 1)",
+        "#define F_CANCELLK\t(F_LINUX_SPECIFIC_BASE + 5)",
+        "#define F_DUPFD_CLOEXEC\t(F_LINUX_SPECIFIC_BASE + 6)",
+        "#define F_NOTIFY\t(F_LINUX_SPECIFIC_BASE+2)",
+        "#define F_SETPIPE_SZ\t(F_LINUX_SPECIFIC_BASE + 7)",
+        "#define F_GETPIPE_SZ\t(F_LINUX_SPECIFIC_BASE + 8)",
+        "#define F_ADD_SEALS\t(F_LINUX_SPECIFIC_BASE + 9)",
+        "#define F_GET_SEALS\t(F_LINUX_SPECIFIC_BASE + 10)",
+        "#define F_SEAL_SEAL\t0x0001\t/* prevent further seals from being set */",
+        "#define F_SEAL_SHRINK\t0x0002\t/* prevent file from shrinking */",
+        "#define F_SEAL_GROW\t0x0004\t/* prevent file from growing */",
+        "#define F_SEAL_WRITE\t0x0008\t/* prevent writes */",
+        "#define F_SEAL_FUTURE_WRITE\t0x0010  /* prevent future writes while mapped */",
+        "#define F_GET_RW_HINT\t\t(F_LINUX_SPECIFIC_BASE + 11)",
+        "#define F_SET_RW_HINT\t\t(F_LINUX_SPECIFIC_BASE + 12)",
+        "#define F_GET_FILE_RW_HINT\t(F_LINUX_SPECIFIC_BASE + 13)",
+        "#define F_SET_FILE_RW_HINT\t(F_LINUX_SPECIFIC_BASE + 14)"
+      ],
+      "sha256": "1cb09f0ece59b8e86af7371d8ce752a4918e3ae8aed9482599fa8b4c1ca48977"
+    },
+    {
+      "bytes": 5423,
+      "original_path": "/usr/include/asm-generic/fcntl.h",
+      "relevant_lines": [
+        "#define F_LINUX_SPECIFIC_BASE\t1024"
+      ],
+      "sha256": "fc4998b97bb644acb07c55a4dade3bdcb89f6f82d6c24c305d68858b3dce88e1"
+    },
+    {
+      "bytes": 1324,
+      "original_path": "/usr/include/linux/memfd.h",
+      "relevant_lines": [
+        "#define MFD_CLOEXEC\t\t0x0001U",
+        "#define MFD_ALLOW_SEALING\t0x0002U"
+      ],
+      "sha256": "85f1974ed3cfdfc7e1c481def4e033fc2f1f23fba31d7ebe208a6652d8de1717"
+    }
+  ],
+  "postprobe_current_header_readback": true
+}

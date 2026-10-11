@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot34-native-owner-qualification02-2026-10-11/qualify02.py", line 254, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot34-native-owner-qualification02-2026-10-11/qualify02.py", line 249, in main
+    raise primary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot34-native-owner-qualification02-2026-10-11/qualify02.py", line 97, in main
+    lease = owner.borrow(object())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate03-2026-10-11/compiled_edge_owner.py", line 158, in borrow
+    acquire();token=object();active=token;released=False
+    ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-uncached-edge-caller-candidate03-2026-10-11/compiled_edge_owner.py", line 130, in acquire
+    seals=fcntl.F_SEAL_WRITE|fcntl.F_SEAL_GROW|fcntl.F_SEAL_SHRINK|fcntl.F_SEAL_SEAL
+          ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'fcntl' has no attribute 'F_SEAL_WRITE'

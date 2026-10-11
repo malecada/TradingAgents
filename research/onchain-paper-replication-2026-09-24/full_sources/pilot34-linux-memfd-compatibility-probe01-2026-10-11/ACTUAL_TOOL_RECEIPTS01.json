@@ -1,0 +1,20 @@
+{
+  "format": "post-execution-retention-of-actual-root-tool-evidence-v1",
+  "not_a_prelaunch_source_freeze": true,
+  "probe": {
+    "tool_chunk": "a5dd44",
+    "exit_code": 0,
+    "output": "{\"status\": \"PASS_ACTUAL_LINUX_KERNEL_SEALS\", \"libc_memfd_create_lookup\": \"CDLL(None)\", \"flags\": 3, \"F_ADD_SEALS\": 1033, \"F_GET_SEALS\": 1034, \"seal_mask\": 15, \"actual_kernel_seals\": 15, \"refusals\": [\"write\", \"grow\", \"shrink\"], \"bytes\": 41, \"sha256\": \"f2d82f37a829a5619ebc6183e797d9ff9b923d6179c2fe47bbfcb4ce68192374\", \"no_scientific_import\": true, \"fd_closed\": true, \"elapsed_seconds\": 0.00016817800496937707}\n"
+  },
+  "feature_observation": {
+    "tool_chunk": "1641bd",
+    "exit_code": 0,
+    "output": "189:#define F_LINUX_SPECIFIC_BASE\t1024\n{\"interpreter\": \"3.13.13\", \"fcntl_origin\": \"built-in\", \"fcntl_constants\": {\"F_ADD_SEALS\": null, \"F_GET_SEALS\": null, \"F_SEAL_WRITE\": null, \"F_SEAL_GROW\": null, \"F_SEAL_SHRINK\": null, \"F_SEAL_SEAL\": null}, \"os_constants\": {\"MFD_ALLOW_SEALING\": null, \"MFD_CLOEXEC\": null}, \"memfd_available\": false, \"platform\": \"linux\"}\n"
+  },
+  "prior_precheck": {
+    "tool_chunk": "fbc9ce",
+    "exit_code": 1,
+    "reason": "fcntl.__file__ unavailable; actual preceding Linux-header lines and error retained in tool history"
+  },
+  "qualification": "Source is retained from the already executed inline tool request, not re-executed or claimed to have been frozen before the ordinary engineering probe. Tool result is genuine Root-supplied evidence; file metadata alone does not authenticate execution. No empirical/native-module/numerical/whole-capacity claim."
+}
