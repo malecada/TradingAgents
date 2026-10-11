@@ -1,0 +1,59 @@
+--- preflight30_03.py
++++ preflight30_04.py
+@@ -21,7 +21,7 @@
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+ NAME='eth-paper-real-data-end-to-end-resource-20261011-30'
+-GATE=str((HERE/'gate01.json').relative_to(ROOT))
++GATE=str((HERE/'gate02.json').relative_to(ROOT))
+ EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261011-30', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261011-30'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
+ INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py', 'sha256': 'f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb'}
+ BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
+@@ -229,9 +229,9 @@
+ 
+ 
+ def check(*,binding_ref=None,release_ref=None):
+-    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING01.json','fixed binding path differs')
+-    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW01.json','fixed release path differs')
+-    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING01.json'))
++    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING02.json','fixed binding path differs')
++    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW02.json','fixed release path differs')
++    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING02.json'))
+     need(binding['identity']==NAME and binding['schema_version']==1,'fixed final binding required')
+     for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review'):
+         reference(binding.get(role))
+@@ -239,12 +239,12 @@
+     for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review'):reference(binding[role])
+     need(binding['gate']['path']==GATE,'fixed gate path differs')
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+-    release_path=HERE/'RELEASE_REVIEW01.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
++    release_path=HERE/'RELEASE_REVIEW02.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
+     need(release.get('decision')=='accepted' and release['identity']==NAME,'exact source/entry review missing')
+     refs=dict(release['evidence'])
+     for ref in binding.values():
+         if type(ref) is dict and set(ref)>={'path','sha256'}:need(refs.get(ref['path'])==ref['sha256'],'final binding ref not independently released')
+-    for path in (release_path,HERE/'BINDING01.json',Path(__file__)):
++    for path in (release_path,HERE/'BINDING02.json',Path(__file__)):
+         relative=str(path.relative_to(ROOT));digest=hashlib.sha256(read_path(path)).hexdigest()
+         if path!=release_path:need(refs.get(relative)==digest,'exact entry/binding not independently released')
+         refs[relative]=digest
+@@ -325,7 +325,7 @@
+     if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
+     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+     return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
+-        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':101,
++        'registration_sha256':file_hash(HERE/'gate02.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':101,
+         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+         'index_capacity':index_capacity,'projected_reservations':scopes,'host_mem_available_bytes':available,'free_disk_bytes':free,
+         'startup_free_requirement_bytes':startup,'storage_observation':storage,
+--- root_io30_03.py
++++ root_io30_04.py
+@@ -137,7 +137,7 @@
+ 
+ if __name__ == '__main__':
+     # Final exact preflight is separately bound/reviewed in the execution dir.
+-    from preflight30_03 import check
++    from preflight30_04 import check
+     args, preflight = check()
+     result = launch_checked(args,preflight,Path(__file__).resolve().parent)
+     raise SystemExit(result['actual_parent_exit_code'])
