@@ -1,0 +1,33 @@
+{
+  "candidate_manifest": {
+    "bytes": 1512,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/CANDIDATE02_MANIFEST01.json",
+    "sha256": "51f9f32db64503b1d31758d7c4926c74609fb220468faaa7483519de9afcc3e7"
+  },
+  "checks": {
+    "preflight30_exact_declared_delta": true,
+    "register30_exact_declared_delta": true,
+    "root_io30_exact_declared_delta": true
+  },
+  "decision": "accepted_ordering_seam_only",
+  "integration_decision": "refused_current67_runtime_environment_mismatch",
+  "qualification": "Ordering correction is exact and preserves remaining source checks. Actual final complete preparation recovery and independent review remain mandatory after final entry freeze and before empirical execution through external Root release condition. Source/current67 integration remains refused for runtime inventory identity mismatch recorded in REVIEW01.json; no genuine integration_review can yet be supplied.",
+  "registration_command_released": false,
+  "sources": [
+    {
+      "bytes": 5463,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/register30_02.py",
+      "sha256": "fb5b5df86624f21dcc0b25b9402231db25740651ef45366ef1d61acfb4cd57e4"
+    },
+    {
+      "bytes": 29393,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/preflight30_02.py",
+      "sha256": "e70f62133bc8be68e0f72f5de04c27198268d74865b1289d770b9ce9cf2f78f1"
+    },
+    {
+      "bytes": 7339,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/root_io30_02.py",
+      "sha256": "355123786af983cbcf7fbd6886e7a397a0d49f082b6137ad83705e10e3433bd1"
+    }
+  ]
+}

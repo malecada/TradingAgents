@@ -1,0 +1,53 @@
+{
+  "accepted_binder_review_sha256": "28bfc0b4f80f4d8a063f0f9008259b32c125a1ad78a1a14579ec98142e90beda",
+  "argv": [
+    "taskset",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "10",
+    "prlimit",
+    "--cpu=30",
+    "--as=536870912",
+    "--fsize=4194304",
+    "--",
+    ".venv/bin/python",
+    "-B",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/bind_actual01.py"
+  ],
+  "at": "2026-10-10T23:52:09.653228+00:00",
+  "binder_sha256": "bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb",
+  "candidate_manifest_sha256": "fc60e0198aea3e77e9cea5419d448a25882b66ca83b81461d23c2621ff2af9e8",
+  "check_result_sha256": "78ba4298bd0759a439e1b612cd66c996f07967774ef30ef07315e9b3a7125e55",
+  "checks": 178,
+  "command": "taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/bind_actual01.py",
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "decision": "RELEASE_EXACT_FULL30_OFFLINE_BINDING_CALLER_ONCE",
+  "entry_conditions": [
+    "Keep frozen preparation and pinned binder dependencies unchanged; execute exact cwd/command once.",
+    "Actual wrapper enforces canonical existing private scaffold, fresh30 claim/dispatch/private/output paths and exclusive parent/output creation.",
+    "Preserve any failure after private-parent creation or partial public publication. Never overwrite, delete evidence, or retry the same route.",
+    "After actual bind, independently join returned public BOUND01/input refs and metadata-only opaque67th into the fresh gate before source/currentness/native/admission review."
+  ],
+  "execution_owner": "Root only",
+  "expected_bound_roles": 67,
+  "expected_public_roles": 66,
+  "findings": [],
+  "fresh_names": {
+    "bound": "BOUND01.json",
+    "experiment": "eth-paper-real-data-end-to-end-resource-20261011-30",
+    "namespace": "ethpilot-20261011-30",
+    "private_leaf": "archive_transport01.json",
+    "private_parent": "research_artifacts/real_pilot_runtime/pilot-transport-20261011-30-01",
+    "request": "REQUEST01.json"
+  },
+  "review_scope": "Frozen public source/metadata/inverse/role/caller only. Accepted binder02 implementation reused; no binding, credential or private input access.",
+  "untested": [
+    "Actual binding/publication and opaque output body/reference/currentness; no original private/connection/key read, hash or stat occurred.",
+    "Availability and current content of inherited historical/scientific data bodies;66-reference roster equality is not admission or a new data hash audit.",
+    "Actual full30 gate/source closure, namespace/resource/currentness/integration admission, claim accounting and experiment budget.",
+    "SSH/network/remote availability or preservation; empirical/native/numerical execution and financial claims."
+  ],
+  "wrapper_sha256": "954ebcb2f1f2ae4a957b207c3bf86a0fd23cfc790500722f91feef0b474a5360"
+}

@@ -1,0 +1,107 @@
+--- preflight29_02.py
++++ preflight30_01.py
+@@ -20,12 +20,15 @@
+ 
+ ROOT=Path(__file__).resolve().parents[4]
+ HERE=Path(__file__).resolve().parent
+-NAME='eth-paper-real-data-end-to-end-resource-20261009-29'
+-GATE=str((HERE/'gate04.json').relative_to(ROOT))
+-EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261009-29', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261009-29'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
++NAME='eth-paper-real-data-end-to-end-resource-20261011-30'
++GATE=str((HERE/'gate01.json').relative_to(ROOT))
++EXPECTED_RESOURCES={'disk_floor_bytes': 10737418240, 'disk_paths': ['/home/malecada/master_thesis/TradingAgents-audit-fixes'], 'memory_high_bytes': 5368709120, 'memory_max_bytes': 6442450944, 'native_unit_limits': {'file_size_bytes': 1073741824}, 'reserve_bytes': 2684354560, 'start_reserve_bytes': 2684354560, 'storage_budget': {'authority_root': '/home/malecada/master_thesis/TradingAgents-audit-fixes', 'experiment': 'eth-paper-real-data-end-to-end-resource-20261011-30', 'kind': 'real-pilot-writable-union', 'limits': {'max_allocated_bytes': 21474836480, 'max_depth': 64, 'max_entries': 1000000, 'max_logical_bytes': 17179869184, 'max_scan_seconds': 5}, 'roots': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/eth-paper-real-data-end-to-end-resource-20261011-30'], 'schema_version': 2, 'shared_files': ['/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs/.lock']}, 'wall_seconds': 28800}
+ INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py', 'sha256': 'f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb'}
+ BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
+ OPAQUE_ROLE='archive_transport'
++FROZEN_PREPARATION={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/PREPARED01.json', 'sha256': '944067ce9c0892b04d983c454a5e4c1afd9a3fe587cccf73b7e52fcf24faa097', 'bytes': 86742}
++COMPILED_POLICY={'format': 'compiled-small-lse-prototype04-session-v1', 'library_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so', 'library_sha256': '9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2', 'runtime_bytes': 382, 'runtime_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json', 'runtime_sha256': '247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366', 'source_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c', 'source_sha256': '8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8'}
++COMPILED_INPUTS={'library': 'compiled_normalization_library', 'runtime': 'compiled_normalization_runtime', 'source': 'compiled_normalization_source'}
+ 
+ 
+ def need(ok,message):
+@@ -159,8 +162,8 @@
+     review=read(binding['binding_review']);core=read(binding['core_manifest']);public=read(binding['public_manifest']);prior=read(binding['public_refs'])
+     need(review['decision']=='accepted' and review['identity']==NAME,'actual final input binding review required')
+     actual={role:{key:info[key] for key in ('path','sha256')} for role,info in admission.inputs.items()}
+-    need(len(actual)==64 and review['input_refs']==actual and binding['input_refs']==actual,'exact genuine64-role input closure differs')
+-    need(public['experiment']==NAME and public['all_input_roles']==64,'accepted public04 identity/roster differs')
++    need(len(actual)==67 and review['input_refs']==actual and binding['input_refs']==actual,'exact genuine67-role input closure differs')
++    need(public['experiment']==NAME and public['all_input_roles']==67,'accepted public04 identity/roster differs')
+     for role,ref in binding.items():
+         if type(ref) is dict and {'path','sha256'}<=set(ref):
+             need(release['evidence'].get(ref['path'])==ref['sha256'],'binding evidence absent from release')
+@@ -169,12 +172,12 @@
+         need(len(role.encode('ascii'))<=128,'actual input role encoding differs');_path_envelope(str(ROOT/info['path']))
+     bound=read(binding['transport_binding'])
+     changed={'archive_transport','matching_ordered_edge_scratch'}|set(bound['inputs'])
+-    need(set(prior)==set(actual),'public04 original role roster differs')
++    need(set(prior)==set(actual)-{OPAQUE_ROLE},'public04 original role roster differs')
+     for role,ref in prior.items():
+         if role not in changed:need(actual[role]['sha256']==ref['sha256'],'unrelated public04 input changed: '+role)
+-    need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget96 review differs')
++    need(admission.experiment['cumulative_budget_extension']['review']==binding['budget_review'],'genuine budget101 review differs')
+     prepared=read(binding['preparation']);unbound=read(binding['unbound_archive'])
+-    need(prepared['preparation_origin']['public_manifest']==binding['public_preparation'],'prepared public04 origin differs')
++    need(binding['preparation']==FROZEN_PREPARATION,'exact reviewed full30 public preparation differs')
+     need(bound['source_request']['prepared']==binding['preparation'] and bound['source_request']['archive_policy']==binding['unbound_archive'],'actual binder source request differs')
+     need(prepared['builder03_spec']['references']['archive_policy']==binding['unbound_archive'],'unbound archive role differs')
+     binder_body=read_path(reference(BINDER));need(hashlib.sha256(binder_body).hexdigest()==BINDER['sha256'] and release['evidence'].get(BINDER['path'])==BINDER['sha256'],'unchanged accepted binder source required')
+@@ -196,6 +199,12 @@
+     need(execution.get('edge_cache_policy')=={'format':'adaptive-lazy-edge-cache-v1','max_edge_products':16384,'chunk_entries':256,'max_scratch_bytes':262144},'fixed adaptive cache policy differs')
+     need(execution.get('geometry')=={'format':'provisional-pair-geometry-v1','max_body_bytes':1536},'fixed geometry policy differs')
+     need(execution.get('binding_timing')=={'format':'binding-lease-phases-v1','max_body_bytes':640},'fixed binding timing policy differs')
++    need(execution.get('compiled_normalization_policy')==COMPILED_POLICY,'exact selected compiled policy differs')
++    need(execution.get('compiled_normalization_inputs')==COMPILED_INPUTS,'exact compiled role selection differs')
++    for kind,role in COMPILED_INPUTS.items():
++        need(actual[role]['sha256']==COMPILED_POLICY[kind+'_sha256']
++             and str(ROOT/actual[role]['path'])==COMPILED_POLICY[kind+'_path'],
++             'compiled source/library/runtime role does not join policy')
+     need(execution['max_summary_bytes']==144998400,'original per-stage summary cap differs')
+     schedule=compact['stage_policy']['schedule']
+     need(schedule['max_total_checkpoints']==160 and schedule['max_total_checkpoint_bytes']==43058298880 and schedule['max_checkpoints']==1,'original cumulative checkpoint schedule differs')
+@@ -220,29 +229,29 @@
+ 
+ 
+ def check(*,binding_ref=None,release_ref=None):
+-    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING02.json','fixed binding path differs')
+-    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW02.json','fixed release path differs')
+-    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING02.json'))
++    if binding_ref is not None:need(reference(binding_ref)==HERE/'BINDING01.json','fixed binding path differs')
++    if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW01.json','fixed release path differs')
++    binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING01.json'))
+     need(binding['identity']==NAME and binding['schema_version']==1,'fixed final binding required')
+-    for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review'):
++    for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review','preparation_recovery','preparation_recovery_review'):
+         reference(binding.get(role))
+     # Unknown draft references refuse before admission, subprocesses or scans.
+     for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review'):reference(binding[role])
+     need(binding['gate']['path']==GATE,'fixed gate path differs')
+     source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+-    release_path=HERE/'RELEASE_REVIEW02.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
++    release_path=HERE/'RELEASE_REVIEW01.json';release=read(release_ref) if release_ref is not None else json.loads(read_path(release_path))
+     need(release.get('decision')=='accepted' and release['identity']==NAME,'exact source/entry review missing')
+     refs=dict(release['evidence'])
+     for ref in binding.values():
+         if type(ref) is dict and set(ref)>={'path','sha256'}:need(refs.get(ref['path'])==ref['sha256'],'final binding ref not independently released')
+-    for path in (release_path,HERE/'BINDING02.json',Path(__file__)):
++    for path in (release_path,HERE/'BINDING01.json',Path(__file__)):
+         relative=str(path.relative_to(ROOT));digest=hashlib.sha256(read_path(path)).hexdigest()
+         if path!=release_path:need(refs.get(relative)==digest,'exact entry/binding not independently released')
+         refs[relative]=digest
+     authenticate_committed(source,committed_refs(refs,binding))
+     args=SimpleNamespace(root=ROOT,registration=GATE,experiment=NAME,source=source)
+     admission,job=_admitted(args)
+-    if not admission.ready or admission.effective_attempt_budget!=100:raise ValueError('exact pilot admission/budget differs')
++    if not admission.ready or admission.effective_attempt_budget!=101:raise ValueError('exact pilot admission/budget differs')
+     need(len(admission.experiment['source_files'])>=365,'complete installed source plus entry registration pins required')
+     for relative,expected in admission.experiment['source_files'].items():
+         _path_envelope(str(ROOT/relative))
+@@ -316,7 +325,7 @@
+     if free<startup:raise ValueError('full projected source/scratch plus disk floor unavailable')
+     if available<job['resources']['start_reserve_bytes']:raise ValueError('frozen startup RAM reserve unavailable')
+     return args,{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'experiment':NAME,
+-        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':100,
++        'registration_sha256':file_hash(HERE/'gate01.json'),'release_sha256':file_hash(release_path),'effective_attempt_budget':101,
+         'source_pins':len(admission.experiment['source_files']),'compact_input_pins':len(admission.inputs),
+         'index_capacity':index_capacity,'projected_reservations':scopes,'host_mem_available_bytes':available,'free_disk_bytes':free,
+         'startup_free_requirement_bytes':startup,'storage_observation':storage,

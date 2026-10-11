@@ -1,0 +1,11 @@
+--- /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/root_io30_01.py
++++ /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/root_io29_02.py
+@@ -137,7 +137,7 @@
+ 
+ if __name__ == '__main__':
+     # Final exact preflight is separately bound/reviewed in the execution dir.
+-    from preflight30_01 import check
++    from preflight29_02 import check
+     args, preflight = check()
+     result = launch_checked(args,preflight,Path(__file__).resolve().parent)
+     raise SystemExit(result['actual_parent_exit_code'])

@@ -1,0 +1,78 @@
+{
+  "additional_evidence": [
+    {
+      "bytes": 45525,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+      "sha256": "8f559c4030a1bf69e678337bb68216115943b0a6ae2a0e8100601557c6d81c77"
+    },
+    {
+      "bytes": 15721,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/ALL_INPUT_REFS01.json",
+      "sha256": "c79dd2e9cd4b9fda64febca027ca4452f745e077804525eab5de5790938cb2de"
+    },
+    {
+      "bytes": 382,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json",
+      "sha256": "247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366"
+    }
+  ],
+  "candidate_manifest": {
+    "bytes": 3009,
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-entry-preparation01-2026-10-11/MANIFEST01.json",
+    "sha256": "6ea692d3d02cab9be3f6d578701de3a63b461238b5d917892c97a02e44d0c94b"
+  },
+  "checks": {
+    "baseline_pins": true,
+    "bound67_private_ref_only": true,
+    "capacity_roster421": true,
+    "manifest_files": true,
+    "only_prepared_inputs_and_check_changed": true,
+    "preflight30_01.py_literal_inverse": true,
+    "register30_01.py_literal_inverse": true,
+    "root_io30_01.py_literal_inverse": true,
+    "rootio_function_bodies_unchanged": true,
+    "runtime_environment_join": false
+  },
+  "decision": "refused",
+  "empirical_release": false,
+  "excluded": "No private transport body stat/read/hash, connection, credentials, arrays, Admission, ResearchRun.start, native/scientific import, network, preservation or Git mutation.",
+  "findings": [
+    {
+      "correction": "Preserve candidate01. In a separately reviewed successor remove only preparation_recovery and preparation_recovery_review from registration REQUIRED, evidence-to-sourcepins/Binding population, and preflight required binding roles. Keep exact final preparation recovery plus independent recovery review mandatory in the accepted external Root-before-launch release condition after final entry freeze. Do not put its own recovery refs into recovered gate/Binding/release.",
+      "problem": "Final preparation recovery and review are prerequisites for gate creation, then embedded in gate source_files and Binding and required in release. Recovery of exact final gate/Binding/release cannot precede or be embedded in those recovered artifacts. Prior recovery cannot truthfully substitute for current final preparation recovery.",
+      "severity": "blocking",
+      "source": [
+        "register30_01.py:13",
+        "register30_01.py:24",
+        "register30_01.py:45",
+        "register30_01.py:54",
+        "register30_01.py:55",
+        "preflight30_01.py:236",
+        "preflight30_01.py:246"
+      ]
+    },
+    {
+      "correction": "Reconcile a genuine accepted runtime/environment identity and propagate exact reviewed runtime policy, compiled runtime input, binding and source references. Preserve the equality guard; changing declared digest alone is not runtime or inventory admission.",
+      "problem": "Bound environment SHA256 3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc differs from selected compiled runtime runtime_inventory_sha256 7f0cbd1a34389ac112c9e09241cb1bcab7b1972e77e5fe7d13dc124984266175. Actual caller line90 requires equality and will refuse.",
+      "severity": "blocking",
+      "source": [
+        "tradingagents/research/onchain_replication/compact_mcm_batched.py:90",
+        "real-data-pilot-full30-binding-preparation01-2026-10-11/ALL_INPUT_REFS01.json",
+        "matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json"
+      ]
+    }
+  ],
+  "registration_command_released": false,
+  "remaining": [
+    "Successor source/inverse review and exact actual public artifact population; no placeholder receipts.",
+    "421 ancestry/current-body verification not independently repeated after discovering blocker. Cardinality alone is not commit authentication.",
+    "Final binding review, actual capacity declaration, exact gate and release review plus complete final preparation recovery before launch."
+  ],
+  "reuse": [
+    "Accepted full29 RootIO/function behavior and Owner/native scope unchanged at function-body level.",
+    "Accepted compiled caller source-entry review b152147d and actual03 qualification review f5be7402 reused. Independent actual bound inventory join FAILED; earlier source qualification does not admit this mismatched entry.",
+    "Genuine101 extension review e98bb82c reused; no allowance adoption or claim performed."
+  ],
+  "schema_version": 1,
+  "scope": "Frozen full30 candidate01 source and registration ordering; no empirical release"
+}

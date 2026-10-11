@@ -1,0 +1,37 @@
+{
+  "ROOT_EVIDENCE_REFS01.json": {
+    "required_roles": [
+      "budget_review",
+      "capacity_observation",
+      "prior_outcome_review",
+      "prior_preservation_complete",
+      "prior_recovery_review",
+      "prior_root_closure_review",
+      "integration_review",
+      "preparation_recovery",
+      "preparation_recovery_review"
+    ],
+    "schema": "exact map role -> genuine public {path,sha256[,bytes]}"
+  },
+  "budget_review_available": "real-data-pilot-full30-cumulative-machine-review01-2026-10-11/EXTENSION101_REVIEW01.json",
+  "budget_review_expected_sha256": "e98bb82c8c20dff02d0c16bd52fdf3d05bd7d28ea852d3d6f6817b42b7e2b3be",
+  "capacity_source_anchor": "f63cf196ea5e9d344c365b04cfeb16df6f1ffb0d",
+  "capacity_source_map": "CAPACITY_SOURCE_MAP01.json",
+  "register30_01.py_requires": [
+    "../real-data-pilot-full30-binding-preparation01-2026-10-11/BOUND01.json",
+    "../real-data-pilot-full30-binding-preparation01-2026-10-11/ALL_INPUT_REFS01.json",
+    "../real-data-pilot-full30-binding-preparation01-2026-10-11/BINDING_CHECK01.json",
+    "ROOT_EVIDENCE_REFS01.json"
+  ],
+  "register_outputs": [
+    "gate01.json",
+    "PUBLIC_MANIFEST01.json",
+    "BINDING_DRAFT01.json",
+    "REGISTRATION_DRAFT01.json"
+  ],
+  "root_finalizes": [
+    "BINDING01.json: draft plus genuine binding_review ref",
+    "RELEASE_REVIEW01.json: accepted exact identity/evidence map including all binding refs, current source/input bodies and entry scripts"
+  ],
+  "status": "PATH_CONTRACT_ONLY_NO_RECEIPTS_CREATED"
+}

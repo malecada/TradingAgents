@@ -1,0 +1,21 @@
+--- register30_03.py
++++ register30_04.py
+@@ -35,11 +35,16 @@
+   p=ROOT/refs[role]['path'];need(ref(p)['sha256']==refs[role]['sha256'] and load(p)==doc,'actual bound public input differs')
+  gate=load(DRAFT/'gate.draft01.json');experiment=gate['experiments'][NAME]
+  need(experiment['parent']==OLD and len(experiment['inputs'])==67,'full30 parent/roster differs')
+- experiment['cells']=['real-eth-seven-graph-joint-update-resource30']
++ # Cell labels are scoped by the fresh experiment; retain the authentic plan's
++ # declared role label. Historical experiment29 remains permanently closed.
++ pilot_role=next(iter(bound['inputs']['execution_job']['payload']['representation_jobs'].values()))['real_pilot_input']
++ cell=bound['inputs'][pilot_role]['cell_id']
++ need(cell=='real-eth-seven-graph-joint-update-resource29','preserved genuine pilot cell differs')
++ experiment['cells']=[cell]
+  experiment['inputs']=refs;experiment['charter']=ref(DRAFT/'CHARTER01.md')
+  experiment['cumulative_budget_extension']={'extension':ref(DRAFT/'EXTENSION_PROPOSED101_01.json'),'review':evidence['budget_review']}
+  pins=experiment['source_files'];pins.update(load(HERE/'INSTALLED_SOURCE_PINS01.json'))
+- for name in ('preflight30_03.py','root_io30_03.py','register30_03.py','CORE_MANIFEST02.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
++ for name in ('preflight30_03.py','root_io30_03.py','register30_04.py','CORE_MANIFEST02.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
+   p=HERE/name;pins[str(p.relative_to(ROOT))]=ref(p)['sha256']
+  public_pins=load(HERE/'CAPACITY_SOURCE_MAP01.json')['source_files']
+  need(all(pins.get(path)==digest for path,digest in public_pins.items()),'capacity ancestry map differs from admission sources')

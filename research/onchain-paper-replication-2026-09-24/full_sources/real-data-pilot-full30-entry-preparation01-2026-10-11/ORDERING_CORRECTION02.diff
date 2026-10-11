@@ -1,0 +1,42 @@
+--- register30_01.py
++++ register30_02.py
+@@ -10,7 +10,7 @@
+ T=F/'real-data-pilot-full30-binding-preparation01-2026-10-11'
+ OLD='eth-paper-real-data-end-to-end-resource-20261009-29'
+ NAME='eth-paper-real-data-end-to-end-resource-20261011-30'
+-REQUIRED=('budget_review','capacity_observation','prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review','preparation_recovery','preparation_recovery_review')
++REQUIRED=('budget_review','capacity_observation','prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review')
+ def need(ok,message):
+  if not ok:raise ValueError(message)
+ def load(p):return json.loads(p.read_bytes())
+@@ -39,7 +39,7 @@
+  experiment['inputs']=refs;experiment['charter']=ref(DRAFT/'CHARTER01.md')
+  experiment['cumulative_budget_extension']={'extension':ref(DRAFT/'EXTENSION_PROPOSED101_01.json'),'review':evidence['budget_review']}
+  pins=experiment['source_files'];pins.update(load(HERE/'INSTALLED_SOURCE_PINS01.json'))
+- for name in ('preflight30_01.py','root_io30_01.py','register30_01.py','CORE_MANIFEST01.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
++ for name in ('preflight30_02.py','root_io30_02.py','register30_02.py','CORE_MANIFEST01.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
+   p=HERE/name;pins[str(p.relative_to(ROOT))]=ref(p)['sha256']
+  public_pins=load(HERE/'CAPACITY_SOURCE_MAP01.json')['source_files']
+  need(all(pins.get(path)==digest for path,digest in public_pins.items()),'capacity ancestry map differs from admission sources')
+--- preflight30_01.py
++++ preflight30_02.py
+@@ -233,7 +233,7 @@
+     if release_ref is not None:need(reference(release_ref)==HERE/'RELEASE_REVIEW01.json','fixed release path differs')
+     binding=read(binding_ref) if binding_ref is not None else json.loads(read_path(HERE/'BINDING01.json'))
+     need(binding['identity']==NAME and binding['schema_version']==1,'fixed final binding required')
+-    for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review','preparation_recovery','preparation_recovery_review'):
++    for role in ('prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review'):
+         reference(binding.get(role))
+     # Unknown draft references refuse before admission, subprocesses or scans.
+     for role in ('gate','core_manifest','public_manifest','public_refs','capacity_observation','transport','binding_review','transport_binding','preparation','unbound_archive','budget_review'):reference(binding[role])
+--- root_io30_01.py
++++ root_io30_02.py
+@@ -137,7 +137,7 @@
+ 
+ if __name__ == '__main__':
+     # Final exact preflight is separately bound/reviewed in the execution dir.
+-    from preflight30_01 import check
++    from preflight30_02 import check
+     args, preflight = check()
+     result = launch_checked(args,preflight,Path(__file__).resolve().parent)
+     raise SystemExit(result['actual_parent_exit_code'])

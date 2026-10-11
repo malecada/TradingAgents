@@ -1,0 +1,426 @@
+{
+  "argv": [
+    "taskset",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "10",
+    "prlimit",
+    "--cpu=30",
+    "--as=536870912",
+    "--fsize=4194304",
+    "--",
+    ".venv/bin/python",
+    "-B",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py"
+  ],
+  "at": "2026-10-11T00:04:34.047581+00:00",
+  "binder_or_authority_execution": false,
+  "checks": [
+    "external frozen manifest matching-compiled-runtime-input02-2026-10-11",
+    "frozen artifact matching-compiled-runtime-input02-2026-10-11/LINEAGE01.json",
+    "frozen artifact matching-compiled-runtime-input02-2026-10-11/LITERAL_PATCH01.diff",
+    "frozen artifact matching-compiled-runtime-input02-2026-10-11/POLICY01.json",
+    "frozen artifact matching-compiled-runtime-input02-2026-10-11/REPORT.md",
+    "frozen artifact matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json",
+    "external frozen manifest real-data-pilot-full30-binding-preparation02-2026-10-11",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/CHECK_RESULT01.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/LITERAL_PATCH01.diff",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/MATCHING_SCRATCH_RESERVATION01.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/PREPARED01.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/PUBLIC_INPUT_REFS_DRAFT01.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/REPORT.md",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/REQUEST01.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/build_public02.py",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/check02.py",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/archive_policy.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/archive_transport.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/compact_policy.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/execution_job.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/mcm_output_policy.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/mcm_policy.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/original_import.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/pair_policy.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/pilot.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/producer_plan.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/resource_population_plan.json",
+    "frozen artifact real-data-pilot-full30-binding-preparation02-2026-10-11/public01/typed_payload.json",
+    "accepted01 wrapper/binder review anchor",
+    "old01 actual PUBLIC binding retained",
+    "public lineage caller",
+    "public lineage environment",
+    "public lineage original_inventory",
+    "public lineage original_runtime",
+    "public lineage parser",
+    "actual canonical345B runtime02",
+    "only semantic runtime inventory field changed",
+    "old aggregate versus actual environment body join",
+    "six-body historical inventory contains exact environment reference",
+    "historical platform/version/executable fields preserved",
+    "actual installed parser accepts corrected runtime metadata",
+    "actual installed freeze accepts corrected selection metadata",
+    "actual parser refuses malformed typed/runtime/digest/extra metadata",
+    "actual parser refuses malformed typed/runtime/digest/extra metadata",
+    "actual parser refuses malformed typed/runtime/digest/extra metadata",
+    "actual parser refuses malformed typed/runtime/digest/extra metadata",
+    "genuinecaller environment predicate remains unchanged",
+    "actual require refuses old environment-join operands",
+    "actual require accepts corrected environment-join operands; no Admission fabricated",
+    "only exact runtime path/hash/extent selection changes",
+    "same12 public template roles",
+    "new unbound archive namespace",
+    "complete science/caps/public inverse archive_policy",
+    "new unbound transport namespace",
+    "complete science/caps/public inverse archive_transport",
+    "complete science/caps/public inverse compact_policy",
+    "complete science/caps/public inverse execution_job",
+    "complete science/caps/public inverse mcm_output_policy",
+    "complete science/caps/public inverse mcm_policy",
+    "complete science/caps/public inverse original_import",
+    "complete science/caps/public inverse pair_policy",
+    "complete science/caps/public inverse pilot",
+    "complete science/caps/public inverse producer_plan",
+    "complete science/caps/public inverse resource_population_plan",
+    "complete science/caps/public inverse typed_payload",
+    "scratch identity and all cap bytes unchanged",
+    "both actual descriptors and pilot resources agree",
+    "canonical policy digest archive_policy",
+    "canonical policy digest compact_policy",
+    "canonical policy digest pair_policy",
+    "unchanged66public+pendingopaque67role denominator",
+    "actual registered environment reference join",
+    "unchanged inherited role agreement_reuse_source_review",
+    "unchanged inherited role agreement_slice_source_review",
+    "actual changed public reference archive_policy",
+    "unchanged inherited role calendar",
+    "actual changed public reference compact_policy",
+    "unchanged inherited role compiled_normalization_library",
+    "actual changed public reference compiled_normalization_runtime",
+    "unchanged inherited role compiled_normalization_source",
+    "unchanged inherited role environment",
+    "actual changed public reference execution_job",
+    "unchanged inherited role execution_workspace",
+    "unchanged inherited role graph_20220502",
+    "unchanged inherited role graph_20220509",
+    "unchanged inherited role graph_20220516",
+    "unchanged inherited role graph_20220523",
+    "unchanged inherited role graph_20220530",
+    "unchanged inherited role graph_20220606",
+    "unchanged inherited role graph_20220613",
+    "unchanged inherited role imported_authority_lease",
+    "unchanged inherited role lease_subphase_source_review",
+    "unchanged inherited role legacy_artifact_index",
+    "unchanged inherited role legacy_cell",
+    "unchanged inherited role legacy_cell_ledger",
+    "unchanged inherited role legacy_claim",
+    "unchanged inherited role legacy_day_20220613",
+    "unchanged inherited role legacy_day_20220614",
+    "unchanged inherited role legacy_day_20220615",
+    "unchanged inherited role legacy_day_20220616",
+    "unchanged inherited role legacy_day_20220617",
+    "unchanged inherited role legacy_day_20220618",
+    "unchanged inherited role legacy_day_20220619",
+    "unchanged inherited role legacy_graph_config",
+    "unchanged inherited role legacy_graph_evidence",
+    "unchanged inherited role legacy_graph_manifest",
+    "unchanged inherited role legacy_intent",
+    "unchanged inherited role legacy_phase_source",
+    "unchanged inherited role legacy_result",
+    "unchanged inherited role legacy_run_source",
+    "unchanged inherited role legacy_source_index",
+    "unchanged inherited role legacy_terminal",
+    "actual changed public reference matching_ordered_edge_scratch",
+    "actual changed public reference mcm_output_policy",
+    "actual changed public reference mcm_policy",
+    "unchanged inherited role model",
+    "unchanged inherited role original_claim",
+    "unchanged inherited role original_dictionary",
+    "unchanged inherited role original_dictionary_config",
+    "unchanged inherited role original_dictionary_intent",
+    "unchanged inherited role original_dictionary_result",
+    "unchanged inherited role original_gate",
+    "unchanged inherited role original_graph_manifest",
+    "actual changed public reference original_import",
+    "unchanged inherited role original_import_stage",
+    "unchanged inherited role original_matching_config",
+    "unchanged inherited role original_sample_intent",
+    "unchanged inherited role original_samples",
+    "unchanged inherited role original_terminal",
+    "actual changed public reference pair_policy",
+    "actual changed public reference pilot",
+    "unchanged inherited role pilot_performance_adoption",
+    "unchanged inherited role price_panel",
+    "actual changed public reference producer_plan",
+    "actual changed public reference resource_population_plan",
+    "unchanged inherited role resource_population_scope",
+    "unchanged inherited role training",
+    "actual changed public reference typed_payload",
+    "MCM exactruntime02selection",
+    "three-role policy reference library",
+    "three-role policy reference runtime",
+    "three-role policy reference source",
+    "actual prepared body set",
+    "unchanged connection PUBLIC reference only",
+    "new exact30-02 private route string only",
+    "new request reference prepared",
+    "new request reference archive_policy",
+    "prepared/request archive join",
+    "entire wrapper inverse is only fresh private/namespace strings",
+    "accepted one-use seam unchanged not os.path.lexists(p)",
+    "accepted one-use seam unchanged parent.mkdir(mode=0o700,exist_ok=False)",
+    "accepted one-use seam unchanged load(HERE/'REQUEST01.json')",
+    "accepted one-use seam unchanged save(HERE/'BOUND01.json',bound)",
+    "accepted one-use seam unchanged module.bind(ROOT,request)",
+    "actual literal patch inverse/reencoding real-data-pilot-full30-binding-preparation02-2026-10-11",
+    "actual literal patch inverse/reencoding matching-compiled-runtime-input02-2026-10-11",
+    "fresh public output absent BOUND01.json",
+    "fresh public output absent inputs01",
+    "fresh public output absent ALL_INPUT_REFS01.json",
+    "fresh public output absent BINDING_CHECK01.json",
+    "fresh empirical30 claim/newdispatch namespace absent (public metadata only)",
+    "exact Root offline one-use v2 command",
+    "no native/scientific imports"
+  ],
+  "command": "taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py",
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "decision": "RELEASE_EXACT_RUNTIME02_AND_FULL30V2_OFFLINE_BINDING_ONCE",
+  "limitations": [
+    "Runtime metadata observation age and exclusions persist; no current package/library/loaded runtime proof.",
+    "New private parent existence/currentness is intentionally uninspected; actual wrapper must enforce its one-use checks.",
+    "Actual v2binding/opaque67th/current gate/source/native/admission/accounting and external recovery remain pending.",
+    "No empirical30 claim or allowance101 adoption is made; unchanged input identities do not supply authority."
+  ],
+  "new_environment_join": true,
+  "new_runtime_bytes": 345,
+  "old_environment_join": false,
+  "old_inventory_exclusions_preserved": [
+    "Installed NumPy/SciPy package payload body validation",
+    "Loaded numerical versions until qualification checks them",
+    "Historical compiler binary/build dependency authentication",
+    "Loaded libm body identity",
+    "Filesystem writer exclusion or future currentness",
+    "Financial Admission/Owner or empirical capacity"
+  ],
+  "private_or_connection_target_reads_hashes_stats": false,
+  "read_bytes": 1646037,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/INVENTORY01.json": {
+      "bytes": 3624,
+      "sha256": "7f0cbd1a34389ac112c9e09241cb1bcab7b1972e77e5fe7d13dc124984266175"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/POLICY01.json": {
+      "bytes": 950,
+      "sha256": "cf9cbe5ca7aa1a9e1849d59ec63916f8aa288b35a82d84f8b35c432c575506be"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json": {
+      "bytes": 382,
+      "sha256": "247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/LINEAGE01.json": {
+      "bytes": 1280,
+      "sha256": "77e85c3e10c75d6d417cb215c6a121b43d19c4a41d8e52cd803589e6f4c9eb8b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/LITERAL_PATCH01.diff": {
+      "bytes": 1130,
+      "sha256": "fcd6dcc9737e329258af4af863c53dc5b864146d1e448df0714dec82a15d69cc"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/MANIFEST01.json": {
+      "bytes": 1021,
+      "sha256": "f03573b89b9657dd7a6bfe0c14d90bdc8133cc51c378aa013afec8331b393945"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/POLICY01.json": {
+      "bytes": 917,
+      "sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/REPORT.md": {
+      "bytes": 1512,
+      "sha256": "03c6cfe38aa96bc874be266a5fd4b343af8be3f438d666604e42845320520201"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json": {
+      "bytes": 345,
+      "sha256": "8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/BOUND01.json": {
+      "bytes": 87585,
+      "sha256": "ed988bd2e19eb7e4dfacb98e73aca41fef825c389eeca0018a59a8353a35e3fa"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/MATCHING_SCRATCH_RESERVATION01.json": {
+      "bytes": 2554,
+      "sha256": "71f0bf614a9d8e89e8e708c588b8b0e7390dc958992ec1678ab909bcbee55146"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/PREPARED01.json": {
+      "bytes": 86742,
+      "sha256": "944067ce9c0892b04d983c454a5e4c1afd9a3fe587cccf73b7e52fcf24faa097"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/PUBLIC_INPUT_REFS_DRAFT01.json": {
+      "bytes": 15504,
+      "sha256": "3cf599ad514112b909df098ee0e62f70beaa8996ec818c903200c7c1880352ec"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/REQUEST01.json": {
+      "bytes": 843,
+      "sha256": "303c2cb5991227d6a1c8dd2aed9f61b30e91220301b13a1caabcd2bd15dcc25a"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/bind_actual01.py": {
+      "bytes": 3353,
+      "sha256": "954ebcb2f1f2ae4a957b207c3bf86a0fd23cfc790500722f91feef0b474a5360"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/archive_policy.json": {
+      "bytes": 517,
+      "sha256": "1a3979baa040a2263f82bdbc57b10c5d413eeb93f528a08dd9afafb3190ebd81"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/archive_transport.json": {
+      "bytes": 730,
+      "sha256": "0b40cda92aaee14145a72b1f04d03ac0a5377ce6ac852ef3a7f817ef4f1384a3"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/compact_policy.json": {
+      "bytes": 1265,
+      "sha256": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/execution_job.json": {
+      "bytes": 6143,
+      "sha256": "4c456d444010c557cad9917d7aa966fa2d69e6f2ed56ea2e5f75c94eda6489e3"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/mcm_output_policy.json": {
+      "bytes": 144,
+      "sha256": "4c45712816a0f59bbb18477c7f78cd05f16a62b338348750ed9743a594f6d447"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/mcm_policy.json": {
+      "bytes": 2283,
+      "sha256": "ae58831cceaf77bf4afeb459d31addf1b1133f8b26479f3f7307c2c2f6ef58ec"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/original_import.json": {
+      "bytes": 5187,
+      "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/pair_policy.json": {
+      "bytes": 26388,
+      "sha256": "83b829ff7add88226e2aa76d4b14def768a849bb757a35a590dd8729a24035eb"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/pilot.json": {
+      "bytes": 32815,
+      "sha256": "205d0e04466f96c6744cdb4e2d70fd8eda55acca65379c08352a3c364a07352b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/producer_plan.json": {
+      "bytes": 5180,
+      "sha256": "fa983d0c5e82034897fb04461217b5edc15f2e07551ec825974ae48b1bbd74cd"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/resource_population_plan.json": {
+      "bytes": 610,
+      "sha256": "3265929788979c1b1a6bfa628798d68daff4b33847aeb76fca85d0040874d5b4"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/public01/typed_payload.json": {
+      "bytes": 5265,
+      "sha256": "5902c014c2569aad172df3ad6ec0a202c20145db33647a5dfc2204e623514f23"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/CHECK_RESULT01.json": {
+      "bytes": 219,
+      "sha256": "65a77e8b5434409e3c7756a14d40e2f4e1f2a9a55c7365cc5df58b0e5090d0fc"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/LITERAL_PATCH01.diff": {
+      "bytes": 240688,
+      "sha256": "72cfb72ef187f010ba383708d711029f879ffa6ba29c8b3dceb24f0ec904e4cb"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/MANIFEST01.json": {
+      "bytes": 3508,
+      "sha256": "dfb3b1a89e7317fe8588c6e95e602fe664d4545b0b846c95689d08e5d2f37f82"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/MATCHING_SCRATCH_RESERVATION01.json": {
+      "bytes": 2554,
+      "sha256": "71f0bf614a9d8e89e8e708c588b8b0e7390dc958992ec1678ab909bcbee55146"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/PREPARED01.json": {
+      "bytes": 86744,
+      "sha256": "8e130dd0adc623d1dd372fb31b6cee9fab968728356097481e1ecafe430eaeee"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/PUBLIC_INPUT_REFS_DRAFT01.json": {
+      "bytes": 15504,
+      "sha256": "799499a583664029c6872c10529731f791686067a837d6545cbf17398f3025be"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/REPORT.md": {
+      "bytes": 2847,
+      "sha256": "95c3389113abc9abf40296140641c29e726bd97f64387e24658c0ae5d5d26880"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/REQUEST01.json": {
+      "bytes": 843,
+      "sha256": "271a7629555bf57428c7df9aced1cbbf61a0abb2046eb470119c1e613a7e0e73"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py": {
+      "bytes": 3355,
+      "sha256": "2eddb9d70a325cde6bc0ac8579faf14478091872a21baaca2bbc12c2b70d654d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/build_public02.py": {
+      "bytes": 5005,
+      "sha256": "9831668fc1685a5dac8114db3791cddd35f7fc2a15c362f20fe5ce43a242789b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/check02.py": {
+      "bytes": 4808,
+      "sha256": "124a13128b1775f0d92a4862d8f087c38965c731b7b92674a49d956066f875ab"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/archive_policy.json": {
+      "bytes": 519,
+      "sha256": "31fa81db0eccf8aabd8d6e21e3684b6e0de9dac573db4e72cc50fb7d68a2a0d0"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/archive_transport.json": {
+      "bytes": 732,
+      "sha256": "4b12526b3d21b5dc7e7d303a231dd62c89f0d35f495e681fa864b9f7fe3833c5"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/compact_policy.json": {
+      "bytes": 1265,
+      "sha256": "e0c0ae4150c6ddc97662209df7ae60ed08adf7dc00518e94237c9ee94d376ada"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/execution_job.json": {
+      "bytes": 6143,
+      "sha256": "0d57642c071fa4a4e7e160b7ba8290da4ef15adaa77040bfd526e6dde8b75441"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/mcm_output_policy.json": {
+      "bytes": 144,
+      "sha256": "4c45712816a0f59bbb18477c7f78cd05f16a62b338348750ed9743a594f6d447"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/mcm_policy.json": {
+      "bytes": 2283,
+      "sha256": "5f2795f29531ec6b1ab53660a18a10332c9b1e7fc40c56c3ae801724d800521b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/original_import.json": {
+      "bytes": 5187,
+      "sha256": "635dc513c4b1fb9d85c68a393cdc2576dbf1e38320f8c03326ceef26ffdb9fee"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/pair_policy.json": {
+      "bytes": 26388,
+      "sha256": "83b829ff7add88226e2aa76d4b14def768a849bb757a35a590dd8729a24035eb"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/pilot.json": {
+      "bytes": 32815,
+      "sha256": "205d0e04466f96c6744cdb4e2d70fd8eda55acca65379c08352a3c364a07352b"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/producer_plan.json": {
+      "bytes": 5180,
+      "sha256": "5e469572ed5601bcd30855d353e7abe04004304f0dcbb78c5985ced272a4fd99"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/resource_population_plan.json": {
+      "bytes": 610,
+      "sha256": "3265929788979c1b1a6bfa628798d68daff4b33847aeb76fca85d0040874d5b4"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/public01/typed_payload.json": {
+      "bytes": 5265,
+      "sha256": "5902c014c2569aad172df3ad6ec0a202c20145db33647a5dfc2204e623514f23"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-review01-2026-10-11/REVIEW01.json": {
+      "bytes": 3056,
+      "sha256": "7bd51953fabb0d2484355743b60ec3320644a790392da11b1c5504c57d20f4a9"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-selected-feature-protocol01-2026-10-06/draft07/templates/environment.json": {
+      "bytes": 358,
+      "sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc"
+    },
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": {
+      "bytes": 45525,
+      "sha256": "8f559c4030a1bf69e678337bb68216115943b0a6ae2a0e8100601557c6d81c77"
+    },
+    "tradingagents/research/onchain_replication/compiled_normalization_policy.py": {
+      "bytes": 10714,
+      "sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+--- register30_02.py
++++ register30_03.py
+@@ -7,7 +7,7 @@
+ from pathlib import Path
+ ROOT=Path.cwd().resolve();HERE=Path(__file__).resolve().parent;F=HERE.parent
+ DRAFT=F/'real-data-pilot-full30-preparation01-2026-10-11'
+-T=F/'real-data-pilot-full30-binding-preparation01-2026-10-11'
++T=F/'real-data-pilot-full30-binding-preparation02-2026-10-11'
+ OLD='eth-paper-real-data-end-to-end-resource-20261009-29'
+ NAME='eth-paper-real-data-end-to-end-resource-20261011-30'
+ REQUIRED=('budget_review','capacity_observation','prior_outcome_review','prior_preservation_complete','prior_recovery_review','prior_root_closure_review','integration_review')
+@@ -29,7 +29,7 @@
+  refs=load(T/'ALL_INPUT_REFS01.json');bound=load(T/'BOUND01.json')
+  need(len(refs)==67 and set(bound['private_input'])=={'archive_transport'},'genuine full30 bound67 required')
+  private=bound['private_input']['archive_transport']
+- need(private['path']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-30-01/archive_transport01.json','fresh opaque publication route required')
++ need(private['path']=='research_artifacts/real_pilot_runtime/pilot-transport-20261011-30-02/archive_transport01.json','fresh opaque publication route required')
+  need(all(refs['archive_transport'][k]==private[k] for k in ('path','sha256')),'opaque public reference differs')
+  for role,doc in bound['inputs'].items():
+   p=ROOT/refs[role]['path'];need(ref(p)['sha256']==refs[role]['sha256'] and load(p)==doc,'actual bound public input differs')
+@@ -39,7 +39,7 @@
+  experiment['inputs']=refs;experiment['charter']=ref(DRAFT/'CHARTER01.md')
+  experiment['cumulative_budget_extension']={'extension':ref(DRAFT/'EXTENSION_PROPOSED101_01.json'),'review':evidence['budget_review']}
+  pins=experiment['source_files'];pins.update(load(HERE/'INSTALLED_SOURCE_PINS01.json'))
+- for name in ('preflight30_02.py','root_io30_02.py','register30_02.py','CORE_MANIFEST01.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
++ for name in ('preflight30_03.py','root_io30_03.py','register30_03.py','CORE_MANIFEST02.json','INSTALLED_SOURCE_PINS01.json','CAPACITY_SOURCE_MAP01.json'):
+   p=HERE/name;pins[str(p.relative_to(ROOT))]=ref(p)['sha256']
+  public_pins=load(HERE/'CAPACITY_SOURCE_MAP01.json')['source_files']
+  need(all(pins.get(path)==digest for path,digest in public_pins.items()),'capacity ancestry map differs from admission sources')
+@@ -53,7 +53,7 @@
+  capacity=load(ROOT/evidence['capacity_observation']['path'])
+  need(capacity['identity']==NAME and capacity['source_body_pins']==public['source_pins'],'Root capacity must join exact prospective source roster')
+  save(HERE/'PUBLIC_MANIFEST01.json',public);save(HERE/'gate01.json',gate)
+- binding={'schema_version':1,'identity':NAME,'status':'DRAFT_NOT_RELEASED','gate':ref(HERE/'gate01.json'),'core_manifest':ref(HERE/'CORE_MANIFEST01.json'),'public_manifest':ref(HERE/'PUBLIC_MANIFEST01.json'),'public_refs':ref(T/'PUBLIC_INPUT_REFS_DRAFT01.json'),'transport':private,'transport_binding':ref(T/'BOUND01.json'),'preparation':ref(T/'PREPARED01.json'),'unbound_archive':ref(T/'public01/archive_policy.json'),'public_preparation':ref(T/'MANIFEST01.json'),'binding_readback':ref(T/'BINDING_CHECK01.json'),'input_refs':{role:{k:v[k] for k in ('path','sha256')} for role,v in refs.items()},'binding_review':None,**evidence}
++ binding={'schema_version':1,'identity':NAME,'status':'DRAFT_NOT_RELEASED','gate':ref(HERE/'gate01.json'),'core_manifest':ref(HERE/'CORE_MANIFEST02.json'),'public_manifest':ref(HERE/'PUBLIC_MANIFEST01.json'),'public_refs':ref(T/'PUBLIC_INPUT_REFS_DRAFT01.json'),'transport':private,'transport_binding':ref(T/'BOUND01.json'),'preparation':ref(T/'PREPARED01.json'),'unbound_archive':ref(T/'public01/archive_policy.json'),'public_preparation':ref(T/'MANIFEST01.json'),'binding_readback':ref(T/'BINDING_CHECK01.json'),'input_refs':{role:{k:v[k] for k in ('path','sha256')} for role,v in refs.items()},'binding_review':None,**evidence}
+  save(HERE/'BINDING_DRAFT01.json',binding)
+  save(HERE/'REGISTRATION_DRAFT01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'parent':OLD,'gate':ref(HERE/'gate01.json'),'source_pins':len(pins),'input_roles':67,'binding_review_missing':True,'qualification':'Root must create BINDING01 with actual binding review and RELEASE_REVIEW01, commit exact sources and authenticate actual recovery before genuine preflight. No admission or claim.'})
+ if __name__=='__main__':main()
+--- preflight30_02.py
++++ preflight30_03.py
+@@ -26,8 +26,8 @@
+ INDEX_CAPACITY={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-index-capacity02-2026-10-08/candidate/index_capacity.py', 'sha256': 'f486a3b7d8930378df7e17bd347c0f70d61355b657da30c7bad338f31b0de9bb'}
+ BINDER={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/binder02/bind01.py', 'sha256': 'bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'}
+ OPAQUE_ROLE='archive_transport'
+-FROZEN_PREPARATION={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation01-2026-10-11/PREPARED01.json', 'sha256': '944067ce9c0892b04d983c454a5e4c1afd9a3fe587cccf73b7e52fcf24faa097', 'bytes': 86742}
+-COMPILED_POLICY={'format': 'compiled-small-lse-prototype04-session-v1', 'library_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so', 'library_sha256': '9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2', 'runtime_bytes': 382, 'runtime_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input01-2026-10-10/RUNTIME_REFERENCE01.json', 'runtime_sha256': '247d62394372e4ef10b4e79f351e5c2aee017b846cb2fc35e29b774b2a7eb366', 'source_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c', 'source_sha256': '8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8'}
++FROZEN_PREPARATION={'path': 'research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/PREPARED01.json', 'bytes': 86744, 'sha256': '8e130dd0adc623d1dd372fb31b6cee9fab968728356097481e1ecafe430eaeee'}
++COMPILED_POLICY={'format': 'compiled-small-lse-prototype04-session-v1', 'library_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.so', 'library_sha256': '9fd95c85ae9c5572adad1f0c8824d6f52f09762cc06fcb7ad03b17a6cc03e3f2', 'runtime_bytes': 345, 'runtime_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-runtime-input02-2026-10-11/RUNTIME_REFERENCE01.json', 'runtime_sha256': '8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb', 'source_path': '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-small-pair-prototype04-2026-10-09/reduction.c', 'source_sha256': '8c7b2f34ff0e3da95ae34f77134b2b47560e3e0307945371a2e10c461ac962e8'}
+ COMPILED_INPUTS={'library': 'compiled_normalization_library', 'runtime': 'compiled_normalization_runtime', 'source': 'compiled_normalization_source'}
+ 
+ 
+--- root_io30_02.py
++++ root_io30_03.py
+@@ -137,7 +137,7 @@
+ 
+ if __name__ == '__main__':
+     # Final exact preflight is separately bound/reviewed in the execution dir.
+-    from preflight30_02 import check
++    from preflight30_03 import check
+     args, preflight = check()
+     result = launch_checked(args,preflight,Path(__file__).resolve().parent)
+     raise SystemExit(result['actual_parent_exit_code'])

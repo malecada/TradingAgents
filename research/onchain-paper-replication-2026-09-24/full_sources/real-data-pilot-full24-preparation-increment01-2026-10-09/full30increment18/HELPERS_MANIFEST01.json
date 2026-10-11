@@ -1,0 +1,52 @@
+{
+  "baseline_actual_recovery": "outcome16/FRESH_GIT_RECOVERY16.json",
+  "files": {
+    "LITERAL_PATCH01.diff": {
+      "bytes": 13217,
+      "sha256": "7f07d36765d5a3fb9ab30307f4af05dced7274327c8852fe762d0ad4fefafca6"
+    },
+    "capture18.py": {
+      "bytes": 2461,
+      "sha256": "fc678dcb7d5e6ea7bf87f2973a13c83c6775e29a82aeac8fa3fa97abe697adf4"
+    },
+    "recover18.py": {
+      "bytes": 3615,
+      "sha256": "1ed145f27334e4d8889cfb24ff6858f84d02f5237cf49e0a9d28c9f3da8c8198"
+    },
+    "select18.py": {
+      "bytes": 6930,
+      "sha256": "c39181cb900ae40d7041987eb49bdfce32c3beea59fb50e28b8da900b3841e43"
+    }
+  },
+  "origins": {
+    "capture": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/capture14.py",
+      "sha256": "b70654a3918a8b4b7626c5b4958d9b52f9e9bc6819841655dc21a4be77ef9fb0"
+    },
+    "recover": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/recover14.py",
+      "sha256": "47111b27dc570de7dbba965e2acd57eed391362968185527c2df50b27cfe4f37"
+    },
+    "select": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full29increment14/select14.py",
+      "sha256": "364225437f0573202d69d0f5e9f4cbafc1accbd94aa1757a7ddef7f8a0bf7350"
+    }
+  },
+  "owned": [
+    "real-data-pilot-full30-preparation01-2026-10-11",
+    "real-data-pilot-full30-binding-preparation01-2026-10-11",
+    "real-data-pilot-full30-binding-review01-2026-10-11",
+    "real-data-pilot-full30-accounting-binding-review01-2026-10-11",
+    "real-data-pilot-full30-cumulative-machine-review01-2026-10-11",
+    "real-data-pilot-full30-entry-preparation01-2026-10-11",
+    "real-data-pilot-full30-final-entry-review01-2026-10-11",
+    "pilot-full30-preparation-increment-tools-review01-2026-10-11",
+    "real-data-pilot-full24-preparation-increment01-2026-10-09/full30increment17"
+  ],
+  "prior_withheld_manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full24-preparation-increment01-2026-10-09/full30increment17/HELPERS_MANIFEST01.json",
+    "sha256": "361d13039a4a9081ea445960e9c25480cf9c200ebfdc6868595fb353a8535ee1"
+  },
+  "scope": "Exact incremental public preparation from accepted actual16 recovery. Prior17 is WITHHELD missing helper paths/stale output identity, preserved and never executed. Existing14 mechanics reused; no new generic framework. Root executes only after source/caller review. No private/raw/installed-runtime bodies or deletion.",
+  "status": "SOURCE_DRAFT_NOT_EXECUTED"
+}

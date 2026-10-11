@@ -1,0 +1,55 @@
+{
+  "argv": [
+    "taskset",
+    "-c",
+    "3",
+    "nice",
+    "-n",
+    "10",
+    "prlimit",
+    "--cpu=30",
+    "--as=536870912",
+    "--fsize=4194304",
+    "--",
+    ".venv/bin/python",
+    "-B",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py"
+  ],
+  "at": "2026-10-11T00:05:23.945475+00:00",
+  "binding_manifest_sha256": "dfb3b1a89e7317fe8588c6e95e602fe664d4545b0b846c95689d08e5d2f37f82",
+  "check_result_sha256": "8903f02d6a0a7a2ea1697485a27de87a2ff373fb76c90a81c87d6f7809a20944",
+  "checks": 164,
+  "command": "taskset -c 3 nice -n 10 prlimit --cpu=30 --as=536870912 --fsize=4194304 -- .venv/bin/python -B research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-binding-preparation02-2026-10-11/bind_actual01.py",
+  "conditions": [
+    "Root alone executes the exact freshv2 offline binding command once. Actual wrapper enforces fresh claim/dispatch/private/public paths and exclusive publication.",
+    "Retain old runtime01, old actual binding01 and its unused original private route; do not reenter, overwrite or delete them.",
+    "Preserve any new partial private/public publication on refusal; do not retry same route.",
+    "After actual binding, validate returned67public/opaque-reference joins and rebuild separately reviewed entry pins using corrected runtime02 and actualv2binding before any empirical admission."
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "decision": "RELEASE_EXACT_RUNTIME02_AND_FULL30V2_OFFLINE_BINDING_ONCE",
+  "environment_body_sha256": "3a97a20ba8058cac81c8c62a7ba3596aac2fe4deb17627d0aa57bf53a93b86dc",
+  "findings": [],
+  "observations": {
+    "actual_parser_controls_refused": 4,
+    "new_environment_join": true,
+    "new_namespace": "ethpilot-20261011-30v2",
+    "new_private_parent_string": "research_artifacts/real_pilot_runtime/pilot-transport-20261011-30-02",
+    "old_environment_join": false,
+    "role_count_after_actual_binding": 67,
+    "role_count_public": 66,
+    "unchanged_genuine_caller_sha256": "8f559c4030a1bf69e678337bb68216115943b0a6ae2a0e8100601557c6d81c77",
+    "unchanged_parser_sha256": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01"
+  },
+  "runtime_body_bytes": 345,
+  "runtime_body_sha256": "8135e84845eae061bfbb68c22fc825fd5614d9b6dc313e8b39a5a0d1f0df97fb",
+  "runtime_manifest_sha256": "f03573b89b9657dd7a6bfe0c14d90bdc8133cc51c378aa013afec8331b393945",
+  "untested": [
+    "Runtime metadata observation age and exclusions persist; no current package/library/loaded runtime proof.",
+    "New private parent existence/currentness is intentionally uninspected; actual wrapper must enforce its one-use checks.",
+    "Actual v2binding/opaque67th/current gate/source/native/admission/accounting and external recovery remain pending.",
+    "No empirical30 claim or allowance101 adoption is made; unchanged input identities do not supply authority.",
+    "The complete genuine _compiled_inputs route with Admission/run.read_input was not called; isolated actual parser and equality-operand checks create no fake authority.",
+    "No binder/native/scientific/network/Git/Owner action; no private/connection/key target read/hash/stat."
+  ]
+}

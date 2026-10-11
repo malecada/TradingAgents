@@ -1,0 +1,129 @@
+{
+  "added_roles": [
+    "compiled_normalization_library",
+    "compiled_normalization_runtime",
+    "compiled_normalization_source"
+  ],
+  "adopted": false,
+  "allocation_sha256": "3bb332a16b78638c5a86db9adeaec9ff4ae9a89c9faf176c8bcfc0f4e0a3dc42",
+  "at": "2026-10-10T23:43:16.355053+00:00",
+  "changed_existing_roles": [
+    "execution_job",
+    "mcm_policy"
+  ],
+  "decision": "ACCEPT_ACCOUNTING_PROPOSAL_ONLY_NO_ADOPTION_OR_ENTRY_RELEASE",
+  "equation": {
+    "closed": 52,
+    "fresh30": 1,
+    "historical": 17,
+    "pending": 28,
+    "preclaim_reserved": 3,
+    "prior_ceiling": 100,
+    "proposed_ceiling": 101,
+    "spent": 69
+  },
+  "extension_sha256": "67d3d2e03d71ad0567c8289b212c186b4a8ad9e485b6a792b80b53d74844770f",
+  "financial_fit_ceiling": 1420,
+  "findings": [
+    "pilot.resource_policy still29 differs fresh30job: real_pilot_import_caller.py173 refusal",
+    "scratch experiment29/annealingb9229da3 differs30/eb509ecf: old preflight264\u2013269 refusal",
+    "old dispatch namespace ethpilot-20261009-29 remains spent: archive_dispatch.py253\u2013254 refusal",
+    "reviewNone and old entry helper pins are draft-only, not entry release"
+  ],
+  "input_roles": 67,
+  "installed_source_updates": {
+    "tradingagents/research/onchain_replication/batched_numeric_execution.py": "8552d9496539450e65bcb2d57404e7a783b917a24807088639e81e1dadc568af",
+    "tradingagents/research/onchain_replication/batched_numeric_reuse.py": "dabc42d5a83ed5ef31d1eb31985da1529acf604c6ce6354badf276e5c07a936a",
+    "tradingagents/research/onchain_replication/batched_pair_executor.py": "2e4c5b51f991e1c02eed00d1044a423222eebe77d0f540057f1108df562e34ff",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "8f559c4030a1bf69e678337bb68216115943b0a6ae2a0e8100601557c6d81c77",
+    "tradingagents/research/onchain_replication/compiled_normalization_policy.py": "f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01",
+    "tradingagents/research/onchain_replication/compiled_small_lse.py": "7f98ca93c5100e475c1a6de0280e4ce546c0adc26c3865820068b868014c496e",
+    "tradingagents/research/onchain_replication/imported_authority_lease.py": "edd14622f3b5948a057e38bcce937c4080b9acc985c9a419fa0ac038aa158119",
+    "tradingagents/research/onchain_replication/matching_annealing.py": "eb509ecf5c9ed7d28783b1a4230013ddcba8036a0fb5174d3aaa60307fc63b43",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py": "0e92401fbc3e578842d150f43c350e8e1df600ba774ae6088fe2b03e23cb5ea0",
+    "tradingagents/research/onchain_replication/matching_immutable_session.py": "3c4652633ea8658f5a4b96bba54763d2b52a1f2cc07b53f681e8a355b2fcf0aa"
+  },
+  "original29_added_once": {
+    "claim_sha256": "5b81c3cb892f75a0b1505bb08049c5cc985b4dd43f01e38899c8f7abf54c2504",
+    "experiment": "eth-paper-real-data-end-to-end-resource-20261009-29",
+    "terminal_sha256": "100e51b2408119975cac58abec88b09b17203736f3a8254011507da147f977e0",
+    "terminal_status": "failed"
+  },
+  "preserved_check_failure": "First accounting script used extension.closed_claims rather than actual extension.claims and stopped KeyError before writing; corrected metadata key only, no draft mutation.",
+  "prior51_and_pending_reserved_exactly_preserved": true,
+  "private_dispatch_read_hashed_copied": false,
+  "references": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/REVIEW01.json": {
+      "bytes": 52590,
+      "sha256": "fe583259793fae6bdfd744027f9862729225e06c037642bb547ede3e957dcc1f"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot29-terminal-outcome-review01-2026-10-11/tools16/returned01/REVIEW01.json": {
+      "bytes": 754395,
+      "sha256": "1d9e3fc85ac365fc91e1f21214cf2d20107bbe530b22a901af2ad3d12df62a1d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-allocation-review01-2026-10-09/EXTENSION100_REVIEW01.json": {
+      "bytes": 812,
+      "sha256": "a1a0eb995e38725446b8f1f56ea5e13717b0de61d6dd2b22c438c0d08c7001fd"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/CUMULATIVE_ALLOCATION_PROPOSED100_01.json": {
+      "bytes": 21412,
+      "sha256": "bcfe3bc18dc27f2e84061037398ad483ea3270206d438f2c39bb669e5d6f0ca1"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/MATCHING_SCRATCH_RESERVATION02.json": {
+      "bytes": 2566,
+      "sha256": "c4558a6e9572d4966547a394af33678d0abdeb34cda07c8712b48a4ab7e160c4"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-entry01-2026-10-09/gate04.json": {
+      "bytes": 641992,
+      "sha256": "f6be8198d971451eea91647bf853de036b82405ffcb70e18db61ef204e76c898"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/execution_job.json": {
+      "bytes": 6143,
+      "sha256": "4cc5878f428bf2201e42191198ed1ae7e30468f0a018ecb26a95ccaa568f7b89"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/mcm_policy.json": {
+      "bytes": 1173,
+      "sha256": "23f2123c13b5383a377015346c272797bd7143baf6176dabcbc51c859cfdd6dc"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full29-transport-binding01-2026-10-09/inputs02/pilot.json": {
+      "bytes": 32815,
+      "sha256": "57762b693787e770400dfcc89e112ba1d126bb8162f0bc5d9ad37f9e2b1de1fc"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/CUMULATIVE_ALLOCATION_PROPOSED101_01.json": {
+      "bytes": 21025,
+      "sha256": "3bb332a16b78638c5a86db9adeaec9ff4ae9a89c9faf176c8bcfc0f4e0a3dc42"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/EXTENSION_PROPOSED101_01.json": {
+      "bytes": 17320,
+      "sha256": "67d3d2e03d71ad0567c8289b212c186b4a8ad9e485b6a792b80b53d74844770f"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/REGISTRATION_DRAFT01.json": {
+      "bytes": 3493,
+      "sha256": "297f22b21fa27cca024256bf1192e86b3bab99b4e0a20c406f68320e1764e223"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/execution_job.json": {
+      "bytes": 8035,
+      "sha256": "a362d3d44b5ec63dbfed96df27f5a481c34f3c488bc7402ac518f1283ae4a49d"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/gate.draft01.json": {
+      "bytes": 746691,
+      "sha256": "70306e1e9c7c81e412038709173f490de77d8535dd34911788d502e406b890c2"
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full30-preparation01-2026-10-11/mcm_policy.json": {
+      "bytes": 2748,
+      "sha256": "31e9cb0c811e5437d0de575940f46276b242d992929f2fc6504851688a2a88c3"
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/claim.json": {
+      "bytes": 120642,
+      "sha256": "5b81c3cb892f75a0b1505bb08049c5cc985b4dd43f01e38899c8f7abf54c2504"
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261009-29/failed.json": {
+      "bytes": 653,
+      "sha256": "100e51b2408119975cac58abec88b09b17203736f3a8254011507da147f977e0"
+    }
+  },
+  "refunds_transfers_new_financial_fits": 0,
+  "returned16_review_decision": "ACCEPT_ACTUAL_OUTCOME16_DECLARED_PUBLIC_INCREMENT_RETURN",
+  "terminal_review_decision": "ACCEPT_ACTUAL_FAILED_TERMINAL_AND_BOUNDED_PARTIAL_PROGRESS",
+  "transport_decision": "REFUSE_UNCHANGED29_TRANSPORT_REUSE_FRESH_BINDING_REQUIRED"
+}
