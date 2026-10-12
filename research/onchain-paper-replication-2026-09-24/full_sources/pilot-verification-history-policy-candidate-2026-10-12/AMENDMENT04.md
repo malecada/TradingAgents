@@ -1,0 +1,5 @@
+# Selected startup bounds amendment04
+
+All frozen03 files/manifestb5e4278ca4228d5c92159526676728500de32b7e985a7cbd2f8d9131cfe24bb5 remain unchanged under iteration03; top-level original manifest03 remains unchanged. Reviewer REMAINING_CHECK01 retains the selected startup cap-bypass RED. Only _history_prior(run=None) changes: call _history_scan(root,workers,previous=None), discard its metadata tuple, return verified prior. Each startup call still performs an original fresh full claims sweep, now after selected roster/body bounds and with the same before/after frontier rejoin. No run snapshot is issued or transferred. Absent/v1 defaults unchanged.
+
+STARTUP_CHECK04 passes one focused reduced-cap startup refusal and no-seed regression in0.022s. A3-claim synthetic roster refuses maxruns1 before any claim verifier; restored bounds permit two independent full3-claim sweeps with both private registries remaining empty. No unchanged matrices or actual115 scan were run. Benchmark, lifecycle and compact sources unchanged.

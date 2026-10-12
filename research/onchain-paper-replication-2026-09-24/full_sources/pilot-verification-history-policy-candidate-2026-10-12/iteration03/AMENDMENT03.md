@@ -1,0 +1,5 @@
+# Actual Run identity seal amendment03
+
+All frozen02 files/manifest2527272ba02fbb1f4023ea1eb1f337223a06982bb9e0b99d3f03919f9edbf919 remain unchanged under iteration02; original top-level manifest02 is unchanged. Independent reviewer BINDING_CHECK01 retained the original same-fields distinct-Run private-table transplant RED. The only source change adds id(run) to _history_anchor canonical bytes, hence its existing HMAC seal. A different live object with identical fields cannot reuse a copied sealed snapshot. Original run is weakly keyed; strong references during verification prevent identity reuse in an active comparison.
+
+IDENTITY_CHECK03 passes one focused synthetic control in0.024s: copy an intact seal into a distinct fixture Run with identical __dict__, require refusal before any own/history verifier call, invalidate clone state while leaving original state intact. This is private-table mutation engineering evidence, not a genuine Run or release. No unchanged matrices or actual115 scan were executed. Benchmark/lifecycle/compact sources unchanged from02.

@@ -1,0 +1,122 @@
+test_claim_terminal_frontier_changes (__main__.Tests.test_claim_terminal_frontier_changes) ... /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py:321: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+  from .verify import verify_claim
+ERROR
+test_cost_and_full_force_expiry (__main__.Tests.test_cost_and_full_force_expiry) ... /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py:321: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+  from .verify import verify_claim
+ERROR
+test_current_git_and_thread_isolation (__main__.Tests.test_current_git_and_thread_isolation) ... /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py:321: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+  from .verify import verify_claim
+ERROR
+test_default_source_parity (__main__.Tests.test_default_source_parity) ... ok
+test_full_failure_fatal_clears (__main__.Tests.test_full_failure_fatal_clears) ... /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py:321: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+  from .verify import verify_claim
+ERROR
+test_policy_bounds_active_and_fresh_run (__main__.Tests.test_policy_bounds_active_and_fresh_run) ... ok
+test_tamper_authority_clock (__main__.Tests.test_tamper_authority_clock) ... /home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py:321: ImportWarning: can't resolve package from __spec__ or __package__, falling back on __name__ and __path__
+  from .verify import verify_claim
+ERROR
+
+======================================================================
+ERROR: test_claim_terminal_frontier_changes (__main__.Tests.test_claim_terminal_frontier_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 71, in test_claim_terminal_frontier_changes
+    f.admit();f.events.clear()
+    ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 57, in admit
+    return self.env['admit'](root=self.root,registration='gate',experiment='own',source='source',_own_claim='own',_history_run=self.run,_force_history=force)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 601, in admit
+    prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+        raw, spec['historical_claim_verification'], _force_history)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 458, in _history_prior
+    prior = claims(root) if workers == 1 else claims(root, workers=workers)
+            ~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 321, in claims
+    from .verify import verify_claim
+KeyError: "'__name__' not in globals"
+
+======================================================================
+ERROR: test_cost_and_full_force_expiry (__main__.Tests.test_cost_and_full_force_expiry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 64, in test_cost_and_full_force_expiry
+    f=self.f;f.admit();self.assertEqual(sum(k=='verify' for k,v in f.events),6)
+             ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 57, in admit
+    return self.env['admit'](root=self.root,registration='gate',experiment='own',source='source',_own_claim='own',_history_run=self.run,_force_history=force)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 601, in admit
+    prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+        raw, spec['historical_claim_verification'], _force_history)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 458, in _history_prior
+    prior = claims(root) if workers == 1 else claims(root, workers=workers)
+            ~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 321, in claims
+    from .verify import verify_claim
+KeyError: "'__name__' not in globals"
+
+======================================================================
+ERROR: test_current_git_and_thread_isolation (__main__.Tests.test_current_git_and_thread_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 91, in test_current_git_and_thread_isolation
+    f=self.f;f.admit();f.git_error=True
+             ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 57, in admit
+    return self.env['admit'](root=self.root,registration='gate',experiment='own',source='source',_own_claim='own',_history_run=self.run,_force_history=force)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 601, in admit
+    prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+        raw, spec['historical_claim_verification'], _force_history)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 458, in _history_prior
+    prior = claims(root) if workers == 1 else claims(root, workers=workers)
+            ~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 321, in claims
+    from .verify import verify_claim
+KeyError: "'__name__' not in globals"
+
+======================================================================
+ERROR: test_full_failure_fatal_clears (__main__.Tests.test_full_failure_fatal_clears)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 87, in test_full_failure_fatal_clears
+    f=self.f;f.admit();fatal=KeyboardInterrupt('original');f.verify_error=fatal
+             ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 57, in admit
+    return self.env['admit'](root=self.root,registration='gate',experiment='own',source='source',_own_claim='own',_history_run=self.run,_force_history=force)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 601, in admit
+    prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+        raw, spec['historical_claim_verification'], _force_history)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 458, in _history_prior
+    prior = claims(root) if workers == 1 else claims(root, workers=workers)
+            ~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 321, in claims
+    from .verify import verify_claim
+KeyError: "'__name__' not in globals"
+
+======================================================================
+ERROR: test_tamper_authority_clock (__main__.Tests.test_tamper_authority_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 78, in test_tamper_authority_clock
+    f=Fixture();f.admit()
+                ~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/check01.py", line 57, in admit
+    return self.env['admit'](root=self.root,registration='gate',experiment='own',source='source',_own_claim='own',_history_run=self.run,_force_history=force)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 601, in admit
+    prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+        raw, spec['historical_claim_verification'], _force_history)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 458, in _history_prior
+    prior = claims(root) if workers == 1 else claims(root, workers=workers)
+            ~~~~~~^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/admission.py", line 321, in claims
+    from .verify import verify_claim
+KeyError: "'__name__' not in globals"
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.150s
+
+FAILED (errors=5)

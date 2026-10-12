@@ -1,0 +1,77 @@
+{
+  "actual_root_operation": {
+    "completion_chunk": "e176e0",
+    "exit": 0,
+    "session": 56013
+  },
+  "canonical_metadata_bytes": 11752872,
+  "capability_created": false,
+  "claims": 115,
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/SOURCE_MANIFEST04.json": "2aa442da0684b19320afa8063c0360c749a616c0a7ddfb1c35039281b1188fa3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-candidate-2026-10-12/benchmark01.py": "557bd54d663aea114d99b1fc24feb808366b003988ade795eadfe09b3bb66f70",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-integration-2026-10-12/HISTORY_BENCHMARK01.json": "507ec3e15ba333c62f61e39023eb527ae82251eeac0121c92b4ebaa590552839",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-integration-2026-10-12/HISTORY_BENCHMARK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-integration-2026-10-12/SOURCE_INTEGRATION01.json": "99a3f526fd15d2609993fd286bf7a2e2e53dfbe452b525c3d53ad9c658976676",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-review-2026-10-12/RETURN_CHECK01.json": "b649f1077d75dae23fc351a46e3f7803ddb8270742f2144a0910f3c7e7b7254a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-review-2026-10-12/RETURN_CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-review-2026-10-12/SOURCE_REVIEW01.json": "a3578a3d5066b4e653ce8a86f51eb76444d9a21eb4f2ea3bc1315c2486b0ea27",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-verification-history-policy-review-2026-10-12/check_return01.py": "9007dc600de3532072fca183019852c57a7c24a9eb10470afa7d8682cd026c1a",
+    "tradingagents/research/admission.py": "2ea096e95cc725cdcad2ce51dd7a4444d5b33399461a0bcad7ef189b58a853a8",
+    "tradingagents/research/lifecycle.py": "27f25f03736c62eb77b33dd24f6b98f2a547b8bbaa209ea5af2577ae1561095d",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "2634feb93b98e74efe49d495a4f27d7b9c259c3e2534b7af624c3eb02351328a",
+    "tradingagents/research/verify.py": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+  },
+  "full_mean_seconds": 5.285981428001833,
+  "full_scans_seconds": [
+    5.310312107001664,
+    5.261650749002001
+  ],
+  "installed_targets": [
+    {
+      "baseline_sha256": "672d8774ff26900f8feadf211ec154d5730e7fbd53156e5b505964ac141d856e",
+      "candidate_sha256": "2ea096e95cc725cdcad2ce51dd7a4444d5b33399461a0bcad7ef189b58a853a8",
+      "compiled": true,
+      "target": "tradingagents/research/admission.py"
+    },
+    {
+      "baseline_sha256": "e45e53661e212d55da56565372c6ff2cada93f002160f555966523cb6eee40d3",
+      "candidate_sha256": "27f25f03736c62eb77b33dd24f6b98f2a547b8bbaa209ea5af2577ae1561095d",
+      "compiled": true,
+      "target": "tradingagents/research/lifecycle.py"
+    },
+    {
+      "baseline_sha256": "88e839d342764caf3f274ab7155ee5d9ee8f8e5e9dda6055920317fcc60b8926",
+      "candidate_sha256": "2634feb93b98e74efe49d495a4f27d7b9c259c3e2534b7af624c3eb02351328a",
+      "compiled": true,
+      "target": "tradingagents/research/onchain_replication/compact_mcm_batched.py"
+    }
+  ],
+  "measurement_qualifications": [
+    "Warm steps intentionally omit full historical Git audits, own-claim verification, current admission checks and run seal/anchor work.",
+    "Different scheduled work is measured, not equivalent-proof speedup or whole production warm-check latency.",
+    "Two full and three warm sequential observations are not a general performance distribution.",
+    "Own process CPU/RSS do not establish simultaneous children or full-pilot peak memory.",
+    "No separate canonical returned-claims digest is persisted; frontier digest and encoded metadata size are recorded.",
+    "Root reports successful wrapper calls setting two CPUs,60sCPU,60swall and4MiBFSIZE; this receipt does not independently prove OS-enforced readback."
+  ],
+  "not_established": [
+    "Empirical policy activation or claim",
+    "Full admission/Owner/continuation runtime",
+    "Whole-pilot throughput or memory/capacity",
+    "Completed MCM or training result",
+    "External recovery"
+  ],
+  "offline_tests": "pending when inspected: progress dots only; no completion outcome certified or active log pinned",
+  "parent_peak_rss_kib": 218220,
+  "same_frontier_all5": true,
+  "scope": "actual historical frontier/audit component benchmark and exact three-body installation only",
+  "verify_unchanged_sha256": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce",
+  "warm_mean_seconds": 0.11090112065721769,
+  "warm_scans_seconds": [
+    0.11624156199104618,
+    0.10631594998994842,
+    0.11014584999065846
+  ]
+}

@@ -328,6 +328,189 @@ def claims(root: Path, *, workers=1) -> list[dict]:
     return result
 
 
+# Selected history snapshots contain metadata only, never Git bodies/processes.
+# Weak identity keys own independent snapshots; no state is accepted from callers.
+from weakref import WeakKeyDictionary
+import hmac
+import os
+import stat
+import threading
+import time
+import math
+_HISTORY = WeakKeyDictionary()
+_HISTORY_BUSY = WeakKeyDictionary()
+_HISTORY_MUTEX = threading.Lock()
+_HISTORY_SEAL_KEY = os.urandom(32)
+_HISTORY_MAX_RUNS = 512
+_HISTORY_MAX_BODY = 8 * 1024**2
+_HISTORY_MAX_BYTES = 64 * 1024**2
+
+
+def _history_bytes(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+
+
+def _history_policy(value):
+    if type(value) is dict and value.get('format') == 'bounded-claims-v2':
+        if (set(value) != {'format', 'workers', 'max_audit_seconds'}
+                or type(value['workers']) is not int or value['workers'] not in (1, 2)
+                or type(value['max_audit_seconds']) is not int or value['max_audit_seconds'] != 300):
+            raise ValueError('exact bounded history audit policy required')
+        return value['workers'], 300
+    return _claim_workers(value), None
+
+
+def _history_frontier(root):
+    folder = root / 'research_runs'
+    if not folder.exists():
+        return ()
+    if folder.is_symlink() or folder.resolve() != folder:
+        raise ValueError('canonical history directory required')
+    children = []
+    for child in folder.iterdir():
+        if child.name.startswith('.'):
+            continue
+        children.append(child)
+        if len(children) > _HISTORY_MAX_RUNS:
+            raise ValueError('bounded history roster exceeded')
+    rows = []; total = 0
+    for child in sorted(children):
+        identity(child.name, 'historical run')
+        if child.is_symlink() or not child.is_dir() or child.resolve() != child:
+            raise ValueError('canonical history child required')
+        pins = []
+        for name in ('claim.json', 'complete.json', 'failed.json'):
+            path = child / name
+            try:
+                fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
+            except FileNotFoundError:
+                if name == 'claim.json':
+                    raise ValueError('partial run claim requires manual recovery; automatic reuse prohibited')
+                pins.append(None); continue
+            with os.fdopen(fd, 'rb') as stream:
+                if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+                    raise ValueError('regular history body required')
+                raw = stream.read(min(_HISTORY_MAX_BODY, _HISTORY_MAX_BYTES-total)+1)
+            total += len(raw)
+            if len(raw) > _HISTORY_MAX_BODY or total > _HISTORY_MAX_BYTES:
+                raise ValueError('bounded history metadata exceeded')
+            pins.append(digest(raw))
+        rows.append((child.name, *pins))
+    return tuple(rows)
+
+
+def _history_anchor(run, root, registration, experiment, source, design_source, raw, policy):
+    from .lifecycle import ResearchRun
+    if (type(run) is not ResearchRun or run.admission.root != root
+            or run.directory != root / 'research_runs' / experiment
+            or run.admission.experiment_id != experiment
+            or run.admission.source != source or run.admission.design_source != design_source
+            or run.admission.registration != registration
+            or run.admission.registration_sha256 != digest(raw)
+            or run.admission.spec != json.loads(raw)):
+        raise ValueError('same genuine run history authority required')
+    run._active()
+    return _history_bytes((id(run), str(root), experiment, source, design_source, registration,
+        digest(raw), run._claim_sha256, run.admission.bindings, run.admission.bindings_sha256,
+        digest(_history_bytes(run.admission.experiment)), digest(_history_bytes(run.admission.inputs)), policy))
+
+
+def _history_seal(state):
+    return hmac.digest(_HISTORY_SEAL_KEY, _history_bytes(state), 'sha256')
+
+
+def _history_scan(root, workers, previous=None, *, force=False, own=None):
+    """Bounded metadata calculation, not an admission grant or reusable token.
+
+    Production callers supply previous only after genuine run/seal verification.
+    The standalone benchmark may retain this tuple but cannot insert it into a run.
+    """
+    if type(force) is not bool or type(workers) is not int or workers not in (1, 2):
+        raise ValueError('finite history scan policy required')
+    now = time.monotonic()
+    if not math.isfinite(now) or now < 0:
+        raise ValueError('finite monotonic history clock required')
+    if previous is not None:
+        frontier, encoded, audited, last = previous
+        if now < last or audited > last:
+            raise ValueError('history clock moved backwards')
+    current = _history_frontier(root)
+    full = previous is None or force or now-audited >= 300 or current != frontier
+    if full:
+        prior = claims(root) if workers == 1 else claims(root, workers=workers)
+        encoded = _history_bytes(prior).hex()
+        if len(encoded) > 2*_HISTORY_MAX_BYTES:
+            raise ValueError('bounded verified history exceeded')
+        audited = now
+    else:
+        prior = json.loads(bytes.fromhex(encoded))
+        if own is not None:
+            # Own claim's complete original Git/design verification stays fresh.
+            verified = _verify_claim_child(root/'research_runs'/own)
+            original = next((c for c in prior if c['experiment_id'] == own), None)
+            if _history_bytes(verified) != _history_bytes(original):
+                raise ValueError('own verified claim changed')
+    end = time.monotonic()
+    if not math.isfinite(end) or end < now:
+        raise ValueError('history clock moved backwards')
+    if _history_frontier(root) != current:
+        raise ValueError('history frontier changed during verification')
+    return (current, encoded, audited, end), prior, full
+
+
+def _history_prior(run, root, registration, experiment, source, design_source, raw, policy, force):
+    workers, seconds = _history_policy(policy)
+    if type(force) is not bool or seconds != 300:
+        raise ValueError('explicit finite history force required')
+    if run is None:
+        # Startup retains a bounded fresh full sweep. No transferable seed.
+        _, prior, _ = _history_scan(root, workers, previous=None)
+        return prior
+    anchor = _history_anchor(run,root,registration,experiment,source,design_source,raw,policy)
+    owner = threading.get_ident()
+    with _HISTORY_MUTEX:
+        if run in _HISTORY_BUSY:
+            raise ValueError('concurrent history snapshot use prohibited')
+        _HISTORY_BUSY[run] = owner
+    primary = None
+    try:
+        saved = _HISTORY.get(run)
+        previous = None
+        if saved is not None:
+            state, seal = saved
+            if not hmac.compare_digest(_history_seal(state), seal):
+                raise ValueError('history snapshot seal differs')
+            old_anchor, previous, thread = state
+            if old_anchor != anchor.hex() or thread != owner:
+                raise ValueError('history snapshot authority/thread differs')
+        snapshot, prior, full = _history_scan(root, workers, previous, force=force, own=experiment)
+        if _history_anchor(run,root,registration,experiment,source,design_source,raw,policy) != anchor:
+            raise ValueError('history authority changed during verification')
+        state = (anchor.hex(), snapshot, owner)
+        _HISTORY[run] = (state, _history_seal(state))
+        return prior
+    except BaseException as error:
+        primary = error
+        try:
+            _HISTORY.pop(run, None)
+        except BaseException as cleanup:
+            _claim_failure_note(primary, 'history invalidation failed', cleanup)
+        raise
+    finally:
+        try:
+            with _HISTORY_MUTEX:
+                _HISTORY_BUSY.pop(run, None)
+        except BaseException as cleanup:
+            if primary is not None:
+                _claim_failure_note(primary, 'history release failed', cleanup)
+            else:
+                try:
+                    _HISTORY.pop(run, None)
+                except BaseException as invalidation:
+                    _claim_failure_note(cleanup, 'history invalidation failed', invalidation)
+                raise
+
+
 @dataclass(frozen=True)
 class Admission:
     root: Path
@@ -348,7 +531,7 @@ class Admission:
 
 
 def admit(*, root, registration, experiment, source, design_source=None, bindings=None,
-          _own_claim=None) -> Admission:
+          _own_claim=None, _history_run=None, _force_history=False) -> Admission:
     """Read only registration, source and prior receipts; no empirical input bytes.
 
     `ready=False` admits a prospective design while refusing its execution until
@@ -366,8 +549,10 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
     spec = json.loads(raw)
     if spec.get("schema_version") != 1:
         raise ValueError("unsupported registration schema")
-    claim_workers = (_claim_workers(spec['historical_claim_verification'])
-                     if 'historical_claim_verification' in spec else 1)
+    claim_workers, history_seconds = (_history_policy(spec['historical_claim_verification'])
+                     if 'historical_claim_verification' in spec else (1, None))
+    if type(_force_history) is not bool or (_history_run is not None and _own_claim != experiment):
+        raise ValueError('private history invocation differs')
     identity(spec["program_id"], "program")
     identity(experiment, "experiment")
     experiments = spec["experiments"]
@@ -437,7 +622,11 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
             if exposure["state"] not in {"exposed", "spent"}:
                 raise ValueError("invalid prior exposure state")
             history.append({**exposure, "identity": info["identity"]})
-    prior = claims(root) if claim_workers == 1 else claims(root, workers=claim_workers)
+    if history_seconds is None:
+        prior = claims(root) if claim_workers == 1 else claims(root, workers=claim_workers)
+    else:
+        prior = _history_prior(_history_run, root, registration, experiment, source, design_source,
+            raw, spec['historical_claim_verification'], _force_history)
     if any(c["experiment_id"] == experiment for c in prior if c["experiment_id"] != _own_claim):
         raise ValueError("repeat run prohibited; use a separately justified registration")
     relevant = [c for c in prior if c["family"]["mechanism_id"] == family["mechanism_id"]]

@@ -1,0 +1,13 @@
+--- iteration03/admission.py
++++ iteration04/admission.py
+@@ -463,8 +463,8 @@
+     if type(force) is not bool or seconds != 300:
+         raise ValueError('explicit finite history force required')
+     if run is None:
+-        # Startup retains a fresh original full sweep. No transferable seed.
+-        prior = claims(root) if workers == 1 else claims(root, workers=workers)
++        # Startup retains a bounded fresh full sweep. No transferable seed.
++        _, prior, _ = _history_scan(root, workers, previous=None)
+         return prior
+     anchor = _history_anchor(run,root,registration,experiment,source,design_source,raw,policy)
+     owner = threading.get_ident()

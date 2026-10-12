@@ -1,0 +1,11 @@
+--- iteration01/benchmark01.py
++++ iteration02/benchmark01.py
+@@ -16,7 +16,7 @@
+  module._history_policy({'format':'bounded-claims-v2','workers':args.workers,'max_audit_seconds':300})
+  frontier=module._history_frontier(root)
+  if len(frontier)!=115:raise ValueError('exact115-claim roster required')
+- output={'kind':'engineering-only-history-component-measurement','root':str(root),'candidate_sha256':hashlib.sha256((p/'admission.py').read_bytes()).hexdigest(),'claims':115,'workers':args.workers,'steps':[],'capability_created':False}
++ output={'kind':'engineering-only-history-component-measurement','root':str(root),'candidate_sha256':hashlib.sha256((p/'admission.py').read_bytes()).hexdigest(),'claims':115,'workers':args.workers,'steps':[],'capability_created':False,'measurement_scope':'historical frontier and history audit component only','excludes':['current admission HEAD/source/design/runtime/input-binding/budget checks','warm own-claim verification','production warm _check_source latency']}
+  previous=None
+  for name,force in (('full_baseline',False),('warm_scan1',False),('warm_scan2',False),('warm_scan3',False),('forced_refresh',True)):
+   started=time.perf_counter();cpu=time.process_time();snapshot,prior,full=module._history_scan(root,args.workers,previous,force=force)

@@ -1,0 +1,63 @@
+{
+  "candidate_sha256": "2ea096e95cc725cdcad2ce51dd7a4444d5b33399461a0bcad7ef189b58a853a8",
+  "capability_created": false,
+  "claims": 115,
+  "excludes": [
+    "current admission HEAD/source/design/runtime/input-binding/budget checks",
+    "warm own-claim verification",
+    "production warm _check_source latency"
+  ],
+  "kind": "engineering-only-history-component-measurement",
+  "limits": {
+    "elapsed_audit_seconds": 300,
+    "max_body_bytes": 8388608,
+    "max_claims": 512,
+    "max_total_bytes": 67108864
+  },
+  "measurement_scope": "historical frontier and history audit component only",
+  "peak_rss_kib": 218220,
+  "root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "steps": [
+    {
+      "frontier_sha256": "c01d5818e3b5b4cb1bbcd5c06cafba5cdc57305806caf5d8290ad53f9d9ea31d",
+      "full_audit": true,
+      "own_cpu_seconds": 1.9866838629999999,
+      "step": "full_baseline",
+      "verified_metadata_bytes": 11752872,
+      "wall_seconds": 5.310312107001664
+    },
+    {
+      "frontier_sha256": "c01d5818e3b5b4cb1bbcd5c06cafba5cdc57305806caf5d8290ad53f9d9ea31d",
+      "full_audit": false,
+      "own_cpu_seconds": 0.11600076100000001,
+      "step": "warm_scan1",
+      "verified_metadata_bytes": 11752872,
+      "wall_seconds": 0.11624156199104618
+    },
+    {
+      "frontier_sha256": "c01d5818e3b5b4cb1bbcd5c06cafba5cdc57305806caf5d8290ad53f9d9ea31d",
+      "full_audit": false,
+      "own_cpu_seconds": 0.10700045400000002,
+      "step": "warm_scan2",
+      "verified_metadata_bytes": 11752872,
+      "wall_seconds": 0.10631594998994842
+    },
+    {
+      "frontier_sha256": "c01d5818e3b5b4cb1bbcd5c06cafba5cdc57305806caf5d8290ad53f9d9ea31d",
+      "full_audit": false,
+      "own_cpu_seconds": 0.10999935100000036,
+      "step": "warm_scan3",
+      "verified_metadata_bytes": 11752872,
+      "wall_seconds": 0.11014584999065846
+    },
+    {
+      "frontier_sha256": "c01d5818e3b5b4cb1bbcd5c06cafba5cdc57305806caf5d8290ad53f9d9ea31d",
+      "full_audit": true,
+      "own_cpu_seconds": 1.8931121419999997,
+      "step": "forced_refresh",
+      "verified_metadata_bytes": 11752872,
+      "wall_seconds": 5.261650749002001
+    }
+  ],
+  "workers": 2
+}

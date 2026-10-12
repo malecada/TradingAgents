@@ -1,0 +1,16 @@
+--- b/tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ a/tradingagents/research/onchain_replication/compact_mcm_batched.py
+@@ -718,13 +718,6 @@
+                 prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation,target=target)
+             continuation_options={'completed_prefix':prefix,'numeric':executor,
+                 'continuation_contract_sha256':continuation['numerical_contract_sha256']}
+-        history_run=target.owner.bound._run
+-        if history_run.admission.spec.get('historical_claim_verification',{}).get('format')=='bounded-claims-v2':
+-            original_post_batch=post_batch
+-            def audited_post_batch(j,batch,token,original):
+-                history_run._check_source(force_history=True)
+-                if original_post_batch is not None:original_post_batch(j,batch,token,original)
+-            post_batch=audited_post_batch
+         result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)
+         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
+         numeric_binding=executor.finish()

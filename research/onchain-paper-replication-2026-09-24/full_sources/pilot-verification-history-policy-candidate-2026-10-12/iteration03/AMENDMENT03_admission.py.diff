@@ -1,0 +1,11 @@
+--- iteration02/admission.py
++++ iteration03/admission.py
+@@ -410,7 +410,7 @@
+             or run.admission.spec != json.loads(raw)):
+         raise ValueError('same genuine run history authority required')
+     run._active()
+-    return _history_bytes((str(root), experiment, source, design_source, registration,
++    return _history_bytes((id(run), str(root), experiment, source, design_source, registration,
+         digest(raw), run._claim_sha256, run.admission.bindings, run.admission.bindings_sha256,
+         digest(_history_bytes(run.admission.experiment)), digest(_history_bytes(run.admission.inputs)), policy))
+ 

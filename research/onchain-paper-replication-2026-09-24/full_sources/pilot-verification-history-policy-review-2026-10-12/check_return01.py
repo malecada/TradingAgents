@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,hashlib,statistics,math
+F=Path('research/onchain-paper-replication-2026-09-24/full_sources');D=F/'pilot-verification-history-policy-review-2026-10-12';I=F/'pilot-verification-history-policy-integration-2026-10-12';C=F/'pilot-verification-history-policy-candidate-2026-10-12';h=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();r=json.loads((I/'SOURCE_INTEGRATION01.json').read_text());b=json.loads((I/'HISTORY_BENCHMARK01.json').read_text())
+assert h(D/'SOURCE_REVIEW01.json')==r['review_sha256']=='a3578a3d5066b4e653ce8a86f51eb76444d9a21eb4f2ea3bc1315c2486b0ea27';assert h(C/'SOURCE_MANIFEST04.json')==r['source_manifest_sha256'];assert h(I/'HISTORY_BENCHMARK01.json')==r['benchmark_sha256'];assert not (I/'HISTORY_BENCHMARK01.stderr').read_bytes()
+for row in r['targets']:
+ p=Path(row['target']);assert p.read_bytes()==(C/p.name).read_bytes();assert h(p)==row['candidate_sha256']
+assert h(Path('tradingagents/research/verify.py'))==r['verify_sha256']=='1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce'
+assert b['candidate_sha256']==h(C/'admission.py') and b['claims']==115 and b['workers']==2 and b['capability_created'] is False
+assert [x['step'] for x in b['steps']]==['full_baseline','warm_scan1','warm_scan2','warm_scan3','forced_refresh'];assert [x['full_audit'] for x in b['steps']]==[True,False,False,False,True];assert len({x['frontier_sha256'] for x in b['steps']})==1;assert {x['verified_metadata_bytes'] for x in b['steps']}=={11752872}
+assert all(type(x[k])is float and math.isfinite(x[k]) and x[k]>=0 for x in b['steps'] for k in ['wall_seconds','own_cpu_seconds']);assert b['peak_rss_kib']==218220;assert b['limits']=={'elapsed_audit_seconds':300,'max_body_bytes':8388608,'max_claims':512,'max_total_bytes':67108864};assert len(b['excludes'])==3
+full=[b['steps'][i]['wall_seconds'] for i in [0,4]];warm=[b['steps'][i]['wall_seconds'] for i in [1,2,3]]
+out={'status':'PASS_actual_component_and_installed_exact_bodies','full_wall_seconds':full,'warm_wall_seconds':warm,'full_mean_seconds':statistics.mean(full),'warm_mean_seconds':statistics.mean(warm),'warm_median_seconds':statistics.median(warm),'observed_full_mean_to_warm_mean_ratio':statistics.mean(full)/statistics.mean(warm),'ratio_qualification':'different explicitly scheduled work; not equal-proof speedup or production warm latency','parent_peak_rss_kib':b['peak_rss_kib'],'canonical_metadata_bytes':11752872,'same_frontier_all5':True,'separate_canonical_result_digest_persisted':False,'actual_benchmark_rerun':False,'three_installed_exact_copies':True,'verify_unchanged':True}
+print(json.dumps(out,indent=2))

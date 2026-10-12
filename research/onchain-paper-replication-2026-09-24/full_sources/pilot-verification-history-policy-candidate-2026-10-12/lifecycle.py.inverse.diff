@@ -1,0 +1,35 @@
+--- b/tradingagents/research/lifecycle.py
++++ a/tradingagents/research/lifecycle.py
+@@ -142,18 +142,13 @@
+             if digest(local_path(self.admission.root, info["path"]).read_bytes()) != info["sha256"]:
+                 raise ValueError(f"input hash differs: {name}")
+ 
+-    def _check_source(self, *, force_history=False):
++    def _check_source(self):
+         from .onchain_replication.phase_timing import measure
+-        history_policy = self.admission.spec.get('historical_claim_verification')
+-        selected = type(history_policy) is dict and history_policy.get('format') == 'bounded-claims-v2'
+-        if type(force_history) is not bool:
+-            raise ValueError('Boolean history force required')
+-        history_args = {'_history_run': self, '_force_history': force_history} if selected else {}
+         with measure("source_admission"):
+             current = admit(root=self.admission.root, registration=self.admission.registration,
+                             experiment=self.admission.experiment_id, source=self.admission.source,
+                             design_source=self.admission.design_source, bindings=self.admission.bindings,
+-                            _own_claim=self.admission.experiment_id, **history_args)
++                            _own_claim=self.admission.experiment_id)
+             if current.registration_sha256 != self.admission.registration_sha256:
+                 raise ValueError("registration changed during run")
+             if (current.experiment != self.admission.experiment or current.inputs != self.admission.inputs
+@@ -251,10 +246,7 @@
+         with _lock(self.admission.root):
+             self._active()
+             try:
+-                if self.admission.spec.get("historical_claim_verification", {}).get("format") == "bounded-claims-v2":
+-                    self._check_source(force_history=True)
+-                else:
+-                    self._check_source()
++                self._check_source()
+                 self._check_inputs()
+                 expected = self.admission.experiment["cells"]
+                 actual = [cell["id"] for cell in cells]

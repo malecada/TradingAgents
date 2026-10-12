@@ -1,0 +1,11 @@
+--- iteration02/admission.py
++++ iteration01/admission.py
+@@ -382,7 +382,7 @@
+         for name in ('claim.json', 'complete.json', 'failed.json'):
+             path = child / name
+             try:
+-                fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC)
++                fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+             except FileNotFoundError:
+                 if name == 'claim.json':
+                     raise ValueError('partial run claim requires manual recovery; automatic reuse prohibited')
