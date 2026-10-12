@@ -1,0 +1,28 @@
+--- prepare_entry01.py.before
++++ prepare_entry01.py.after
+@@ -66,8 +66,11 @@
+     assert len(pins)==428
+     for path,digest in pins.items():assert pin(ROOT/path)['sha256']==digest
+     save('CAPACITY_SOURCE_MAP01.json',pins)
+-    core_body=read(OLD/'CORE_MANIFEST01.json')
+-    with (HERE/'CORE_MANIFEST01.json').open('xb') as stream:stream.write(core_body)
++    core=load(OLD/'CORE_MANIFEST01.json')
++    core['inputs']={role:pin(ROOT/inputs[role]['path']) for role in core['inputs']}
++    core['builder_sha256']=pin(PUBLIC/'build_public01.py')['sha256']
++    core['scope']=core['scope'].replace('fixed36','fixed38')
++    save('CORE_MANIFEST01.json',core)
+     public=load(OLD/'PUBLIC_MANIFEST01.json'); public.update(experiment=NAME,source_pins=pins)
+     save('PUBLIC_MANIFEST01.json',public)
+     capacity=load(OLD/'CAPACITY_DECLARATION_ROOT01.json')
+@@ -95,9 +98,9 @@
+     for path,digest in experiment['source_files'].items():
+         actual=pin(ROOT/path)['sha256']
+         if actual!=digest:changed[path]={'previous':digest,'current':actual}
+-    approved=load(F/'pilot-efficiency-integration-2026-10-12/SOURCE02.json')
++    old_pins=load(OLD/'PUBLIC_MANIFEST01.json')['source_pins']
+     assert len(changed)==6
+-    assert set(changed)==set(p for p in pins if pins[p]!=load(OLD/'PUBLIC_MANIFEST01.json')['source_pins'][p])
++    assert set(changed)==set(p for p in pins if pins[p]!=old_pins[p])
+     for path,value in changed.items():experiment['source_files'][path]=value['current']
+     source_dirs=[PUBLIC,CUMULATIVE,F/'pilot38-public-binding-review-2026-10-12',F/'pilot38-integration-cumulative-review-2026-10-12',F/'pilot38-entry-capacity-investigation-2026-10-12',F/'pilot36-outcome-review-2026-10-12',F/'pilot-efficiency-integration-2026-10-12']
+     for directory in source_dirs:
