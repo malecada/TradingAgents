@@ -31,11 +31,23 @@ def _writer(owner, policy, name):
         'local_free_floor_bytes':policy['local_free_floor_bytes']} | ({'read_controls':read_controls.policy(policy['read_controls'])} if 'read_controls' in policy else {})
 
 
-def _inputs(owner, name):
+def _poll_target(owner,target):
+    from .imported_mcm_identity import Target
+    require(type(target) is Target and target.owner is owner and target.execution._owner is owner,
+        'genuine same-owner archive target required')
+    execution=target.execution
+    target.lease()
+    require(type(target) is Target and target.owner is owner and target.execution is execution
+        and execution._owner is owner,'archive target changed during poll')
+
+
+def _inputs(owner, name, *, target=None):
     run = owner.bound._run
     require(type(name) is str and name in run.admission.inputs,'registered archive policy input required')
     selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][owner.bound.record['representation']]
+    if target is not None:_poll_target(owner,target)
     item = json.loads(run.read_input(selected['plan_input']))['producers'][owner.bound.record['producer']]
+    if target is not None:_poll_target(owner,target)
     for value in (selected,item):
         require(value.get('native_backend') == owner.policy['backend'],'archive scientific backend selection differs')
         require(value.get('compact_archive_input') == name,'explicit archive policy selection differs')
@@ -50,10 +62,11 @@ def _inputs(owner, name):
     return value,reference
 
 
-def _record(owner, name, transport):
+def _record(owner, name, transport, *, target=None):
     require(type(owner) is compact_owner.Owner,'actual current compact owner required')
     owner.boundary();compact_owner.verify_current(owner)
-    policy,reference = _inputs(owner,name)
+    if target is not None:_poll_target(owner,target)
+    policy,reference = _inputs(owner,name,**({'target':target} if target is not None else {}))
     require(type(policy) is dict and set(policy)-{'read_controls'} == FIELDS and type(policy['schema_version']) is int
         and policy['schema_version'] == 1 and policy['backend'] == BACKEND,'archive owner policy schema')
     positive = FIELDS-{'schema_version','backend','transport_identity','remote_namespace'}
@@ -87,7 +100,8 @@ def _record(owner, name, transport):
             'remote_payload_bytes':remote,'decoded_transfer_bytes':transfer,'metadata_bytes':metadata,'operation_control_metadata_bytes':operation_control,
             'checkpoint_reference_bytes_per_read':references},'execution_admitted':False}
     owner.boundary();compact_owner.verify_current(owner)
-    require(_inputs(owner,name) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
+    if target is not None:_poll_target(owner,target)
+    require(_inputs(owner,name,**({'target':target} if target is not None else {})) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
         'archive selection changed across final owner lease')
     return result
 
@@ -99,10 +113,10 @@ class Selection:
         object.__setattr__(self,'_transport',transport);object.__setattr__(self,'_record',freeze(record))
     def __setattr__(self,name,value):raise AttributeError('archive selection is immutable')
     record = property(lambda self:self._record)
-    def check(self):
-        require(_record(self._owner,self._input,self._transport) == thaw(self.record),'archive selection identity changed')
-    def writer_policy(self,name):
-        self.check()
+    def check(self,*,target=None):
+        require(_record(self._owner,self._input,self._transport,**({'target':target} if target is not None else {})) == thaw(self.record),'archive selection identity changed')
+    def writer_policy(self,name,*,target=None):
+        self.check(**({'target':target} if target is not None else {}))
         require(name in self.record['required_stages'],'archive stage outside registered population')
         return _writer(self._owner,thaw(self.record['policy']),name)
 

@@ -1,0 +1,69 @@
+--- iteration01/batched_continuation.py
++++ iteration02/batched_continuation.py
+@@ -203,7 +203,8 @@
+ 
+ def _bind_contract_template(run,target,m,expected_contract):
+     """Bind only operational identities after genuine Target creation."""
+-    from . import compact_mcm_batched
++    from . import compact_mcm_batched, job
++    from .provenance import thaw
+     require(m['contract_mode']=='genuine-target-contract-template-v1' and target is not None,
+         'explicit genuine target contract template required')
+     pin=_target_identity(run,target)
+@@ -211,12 +212,33 @@
+     fields={'source_sha256','config_sha256','dictionary_sha256','graph_hash','node_order_hash',
+         'descriptor_sha256','workflow_identity','cells','batch_cells','numerical_contract_sha256'}
+     require(type(template) is dict and set(template)==fields and set(expected_contract)==fields
+-        and template['workflow_identity'] is None and template['descriptor_sha256'] is None,
+-        'exact two-slot contract template required')
++        and template['workflow_identity'] is None and template['descriptor_sha256'] is None
++        and template['source_sha256'] is None,
++        'exact three-slot contract template required')
+     role=m['runtime_policy_input']
+     require(type(role) is str and role in run.admission.inputs,'registered runtime MCM policy required')
+     raw=_bounded_input(run,role,max_bytes=2*1024**2,target=target)
+     policy=_json(raw)
++    pair_role=m['runtime_pair_policy_input']
++    require(type(pair_role) is str and pair_role in run.admission.inputs and pair_role!=role,
++        'distinct registered runtime pair policy required')
++    pair_raw=_bounded_input(run,pair_role,max_bytes=2*1024**2,target=target)
++    pair=_json(pair_raw);numerical=m['numerical_source']
++    require(type(numerical) is dict and set(numerical)=={'commit','files'}
++        and type(numerical['commit']) is str and len(numerical['commit'])==40
++        and all(c in '0123456789abcdef' for c in numerical['commit'])
++        and type(numerical['files']) is dict and set(numerical['files'])==job.required_sources(),
++        'exact numerical source closure required')
++    require(type(pair) is dict and set(pair)=={'schema_version','backend','limits','numerical_source'}
++        and type(pair['schema_version']) is int and pair['schema_version']==1
++        and digest(pair_raw)==target.owner.bound.record['policy_sha256']
++        and body(pair['numerical_source'])==body(numerical)
++        and body(thaw(target.owner.bound.record['numerical_source']))==body(numerical),
++        'registered pair policy and bound numerical source differ')
++    require(all(type(value) is str and len(value)==64
++        and all(c in '0123456789abcdef' for c in value)
++        and run.admission.experiment['source_files'].get(name)==value
++        for name,value in numerical['files'].items()),'admitted numerical source closure differs')
+     _poll_target(run,target)
+     scope=type(target).derive_scope(target)
+     require(scope==target.scope and scope['graph']==target.key
+@@ -227,7 +249,7 @@
+     start={'rows':rows,'cells':cells,'graph_hash':target.key,'scope':scope}
+     compact_mcm_batched.validate(policy,cells)
+     current=compact_mcm_batched._continuation_contract(target,start,policy,descriptor)
+-    frozen={**current,'workflow_identity':None,'descriptor_sha256':None}
++    frozen={**current,'source_sha256':None,'workflow_identity':None,'descriptor_sha256':None}
+     require(body(frozen)==body(template) and body(current)==body(expected_contract),
+         'template scientific/source/config or runtime contract differs')
+     require(all(a is b for a,b in zip(pin,_target_identity(run,target),strict=True)),
+@@ -271,7 +293,10 @@
+         require(m['contract_mode']=='genuine-target-contract-template-v1'
+             and review['contract_mode']==m['contract_mode']
+             and review['contract_template_sha256']==digest(body(m['contract']))
+-            and review['runtime_policy_input']==m['runtime_policy_input'], 'reviewed contract template differs')
++            and review['runtime_policy_input']==m['runtime_policy_input']
++            and review['runtime_pair_policy_input']==m['runtime_pair_policy_input']
++            and review['numerical_source_sha256']==digest(body(m['numerical_source'])),
++            'reviewed contract template differs')
+     recovered={}
+     for kind in ('score_offload','numeric_origin'):
+         receipt_raw=registered(m['recoveries'][kind])

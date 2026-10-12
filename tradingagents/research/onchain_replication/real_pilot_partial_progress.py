@@ -132,6 +132,44 @@ class MCMProgress:
         self.output.flush()
         self.records+=1;self.last_emitted=now;self.previous=counts;self.last=row
 
+    def poll_batched(self, value, *, journal_cells, score_cells):
+        if self.error is not None or self.records>=self.policy['max_records']:return
+        try:self._poll_batched(value,journal_cells,score_cells)
+        except BaseException as error:
+            self.error=type(error).__name__;raise
+
+    def _poll_batched(self,value,journal_cells,score_cells):
+        require(self.key is not None,'graph interval absent')
+        now=_time(self.clock());require(now>=self.observed,'clock moved backwards');self.observed=now
+        if self.last_emitted is not None and now-self.last_emitted<self.policy['interval_seconds']:return
+        require(type(value) is dict and set(value)=={'occurrences','computed','reused','numeric_durable_cells','imported_occurrences','provisional_callbacks'},'batched observation fields')
+        n=value['occurrences'];computed=value['computed'];reused=value['reused'];numeric=value['numeric_durable_cells']
+        counts=(n,computed,reused,numeric,journal_cells,score_cells);total=self.nodes[self.key]*32
+        require(all(type(x) is int and 0<=x<=total for x in counts),'batched counts invalid')
+        require(computed+reused==n and score_cells<=journal_cells<=numeric<=n,'batched watermarks differ')
+        require(type(value['imported_occurrences']) is int and 0<=value['imported_occurrences']<=n,'imported prefix watermark invalid')
+        previous=getattr(self,'_batched_previous',None)
+        if previous is not None and previous[0]==self.key:require(all(a>=b for a,b in zip(counts,previous[1])),'batched watermark moved backwards')
+        callbacks=value['provisional_callbacks']
+        require(type(callbacks) is dict and set(callbacks)<= {'source_guard_calls','authority_poll_calls','authority_poll_ns','authority_poll_failures'} and all(type(x) is int and 0<=x<2**127 for x in callbacks.values()),'provisional callbacks invalid')
+        from . import phase_timing
+        snapshot=phase_timing.current_snapshot() # Caller is outside pair/publication/entry phases.
+        phases=None if snapshot is None else {k:{f:v[f] for f in ('calls','wall_seconds','cpu_seconds')} for k,v in snapshot['phases'].items() if k in ('pair_numeric','row_extraction','source_admission','lease_full','lease_live')}
+        row={'kind':'real_pilot_batched_mcm_progress','schema_version':1,'sequence':self.records,
+             'claim_sha256':self.claim,'source':self.source,'graph_hash':self.key,
+             'expected_matching_pairs':total,'observed_elapsed_seconds':now-self.started,
+             'scope_elapsed_seconds':now-self.began,'in_memory_occurrences':n,
+             'in_memory_computed':computed,'in_memory_reused':reused,'imported_occurrences':value['imported_occurrences'],
+             'durable_numeric_origin_summary_cells':numeric,'durable_journal_cells':journal_cells,
+             'durable_score_spool_cells':score_cells,'provisional_callback_counters':callbacks,
+             'provisional_selected_phase_totals':phases,'full_mcm_completion_verified_here':False,
+             'representation_credit':0,'paper_financial_fits':0,
+             'qualification':'Sampled counts only; score watermark conservative until final fsync; no completion/restart or availability authority.'}
+        raw=json.dumps(row,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n'
+        require(len(raw.encode())<=MAX_LINE_BYTES,'diagnostic line exceeds finite bound')
+        require(self.output.write(raw)==len(raw),'short telemetry write');self.output.flush()
+        self.records+=1;self.last_emitted=now;self.last=row;self._batched_previous=(self.key,counts)
+
     def summary(self):
         return {'kind':'partial_mcm_diagnostics_only','records':self.records,
                 'max_records':self.policy['max_records'],'max_stdout_bytes':MAX_LINE_BYTES*self.policy['max_records'],

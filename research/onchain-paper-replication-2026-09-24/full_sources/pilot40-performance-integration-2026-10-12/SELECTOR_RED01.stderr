@@ -1,0 +1,42 @@
+FE.E.
+======================================================================
+ERROR: test_false_selector (__main__.Check.test_false_selector)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/check_selector01.py", line 19, in test_false_selector
+    self.assertIs(caller.validate_plan(p),p)
+                  ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 71, in validate_plan
+    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()), 'pilot plan fields differ')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 24, in require
+    raise ValueError(message)
+ValueError: pilot plan fields differ
+
+======================================================================
+ERROR: test_selected_plan (__main__.Check.test_selected_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/check_selector01.py", line 10, in test_selected_plan
+    self.assertIs(caller.validate_plan(p),p)
+                  ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 71, in validate_plan
+    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()), 'pilot plan fields differ')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 24, in require
+    raise ValueError(message)
+ValueError: pilot plan fields differ
+
+======================================================================
+FAIL: test_compact_dispatch (__main__.Check.test_compact_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/check_selector01.py", line 23, in test_compact_dispatch
+    self.assertIn('weekly_digest_pin',[a.arg for a in f.args.kwonlyargs])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'weekly_digest_pin' not found in ['graph_hash', 'input_name', 'output_input', 'progress', 'diagnostic']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+FAILED (failures=1, errors=2)

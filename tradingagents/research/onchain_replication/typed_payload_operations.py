@@ -51,6 +51,16 @@ def dispose(path, size, sha):
         a.io._root(root,fd);os.unlink(Path(path).name,dir_fd=fd);os.fsync(fd)
     finally:a.io._release(lambda:os.close(fd))
 
+def _poll_target_pre_cap(operation):
+    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
+        'typed pre-cap target/capability replaced')
+    from .archive_owner_policy import _poll_target
+    _poll_target(operation.owner,operation._target)
+    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
+        'typed pre-cap target/capability changed after poll')
+    operation.held.check(operation.owner)
+
+
 class _Operation:
     def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count,*,target=None):
         from . import archive_dispatch as d, archive_owner_operations as a
@@ -81,7 +91,10 @@ class _Operation:
         else:
             require(self.ledger._active is None and ((batched_open and self.policy['batched_parent']=='actual-active-mcm-stage-v1' and owner.active is stage) or (stage.closed and owner.active is None)),'typed standalone requires selected actual active batched stage or closed idle stage')
             self.parent_operation=None
-        self.context._outer();self.ledger._current(full=True);self.ledger._stage(stage)
+        self.context._outer()
+        if target is not None:_poll_target_pre_cap(self)
+        self.ledger._current(full=True,**({'target':target} if target is not None else {}));self.ledger._stage(stage)
+        if target is not None:_poll_target_pre_cap(self)
         registry=getattr(self.ledger,'_typed_payload_registry',None)
         if registry is None:
             registry={};self.ledger._typed_payload_registry=registry
@@ -109,7 +122,8 @@ class _Operation:
         self.context._spent_pin=canonical_bytes(self.context._spent)
         require(self.context._spent['logical_bytes']<=self.context._record['capacity']['logical_bytes'],'typed shared logical capacity')
         self.context._publish(self.claim_name,{'claim':self.record,'spent':self.context._spent})
-        self.remote=self.ledger.selection.writer_policy(stage.name)['remote_prefix']+'-p'+self.sha[:16]
+        self.remote=self.ledger.selection.writer_policy(stage.name,**({'target':target} if target is not None else {}))['remote_prefix']+'-p'+self.sha[:16]
+        if target is not None:_poll_target_pre_cap(self)
         require(len(self.remote)+13<=127,'typed remote namespace bound')
         self.cap={'ledger':self.ledger,'held':self.held,'lease':self.lease,'view':self.view,'thread':get_ident(),'claim_sha256':self.sha,'remote_prefix':self.remote,'typed_operation':self}
         self.context._cap=self.cap
@@ -179,7 +193,7 @@ class _Operation:
         require(type(receipt) is dict and receipt['transport_identity']==self.view.identity,'typed recovery endpoint')
         # Original scope is authenticated by consumer's anchored receipt; remote
         # is deliberately restricted to this actual stage's typed namespace.
-        prefix=self.ledger.selection.writer_policy(self.stage.name)['remote_prefix']+'-p'
+        prefix=self.ledger.selection.writer_policy(self.stage.name,**({'target':self._target} if self._target is not None else {}))['remote_prefix']+'-p'
         require(receipt['remote'].startswith(prefix),'typed recovery foreign stage')
         n=receipt['bytes'];require(type(n) is int and 0<n<=self.budget['chunk_bytes'],'typed recovery extent')
         self.counter['recovered']+=n;self.counter['chunks']+=1;self._counter_pin=policy.raw(self.counter);self.ledger._typed_payload_registry_pin=policy.sha(policy.raw(self.registry))
@@ -272,7 +286,11 @@ def operation(owner,stage,*,kind,binding,payload_bytes,chunk_count,target=None):
         if op is not None:
             op.context._failed=True
             try:op._publish('typed-failed-'+op.sha+'.json',{'error_type':type(error).__name__,'reservations_retained':True})
-            except BaseException as failure:error.add_note('typed failure evidence: '+repr(failure))
+            except BaseException as failure:
+                if target is None:error.add_note('typed failure evidence: '+repr(failure))
+                else:
+                    try:BaseException.add_note(error,'typed failure evidence: '+repr(failure))
+                    except BaseException:pass
         raise
     finally:
         if op is not None:op.closed=True;op.context._cap=op.parent

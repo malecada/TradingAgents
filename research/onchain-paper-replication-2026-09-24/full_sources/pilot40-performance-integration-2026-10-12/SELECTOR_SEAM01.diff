@@ -1,0 +1,57 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-batched-live-telemetry-candidate-2026-10-12/real_pilot_import_caller.py
++++ tradingagents/research/onchain_replication/real_pilot_import_caller.py
+@@ -68,7 +68,9 @@
+         diagnostic_policy(p['scoring_diagnostic'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()), 'pilot plan fields differ')
++    weekly_pin = 'weekly_graph_digest_pin' in p
++    require(not weekly_pin or (full and type(p['weekly_graph_digest_pin']) is bool), 'explicit schema2 weekly digest pin Boolean required')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()) | ({'weekly_graph_digest_pin'} if weekly_pin else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -587,12 +589,12 @@
+                 require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+                 mark('original_import')
+                 if diagnostic is None:
+-                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k) for k,g in graphs.items()]
++                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})) for k,g in graphs.items()]
+                 else:
+                     checked=[]
+                     for graph_index,(k,g) in enumerate(graphs.items()):
+                         diagnostic.startup_enter('target',graph_index)
+-                        checked.append(Target(execution,g,k))
++                        checked.append(Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})))
+                         diagnostic.startup_complete()
+                 for graph_index,target in enumerate(checked):
+                     if diagnostic is not None:diagnostic.startup_enter('prepare',graph_index)
+@@ -603,6 +605,7 @@
+                 measurements.begin(key)
+                 if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
+                 result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
++                    **({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {}),
+                     **({'progress':progress} if progress is not None else {}),
+                     **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+                 if diagnostic is not None:diagnostic.startup_complete()
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-batched-live-telemetry-candidate-2026-10-12/compact_mcm.py
++++ tradingagents/research/onchain_replication/compact_mcm.py
+@@ -289,7 +289,8 @@
+         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+ 
+ 
+-def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):
++def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None,weekly_digest_pin=False):
++    require(type(weekly_digest_pin) is bool,'explicit weekly digest pin Boolean required')
+     if progress is not None:
+         from .real_pilot_partial_progress import MCMProgress
+         require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
+@@ -297,7 +298,7 @@
+         from .real_pilot_partial_progress import ScoringDiagnostic
+         require(type(diagnostic) is ScoringDiagnostic,'exact optional scoring diagnostic required')
+     from .imported_mcm_identity import Target
+-    target=Target(execution,graph,graph_hash)
++    target=Target(execution,graph,graph_hash,**({'weekly_digest_pin':True} if weekly_digest_pin else {}))
+     with compact_owner._held(target.owner) as held:
+         from . import compact_mcm_batched
+         selected_policy=json.loads(target.owner.bound._run.read_input(input_name))

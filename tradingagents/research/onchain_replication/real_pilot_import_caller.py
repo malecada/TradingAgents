@@ -68,7 +68,9 @@ def validate_plan(p):
         diagnostic_policy(p['scoring_diagnostic'])
     resource_subset = 'population_scope' in p
     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()), 'pilot plan fields differ')
+    weekly_pin = 'weekly_graph_digest_pin' in p
+    require(not weekly_pin or (full and type(p['weekly_graph_digest_pin']) is bool), 'explicit schema2 weekly digest pin Boolean required')
+    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()) | ({'weekly_graph_digest_pin'} if weekly_pin else set()), 'pilot plan fields differ')
     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
             and type(p['batch_size']) is int and p['batch_size'] == 16
@@ -370,7 +372,7 @@ def admitted(ad, job, *, fresh_archive=False):
             effective=compact_policy.effective_matching(s['descriptor']['configs']['matching'],compact_pair)
             normalized=compact_policy.pair_policy(compact_pair)
             require(set(normalized) in (matching_pair.POLICY_FIELDS,matching_pair.POLICY_FIELDS|{'checkpoint_layout'}) and effective['max_pair_entries']>=s['descriptor']['configs']['matching']['max_pair_entries'],'batched execution pair policy differs')
-            require('partial_progress' not in p and 'scoring_diagnostic' not in p,'legacy per-pair progress/stop incompatible with full batched pilot')
+            require('scoring_diagnostic' not in p,'planned scoring stop incompatible with full batched pilot')
             transport=_read(ad,p['archive_inputs']['transport_input'])
             require(type(transport.get('schema_version')) is int and transport['schema_version']==2,'batched typed transport must be explicitly selected')
             typed_role=transport.get('typed_payload_input')
@@ -587,12 +589,12 @@ def execute(run, payload):
                 require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
                 mark('original_import')
                 if diagnostic is None:
-                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k) for k,g in graphs.items()]
+                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})) for k,g in graphs.items()]
                 else:
                     checked=[]
                     for graph_index,(k,g) in enumerate(graphs.items()):
                         diagnostic.startup_enter('target',graph_index)
-                        checked.append(Target(execution,g,k))
+                        checked.append(Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})))
                         diagnostic.startup_complete()
                 for graph_index,target in enumerate(checked):
                     if diagnostic is not None:diagnostic.startup_enter('prepare',graph_index)
@@ -603,6 +605,7 @@ def execute(run, payload):
                 measurements.begin(key)
                 if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
                 result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+                    **({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {}),
                     **({'progress':progress} if progress is not None else {}),
                     **({'diagnostic':diagnostic} if diagnostic is not None else {}))
                 if diagnostic is not None:diagnostic.startup_complete()

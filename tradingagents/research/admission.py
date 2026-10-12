@@ -188,11 +188,130 @@ def _overlaps(left, right):
     return a < d and c < b
 
 
-def claims(root: Path) -> list[dict]:
+def _claim_workers(value):
+    if (type(value) is not dict or set(value) != {'format', 'workers'}
+            or value['format'] != 'bounded-claims-v1'
+            or type(value['workers']) is not int or value['workers'] not in (1, 2)):
+        raise ValueError('exact bounded historical claim verification policy required')
+    return value['workers']
+
+
+def _verify_claim_child(child):
+    if not child.is_dir() or not (child / "claim.json").is_file():
+        raise ValueError("partial run claim requires manual recovery; automatic reuse prohibited")
+    from .verify import verify_claim
+    claim = verify_claim(child)
+    if claim["experiment_id"] != child.name:
+        raise ValueError("run claim identity differs from its directory")
+    if (child / "complete.json").exists() and (child / "failed.json").exists():
+        raise ValueError("contradictory terminal receipts require review")
+    return claim
+
+
+def _claim_failure_note(primary, label, error):
+    # Diagnostic construction must never replace the original failure.
+    try:
+        note = label + ': ' + type(error).__name__
+        try:
+            note += ': ' + str(error)[:1024]
+        except BaseException:
+            pass
+        BaseException.add_note(primary, note)
+    except BaseException:
+        pass
+
+
+def _parallel_claims(children):
+    """Fresh two-worker sweep, sorted semantic results, at most two in flight."""
+    from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
+    executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix='claim-proof')
+    pending = {}; values = {}; errors = {}; next_index = 0
+    primary = None; cleanup_error = None
+    try:
+        while pending or (next_index < len(children) and not errors):
+            # Inspect every already completed task before deciding to submit more.
+            done = {future for future in pending if future.done()}
+            if not done and len(pending) == 2:
+                done, _ = wait(tuple(pending), return_when=FIRST_COMPLETED)
+            for future in sorted(done, key=pending.__getitem__):
+                index = pending.pop(future)
+                try:
+                    values[index] = future.result()
+                except BaseException as error:
+                    errors[index] = error
+            if errors:
+                # Only inspect completed futures: a main-thread interruption is
+                # not misclassified as the running worker's result.
+                if pending:
+                    wait(tuple(pending), return_when=FIRST_COMPLETED)
+                    continue
+                break
+            if next_index < len(children) and len(pending) < 2:
+                future = executor.submit(_verify_claim_child, children[next_index])
+                pending[future] = next_index
+                next_index += 1
+            elif pending:
+                wait(tuple(pending), return_when=FIRST_COMPLETED)
+        if errors:
+            first = min(errors); primary = errors[first]
+            for index in sorted(errors):
+                if index != first:
+                    _claim_failure_note(primary, 'later speculative claim index '+str(index), errors[index])
+            raise primary
+        return [values[index] for index in range(len(children))]
+    except BaseException as error:
+        primary = error
+        # Scheduler failures stop submission; shutdown below drains owned work.
+        raise
+    finally:
+        try:
+            executor.shutdown(wait=True)
+        except BaseException as error:
+            cleanup_error = error
+            # Retry the same owned shutdown after interruption; never accept uncertain cleanup.
+            try:
+                executor.shutdown(wait=True)
+            except BaseException as later:
+                _claim_failure_note(cleanup_error, 'shutdown retry failed', later)
+        original_primary = primary
+        # Observe later failures even after a scheduler interruption, but never
+        # block on result() or claim completion when shutdown was inconclusive.
+        for future, index in sorted(pending.items(), key=lambda item:item[1]):
+            try:
+                completed = future.done()
+            except BaseException as probe_error:
+                if cleanup_error is None:
+                    cleanup_error = probe_error
+                elif primary is not None:
+                    _claim_failure_note(primary, 'claim completion probe failed', probe_error)
+                continue
+            if not completed:
+                if cleanup_error is None:
+                    cleanup_error = RuntimeError('claim worker drain incomplete')
+                continue
+            try:
+                future.result()
+            except BaseException as later:
+                if primary is None:
+                    primary = later
+                    if cleanup_error is None:cleanup_error = later
+                else:
+                    _claim_failure_note(primary, 'drained claim index '+str(index), later)
+        if cleanup_error is not None:
+            if original_primary is None:
+                raise cleanup_error
+            _claim_failure_note(primary, 'claim worker cleanup uncertain', cleanup_error)
+
+
+def claims(root: Path, *, workers=1) -> list[dict]:
     """Every start spends one attempt and exposes its windows, including failures."""
+    if type(workers) is not int or workers not in (1, 2):
+        raise ValueError('bounded claim worker count required')
     folder = root / "research_runs"
     if not folder.exists():
         return []
+    if workers == 2:
+        return _parallel_claims([child for child in sorted(folder.iterdir()) if not child.name.startswith('.')])
     result = []
     for child in sorted(folder.iterdir()):
         if child.name.startswith("."):
@@ -247,6 +366,8 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
     spec = json.loads(raw)
     if spec.get("schema_version") != 1:
         raise ValueError("unsupported registration schema")
+    claim_workers = (_claim_workers(spec['historical_claim_verification'])
+                     if 'historical_claim_verification' in spec else 1)
     identity(spec["program_id"], "program")
     identity(experiment, "experiment")
     experiments = spec["experiments"]
@@ -316,7 +437,7 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
             if exposure["state"] not in {"exposed", "spent"}:
                 raise ValueError("invalid prior exposure state")
             history.append({**exposure, "identity": info["identity"]})
-    prior = claims(root)
+    prior = claims(root) if claim_workers == 1 else claims(root, workers=claim_workers)
     if any(c["experiment_id"] == experiment for c in prior if c["experiment_id"] != _own_claim):
         raise ValueError("repeat run prohibited; use a separately justified registration")
     relevant = [c for c in prior if c["family"]["mechanism_id"] == family["mechanism_id"]]

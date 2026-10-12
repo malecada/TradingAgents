@@ -7,6 +7,7 @@ from .matching_pair import BACKEND
 from .matching_identity import graph_identity
 from .neighborhoods import graph_hash,node_order_hash
 from .contracts import GraphSnapshot
+from . import weekly_graph_digest_pin
 
 KERNEL='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection02-2026-10-08/imported_kernel.py'
 HELPER='research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py'
@@ -32,9 +33,12 @@ def _checkpoint(execution,*,value=False):
 
 
 class Target:
-    def __init__(self,execution,graph,key):
+    def __init__(self,execution,graph,key,*,weekly_digest_pin=False):
         require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')
         require(type(graph) is GraphSnapshot,'actual registered weekly graph required')
+        require(type(weekly_digest_pin) is bool,'explicit weekly digest pin Boolean required')
+        self._weekly_digest_pin=None
+        self._weekly_digest_pin_identity=None
         _checkpoint(execution,value=True)
         self.execution=execution;self.graph=graph;self.key=key
         self.owner=execution._owner;self.dictionary=execution._materialized._dictionary
@@ -51,12 +55,22 @@ class Target:
         manifest=original_dictionary.parse(self._manifest)
         _checkpoint(execution)
         require(manifest['graph_hash']==key and graph_hash(graph)==key,'target graph content differs')
+        if weekly_digest_pin:
+            self._weekly_digest_pin=weekly_graph_digest_pin.create(graph,original_digest=key)
+            self._weekly_digest_pin_identity=self._weekly_digest_pin
         self._execution=_checkpoint(execution,value=True);self._execution_pin=canonical_bytes(self._execution)
         self._node_order=node_order_hash(graph.node_ids)
         self._motifs=[graph_identity(m) for m in self.dictionary.representatives]
         self.scope=self.derive_scope();self._scope_pin=canonical_bytes(self.scope)
         _checkpoint(execution)
         self.check()
+
+    def _graph_digest(self):
+        require(self._weekly_digest_pin is self._weekly_digest_pin_identity,'weekly digest pin replaced')
+        if self._weekly_digest_pin is None:return graph_hash(self.graph)
+        digest,state=weekly_graph_digest_pin.verify(self.graph,self._weekly_digest_pin)
+        self._weekly_digest_pin=state;self._weekly_digest_pin_identity=state
+        return digest
 
     def _arrays(self):
         return tuple(id(getattr(self.graph,name)) for name in ('node_ids','node_features','edge_index','edge_features','edge_aggregates'))
@@ -88,7 +102,7 @@ class Target:
         require(self.execution._materialized._integrity()['ordered_motifs']==self._motifs,'original motif order changed')
         require(self.derive_scope()==self.scope,'imported workload independently differs')
         if full_graph:
-            require(graph_hash(self.graph)==self.key and node_order_hash(self.graph.node_ids)==self._node_order,'registered target contents changed')
+            require(self._graph_digest()==self.key and node_order_hash(self.graph.node_ids)==self._node_order,'registered target contents changed')
 
     def lease(self):
         # Inner callbacks keep frozen input contract; full graph hashes run at

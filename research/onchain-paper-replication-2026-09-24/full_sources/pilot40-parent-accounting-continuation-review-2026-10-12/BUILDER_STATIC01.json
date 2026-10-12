@@ -1,0 +1,20 @@
+{
+  "decision": "accepted_static_metadata_preparation_only",
+  "source_sha256": "4c646c54414072624c8820dcd58ef0755baa76a0e98d37b7f17df2d095b01a8a",
+  "executed": false,
+  "checks": [
+    "stdlib imports only",
+    "fixed contract hash and bounded canonical regular byte reads",
+    "all source/evidence/16x6 hashes checked before output mkdir",
+    "origin full extent 65536*9 checked then exact16 slice digests",
+    "descriptor digest checked against all16 original pending commitments",
+    "127 role arithmetic and four null future authority roles",
+    "unused canonical destination and exclusive file writes"
+  ],
+  "limitations": [
+    "No builder execution, generated-role registration, genuine continuation admission or recovery established.",
+    "Reads hash raw score bodies only; does not decode or recompute scores.",
+    "Hash checks do not assert atomic writer exclusion; interrupted output can remain partial and cannot be reused by this once-use builder.",
+    "Original outputs remain untouched; derived accounting is explicitly a new proof, not a missing original sealed output."
+  ]
+}

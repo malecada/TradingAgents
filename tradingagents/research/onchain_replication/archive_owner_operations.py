@@ -128,13 +128,13 @@ class Ledger:
                 io._root(root,fd)
             finally:_close_descriptor(fd)
 
-    def _current(self, *, full, sampled_evidence=False):
+    def _current(self, *, full, sampled_evidence=False, target=None):
         require(not self._closed and not self._poisoned,'archive reservations are terminal')
         require(getattr(self.owner,'_archive_operations',None) is self,
             'archive reservation owner binding changed')
         require(self.selection._owner is self.owner and self._transition is self.owner._transition,
             'archive selection owner or transition changed')
-        if full:self.selection.check()
+        if full:self.selection.check(**({'target':target} if target is not None else {}))
         else:self.owner.lease()
         require(policy.writer.archive._transport(self.selection._transport) ==
             self.selection.record['policy']['transport_identity'],'archive endpoint changed')

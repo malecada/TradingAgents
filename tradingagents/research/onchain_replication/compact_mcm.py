@@ -289,7 +289,8 @@ def produce(dictionary, *, graph_hash, input_name, output_input):
         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
 
 
-def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):
+def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None,weekly_digest_pin=False):
+    require(type(weekly_digest_pin) is bool,'explicit weekly digest pin Boolean required')
     if progress is not None:
         from .real_pilot_partial_progress import MCMProgress
         require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
@@ -297,13 +298,13 @@ def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progre
         from .real_pilot_partial_progress import ScoringDiagnostic
         require(type(diagnostic) is ScoringDiagnostic,'exact optional scoring diagnostic required')
     from .imported_mcm_identity import Target
-    target=Target(execution,graph,graph_hash)
+    target=Target(execution,graph,graph_hash,**({'weekly_digest_pin':True} if weekly_digest_pin else {}))
     with compact_owner._held(target.owner) as held:
         from . import compact_mcm_batched
         selected_policy=json.loads(target.owner.bound._run.read_input(input_name))
         if compact_mcm_batched.selected(selected_policy):
-            require(progress is None and diagnostic is None,'batched scoring diagnostic/partial-stop route not implemented')
-            return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+            require(diagnostic is None,'batched planned scoring stop not supported')
+            return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,**({'progress':progress} if progress is not None else {}))
         return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress,diagnostic=diagnostic)
 
 

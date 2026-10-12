@@ -1,0 +1,211 @@
+--- a/tradingagents/research/onchain_replication/batched_continuation.py
++++ b/tradingagents/research/onchain_replication/batched_continuation.py
+@@ -173,47 +173,17 @@
+     return a
+ 
+ 
+-def _target_identity(run,target):
+-    from tradingagents.research.lifecycle import ResearchRun
+-    from .imported_mcm_identity import Target
+-    require(type(run) is ResearchRun and type(target) is Target,
+-        'genuine continuation Run/Target required')
+-    owner=target.owner;execution=target.execution;bound=owner.bound
+-    require(bound._run is run and execution._owner is owner and execution._bound is bound,
+-        'continuation target Run/Owner differs')
+-    return (target,owner,execution,bound)
+-
+-
+-def _poll_target(run,target):
+-    pin=_target_identity(run,target)
+-    type(target).lease(target)
+-    require(all(a is b for a,b in zip(pin,_target_identity(run,target),strict=True)),
+-        'continuation target authority changed during poll')
+-
+-
+-def _reader_target(run,reader):
+-    if len(reader)==4:return None
+-    require(len(reader)==5 and type(reader[4]) is tuple and len(reader[4])==4,
+-        'continuation reader target pin differs')
+-    pin=reader[4];target=pin[0]
+-    require(all(a is b for a,b in zip(pin,_target_identity(run,target),strict=True)),
+-        'continuation reader target replaced')
+-    return target
+-
+-
+-def _authority(run, m, *, target=None):
++def _authority(run, m):
+     """Admitted parent, immutable terminal evidence and two recovered inventories."""
+     ad=run.admission
+-    if target is not None:_poll_target(run,target)
+     run._active();run._check_source()
+-    if target is not None:_poll_target(run,target)
+     require(ad.experiment['parent']==m['parent_experiment'] and ad.effective_attempt_budget>0,
+             'registered continuation parent/allowance differs')
+     parent=ad.root/'research_runs'/m['parent_experiment']
+     require(not os.path.lexists(parent/'complete.json'), 'COMPLETE parent refused')
+     def registered(ref):
+         require(type(ref) is dict and set(ref)=={'role','sha256'}, 'authority registered reference required')
+-        raw=_bounded_input(run,ref['role'],max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))
++        raw=_bounded_input(run,ref['role'],max_bytes=MAX_MANIFEST_BYTES)
+         require(len(raw)<=MAX_MANIFEST_BYTES and digest(raw)==ref['sha256'], 'authority body differs')
+         return raw
+     claim_raw=registered(m['parent_claim']);failed_raw=registered(m['parent_failed'])
+@@ -270,12 +240,11 @@
+     return accounting
+ 
+ 
+-def verify_prefix(run, registered_input, *, expected_contract, target=None):
++def verify_prefix(run, registered_input, *, expected_contract):
+     """A parser result is not authority; only a genuine admitted run returns it."""
+     from tradingagents.research.lifecycle import ResearchRun
+     require(type(run) is ResearchRun, 'genuine continuation admission required')
+-    target_pin=None if target is None else _target_identity(run,target)
+-    manifest_raw=_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))
++    manifest_raw=_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES)
+     require(len(manifest_raw)<=MAX_MANIFEST_BYTES, 'prefix manifest extent exceeded')
+     m=_json(manifest_raw)
+     require(m['policy']==POLICY and m.get('provenance_mode','durable-commit') in ('durable-commit','legacy-recovered-prefix-v1') and m['contract']==expected_contract, 'prefix exact contract differs')
+@@ -287,13 +256,13 @@
+     require(m['successor_experiment'] not in m['ancestor_experiments'] and m['parent_experiment'] in m['ancestor_experiments'], 'continuation identity reused')
+     require((m['contract']['workflow_identity'],m['contract']['graph_hash']) not in _USED.get(run,set()),'continuation already consumed by successor')
+     descriptors=_descriptors(m.get('descriptors',{}),expected_contract)
+-    accounting=_authority(run,m,**({'target':target} if target is not None else {}))
++    accounting=_authority(run,m)
+     batches=[];start=0;last_costs={};origin_cache=None;origin_reads=0;last_summary=None;last_epoch=None;oh=hashlib.sha256();sh=hashlib.sha256()
+     require(type(m['batches']) is list and 0<len(m['batches'])<=65536, 'bounded nonempty prefix required')
+     for index,refs in enumerate(m['batches']):
+         require(type(refs) is list and len(refs)==6, 'prefix registered body roster differs')
+         refs=_references(refs)
+-        batch=_registered_batch(run,refs,index,expected_contract,m.get('provenance_mode')=='legacy-recovered-prefix-v1',descriptors,**({'target':target} if target is not None else {}))
++        batch=_registered_batch(run,refs,index,expected_contract,m.get('provenance_mode')=='legacy-recovered-prefix-v1',descriptors)
+         commit_value=_json(batch.commit);summary_value=_json(batch.summary)
+         epoch=commit_value['cost_epoch_start']
+         require((index==0 and epoch==0) or epoch==last_epoch or epoch==start, 'prefix memo reset boundary differs')
+@@ -312,7 +281,7 @@
+                 else:
+                     if origin_cache is None or origin_cache[0]!=origin_batch:
+                         origin_reads+=1
+-                        origin_cache=(origin_batch,_registered_batch(run,batches[origin_batch],origin_batch,expected_contract,m.get('provenance_mode')=='legacy-recovered-prefix-v1',descriptors,**({'target':target} if target is not None else {})))
++                        origin_cache=(origin_batch,_registered_batch(run,batches[origin_batch],origin_batch,expected_contract,m.get('provenance_mode')=='legacy-recovered-prefix-v1',descriptors))
+                     source=origin_cache[1]
+                 require(record[2:]==source.records[offset][2:]
+                         and numeric_format.RECORD.unpack_from(source.origins,offset*9)==(0,origin),
+@@ -321,16 +290,13 @@
+     require(start==m['next_ordinal'] and start<=expected_contract['cells'] and (start==expected_contract['cells'] or start%expected_contract['batch_cells']==0), 'partial/finished prefix refused')
+     require(type(m['spent_counters']) is dict and all(type(k) is str and type(v) is int and 0<=v<2**127 for k,v in m['spent_counters'].items()), 'spent accounting required')
+     _check_spent(m['spent_counters'],accounting['retained_partial_work'],last_costs)
+-    require(_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))==manifest_raw, 'prefix changed during verification')
+-    _authority(run,m,**({'target':target} if target is not None else {}))
++    require(_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES)==manifest_raw, 'prefix changed during verification')
++    _authority(run,m)
+     expected=(m['parent_experiment'],m['successor_experiment'],expected_contract['workflow_identity'],expected_contract['graph_hash'],start,tuple(batches),oh.hexdigest(),sh.hexdigest(),expected_contract.get('numerical_contract_sha256',digest(body(expected_contract))),tuple(sorted(m['spent_counters'].items())),digest(manifest_raw),tuple(sorted(descriptors.items())),(('verified_batches',len(batches)),('prior_origin_batch_reads',origin_reads),('max_decoded_batches_retained',2)))
+     result=CompletedPrefix(*expected)
+     require(type(result) is CompletedPrefix and tuple(getattr(result,f.name) for f in fields(result))==expected, 'prefix constructor changed authenticated fields')
+     _VERIFIED[result]=expected
+     _READERS[result]=(run,body(expected_contract),m.get('provenance_mode')=='legacy-recovered-prefix-v1',registered_input)
+-    if target is not None:
+-        require(all(a is b for a,b in zip(target_pin,_target_identity(run,target),strict=True)), 'continuation target changed during verification')
+-        _READERS[result]=(*_READERS[result],target_pin)
+     return result
+ 
+ 
+@@ -342,15 +308,14 @@
+     try:
+         reader=_READERS.get(prefix)
+         if reader is not None:
+-            run,_,_,role=reader[:4]
+-            target=_reader_target(run,reader)
++            run,_,_,role=reader
+             key=(prefix.workflow_identity,prefix.graph_hash)
+             used=_USED.setdefault(run,set())
+             require(key not in used,'continuation already consumed by successor')
+             used.add(key)
+-            manifest=_bounded_input(run,role,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))
++            manifest=_bounded_input(run,role,max_bytes=MAX_MANIFEST_BYTES)
+             require(digest(manifest)==prefix.manifest_sha256,'prefix admission changed before restoration')
+-            _authority(run,_json(manifest),**({'target':target} if target is not None else {}))
++            _authority(run,_json(manifest))
+         for index in range(len(prefix.batches)):
+             batch=_load_batch(prefix,index)
+             for suffix,raw in zip(SUFFIXES,batch.score_bodies,strict=True):
+@@ -409,29 +374,9 @@
+     return tuple(result)
+ 
+ 
+-def _polled_batch_inputs(run,names,target):
+-    from tradingagents.research.lifecycle import _lock
+-    from .original_dictionary import _read_registered
+-    _poll_target(run,target)
++def _registered_batch(run,refs,index,contract,legacy,descriptors=None):
++    names=tuple(role for role,_ in refs)
+     values=run.read_inputs(names,max_each_bytes=1024**2,max_total_bytes=4*1024**2)
+-    pins=tuple((name,run.admission.inputs[name]['path'],run.admission.inputs[name]['sha256']) for name in names)
+-    _poll_target(run,target)
+-    # Read-only post-callback rejoin; no Target callback under this lock.
+-    with _lock(run.admission.root):
+-        run._active()
+-        require(pins==tuple((name,run.admission.inputs[name]['path'],run.admission.inputs[name]['sha256']) for name in names),
+-            'continuation batch contract changed after target poll')
+-        for name in names:
+-            require(_read_registered(run,name,max_bytes=1024**2)==values[name],
+-                'continuation batch body changed after target poll')
+-        run._active()
+-    return values
+-
+-
+-def _registered_batch(run,refs,index,contract,legacy,descriptors=None,*,target=None):
+-    names=tuple(role for role,_ in refs)
+-    if target is None:values=run.read_inputs(names,max_each_bytes=1024**2,max_total_bytes=4*1024**2)
+-    else:values=_polled_batch_inputs(run,names,target)
+     blobs=tuple(values[role] for role,_ in refs)
+     require(all(digest(raw)==sha for raw,(_,sha) in zip(blobs,refs,strict=True)), 'recovered prefix body changed')
+     if descriptors:
+@@ -449,32 +394,17 @@
+         batch=prefix.batches[index]
+         require(type(batch) is CompletedBatch,'registered prefix reader missing')
+         return batch
+-    run,contract,legacy,_=reader[:4]
+-    target=_reader_target(run,reader)
+-    return _registered_batch(run,prefix.batches[index],index,_json(contract),legacy,dict(prefix.descriptors),**({'target':target} if target is not None else {}))
+-
+-
+-def _bounded_input(run,name,*,max_bytes,target=None):
++    run,contract,legacy,_=reader
++    return _registered_batch(run,prefix.batches[index],index,_json(contract),legacy,dict(prefix.descriptors))
++
++
++def _bounded_input(run,name,*,max_bytes):
+     """Source-checked registered metadata transaction, capped before allocation.
+ 
+     This explicit continuation route permits a 32MiB manifest/inventory; the
+     shared general-purpose 2MiB/4MiB role reader remains unchanged.
+     """
+     from tradingagents.research.lifecycle import _lock
+-    if target is not None:
+-        _poll_target(run,target)
+-        value=_bounded_input(run,name,max_bytes=max_bytes)
+-        pin=(run.admission.inputs[name]['path'],run.admission.inputs[name]['sha256'])
+-        _poll_target(run,target)
+-        # No callback while the non-reentrant lifecycle lock is held.
+-        with _lock(run.admission.root):
+-            run._active()
+-            require(pin==(run.admission.inputs[name]['path'],run.admission.inputs[name]['sha256']),
+-                'continuation contract changed after target poll')
+-            require(_registered_body(run,name,max_bytes)==value,
+-                'continuation body changed after target poll')
+-            run._active()
+-        return value
+     require(type(max_bytes) is int and 0<max_bytes<=MAX_MANIFEST_BYTES,'continuation metadata bound differs')
+     with _lock(run.admission.root):
+         run._active();run._check_source()
+--- a/tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ b/tradingagents/research/onchain_replication/compact_mcm_batched.py
+@@ -715,7 +715,7 @@
+             continuation=_continuation_contract(target,start,policy,descriptor)
+             role=b['continuation'].get('graph_manifest_inputs',{}).get(start['graph_hash'],b['continuation']['manifest_input'])
+             if role is not None:
+-                prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation,target=target)
++                prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation)
+             continuation_options={'completed_prefix':prefix,'numeric':executor,
+                 'continuation_contract_sha256':continuation['numerical_contract_sha256']}
+         result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)

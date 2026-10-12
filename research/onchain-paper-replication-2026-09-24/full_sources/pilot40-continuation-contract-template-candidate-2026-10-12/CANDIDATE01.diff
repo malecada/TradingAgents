@@ -1,0 +1,106 @@
+--- a/tradingagents/research/onchain_replication/batched_continuation.py
++++ b/tradingagents/research/onchain_replication/batched_continuation.py
+@@ -201,6 +201,40 @@
+     return target
+ 
+ 
++def _bind_contract_template(run,target,m,expected_contract):
++    """Bind only operational identities after genuine Target creation."""
++    from . import compact_mcm_batched
++    require(m['contract_mode']=='genuine-target-contract-template-v1' and target is not None,
++        'explicit genuine target contract template required')
++    pin=_target_identity(run,target)
++    template=m['contract']
++    fields={'source_sha256','config_sha256','dictionary_sha256','graph_hash','node_order_hash',
++        'descriptor_sha256','workflow_identity','cells','batch_cells','numerical_contract_sha256'}
++    require(type(template) is dict and set(template)==fields and set(expected_contract)==fields
++        and template['workflow_identity'] is None and template['descriptor_sha256'] is None,
++        'exact two-slot contract template required')
++    role=m['runtime_policy_input']
++    require(type(role) is str and role in run.admission.inputs,'registered runtime MCM policy required')
++    raw=_bounded_input(run,role,max_bytes=2*1024**2,target=target)
++    policy=_json(raw)
++    _poll_target(run,target)
++    scope=type(target).derive_scope(target)
++    require(scope==target.scope and scope['graph']==target.key
++        and scope['dictionary']==target.dictionary.identity, 'genuine target scope differs')
++    rows=len(target.graph.node_ids);cells=rows*32
++    descriptor={'rows':rows,'cells':cells,'motifs':32,'graph_hash':target.key,
++        'node_order_hash':scope['node_order'],'workload_sha256':scope['workflow'],'purpose_schema_version':2}
++    start={'rows':rows,'cells':cells,'graph_hash':target.key,'scope':scope}
++    compact_mcm_batched.validate(policy,cells)
++    current=compact_mcm_batched._continuation_contract(target,start,policy,descriptor)
++    frozen={**current,'workflow_identity':None,'descriptor_sha256':None}
++    require(body(frozen)==body(template) and body(current)==body(expected_contract),
++        'template scientific/source/config or runtime contract differs')
++    require(all(a is b for a,b in zip(pin,_target_identity(run,target),strict=True)),
++        'template target authority changed')
++    return descriptor
++
++
+ def _authority(run, m, *, target=None):
+     """Admitted parent, immutable terminal evidence and two recovered inventories."""
+     ad=run.admission
+@@ -233,6 +267,11 @@
+             and review['batches_sha256']==digest(body(m['batches']))
+             and review['descriptors_sha256']==digest(body(m.get('descriptors',{})))
+             and review['spent_counters_sha256']==digest(body(m['spent_counters'])), 'reviewed continuation joins differ')
++    if 'contract_mode' in m:
++        require(m['contract_mode']=='genuine-target-contract-template-v1'
++            and review['contract_mode']==m['contract_mode']
++            and review['contract_template_sha256']==digest(body(m['contract']))
++            and review['runtime_policy_input']==m['runtime_policy_input'], 'reviewed contract template differs')
+     recovered={}
+     for kind in ('score_offload','numeric_origin'):
+         receipt_raw=registered(m['recoveries'][kind])
+@@ -278,15 +317,28 @@
+     manifest_raw=_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))
+     require(len(manifest_raw)<=MAX_MANIFEST_BYTES, 'prefix manifest extent exceeded')
+     m=_json(manifest_raw)
+-    require(m['policy']==POLICY and m.get('provenance_mode','durable-commit') in ('durable-commit','legacy-recovered-prefix-v1') and m['contract']==expected_contract, 'prefix exact contract differs')
++    runtime_descriptor=None
++    if 'contract_mode' in m:
++        runtime_descriptor=_bind_contract_template(run,target,m,expected_contract)
++        require(m['policy']==POLICY and m.get('provenance_mode','durable-commit') in ('durable-commit','legacy-recovered-prefix-v1'), 'prefix exact contract differs')
++    else:
++        require(m['policy']==POLICY and m.get('provenance_mode','durable-commit') in ('durable-commit','legacy-recovered-prefix-v1') and m['contract']==expected_contract, 'prefix exact contract differs')
+     required={'source_sha256','config_sha256','dictionary_sha256','graph_hash','node_order_hash','descriptor_sha256','workflow_identity','cells','batch_cells'}
+     require(required<=set(expected_contract), 'prefix numerical contract incomplete')
+     require(type(expected_contract['batch_cells']) is int and 0<expected_contract['batch_cells']<=4096
+             and type(expected_contract['cells']) is int and 0<expected_contract['cells']<2**63, 'prefix finite bounds required')
+     require(m['successor_experiment']==run.admission.experiment_id and m['parent_experiment']!=m['successor_experiment'] and m['parent_status']=='FAILED', 'fresh successor/FAILED parent required')
+     require(m['successor_experiment'] not in m['ancestor_experiments'] and m['parent_experiment'] in m['ancestor_experiments'], 'continuation identity reused')
+-    require((m['contract']['workflow_identity'],m['contract']['graph_hash']) not in _USED.get(run,set()),'continuation already consumed by successor')
++    if runtime_descriptor is None:
++        require((m['contract']['workflow_identity'],m['contract']['graph_hash']) not in _USED.get(run,set()),'continuation already consumed by successor')
++    else:
++        require((expected_contract['workflow_identity'],expected_contract['graph_hash']) not in _USED.get(run,set()),'continuation already consumed by successor')
+     descriptors=_descriptors(m.get('descriptors',{}),expected_contract)
++    if runtime_descriptor is not None:
++        runtime_key=digest(body(runtime_descriptor))
++        require(runtime_key==expected_contract['descriptor_sha256'],'runtime descriptor digest differs')
++        require(runtime_key not in descriptors or descriptors[runtime_key]==body(runtime_descriptor),'runtime descriptor conflicts with parent')
++        descriptors[runtime_key]=body(runtime_descriptor)
+     accounting=_authority(run,m,**({'target':target} if target is not None else {}))
+     batches=[];start=0;last_costs={};origin_cache=None;origin_reads=0;last_summary=None;last_epoch=None;oh=hashlib.sha256();sh=hashlib.sha256()
+     require(type(m['batches']) is list and 0<len(m['batches'])<=65536, 'bounded nonempty prefix required')
+@@ -323,6 +375,8 @@
+     _check_spent(m['spent_counters'],accounting['retained_partial_work'],last_costs)
+     require(_bounded_input(run,registered_input,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))==manifest_raw, 'prefix changed during verification')
+     _authority(run,m,**({'target':target} if target is not None else {}))
++    if runtime_descriptor is not None:
++        require(_bind_contract_template(run,target,m,expected_contract)==runtime_descriptor,'runtime template binding changed during verification')
+     expected=(m['parent_experiment'],m['successor_experiment'],expected_contract['workflow_identity'],expected_contract['graph_hash'],start,tuple(batches),oh.hexdigest(),sh.hexdigest(),expected_contract.get('numerical_contract_sha256',digest(body(expected_contract))),tuple(sorted(m['spent_counters'].items())),digest(manifest_raw),tuple(sorted(descriptors.items())),(('verified_batches',len(batches)),('prior_origin_batch_reads',origin_reads),('max_decoded_batches_retained',2)))
+     result=CompletedPrefix(*expected)
+     require(type(result) is CompletedPrefix and tuple(getattr(result,f.name) for f in fields(result))==expected, 'prefix constructor changed authenticated fields')
+@@ -351,6 +405,10 @@
+             manifest=_bounded_input(run,role,max_bytes=MAX_MANIFEST_BYTES,**({'target':target} if target is not None else {}))
+             require(digest(manifest)==prefix.manifest_sha256,'prefix admission changed before restoration')
+             _authority(run,_json(manifest),**({'target':target} if target is not None else {}))
++            if 'contract_mode' in _json(manifest):
++                runtime_descriptor=_bind_contract_template(run,target,_json(manifest),_json(reader[1]))
++                require(dict(prefix.descriptors).get(digest(body(runtime_descriptor)))==body(runtime_descriptor)
++                    and runtime_descriptor['workload_sha256']==prefix.workflow_identity,'restored runtime template binding differs')
+         for index in range(len(prefix.batches)):
+             batch=_load_batch(prefix,index)
+             for suffix,raw in zip(SUFFIXES,batch.score_bodies,strict=True):

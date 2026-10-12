@@ -1,0 +1,732 @@
+--- tradingagents/research/onchain_replication/archive_owner_policy.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__archive_owner_policy.py
+@@ -31,23 +31,11 @@
+         'local_free_floor_bytes':policy['local_free_floor_bytes']} | ({'read_controls':read_controls.policy(policy['read_controls'])} if 'read_controls' in policy else {})
+ 
+ 
+-def _poll_target(owner,target):
+-    from .imported_mcm_identity import Target
+-    require(type(target) is Target and target.owner is owner and target.execution._owner is owner,
+-        'genuine same-owner archive target required')
+-    execution=target.execution
+-    target.lease()
+-    require(type(target) is Target and target.owner is owner and target.execution is execution
+-        and execution._owner is owner,'archive target changed during poll')
+-
+-
+-def _inputs(owner, name, *, target=None):
++def _inputs(owner, name):
+     run = owner.bound._run
+     require(type(name) is str and name in run.admission.inputs,'registered archive policy input required')
+     selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][owner.bound.record['representation']]
+-    if target is not None:_poll_target(owner,target)
+     item = json.loads(run.read_input(selected['plan_input']))['producers'][owner.bound.record['producer']]
+-    if target is not None:_poll_target(owner,target)
+     for value in (selected,item):
+         require(value.get('native_backend') == owner.policy['backend'],'archive scientific backend selection differs')
+         require(value.get('compact_archive_input') == name,'explicit archive policy selection differs')
+@@ -62,11 +50,10 @@
+     return value,reference
+ 
+ 
+-def _record(owner, name, transport, *, target=None):
++def _record(owner, name, transport):
+     require(type(owner) is compact_owner.Owner,'actual current compact owner required')
+     owner.boundary();compact_owner.verify_current(owner)
+-    if target is not None:_poll_target(owner,target)
+-    policy,reference = _inputs(owner,name,**({'target':target} if target is not None else {}))
++    policy,reference = _inputs(owner,name)
+     require(type(policy) is dict and set(policy)-{'read_controls'} == FIELDS and type(policy['schema_version']) is int
+         and policy['schema_version'] == 1 and policy['backend'] == BACKEND,'archive owner policy schema')
+     positive = FIELDS-{'schema_version','backend','transport_identity','remote_namespace'}
+@@ -100,8 +87,7 @@
+             'remote_payload_bytes':remote,'decoded_transfer_bytes':transfer,'metadata_bytes':metadata,'operation_control_metadata_bytes':operation_control,
+             'checkpoint_reference_bytes_per_read':references},'execution_admitted':False}
+     owner.boundary();compact_owner.verify_current(owner)
+-    if target is not None:_poll_target(owner,target)
+-    require(_inputs(owner,name,**({'target':target} if target is not None else {})) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
++    require(_inputs(owner,name) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
+         'archive selection changed across final owner lease')
+     return result
+ 
+@@ -113,10 +99,10 @@
+         object.__setattr__(self,'_transport',transport);object.__setattr__(self,'_record',freeze(record))
+     def __setattr__(self,name,value):raise AttributeError('archive selection is immutable')
+     record = property(lambda self:self._record)
+-    def check(self,*,target=None):
+-        require(_record(self._owner,self._input,self._transport,**({'target':target} if target is not None else {})) == thaw(self.record),'archive selection identity changed')
+-    def writer_policy(self,name,*,target=None):
+-        self.check(**({'target':target} if target is not None else {}))
++    def check(self):
++        require(_record(self._owner,self._input,self._transport) == thaw(self.record),'archive selection identity changed')
++    def writer_policy(self,name):
++        self.check()
+         require(name in self.record['required_stages'],'archive stage outside registered population')
+         return _writer(self._owner,thaw(self.record['policy']),name)
+ 
+--- tradingagents/research/onchain_replication/archive_owner_operations.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__archive_owner_operations.py
+@@ -128,13 +128,13 @@
+                 io._root(root,fd)
+             finally:_close_descriptor(fd)
+ 
+-    def _current(self, *, full, sampled_evidence=False, target=None):
++    def _current(self, *, full, sampled_evidence=False):
+         require(not self._closed and not self._poisoned,'archive reservations are terminal')
+         require(getattr(self.owner,'_archive_operations',None) is self,
+             'archive reservation owner binding changed')
+         require(self.selection._owner is self.owner and self._transition is self.owner._transition,
+             'archive selection owner or transition changed')
+-        if full:self.selection.check(**({'target':target} if target is not None else {}))
++        if full:self.selection.check()
+         else:self.owner.lease()
+         require(policy.writer.archive._transport(self.selection._transport) ==
+             self.selection.record['policy']['transport_identity'],'archive endpoint changed')
+--- tradingagents/research/onchain_replication/typed_payload_operations.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__typed_payload_operations.py
+@@ -50,16 +50,6 @@
+         require(a.io._signature(before)==a.io._signature(os.stat(Path(path).name,dir_fd=fd,follow_symlinks=False)),'typed disposal source changed')
+         a.io._root(root,fd);os.unlink(Path(path).name,dir_fd=fd);os.fsync(fd)
+     finally:a.io._release(lambda:os.close(fd))
+-
+-def _poll_target_pre_cap(operation):
+-    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
+-        'typed pre-cap target/capability replaced')
+-    from .archive_owner_policy import _poll_target
+-    _poll_target(operation.owner,operation._target)
+-    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
+-        'typed pre-cap target/capability changed after poll')
+-    operation.held.check(operation.owner)
+-
+ 
+ class _Operation:
+     def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count,*,target=None):
+@@ -91,10 +81,7 @@
+         else:
+             require(self.ledger._active is None and ((batched_open and self.policy['batched_parent']=='actual-active-mcm-stage-v1' and owner.active is stage) or (stage.closed and owner.active is None)),'typed standalone requires selected actual active batched stage or closed idle stage')
+             self.parent_operation=None
+-        self.context._outer()
+-        if target is not None:_poll_target_pre_cap(self)
+-        self.ledger._current(full=True,**({'target':target} if target is not None else {}));self.ledger._stage(stage)
+-        if target is not None:_poll_target_pre_cap(self)
++        self.context._outer();self.ledger._current(full=True);self.ledger._stage(stage)
+         registry=getattr(self.ledger,'_typed_payload_registry',None)
+         if registry is None:
+             registry={};self.ledger._typed_payload_registry=registry
+@@ -122,8 +109,7 @@
+         self.context._spent_pin=canonical_bytes(self.context._spent)
+         require(self.context._spent['logical_bytes']<=self.context._record['capacity']['logical_bytes'],'typed shared logical capacity')
+         self.context._publish(self.claim_name,{'claim':self.record,'spent':self.context._spent})
+-        self.remote=self.ledger.selection.writer_policy(stage.name,**({'target':target} if target is not None else {}))['remote_prefix']+'-p'+self.sha[:16]
+-        if target is not None:_poll_target_pre_cap(self)
++        self.remote=self.ledger.selection.writer_policy(stage.name)['remote_prefix']+'-p'+self.sha[:16]
+         require(len(self.remote)+13<=127,'typed remote namespace bound')
+         self.cap={'ledger':self.ledger,'held':self.held,'lease':self.lease,'view':self.view,'thread':get_ident(),'claim_sha256':self.sha,'remote_prefix':self.remote,'typed_operation':self}
+         self.context._cap=self.cap
+@@ -193,7 +179,7 @@
+         require(type(receipt) is dict and receipt['transport_identity']==self.view.identity,'typed recovery endpoint')
+         # Original scope is authenticated by consumer's anchored receipt; remote
+         # is deliberately restricted to this actual stage's typed namespace.
+-        prefix=self.ledger.selection.writer_policy(self.stage.name,**({'target':self._target} if self._target is not None else {}))['remote_prefix']+'-p'
++        prefix=self.ledger.selection.writer_policy(self.stage.name)['remote_prefix']+'-p'
+         require(receipt['remote'].startswith(prefix),'typed recovery foreign stage')
+         n=receipt['bytes'];require(type(n) is int and 0<n<=self.budget['chunk_bytes'],'typed recovery extent')
+         self.counter['recovered']+=n;self.counter['chunks']+=1;self._counter_pin=policy.raw(self.counter);self.ledger._typed_payload_registry_pin=policy.sha(policy.raw(self.registry))
+@@ -286,11 +272,7 @@
+         if op is not None:
+             op.context._failed=True
+             try:op._publish('typed-failed-'+op.sha+'.json',{'error_type':type(error).__name__,'reservations_retained':True})
+-            except BaseException as failure:
+-                if target is None:error.add_note('typed failure evidence: '+repr(failure))
+-                else:
+-                    try:BaseException.add_note(error,'typed failure evidence: '+repr(failure))
+-                    except BaseException:pass
++            except BaseException as failure:error.add_note('typed failure evidence: '+repr(failure))
+         raise
+     finally:
+         if op is not None:op.closed=True;op.context._cap=op.parent
+--- tradingagents/research/admission.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__admission.py
+@@ -188,130 +188,11 @@
+     return a < d and c < b
+ 
+ 
+-def _claim_workers(value):
+-    if (type(value) is not dict or set(value) != {'format', 'workers'}
+-            or value['format'] != 'bounded-claims-v1'
+-            or type(value['workers']) is not int or value['workers'] not in (1, 2)):
+-        raise ValueError('exact bounded historical claim verification policy required')
+-    return value['workers']
+-
+-
+-def _verify_claim_child(child):
+-    if not child.is_dir() or not (child / "claim.json").is_file():
+-        raise ValueError("partial run claim requires manual recovery; automatic reuse prohibited")
+-    from .verify import verify_claim
+-    claim = verify_claim(child)
+-    if claim["experiment_id"] != child.name:
+-        raise ValueError("run claim identity differs from its directory")
+-    if (child / "complete.json").exists() and (child / "failed.json").exists():
+-        raise ValueError("contradictory terminal receipts require review")
+-    return claim
+-
+-
+-def _claim_failure_note(primary, label, error):
+-    # Diagnostic construction must never replace the original failure.
+-    try:
+-        note = label + ': ' + type(error).__name__
+-        try:
+-            note += ': ' + str(error)[:1024]
+-        except BaseException:
+-            pass
+-        BaseException.add_note(primary, note)
+-    except BaseException:
+-        pass
+-
+-
+-def _parallel_claims(children):
+-    """Fresh two-worker sweep, sorted semantic results, at most two in flight."""
+-    from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
+-    executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix='claim-proof')
+-    pending = {}; values = {}; errors = {}; next_index = 0
+-    primary = None; cleanup_error = None
+-    try:
+-        while pending or (next_index < len(children) and not errors):
+-            # Inspect every already completed task before deciding to submit more.
+-            done = {future for future in pending if future.done()}
+-            if not done and len(pending) == 2:
+-                done, _ = wait(tuple(pending), return_when=FIRST_COMPLETED)
+-            for future in sorted(done, key=pending.__getitem__):
+-                index = pending.pop(future)
+-                try:
+-                    values[index] = future.result()
+-                except BaseException as error:
+-                    errors[index] = error
+-            if errors:
+-                # Only inspect completed futures: a main-thread interruption is
+-                # not misclassified as the running worker's result.
+-                if pending:
+-                    wait(tuple(pending), return_when=FIRST_COMPLETED)
+-                    continue
+-                break
+-            if next_index < len(children) and len(pending) < 2:
+-                future = executor.submit(_verify_claim_child, children[next_index])
+-                pending[future] = next_index
+-                next_index += 1
+-            elif pending:
+-                wait(tuple(pending), return_when=FIRST_COMPLETED)
+-        if errors:
+-            first = min(errors); primary = errors[first]
+-            for index in sorted(errors):
+-                if index != first:
+-                    _claim_failure_note(primary, 'later speculative claim index '+str(index), errors[index])
+-            raise primary
+-        return [values[index] for index in range(len(children))]
+-    except BaseException as error:
+-        primary = error
+-        # Scheduler failures stop submission; shutdown below drains owned work.
+-        raise
+-    finally:
+-        try:
+-            executor.shutdown(wait=True)
+-        except BaseException as error:
+-            cleanup_error = error
+-            # Retry the same owned shutdown after interruption; never accept uncertain cleanup.
+-            try:
+-                executor.shutdown(wait=True)
+-            except BaseException as later:
+-                _claim_failure_note(cleanup_error, 'shutdown retry failed', later)
+-        original_primary = primary
+-        # Observe later failures even after a scheduler interruption, but never
+-        # block on result() or claim completion when shutdown was inconclusive.
+-        for future, index in sorted(pending.items(), key=lambda item:item[1]):
+-            try:
+-                completed = future.done()
+-            except BaseException as probe_error:
+-                if cleanup_error is None:
+-                    cleanup_error = probe_error
+-                elif primary is not None:
+-                    _claim_failure_note(primary, 'claim completion probe failed', probe_error)
+-                continue
+-            if not completed:
+-                if cleanup_error is None:
+-                    cleanup_error = RuntimeError('claim worker drain incomplete')
+-                continue
+-            try:
+-                future.result()
+-            except BaseException as later:
+-                if primary is None:
+-                    primary = later
+-                    if cleanup_error is None:cleanup_error = later
+-                else:
+-                    _claim_failure_note(primary, 'drained claim index '+str(index), later)
+-        if cleanup_error is not None:
+-            if original_primary is None:
+-                raise cleanup_error
+-            _claim_failure_note(primary, 'claim worker cleanup uncertain', cleanup_error)
+-
+-
+-def claims(root: Path, *, workers=1) -> list[dict]:
++def claims(root: Path) -> list[dict]:
+     """Every start spends one attempt and exposes its windows, including failures."""
+-    if type(workers) is not int or workers not in (1, 2):
+-        raise ValueError('bounded claim worker count required')
+     folder = root / "research_runs"
+     if not folder.exists():
+         return []
+-    if workers == 2:
+-        return _parallel_claims([child for child in sorted(folder.iterdir()) if not child.name.startswith('.')])
+     result = []
+     for child in sorted(folder.iterdir()):
+         if child.name.startswith("."):
+@@ -366,8 +247,6 @@
+     spec = json.loads(raw)
+     if spec.get("schema_version") != 1:
+         raise ValueError("unsupported registration schema")
+-    claim_workers = (_claim_workers(spec['historical_claim_verification'])
+-                     if 'historical_claim_verification' in spec else 1)
+     identity(spec["program_id"], "program")
+     identity(experiment, "experiment")
+     experiments = spec["experiments"]
+@@ -437,7 +316,7 @@
+             if exposure["state"] not in {"exposed", "spent"}:
+                 raise ValueError("invalid prior exposure state")
+             history.append({**exposure, "identity": info["identity"]})
+-    prior = claims(root) if claim_workers == 1 else claims(root, workers=claim_workers)
++    prior = claims(root)
+     if any(c["experiment_id"] == experiment for c in prior if c["experiment_id"] != _own_claim):
+         raise ValueError("repeat run prohibited; use a separately justified registration")
+     relevant = [c for c in prior if c["family"]["mechanism_id"] == family["mechanism_id"]]
+--- tradingagents/research/onchain_replication/imported_mcm_identity.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__imported_mcm_identity.py
+@@ -7,7 +7,6 @@
+ from .matching_identity import graph_identity
+ from .neighborhoods import graph_hash,node_order_hash
+ from .contracts import GraphSnapshot
+-from . import weekly_graph_digest_pin
+ 
+ KERNEL='research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-capacity-selection02-2026-10-08/imported_kernel.py'
+ HELPER='research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py'
+@@ -33,12 +32,9 @@
+ 
+ 
+ class Target:
+-    def __init__(self,execution,graph,key,*,weekly_digest_pin=False):
++    def __init__(self,execution,graph,key):
+         require(type(execution) is original_import_stage.ImportedExecution,'genuine imported execution required')
+         require(type(graph) is GraphSnapshot,'actual registered weekly graph required')
+-        require(type(weekly_digest_pin) is bool,'explicit weekly digest pin Boolean required')
+-        self._weekly_digest_pin=None
+-        self._weekly_digest_pin_identity=None
+         _checkpoint(execution,value=True)
+         self.execution=execution;self.graph=graph;self.key=key
+         self.owner=execution._owner;self.dictionary=execution._materialized._dictionary
+@@ -55,22 +51,12 @@
+         manifest=original_dictionary.parse(self._manifest)
+         _checkpoint(execution)
+         require(manifest['graph_hash']==key and graph_hash(graph)==key,'target graph content differs')
+-        if weekly_digest_pin:
+-            self._weekly_digest_pin=weekly_graph_digest_pin.create(graph,original_digest=key)
+-            self._weekly_digest_pin_identity=self._weekly_digest_pin
+         self._execution=_checkpoint(execution,value=True);self._execution_pin=canonical_bytes(self._execution)
+         self._node_order=node_order_hash(graph.node_ids)
+         self._motifs=[graph_identity(m) for m in self.dictionary.representatives]
+         self.scope=self.derive_scope();self._scope_pin=canonical_bytes(self.scope)
+         _checkpoint(execution)
+         self.check()
+-
+-    def _graph_digest(self):
+-        require(self._weekly_digest_pin is self._weekly_digest_pin_identity,'weekly digest pin replaced')
+-        if self._weekly_digest_pin is None:return graph_hash(self.graph)
+-        digest,state=weekly_graph_digest_pin.verify(self.graph,self._weekly_digest_pin)
+-        self._weekly_digest_pin=state;self._weekly_digest_pin_identity=state
+-        return digest
+ 
+     def _arrays(self):
+         return tuple(id(getattr(self.graph,name)) for name in ('node_ids','node_features','edge_index','edge_features','edge_aggregates'))
+@@ -102,7 +88,7 @@
+         require(self.execution._materialized._integrity()['ordered_motifs']==self._motifs,'original motif order changed')
+         require(self.derive_scope()==self.scope,'imported workload independently differs')
+         if full_graph:
+-            require(self._graph_digest()==self.key and node_order_hash(self.graph.node_ids)==self._node_order,'registered target contents changed')
++            require(graph_hash(self.graph)==self.key and node_order_hash(self.graph.node_ids)==self._node_order,'registered target contents changed')
+ 
+     def lease(self):
+         # Inner callbacks keep frozen input contract; full graph hashes run at
+--- tradingagents/research/onchain_replication/weekly_graph_digest_pin.py
++++ /dev/null
+@@ -1,99 +0,0 @@
+-"""Private Target-owned weekly JSON digest pin; never graph/Owner authority."""
+-from dataclasses import fields
+-from types import MappingProxyType
+-import numpy as np
+-from .contracts import GraphSnapshot,validate_graph
+-from .neighborhoods import graph_hash
+-
+-_FIELDS=('asset','start_utc','end_utc','available_at','source_hashes','graph_config_hash','node_ids','node_features','edge_index','edge_features','raw_count','admitted_count','exclusion_counts','edge_aggregates')
+-_ARRAYS=('node_features','edge_index','edge_features','edge_aggregates')
+-_STRINGS=('asset','start_utc','end_utc','available_at','graph_config_hash')
+-_TUPLES=('source_hashes','node_ids')
+-
+-def _layout(a):
+-    d=a.dtype
+-    if (d.fields is not None or d.subdtype is not None or d.hasobject or d.metadata is not None
+-            or not ((d.kind in ('i','u') and d.itemsize in (1,2,4,8))
+-                    or (d.kind=='f' and d.itemsize in (2,4,8)))):return None
+-    return (d.str,tuple(a.shape),tuple(a.strides),a.nbytes,a.__array_interface__['data'][0])
+-
+-def _array_pin(a):
+-    if type(a) is not np.ndarray:return None
+-    chain=[];current=a
+-    for _ in range(4):
+-        if type(current) is bytes:return (a,tuple(chain),current)
+-        if type(current) is not np.ndarray or current.flags.writeable or not current.flags.c_contiguous:return None
+-        layout=_layout(current)
+-        if layout is None:return None
+-        chain.append((current,layout));current=current.base
+-    return None
+-
+-def _mapping(value):
+-    if type(value) is not MappingProxyType:return None
+-    items=tuple(value.items())
+-    if any(type(k) is not str or type(v) is not int for k,v in items):return None
+-    return tuple(sorted(items))
+-
+-def _capture(graph):
+-    if type(graph) is not GraphSnapshot or tuple(f.name for f in fields(graph))!=_FIELDS:return None
+-    if any(type(getattr(graph,n)) is not str for n in _STRINGS):return None
+-    if any(type(getattr(graph,n)) is not int for n in ('raw_count','admitted_count')):return None
+-    if any(type(getattr(graph,n)) is not tuple or any(type(x) is not str for x in getattr(graph,n)) for n in _TUPLES):return None
+-    counts=_mapping(graph.exclusion_counts)
+-    if counts is None:return None
+-    arrays=[]
+-    for name in _ARRAYS:
+-        value=getattr(graph,name)
+-        if value is None and name=='edge_aggregates':arrays.append(None);continue
+-        pin=_array_pin(value)
+-        if pin is None:return None
+-        arrays.append(pin)
+-    metadata=tuple((n,getattr(graph,n)) for n in _FIELDS if n not in _ARRAYS and n!='exclusion_counts')
+-    return (graph,metadata,counts,tuple(arrays))
+-
+-def _rejoin(graph,pin):
+-    if graph is not pin[0] or type(graph) is not GraphSnapshot:return False
+-    for name,value in pin[1]:
+-        current=getattr(graph,name)
+-        if name in _TUPLES:
+-            if current is not value:return False
+-        elif type(current) is not type(value) or current!=value:return False
+-    if _mapping(graph.exclusion_counts)!=pin[2]:return False
+-    for name,saved in zip(_ARRAYS,pin[3],strict=True):
+-        current=getattr(graph,name)
+-        if saved is None:
+-            if current is not None:return False
+-            continue
+-        if current is not saved[0]:return False
+-        for item,layout in saved[1]:
+-            if current is not item or type(current) is not np.ndarray or current.flags.writeable or not current.flags.c_contiguous or _layout(current)!=layout:return False
+-            current=current.base
+-        if current is not saved[2]:return False
+-    return True
+-
+-def create(graph,*,original_digest):
+-    """Private immutable state for one Target; no authority/session object."""
+-    try:pin=_capture(graph)
+-    except RuntimeError:return None
+-    if pin is None:return None
+-    validate_graph(graph)
+-    # Snapshot only metadata; retain existing immutable array objects unchanged.
+-    snapshot=object.__new__(GraphSnapshot)
+-    metadata=dict(pin[1]);metadata['exclusion_counts']=MappingProxyType(dict(pin[2]))
+-    metadata.update((n,None if a is None else a[0]) for n,a in zip(_ARRAYS,pin[3],strict=True))
+-    for name in _FIELDS:object.__setattr__(snapshot,name,metadata[name])
+-    digest=graph_hash(snapshot)
+-    try:joined=_rejoin(graph,pin)
+-    except RuntimeError:return None
+-    return (pin,original_digest) if digest==original_digest and joined else None
+-
+-
+-def verify(graph,state):
+-    """Return original digest and current private state, always fresh validation."""
+-    if state is None:return graph_hash(graph),None
+-    validate_graph(graph)
+-    try:joined=_rejoin(graph,state[0])
+-    except RuntimeError:joined=False
+-    if joined:return state[1],state
+-    # Once eligibility/currentness changes the Target does not repin.
+-    return graph_hash(graph),None
+--- tradingagents/research/onchain_replication/neighborhoods.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__neighborhoods.py
+@@ -23,24 +23,6 @@
+     return h.hexdigest()
+ 
+ 
+-def _graph_chunk_bytes(value):
+-    """Fresh bounded ndarray conversion; no scalar-domain rescan or cache."""
+-    import json
+-    from .provenance import current_canonical_bytes
+-    if type(value) is not np.ndarray:
+-        return current_canonical_bytes(value.tolist())
+-    dtype=value.dtype
+-    direct=(value.ndim in (1,2) and value.size<=1024
+-            and dtype.fields is None and dtype.subdtype is None and not dtype.hasobject
+-            and dtype.metadata is None and
+-            ((dtype.kind in ('i','u') and dtype.itemsize in (1,2,4,8))
+-             or (dtype.kind=='f' and dtype.itemsize in (2,4,8))))
+-    body=value.tolist()
+-    if not direct:return current_canonical_bytes(body)
+-    return json.dumps(body,sort_keys=True,separators=(',', ':'),ensure_ascii=False,
+-                      allow_nan=False).encode('utf-8')
+-
+-
+ def graph_hash(graph):
+     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
+     from dataclasses import fields
+@@ -56,7 +38,7 @@
+             rows=max(1,1024//max(1,value.shape[1]))
+             for start in range(0,len(value),rows):
+                 if start:h.update(b',')
+-                h.update(_graph_chunk_bytes(value[start:start+rows])[1:-1])
++                h.update(canonical_bytes(value[start:start+rows].tolist())[1:-1])
+             h.update(b']')
+         elif isinstance(value,np.ndarray) and value.ndim>1:
+             h.update(b'[')
+@@ -71,9 +53,8 @@
+             for start in range(0,len(value),1024):
+                 if start:h.update(b',')
+                 chunk=value[start:start+1024]
+-                encoded=(_graph_chunk_bytes(chunk) if isinstance(chunk,np.ndarray)
+-                         else canonical_bytes(chunk))
+-                h.update(encoded[1:-1])
++                if isinstance(chunk,np.ndarray):chunk=chunk.tolist()
++                h.update(canonical_bytes(chunk)[1:-1])
+             h.update(b']')
+         elif isinstance(value,Mapping):
+             h.update(b'{')
+--- tradingagents/research/onchain_replication/real_pilot_import_caller.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__real_pilot_import_caller.py
+@@ -68,9 +68,7 @@
+         diagnostic_policy(p['scoring_diagnostic'])
+     resource_subset = 'population_scope' in p
+     require(not resource_subset or (full and p['population_scope'] == 'resource_pilot_subset'), 'explicit schema2 subset scope required')
+-    weekly_pin = 'weekly_graph_digest_pin' in p
+-    require(not weekly_pin or (full and type(p['weekly_graph_digest_pin']) is bool), 'explicit schema2 weekly digest pin Boolean required')
+-    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()) | ({'weekly_graph_digest_pin'} if weekly_pin else set()), 'pilot plan fields differ')
++    require(set(p) == fields | ({'resource_policy'} if full else set()) | ({'population_scope'} if resource_subset else set()) | ({'imported_authority_lease_input'} if interval else set()) | ({'expected_code_cache_input'} if code_cache else set()) | ({'archive_inputs'} if archive else set()) | ({'partial_progress'} if partial else set()) | ({'scoring_diagnostic'} if diagnostic else set()) | ({'phase_timing_policy'} if timing else set()), 'pilot plan fields differ')
+     require(type(p['schema_version']) is int and p['schema_version'] in (1, 2) and p['kind'] == KIND
+             and p['asset'] == 'ETH' and type(p['seed']) is int and p['seed'] == 11
+             and type(p['batch_size']) is int and p['batch_size'] == 16
+@@ -372,7 +370,7 @@
+             effective=compact_policy.effective_matching(s['descriptor']['configs']['matching'],compact_pair)
+             normalized=compact_policy.pair_policy(compact_pair)
+             require(set(normalized) in (matching_pair.POLICY_FIELDS,matching_pair.POLICY_FIELDS|{'checkpoint_layout'}) and effective['max_pair_entries']>=s['descriptor']['configs']['matching']['max_pair_entries'],'batched execution pair policy differs')
+-            require('scoring_diagnostic' not in p,'planned scoring stop incompatible with full batched pilot')
++            require('partial_progress' not in p and 'scoring_diagnostic' not in p,'legacy per-pair progress/stop incompatible with full batched pilot')
+             transport=_read(ad,p['archive_inputs']['transport_input'])
+             require(type(transport.get('schema_version')) is int and transport['schema_version']==2,'batched typed transport must be explicitly selected')
+             typed_role=transport.get('typed_payload_input')
+@@ -589,12 +587,12 @@
+                 require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')
+                 mark('original_import')
+                 if diagnostic is None:
+-                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})) for k,g in graphs.items()]
++                    checked = [] if p.get('imported_authority_lease_input') is not None and selected_mcm.get('schema_version') == 6 else [Target(execution,g,k) for k,g in graphs.items()]
+                 else:
+                     checked=[]
+                     for graph_index,(k,g) in enumerate(graphs.items()):
+                         diagnostic.startup_enter('target',graph_index)
+-                        checked.append(Target(execution,g,k,**({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {})))
++                        checked.append(Target(execution,g,k))
+                         diagnostic.startup_complete()
+                 for graph_index,target in enumerate(checked):
+                     if diagnostic is not None:diagnostic.startup_enter('prepare',graph_index)
+@@ -605,7 +603,6 @@
+                 measurements.begin(key)
+                 if diagnostic is not None:diagnostic.startup_enter('production',graph_index)
+                 result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+-                    **({'weekly_digest_pin':True} if p.get('weekly_graph_digest_pin') is True else {}),
+                     **({'progress':progress} if progress is not None else {}),
+                     **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+                 if diagnostic is not None:diagnostic.startup_complete()
+--- tradingagents/research/onchain_replication/compact_mcm.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__compact_mcm.py
+@@ -289,8 +289,7 @@
+         return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+ 
+ 
+-def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None,weekly_digest_pin=False):
+-    require(type(weekly_digest_pin) is bool,'explicit weekly digest pin Boolean required')
++def produce_imported(execution,graph,*,graph_hash,input_name,output_input,progress=None,diagnostic=None):
+     if progress is not None:
+         from .real_pilot_partial_progress import MCMProgress
+         require(type(progress) is MCMProgress,'exact optional pilot telemetry required')
+@@ -298,13 +297,13 @@
+         from .real_pilot_partial_progress import ScoringDiagnostic
+         require(type(diagnostic) is ScoringDiagnostic,'exact optional scoring diagnostic required')
+     from .imported_mcm_identity import Target
+-    target=Target(execution,graph,graph_hash,**({'weekly_digest_pin':True} if weekly_digest_pin else {}))
++    target=Target(execution,graph,graph_hash)
+     with compact_owner._held(target.owner) as held:
+         from . import compact_mcm_batched
+         selected_policy=json.loads(target.owner.bound._run.read_input(input_name))
+         if compact_mcm_batched.selected(selected_policy):
+-            require(diagnostic is None,'batched planned scoring stop not supported')
+-            return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,**({'progress':progress} if progress is not None else {}))
++            require(progress is None and diagnostic is None,'batched scoring diagnostic/partial-stop route not implemented')
++            return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+         return _produce_locked(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held,progress=progress,diagnostic=diagnostic)
+ 
+ 
+--- tradingagents/research/onchain_replication/compact_mcm_batched.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__compact_mcm_batched.py
+@@ -583,7 +583,7 @@
+     yield from _spool(Path(args['stage_root']),binding,chunks=True)
+ 
+ 
+-def _compute(target, stage, graph, policy, start, modules, boundary, progress=None):
++def _compute(target, stage, graph, policy, start, modules, boundary):
+     """Shared functional core; genuine authority supplied only by produce()."""
+     b=validate(policy,start['cells']);p=thaw(target.owner.policy)
+     authority_poll=target.lease if policy['schema_version']==6 and getattr(target.execution,'_sampled_authority_lease',None) is not None else None
+@@ -625,10 +625,7 @@
+         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
+         execution=b['execution']
+-        durable_scores=0
+-        def observe_numeric(value):
+-            progress.poll_batched(value,journal_cells=journal.cells,score_cells=durable_scores)
+-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}),**({'progress':observe_numeric} if progress is not None else {}))
++        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}))
+         external=None;post_batch=final_batches=None
+         if b['retention']=='typed-recover-before-retire-v2':
+             from . import registered_offload as offload
+@@ -722,9 +719,6 @@
+         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
+         numeric_binding=executor.finish()
+         os.fsync(spool_fd)
+-        if progress is not None:
+-            durable_scores=seen
+-            observe_numeric(executor.progress_snapshot())
+         require(io._signature(os.fstat(fd))[:2]==token_pin and io._signature(os.fstat(spool_fd))[:2]==spool_pin,'token/spool descriptor replaced')
+     except BaseException as error:
+         primary=error
+@@ -765,12 +759,9 @@
+     target_lease(target,boundary=True)
+ 
+ 
+-def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
++def produce(target, *, graph_hash,input_name,output_input,held):
+     from .imported_mcm_identity import Target
+     require(type(target) is Target,'genuine imported Target required')
+-    if progress is not None:
+-        from .real_pilot_partial_progress import MCMProgress
+-        require(type(progress) is MCMProgress,'exact optional batched telemetry required')
+     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
+     try:
+         with phase_timing.measure('entry'):
+@@ -803,8 +794,7 @@
+                 require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
+                 require(_numeric_policy(b['execution'])==numeric_selection,'batched numeric selection changed')
+                 require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
+-        if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])
+-        boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary,**({'progress':progress} if progress is not None else {}));boundary()
++        boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
+         require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')
+         require(compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy'))==edge_selection,'completed numeric edge selection differs')
+         if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)
+--- tradingagents/research/onchain_replication/batched_numeric_execution.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__batched_numeric_execution.py
+@@ -46,9 +46,7 @@
+     return value
+ 
+ class NumericExecution:
+-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None,progress=None):
+-        require(progress is None or callable(progress),'optional progress callback required')
+-        self.progress=progress
++    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
+         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
+         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
+         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
+@@ -108,16 +106,6 @@
+             value.update(timing)
+         return value
+ 
+-    def progress_snapshot(self):
+-        # Provisional counters do not use the attested batch-closure timing snapshot.
+-        names=('source_guard_calls','authority_poll_calls','authority_poll_ns','authority_poll_failures')
+-        current=counters(self.memo)
+-        value={k:current[k] for k in names if k in current}
+-        return {'occurrences':self.ordinal,'computed':self.computed,'reused':self.reused,
+-                'numeric_durable_cells':self.ordinal-len(self.buffer)//9,
+-                'imported_occurrences':getattr(self,'continuation',{}).get('imported_cells',0),
+-                'provisional_callbacks':value}
+-
+     def _root(self):
+         require(self.root.resolve()==self.root and sig(os.stat(self.root,follow_symlinks=False))[:2]==self.root_pin==sig(os.fstat(self.fd))[:2],'numeric stream root changed')
+         if self.batches_fd is not None:require(sig(os.stat('numeric-batches',dir_fd=self.fd,follow_symlinks=False))[:2]==self.batches_pin==sig(os.fstat(self.batches_fd))[:2],'numeric batch root changed')
+@@ -157,16 +145,9 @@
+             self.buffer.extend(RECORD.pack(mode,origin));self.ordinal+=1;self.computed+=1-mode;self.reused+=mode;self.batch_computed+=1-mode;self.batch_reused+=mode
+             self.batch_elapsed+=elapsed
+             if len(self.buffer)==9*self.batch_cells or self.ordinal==self.cells:self._complete_batch()
+-            if self.progress is not None:self.progress(self.progress_snapshot())
+             return result
+-        except BaseException as error:
+-            if self.progress is None:self._poison()
+-            else:
+-                try:self._poison()
+-                except BaseException as cleanup:
+-                    try:BaseException.add_note(error,'numeric progress cleanup: '+repr(cleanup))
+-                    except BaseException:pass
+-            raise
++        except BaseException:
++            self._poison();raise
+     def _complete_batch(self):
+         self.memo.end_batch() # Genuine full guard precedes any summary credit.
+         if self.binding_timing is not None:
+--- tradingagents/research/onchain_replication/real_pilot_partial_progress.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/pilot40-performance-integration-2026-10-12/baseline/tradingagents__research__onchain_replication__real_pilot_partial_progress.py
+@@ -132,44 +132,6 @@
+         self.output.flush()
+         self.records+=1;self.last_emitted=now;self.previous=counts;self.last=row
+ 
+-    def poll_batched(self, value, *, journal_cells, score_cells):
+-        if self.error is not None or self.records>=self.policy['max_records']:return
+-        try:self._poll_batched(value,journal_cells,score_cells)
+-        except BaseException as error:
+-            self.error=type(error).__name__;raise
+-
+-    def _poll_batched(self,value,journal_cells,score_cells):
+-        require(self.key is not None,'graph interval absent')
+-        now=_time(self.clock());require(now>=self.observed,'clock moved backwards');self.observed=now
+-        if self.last_emitted is not None and now-self.last_emitted<self.policy['interval_seconds']:return
+-        require(type(value) is dict and set(value)=={'occurrences','computed','reused','numeric_durable_cells','imported_occurrences','provisional_callbacks'},'batched observation fields')
+-        n=value['occurrences'];computed=value['computed'];reused=value['reused'];numeric=value['numeric_durable_cells']
+-        counts=(n,computed,reused,numeric,journal_cells,score_cells);total=self.nodes[self.key]*32
+-        require(all(type(x) is int and 0<=x<=total for x in counts),'batched counts invalid')
+-        require(computed+reused==n and score_cells<=journal_cells<=numeric<=n,'batched watermarks differ')
+-        require(type(value['imported_occurrences']) is int and 0<=value['imported_occurrences']<=n,'imported prefix watermark invalid')
+-        previous=getattr(self,'_batched_previous',None)
+-        if previous is not None and previous[0]==self.key:require(all(a>=b for a,b in zip(counts,previous[1])),'batched watermark moved backwards')
+-        callbacks=value['provisional_callbacks']
+-        require(type(callbacks) is dict and set(callbacks)<= {'source_guard_calls','authority_poll_calls','authority_poll_ns','authority_poll_failures'} and all(type(x) is int and 0<=x<2**127 for x in callbacks.values()),'provisional callbacks invalid')
+-        from . import phase_timing
+-        snapshot=phase_timing.current_snapshot() # Caller is outside pair/publication/entry phases.
+-        phases=None if snapshot is None else {k:{f:v[f] for f in ('calls','wall_seconds','cpu_seconds')} for k,v in snapshot['phases'].items() if k in ('pair_numeric','row_extraction','source_admission','lease_full','lease_live')}
+-        row={'kind':'real_pilot_batched_mcm_progress','schema_version':1,'sequence':self.records,
+-             'claim_sha256':self.claim,'source':self.source,'graph_hash':self.key,
+-             'expected_matching_pairs':total,'observed_elapsed_seconds':now-self.started,
+-             'scope_elapsed_seconds':now-self.began,'in_memory_occurrences':n,
+-             'in_memory_computed':computed,'in_memory_reused':reused,'imported_occurrences':value['imported_occurrences'],
+-             'durable_numeric_origin_summary_cells':numeric,'durable_journal_cells':journal_cells,
+-             'durable_score_spool_cells':score_cells,'provisional_callback_counters':callbacks,
+-             'provisional_selected_phase_totals':phases,'full_mcm_completion_verified_here':False,
+-             'representation_credit':0,'paper_financial_fits':0,
+-             'qualification':'Sampled counts only; score watermark conservative until final fsync; no completion/restart or availability authority.'}
+-        raw=json.dumps(row,sort_keys=True,separators=(',',':'),allow_nan=False)+'\n'
+-        require(len(raw.encode())<=MAX_LINE_BYTES,'diagnostic line exceeds finite bound')
+-        require(self.output.write(raw)==len(raw),'short telemetry write');self.output.flush()
+-        self.records+=1;self.last_emitted=now;self.last=row;self._batched_previous=(self.key,counts)
+-
+     def summary(self):
+         return {'kind':'partial_mcm_diagnostics_only','records':self.records,
+                 'max_records':self.policy['max_records'],'max_stdout_bytes':MAX_LINE_BYTES*self.policy['max_records'],

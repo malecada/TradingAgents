@@ -1,0 +1,22 @@
+{
+  "decision": "contract_assembly_withheld",
+  "prior_source_review_sha256": "966b505d1a61762fe9fcbb3191cfac2ab225171e8f950b9a7bebf5c23191647a",
+  "dependency_confirmed": [
+    "matching_owner Binding.record contains actual run._claim_sha256 and admission.registration_sha256",
+    "compact Owner.identity hashes its binding record",
+    "original_import_stage completion receipt hashes Owner.identity",
+    "ImportedExecution execution_identity hashes import receipt and current configuration",
+    "Target.derive_scope workload hashes execution_identity",
+    "compact descriptor hashes workload; continuation expected_contract contains workflow_identity and descriptor_sha256",
+    "preregistered continuation input bytes containing these values would themselves affect registration/claim identity"
+  ],
+  "recommendation": "Use a new explicit finite contract-template mode that preregisters every stable scientific/source/config identity but leaves only the two registration-derived fields to bind from the genuine same-run Target and actual descriptor during verification. Reject arbitrary omitted/extra fields, retain exact old full-contract route by default, and make independent continuation review bind the template mode/hash and stable fields. Never synthesize a precomputed Claim/Owner or treat a draft identity as actual. Preserve original parent descriptors for decoding historical batches separately from the actual successor descriptor.",
+  "source_evidence": {
+    "tradingagents/research/onchain_replication/matching_owner.py": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38",
+    "tradingagents/research/onchain_replication/compact_owner.py": "fa1221098270c6d4037ed74ed98541828b3da3dcc1bb07862c1d8b3bfa017188",
+    "tradingagents/research/onchain_replication/original_import_stage.py": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c",
+    "tradingagents/research/onchain_replication/imported_mcm_identity.py": "95b355399b8e8b562ff2fda98c4000cbac02a4248b1934a932ad4b53a6974d02",
+    "tradingagents/research/onchain_replication/compact_mcm_batched.py": "c38baa53719a99fed5d903ef07b6535aca3430123971a47f7828164f9ddd846b"
+  },
+  "empirical_entry_or_contract_assembly_released": false
+}

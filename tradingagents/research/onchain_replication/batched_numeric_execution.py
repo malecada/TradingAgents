@@ -46,7 +46,9 @@ def counters(memo):
     return value
 
 class NumericExecution:
-    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
+    def __init__(self,stream_root,config,policy,schedule,checkpoint,*,cells,batch_cells,max_origin_bytes,max_summary_bytes,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=None,binding_timing=None,binding_owner=None,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None,progress=None):
+        require(progress is None or callable(progress),'optional progress callback required')
+        self.progress=progress
         self.fd=self.origins_fd=self.batches_fd=None;self.memo=None;self.closed=False;self.poisoned=False;self.finished=False
         self.root=Path(stream_root).absolute();self.cells=cells;self.batch_cells=batch_cells
         self.max_origin_bytes=max_origin_bytes;self.max_summary_bytes=max_summary_bytes
@@ -106,6 +108,16 @@ class NumericExecution:
             value.update(timing)
         return value
 
+    def progress_snapshot(self):
+        # Provisional counters do not use the attested batch-closure timing snapshot.
+        names=('source_guard_calls','authority_poll_calls','authority_poll_ns','authority_poll_failures')
+        current=counters(self.memo)
+        value={k:current[k] for k in names if k in current}
+        return {'occurrences':self.ordinal,'computed':self.computed,'reused':self.reused,
+                'numeric_durable_cells':self.ordinal-len(self.buffer)//9,
+                'imported_occurrences':getattr(self,'continuation',{}).get('imported_cells',0),
+                'provisional_callbacks':value}
+
     def _root(self):
         require(self.root.resolve()==self.root and sig(os.stat(self.root,follow_symlinks=False))[:2]==self.root_pin==sig(os.fstat(self.fd))[:2],'numeric stream root changed')
         if self.batches_fd is not None:require(sig(os.stat('numeric-batches',dir_fd=self.fd,follow_symlinks=False))[:2]==self.batches_pin==sig(os.fstat(self.batches_fd))[:2],'numeric batch root changed')
@@ -145,9 +157,16 @@ class NumericExecution:
             self.buffer.extend(RECORD.pack(mode,origin));self.ordinal+=1;self.computed+=1-mode;self.reused+=mode;self.batch_computed+=1-mode;self.batch_reused+=mode
             self.batch_elapsed+=elapsed
             if len(self.buffer)==9*self.batch_cells or self.ordinal==self.cells:self._complete_batch()
+            if self.progress is not None:self.progress(self.progress_snapshot())
             return result
-        except BaseException:
-            self._poison();raise
+        except BaseException as error:
+            if self.progress is None:self._poison()
+            else:
+                try:self._poison()
+                except BaseException as cleanup:
+                    try:BaseException.add_note(error,'numeric progress cleanup: '+repr(cleanup))
+                    except BaseException:pass
+            raise
     def _complete_batch(self):
         self.memo.end_batch() # Genuine full guard precedes any summary credit.
         if self.binding_timing is not None:

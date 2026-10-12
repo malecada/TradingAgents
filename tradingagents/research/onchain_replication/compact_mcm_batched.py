@@ -583,7 +583,7 @@ def output_chunks(args, start):
     yield from _spool(Path(args['stage_root']),binding,chunks=True)
 
 
-def _compute(target, stage, graph, policy, start, modules, boundary):
+def _compute(target, stage, graph, policy, start, modules, boundary, progress=None):
     """Shared functional core; genuine authority supplied only by produce()."""
     b=validate(policy,start['cells']);p=thaw(target.owner.policy)
     authority_poll=target.lease if policy['schema_version']==6 and getattr(target.execution,'_sampled_authority_lease',None) is not None else None
@@ -625,7 +625,10 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
         spool_fd=os.open(stream/'scores.f32',os.O_RDWR|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
         spool_pin=io._signature(os.fstat(spool_fd))[:2];spool_hash=hashlib.sha256()
         execution=b['execution']
-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}))
+        durable_scores=0
+        def observe_numeric(value):
+            progress.poll_batched(value,journal_cells=journal.cells,score_cells=durable_scores)
+        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}),**({'progress':observe_numeric} if progress is not None else {}))
         external=None;post_batch=final_batches=None
         if b['retention']=='typed-recover-before-retire-v2':
             from . import registered_offload as offload
@@ -712,13 +715,16 @@ def _compute(target, stage, graph, policy, start, modules, boundary):
             continuation=_continuation_contract(target,start,policy,descriptor)
             role=b['continuation'].get('graph_manifest_inputs',{}).get(start['graph_hash'],b['continuation']['manifest_input'])
             if role is not None:
-                prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation)
+                prefix=batched_continuation.verify_prefix(target.owner.bound._run,role,expected_contract=continuation,target=target)
             continuation_options={'completed_prefix':prefix,'numeric':executor,
                 'continuation_contract_sha256':continuation['numerical_contract_sha256']}
         result=modules['driver'].drive(graph,target.dictionary,descriptor=descriptor,policy={k:policy['numeric'][k] for k in ('max_buffer_bytes','edge_chunk','extraction_limit')},journal=journal,executor=executor if continuation is not None else execute,consumer=sink,max_chunk_bytes=128,max_closure_token_bytes=b['max_closure_token_bytes'],post_batch=post_batch,final_batches=final_batches,authority_poll=authority_poll,**continuation_options)
         require(seen==result['completed_cells']==start['cells'],'batched sink coverage differs')
         numeric_binding=executor.finish()
         os.fsync(spool_fd)
+        if progress is not None:
+            durable_scores=seen
+            observe_numeric(executor.progress_snapshot())
         require(io._signature(os.fstat(fd))[:2]==token_pin and io._signature(os.fstat(spool_fd))[:2]==spool_pin,'token/spool descriptor replaced')
     except BaseException as error:
         primary=error
@@ -759,9 +765,12 @@ def _entry_lease(target, execution):
     target_lease(target,boundary=True)
 
 
-def produce(target, *, graph_hash,input_name,output_input,held):
+def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
     from .imported_mcm_identity import Target
     require(type(target) is Target,'genuine imported Target required')
+    if progress is not None:
+        from .real_pilot_partial_progress import MCMProgress
+        require(type(progress) is MCMProgress,'exact optional batched telemetry required')
     owner=target.owner;held.check(owner);root=None;fd=None;stage=None;mapped=None;matrix=None
     try:
         with phase_timing.measure('entry'):
@@ -794,7 +803,8 @@ def produce(target, *, graph_hash,input_name,output_input,held):
                 require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
                 require(_numeric_policy(b['execution'])==numeric_selection,'batched numeric selection changed')
                 require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
-        boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary);boundary()
+        if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])
+        boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary,**({'progress':progress} if progress is not None else {}));boundary()
         require(compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy'))==normalization,'completed numeric normalization selection differs')
         require(compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy'))==edge_selection,'completed numeric edge selection differs')
         if normalization is not None:binding['compiled_normalization_policy']=dict(normalization)
