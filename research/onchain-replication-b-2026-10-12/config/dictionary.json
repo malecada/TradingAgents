@@ -1,0 +1,12 @@
+{
+ "sample_count": 512,
+ "size": 32,
+ "hop_depth": 1,
+ "n_max": 32,
+ "neighborhood": "weak one-hop induced; center plus up to n_max-1 neighbors with largest interaction count with center, ties by node index",
+ "sampling": "without replacement over (training week, center); equal initial weights; halve weights of remaining centers inside the drawn neighborhood in that week",
+ "linkage": "average",
+ "representative": "medoid: minimum within-cluster distance sum, ties by sample index",
+ "rng": "numpy PCG64(seed)",
+ "distance": "1 - (S(A,B)+S(B,A))/2"
+}

@@ -1,0 +1,15 @@
+{
+ "registered": "2026-10-12",
+ "fold": "initial_eth",
+ "sealed_test_year": 2024,
+ "one_shot": true,
+ "primary": {
+  "metric": "direction_accuracy_full_model_mean_over_seeds",
+  "paper_value": 0.804,
+  "close_if_abs_diff_le": 0.02,
+  "bootstrap": {"draws": 2000, "block_days": 14, "seed": 20260924}
+ },
+ "secondary": ["full_minus_lstm_accuracy_with_bootstrap", "regression_mae_rmse_mape_usd"],
+ "chance_control": "label_permutation accuracy within bootstrap interval of majority-class rate",
+ "no_tuning": "no setting changes after any 2024 evaluation; failed cells retained"
+}

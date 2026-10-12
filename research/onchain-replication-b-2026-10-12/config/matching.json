@@ -1,0 +1,13 @@
+{
+ "alpha": 1.0,
+ "beta0": 1.0,
+ "beta_final": 30.0,
+ "beta_rate": 0.075,
+ "max_iterations": 50,
+ "normalization": "row then column, one pass each, log-domain",
+ "hardening": "greedy global maximum, row-major ties, remove row and column, min(n1,n2) picks",
+ "s1": "exp(-mean squared edge feature difference); 0 if either edge absent",
+ "s2": "exp(-mean squared node feature difference)",
+ "objective": "Eq.1 literal: edge term /(2 sqrt(l1 l2)), node term /sqrt(n1 n2), total /(1+alpha); zero-edge graphs contribute 0 to edge term",
+ "reference_tolerance": {"atol": 1e-9, "rtol": 1e-9}
+}

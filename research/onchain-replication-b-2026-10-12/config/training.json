@@ -1,0 +1,16 @@
+{
+ "optimizer": "adam",
+ "lr": 0.001,
+ "betas": [0.9, 0.999],
+ "batch_size": 16,
+ "epochs": 100,
+ "grad_clip_norm": 1.0,
+ "seeds": [11, 23, 37, 51, 71],
+ "validation": "none",
+ "early_stopping": false,
+ "best_seed_selection": false,
+ "regression_target": "next-day close scaled by training mean/std; reported in USD",
+ "direction_target": "close[d+1] > close[d]; ties 0; cross-entropy",
+ "diagnostics": ["constant_graph", "label_permutation"],
+ "label_permutation_seed": 20260924
+}

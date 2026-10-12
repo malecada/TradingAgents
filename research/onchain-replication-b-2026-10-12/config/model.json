@@ -1,0 +1,24 @@
+{
+ "mcm_input": 32,
+ "mlp_widths": [64, 32],
+ "mlp_activation": "relu",
+ "gat_layers": 2,
+ "gat_heads": [4, 1],
+ "gat_widths": [16, 32],
+ "gat_concat": [true, false],
+ "gat_activation": ["elu", "identity"],
+ "leaky_relu_slope": 0.2,
+ "gat_neighbors": "incoming edges plus self once",
+ "pooling": "mean",
+ "graph_vector_width": 32,
+ "lookback_days": 28,
+ "lstm_width": 64,
+ "attention_width": 32,
+ "heads": {"regression": 1, "classification": 2},
+ "baselines": {
+  "lstm": {"width": 64},
+  "gru": {"width": 64},
+  "hlstm": {"lower": 128, "upper": 128, "chunks": 4, "chunk_len": 7},
+  "svm": {"kernel": "rbf", "C": 1.0, "gamma": "scale"}
+ }
+}
