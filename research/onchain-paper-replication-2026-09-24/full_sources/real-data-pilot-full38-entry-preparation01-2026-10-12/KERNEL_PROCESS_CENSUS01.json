@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-12T08:28:41.145451+00:00",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261012-38",
+  "processes": [
+    {
+      "comm": "python",
+      "cpu_system_seconds": 0.56,
+      "cpu_user_seconds": 5.3,
+      "io": {
+        "cancelled_write_bytes": 0,
+        "rchar": 262426873,
+        "read_bytes": 0,
+        "syscr": 32719,
+        "syscw": 3,
+        "wchar": 2216,
+        "write_bytes": 4096
+      },
+      "pid": 583721,
+      "ppid": 4583,
+      "reaped_children_system_seconds": 0.0,
+      "reaped_children_user_seconds": 0.0,
+      "start_ticks": 4683778,
+      "state": "S",
+      "wchan": "hrtimer_nanosleep"
+    },
+    {
+      "comm": "python",
+      "cpu_system_seconds": 83.59,
+      "cpu_user_seconds": 425.28,
+      "io": {
+        "cancelled_write_bytes": 4096,
+        "rchar": 90667174103,
+        "read_bytes": 2955636736,
+        "syscr": 13184693,
+        "syscw": 13621118,
+        "wchar": 69246306009,
+        "write_bytes": 565248
+      },
+      "pid": 583748,
+      "ppid": 583721,
+      "reaped_children_system_seconds": 404.11,
+      "reaped_children_user_seconds": 829.49,
+      "start_ticks": 4683816,
+      "state": "S",
+      "wchan": "ep_poll"
+    },
+    {
+      "comm": "git",
+      "cpu_system_seconds": 0.01,
+      "cpu_user_seconds": 0.04,
+      "io": {
+        "cancelled_write_bytes": 0,
+        "rchar": 46801,
+        "read_bytes": 0,
+        "syscr": 45,
+        "syscw": 315,
+        "wchar": 1616014,
+        "write_bytes": 0
+      },
+      "pid": 689021,
+      "ppid": 583748,
+      "reaped_children_system_seconds": 0.0,
+      "reaped_children_user_seconds": 0.0,
+      "start_ticks": 4847003,
+      "state": "R",
+      "wchan": "0"
+    }
+  ],
+  "qualification": "Actual bounded kernel cgroup process census. Comm names/parent and start identities only, no command-line/environment/body/credentials inspected. CPU totals include separately reported reaped children; activity snapshots do not alone give phase attribution or model throughput."
+}

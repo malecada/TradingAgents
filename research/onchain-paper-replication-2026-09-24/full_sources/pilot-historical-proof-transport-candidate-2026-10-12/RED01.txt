@@ -1,0 +1,41 @@
+FEEE
+======================================================================
+ERROR: test_missing_and_error_priority (__main__.ProofTests.test_missing_and_error_priority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 49, in test_missing_and_error_priority
+    for module,kw in [(old,{}),(v,{'_body_cache':v._source_body_cache(self.root)})]:
+                                                 ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'proofcandidate.verify' has no attribute '_source_body_cache'
+
+======================================================================
+ERROR: test_scope_and_budget (__main__.ProofTests.test_scope_and_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 53, in test_scope_and_budget
+    cache=v._source_body_cache(self.root);v._verify_sources(self.root,self.pins,{self.commit},_body_cache=cache)
+          ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'proofcandidate.verify' has no attribute '_source_body_cache'
+
+======================================================================
+ERROR: test_unique_and_warm_hash_mismatch (__main__.ProofTests.test_unique_and_warm_hash_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 43, in test_unique_and_warm_hash_mismatch
+    cache=v._source_body_cache(self.root);v._verify_sources(self.root,self.pins,{self.commit},_body_cache=cache)
+          ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'proofcandidate.verify' has no attribute '_source_body_cache'
+
+======================================================================
+FAIL: test_duplicate_history_exact_and_fewer_body_bytes (__main__.ProofTests.test_duplicate_history_exact_and_fewer_body_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 40, in test_duplicate_history_exact_and_fewer_body_bytes
+    self.assertEqual(actual,baseline);self.assertLess(c['returned_bytes'],b['returned_bytes']/2)
+                                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2444544 not less than 1222272.0
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.089s
+
+FAILED (failures=1, errors=3)

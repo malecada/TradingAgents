@@ -1,0 +1,13 @@
+# Increment35 finite source/scope review
+
+SOURCE_ONLY_ACCEPTED. No P1/P2 defect found in the changed helper/scope seam. Capture, return and outcome recovery remain unperformed by this review.
+
+The exact frozen selector pins 250 new regular bodies (3,797,878 bytes) plus seven deployed helper bodies. All fixed new and baseline pins match current path/type/mode/size/SHA; 40 unchanged omissions independently join the actual33/34 selection rows. The actual34 capture/selection/return and accepted review join. No historical tar or prior returned-blob duplicate is selected.
+
+All five closed38 roots have exact child rosters, with 13 directories including the three empty archive-context directories. Every regular child is selected. The full original claim/failed terminal/nine outputs, native guard and observer records, parent logs, genuine owned FeatureJournal/import metadata, and complete archive-context38 are included. Exactly the three declared opaque36 files are added. Those six opaque38/36 bodies were checked by stat/hash only; no JSON decoding, connection-target read or secret traversal occurred. Complete frozen outcome and successor-review directories are included, including failed controls and their corrective evidence. The current35 source/return review remains explicitly outside the archive to avoid circular selection.
+
+Independent literal reversal restores exact accepted34 capture/recovery bytes and identical ASTs. Published forward/inverse diffs reproduce all three source changes; helper manifest hashes join. Accepted PAX/name/type/mode/hash readback and fresh remote commit/blob/no-alternates mechanics are unchanged. Selector change adds finite closed-directory child/mode assertions and no recursive private traversal. Fresh selection and bare recovery destinations were absent. Selection rejects changed pinned bodies and writes once; Root must deploy exact helper bytes.
+
+The preserved source/metadata candidates and public39 preparation are evidence, not accepted execution authority. The original38 outer disposition remains FAILED/spent despite its separately accepted first-graph preparation component. No full39 capacity, financial fit, empirical admission, runtime installation, POSIX restoration, deletion or current outcome backup follows from this source review. Root alone may perform the actual preservation operation; the subsequent returned archive needs an independent typed readback before recovery acceptance.
+
+SOURCE_CHECK01.json and its raw log record the passing finite read-only review. No selector, capture or recovery helper was executed, and no Git/network/empirical action occurred.

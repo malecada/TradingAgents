@@ -1,0 +1,57 @@
+def _source_body_cache(root):
+    """Transport bytes only, owned and cleared by one claims sweep."""
+    return {'root': Path(root).resolve(), 'bodies': {}, 'bytes': 0}
+
+
+def _source_transport(root, requests, cache):
+    """Fresh path resolution; reuse bounded immutable OID bodies, never verdicts.
+
+    Invalid header framing falls back to the original body transaction so its
+    sequential comparison/error ordering remains intact. No exceptional child
+    cleanup is suppressed. Cache hits still pass every original SHA256 check.
+    """
+    if Path(root).resolve() != cache['root']:
+        raise ValueError('Git body sweep root differs')
+    headers = _git_transport(root, requests, headers=True)
+    lines = headers.splitlines(keepends=True)
+    extents = []
+    if len(lines) != requests.count(b'\n'):
+        return _git_transport(root, requests)
+    for line in lines:
+        match = re.fullmatch(rb'([0-9a-f]{40}) blob (0|[1-9][0-9]*)\n', line)
+        if match is None or len(line) > 128:
+            return _git_transport(root, requests)
+        extent = (match[1], int(match[2]))
+        if extent[1] > _GIT_BODY:
+            return _git_transport(root, requests)
+        extents.append(extent)
+    # Preserve the original logical batch response limit even on cache hits.
+    if sum(len(line)+size+1 for line, (_,size) in zip(lines,extents,strict=True)) > _GIT_BODY+128*_GIT_PARTS:
+        raise ValueError('Git aggregate output ceiling exceeded')
+    missing = list(dict.fromkeys(e for e in extents if e not in cache['bodies']))
+    fresh = {}
+    if missing:
+        raw = _git_transport(root, b''.join(oid+b'\n' for oid,_ in missing))
+        offset = 0
+        for oid, size in missing:
+            header = oid+b' blob '+str(size).encode()+b'\n'
+            start = offset+len(header);end = start+size
+            if raw[offset:start] != header or raw[end:end+1] != b'\n':
+                # A changed/corrupt object must not become a reusable body.
+                return _git_transport(root, requests)
+            value = raw[start:end]
+            if len(value) != size or hashlib.sha1(b'blob '+str(size).encode()+b'\0'+value).hexdigest().encode() != oid:
+                return _git_transport(root, requests)
+            fresh[(oid,size)] = value
+            offset = end+1
+        if offset != len(raw):
+            return _git_transport(root, requests)
+    result = b''.join(line+(cache['bodies'][extent] if extent in cache['bodies'] else fresh[extent])+b'\n'
+                      for line,extent in zip(lines,extents,strict=True))
+    for extent,value in fresh.items():
+        if len(cache['bodies']) < _GIT_PARTS and cache['bytes']+len(value) <= _GIT_BODY:
+            cache['bodies'][extent] = value
+            cache['bytes'] += len(value)
+    return result
+
+

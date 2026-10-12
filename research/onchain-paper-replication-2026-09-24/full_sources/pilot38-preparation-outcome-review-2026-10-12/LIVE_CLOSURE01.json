@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-12T08:43:56.064983+00:00",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+  "cgroup_absent": true,
+  "command": [
+    "systemctl",
+    "--user",
+    "show",
+    "onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+    "--property=ActiveState,SubState,MainPID,ControlGroup,ExecMainStatus,Result"
+  ],
+  "exit_code": 0,
+  "pids_absent": {
+    "582648": true,
+    "583192": true,
+    "583721": true,
+    "583748": true
+  },
+  "properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "MainPID": "0",
+    "Result": "exit-code",
+    "SubState": "failed"
+  }
+}

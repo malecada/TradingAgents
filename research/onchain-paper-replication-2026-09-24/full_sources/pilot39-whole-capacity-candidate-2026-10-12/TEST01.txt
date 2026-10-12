@@ -1,0 +1,25 @@
+test_cap_floor_inode_and_header_extra_cost (__main__.CapacityTests.test_cap_floor_inode_and_header_extra_cost) ... ok
+test_dated_baseline_cannot_pass (__main__.CapacityTests.test_dated_baseline_cannot_pass) ... ok
+test_final_synthetic_arithmetic_only (__main__.CapacityTests.test_final_synthetic_arithmetic_only) ... ok
+test_header_exact_and_interval (__main__.CapacityTests.test_header_exact_and_interval) ... 
+  test_header_exact_and_interval (__main__.CapacityTests.test_header_exact_and_interval) (args=(100, 0)) ... FAIL
+test_missing_terms_refused (__main__.CapacityTests.test_missing_terms_refused) ... ok
+test_no_numerical_imports (__main__.CapacityTests.test_no_numerical_imports) ... ok
+test_residual_domains_rebased_without_double_charge (__main__.CapacityTests.test_residual_domains_rebased_without_double_charge) ... ok
+test_source_route_counts_and_limits_refused (__main__.CapacityTests.test_source_route_counts_and_limits_refused) ... ok
+test_unbound_current_terms_refused (__main__.CapacityTests.test_unbound_current_terms_refused) ... ok
+test_whole_counts_and_independent_group_formula (__main__.CapacityTests.test_whole_counts_and_independent_group_formula) ... ok
+
+======================================================================
+FAIL: test_header_exact_and_interval (__main__.CapacityTests.test_header_exact_and_interval) (args=(100, 0))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot39-whole-capacity-candidate-2026-10-12/test_capacity.py", line 25, in test_header_exact_and_interval
+    with self.assertRaises(ValueError):header_bounds(*args)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.687s
+
+FAILED (failures=1)

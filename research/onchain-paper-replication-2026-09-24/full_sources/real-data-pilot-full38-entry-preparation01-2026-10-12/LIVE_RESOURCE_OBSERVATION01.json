@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-12T08:11:12.580775+00:00",
+  "fields": {
+    "child_exit_code": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 30438178816
+    },
+    "elapsed_seconds": 583.6836498379998,
+    "host_mem_available_bytes": 6432923648,
+    "limit_reason": null,
+    "memory_current_bytes": 5124546560,
+    "memory_events": {
+      "high": 653,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "minimum_sampled_disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 30433484800
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. Kernel peak is the last memory.peak readback for that cgroup lifetime, including charged file cache; the ancestor is not workload-only. A last read before abrupt termination need not be the final lifetime peak. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 3146395648,
+        "file_bytes": 1968787456,
+        "kernel_peak_bytes": 5370769408,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+        "pressure": "some avg10=0.00 avg60=0.07 avg300=0.18 total=1355289\nfull avg10=0.00 avg60=0.07 avg300=0.18 total=1355289",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 8196481024,
+        "file_bytes": 4620316672,
+        "kernel_peak_bytes": 14059433984,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.03 avg300=0.07 total=1518457\nfull avg10=0.00 avg60=0.03 avg300=0.07 total=1516847",
+        "swap_current_bytes": 587112448,
+        "unavailable": {}
+      }
+    },
+    "storage_peak_allocated_bytes": 5161607168,
+    "storage_peak_entries": 18205,
+    "storage_peak_logical_file_bytes": 5581956556,
+    "unit": "onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-c963f57d8c1d42488cc3da979cc53a33.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    }
+  },
+  "identity": "eth-paper-real-data-end-to-end-resource-20261012-38",
+  "original_live_body_sha256": "e805ec10875679ce1f09cf6c4b188d3afd5190f03197dcfe6333942d80a37c4f",
+  "qualification": "Snapshot of actual original live guard metadata; sampled current/optional kernel peak/events and sampled disk/writable union remain separate from whole-job final peaks and scientific preparation completion.",
+  "source": "989e805ed5ae59126f096135eea43095eaebc81d"
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-preparation-outcome-review-2026-10-12/check01.py", line 70, in <module>
+    yes('closure metadata '+p,sha(native/p)==h)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-preparation-outcome-review-2026-10-12/check01.py", line 13, in sha
+    p=Path(p); st=p.lstat(); assert stat.S_ISREG(st.st_mode) and not p.is_symlink(),str(p)
+AssertionError: /home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261012-38/guard

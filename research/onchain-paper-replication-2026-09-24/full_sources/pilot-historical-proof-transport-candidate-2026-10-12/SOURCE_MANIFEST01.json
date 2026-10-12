@@ -1,0 +1,45 @@
+{
+  "status": "WITHHELD_CURRENTNESS_REGRESSION",
+  "sources": {
+    "verify.py": {
+      "original_sha256": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce",
+      "candidate_sha256": "a6d867a95f048f785192632bedb2598a144fab3fc91e48aa7cfd8362c8e0a22a",
+      "original": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/verify.py",
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py"
+    },
+    "admission.py": {
+      "original_sha256": "793c4034d23ff4e486e2a888004b1dc69a11383c4d4460f01d1489fd5794f7a7",
+      "candidate_sha256": "a64444470047bca2a4ac7b1b616fb5cf44c1d904e67734acebc1ef0099b886cb",
+      "original": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py",
+      "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/admission.py"
+    }
+  },
+  "gate_or_live_source_changed": false,
+  "synthetic_metrics": {
+    "baseline": {
+      "processes": 12,
+      "returned_bytes": 2444544
+    },
+    "candidate": {
+      "processes": 7,
+      "returned_bytes": 2444544
+    },
+    "claims": 6,
+    "equal": true,
+    "body_byte_reduction": false
+  },
+  "currentness_failure": {
+    "synthetic_only": true,
+    "legacy_fresh_child": {
+      "accepted": false,
+      "type": "ValueError",
+      "message": "registered source/charter/selection hash mismatch"
+    },
+    "persistent_child": {
+      "accepted": true
+    },
+    "same": false
+  },
+  "installed_git_version": "2.34.1",
+  "qualification": "Candidate must not be integrated: warmed Git replacement resolution differs from legacy fresh child."
+}

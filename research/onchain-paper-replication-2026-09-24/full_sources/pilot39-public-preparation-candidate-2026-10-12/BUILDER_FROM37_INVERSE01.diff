@@ -1,0 +1,119 @@
+--- full39/build_public01.py
++++ research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full37-binding-preparation01-2026-10-11/build_public01.py
+@@ -1,4 +1,4 @@
+-"""Finite Root-only whole-pilot39 rebase; no binder, admission or claim."""
++"""Finite Root-only whole-pilot37 rebase; no binder, admission or claim."""
+ import argparse
+ import ast
+ import copy
+@@ -14,8 +14,8 @@
+ ROOT=Path.cwd().resolve();HERE=Path(__file__).resolve().parent;F=HERE.parent
+ OLD=F/'real-data-pilot-full35-binding-preparation01-2026-10-11'
+ EFF=F/'pilot-efficiency-integration-2026-10-11'
+-ACCEPTED38=F/'real-data-pilot-full38-binding-preparation01-2026-10-12'
+-NAME='eth-paper-real-data-end-to-end-resource-20261012-39'
++STOP=F/'pilot-efficiency-entry-qualification-2026-10-11'
++NAME='eth-paper-real-data-end-to-end-resource-20261011-37'
+ PRIOR='eth-paper-real-data-end-to-end-resource-20261011-35'
+ BASE_MANIFEST='ecf0606d1c2f6197692ebdeec77264d150b18cb13f688ba2c23e2b378b60ed54'
+ BINDER_SHA='bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb'
+@@ -27,23 +27,19 @@
+ def save(p,value):
+     with p.open('xb') as h:h.write(raw(value))
+ 
+-ACCEPTED38_PINS={'public01/mcm_policy.json': '679e22cd860f6f16afc649ba66fb7959227d2ec81895760e8350d44c0c41e797', 'public01/pair_policy.json': '2c51df89959dbb1f7dd022f0ec2c159fcb848b5fcd7ff6c38d93cb7243593e4b', 'public01/typed_payload.json': 'ee00ceab9b532d97829a1ca0fbb010c211055681212a579c730c5a39bb66b596', 'public01/pilot.json': '4920d158c6f3e429c7ab433743c1df48ed448198e207d483797c6d58772d65cb', 'public01/execution_job.json': 'b48bc82a51467e86169e322b7a61e4f4a5628a37fbcda6970a6113d949972747', 'EXPECTED_CODE_POLICY01.json': 'a53290d42b8ebce2519efb15857f1a0a5f9243256713a233ec04ba0f3d19a0db'}
+-
+ def main(anchor):
+     assert re.fullmatch('[0-9a-f]{40}',anchor) and subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()==anchor
+-    assert HERE==F/'real-data-pilot-full39-binding-preparation01-2026-10-12'
+-    for name,digest in ACCEPTED38_PINS.items():assert ref(ACCEPTED38/name)['sha256']==digest
++    assert HERE==F/'real-data-pilot-full37-binding-preparation01-2026-10-11'
+     assert ref(OLD/'MANIFEST01.json')['sha256']==BASE_MANIFEST
+     for name,pin in load(OLD/'MANIFEST01.json')['files'].items():
+         p=OLD/name;assert p.resolve().is_relative_to(OLD) and not p.is_symlink() and ref(p)==pin
+-    routes=[ROOT/'research_runs'/NAME,ROOT/'research_artifacts/archive-dispatch-ethpilot-20261012-39',ROOT/'research_artifacts/real_pilot_runtime/pilot-transport-20261012-39-01']
++    routes=[ROOT/'research_runs'/NAME,ROOT/'research_artifacts/archive-dispatch-ethpilot-20261011-37',ROOT/'research_artifacts/real_pilot_runtime/pilot-transport-20261011-37-01']
+     assert all(not os.path.lexists(p) for p in routes)
+     source=ROOT/'tradingagents/research/onchain_replication/job.py'
+     function=next(n for n in ast.parse(source.read_bytes()).body if isinstance(n,ast.FunctionDef) and n.name=='required_sources')
+     scope={'Path':Path,'__file__':str(source)}
+     exec(compile(ast.Module(body=[function],type_ignores=[]),str(source),'exec'),scope)
+     files={p:ref(ROOT/p)['sha256'] for p in sorted(scope['required_sources']())};assert len(files)==205
+-    assert files==load(ACCEPTED38/'public01/pair_policy.json')['numerical_source']['files'], 'accepted38 source bodies changed'
+     queries='\n'.join(anchor+':'+p for p in files)+'\n'
+     output=subprocess.check_output(['git','-c','core.packedGitWindowSize=16m','-c','core.packedGitLimit=64m','cat-file','--batch'],input=queries.encode())
+     offset=0;joined=[]
+@@ -61,20 +57,11 @@
+     docs['mcm_policy']=load(EFF/'SUCCESSOR_MCM_DRAFT01.json')
+     assert 'entry_qualification' not in docs['mcm_policy']
+     assert docs['mcm_policy']['schema_version']==6
+-    accepted_mcm=load(ACCEPTED38/'public01/mcm_policy.json')
+-    qualification=accepted_mcm.pop('entry_qualification')
+-    assert qualification['experiment_id']=='eth-paper-real-data-end-to-end-resource-20261012-38'
+-    assert docs['mcm_policy']==accepted_mcm, 'full route changes beyond removing entry qualification'
+-    assert docs['mcm_policy']['batched']['continuation']['manifest_input'] is None
+-    assert docs['mcm_policy']['batched']['continuation']['graph_manifest_inputs']=={}
+     # Whole37 continues through the original seven complete graphs and joint update.
+     docs['typed_payload']=load(EFF/'SUCCESSOR_TYPED_DRAFT01.json')
+-    assert docs['typed_payload']==load(ACCEPTED38/'public01/typed_payload.json')
+-    assert len(docs['typed_payload']['graphs'])==7
+-    assert sum(v['rows']*32 for v in docs['typed_payload']['graphs'].values())==415968128
+     docs['pair_policy']['numerical_source']={'commit':anchor,'files':files}
+-    docs['archive_policy']['remote_namespace']='ethpilot-20261012-39'
+-    docs['archive_transport']['namespace']='ethpilot-20261012-39'
++    docs['archive_policy']['remote_namespace']='ethpilot-20261011-37'
++    docs['archive_transport']['namespace']='ethpilot-20261011-37'
+     assert docs['archive_policy']['transport_identity'] is None and docs['archive_transport']['connection'] is None
+     for resources in (docs['execution_job']['resources'],docs['pilot']['resource_policy']):
+         assert resources['storage_budget']['experiment']==PRIOR
+@@ -83,26 +70,21 @@
+     assert docs['execution_job']['resources']==docs['pilot']['resource_policy']
+     pilot=docs['pilot'];assert 'expected_code_cache_input' not in pilot and 'phase_timing_policy' not in pilot
+     pilot['expected_code_cache_input']='expected_code_cache';pilot['phase_timing_policy']='exclusive-wall-cpu-v1'
+-    pilot['outputs']['timing']='phase-timing.json';pilot['cell_id']='real-eth-whole-seven-graph-joint-pilot-resource39'
++    pilot['outputs']['timing']='phase-timing.json';pilot['cell_id']='real-eth-whole-seven-graph-joint-pilot-resource37'
+     lease=ROOT/'tradingagents/research/onchain_replication/imported_authority_lease.py'
+     expected=next(n.value for n in ast.parse(lease.read_bytes()).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='EXPECTED_POLICY' for t in n.targets))
+-    assert ast.literal_eval(expected)==load(ACCEPTED38/'EXPECTED_CODE_POLICY01.json')
+     save(HERE/'EXPECTED_CODE_POLICY01.json',ast.literal_eval(expected))
+     for value in (docs['execution_job']['payload']['representation_jobs']['original32'],docs['producer_plan']['producers']['original32']):
+         for role,key in [('pair_policy','pair_execution'),('archive_policy','compact_archive_execution')]:value['descriptor'][key]['policy_sha256']=hashlib.sha256(raw(docs[role])).hexdigest()
+     # Four scientific bodies, all seven whole graphs and original training scope are preserved.
+     for role in ('compact_policy','original_import','resource_population_plan','mcm_output_policy'):assert docs[role]==baseline[role]
+     for key in ('decisions','graph_inputs','graph_sequences','batch_size','seed','lookback_days','model_execution','model_input','training_input','indices'):assert pilot[key]==baseline['pilot'][key]
+-    accepted_resources=load(ACCEPTED38/'public01/execution_job.json')['resources']
+-    accepted_resources['storage_budget']['experiment']=NAME
+-    accepted_resources['storage_budget']['roots'][1]=str(ROOT/'research_runs'/NAME)
+-    assert docs['execution_job']['resources']==accepted_resources
+     (HERE/'public01').mkdir()
+     for role,value in docs.items():save(HERE/'public01'/(role+'.json'),value)
+     prepared=load(OLD/'PREPARED01.json');prepared['builder03_result']['inputs']={k:v for k,v in docs.items() if k!='archive_policy'}
+     assert len(prepared['builder03_result']['inputs'])==11
+     prepared['builder03_spec']['references']['archive_policy']=ref(HERE/'public01/archive_policy.json');save(HERE/'PREPARED01.json',prepared)
+-    request=load(OLD/'REQUEST01.json');request.update(prepared=ref(HERE/'PREPARED01.json'),archive_policy=ref(HERE/'public01/archive_policy.json'),private_parent='research_artifacts/real_pilot_runtime/pilot-transport-20261012-39-01');save(HERE/'REQUEST01.json',request)
++    request=load(OLD/'REQUEST01.json');request.update(prepared=ref(HERE/'PREPARED01.json'),archive_policy=ref(HERE/'public01/archive_policy.json'),private_parent='research_artifacts/real_pilot_runtime/pilot-transport-20261011-37-01');save(HERE/'REQUEST01.json',request)
+     # Retain the opaque connection reference; never open its body.
+     refs=load(OLD/'PUBLIC_INPUT_REFS_DRAFT01.json');assert len(refs)==71 and 'archive_transport' not in refs
+     for role in docs:
+@@ -111,16 +93,16 @@
+     assert 'expected_code_cache' not in refs
+     pin=ref(HERE/'EXPECTED_CODE_POLICY01.json');refs['expected_code_cache']={k:pin[k] for k in ('path','sha256')};refs['expected_code_cache']['dataset']='eth'
+     assert len(refs)==72;save(HERE/'PUBLIC_INPUT_REFS_DRAFT01.json',refs)
+-    before=(OLD/'bind_actual01.py').read_text();after=before.replace('20261011-35','20261012-39').replace('len(refs)==72','len(refs)==73');ast.parse(after)
++    before=(OLD/'bind_actual01.py').read_text();after=before.replace('20261011-35','20261011-37').replace('len(refs)==72','len(refs)==73');ast.parse(after)
+     assert before!=after
+     with (HERE/'bind_actual01.py').open('x') as h:h.write(after)
+     save(HERE/'CURRENT_NUMERICAL_GIT_JOIN01.json',{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':anchor,'files':joined,'count':205,'actual_git_batch_exit':0,'actual_git_batch_stdout_sha256':hashlib.sha256(output).hexdigest(),'claim':False})
+     patches=[]
+-    for role in sorted(docs):patches.extend(difflib.unified_diff(raw(baseline[role]).decode().splitlines(True),raw(docs[role]).decode().splitlines(True),fromfile='full35/public01/'+role,tofile='full39/public01/'+role))
+-    patches.extend(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='full35/bind_actual01.py',tofile='full39/bind_actual01.py'))
++    for role in sorted(docs):patches.extend(difflib.unified_diff(raw(baseline[role]).decode().splitlines(True),raw(docs[role]).decode().splitlines(True),fromfile='full35/public01/'+role,tofile='full37/public01/'+role))
++    patches.extend(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='full35/bind_actual01.py',tofile='full37/bind_actual01.py'))
+     with (HERE/'LITERAL_PATCH01.diff').open('x') as h:h.write(''.join(patches))
+-    save(HERE/'ROOT_PREPARATION01.json',{'status':'DRAFT_NOT_RELEASED','source_anchor':anchor,'predecessor_manifest':ref(OLD/'MANIFEST01.json'),'source_bodies':205,'public_documents':12,'draft_input_roles':72,'bound_input_roles':73,'bound_gate_outputs':9,'binder_executed':False,'claim':False,'scientific_method_change':False,'preparation_exception':None,'dependency':'Actual closed38 component qualification, accepted outcome, fresh recovery and current whole39 capacity required before execution','whole_pilot_unchanged_cells':415968128,'whole_pilot_unchanged_graphs':7,'physical_caps_changed':False,'prior38_outcome':None,'prior38_recovery':None,'prior38_component_qualification':None,'current_whole39_capacity':None,'final_release':None,'existing_binder_sha256':BINDER_SHA,'fresh_absent_paths':[str(p.relative_to(ROOT)) for p in routes]})
+-    save(HERE/'MANIFEST01.json',{'status':'DRAFT_NOT_RELEASED','files':{str(p.relative_to(HERE)):ref(p) for p in sorted(HERE.rglob('*')) if p.is_file()},'scope':'Fixed39 whole-pilot public rebinding. Actual205 committed source joins; explicit code-cache/timing/C05/continuation/metadata controls. No binder, admission, claim, physical capacity or release.'})
++    save(HERE/'ROOT_PREPARATION01.json',{'status':'DRAFT_NOT_RELEASED','source_anchor':anchor,'predecessor_manifest':ref(OLD/'MANIFEST01.json'),'source_bodies':205,'public_documents':12,'draft_input_roles':72,'bound_input_roles':73,'bound_gate_outputs':9,'binder_executed':False,'claim':False,'scientific_method_change':False,'preparation_exception':None,'dependency':'Accepted and externally recovered genuine36 entry component required before execution','whole_pilot_unchanged_cells':415968128,'whole_pilot_unchanged_graphs':7,'physical_caps_changed':False,'existing_binder_sha256':BINDER_SHA,'fresh_absent_paths':[str(p.relative_to(ROOT)) for p in routes]})
++    save(HERE/'MANIFEST01.json',{'status':'DRAFT_NOT_RELEASED','files':{str(p.relative_to(HERE)):ref(p) for p in sorted(HERE.rglob('*')) if p.is_file()},'scope':'Fixed37 whole-pilot public rebinding. Actual205 committed source joins; explicit code-cache/timing/C05/continuation/metadata controls. No binder, admission, claim, physical capacity or release.'})
+     print(json.dumps({'status':'DRAFT_NOT_RELEASED','source_bodies':205,'draft_roles':72,'bound_roles':73,'claim':False}))
+ 
+ if __name__=='__main__':

@@ -1,0 +1,499 @@
+--- candidate39.ast
++++ baseline37.ast
+@@ -1,7 +1,7 @@
+ Module(
+   body=[
+     Expr(
+-      value=Constant(value='Finite Root-only whole-pilot39 rebase; no binder, admission or claim.')),
++      value=Constant(value='Finite Root-only whole-pilot37 rebase; no binder, admission or claim.')),
+     Import(
+       names=[
+         alias(name='argparse')]),
+@@ -93,15 +93,15 @@
+         right=Constant(value='pilot-efficiency-integration-2026-10-11'))),
+     Assign(
+       targets=[
+-        Name(id='ACCEPTED38', ctx=Store())],
++        Name(id='STOP', ctx=Store())],
+       value=BinOp(
+         left=Name(id='F', ctx=Load()),
+         op=Div(),
+-        right=Constant(value='real-data-pilot-full38-binding-preparation01-2026-10-12'))),
++        right=Constant(value='pilot-efficiency-entry-qualification-2026-10-11'))),
+     Assign(
+       targets=[
+         Name(id='NAME', ctx=Store())],
+-      value=Constant(value='eth-paper-real-data-end-to-end-resource-20261012-39')),
++      value=Constant(value='eth-paper-real-data-end-to-end-resource-20261011-37')),
+     Assign(
+       targets=[
+         Name(id='PRIOR', ctx=Store())],
+@@ -276,24 +276,6 @@
+                     keywords=[])],
+                 keywords=[]))])],
+       decorator_list=[]),
+-    Assign(
+-      targets=[
+-        Name(id='ACCEPTED38_PINS', ctx=Store())],
+-      value=Dict(
+-        keys=[
+-          Constant(value='public01/mcm_policy.json'),
+-          Constant(value='public01/pair_policy.json'),
+-          Constant(value='public01/typed_payload.json'),
+-          Constant(value='public01/pilot.json'),
+-          Constant(value='public01/execution_job.json'),
+-          Constant(value='EXPECTED_CODE_POLICY01.json')],
+-        values=[
+-          Constant(value='679e22cd860f6f16afc649ba66fb7959227d2ec81895760e8350d44c0c41e797'),
+-          Constant(value='2c51df89959dbb1f7dd022f0ec2c159fcb848b5fcd7ff6c38d93cb7243593e4b'),
+-          Constant(value='ee00ceab9b532d97829a1ca0fbb010c211055681212a579c730c5a39bb66b596'),
+-          Constant(value='4920d158c6f3e429c7ab433743c1df48ed448198e207d483797c6d58772d65cb'),
+-          Constant(value='b48bc82a51467e86169e322b7a61e4f4a5628a37fbcda6970a6113d949972747'),
+-          Constant(value='a53290d42b8ebce2519efb15857f1a0a5f9243256713a233ec04ba0f3d19a0db')])),
+     FunctionDef(
+       name='main',
+       args=arguments(
+@@ -353,39 +335,7 @@
+               BinOp(
+                 left=Name(id='F', ctx=Load()),
+                 op=Div(),
+-                right=Constant(value='real-data-pilot-full39-binding-preparation01-2026-10-12'))])),
+-        For(
+-          target=Tuple(
+-            elts=[
+-              Name(id='name', ctx=Store()),
+-              Name(id='digest', ctx=Store())],
+-            ctx=Store()),
+-          iter=Call(
+-            func=Attribute(
+-              value=Name(id='ACCEPTED38_PINS', ctx=Load()),
+-              attr='items',
+-              ctx=Load()),
+-            args=[],
+-            keywords=[]),
+-          body=[
+-            Assert(
+-              test=Compare(
+-                left=Subscript(
+-                  value=Call(
+-                    func=Name(id='ref', ctx=Load()),
+-                    args=[
+-                      BinOp(
+-                        left=Name(id='ACCEPTED38', ctx=Load()),
+-                        op=Div(),
+-                        right=Name(id='name', ctx=Load()))],
+-                    keywords=[]),
+-                  slice=Constant(value='sha256'),
+-                  ctx=Load()),
+-                ops=[
+-                  Eq()],
+-                comparators=[
+-                  Name(id='digest', ctx=Load())]))],
+-          orelse=[]),
++                right=Constant(value='real-data-pilot-full37-binding-preparation01-2026-10-11'))])),
+         Assert(
+           test=Compare(
+             left=Subscript(
+@@ -487,11 +437,11 @@
+               BinOp(
+                 left=Name(id='ROOT', ctx=Load()),
+                 op=Div(),
+-                right=Constant(value='research_artifacts/archive-dispatch-ethpilot-20261012-39')),
++                right=Constant(value='research_artifacts/archive-dispatch-ethpilot-20261011-37')),
+               BinOp(
+                 left=Name(id='ROOT', ctx=Load()),
+                 op=Div(),
+-                right=Constant(value='research_artifacts/real_pilot_runtime/pilot-transport-20261012-39-01'))],
++                right=Constant(value='research_artifacts/real_pilot_runtime/pilot-transport-20261011-37-01'))],
+             ctx=Load())),
+         Assert(
+           test=Call(
+@@ -666,27 +616,6 @@
+               Eq()],
+             comparators=[
+               Constant(value=205)])),
+-        Assert(
+-          test=Compare(
+-            left=Name(id='files', ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Subscript(
+-                value=Subscript(
+-                  value=Call(
+-                    func=Name(id='load', ctx=Load()),
+-                    args=[
+-                      BinOp(
+-                        left=Name(id='ACCEPTED38', ctx=Load()),
+-                        op=Div(),
+-                        right=Constant(value='public01/pair_policy.json'))],
+-                    keywords=[]),
+-                  slice=Constant(value='numerical_source'),
+-                  ctx=Load()),
+-                slice=Constant(value='files'),
+-                ctx=Load())]),
+-          msg=Constant(value='accepted38 source bodies changed')),
+         Assign(
+           targets=[
+             Name(id='queries', ctx=Store())],
+@@ -1068,87 +997,6 @@
+               Constant(value=6)])),
+         Assign(
+           targets=[
+-            Name(id='accepted_mcm', ctx=Store())],
+-          value=Call(
+-            func=Name(id='load', ctx=Load()),
+-            args=[
+-              BinOp(
+-                left=Name(id='ACCEPTED38', ctx=Load()),
+-                op=Div(),
+-                right=Constant(value='public01/mcm_policy.json'))],
+-            keywords=[])),
+-        Assign(
+-          targets=[
+-            Name(id='qualification', ctx=Store())],
+-          value=Call(
+-            func=Attribute(
+-              value=Name(id='accepted_mcm', ctx=Load()),
+-              attr='pop',
+-              ctx=Load()),
+-            args=[
+-              Constant(value='entry_qualification')],
+-            keywords=[])),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Name(id='qualification', ctx=Load()),
+-              slice=Constant(value='experiment_id'),
+-              ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Constant(value='eth-paper-real-data-end-to-end-resource-20261012-38')])),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Name(id='docs', ctx=Load()),
+-              slice=Constant(value='mcm_policy'),
+-              ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Name(id='accepted_mcm', ctx=Load())]),
+-          msg=Constant(value='full route changes beyond removing entry qualification')),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Subscript(
+-                value=Subscript(
+-                  value=Subscript(
+-                    value=Name(id='docs', ctx=Load()),
+-                    slice=Constant(value='mcm_policy'),
+-                    ctx=Load()),
+-                  slice=Constant(value='batched'),
+-                  ctx=Load()),
+-                slice=Constant(value='continuation'),
+-                ctx=Load()),
+-              slice=Constant(value='manifest_input'),
+-              ctx=Load()),
+-            ops=[
+-              Is()],
+-            comparators=[
+-              Constant(value=None)])),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Subscript(
+-                value=Subscript(
+-                  value=Subscript(
+-                    value=Name(id='docs', ctx=Load()),
+-                    slice=Constant(value='mcm_policy'),
+-                    ctx=Load()),
+-                  slice=Constant(value='batched'),
+-                  ctx=Load()),
+-                slice=Constant(value='continuation'),
+-                ctx=Load()),
+-              slice=Constant(value='graph_manifest_inputs'),
+-              ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Dict(keys=[], values=[])])),
+-        Assign(
+-          targets=[
+             Subscript(
+               value=Name(id='docs', ctx=Load()),
+               slice=Constant(value='typed_payload'),
+@@ -1161,76 +1009,6 @@
+                 op=Div(),
+                 right=Constant(value='SUCCESSOR_TYPED_DRAFT01.json'))],
+             keywords=[])),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Name(id='docs', ctx=Load()),
+-              slice=Constant(value='typed_payload'),
+-              ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Call(
+-                func=Name(id='load', ctx=Load()),
+-                args=[
+-                  BinOp(
+-                    left=Name(id='ACCEPTED38', ctx=Load()),
+-                    op=Div(),
+-                    right=Constant(value='public01/typed_payload.json'))],
+-                keywords=[])])),
+-        Assert(
+-          test=Compare(
+-            left=Call(
+-              func=Name(id='len', ctx=Load()),
+-              args=[
+-                Subscript(
+-                  value=Subscript(
+-                    value=Name(id='docs', ctx=Load()),
+-                    slice=Constant(value='typed_payload'),
+-                    ctx=Load()),
+-                  slice=Constant(value='graphs'),
+-                  ctx=Load())],
+-              keywords=[]),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Constant(value=7)])),
+-        Assert(
+-          test=Compare(
+-            left=Call(
+-              func=Name(id='sum', ctx=Load()),
+-              args=[
+-                GeneratorExp(
+-                  elt=BinOp(
+-                    left=Subscript(
+-                      value=Name(id='v', ctx=Load()),
+-                      slice=Constant(value='rows'),
+-                      ctx=Load()),
+-                    op=Mult(),
+-                    right=Constant(value=32)),
+-                  generators=[
+-                    comprehension(
+-                      target=Name(id='v', ctx=Store()),
+-                      iter=Call(
+-                        func=Attribute(
+-                          value=Subscript(
+-                            value=Subscript(
+-                              value=Name(id='docs', ctx=Load()),
+-                              slice=Constant(value='typed_payload'),
+-                              ctx=Load()),
+-                            slice=Constant(value='graphs'),
+-                            ctx=Load()),
+-                          attr='values',
+-                          ctx=Load()),
+-                        args=[],
+-                        keywords=[]),
+-                      ifs=[],
+-                      is_async=0)])],
+-              keywords=[]),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Constant(value=415968128)])),
+         Assign(
+           targets=[
+             Subscript(
+@@ -1256,7 +1034,7 @@
+                 ctx=Load()),
+               slice=Constant(value='remote_namespace'),
+               ctx=Store())],
+-          value=Constant(value='ethpilot-20261012-39')),
++          value=Constant(value='ethpilot-20261011-37')),
+         Assign(
+           targets=[
+             Subscript(
+@@ -1266,7 +1044,7 @@
+                 ctx=Load()),
+               slice=Constant(value='namespace'),
+               ctx=Store())],
+-          value=Constant(value='ethpilot-20261012-39')),
++          value=Constant(value='ethpilot-20261011-37')),
+         Assert(
+           test=BoolOp(
+             op=And(),
+@@ -1460,7 +1238,7 @@
+               value=Name(id='pilot', ctx=Load()),
+               slice=Constant(value='cell_id'),
+               ctx=Store())],
+-          value=Constant(value='real-eth-whole-seven-graph-joint-pilot-resource39')),
++          value=Constant(value='real-eth-whole-seven-graph-joint-pilot-resource37')),
+         Assign(
+           targets=[
+             Name(id='lease', ctx=Store())],
+@@ -1549,27 +1327,6 @@
+                             keywords=[])])],
+                     is_async=0)])],
+             keywords=[])),
+-        Assert(
+-          test=Compare(
+-            left=Call(
+-              func=Attribute(
+-                value=Name(id='ast', ctx=Load()),
+-                attr='literal_eval',
+-                ctx=Load()),
+-              args=[
+-                Name(id='expected', ctx=Load())],
+-              keywords=[]),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Call(
+-                func=Name(id='load', ctx=Load()),
+-                args=[
+-                  BinOp(
+-                    left=Name(id='ACCEPTED38', ctx=Load()),
+-                    op=Div(),
+-                    right=Constant(value='EXPECTED_CODE_POLICY01.json'))],
+-                keywords=[])])),
+         Expr(
+           value=Call(
+             func=Name(id='save', ctx=Load()),
+@@ -1728,66 +1485,6 @@
+                     slice=Name(id='key', ctx=Load()),
+                     ctx=Load())]))],
+           orelse=[]),
+-        Assign(
+-          targets=[
+-            Name(id='accepted_resources', ctx=Store())],
+-          value=Subscript(
+-            value=Call(
+-              func=Name(id='load', ctx=Load()),
+-              args=[
+-                BinOp(
+-                  left=Name(id='ACCEPTED38', ctx=Load()),
+-                  op=Div(),
+-                  right=Constant(value='public01/execution_job.json'))],
+-              keywords=[]),
+-            slice=Constant(value='resources'),
+-            ctx=Load())),
+-        Assign(
+-          targets=[
+-            Subscript(
+-              value=Subscript(
+-                value=Name(id='accepted_resources', ctx=Load()),
+-                slice=Constant(value='storage_budget'),
+-                ctx=Load()),
+-              slice=Constant(value='experiment'),
+-              ctx=Store())],
+-          value=Name(id='NAME', ctx=Load())),
+-        Assign(
+-          targets=[
+-            Subscript(
+-              value=Subscript(
+-                value=Subscript(
+-                  value=Name(id='accepted_resources', ctx=Load()),
+-                  slice=Constant(value='storage_budget'),
+-                  ctx=Load()),
+-                slice=Constant(value='roots'),
+-                ctx=Load()),
+-              slice=Constant(value=1),
+-              ctx=Store())],
+-          value=Call(
+-            func=Name(id='str', ctx=Load()),
+-            args=[
+-              BinOp(
+-                left=BinOp(
+-                  left=Name(id='ROOT', ctx=Load()),
+-                  op=Div(),
+-                  right=Constant(value='research_runs')),
+-                op=Div(),
+-                right=Name(id='NAME', ctx=Load()))],
+-            keywords=[])),
+-        Assert(
+-          test=Compare(
+-            left=Subscript(
+-              value=Subscript(
+-                value=Name(id='docs', ctx=Load()),
+-                slice=Constant(value='execution_job'),
+-                ctx=Load()),
+-              slice=Constant(value='resources'),
+-              ctx=Load()),
+-            ops=[
+-              Eq()],
+-            comparators=[
+-              Name(id='accepted_resources', ctx=Load())])),
+         Expr(
+           value=Call(
+             func=Attribute(
+@@ -1963,7 +1660,7 @@
+                   keywords=[])),
+               keyword(
+                 arg='private_parent',
+-                value=Constant(value='research_artifacts/real_pilot_runtime/pilot-transport-20261012-39-01'))])),
++                value=Constant(value='research_artifacts/real_pilot_runtime/pilot-transport-20261011-37-01'))])),
+         Expr(
+           value=Call(
+             func=Name(id='save', ctx=Load()),
+@@ -2155,7 +1852,7 @@
+                   ctx=Load()),
+                 args=[
+                   Constant(value='20261011-35'),
+-                  Constant(value='20261012-39')],
++                  Constant(value='20261011-37')],
+                 keywords=[]),
+               attr='replace',
+               ctx=Load()),
+@@ -2342,7 +2039,7 @@
+                       keyword(
+                         arg='tofile',
+                         value=BinOp(
+-                          left=Constant(value='full39/public01/'),
++                          left=Constant(value='full37/public01/'),
+                           op=Add(),
+                           right=Name(id='role', ctx=Load())))])],
+                 keywords=[]))],
+@@ -2382,7 +2079,7 @@
+                     value=Constant(value='full35/bind_actual01.py')),
+                   keyword(
+                     arg='tofile',
+-                    value=Constant(value='full39/bind_actual01.py'))])],
++                    value=Constant(value='full37/bind_actual01.py'))])],
+             keywords=[])),
+         With(
+           items=[
+@@ -2442,11 +2139,6 @@
+                   Constant(value='whole_pilot_unchanged_cells'),
+                   Constant(value='whole_pilot_unchanged_graphs'),
+                   Constant(value='physical_caps_changed'),
+-                  Constant(value='prior38_outcome'),
+-                  Constant(value='prior38_recovery'),
+-                  Constant(value='prior38_component_qualification'),
+-                  Constant(value='current_whole39_capacity'),
+-                  Constant(value='final_release'),
+                   Constant(value='existing_binder_sha256'),
+                   Constant(value='fresh_absent_paths')],
+                 values=[
+@@ -2469,15 +2161,10 @@
+                   Constant(value=False),
+                   Constant(value=False),
+                   Constant(value=None),
+-                  Constant(value='Actual closed38 component qualification, accepted outcome, fresh recovery and current whole39 capacity required before execution'),
++                  Constant(value='Accepted and externally recovered genuine36 entry component required before execution'),
+                   Constant(value=415968128),
+                   Constant(value=7),
+                   Constant(value=False),
+-                  Constant(value=None),
+-                  Constant(value=None),
+-                  Constant(value=None),
+-                  Constant(value=None),
+-                  Constant(value=None),
+                   Name(id='BINDER_SHA', ctx=Load()),
+                   ListComp(
+                     elt=Call(
+@@ -2556,7 +2243,7 @@
+                             args=[],
+                             keywords=[])],
+                         is_async=0)]),
+-                  Constant(value='Fixed39 whole-pilot public rebinding. Actual205 committed source joins; explicit code-cache/timing/C05/continuation/metadata controls. No binder, admission, claim, physical capacity or release.')])],
++                  Constant(value='Fixed37 whole-pilot public rebinding. Actual205 committed source joins; explicit code-cache/timing/C05/continuation/metadata controls. No binder, admission, claim, physical capacity or release.')])],
+             keywords=[])),
+         Expr(
+           value=Call(

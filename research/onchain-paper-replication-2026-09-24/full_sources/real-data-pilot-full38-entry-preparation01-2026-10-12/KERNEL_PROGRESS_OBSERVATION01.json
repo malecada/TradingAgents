@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-12T08:27:23.460788+00:00",
+  "cgroup_cpu_stat_raw": "usage_usec 1665333680\nuser_usec 1196071910\nsystem_usec 469261769\ncore_sched.force_idle_usec 0\n",
+  "identity": "eth-paper-real-data-end-to-end-resource-20261012-38",
+  "main_process_cpu_seconds": {
+    "reaped_children_system": 0.0,
+    "reaped_children_user": 0.0,
+    "system": 0.53,
+    "user": 5.06
+  },
+  "native_elapsed_seconds": 1554.6592566689942,
+  "pid": 583721,
+  "pid_start_ticks": 4683778,
+  "process_io_cumulative": {
+    "cancelled_write_bytes": 0,
+    "rchar": 250039292,
+    "read_bytes": 0,
+    "syscr": 31173,
+    "syscw": 3,
+    "wchar": 2216,
+    "write_bytes": 4096
+  },
+  "qualification": "Actual same-child kernel cumulative CPU/I/O counters and scheduler wait-channel snapshot. Counters are process/cgroup totals rather than phase attribution; rchar includes cached/buffered reads and pipes, read_bytes reflects storage-accounted reads. No model timing, throughput, terminal result or causal diagnosis is inferred from one observation.",
+  "state": "S",
+  "wchan": "hrtimer_nanosleep"
+}

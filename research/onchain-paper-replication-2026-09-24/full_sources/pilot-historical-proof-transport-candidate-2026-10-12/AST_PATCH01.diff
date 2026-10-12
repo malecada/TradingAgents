@@ -1,0 +1,1979 @@
+--- original/verify.py.ast
++++ candidate/verify.py.ast
+@@ -1731,6 +1731,1532 @@
+                 right=Constant(value=b'\n'))],
+             ctx=Load()))],
+       decorator_list=[]),
++    ClassDef(
++      name='_SweepGitReader',
++      bases=[],
++      keywords=[],
++      body=[
++        Expr(
++          value=Constant(value='One bounded Git process for source proofs in one fresh claims sweep.')),
++        FunctionDef(
++          name='__init__',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='self'),
++              arg(arg='root')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Assign(
++              targets=[
++                Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='root',
++                  ctx=Store())],
++              value=Call(
++                func=Attribute(
++                  value=Call(
++                    func=Name(id='Path', ctx=Load()),
++                    args=[
++                      Name(id='root', ctx=Load())],
++                    keywords=[]),
++                  attr='resolve',
++                  ctx=Load()),
++                args=[],
++                keywords=[])),
++            Assign(
++              targets=[
++                Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='process',
++                  ctx=Store())],
++              value=Constant(value=None)),
++            Assign(
++              targets=[
++                Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='selector',
++                  ctx=Store())],
++              value=Constant(value=None)),
++            Assign(
++              targets=[
++                Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='closed',
++                  ctx=Store())],
++              value=Constant(value=False))],
++          decorator_list=[]),
++        FunctionDef(
++          name='__enter__',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='self')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Return(
++              value=Name(id='self', ctx=Load()))],
++          decorator_list=[]),
++        FunctionDef(
++          name='_start',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='self')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Import(
++              names=[
++                alias(name='os')]),
++            Import(
++              names=[
++                alias(name='selectors')]),
++            If(
++              test=Attribute(
++                value=Name(id='self', ctx=Load()),
++                attr='closed',
++                ctx=Load()),
++              body=[
++                Raise(
++                  exc=Call(
++                    func=Name(id='ValueError', ctx=Load()),
++                    args=[
++                      Constant(value='Git sweep reader already closed')],
++                    keywords=[]))],
++              orelse=[]),
++            If(
++              test=Compare(
++                left=Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='process',
++                  ctx=Load()),
++                ops=[
++                  Is()],
++                comparators=[
++                  Constant(value=None)]),
++              body=[
++                Assign(
++                  targets=[
++                    Attribute(
++                      value=Name(id='self', ctx=Load()),
++                      attr='process',
++                      ctx=Store())],
++                  value=Call(
++                    func=Attribute(
++                      value=Name(id='subprocess', ctx=Load()),
++                      attr='Popen',
++                      ctx=Load()),
++                    args=[
++                      List(
++                        elts=[
++                          Constant(value='git'),
++                          Constant(value='cat-file'),
++                          Constant(value='--batch')],
++                        ctx=Load())],
++                    keywords=[
++                      keyword(
++                        arg='cwd',
++                        value=Attribute(
++                          value=Name(id='self', ctx=Load()),
++                          attr='root',
++                          ctx=Load())),
++                      keyword(
++                        arg='env',
++                        value=Dict(
++                          keys=[
++                            None,
++                            Constant(value='GIT_NO_LAZY_FETCH')],
++                          values=[
++                            Attribute(
++                              value=Name(id='os', ctx=Load()),
++                              attr='environ',
++                              ctx=Load()),
++                            Constant(value='1')])),
++                      keyword(
++                        arg='stdin',
++                        value=Attribute(
++                          value=Name(id='subprocess', ctx=Load()),
++                          attr='PIPE',
++                          ctx=Load())),
++                      keyword(
++                        arg='stdout',
++                        value=Attribute(
++                          value=Name(id='subprocess', ctx=Load()),
++                          attr='PIPE',
++                          ctx=Load())),
++                      keyword(
++                        arg='stderr',
++                        value=Attribute(
++                          value=Name(id='subprocess', ctx=Load()),
++                          attr='PIPE',
++                          ctx=Load())),
++                      keyword(
++                        arg='bufsize',
++                        value=Constant(value=0))])),
++                Assign(
++                  targets=[
++                    Attribute(
++                      value=Name(id='self', ctx=Load()),
++                      attr='selector',
++                      ctx=Store())],
++                  value=Call(
++                    func=Attribute(
++                      value=Name(id='selectors', ctx=Load()),
++                      attr='DefaultSelector',
++                      ctx=Load()),
++                    args=[],
++                    keywords=[])),
++                For(
++                  target=Tuple(
++                    elts=[
++                      Name(id='stream', ctx=Store()),
++                      Name(id='label', ctx=Store())],
++                    ctx=Store()),
++                  iter=Tuple(
++                    elts=[
++                      Tuple(
++                        elts=[
++                          Attribute(
++                            value=Attribute(
++                              value=Name(id='self', ctx=Load()),
++                              attr='process',
++                              ctx=Load()),
++                            attr='stdout',
++                            ctx=Load()),
++                          Constant(value='output')],
++                        ctx=Load()),
++                      Tuple(
++                        elts=[
++                          Attribute(
++                            value=Attribute(
++                              value=Name(id='self', ctx=Load()),
++                              attr='process',
++                              ctx=Load()),
++                            attr='stderr',
++                            ctx=Load()),
++                          Constant(value='error')],
++                        ctx=Load())],
++                    ctx=Load()),
++                  body=[
++                    Expr(
++                      value=Call(
++                        func=Attribute(
++                          value=Name(id='os', ctx=Load()),
++                          attr='set_blocking',
++                          ctx=Load()),
++                        args=[
++                          Call(
++                            func=Attribute(
++                              value=Name(id='stream', ctx=Load()),
++                              attr='fileno',
++                              ctx=Load()),
++                            args=[],
++                            keywords=[]),
++                          Constant(value=False)],
++                        keywords=[])),
++                    Expr(
++                      value=Call(
++                        func=Attribute(
++                          value=Attribute(
++                            value=Name(id='self', ctx=Load()),
++                            attr='selector',
++                            ctx=Load()),
++                          attr='register',
++                          ctx=Load()),
++                        args=[
++                          Name(id='stream', ctx=Load()),
++                          Attribute(
++                            value=Name(id='selectors', ctx=Load()),
++                            attr='EVENT_READ',
++                            ctx=Load()),
++                          Name(id='label', ctx=Load())],
++                        keywords=[]))],
++                  orelse=[]),
++                Expr(
++                  value=Call(
++                    func=Attribute(
++                      value=Name(id='os', ctx=Load()),
++                      attr='set_blocking',
++                      ctx=Load()),
++                    args=[
++                      Call(
++                        func=Attribute(
++                          value=Attribute(
++                            value=Attribute(
++                              value=Name(id='self', ctx=Load()),
++                              attr='process',
++                              ctx=Load()),
++                            attr='stdin',
++                            ctx=Load()),
++                          attr='fileno',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[]),
++                      Constant(value=False)],
++                    keywords=[]))],
++              orelse=[])],
++          decorator_list=[]),
++        FunctionDef(
++          name='_end',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='raw'),
++              arg(arg='count'),
++              arg(arg='headers')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Assign(
++              targets=[
++                Name(id='offset', ctx=Store())],
++              value=Constant(value=0)),
++            For(
++              target=Name(id='_', ctx=Store()),
++              iter=Call(
++                func=Name(id='range', ctx=Load()),
++                args=[
++                  Name(id='count', ctx=Load())],
++                keywords=[]),
++              body=[
++                Assign(
++                  targets=[
++                    Name(id='end', ctx=Store())],
++                  value=Call(
++                    func=Attribute(
++                      value=Name(id='raw', ctx=Load()),
++                      attr='find',
++                      ctx=Load()),
++                    args=[
++                      Constant(value=b'\n'),
++                      Name(id='offset', ctx=Load())],
++                    keywords=[])),
++                If(
++                  test=Compare(
++                    left=Name(id='end', ctx=Load()),
++                    ops=[
++                      Lt()],
++                    comparators=[
++                      Constant(value=0)]),
++                  body=[
++                    Return(
++                      value=Constant(value=None))],
++                  orelse=[]),
++                Assign(
++                  targets=[
++                    Name(id='line', ctx=Store())],
++                  value=Subscript(
++                    value=Name(id='raw', ctx=Load()),
++                    slice=Slice(
++                      lower=Name(id='offset', ctx=Load()),
++                      upper=Name(id='end', ctx=Load())),
++                    ctx=Load())),
++                Assign(
++                  targets=[
++                    Name(id='offset', ctx=Store())],
++                  value=BinOp(
++                    left=Name(id='end', ctx=Load()),
++                    op=Add(),
++                    right=Constant(value=1))),
++                If(
++                  test=UnaryOp(
++                    op=Not(),
++                    operand=Name(id='headers', ctx=Load())),
++                  body=[
++                    Assign(
++                      targets=[
++                        Name(id='match', ctx=Store())],
++                      value=Call(
++                        func=Attribute(
++                          value=Name(id='re', ctx=Load()),
++                          attr='fullmatch',
++                          ctx=Load()),
++                        args=[
++                          Constant(value=b'[0-9a-f]{40} blob (0|[1-9][0-9]*)'),
++                          Name(id='line', ctx=Load())],
++                        keywords=[])),
++                    If(
++                      test=Name(id='match', ctx=Load()),
++                      body=[
++                        Assign(
++                          targets=[
++                            Name(id='size', ctx=Store())],
++                          value=Call(
++                            func=Name(id='int', ctx=Load()),
++                            args=[
++                              Subscript(
++                                value=Name(id='match', ctx=Load()),
++                                slice=Constant(value=1),
++                                ctx=Load())],
++                            keywords=[])),
++                        If(
++                          test=Compare(
++                            left=Call(
++                              func=Name(id='len', ctx=Load()),
++                              args=[
++                                Name(id='raw', ctx=Load())],
++                              keywords=[]),
++                            ops=[
++                              Lt()],
++                            comparators=[
++                              BinOp(
++                                left=BinOp(
++                                  left=Name(id='offset', ctx=Load()),
++                                  op=Add(),
++                                  right=Name(id='size', ctx=Load())),
++                                op=Add(),
++                                right=Constant(value=1))]),
++                          body=[
++                            Return(
++                              value=Constant(value=None))],
++                          orelse=[]),
++                        AugAssign(
++                          target=Name(id='offset', ctx=Store()),
++                          op=Add(),
++                          value=BinOp(
++                            left=Name(id='size', ctx=Load()),
++                            op=Add(),
++                            right=Constant(value=1)))],
++                      orelse=[])],
++                  orelse=[])],
++              orelse=[]),
++            Return(
++              value=Name(id='offset', ctx=Load()))],
++          decorator_list=[
++            Name(id='staticmethod', ctx=Load())]),
++        FunctionDef(
++          name='exchange',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='self'),
++              arg(arg='requests')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Import(
++              names=[
++                alias(name='os')]),
++            Import(
++              names=[
++                alias(name='selectors')]),
++            Import(
++              names=[
++                alias(name='time')]),
++            If(
++              test=BoolOp(
++                op=Or(),
++                values=[
++                  Compare(
++                    left=Call(
++                      func=Name(id='type', ctx=Load()),
++                      args=[
++                        Name(id='requests', ctx=Load())],
++                      keywords=[]),
++                    ops=[
++                      IsNot()],
++                    comparators=[
++                      Name(id='bytes', ctx=Load())]),
++                  Compare(
++                    left=Call(
++                      func=Name(id='len', ctx=Load()),
++                      args=[
++                        Name(id='requests', ctx=Load())],
++                      keywords=[]),
++                    ops=[
++                      Gt()],
++                    comparators=[
++                      Name(id='_GIT_REQUEST', ctx=Load())]),
++                  UnaryOp(
++                    op=Not(),
++                    operand=Call(
++                      func=Attribute(
++                        value=Name(id='requests', ctx=Load()),
++                        attr='endswith',
++                        ctx=Load()),
++                      args=[
++                        Constant(value=b'\n')],
++                      keywords=[]))]),
++              body=[
++                Raise(
++                  exc=Call(
++                    func=Name(id='ValueError', ctx=Load()),
++                    args=[
++                      Constant(value='Git request ceiling exceeded')],
++                    keywords=[]))],
++              orelse=[]),
++            Assign(
++              targets=[
++                Name(id='count', ctx=Store())],
++              value=Call(
++                func=Attribute(
++                  value=Name(id='requests', ctx=Load()),
++                  attr='count',
++                  ctx=Load()),
++                args=[
++                  Constant(value=b'\n')],
++                keywords=[])),
++            If(
++              test=UnaryOp(
++                op=Not(),
++                operand=Compare(
++                  left=Constant(value=0),
++                  ops=[
++                    Lt(),
++                    LtE()],
++                  comparators=[
++                    Name(id='count', ctx=Load()),
++                    Name(id='_GIT_PARTS', ctx=Load())])),
++              body=[
++                Raise(
++                  exc=Call(
++                    func=Name(id='ValueError', ctx=Load()),
++                    args=[
++                      Constant(value='Git request count exceeded')],
++                    keywords=[]))],
++              orelse=[]),
++            Expr(
++              value=Call(
++                func=Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='_start',
++                  ctx=Load()),
++                args=[],
++                keywords=[])),
++            Assign(
++              targets=[
++                Name(id='outgoing', ctx=Store())],
++              value=Name(id='requests', ctx=Load())),
++            Assign(
++              targets=[
++                Name(id='sent', ctx=Store())],
++              value=Constant(value=0)),
++            Assign(
++              targets=[
++                Name(id='output', ctx=Store())],
++              value=Call(
++                func=Name(id='bytearray', ctx=Load()),
++                args=[],
++                keywords=[])),
++            Assign(
++              targets=[
++                Name(id='errors', ctx=Store())],
++              value=Call(
++                func=Name(id='bytearray', ctx=Load()),
++                args=[],
++                keywords=[])),
++            Assign(
++              targets=[
++                Name(id='deadline', ctx=Store())],
++              value=BinOp(
++                left=Call(
++                  func=Attribute(
++                    value=Name(id='time', ctx=Load()),
++                    attr='monotonic',
++                    ctx=Load()),
++                  args=[],
++                  keywords=[]),
++                op=Add(),
++                right=Name(id='_GIT_SECONDS', ctx=Load()))),
++            Expr(
++              value=Call(
++                func=Attribute(
++                  value=Attribute(
++                    value=Name(id='self', ctx=Load()),
++                    attr='selector',
++                    ctx=Load()),
++                  attr='register',
++                  ctx=Load()),
++                args=[
++                  Attribute(
++                    value=Attribute(
++                      value=Name(id='self', ctx=Load()),
++                      attr='process',
++                      ctx=Load()),
++                    attr='stdin',
++                    ctx=Load()),
++                  Attribute(
++                    value=Name(id='selectors', ctx=Load()),
++                    attr='EVENT_WRITE',
++                    ctx=Load()),
++                  Constant(value='input')],
++                keywords=[])),
++            Try(
++              body=[
++                While(
++                  test=Constant(value=True),
++                  body=[
++                    Assign(
++                      targets=[
++                        Name(id='left', ctx=Store())],
++                      value=BinOp(
++                        left=Name(id='deadline', ctx=Load()),
++                        op=Sub(),
++                        right=Call(
++                          func=Attribute(
++                            value=Name(id='time', ctx=Load()),
++                            attr='monotonic',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]))),
++                    If(
++                      test=Compare(
++                        left=Name(id='left', ctx=Load()),
++                        ops=[
++                          LtE()],
++                        comparators=[
++                          Constant(value=0)]),
++                      body=[
++                        Raise(
++                          exc=Call(
++                            func=Attribute(
++                              value=Name(id='subprocess', ctx=Load()),
++                              attr='TimeoutExpired',
++                              ctx=Load()),
++                            args=[
++                              Constant(value='Git source sweep'),
++                              Name(id='_GIT_SECONDS', ctx=Load())],
++                            keywords=[]))],
++                      orelse=[]),
++                    For(
++                      target=Tuple(
++                        elts=[
++                          Name(id='key', ctx=Store()),
++                          Name(id='_', ctx=Store())],
++                        ctx=Store()),
++                      iter=Call(
++                        func=Attribute(
++                          value=Attribute(
++                            value=Name(id='self', ctx=Load()),
++                            attr='selector',
++                            ctx=Load()),
++                          attr='select',
++                          ctx=Load()),
++                        args=[
++                          Call(
++                            func=Name(id='min', ctx=Load()),
++                            args=[
++                              Name(id='left', ctx=Load()),
++                              Constant(value=0.25)],
++                            keywords=[])],
++                        keywords=[]),
++                      body=[
++                        Assign(
++                          targets=[
++                            Name(id='stream', ctx=Store())],
++                          value=Attribute(
++                            value=Name(id='key', ctx=Load()),
++                            attr='fileobj',
++                            ctx=Load())),
++                        If(
++                          test=Compare(
++                            left=Attribute(
++                              value=Name(id='key', ctx=Load()),
++                              attr='data',
++                              ctx=Load()),
++                            ops=[
++                              Eq()],
++                            comparators=[
++                              Constant(value='input')]),
++                          body=[
++                            Try(
++                              body=[
++                                Assign(
++                                  targets=[
++                                    Name(id='n', ctx=Store())],
++                                  value=Call(
++                                    func=Attribute(
++                                      value=Name(id='os', ctx=Load()),
++                                      attr='write',
++                                      ctx=Load()),
++                                    args=[
++                                      Call(
++                                        func=Attribute(
++                                          value=Name(id='stream', ctx=Load()),
++                                          attr='fileno',
++                                          ctx=Load()),
++                                        args=[],
++                                        keywords=[]),
++                                      Subscript(
++                                        value=Name(id='outgoing', ctx=Load()),
++                                        slice=Slice(
++                                          lower=Name(id='sent', ctx=Load()),
++                                          upper=BinOp(
++                                            left=Name(id='sent', ctx=Load()),
++                                            op=Add(),
++                                            right=Constant(value=4096))),
++                                        ctx=Load())],
++                                    keywords=[]))],
++                              handlers=[
++                                ExceptHandler(
++                                  type=Name(id='BlockingIOError', ctx=Load()),
++                                  body=[
++                                    Continue()])],
++                              orelse=[],
++                              finalbody=[]),
++                            If(
++                              test=Compare(
++                                left=Name(id='n', ctx=Load()),
++                                ops=[
++                                  LtE()],
++                                comparators=[
++                                  Constant(value=0)]),
++                              body=[
++                                Raise(
++                                  exc=Call(
++                                    func=Name(id='ValueError', ctx=Load()),
++                                    args=[
++                                      Constant(value='Git input closed')],
++                                    keywords=[]))],
++                              orelse=[]),
++                            AugAssign(
++                              target=Name(id='sent', ctx=Store()),
++                              op=Add(),
++                              value=Name(id='n', ctx=Load())),
++                            If(
++                              test=Compare(
++                                left=Name(id='sent', ctx=Load()),
++                                ops=[
++                                  Eq()],
++                                comparators=[
++                                  Call(
++                                    func=Name(id='len', ctx=Load()),
++                                    args=[
++                                      Name(id='outgoing', ctx=Load())],
++                                    keywords=[])]),
++                              body=[
++                                Expr(
++                                  value=Call(
++                                    func=Attribute(
++                                      value=Attribute(
++                                        value=Name(id='self', ctx=Load()),
++                                        attr='selector',
++                                        ctx=Load()),
++                                      attr='unregister',
++                                      ctx=Load()),
++                                    args=[
++                                      Name(id='stream', ctx=Load())],
++                                    keywords=[]))],
++                              orelse=[])],
++                          orelse=[
++                            Try(
++                              body=[
++                                Assign(
++                                  targets=[
++                                    Name(id='part', ctx=Store())],
++                                  value=Call(
++                                    func=Attribute(
++                                      value=Name(id='os', ctx=Load()),
++                                      attr='read',
++                                      ctx=Load()),
++                                    args=[
++                                      Call(
++                                        func=Attribute(
++                                          value=Name(id='stream', ctx=Load()),
++                                          attr='fileno',
++                                          ctx=Load()),
++                                        args=[],
++                                        keywords=[]),
++                                      Constant(value=65536)],
++                                    keywords=[]))],
++                              handlers=[
++                                ExceptHandler(
++                                  type=Name(id='BlockingIOError', ctx=Load()),
++                                  body=[
++                                    Continue()])],
++                              orelse=[],
++                              finalbody=[]),
++                            If(
++                              test=UnaryOp(
++                                op=Not(),
++                                operand=Name(id='part', ctx=Load())),
++                              body=[
++                                Raise(
++                                  exc=Call(
++                                    func=Name(id='ValueError', ctx=Load()),
++                                    args=[
++                                      Constant(value='Git batch short body or terminator')],
++                                    keywords=[]))],
++                              orelse=[]),
++                            Assign(
++                              targets=[
++                                Name(id='target', ctx=Store())],
++                              value=IfExp(
++                                test=Compare(
++                                  left=Attribute(
++                                    value=Name(id='key', ctx=Load()),
++                                    attr='data',
++                                    ctx=Load()),
++                                  ops=[
++                                    Eq()],
++                                  comparators=[
++                                    Constant(value='output')]),
++                                body=Name(id='output', ctx=Load()),
++                                orelse=Name(id='errors', ctx=Load()))),
++                            Assign(
++                              targets=[
++                                Name(id='limit', ctx=Store())],
++                              value=IfExp(
++                                test=Compare(
++                                  left=Attribute(
++                                    value=Name(id='key', ctx=Load()),
++                                    attr='data',
++                                    ctx=Load()),
++                                  ops=[
++                                    Eq()],
++                                  comparators=[
++                                    Constant(value='output')]),
++                                body=BinOp(
++                                  left=Name(id='_GIT_BODY', ctx=Load()),
++                                  op=Add(),
++                                  right=BinOp(
++                                    left=Constant(value=128),
++                                    op=Mult(),
++                                    right=Name(id='_GIT_PARTS', ctx=Load()))),
++                                orelse=Constant(value=65536))),
++                            If(
++                              test=Compare(
++                                left=BinOp(
++                                  left=Call(
++                                    func=Name(id='len', ctx=Load()),
++                                    args=[
++                                      Name(id='target', ctx=Load())],
++                                    keywords=[]),
++                                  op=Add(),
++                                  right=Call(
++                                    func=Name(id='len', ctx=Load()),
++                                    args=[
++                                      Name(id='part', ctx=Load())],
++                                    keywords=[])),
++                                ops=[
++                                  Gt()],
++                                comparators=[
++                                  Name(id='limit', ctx=Load())]),
++                              body=[
++                                Raise(
++                                  exc=Call(
++                                    func=Name(id='ValueError', ctx=Load()),
++                                    args=[
++                                      Constant(value='Git aggregate output ceiling exceeded')],
++                                    keywords=[]))],
++                              orelse=[]),
++                            Expr(
++                              value=Call(
++                                func=Attribute(
++                                  value=Name(id='target', ctx=Load()),
++                                  attr='extend',
++                                  ctx=Load()),
++                                args=[
++                                  Name(id='part', ctx=Load())],
++                                keywords=[]))])],
++                      orelse=[]),
++                    Assign(
++                      targets=[
++                        Name(id='end', ctx=Store())],
++                      value=Call(
++                        func=Attribute(
++                          value=Name(id='self', ctx=Load()),
++                          attr='_end',
++                          ctx=Load()),
++                        args=[
++                          Name(id='output', ctx=Load()),
++                          Name(id='count', ctx=Load()),
++                          Constant(value=False)],
++                        keywords=[])),
++                    If(
++                      test=BoolOp(
++                        op=And(),
++                        values=[
++                          Compare(
++                            left=Name(id='end', ctx=Load()),
++                            ops=[
++                              IsNot()],
++                            comparators=[
++                              Constant(value=None)]),
++                          Compare(
++                            left=Name(id='sent', ctx=Load()),
++                            ops=[
++                              Eq()],
++                            comparators=[
++                              Call(
++                                func=Name(id='len', ctx=Load()),
++                                args=[
++                                  Name(id='outgoing', ctx=Load())],
++                                keywords=[])])]),
++                      body=[
++                        If(
++                          test=Compare(
++                            left=Name(id='end', ctx=Load()),
++                            ops=[
++                              NotEq()],
++                            comparators=[
++                              Call(
++                                func=Name(id='len', ctx=Load()),
++                                args=[
++                                  Name(id='output', ctx=Load())],
++                                keywords=[])]),
++                          body=[
++                            Raise(
++                              exc=Call(
++                                func=Name(id='ValueError', ctx=Load()),
++                                args=[
++                                  Constant(value='Git batch trailing response')],
++                                keywords=[]))],
++                          orelse=[]),
++                        Return(
++                          value=Call(
++                            func=Name(id='bytes', ctx=Load()),
++                            args=[
++                              Name(id='output', ctx=Load())],
++                            keywords=[]))],
++                      orelse=[])],
++                  orelse=[])],
++              handlers=[
++                ExceptHandler(
++                  type=Name(id='BaseException', ctx=Load()),
++                  body=[
++                    Assign(
++                      targets=[
++                        Attribute(
++                          value=Name(id='self', ctx=Load()),
++                          attr='closed',
++                          ctx=Store())],
++                      value=Constant(value=True)),
++                    If(
++                      test=Compare(
++                        left=Call(
++                          func=Attribute(
++                            value=Attribute(
++                              value=Name(id='self', ctx=Load()),
++                              attr='process',
++                              ctx=Load()),
++                            attr='poll',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]),
++                        ops=[
++                          Is()],
++                        comparators=[
++                          Constant(value=None)]),
++                      body=[
++                        Expr(
++                          value=Call(
++                            func=Attribute(
++                              value=Attribute(
++                                value=Name(id='self', ctx=Load()),
++                                attr='process',
++                                ctx=Load()),
++                              attr='kill',
++                              ctx=Load()),
++                            args=[],
++                            keywords=[]))],
++                      orelse=[]),
++                    Expr(
++                      value=Call(
++                        func=Attribute(
++                          value=Attribute(
++                            value=Name(id='self', ctx=Load()),
++                            attr='process',
++                            ctx=Load()),
++                          attr='wait',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[
++                          keyword(
++                            arg='timeout',
++                            value=Constant(value=5))])),
++                    Raise()])],
++              orelse=[],
++              finalbody=[
++                If(
++                  test=Compare(
++                    left=Attribute(
++                      value=Name(id='self', ctx=Load()),
++                      attr='selector',
++                      ctx=Load()),
++                    ops=[
++                      IsNot()],
++                    comparators=[
++                      Constant(value=None)]),
++                  body=[
++                    Try(
++                      body=[
++                        Expr(
++                          value=Call(
++                            func=Attribute(
++                              value=Attribute(
++                                value=Name(id='self', ctx=Load()),
++                                attr='selector',
++                                ctx=Load()),
++                              attr='unregister',
++                              ctx=Load()),
++                            args=[
++                              Attribute(
++                                value=Attribute(
++                                  value=Name(id='self', ctx=Load()),
++                                  attr='process',
++                                  ctx=Load()),
++                                attr='stdin',
++                                ctx=Load())],
++                            keywords=[]))],
++                      handlers=[
++                        ExceptHandler(
++                          type=Name(id='KeyError', ctx=Load()),
++                          body=[
++                            Pass()])],
++                      orelse=[],
++                      finalbody=[])],
++                  orelse=[])])],
++          decorator_list=[]),
++        FunctionDef(
++          name='__exit__',
++          args=arguments(
++            posonlyargs=[],
++            args=[
++              arg(arg='self'),
++              arg(arg='typ'),
++              arg(arg='primary'),
++              arg(arg='traceback')],
++            kwonlyargs=[],
++            kw_defaults=[],
++            defaults=[]),
++          body=[
++            Import(
++              names=[
++                alias(name='os')]),
++            Import(
++              names=[
++                alias(name='time')]),
++            Assign(
++              targets=[
++                Attribute(
++                  value=Name(id='self', ctx=Load()),
++                  attr='closed',
++                  ctx=Store())],
++              value=Constant(value=True)),
++            Assign(
++              targets=[
++                Name(id='process', ctx=Store())],
++              value=Attribute(
++                value=Name(id='self', ctx=Load()),
++                attr='process',
++                ctx=Load())),
++            FunctionDef(
++              name='finish',
++              args=arguments(
++                posonlyargs=[],
++                args=[],
++                kwonlyargs=[],
++                kw_defaults=[],
++                defaults=[]),
++              body=[
++                If(
++                  test=Compare(
++                    left=Name(id='process', ctx=Load()),
++                    ops=[
++                      Is()],
++                    comparators=[
++                      Constant(value=None)]),
++                  body=[
++                    Return()],
++                  orelse=[]),
++                If(
++                  test=Compare(
++                    left=Name(id='primary', ctx=Load()),
++                    ops=[
++                      IsNot()],
++                    comparators=[
++                      Constant(value=None)]),
++                  body=[
++                    If(
++                      test=Compare(
++                        left=Call(
++                          func=Attribute(
++                            value=Name(id='process', ctx=Load()),
++                            attr='poll',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]),
++                        ops=[
++                          Is()],
++                        comparators=[
++                          Constant(value=None)]),
++                      body=[
++                        Expr(
++                          value=Call(
++                            func=Attribute(
++                              value=Name(id='process', ctx=Load()),
++                              attr='kill',
++                              ctx=Load()),
++                            args=[],
++                            keywords=[]))],
++                      orelse=[]),
++                    Expr(
++                      value=Call(
++                        func=Attribute(
++                          value=Name(id='process', ctx=Load()),
++                          attr='wait',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[
++                          keyword(
++                            arg='timeout',
++                            value=Constant(value=5))])),
++                    Return()],
++                  orelse=[]),
++                Expr(
++                  value=Call(
++                    func=Attribute(
++                      value=Attribute(
++                        value=Name(id='process', ctx=Load()),
++                        attr='stdin',
++                        ctx=Load()),
++                      attr='close',
++                      ctx=Load()),
++                    args=[],
++                    keywords=[])),
++                Assign(
++                  targets=[
++                    Name(id='deadline', ctx=Store())],
++                  value=BinOp(
++                    left=Call(
++                      func=Attribute(
++                        value=Name(id='time', ctx=Load()),
++                        attr='monotonic',
++                        ctx=Load()),
++                      args=[],
++                      keywords=[]),
++                    op=Add(),
++                    right=Constant(value=5))),
++                Assign(
++                  targets=[
++                    Name(id='diagnostics', ctx=Store())],
++                  value=Constant(value=0)),
++                While(
++                  test=Call(
++                    func=Attribute(
++                      value=Attribute(
++                        value=Name(id='self', ctx=Load()),
++                        attr='selector',
++                        ctx=Load()),
++                      attr='get_map',
++                      ctx=Load()),
++                    args=[],
++                    keywords=[]),
++                  body=[
++                    If(
++                      test=Compare(
++                        left=Call(
++                          func=Attribute(
++                            value=Name(id='time', ctx=Load()),
++                            attr='monotonic',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]),
++                        ops=[
++                          GtE()],
++                        comparators=[
++                          Name(id='deadline', ctx=Load())]),
++                      body=[
++                        Raise(
++                          exc=Call(
++                            func=Attribute(
++                              value=Name(id='subprocess', ctx=Load()),
++                              attr='TimeoutExpired',
++                              ctx=Load()),
++                            args=[
++                              Constant(value='Git sweep close'),
++                              Constant(value=5)],
++                            keywords=[]))],
++                      orelse=[]),
++                    For(
++                      target=Tuple(
++                        elts=[
++                          Name(id='key', ctx=Store()),
++                          Name(id='_', ctx=Store())],
++                        ctx=Store()),
++                      iter=Call(
++                        func=Attribute(
++                          value=Attribute(
++                            value=Name(id='self', ctx=Load()),
++                            attr='selector',
++                            ctx=Load()),
++                          attr='select',
++                          ctx=Load()),
++                        args=[
++                          Constant(value=0.05)],
++                        keywords=[]),
++                      body=[
++                        Try(
++                          body=[
++                            Assign(
++                              targets=[
++                                Name(id='part', ctx=Store())],
++                              value=Call(
++                                func=Attribute(
++                                  value=Name(id='os', ctx=Load()),
++                                  attr='read',
++                                  ctx=Load()),
++                                args=[
++                                  Call(
++                                    func=Attribute(
++                                      value=Attribute(
++                                        value=Name(id='key', ctx=Load()),
++                                        attr='fileobj',
++                                        ctx=Load()),
++                                      attr='fileno',
++                                      ctx=Load()),
++                                    args=[],
++                                    keywords=[]),
++                                  Constant(value=65536)],
++                                keywords=[]))],
++                          handlers=[
++                            ExceptHandler(
++                              type=Name(id='BlockingIOError', ctx=Load()),
++                              body=[
++                                Continue()])],
++                          orelse=[],
++                          finalbody=[]),
++                        If(
++                          test=Name(id='part', ctx=Load()),
++                          body=[
++                            If(
++                              test=Compare(
++                                left=Attribute(
++                                  value=Name(id='key', ctx=Load()),
++                                  attr='data',
++                                  ctx=Load()),
++                                ops=[
++                                  Eq()],
++                                comparators=[
++                                  Constant(value='output')]),
++                              body=[
++                                Raise(
++                                  exc=Call(
++                                    func=Name(id='ValueError', ctx=Load()),
++                                    args=[
++                                      Constant(value='Git batch trailing response')],
++                                    keywords=[]))],
++                              orelse=[]),
++                            AugAssign(
++                              target=Name(id='diagnostics', ctx=Store()),
++                              op=Add(),
++                              value=Call(
++                                func=Name(id='len', ctx=Load()),
++                                args=[
++                                  Name(id='part', ctx=Load())],
++                                keywords=[])),
++                            If(
++                              test=Compare(
++                                left=Name(id='diagnostics', ctx=Load()),
++                                ops=[
++                                  Gt()],
++                                comparators=[
++                                  Constant(value=65536)]),
++                              body=[
++                                Raise(
++                                  exc=Call(
++                                    func=Name(id='ValueError', ctx=Load()),
++                                    args=[
++                                      Constant(value='Git aggregate output ceiling exceeded')],
++                                    keywords=[]))],
++                              orelse=[])],
++                          orelse=[
++                            Expr(
++                              value=Call(
++                                func=Attribute(
++                                  value=Attribute(
++                                    value=Name(id='self', ctx=Load()),
++                                    attr='selector',
++                                    ctx=Load()),
++                                  attr='unregister',
++                                  ctx=Load()),
++                                args=[
++                                  Attribute(
++                                    value=Name(id='key', ctx=Load()),
++                                    attr='fileobj',
++                                    ctx=Load())],
++                                keywords=[]))])],
++                      orelse=[])],
++                  orelse=[]),
++                If(
++                  test=Compare(
++                    left=Call(
++                      func=Attribute(
++                        value=Name(id='process', ctx=Load()),
++                        attr='wait',
++                        ctx=Load()),
++                      args=[],
++                      keywords=[
++                        keyword(
++                          arg='timeout',
++                          value=Constant(value=5))]),
++                    ops=[
++                      NotEq()],
++                    comparators=[
++                      Constant(value=0)]),
++                  body=[
++                    Raise(
++                      exc=Call(
++                        func=Name(id='ValueError', ctx=Load()),
++                        args=[
++                          Constant(value='saved committed provenance cannot be verified')],
++                        keywords=[]))],
++                  orelse=[])],
++              decorator_list=[]),
++            FunctionDef(
++              name='stop',
++              args=arguments(
++                posonlyargs=[],
++                args=[],
++                kwonlyargs=[],
++                kw_defaults=[],
++                defaults=[]),
++              body=[
++                If(
++                  test=BoolOp(
++                    op=And(),
++                    values=[
++                      Compare(
++                        left=Name(id='process', ctx=Load()),
++                        ops=[
++                          IsNot()],
++                        comparators=[
++                          Constant(value=None)]),
++                      Compare(
++                        left=Call(
++                          func=Attribute(
++                            value=Name(id='process', ctx=Load()),
++                            attr='poll',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]),
++                        ops=[
++                          Is()],
++                        comparators=[
++                          Constant(value=None)])]),
++                  body=[
++                    Expr(
++                      value=Call(
++                        func=Attribute(
++                          value=Name(id='process', ctx=Load()),
++                          attr='kill',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[]))],
++                  orelse=[])],
++              decorator_list=[]),
++            Try(
++              body=[
++                If(
++                  test=Compare(
++                    left=Name(id='primary', ctx=Load()),
++                    ops=[
++                      Is()],
++                    comparators=[
++                      Constant(value=None)]),
++                  body=[
++                    Expr(
++                      value=Call(
++                        func=Name(id='finish', ctx=Load()),
++                        args=[],
++                        keywords=[]))],
++                  orelse=[
++                    Expr(
++                      value=Call(
++                        func=Name(id='stop', ctx=Load()),
++                        args=[],
++                        keywords=[])),
++                    If(
++                      test=Compare(
++                        left=Name(id='process', ctx=Load()),
++                        ops=[
++                          IsNot()],
++                        comparators=[
++                          Constant(value=None)]),
++                      body=[
++                        Expr(
++                          value=Call(
++                            func=Attribute(
++                              value=Name(id='process', ctx=Load()),
++                              attr='wait',
++                              ctx=Load()),
++                            args=[],
++                            keywords=[
++                              keyword(
++                                arg='timeout',
++                                value=Constant(value=5))]))],
++                      orelse=[])])],
++              handlers=[],
++              orelse=[],
++              finalbody=[
++                Import(
++                  names=[
++                    alias(name='sys')]),
++                Assign(
++                  targets=[
++                    Name(id='active', ctx=Store())],
++                  value=BoolOp(
++                    op=Or(),
++                    values=[
++                      Call(
++                        func=Attribute(
++                          value=Name(id='sys', ctx=Load()),
++                          attr='exception',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[]),
++                      Name(id='primary', ctx=Load())])),
++                Expr(
++                  value=Call(
++                    func=Name(id='_git_cleanup', ctx=Load()),
++                    args=[
++                      Tuple(
++                        elts=[
++                          Name(id='stop', ctx=Load()),
++                          Lambda(
++                            args=arguments(
++                              posonlyargs=[],
++                              args=[],
++                              kwonlyargs=[],
++                              kw_defaults=[],
++                              defaults=[]),
++                            body=IfExp(
++                              test=Compare(
++                                left=Name(id='process', ctx=Load()),
++                                ops=[
++                                  IsNot()],
++                                comparators=[
++                                  Constant(value=None)]),
++                              body=Call(
++                                func=Attribute(
++                                  value=Name(id='process', ctx=Load()),
++                                  attr='wait',
++                                  ctx=Load()),
++                                args=[],
++                                keywords=[
++                                  keyword(
++                                    arg='timeout',
++                                    value=Constant(value=5))]),
++                              orelse=Constant(value=None))),
++                          Lambda(
++                            args=arguments(
++                              posonlyargs=[],
++                              args=[],
++                              kwonlyargs=[],
++                              kw_defaults=[],
++                              defaults=[]),
++                            body=IfExp(
++                              test=Compare(
++                                left=Name(id='process', ctx=Load()),
++                                ops=[
++                                  IsNot()],
++                                comparators=[
++                                  Constant(value=None)]),
++                              body=Call(
++                                func=Attribute(
++                                  value=Attribute(
++                                    value=Name(id='process', ctx=Load()),
++                                    attr='stdin',
++                                    ctx=Load()),
++                                  attr='close',
++                                  ctx=Load()),
++                                args=[],
++                                keywords=[]),
++                              orelse=Constant(value=None))),
++                          Lambda(
++                            args=arguments(
++                              posonlyargs=[],
++                              args=[],
++                              kwonlyargs=[],
++                              kw_defaults=[],
++                              defaults=[]),
++                            body=IfExp(
++                              test=Compare(
++                                left=Name(id='process', ctx=Load()),
++                                ops=[
++                                  IsNot()],
++                                comparators=[
++                                  Constant(value=None)]),
++                              body=Call(
++                                func=Attribute(
++                                  value=Attribute(
++                                    value=Name(id='process', ctx=Load()),
++                                    attr='stdout',
++                                    ctx=Load()),
++                                  attr='close',
++                                  ctx=Load()),
++                                args=[],
++                                keywords=[]),
++                              orelse=Constant(value=None))),
++                          Lambda(
++                            args=arguments(
++                              posonlyargs=[],
++                              args=[],
++                              kwonlyargs=[],
++                              kw_defaults=[],
++                              defaults=[]),
++                            body=IfExp(
++                              test=Compare(
++                                left=Name(id='process', ctx=Load()),
++                                ops=[
++                                  IsNot()],
++                                comparators=[
++                                  Constant(value=None)]),
++                              body=Call(
++                                func=Attribute(
++                                  value=Attribute(
++                                    value=Name(id='process', ctx=Load()),
++                                    attr='stderr',
++                                    ctx=Load()),
++                                  attr='close',
++                                  ctx=Load()),
++                                args=[],
++                                keywords=[]),
++                              orelse=Constant(value=None))),
++                          Lambda(
++                            args=arguments(
++                              posonlyargs=[],
++                              args=[],
++                              kwonlyargs=[],
++                              kw_defaults=[],
++                              defaults=[]),
++                            body=IfExp(
++                              test=Compare(
++                                left=Attribute(
++                                  value=Name(id='self', ctx=Load()),
++                                  attr='selector',
++                                  ctx=Load()),
++                                ops=[
++                                  IsNot()],
++                                comparators=[
++                                  Constant(value=None)]),
++                              body=Call(
++                                func=Attribute(
++                                  value=Attribute(
++                                    value=Name(id='self', ctx=Load()),
++                                    attr='selector',
++                                    ctx=Load()),
++                                  attr='close',
++                                  ctx=Load()),
++                                args=[],
++                                keywords=[]),
++                              orelse=Constant(value=None)))],
++                        ctx=Load()),
++                      Name(id='active', ctx=Load())],
++                    keywords=[]))]),
++            Return(
++              value=Constant(value=False))],
++          decorator_list=[])],
++      decorator_list=[]),
+     FunctionDef(
+       name='_verify_sources',
+       args=arguments(
+@@ -1739,10 +3265,62 @@
+           arg(arg='root'),
+           arg(arg='pinned'),
+           arg(arg='commits')],
+-        kwonlyargs=[],
+-        kw_defaults=[],
++        kwonlyargs=[
++          arg(arg='_source_reader')],
++        kw_defaults=[
++          Constant(value=None)],
+         defaults=[]),
+       body=[
++        If(
++          test=BoolOp(
++            op=And(),
++            values=[
++              Compare(
++                left=Name(id='_source_reader', ctx=Load()),
++                ops=[
++                  IsNot()],
++                comparators=[
++                  Constant(value=None)]),
++              BoolOp(
++                op=Or(),
++                values=[
++                  Compare(
++                    left=Call(
++                      func=Name(id='type', ctx=Load()),
++                      args=[
++                        Name(id='_source_reader', ctx=Load())],
++                      keywords=[]),
++                    ops=[
++                      IsNot()],
++                    comparators=[
++                      Name(id='_SweepGitReader', ctx=Load())]),
++                  Compare(
++                    left=Attribute(
++                      value=Name(id='_source_reader', ctx=Load()),
++                      attr='root',
++                      ctx=Load()),
++                    ops=[
++                      NotEq()],
++                    comparators=[
++                      Call(
++                        func=Attribute(
++                          value=Call(
++                            func=Name(id='Path', ctx=Load()),
++                            args=[
++                              Name(id='root', ctx=Load())],
++                            keywords=[]),
++                          attr='resolve',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[])])])]),
++          body=[
++            Raise(
++              exc=Call(
++                func=Name(id='ValueError', ctx=Load()),
++                args=[
++                  Constant(value='Git source sweep root or reader differs')],
++                keywords=[]))],
++          orelse=[]),
+         Assign(
+           targets=[
+             Name(id='rows', ctx=Store())],
+@@ -1766,20 +3344,43 @@
+             If(
+               test=Name(id='rows', ctx=Load()),
+               body=[
++                Assign(
++                  targets=[
++                    Name(id='raw', ctx=Store())],
++                  value=IfExp(
++                    test=Compare(
++                      left=Name(id='_source_reader', ctx=Load()),
++                      ops=[
++                        Is()],
++                      comparators=[
++                        Constant(value=None)]),
++                    body=Call(
++                      func=Name(id='_git_transport', ctx=Load()),
++                      args=[
++                        Name(id='root', ctx=Load()),
++                        Call(
++                          func=Name(id='bytes', ctx=Load()),
++                          args=[
++                            Name(id='requests', ctx=Load())],
++                          keywords=[])],
++                      keywords=[]),
++                    orelse=Call(
++                      func=Attribute(
++                        value=Name(id='_source_reader', ctx=Load()),
++                        attr='exchange',
++                        ctx=Load()),
++                      args=[
++                        Call(
++                          func=Name(id='bytes', ctx=Load()),
++                          args=[
++                            Name(id='requests', ctx=Load())],
++                          keywords=[])],
++                      keywords=[]))),
+                 Expr(
+                   value=Call(
+                     func=Name(id='_verify_batch', ctx=Load()),
+                     args=[
+-                      Call(
+-                        func=Name(id='_git_transport', ctx=Load()),
+-                        args=[
+-                          Name(id='root', ctx=Load()),
+-                          Call(
+-                            func=Name(id='bytes', ctx=Load()),
+-                            args=[
+-                              Name(id='requests', ctx=Load())],
+-                            keywords=[])],
+-                        keywords=[]),
++                      Name(id='raw', ctx=Load()),
+                       Name(id='rows', ctx=Load())],
+                     keywords=[])),
+                 Expr(
+@@ -2554,8 +4155,10 @@
+         posonlyargs=[],
+         args=[
+           arg(arg='directory')],
+-        kwonlyargs=[],
+-        kw_defaults=[],
++        kwonlyargs=[
++          arg(arg='_source_reader')],
++        kw_defaults=[
++          Constant(value=None)],
+         defaults=[]),
+       body=[
+         Expr(
+@@ -3307,7 +4910,10 @@
+                     value=Name(id='claim', ctx=Load()),
+                     slice=Constant(value='design_source'),
+                     ctx=Load())])],
+-            keywords=[])),
++            keywords=[
++              keyword(
++                arg='_source_reader',
++                value=Name(id='_source_reader', ctx=Load()))])),
+         Assign(
+           targets=[
+             Name(id='inputs', ctx=Store())],
+--- original/admission.py.ast
++++ candidate/admission.py.ast
+@@ -1846,150 +1846,164 @@
+             Return(
+               value=List(elts=[], ctx=Load()))],
+           orelse=[]),
++        ImportFrom(
++          module='verify',
++          names=[
++            alias(name='verify_claim'),
++            alias(name='_SweepGitReader')],
++          level=1),
+         Assign(
+           targets=[
+             Name(id='result', ctx=Store())],
+           value=List(elts=[], ctx=Load())),
+-        For(
+-          target=Name(id='child', ctx=Store()),
+-          iter=Call(
+-            func=Name(id='sorted', ctx=Load()),
+-            args=[
+-              Call(
+-                func=Attribute(
+-                  value=Name(id='folder', ctx=Load()),
+-                  attr='iterdir',
+-                  ctx=Load()),
+-                args=[],
+-                keywords=[])],
+-            keywords=[]),
++        With(
++          items=[
++            withitem(
++              context_expr=Call(
++                func=Name(id='_SweepGitReader', ctx=Load()),
++                args=[
++                  Name(id='root', ctx=Load())],
++                keywords=[]),
++              optional_vars=Name(id='reader', ctx=Store()))],
+           body=[
+-            If(
+-              test=Call(
+-                func=Attribute(
+-                  value=Attribute(
+-                    value=Name(id='child', ctx=Load()),
+-                    attr='name',
+-                    ctx=Load()),
+-                  attr='startswith',
+-                  ctx=Load()),
+-                args=[
+-                  Constant(value='.')],
++            For(
++              target=Name(id='child', ctx=Store()),
++              iter=Call(
++                func=Name(id='sorted', ctx=Load()),
++                args=[
++                  Call(
++                    func=Attribute(
++                      value=Name(id='folder', ctx=Load()),
++                      attr='iterdir',
++                      ctx=Load()),
++                    args=[],
++                    keywords=[])],
+                 keywords=[]),
+               body=[
+-                Continue()],
+-              orelse=[]),
+-            If(
+-              test=BoolOp(
+-                op=Or(),
+-                values=[
+-                  UnaryOp(
+-                    op=Not(),
+-                    operand=Call(
+-                      func=Attribute(
++                If(
++                  test=Call(
++                    func=Attribute(
++                      value=Attribute(
+                         value=Name(id='child', ctx=Load()),
+-                        attr='is_dir',
++                        attr='name',
+                         ctx=Load()),
+-                      args=[],
+-                      keywords=[])),
+-                  UnaryOp(
+-                    op=Not(),
+-                    operand=Call(
+-                      func=Attribute(
+-                        value=BinOp(
+-                          left=Name(id='child', ctx=Load()),
+-                          op=Div(),
+-                          right=Constant(value='claim.json')),
+-                        attr='is_file',
+-                        ctx=Load()),
+-                      args=[],
+-                      keywords=[]))]),
+-              body=[
+-                Raise(
+-                  exc=Call(
+-                    func=Name(id='ValueError', ctx=Load()),
+-                    args=[
+-                      Constant(value='partial run claim requires manual recovery; automatic reuse prohibited')],
++                      attr='startswith',
++                      ctx=Load()),
++                    args=[
++                      Constant(value='.')],
++                    keywords=[]),
++                  body=[
++                    Continue()],
++                  orelse=[]),
++                If(
++                  test=BoolOp(
++                    op=Or(),
++                    values=[
++                      UnaryOp(
++                        op=Not(),
++                        operand=Call(
++                          func=Attribute(
++                            value=Name(id='child', ctx=Load()),
++                            attr='is_dir',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[])),
++                      UnaryOp(
++                        op=Not(),
++                        operand=Call(
++                          func=Attribute(
++                            value=BinOp(
++                              left=Name(id='child', ctx=Load()),
++                              op=Div(),
++                              right=Constant(value='claim.json')),
++                            attr='is_file',
++                            ctx=Load()),
++                          args=[],
++                          keywords=[]))]),
++                  body=[
++                    Raise(
++                      exc=Call(
++                        func=Name(id='ValueError', ctx=Load()),
++                        args=[
++                          Constant(value='partial run claim requires manual recovery; automatic reuse prohibited')],
++                        keywords=[]))],
++                  orelse=[]),
++                Assign(
++                  targets=[
++                    Name(id='claim', ctx=Store())],
++                  value=Call(
++                    func=Name(id='verify_claim', ctx=Load()),
++                    args=[
++                      Name(id='child', ctx=Load())],
++                    keywords=[
++                      keyword(
++                        arg='_source_reader',
++                        value=Name(id='reader', ctx=Load()))])),
++                If(
++                  test=Compare(
++                    left=Subscript(
++                      value=Name(id='claim', ctx=Load()),
++                      slice=Constant(value='experiment_id'),
++                      ctx=Load()),
++                    ops=[
++                      NotEq()],
++                    comparators=[
++                      Attribute(
++                        value=Name(id='child', ctx=Load()),
++                        attr='name',
++                        ctx=Load())]),
++                  body=[
++                    Raise(
++                      exc=Call(
++                        func=Name(id='ValueError', ctx=Load()),
++                        args=[
++                          Constant(value='run claim identity differs from its directory')],
++                        keywords=[]))],
++                  orelse=[]),
++                If(
++                  test=BoolOp(
++                    op=And(),
++                    values=[
++                      Call(
++                        func=Attribute(
++                          value=BinOp(
++                            left=Name(id='child', ctx=Load()),
++                            op=Div(),
++                            right=Constant(value='complete.json')),
++                          attr='exists',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[]),
++                      Call(
++                        func=Attribute(
++                          value=BinOp(
++                            left=Name(id='child', ctx=Load()),
++                            op=Div(),
++                            right=Constant(value='failed.json')),
++                          attr='exists',
++                          ctx=Load()),
++                        args=[],
++                        keywords=[])]),
++                  body=[
++                    Raise(
++                      exc=Call(
++                        func=Name(id='ValueError', ctx=Load()),
++                        args=[
++                          Constant(value='contradictory terminal receipts require review')],
++                        keywords=[]))],
++                  orelse=[]),
++                Expr(
++                  value=Call(
++                    func=Attribute(
++                      value=Name(id='result', ctx=Load()),
++                      attr='append',
++                      ctx=Load()),
++                    args=[
++                      Name(id='claim', ctx=Load())],
+                     keywords=[]))],
+               orelse=[]),
+-            ImportFrom(
+-              module='verify',
+-              names=[
+-                alias(name='verify_claim')],
+-              level=1),
+-            Assign(
+-              targets=[
+-                Name(id='claim', ctx=Store())],
+-              value=Call(
+-                func=Name(id='verify_claim', ctx=Load()),
+-                args=[
+-                  Name(id='child', ctx=Load())],
+-                keywords=[])),
+-            If(
+-              test=Compare(
+-                left=Subscript(
+-                  value=Name(id='claim', ctx=Load()),
+-                  slice=Constant(value='experiment_id'),
+-                  ctx=Load()),
+-                ops=[
+-                  NotEq()],
+-                comparators=[
+-                  Attribute(
+-                    value=Name(id='child', ctx=Load()),
+-                    attr='name',
+-                    ctx=Load())]),
+-              body=[
+-                Raise(
+-                  exc=Call(
+-                    func=Name(id='ValueError', ctx=Load()),
+-                    args=[
+-                      Constant(value='run claim identity differs from its directory')],
+-                    keywords=[]))],
+-              orelse=[]),
+-            If(
+-              test=BoolOp(
+-                op=And(),
+-                values=[
+-                  Call(
+-                    func=Attribute(
+-                      value=BinOp(
+-                        left=Name(id='child', ctx=Load()),
+-                        op=Div(),
+-                        right=Constant(value='complete.json')),
+-                      attr='exists',
+-                      ctx=Load()),
+-                    args=[],
+-                    keywords=[]),
+-                  Call(
+-                    func=Attribute(
+-                      value=BinOp(
+-                        left=Name(id='child', ctx=Load()),
+-                        op=Div(),
+-                        right=Constant(value='failed.json')),
+-                      attr='exists',
+-                      ctx=Load()),
+-                    args=[],
+-                    keywords=[])]),
+-              body=[
+-                Raise(
+-                  exc=Call(
+-                    func=Name(id='ValueError', ctx=Load()),
+-                    args=[
+-                      Constant(value='contradictory terminal receipts require review')],
+-                    keywords=[]))],
+-              orelse=[]),
+-            Expr(
+-              value=Call(
+-                func=Attribute(
+-                  value=Name(id='result', ctx=Load()),
+-                  attr='append',
+-                  ctx=Load()),
+-                args=[
+-                  Name(id='claim', ctx=Load())],
+-                keywords=[]))],
+-          orelse=[]),
+-        Return(
+-          value=Name(id='result', ctx=Load()))],
++            Return(
++              value=Name(id='result', ctx=Load()))])],
+       decorator_list=[],
+       returns=Subscript(
+         value=Name(id='list', ctx=Load()),

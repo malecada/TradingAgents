@@ -1,0 +1,39 @@
+E...
+======================================================================
+ERROR: test_duplicate_history_exact_and_fewer_body_bytes (__main__.ProofTests.test_duplicate_history_exact_and_fewer_body_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 39, in test_duplicate_history_exact_and_fewer_body_bytes
+    actual,c=measured(v,lambda:a.claims(self.root))
+             ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 35, in measured
+    try:result=operation()
+               ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/test_transport.py", line 39, in <lambda>
+    actual,c=measured(v,lambda:a.claims(self.root))
+                               ~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/admission.py", line 205, in claims
+    claim = verify_claim(child, _body_cache=body_cache)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 527, in verify_claim
+    _verify_sources(root, pinned, {claim["source"], claim["design_source"]}, _body_cache=_body_cache)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 415, in _verify_sources
+    flush()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 387, in flush
+    else _source_transport(root,bytes(requests),_body_cache))
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 338, in _source_transport
+    headers = transport(requests, headers=True)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 337, in transport
+    return (_git_transport(root,requests,headers=headers) if reader is None else reader.exchange(requests,headers=headers))
+                                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-historical-proof-transport-candidate-2026-10-12/verify.py", line 262, in exchange
+    if not part:raise ValueError('Git batch short body or terminator')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Git batch short body or terminator
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.091s
+
+FAILED (errors=1)

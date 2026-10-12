@@ -1,0 +1,90 @@
+{
+  "status": "READ_ONLY_SOURCE_ATTRIBUTION_HYPOTHESIS",
+  "census": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full38-entry-preparation01-2026-10-12/KERNEL_PROCESS_CENSUS01.json",
+    "bytes": 2166,
+    "sha256": "5176fcc3ee0c8268b5f200223610fa6057a4a70dcafaefa6090ed2900fe012d4"
+  },
+  "census_worker": {
+    "comm": "python",
+    "cpu_system_seconds": 83.59,
+    "cpu_user_seconds": 425.28,
+    "io": {
+      "cancelled_write_bytes": 4096,
+      "rchar": 90667174103,
+      "read_bytes": 2955636736,
+      "syscr": 13184693,
+      "syscw": 13621118,
+      "wchar": 69246306009,
+      "write_bytes": 565248
+    },
+    "pid": 583748,
+    "ppid": 583721,
+    "reaped_children_system_seconds": 404.11,
+    "reaped_children_user_seconds": 829.49,
+    "start_ticks": 4683816,
+    "state": "S",
+    "wchan": "ep_poll"
+  },
+  "worker_own_cpu_seconds": 508.87,
+  "worker_reaped_children_cpu_seconds": 1233.6,
+  "reaped_fraction_of_own_plus_reaped_cpu": 0.7079605387754165,
+  "source_roster_bytes_from_root_observation": 17007200,
+  "rchar_divided_by_one_current_source_roster": 5331.105302636531,
+  "qualification": "Ratio is dimensional comparison only, not admission count; character counters include pipe/cached I/O and potentially child accounting. Snapshot Git child proves one current Git descendant, not all historical child attribution.",
+  "source_pins": [
+    {
+      "path": "tradingagents/research/admission.py",
+      "bytes": 20073,
+      "sha256": "793c4034d23ff4e486e2a888004b1dc69a11383c4d4460f01d1489fd5794f7a7"
+    },
+    {
+      "path": "tradingagents/research/verify.py",
+      "bytes": 19938,
+      "sha256": "1f14343c7918e3464991b9b57ecdf74425130de5c049a4e401d896116881efce"
+    },
+    {
+      "path": "tradingagents/research/lifecycle.py",
+      "bytes": 13475,
+      "sha256": "e45e53661e212d55da56565372c6ff2cada93f002160f555966523cb6eee40d3"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/matching_owner.py",
+      "bytes": 27485,
+      "sha256": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/resource_fixture.py",
+      "bytes": 26791,
+      "sha256": "31cc0329e7246b260f64d6b608df9d9eb4d812cacbb90b9202d9d6f5f8886bc5"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py",
+      "bytes": 48222,
+      "sha256": "02ca18cd68375a07a6176081309469277f7b74be285a3b29d93af2fd052206ae"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "bytes": 22203,
+      "sha256": "ea25f774d4165e460824eaee0425bb6d860825fb7e97784360bb914f5fada741"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "bytes": 8350,
+      "sha256": "15d45478fc33602763b65acebd20f571e8fcbd1fd7b40e3aba05c9a900da1ccf"
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/treatment_admission.py",
+      "bytes": 40425,
+      "sha256": "65ffe3efecd0c972341ec2af8deaa2594560b5a36bc9ca2dcd3e1b8da006d81e"
+    }
+  ],
+  "prior36_phase_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot36-outcome-review-2026-10-12/OUTCOME_REVIEW01.json",
+    "bytes": 264672,
+    "sha256": "d1fae63a7248b3f3fb1fbabe1c2fe4f9ec63dd9c57bb57b58a718b164606fb19"
+  },
+  "new_proc_reads": false,
+  "git_subprocesses_or_imports_executed": false,
+  "live_source_changes": false
+}
