@@ -1,0 +1,26 @@
+{
+ "schema": "fidelity-b v1 (2026-10-12); statuses: verified_match | declared_assumption | known_deviation | blocked",
+ "exact_reproduction_eligible": false,
+ "records": [
+  {"id": "F01b", "locator": "paper §4.1 (density 0.003; Colab P100); author project report (random 50,000-node samples)", "status": "declared_assumption",
+   "decision": "paper-scale weekly graph = induced subgraph on the K=5,000 most active addresses, K frozen label-free by density calibration (CALIBRATION.md)",
+   "cost_if_wrong": "node population differs from the paper's unknown one; the paper's density implies a core of ~1-2k addresses or a different graph definition"},
+  {"id": "F01", "locator": "§4.1", "status": "declared_assumption", "decision": "native successful positive ETH transfers; recipient required; duplicates rejected per day", "cost_if_wrong": "source graph differs from the paper's unavailable provider/filters"},
+  {"id": "F02", "locator": "§4.1", "status": "declared_assumption", "decision": "directed aggregated pairs with count and value; four log1p node attributes, two log1p edge attributes; self-loops retained", "cost_if_wrong": "attributes differ from unreported originals"},
+  {"id": "F03", "locator": "§4.1", "status": "known_deviation", "decision": "Coin Metrics PriceUSD instead of Yahoo Finance; Monday UTC weeks; one-day graph lag", "cost_if_wrong": "price series differs by provider methodology"},
+  {"id": "F04b", "locator": "§2.1 (k-hop neighborhoods)", "status": "declared_assumption", "decision": "weak one-hop induced neighborhood capped at n_max nodes (center plus strongest-interaction neighbors)", "cost_if_wrong": "hub neighborhoods are truncated; the paper's handling of large neighborhoods is unreported"},
+  {"id": "F05", "locator": "§2.1", "status": "declared_assumption", "decision": "512 seeded draws with overlap halving, average linkage, 32 medoids, one dictionary per seed from training weeks only", "cost_if_wrong": "dictionary differs from unknown original settings"},
+  {"id": "F06", "locator": "§2.2 Eq.1", "status": "declared_assumption", "decision": "RBF agreements on log features, alpha=1, missing edge 0, printed 2·sqrt(l1 l2) denominator", "cost_if_wrong": "objective scale differs"},
+  {"id": "F07", "locator": "§2.2.3 Algorithm 1", "status": "declared_assumption", "decision": "literal transcription: half coefficient, one row/column pass per temperature, beta 1→30 ×1.075 (48 temperatures), greedy hardening", "cost_if_wrong": "a derivative-corrected solver would give different assignments"},
+  {"id": "F08", "locator": "§2.2.4 GPU", "status": "known_deviation", "decision": "CPU batched torch solver equal to the reference within 1e-9; no CUDA kernel", "cost_if_wrong": "none for arithmetic; throughput only"},
+  {"id": "F09", "locator": "§2.3 Eq.3", "status": "declared_assumption", "decision": "32 motif similarities per node then trainable MLP 32→64→32 ReLU", "cost_if_wrong": "MLP width unreported"},
+  {"id": "F10", "locator": "§2.4", "status": "declared_assumption", "decision": "two GAT layers (4×16 concat ELU; 1×32), incoming edges plus self, LeakyReLU 0.2", "cost_if_wrong": "widths/heads unreported"},
+  {"id": "F11", "locator": "§§2.4–3", "status": "declared_assumption", "decision": "mean pooling to a 32-vector; joint training of MLP, GAT, LSTM, attention and head; no cached embeddings across updates", "cost_if_wrong": "pooling/staging unreported"},
+  {"id": "F12", "locator": "§3.1 Eqs.9–11", "status": "declared_assumption", "decision": "LSTM 64, additive attention 32 querying the final state, 28 daily steps, each step concatenating the latest available week vector and the scaled close", "cost_if_wrong": "lookback and widths unreported"},
+  {"id": "F13", "locator": "§§3–4", "status": "declared_assumption", "decision": "separate regression scalar and two-logit direction classifier, both trained directly", "cost_if_wrong": "the paper may derive direction from regression"},
+  {"id": "F14", "locator": "§4.2", "status": "declared_assumption", "decision": "initial fold only: train 2022–2023, test 2024; Adam 1e-3, batch 16, 100 epochs, clip 1, seeds 11/23/37/51/71, no validation or early stopping", "cost_if_wrong": "schedule unreported; rolling folds 2018–2023 not run in M2"},
+  {"id": "F15-F16", "locator": "Tables 1–2", "status": "declared_assumption", "decision": "ETH 2024 only; LSTM/GRU/HLSTM(4×7)/SVM price-only baselines on the same window", "cost_if_wrong": "single fold is not the paper's multi-year average"},
+  {"id": "F17-F19", "locator": "Tables 3–6", "status": "blocked", "decision": "out of M2 scope; fund cohort unrecoverable", "cost_if_wrong": "paper_scope_complete remains false"},
+  {"id": "F20", "locator": "Eqs.12–19", "status": "declared_assumption", "decision": "binary-up accuracy/precision/recall/F1 on the sealed year; MAE/MSE/RMSE/MAPE in USD; 14-day moving-block bootstrap", "cost_if_wrong": "aggregation convention unreported"}
+ ]
+}

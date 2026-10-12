@@ -10,7 +10,7 @@
  "aggregation": "ordered (from,to) pair: count, value_eth=sum(value/1e18)",
  "paper_scale": {
   "rule": "induced subgraph on K most active addresses; activity=in_count+out_count of admitted transactions; ties lexicographic address",
-  "K": null,
+  "K": 5000,
   "calibration": "K chosen label-free on weeks 2022-03-07, 2022-09-05, 2023-03-06, 2023-09-04 to match paper density 0.003 in log space; cap 50000"
  },
  "node_features": ["log1p(in_count)", "log1p(out_count)", "log1p(in_volume_eth)", "log1p(out_volume_eth)"],
