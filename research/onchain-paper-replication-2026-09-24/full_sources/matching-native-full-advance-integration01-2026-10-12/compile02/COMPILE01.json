@@ -1,0 +1,26 @@
+{
+  "scope": "Root compile-only; no extension load or numerical imports",
+  "command": [
+    "/usr/bin/cc",
+    "-shared",
+    "-fPIC",
+    "-O3",
+    "-std=c11",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-fno-associative-math",
+    "-fno-unsafe-math-optimizations",
+    "-frounding-math",
+    "-I/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/include/python3.13",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-native-full-advance-candidate02-2026-10-12/native_full.c",
+    "-o",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-native-full-advance-integration01-2026-10-12/compile02/_native_full.cpython-313-x86_64-linux-gnu.so",
+    "-lm"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "source_sha256": "c76737a37682dbd932896ba1d836a54a6fce1dec1db5ec95dcd7ea8af151432d",
+  "library_path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-native-full-advance-integration01-2026-10-12/compile02/_native_full.cpython-313-x86_64-linux-gnu.so",
+  "library_sha256": "a179f69736440c95c0e97fccc6d5041e2a3f785821db8a4ed9303168b389c36e"
+}

@@ -1,0 +1,1945 @@
+{
+  "scope": "finite synthetic current C05v2 Session/shared owned normalizer/production score_only comparison; no pilot/authority/capacity proof",
+  "native_sha256": "a179f69736440c95c0e97fccc6d5041e2a3f785821db8a4ed9303168b389c36e",
+  "config_sha256": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e",
+  "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+  "atol": 1e-08,
+  "rtol": 1e-06,
+  "candidate_preserves_compiled_normalizer_dispatch": false,
+  "tiny_edgeproduct_agreements": "candidate02 recomputes1..7 edge products every iteration; original production telemetry still absent",
+  "qualification": "native selected loop holds GIL; omits original per-normalization BackendOwner dispatch and per-temperature runtime rechecks; unchanged synthetic domain only",
+  "owner_cleanup_seconds": {
+    "current": 4.978996003046632e-06,
+    "native": 3.186010872013867e-06
+  },
+  "cases": [
+    {
+      "case": "1x1",
+      "shape": [
+        1,
+        1
+      ],
+      "edges": [
+        1,
+        1
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          289,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          1,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          289,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          1,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 9.158399188891053e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 49,
+            "agreement_scalar_entries": 49,
+            "chunk_lt8_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.008256955989054404,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 7.26369908079505e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.0019859120075125247,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 289,
+          "candidate_boundary_seconds": 0.0004996210045646876
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.0001522370002930984,
+        "candidate_library_current_seconds": 9.084100020118058e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "2x2",
+      "shape": [
+        2,
+        2
+      ],
+      "edges": [
+        2,
+        2
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          436,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          2,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          436,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          2,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.505301280412823e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 196,
+            "agreement_scalar_entries": 196,
+            "chunk_lt8_calls": 192
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.007226595000247471,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 7.555198681075126e-05,
+              "cpu_seconds": 0.0010001999999999789,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.001935065010911785,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 436,
+          "candidate_boundary_seconds": 0.0007704820018261671
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00012838200200349092,
+        "candidate_library_current_seconds": 8.66129994392395e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "3x4",
+      "shape": [
+        3,
+        4
+      ],
+      "edges": [
+        4,
+        6
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          1404,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          1404,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.336899241432548e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 36,
+            "agreement_scalar_entries": 36,
+            "chunk_8to255_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.007251622009789571,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.41610095044598e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.0016220160032389686,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 1404,
+          "candidate_boundary_seconds": 0.00045233200944494456
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00011697100126184523,
+        "candidate_library_current_seconds": 9.388700709678233e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "8x8",
+      "shape": [
+        8,
+        8
+      ],
+      "edges": [
+        16,
+        16
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          12592,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          14,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          12592,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          14,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.767699960619211e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 320,
+            "agreement_scalar_entries": 320,
+            "chunk_256to1023_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.015541619999567047,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 7.850800466258079e-05,
+              "cpu_seconds": 0.0009997789999999784,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.002600799998617731,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 12592,
+          "candidate_boundary_seconds": 0.0011318629985908046
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00014620600268244743,
+        "candidate_library_current_seconds": 8.448900189250708e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "16x16",
+      "shape": [
+        16,
+        16
+      ],
+      "edges": [
+        32,
+        32
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          49648,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          64,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          49648,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          64,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.929099617991596e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 1280,
+            "agreement_scalar_entries": 1280,
+            "chunk_1024_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.019588082999689505,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.798698450438678e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.005351461993996054,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 49648,
+          "candidate_boundary_seconds": 0.0034527249954408035
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00015596399316564202,
+        "candidate_library_current_seconds": 8.66839982336387e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "32x32",
+      "shape": [
+        32,
+        32
+      ],
+      "edges": [
+        32,
+        32
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          50416,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          455,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          50416,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          455,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 7.015200390014797e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 2048,
+            "agreement_scalar_entries": 2048,
+            "chunk_1024_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.023441362995072268,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 7.578299846500158e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.008188285995856859,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 50416,
+          "candidate_boundary_seconds": 0.0059162959951208904
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00016026198863983154,
+        "candidate_library_current_seconds": 9.003000741358846e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "zero",
+      "shape": [
+        3,
+        4
+      ],
+      "edges": [
+        0,
+        0
+      ],
+      "budget": 1000000,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          252,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          5,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          252,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          5,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": false,
+      "selected_calls": 0,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.839900743216276e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 12,
+            "agreement_scalar_entries": 12
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.008798515991657041,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.88299915054813e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 12,
+            "agreement_scalar_entries": 12
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.00505377100489568,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1000000,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 0,
+          "fallback": 1,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.00014911999460309744
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00011818201164714992,
+        "candidate_library_current_seconds": 9.704199328552932e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "exact",
+      "shape": [
+        3,
+        4
+      ],
+      "edges": [
+        4,
+        6
+      ],
+      "budget": 1404,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          1404,
+          "annealing",
+          "outer",
+          0,
+          48
+        ],
+        [
+          0,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          1404,
+          "annealing",
+          "outer",
+          0,
+          48
+        ],
+        [
+          0,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 3,
+              "failures": 0,
+              "wall_seconds": 9.017098636832088e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 36,
+            "agreement_scalar_entries": 36,
+            "chunk_8to255_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.007353363005677238,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1404,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 3,
+              "failures": 0,
+              "wall_seconds": 8.68649804033339e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 0,
+            "agreement_scalar_entries": 0
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.0018626990058692172,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1404,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 2,
+          "selected": 1,
+          "fallback": 1,
+          "failed": 0,
+          "selected_operations": 1404,
+          "candidate_boundary_seconds": 0.0005436339852167293
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00011843298852909356,
+        "candidate_library_current_seconds": 8.863699622452259e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "plus_one",
+      "shape": [
+        3,
+        4
+      ],
+      "edges": [
+        4,
+        6
+      ],
+      "budget": 1405,
+      "checkpoint_requested": false,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          1404,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          1404,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          4,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": true,
+      "selected_calls": 1,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.33990130154416e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 36,
+            "agreement_scalar_entries": 36,
+            "chunk_8to255_calls": 48
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.007265448002726771,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1405,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 2,
+              "failures": 0,
+              "wall_seconds": 6.280900561250746e-05,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {},
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.0016539759963052347,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1405,
+        "checkpoint_reloaded": false,
+        "candidate_route": {
+          "attempted": 1,
+          "selected": 1,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 1404,
+          "candidate_boundary_seconds": 0.00044468799023889005
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.0001169299939647317,
+        "candidate_library_current_seconds": 0.00010411599942017347,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    },
+    {
+      "case": "partial_checkpoint",
+      "shape": [
+        8,
+        8
+      ],
+      "edges": [
+        16,
+        16
+      ],
+      "budget": 1024,
+      "checkpoint_requested": true,
+      "history_equal": true,
+      "baseline_history": [
+        [
+          1024,
+          "annealing",
+          "edges",
+          176,
+          3
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          156,
+          7
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          136,
+          11
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          116,
+          15
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          96,
+          19
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          76,
+          23
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          56,
+          27
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          36,
+          31
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          16,
+          35
+        ],
+        [
+          1024,
+          "annealing",
+          "normalize_rows",
+          0,
+          38
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          237,
+          42
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          217,
+          46
+        ],
+        [
+          304,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          14,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "candidate_history": [
+        [
+          1024,
+          "annealing",
+          "edges",
+          176,
+          3
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          156,
+          7
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          136,
+          11
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          116,
+          15
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          96,
+          19
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          76,
+          23
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          56,
+          27
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          36,
+          31
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          16,
+          35
+        ],
+        [
+          1024,
+          "annealing",
+          "normalize_rows",
+          0,
+          38
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          237,
+          42
+        ],
+        [
+          1024,
+          "annealing",
+          "edges",
+          217,
+          46
+        ],
+        [
+          304,
+          "hardening",
+          "done",
+          0,
+          48
+        ],
+        [
+          14,
+          "done",
+          "done",
+          0,
+          48
+        ]
+      ],
+      "assignments_equal": true,
+      "soft_layout_equal": true,
+      "soft_close": true,
+      "soft_bitwise": true,
+      "soft_max_abs": 0.0,
+      "score_close": true,
+      "score_abs": 0.0,
+      "score_bitwise": true,
+      "baseline_iterations": 48,
+      "candidate_iterations": 48,
+      "selected_expected": false,
+      "selected_calls": 0,
+      "baseline": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          },
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 14,
+              "failures": 0,
+              "wall_seconds": 0.00041992298793047667,
+              "cpu_seconds": 0.001000371,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 3392,
+            "agreement_scalar_entries": 3392,
+            "chunk_256to1023_calls": 37,
+            "chunk_8to255_calls": 22
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.03587430498737376,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1024,
+        "checkpoint_reloaded": true,
+        "candidate_route": {
+          "attempted": 0,
+          "selected": 0,
+          "fallback": 0,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "candidate": {
+        "adapter_lifetimes": [
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          },
+          {
+            "numpy_chunks": 0,
+            "numpy_entries": 0,
+            "fallback_chunks": 0,
+            "index_bytes": 0,
+            "cache_hit_entries": 0,
+            "cache_miss_entries": 0,
+            "cache_reserved_bytes": 0,
+            "cache_weight_bytes": 0,
+            "cache_validity_bytes": 0,
+            "cache_oversize_chunks": 0,
+            "cache_peak_retained_bytes": 0,
+            "cache_hit_chunks": 0,
+            "cache_allocations": 0,
+            "cache_allocated_bytes": 0,
+            "cache_released_bytes": 0
+          }
+        ],
+        "phases": {
+          "format": "exclusive-wall-cpu-v1",
+          "phases": {
+            "state_scan": {
+              "calls": 14,
+              "failures": 0,
+              "wall_seconds": 0.0005515599623322487,
+              "cpu_seconds": 0.0,
+              "bytes": 0
+            }
+          },
+          "numeric_counts": {
+            "agreement_scalar_chunks": 3392,
+            "agreement_scalar_entries": 3392,
+            "chunk_256to1023_calls": 37,
+            "chunk_8to255_calls": 22
+          },
+          "invalid_measurements": 0,
+          "counters": "cumulative/exclusive/process-local",
+          "authority": false
+        },
+        "wall_seconds": 0.05160455100121908,
+        "timing_interval": "cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup",
+        "operation_budget": 1024,
+        "checkpoint_reloaded": true,
+        "candidate_route": {
+          "attempted": 13,
+          "selected": 0,
+          "fallback": 13,
+          "failed": 0,
+          "selected_operations": 0,
+          "candidate_boundary_seconds": 0.0017145699966931716
+        },
+        "normalization_policy_sha256": "648654607c166911bfec4b0b276cf7f8c148ff7bf9f62621faf12b1ef1b5a8f6",
+        "backend_owner_lifetime": "one shared real engineering owner per route across fixtures and checkpoint sessions"
+      },
+      "validation_diagnostic": {
+        "fresh_ann_check_seconds": 0.00013063599180895835,
+        "candidate_library_current_seconds": 8.540099952369928e-05,
+        "qualification": "independent diagnostic sample; not an exclusive decomposition of solver time"
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}
