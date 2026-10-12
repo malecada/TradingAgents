@@ -1,0 +1,11 @@
+# Exact final whole39 conditional entry release
+
+Accepted exact Binding01 SHA957b98fc9b9c35f88ce85ac1b835fcf1abb6b8e75efed2a405ab90afe385fdd8. It differs from the accepted submitted body only by the genuine BindingReview02 reference and status. Optional binding_readback/endpoint_review nulls remain untouched. No required reference remains missing.
+
+RELEASE_REVIEW01 contains the preflight-compatible accepted decision, exact39 identity and full path-to-SHA evidence. It includes actual Binding01, actual BindingReview02, all1,142 registered source pins,73 input refs, concrete gate/preflight/root-IO, unchanged accepted binder and every bound reference. Existing exact source/input and genuine increment36-return checks were reused. Final control/source bodies still match their accepted hashes. The930-byte local opaque envelope is the sole exception and is hash/mode bound without decoding; its reference is public and committed.
+
+This conditional source/entry release does not start a claim. Root must integrate exact release bytes, commit/push the released public bodies, authenticate actual remote/current committed source, recover later final binding/release/review metadata through the declared actual Git return, and pass fresh source/runtime/namespace/physical/native checks before at most one unused39 claim under existing110. These final metadata bodies are outside archive36; no earlier archive scope is enlarged retroactively.
+
+The intended resource attempt retains all seven whole graphs415,968,128 motif cells, original32motifs/512samples, batch16/seed11/lookback28 and the genuine joint update. Only the preparation stop is removed. Original38 remains FAILED/spent with its separately qualified preparation component. Whole39 training memory, forward/backward/Adam/checkpoint peak and successful completion remain unknown. Prospective guarded storage does not establish physical reservation or full memory fit. No financial validation, paper/production action, runtime/POSIX reconstruction or deletion follows.
+
+No empirical/native/admission/Owner/claim, helper/binder, scan, numerical import, Git or network operation was executed by this review. RELEASE_CHECK01 records exact final-body and caller/evidence-map checks without replaying the source or scientific matrices.

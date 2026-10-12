@@ -1,0 +1,9 @@
+# Three-file final metadata return candidate
+
+Unexecuted source candidate. Root supplies INPUT_TEMPLATE01 with actual committed source and exact three body pins after final release exists, then runs `.venv/bin/python -B <candidate>/return_final01.py <filled-input.json>` from repository root after review. Null template fields fail closed.
+
+Only BINDING01.json, RELEASE_REVIEW01.json and BINDING_REVIEW02.json are accepted, in that order. Each must be a canonical stable regular single-link file of at most4MiB, with exact hash/bytes/mode. Actual36 receipt binds the existing fresh `real-pilot-entry39-20261012-36.git`; no new bare repository or historical traversal occurs. Destination `D39/final-metadata-return01` is reserved by exclusive mkdir; a failed attempt stays reserved.
+
+The reviewed36 subprocess runner, timeout, raw stdout/stderr hashes and actual remote commit-only/direct-blob operations are reused. The narrower procedure logs21 commands: local/current remote joins, three tree/blob joins, commit-only fetch and exact commit comparison, three direct blob fetch/read pairs, final local HEAD. Selected content must equal both registered pins and stable current local bytes. Returned stdout files are the actual three bodies, without duplicate copied output. No alternates are permitted. Blob/commit reads explicitly disable origin promisor behavior and request no lazy fetch; every remote blob is fetched explicitly first. No validation or transport cache is added.
+
+Two focused offline scalar tests passed; no Git/network or real helper execution occurred. Literal patch/inverse records the adaptation, which intentionally removes archive/capture and bare-init operations and adds three fixed selected-body joins. This is not an alias-only adaptation. Successful receipt would attest only actual return of these three bytestrings, not POSIX restoration, runtime/private contents, financial release authority or whole-tree recovery.

@@ -1,0 +1,30 @@
+"""Exact final binding delta and release-map assembly; no admission/claim execution."""
+import ast,hashlib,json,stat
+from pathlib import Path
+D=Path(__file__).resolve().parent;R=D.parents[3];F=D.parent;E=F/'real-data-pilot-full39-entry-preparation01-2026-10-12';N='eth-paper-real-data-end-to-end-resource-20261012-39';checks=[]
+def pin(p):
+ s=p.lstat();assert stat.S_ISREG(s.st_mode) and not p.is_symlink();b=p.read_bytes();return {'path':str(p.relative_to(R)),'sha256':hashlib.sha256(b).hexdigest(),'bytes':len(b)}
+def load(p):return json.loads(p.read_bytes())
+def ck(n,v):assert v,n;checks.append(n)
+b=load(E/'BINDING01.json');submitted=load(E/'BINDING_SUBMITTED01.json');review=load(D/'BINDING_REVIEW02.json');gate=load(E/'gate01.json');ex=gate['experiments'][N]
+ck('exact final original binding',pin(E/'BINDING01.json')=={'path':str((E/'BINDING01.json').relative_to(R)),'sha256':'957b98fc9b9c35f88ce85ac1b835fcf1abb6b8e75efed2a405ab90afe385fdd8','bytes':23807})
+ck('only realreview and status changed',set(k for k in b.keys()|submitted.keys() if b.get(k)!=submitted.get(k))=={'binding_review','status'})
+ck('exact real independent review body',b['binding_review']==pin(D/'BINDING_REVIEW02.json') and b['binding_review']['sha256']=='c6e84797150b7c4929ee26a737e7c6560e8fc4fb8f88c8bd1453c6df276cafbe')
+ck('identity and73 unchanged',b['identity']==review['identity']==N and b['input_refs']==review['input_refs'] and len(b['input_refs'])==73)
+ev=dict(review['evidence'])
+for p in (E/'BINDING01.json',D/'BINDING_REVIEW02.json'):
+ v=pin(p);ev[v['path']]=v['sha256']
+for role,ref in b.items():
+ if isinstance(ref,dict) and {'path','sha256'}<=set(ref):ck('release exactboundref '+role,ev.get(ref['path'])==ref['sha256'])
+for path,h in ex['source_files'].items():ck('release registeredsource '+path,ev.get(path)==h)
+for role,ref in ex['inputs'].items():ck('release actualinput '+role,ev.get(ref['path'])==ref['sha256'] and b['input_refs'][role]=={k:ref[k] for k in ('path','sha256')})
+for n in ('preflight39_01.py','root_io39_01.py','gate01.json'):
+ v=pin(E/n);ck('exact current caller '+n,ev[v['path']]==v['sha256'])
+src=(E/'preflight39_01.py').read_text();tree=ast.parse(src);literals={x.targets[0].id:ast.literal_eval(x.value) for x in tree.body if isinstance(x,ast.Assign) and isinstance(x.targets[0],ast.Name) and x.targets[0].id in ('BINDER','FROZEN_PREPARATION')}
+ck('unchanged exact binder included',ev[literals['BINDER']['path']]==literals['BINDER']['sha256']=='bcca66a6c7daba762a629dff84b9f16e48e7b9c2ffe51f77511942816ee444cb')
+ck('exact preparation included',b['preparation']==literals['FROZEN_PREPARATION'])
+opaque=b['transport'];ck('single opaque exception only',[p for p in ev if p.startswith('research_artifacts/real_pilot_runtime/')]==[opaque['path']] and opaque['bytes']==930 and pin(R/opaque['path'])==opaque and stat.S_IMODE((R/opaque['path']).stat().st_mode)==0o600 and stat.S_IMODE((R/opaque['path']).parent.stat().st_mode)==0o700)
+ck('optional nulls preserved',sorted(k for k,v in b.items() if v is None)==['binding_readback','endpoint_review'])
+out={'schema_version':1,'decision':'accepted','identity':N,'reviewer':'independent integration reviewer /root/pilot_efficiency_integration_review','scope':'Exact final whole39 entry/binding/source/input evidence, conditional on Root committed/current readback and original one-use resource admission. Not completed scientific work or known memory fit.','binding':pin(E/'BINDING01.json'),'binding_review':pin(D/'BINDING_REVIEW02.json'),'gate':pin(E/'gate01.json'),'source_count':1142,'input_count':73,'evidence':ev,'checks':checks,'original38':{'outer_status':'failed','spent':True,'first_graph_preparation_component_qualified':True,'whole_graphs_or_training_completed':False},'whole39':{'graphs':7,'motif_cells':415968128,'original_motifs':32,'original_samples':512,'batch_size':16,'seed':11,'lookback_days':28,'joint_update_required':True,'entry_qualification_removed':True,'full_training_memory_fit_proven':False,'physical_reservation':False},'opaque_exception':{'input_role':'archive_transport','reference':opaque,'handling':'exact930-byte hash/mode only; no decode; this sole body stays local and its reference stays committed'},'required_root_before_launch_conditions':['Integrate these exact release bytes into the fixed entry RELEASE_REVIEW01.json. Commit/push all released public bodies and authenticate actual remote source; release is not recursively pinned.','Authenticate committed exact current source, gate, final Binding01, this actual binding review and all source/input evidence with the existing single-opaque exception.','Recover actual final binding/release/review metadata separately with genuine unique-object Git return; those later bodies are not claimed in archive36.','Perform existing fresh source/runtime/namespace/physical-resource/native checks; sampled observations are not reservations or permanent currentness.','At most one unused original39 resource claim under existing effective110 and unchanged caps. Preserve every failure, unavailable cell and original terminal; no retry/refund/identity reopening.'],'limitations':['No admission/helper/binder/scan/numerical/Owner/claim/Git/network executed by this review. Prior1142source/73input checks and accepted actual36 return reused; only final binding/caller delta checked.','Full GAT forward/backward/Adam/checkpoint peak remains unknown under6GiB max/5GiB high; prospective guarded storage is not memory success.','No financial fit/strategy validation/paper start/production authority, runtime installation, POSIX reconstruction or deletion.','Original38 remains FAILED/spent; qualified preparation cannot change its original ledger.','Current final binding and release/review are outside archive36; original35/36 scope acceptance is unchanged.']}
+with (D/'RELEASE_REVIEW01.json').open('x') as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\n')
+print(json.dumps({'decision':'accepted','checks':len(checks),'evidence':len(ev),'release':pin(D/'RELEASE_REVIEW01.json')}))
