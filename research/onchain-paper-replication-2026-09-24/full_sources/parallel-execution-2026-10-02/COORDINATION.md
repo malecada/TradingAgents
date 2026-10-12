@@ -1,5 +1,7 @@
 # Current coordination — edge-index layout installed
 
+User priority2026-10-12: runtime≤168hours first, original pilot next; see GOAL_SEQUENCE.md. Working scope representative pilot pending clarification. Native creation refused by unfinished PAUSED goal; objective/status/usage retained, no false completion/new native goal. No empirical release or allowance change.
+
 Root owns Main/Git/STATE/registrations/accounting/external preservation and ONE native launcher. No numerical job/new empirical claim. Goal service PAUSED; source engineering explicitly authorized. Original39 FAILED/spent, fixed40 unused/unreleased. Resource78closed33COMPLETE45FAILED/highest110; proposed111 metadata-only unused. Paper36closed27COMPLETE9FAILED/highest64/all1420financialfits pending.
 
 All three bounded assignments completed:
