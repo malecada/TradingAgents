@@ -1,0 +1,74 @@
+{
+  "kind": "read-only-engineering-historical-claim-proof-timing",
+  "at": "2026-10-12T11:19:52.961821+00:00",
+  "candidate_source_sha256": "672d8774ff26900f8feadf211ec154d5730e7fbd53156e5b505964ac141d856e",
+  "review_sha256": "4094aa34257c5b86020541e68002b7a716d6070eeba7032482fee007ce57178f",
+  "affinity": [
+    2,
+    3
+  ],
+  "limits": {
+    "rlimit_as": [
+      -1,
+      -1
+    ],
+    "file_bytes": 4194304,
+    "cpu_seconds": 60
+  },
+  "samples": [
+    {
+      "sample": 0,
+      "workers": 1,
+      "status": "passed",
+      "error_class": null,
+      "wall_seconds": 7.436744268001348,
+      "self_cpu_seconds": 1.6001909999999997,
+      "reaped_children_cpu_seconds": 6.45235,
+      "self_process_lifetime_maxrss_bytes": 99504128,
+      "child_rusage_maxrss_bytes": 67395584,
+      "claim_count": 115,
+      "ordered_claim_records_sha256": "9b25940380b122e7010b076a9acb98cfbaf215500cf43dffa5040e988daeabf3"
+    },
+    {
+      "sample": 1,
+      "workers": 2,
+      "status": "passed",
+      "error_class": null,
+      "wall_seconds": 5.584637949003081,
+      "self_cpu_seconds": 2.008019,
+      "reaped_children_cpu_seconds": 8.598811000000001,
+      "self_process_lifetime_maxrss_bytes": 169009152,
+      "child_rusage_maxrss_bytes": 145412096,
+      "claim_count": 115,
+      "ordered_claim_records_sha256": "9b25940380b122e7010b076a9acb98cfbaf215500cf43dffa5040e988daeabf3"
+    },
+    {
+      "sample": 2,
+      "workers": 2,
+      "status": "passed",
+      "error_class": null,
+      "wall_seconds": 5.536583378001524,
+      "self_cpu_seconds": 1.9705220000000003,
+      "reaped_children_cpu_seconds": 8.586973,
+      "self_process_lifetime_maxrss_bytes": 177508352,
+      "child_rusage_maxrss_bytes": 175276032,
+      "claim_count": 115,
+      "ordered_claim_records_sha256": "9b25940380b122e7010b076a9acb98cfbaf215500cf43dffa5040e988daeabf3"
+    },
+    {
+      "sample": 3,
+      "workers": 1,
+      "status": "passed",
+      "error_class": null,
+      "wall_seconds": 7.453588063995994,
+      "self_cpu_seconds": 1.5277999999999996,
+      "reaped_children_cpu_seconds": 6.569156000000001,
+      "self_process_lifetime_maxrss_bytes": 184758272,
+      "child_rusage_maxrss_bytes": 177508352,
+      "claim_count": 115,
+      "ordered_claim_records_sha256": "9b25940380b122e7010b076a9acb98cfbaf215500cf43dffa5040e988daeabf3"
+    }
+  ],
+  "previous_failed_benchmark": "pilot-claims-parallel-readonly-benchmark-2026-10-12/BENCHMARK01.json",
+  "qualification": "Actual existing claim proofs via unchanged verify.py/fresh local Git. No admit, ResearchRun.start, Owner, model/data fitting, new claim, policy activation, network, registration or live source change. Only claims() is timed, not whole admission or feature throughput. Corrected address-space setup matches recorded native absence of RLIMIT_AS; prior1GiB artificial virtual mapping failure remains preserved. Reverse order limits but does not eliminate cache/contention effects. RSS is process/rusage observation, not whole simultaneous cgroup peak. Original39 remains independent on CPUs0,1."
+}

@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-12T11:11:05.797295+00:00",
+  "kind": "read-only-baseline-source-failure-diagnosis",
+  "first_sorted_claim": "allocation-cash-terms-20260915",
+  "original_admission_source_sha256": "793c4034d23ff4e486e2a888004b1dc69a11383c4d4460f01d1489fd5794f7a7",
+  "result": {
+    "status": "failed",
+    "error_class": "ValueError",
+    "message": "saved committed provenance cannot be verified",
+    "frames": [
+      {
+        "file": "<stdin>",
+        "line": 8,
+        "function": "<module>"
+      },
+      {
+        "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/verify.py",
+        "line": 284,
+        "function": "verify_claim"
+      },
+      {
+        "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/verify.py",
+        "line": 253,
+        "function": "_registration_pair"
+      },
+      {
+        "file": "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/verify.py",
+        "line": 132,
+        "function": "_git_transport"
+      }
+    ]
+  },
+  "qualification": "Original unchanged verify_claim, same source-check limits as failed benchmark; no new run, empirical execution or policy activation. No exception locals/output bodies printed."
+}

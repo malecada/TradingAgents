@@ -1,0 +1,41 @@
+...F.
+======================================================================
+FAIL: test_secondary_drain_probe_failure_preserves_caller_fatal (__main__.Review.test_secondary_drain_probe_failure_preserves_caller_fatal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-candidate-2026-10-12/admission.py", line 235, in _parallel_claims
+    done, _ = wait(tuple(pending), return_when=FIRST_COMPLETED)
+              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-review-2026-10-12/check_review01.py", line 65, in interrupted_wait
+    def interrupted_wait(*a,**k):started.wait(3);release.set();raise fatal
+                                                               ^^^^^^^^^^^
+KeyboardInterrupt: first caller interrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-review-2026-10-12/check_review01.py", line 68, in test_secondary_drain_probe_failure_preserves_caller_fatal
+    try:env['claims'](self.root,workers=2)
+        ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-candidate-2026-10-12/admission.py", line 306, in claims
+    return _parallel_claims([child for child in sorted(folder.iterdir()) if not child.name.startswith('.')])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-candidate-2026-10-12/admission.py", line 280, in _parallel_claims
+    if not future.done():
+           ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-review-2026-10-12/check_review01.py", line 60, in done
+    if draining[0]:raise probefail
+                   ^^^^^^^^^^^^^^^
+SystemExit: second drain interruption
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-review-2026-10-12/check_review01.py", line 69, in test_secondary_drain_probe_failure_preserves_caller_fatal
+    except BaseException as caught:self.assertIs(caught,fatal)
+                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: SystemExit('second drain interruption') is not KeyboardInterrupt('first caller interrupt')
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.084s
+
+FAILED (failures=1)

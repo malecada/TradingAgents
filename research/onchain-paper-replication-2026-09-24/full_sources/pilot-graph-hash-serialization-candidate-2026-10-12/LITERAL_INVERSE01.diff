@@ -1,0 +1,48 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-graph-hash-serialization-candidate-2026-10-12/neighborhoods.py
++++ tradingagents/research/onchain_replication/neighborhoods.py
+@@ -23,24 +23,6 @@
+     return h.hexdigest()
+ 
+ 
+-def _graph_chunk_bytes(value):
+-    """Fresh bounded ndarray conversion; no scalar-domain rescan or cache."""
+-    import json
+-    from .provenance import current_canonical_bytes
+-    if type(value) is not np.ndarray:
+-        return current_canonical_bytes(value.tolist())
+-    dtype=value.dtype
+-    direct=(value.ndim in (1,2) and value.size<=1024
+-            and dtype.fields is None and dtype.subdtype is None and not dtype.hasobject
+-            and dtype.metadata is None and
+-            ((dtype.kind in ('i','u') and dtype.itemsize in (1,2,4,8))
+-             or (dtype.kind=='f' and dtype.itemsize in (2,4,8))))
+-    body=value.tolist()
+-    if not direct:return current_canonical_bytes(body)
+-    return json.dumps(body,sort_keys=True,separators=(',', ':'),ensure_ascii=False,
+-                      allow_nan=False).encode('utf-8')
+-
+-
+ def graph_hash(graph):
+     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
+     from dataclasses import fields
+@@ -56,7 +38,7 @@
+             rows=max(1,1024//max(1,value.shape[1]))
+             for start in range(0,len(value),rows):
+                 if start:h.update(b',')
+-                h.update(_graph_chunk_bytes(value[start:start+rows])[1:-1])
++                h.update(canonical_bytes(value[start:start+rows].tolist())[1:-1])
+             h.update(b']')
+         elif isinstance(value,np.ndarray) and value.ndim>1:
+             h.update(b'[')
+@@ -71,9 +53,8 @@
+             for start in range(0,len(value),1024):
+                 if start:h.update(b',')
+                 chunk=value[start:start+1024]
+-                encoded=(_graph_chunk_bytes(chunk) if isinstance(chunk,np.ndarray)
+-                         else canonical_bytes(chunk))
+-                h.update(encoded[1:-1])
++                if isinstance(chunk,np.ndarray):chunk=chunk.tolist()
++                h.update(canonical_bytes(chunk)[1:-1])
+             h.update(b']')
+         elif isinstance(value,Mapping):
+             h.update(b'{')

@@ -1,0 +1,7 @@
+# Actual read-only historical-claim timing
+
+All four samples verified115 existing claims through the unchanged fresh Git transports and returned the same ordered records digest. Mean component wall time: sequential 7.445166s; two workers 5.560611s; reduction 25.31247% / 1.338912×. Self plus reaped-child CPU increased. Only claims() was benchmarked, on CPUs2/3; actual39 remains on CPUs0/1. Two samples per mode and reversed ordering do not remove cache/contention effects. Process lifetime RSS and child-rusage maximum do not measure simultaneous whole-unit memory. Independent component receipt/arithmetic review2c62423f accepts that limited scope.
+
+The first benchmark failed before any parallel sample. Its1GiB address-space limit prevented Git from mapping a3,328,726,216-byte existing pack; fresh diagnostic child exited128 with the mapping error. That failed result and diagnosis remain immutable. Benchmark02 corrected the engineering setup to the actual native absence of RLIMIT_AS; model memory cap/resources/identity remained unchanged. This creates no empirical allowance or resource-cap admission.
+
+Candidate347715cf is UNINSTALLED. Full registration→genuine admission/run integration and joint resource measurement remain pending. No whole-admission or feature speedup follows, and no model was fitted. Before activation, Root must update the actual source/runtime closure and exact committed registration after original39 closes, with independent release and cumulative allowance.

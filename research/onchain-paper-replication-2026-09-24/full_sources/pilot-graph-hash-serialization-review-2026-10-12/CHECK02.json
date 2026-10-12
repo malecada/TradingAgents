@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "controls": [
+    "subclass dtype trap fallback",
+    "oversize dimension metadata fallback",
+    "negative stride endian exact1024 direct",
+    "nonfinite exact exception parity",
+    "uint64 extreme fresh mutation"
+  ],
+  "manifest_and_literal_inverse": true,
+  "unchanged_other_ast_and_restored_graph_ast": true,
+  "benchmark": {
+    "int64": {
+      "medians": {
+        "baseline": 0.014490130000922363,
+        "candidate": 0.007724609000433702
+      },
+      "wall_reduction_percent": 46.69054729017618,
+      "raw_result": 806522
+    },
+    "float64": {
+      "medians": {
+        "baseline": 0.05801925099513028,
+        "candidate": 0.04898763699748088
+      },
+      "wall_reduction_percent": 15.566581510001654,
+      "raw_result": 2598247
+    },
+    "validated_graph": {
+      "medians": {
+        "baseline": 0.06088572800217662,
+        "candidate": 0.035871599000529386
+      },
+      "wall_reduction_percent": 41.08373147932631,
+      "raw_result": "e80a003111aa890802d80aed78fe329466fa8903e977602e9475bd0da408d551"
+    }
+  },
+  "affinity": [
+    2,
+    3
+  ],
+  "numpy": "2.3.0"
+}

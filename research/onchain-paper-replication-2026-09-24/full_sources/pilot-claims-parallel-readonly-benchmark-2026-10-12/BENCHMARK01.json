@@ -1,0 +1,31 @@
+{
+  "kind": "read-only-engineering-historical-claim-proof-timing",
+  "at": "2026-10-12T11:08:26.558009+00:00",
+  "candidate_source_sha256": "672d8774ff26900f8feadf211ec154d5730e7fbd53156e5b505964ac141d856e",
+  "review_sha256": "4094aa34257c5b86020541e68002b7a716d6070eeba7032482fee007ce57178f",
+  "affinity": [
+    2,
+    3
+  ],
+  "limits": {
+    "address_space_bytes": 1073741824,
+    "file_bytes": 4194304,
+    "cpu_seconds": 60
+  },
+  "samples": [
+    {
+      "sample": 0,
+      "workers": 1,
+      "status": "failed",
+      "error_class": "ValueError",
+      "wall_seconds": 0.010196075003477745,
+      "self_cpu_seconds": 0.008054999999999994,
+      "reaped_children_cpu_seconds": 0.002306,
+      "self_process_lifetime_maxrss_bytes": 22507520,
+      "child_rusage_maxrss_bytes": 22507520,
+      "claim_count": null,
+      "ordered_claim_records_sha256": null
+    }
+  ],
+  "qualification": "Actual existing claim proofs via unchanged verify.py/fresh local Git. No admit, ResearchRun.start, Owner, model/data fitting, new claim, policy activation, network, registration or live source change. This measures only claims(), not whole source admission or feature throughput. Reverse order limits but does not eliminate cache/contention effects. RSS fields are process/rusage observations, not simultaneous whole-cgroup peak. Active39 remains independent on CPUs0,1."
+}

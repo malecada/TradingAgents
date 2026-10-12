@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "decision": "accepted_component_return_and_arithmetic",
+  "scope": "Four actual Root claims() component timing receipts only, joined to the accepted amendment02 source; no whole admission or resource execution admission.",
+  "candidate_source_sha256": "672d8774ff26900f8feadf211ec154d5730e7fbd53156e5b505964ac141d856e",
+  "source_review_sha256": "4094aa34257c5b86020541e68002b7a716d6070eeba7032482fee007ce57178f",
+  "sample_order": [
+    1,
+    2,
+    2,
+    1
+  ],
+  "records_per_sample": 115,
+  "equal_ordered_record_digest": "9b25940380b122e7010b076a9acb98cfbaf215500cf43dffa5040e988daeabf3",
+  "sample_aggregate_exact_join": true,
+  "mean_measurements_by_workers": {
+    "1": {
+      "wall_seconds": 7.445166165998671,
+      "self_cpu_seconds": 1.5639954999999996,
+      "reaped_children_cpu_seconds": 6.510753000000001
+    },
+    "2": {
+      "wall_seconds": 5.5606106635023025,
+      "self_cpu_seconds": 1.9892705000000002,
+      "reaped_children_cpu_seconds": 8.592892
+    }
+  },
+  "mean_wall_seconds_saved": 1.8845555024963687,
+  "mean_wall_reduction_percent": 25.31247067530803,
+  "mean_wall_speed_ratio": 1.3389116081918595,
+  "measurement_context": {
+    "affinity": [
+      2,
+      3
+    ],
+    "limits": {
+      "rlimit_as": [
+        -1,
+        -1
+      ],
+      "file_bytes": 4194304,
+      "cpu_seconds": 60
+    },
+    "root_reported_session": 89319,
+    "root_reported_exit_code": 0,
+    "root_reported_reaped_chunk": "8e0ad5",
+    "execution_provenance": "Root task transcript reports direct package-qualified loading of frozen admission copy and unchanged verify.py/fresh local Git; receipt source prechecks join. Reviewer did not rerun proof or independently trace child processes."
+  },
+  "limitations": [
+    "Only two samples per worker count, in 1/2/2/1 order. No confidence interval or general speedup guarantee; cache warming and contention remain possible.",
+    "Receipt digests agree; returned claim bodies are not reproduced here, and their canonical digest was not independently recomputed from raw claims.",
+    "No child PID ledger or per-command Git transcript in these five receipts. Source review establishes intended fresh verification path, not an independently observed complete subprocess lineage.",
+    "CPUs2,3 differ from active native CPUs0,1. Disjoint affinity is not equivalent cache, storage, host load or resource context; original source affinity and whole admission scheduling are not benchmarked.",
+    "Parent max RSS is lifetime high-water within one process, 99504128 to184758272 bytes. Child rusage maximum is not simultaneous aggregate memory. Neither proves joint parent/children/native peak or memory fit.",
+    "Mean self and reaped child CPU increase with two workers. Wall reduction cannot be represented as reduced CPU work.",
+    "No admit, ResearchRun.start, Owner, selector activation, numerical/model throughput, whole admission, financial exposure, or live integration qualified.",
+    "Root reports prior benchmark failed under artificial1GiB RLIMIT_AS before parallel due Git pack mapping failure. That attempt remains failed. Corrected unlimited virtual address space is a distinct ordinary metadata engineering setup, not evidence of success under the earlier limit, a model-cap change, or a financial/resource cap ladder. No empirical allowance is granted."
+  ],
+  "review_actions": {
+    "actual_proof_rerun": false,
+    "source_synthetic_matrix_repeated": false,
+    "numerical_imports": false,
+    "network": false,
+    "live_source_changes": false
+  },
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-claims-parallel-readonly-benchmark02-2026-10-12/BENCHMARK01.json": "fbca08fac13ff02e61c7e87b3925ef44b29166d966b8d779322cfc9464219185",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-claims-parallel-readonly-benchmark02-2026-10-12/SAMPLE01.json": "31f121c4e8a54dd5e2d606329e9a7618c3a06196d581259e835ef59dd257705c",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-claims-parallel-readonly-benchmark02-2026-10-12/SAMPLE02.json": "0a0f7160bdb6772d705e185128645a5056f5ebc9569a7e646e802fbcfeff9610",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-claims-parallel-readonly-benchmark02-2026-10-12/SAMPLE03.json": "c5d7eb516a57294e8d54e288cfb51731da8201df326485c0ea44e7424c329adc",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-claims-parallel-readonly-benchmark02-2026-10-12/SAMPLE04.json": "9e4b06c97ecbedda994940764bd487e265af2b6f5e8bdb0110901644f0d40e86",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-review-2026-10-12/SOURCE_REVIEW01.json": "4094aa34257c5b86020541e68002b7a716d6070eeba7032482fee007ce57178f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-admission-claims-parallel-candidate-2026-10-12/admission.py": "672d8774ff26900f8feadf211ec154d5730e7fbd53156e5b505964ac141d856e"
+  }
+}

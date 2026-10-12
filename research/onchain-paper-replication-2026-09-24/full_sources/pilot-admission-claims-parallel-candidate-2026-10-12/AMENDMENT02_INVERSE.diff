@@ -1,0 +1,19 @@
+--- admission.py
++++ iteration01/admission.py
+@@ -277,15 +277,7 @@
+         # Observe later failures even after a scheduler interruption, but never
+         # block on result() or claim completion when shutdown was inconclusive.
+         for future, index in sorted(pending.items(), key=lambda item:item[1]):
+-            try:
+-                completed = future.done()
+-            except BaseException as probe_error:
+-                if cleanup_error is None:
+-                    cleanup_error = probe_error
+-                elif primary is not None:
+-                    _claim_failure_note(primary, 'claim completion probe failed', probe_error)
+-                continue
+-            if not completed:
++            if not future.done():
+                 if cleanup_error is None:
+                     cleanup_error = RuntimeError('claim worker drain incomplete')
+                 continue

@@ -1,0 +1,60 @@
+{
+  "kind": "read-only-live-original39-observation",
+  "at": "2026-10-12T12:14:50.784406+00:00",
+  "root_session": 86263,
+  "guard": {
+    "elapsed_seconds": 9496.222947051,
+    "memory_current_bytes": 5114728448,
+    "memory_events": {
+      "high": 114,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": null,
+    "limit_reason": null,
+    "host_mem_available_bytes": 6374535168,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 30364340224
+    }
+  },
+  "guard_source_bytes": 16031,
+  "guard_source_sha256": "13a19d08dab04fc146aa4fff564f1ae43aec77ea9c14dd97d66a5336734a8c74",
+  "selected_processes": [
+    {
+      "pid": 745583,
+      "state": "S",
+      "ppid": 744456,
+      "start_ticks": 5252376
+    },
+    {
+      "pid": 746180,
+      "state": "S",
+      "ppid": 745583,
+      "start_ticks": 5253359
+    },
+    {
+      "pid": 746711,
+      "state": "S",
+      "ppid": 4583,
+      "start_ticks": 5254357
+    },
+    {
+      "pid": 746724,
+      "state": "R",
+      "ppid": 746711,
+      "start_ticks": 5254395
+    }
+  ],
+  "cgroup_exists": true,
+  "kernel_memory_peak_bytes": 5370785792,
+  "current_kernel_controls": {
+    "memory.max": "6442450944",
+    "memory.high": "5368709120",
+    "memory.swap.max": "0"
+  },
+  "hash_joined_local_pairs": 40960,
+  "qualification": "Instantaneous guard/process/cgroup/kernel metadata and separately accepted local prefix count; no full graph, training, whole capacity or recovery."
+}

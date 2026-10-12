@@ -1,0 +1,147 @@
+--- a/tradingagents/research/onchain_replication/archive_owner_policy.py
++++ b/tradingagents/research/onchain_replication/archive_owner_policy.py
+@@ -31,11 +31,23 @@
+         'local_free_floor_bytes':policy['local_free_floor_bytes']} | ({'read_controls':read_controls.policy(policy['read_controls'])} if 'read_controls' in policy else {})
+ 
+ 
+-def _inputs(owner, name):
++def _poll_target(owner,target):
++    from .imported_mcm_identity import Target
++    require(type(target) is Target and target.owner is owner and target.execution._owner is owner,
++        'genuine same-owner archive target required')
++    execution=target.execution
++    target.lease()
++    require(type(target) is Target and target.owner is owner and target.execution is execution
++        and execution._owner is owner,'archive target changed during poll')
++
++
++def _inputs(owner, name, *, target=None):
+     run = owner.bound._run
+     require(type(name) is str and name in run.admission.inputs,'registered archive policy input required')
+     selected = json.loads(run.read_input('execution_job'))['payload']['representation_jobs'][owner.bound.record['representation']]
++    if target is not None:_poll_target(owner,target)
+     item = json.loads(run.read_input(selected['plan_input']))['producers'][owner.bound.record['producer']]
++    if target is not None:_poll_target(owner,target)
+     for value in (selected,item):
+         require(value.get('native_backend') == owner.policy['backend'],'archive scientific backend selection differs')
+         require(value.get('compact_archive_input') == name,'explicit archive policy selection differs')
+@@ -50,10 +62,11 @@
+     return value,reference
+ 
+ 
+-def _record(owner, name, transport):
++def _record(owner, name, transport, *, target=None):
+     require(type(owner) is compact_owner.Owner,'actual current compact owner required')
+     owner.boundary();compact_owner.verify_current(owner)
+-    policy,reference = _inputs(owner,name)
++    if target is not None:_poll_target(owner,target)
++    policy,reference = _inputs(owner,name,**({'target':target} if target is not None else {}))
+     require(type(policy) is dict and set(policy)-{'read_controls'} == FIELDS and type(policy['schema_version']) is int
+         and policy['schema_version'] == 1 and policy['backend'] == BACKEND,'archive owner policy schema')
+     positive = FIELDS-{'schema_version','backend','transport_identity','remote_namespace'}
+@@ -87,7 +100,8 @@
+             'remote_payload_bytes':remote,'decoded_transfer_bytes':transfer,'metadata_bytes':metadata,'operation_control_metadata_bytes':operation_control,
+             'checkpoint_reference_bytes_per_read':references},'execution_admitted':False}
+     owner.boundary();compact_owner.verify_current(owner)
+-    require(_inputs(owner,name) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
++    if target is not None:_poll_target(owner,target)
++    require(_inputs(owner,name,**({'target':target} if target is not None else {})) == (policy,reference) and writer.archive._transport(transport) == policy['transport_identity'],
+         'archive selection changed across final owner lease')
+     return result
+ 
+@@ -99,10 +113,10 @@
+         object.__setattr__(self,'_transport',transport);object.__setattr__(self,'_record',freeze(record))
+     def __setattr__(self,name,value):raise AttributeError('archive selection is immutable')
+     record = property(lambda self:self._record)
+-    def check(self):
+-        require(_record(self._owner,self._input,self._transport) == thaw(self.record),'archive selection identity changed')
+-    def writer_policy(self,name):
+-        self.check()
++    def check(self,*,target=None):
++        require(_record(self._owner,self._input,self._transport,**({'target':target} if target is not None else {})) == thaw(self.record),'archive selection identity changed')
++    def writer_policy(self,name,*,target=None):
++        self.check(**({'target':target} if target is not None else {}))
+         require(name in self.record['required_stages'],'archive stage outside registered population')
+         return _writer(self._owner,thaw(self.record['policy']),name)
+ 
+--- a/tradingagents/research/onchain_replication/archive_owner_operations.py
++++ b/tradingagents/research/onchain_replication/archive_owner_operations.py
+@@ -128,13 +128,13 @@
+                 io._root(root,fd)
+             finally:_close_descriptor(fd)
+ 
+-    def _current(self, *, full, sampled_evidence=False):
++    def _current(self, *, full, sampled_evidence=False, target=None):
+         require(not self._closed and not self._poisoned,'archive reservations are terminal')
+         require(getattr(self.owner,'_archive_operations',None) is self,
+             'archive reservation owner binding changed')
+         require(self.selection._owner is self.owner and self._transition is self.owner._transition,
+             'archive selection owner or transition changed')
+-        if full:self.selection.check()
++        if full:self.selection.check(**({'target':target} if target is not None else {}))
+         else:self.owner.lease()
+         require(policy.writer.archive._transport(self.selection._transport) ==
+             self.selection.record['policy']['transport_identity'],'archive endpoint changed')
+--- a/tradingagents/research/onchain_replication/typed_payload_operations.py
++++ b/tradingagents/research/onchain_replication/typed_payload_operations.py
+@@ -50,6 +50,16 @@
+         require(a.io._signature(before)==a.io._signature(os.stat(Path(path).name,dir_fd=fd,follow_symlinks=False)),'typed disposal source changed')
+         a.io._root(root,fd);os.unlink(Path(path).name,dir_fd=fd);os.fsync(fd)
+     finally:a.io._release(lambda:os.close(fd))
++
++def _poll_target_pre_cap(operation):
++    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
++        'typed pre-cap target/capability replaced')
++    from .archive_owner_policy import _poll_target
++    _poll_target(operation.owner,operation._target)
++    require(operation._target is operation._target_pin and operation.context._cap is operation.parent,
++        'typed pre-cap target/capability changed after poll')
++    operation.held.check(operation.owner)
++
+ 
+ class _Operation:
+     def __init__(self,owner,stage,kind,binding,payload_bytes,chunk_count,*,target=None):
+@@ -81,7 +91,10 @@
+         else:
+             require(self.ledger._active is None and ((batched_open and self.policy['batched_parent']=='actual-active-mcm-stage-v1' and owner.active is stage) or (stage.closed and owner.active is None)),'typed standalone requires selected actual active batched stage or closed idle stage')
+             self.parent_operation=None
+-        self.context._outer();self.ledger._current(full=True);self.ledger._stage(stage)
++        self.context._outer()
++        if target is not None:_poll_target_pre_cap(self)
++        self.ledger._current(full=True,**({'target':target} if target is not None else {}));self.ledger._stage(stage)
++        if target is not None:_poll_target_pre_cap(self)
+         registry=getattr(self.ledger,'_typed_payload_registry',None)
+         if registry is None:
+             registry={};self.ledger._typed_payload_registry=registry
+@@ -109,7 +122,8 @@
+         self.context._spent_pin=canonical_bytes(self.context._spent)
+         require(self.context._spent['logical_bytes']<=self.context._record['capacity']['logical_bytes'],'typed shared logical capacity')
+         self.context._publish(self.claim_name,{'claim':self.record,'spent':self.context._spent})
+-        self.remote=self.ledger.selection.writer_policy(stage.name)['remote_prefix']+'-p'+self.sha[:16]
++        self.remote=self.ledger.selection.writer_policy(stage.name,**({'target':target} if target is not None else {}))['remote_prefix']+'-p'+self.sha[:16]
++        if target is not None:_poll_target_pre_cap(self)
+         require(len(self.remote)+13<=127,'typed remote namespace bound')
+         self.cap={'ledger':self.ledger,'held':self.held,'lease':self.lease,'view':self.view,'thread':get_ident(),'claim_sha256':self.sha,'remote_prefix':self.remote,'typed_operation':self}
+         self.context._cap=self.cap
+@@ -179,7 +193,7 @@
+         require(type(receipt) is dict and receipt['transport_identity']==self.view.identity,'typed recovery endpoint')
+         # Original scope is authenticated by consumer's anchored receipt; remote
+         # is deliberately restricted to this actual stage's typed namespace.
+-        prefix=self.ledger.selection.writer_policy(self.stage.name)['remote_prefix']+'-p'
++        prefix=self.ledger.selection.writer_policy(self.stage.name,**({'target':self._target} if self._target is not None else {}))['remote_prefix']+'-p'
+         require(receipt['remote'].startswith(prefix),'typed recovery foreign stage')
+         n=receipt['bytes'];require(type(n) is int and 0<n<=self.budget['chunk_bytes'],'typed recovery extent')
+         self.counter['recovered']+=n;self.counter['chunks']+=1;self._counter_pin=policy.raw(self.counter);self.ledger._typed_payload_registry_pin=policy.sha(policy.raw(self.registry))
+@@ -272,7 +286,11 @@
+         if op is not None:
+             op.context._failed=True
+             try:op._publish('typed-failed-'+op.sha+'.json',{'error_type':type(error).__name__,'reservations_retained':True})
+-            except BaseException as failure:error.add_note('typed failure evidence: '+repr(failure))
++            except BaseException as failure:
++                if target is None:error.add_note('typed failure evidence: '+repr(failure))
++                else:
++                    try:BaseException.add_note(error,'typed failure evidence: '+repr(failure))
++                    except BaseException:pass
+         raise
+     finally:
+         if op is not None:op.closed=True;op.context._cap=op.parent

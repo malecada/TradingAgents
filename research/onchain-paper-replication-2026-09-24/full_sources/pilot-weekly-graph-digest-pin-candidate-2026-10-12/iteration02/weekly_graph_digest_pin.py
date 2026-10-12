@@ -1,0 +1,103 @@
+"""Private Target-owned weekly JSON digest pin; never graph/Owner authority."""
+from dataclasses import fields
+from types import MappingProxyType
+import numpy as np
+from .contracts import GraphSnapshot,validate_graph
+from .neighborhoods import graph_hash
+
+_FIELDS=('asset','start_utc','end_utc','available_at','source_hashes','graph_config_hash','node_ids','node_features','edge_index','edge_features','raw_count','admitted_count','exclusion_counts','edge_aggregates')
+_ARRAYS=('node_features','edge_index','edge_features','edge_aggregates')
+_STRINGS=('asset','start_utc','end_utc','available_at','graph_config_hash')
+_TUPLES=('source_hashes','node_ids')
+
+def _layout(a):
+    d=a.dtype
+    if (d.fields is not None or d.subdtype is not None or d.hasobject or d.metadata is not None
+            or not ((d.kind in ('i','u') and d.itemsize in (1,2,4,8))
+                    or (d.kind=='f' and d.itemsize in (2,4,8)))):return None
+    return (d.str,tuple(a.shape),tuple(a.strides),a.nbytes,a.__array_interface__['data'][0])
+
+def _array_pin(a):
+    if type(a) is not np.ndarray:return None
+    chain=[];current=a
+    for _ in range(4):
+        if type(current) is bytes:return (a,tuple(chain),current)
+        if type(current) is not np.ndarray or current.flags.writeable or not current.flags.c_contiguous:return None
+        layout=_layout(current)
+        if layout is None:return None
+        chain.append((current,layout));current=current.base
+    return None
+
+def _mapping(value):
+    if type(value) is not MappingProxyType:return None
+    items=tuple(value.items())
+    if any(type(k) is not str or type(v) is not int for k,v in items):return None
+    return tuple(sorted(items))
+
+def _capture(graph):
+    if type(graph) is not GraphSnapshot or tuple(f.name for f in fields(graph))!=_FIELDS:return None
+    if any(type(getattr(graph,n)) is not str for n in _STRINGS):return None
+    if any(type(getattr(graph,n)) is not int for n in ('raw_count','admitted_count')):return None
+    if any(type(getattr(graph,n)) is not tuple or any(type(x) is not str for x in getattr(graph,n)) for n in _TUPLES):return None
+    counts=_mapping(graph.exclusion_counts)
+    if counts is None:return None
+    arrays=[]
+    for name in _ARRAYS:
+        value=getattr(graph,name)
+        if value is None and name=='edge_aggregates':arrays.append(None);continue
+        pin=_array_pin(value)
+        if pin is None:return None
+        arrays.append(pin)
+    metadata=tuple((n,getattr(graph,n)) for n in _FIELDS if n not in _ARRAYS and n!='exclusion_counts')
+    return (graph,metadata,counts,tuple(arrays))
+
+def _rejoin(graph,pin):
+    if graph is not pin[0] or type(graph) is not GraphSnapshot:return False
+    for name,value in pin[1]:
+        current=getattr(graph,name)
+        if name in _TUPLES:
+            if current is not value:return False
+        elif type(current) is not type(value) or current!=value:return False
+    if _mapping(graph.exclusion_counts)!=pin[2]:return False
+    for name,saved in zip(_ARRAYS,pin[3],strict=True):
+        current=getattr(graph,name)
+        if saved is None:
+            if current is not None:return False
+            continue
+        if current is not saved[0]:return False
+        for item,layout in saved[1]:
+            if current is not item or type(current) is not np.ndarray or current.flags.writeable or not current.flags.c_contiguous or _layout(current)!=layout:return False
+            current=current.base
+        if current is not saved[2]:return False
+    return True
+
+class WeeklyDigestPin:
+    """One private graph instance, fresh validation per verification, no cache map."""
+    __slots__=('_graph','_pin','_digest')
+    def __init__(self,graph,*,original_digest):
+        self._graph=graph;self._pin=None;self._digest=None
+        try:pin=_capture(graph)
+        except RuntimeError:return
+        if pin is None:return
+        validate_graph(graph)
+        # Bind initial JSON bytes to a copied metadata snapshot, not a mutable
+        # MappingProxy backing dict observed at two unrelated moments.
+        snapshot=object.__new__(GraphSnapshot)
+        metadata=dict(pin[1]);metadata['exclusion_counts']=MappingProxyType(dict(pin[2]))
+        metadata.update((n,None if a is None else a[0]) for n,a in zip(_ARRAYS,pin[3],strict=True))
+        for name in _FIELDS:object.__setattr__(snapshot,name,metadata[name])
+        digest=graph_hash(snapshot)
+        try:joined=_rejoin(graph,pin)
+        except RuntimeError:return
+        if digest==original_digest and joined:self._pin=pin;self._digest=original_digest
+    def verify(self,graph):
+        if self._pin is None:return graph_hash(graph)
+        # Original validation is still fresh, including arrays, endpoints,
+        # timestamps, node IDs, conservation and raw/log aggregate relations.
+        validate_graph(graph)
+        try:joined=graph is self._graph and _rejoin(graph,self._pin)
+        except RuntimeError:joined=False
+        if joined:return self._digest
+        # Once eligibility/currentness changes this instance never repins.
+        self._pin=None;self._digest=None
+        return graph_hash(graph)

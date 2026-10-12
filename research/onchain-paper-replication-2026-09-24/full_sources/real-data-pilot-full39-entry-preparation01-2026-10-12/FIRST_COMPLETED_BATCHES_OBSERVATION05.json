@@ -1,0 +1,1916 @@
+{
+  "kind": "read-only-live-batch-prefix-increment",
+  "at": "2026-10-12T12:47:25.285865+00:00",
+  "root_session": 86263,
+  "observer_sha256": "b9593dc5bca55cce3b3a2f11c51be2c848338203ac4c9dfffb04350651b01623",
+  "prior_observation_sha256": "6cfc343f43defb821653e4a665dcbe9ab09454b120669560cc73c4b921302004",
+  "previous_hash_joined_pairs": 40960,
+  "new_batches": [
+    {
+      "batch": 10,
+      "start": 40960,
+      "stop": 45056,
+      "computed": 4064,
+      "reused": 32,
+      "numeric_call_elapsed_seconds": 175.11631897483312,
+      "prefix_modified_ns": 1791806497774473205,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 891.5843676170017,
+          "failures": 0,
+          "wall_seconds": 893.0496975320202
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 90112,
+          "cpu_seconds": 3.251677944009316,
+          "failures": 0,
+          "wall_seconds": 3.2839993447996676
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1172,
+          "cpu_seconds": 163.78284087100423,
+          "failures": 0,
+          "wall_seconds": 163.79742471000645
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 266,
+          "cpu_seconds": 62.31373931499053,
+          "failures": 0,
+          "wall_seconds": 79.76535523697385
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 7644,
+          "cpu_seconds": 106.00219673899483,
+          "failures": 0,
+          "wall_seconds": 106.01343581348192
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 268,
+          "cpu_seconds": 27.646904868016406,
+          "failures": 0,
+          "wall_seconds": 27.65128271330468
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 45056,
+          "cpu_seconds": 858.7736987760204,
+          "failures": 0,
+          "wall_seconds": 858.8019396933523
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 1351,
+          "cpu_seconds": 0.13354942799946912,
+          "failures": 0,
+          "wall_seconds": 0.3627522950191633
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 2817,
+          "cpu_seconds": 15.246621965999111,
+          "failures": 0,
+          "wall_seconds": 15.250507505035785
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 704,
+          "cpu_seconds": 1336.357810577005,
+          "failures": 0,
+          "wall_seconds": 6204.854469559919
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 497702952,
+          "calls": 40050,
+          "cpu_seconds": 1.711906643983184,
+          "failures": 0,
+          "wall_seconds": 1.711172867755522
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 132266,
+          "cpu_seconds": 6.611648792992014,
+          "failures": 0,
+          "wall_seconds": 6.6562969551523565
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 10981112,
+        "authority_poll_calls": 309994,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2162307120763,
+        "binding_first_guard_calls": 7909,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 20298092374,
+        "binding_journal_calls": 7909,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 498443393,
+        "binding_second_guard_calls": 7909,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 17633588235,
+        "binding_snapshots_calls": 7909,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 7100507000,
+        "binding_timing_closed": 0,
+        "evictions": 39712,
+        "key_hashed_bytes": 302180640,
+        "lookup_probes": 22032,
+        "lru_link_updates": 86016,
+        "source_guard_calls": 23,
+        "source_hashed_bytes": 3150333
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 85.07495515299934,
+          "failures": 0,
+          "wall_seconds": 85.21388041101454
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.28966219303129037,
+          "failures": 0,
+          "wall_seconds": 0.2925740177379339
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 77,
+          "cpu_seconds": 10.847060881000743,
+          "failures": 0,
+          "wall_seconds": 10.848176849001902
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 4.568306855997889,
+          "failures": 0,
+          "wall_seconds": 5.830688483983977
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 564,
+          "cpu_seconds": 7.843463387004249,
+          "failures": 0,
+          "wall_seconds": 7.8443420389303355
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 1.9548530800057051,
+          "failures": 0,
+          "wall_seconds": 1.9551626400862006
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 49.39200578694545,
+          "failures": 0,
+          "wall_seconds": 49.39115155553736
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.013967914000204473,
+          "failures": 0,
+          "wall_seconds": 0.03452313096931903
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.4589847220017873,
+          "failures": 0,
+          "wall_seconds": 0.45877270994969876
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 82.20585407699991,
+          "failures": 0,
+          "wall_seconds": 372.63546329199744
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 35417064,
+          "calls": 2850,
+          "cpu_seconds": 0.12330725699530376,
+          "failures": 0,
+          "wall_seconds": 0.12325777792284498
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 12192,
+          "cpu_seconds": 0.5201149730141879,
+          "failures": 0,
+          "wall_seconds": 0.5243017355751363
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 535.586858123,
+      "publication_pairs_per_second": 7.647685782199187
+    },
+    {
+      "batch": 11,
+      "start": 45056,
+      "stop": 49152,
+      "computed": 3936,
+      "reused": 160,
+      "numeric_call_elapsed_seconds": 172.8685637585586,
+      "prefix_modified_ns": 1791807031630767958,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 46,
+          "cpu_seconds": 976.8586013310033,
+          "failures": 0,
+          "wall_seconds": 978.4711933140206
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 98304,
+          "cpu_seconds": 3.5390525190059634,
+          "failures": 0,
+          "wall_seconds": 3.574314364530437
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1247,
+          "cpu_seconds": 174.32197682500413,
+          "failures": 0,
+          "wall_seconds": 174.3375268059899
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 285,
+          "cpu_seconds": 66.74951200099264,
+          "failures": 0,
+          "wall_seconds": 85.44698872902518
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 8190,
+          "cpu_seconds": 113.6986729519922,
+          "failures": 0,
+          "wall_seconds": 113.71045931938716
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 287,
+          "cpu_seconds": 29.622598013012464,
+          "failures": 0,
+          "wall_seconds": 29.62725060935918
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 49152,
+          "cpu_seconds": 906.7396124980428,
+          "failures": 0,
+          "wall_seconds": 906.7675703659988
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 1486,
+          "cpu_seconds": 0.14648961699663232,
+          "failures": 0,
+          "wall_seconds": 0.39094133103935746
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 3073,
+          "cpu_seconds": 15.682081725995431,
+          "failures": 0,
+          "wall_seconds": 15.685751838995202
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 746,
+          "cpu_seconds": 1417.6246037550025,
+          "failures": 0,
+          "wall_seconds": 6577.246692705878
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 533120016,
+          "calls": 42900,
+          "cpu_seconds": 1.83324476498683,
+          "failures": 0,
+          "wall_seconds": 1.8324631936993683
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 144074,
+          "cpu_seconds": 7.115792440985729,
+          "failures": 0,
+          "wall_seconds": 7.164373281200824
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 11001584,
+        "authority_poll_calls": 337866,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2288940150539,
+        "binding_first_guard_calls": 8482,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 21768502827,
+        "binding_journal_calls": 8482,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 534360072,
+        "binding_second_guard_calls": 8482,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 18916566711,
+        "binding_snapshots_calls": 8482,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 7614772111,
+        "binding_timing_closed": 0,
+        "evictions": 43648,
+        "key_hashed_bytes": 311167904,
+        "lookup_probes": 24170,
+        "lru_link_updates": 94208,
+        "source_guard_calls": 25,
+        "source_hashed_bytes": 3424275
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 85.27423371400164,
+          "failures": 0,
+          "wall_seconds": 85.42149578200042
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.2873745749966474,
+          "failures": 0,
+          "wall_seconds": 0.29031501973076956
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 75,
+          "cpu_seconds": 10.539135953999903,
+          "failures": 0,
+          "wall_seconds": 10.540102095983457
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 4.43577268600211,
+          "failures": 0,
+          "wall_seconds": 5.681633492051333
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 546,
+          "cpu_seconds": 7.696476212997368,
+          "failures": 0,
+          "wall_seconds": 7.697023505905236
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 1.9756931449960575,
+          "failures": 0,
+          "wall_seconds": 1.9759678960544989
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 47.96591372202238,
+          "failures": 0,
+          "wall_seconds": 47.96563067264651
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.012940188997163204,
+          "failures": 0,
+          "wall_seconds": 0.02818903602019418
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.4354597599963199,
+          "failures": 0,
+          "wall_seconds": 0.4352443339594174
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 81.26679317799744,
+          "failures": 0,
+          "wall_seconds": 372.39222314595827
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 35417064,
+          "calls": 2850,
+          "cpu_seconds": 0.12133812100364594,
+          "failures": 0,
+          "wall_seconds": 0.12129032594384626
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 11808,
+          "cpu_seconds": 0.5041436479937147,
+          "failures": 0,
+          "wall_seconds": 0.5080763260484673
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 533.856294753,
+      "publication_pairs_per_second": 7.672476732516756
+    },
+    {
+      "batch": 12,
+      "start": 49152,
+      "stop": 53248,
+      "computed": 4000,
+      "reused": 96,
+      "numeric_call_elapsed_seconds": 172.12551756786706,
+      "prefix_modified_ns": 1791807562734525980,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 50,
+          "cpu_seconds": 1061.5793201150068,
+          "failures": 0,
+          "wall_seconds": 1063.3308813510375
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 106496,
+          "cpu_seconds": 3.826484726007493,
+          "failures": 0,
+          "wall_seconds": 3.8646376265533036
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1322,
+          "cpu_seconds": 184.77258686300132,
+          "failures": 0,
+          "wall_seconds": 184.78914483801054
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 304,
+          "cpu_seconds": 71.27023322699239,
+          "failures": 0,
+          "wall_seconds": 91.21006251899234
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 8735,
+          "cpu_seconds": 121.23601401197539,
+          "failures": 0,
+          "wall_seconds": 121.25739235138462
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 306,
+          "cpu_seconds": 31.577007394006557,
+          "failures": 0,
+          "wall_seconds": 31.581902733239986
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 53248,
+          "cpu_seconds": 954.4957366910512,
+          "failures": 0,
+          "wall_seconds": 954.5259844194588
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 1621,
+          "cpu_seconds": 0.15873400599980414,
+          "failures": 0,
+          "wall_seconds": 0.41731422203883994
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 3329,
+          "cpu_seconds": 16.12476663599682,
+          "failures": 0,
+          "wall_seconds": 16.128198871992936
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 788,
+          "cpu_seconds": 1498.0826572170033,
+          "failures": 0,
+          "wall_seconds": 6947.938702692882
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 568537080,
+          "calls": 45750,
+          "cpu_seconds": 1.95332394799334,
+          "failures": 0,
+          "wall_seconds": 1.9524922068376327
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 156074,
+          "cpu_seconds": 7.621584040973971,
+          "failures": 0,
+          "wall_seconds": 7.674041215585021
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 10962676,
+        "authority_poll_calls": 366058,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2415055943652,
+        "binding_first_guard_calls": 9054,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 23223855981,
+        "binding_journal_calls": 9054,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 569952082,
+        "binding_second_guard_calls": 9054,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 20186257447,
+        "binding_snapshots_calls": 9054,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 8125638440,
+        "binding_timing_closed": 0,
+        "evictions": 47648,
+        "key_hashed_bytes": 320115232,
+        "lookup_probes": 26340,
+        "lru_link_updates": 102400,
+        "source_guard_calls": 27,
+        "source_hashed_bytes": 3698217
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 84.72071878400345,
+          "failures": 0,
+          "wall_seconds": 84.8596880370169
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.2874322070015296,
+          "failures": 0,
+          "wall_seconds": 0.2903232620228664
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 75,
+          "cpu_seconds": 10.450610037997194,
+          "failures": 0,
+          "wall_seconds": 10.451618032020633
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 4.5207212259997505,
+          "failures": 0,
+          "wall_seconds": 5.763073789967166
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 545,
+          "cpu_seconds": 7.537341059983191,
+          "failures": 0,
+          "wall_seconds": 7.546933031997469
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 1.9544093809940932,
+          "failures": 0,
+          "wall_seconds": 1.9546521238808054
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 47.75612419300842,
+          "failures": 0,
+          "wall_seconds": 47.75841405346
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.012244389003171818,
+          "failures": 0,
+          "wall_seconds": 0.02637289099948248
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.44268491000138965,
+          "failures": 0,
+          "wall_seconds": 0.4424470329977339
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 80.45805346200086,
+          "failures": 0,
+          "wall_seconds": 370.692009987004
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 35417064,
+          "calls": 2850,
+          "cpu_seconds": 0.12007918300650999,
+          "failures": 0,
+          "wall_seconds": 0.12002901313826442
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 12000,
+          "cpu_seconds": 0.5057915999882425,
+          "failures": 0,
+          "wall_seconds": 0.509667934384197
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 531.103758022,
+      "publication_pairs_per_second": 7.712240665091153
+    },
+    {
+      "batch": 13,
+      "start": 53248,
+      "stop": 57344,
+      "computed": 4064,
+      "reused": 32,
+      "numeric_call_elapsed_seconds": 173.7948920617564,
+      "prefix_modified_ns": 1791808095068711687,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 54,
+          "cpu_seconds": 1146.469894293005,
+          "failures": 0,
+          "wall_seconds": 1148.3628211090108
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 114688,
+          "cpu_seconds": 4.109548058023847,
+          "failures": 0,
+          "wall_seconds": 4.150608478761569
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1398,
+          "cpu_seconds": 195.37198021300168,
+          "failures": 0,
+          "wall_seconds": 195.38956911904825
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 323,
+          "cpu_seconds": 75.66449080799117,
+          "failures": 0,
+          "wall_seconds": 96.85758279500442
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 9292,
+          "cpu_seconds": 129.01765979097308,
+          "failures": 0,
+          "wall_seconds": 129.03976407132723
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 325,
+          "cpu_seconds": 33.55079597501111,
+          "failures": 0,
+          "wall_seconds": 33.5561086361995
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 57344,
+          "cpu_seconds": 1003.2319677139967,
+          "failures": 0,
+          "wall_seconds": 1003.2619495752879
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 1756,
+          "cpu_seconds": 0.17095453100614577,
+          "failures": 0,
+          "wall_seconds": 0.4472380230363342
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 3585,
+          "cpu_seconds": 16.563881500995194,
+          "failures": 0,
+          "wall_seconds": 16.567072625002766
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 830,
+          "cpu_seconds": 1578.6236923150052,
+          "failures": 0,
+          "wall_seconds": 7318.449105451866
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 603954144,
+          "calls": 48600,
+          "cpu_seconds": 2.0757525409881055,
+          "failures": 0,
+          "wall_seconds": 2.0748274648722145
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 168266,
+          "cpu_seconds": 8.135628943024017,
+          "failures": 0,
+          "wall_seconds": 8.192065372670186
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 11011832,
+        "authority_poll_calls": 394570,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2541873756816,
+        "binding_first_guard_calls": 9638,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 24703405945,
+        "binding_journal_calls": 9638,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 606235982,
+        "binding_second_guard_calls": 9638,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 21470208657,
+        "binding_snapshots_calls": 9638,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 8644929486,
+        "binding_timing_closed": 0,
+        "evictions": 51712,
+        "key_hashed_bytes": 329113952,
+        "lookup_probes": 28365,
+        "lru_link_updates": 110592,
+        "source_guard_calls": 29,
+        "source_hashed_bytes": 3972159
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 84.89057417799813,
+          "failures": 0,
+          "wall_seconds": 85.0319397579733
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.28306333201635425,
+          "failures": 0,
+          "wall_seconds": 0.28597085220826557
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 76,
+          "cpu_seconds": 10.599393350000355,
+          "failures": 0,
+          "wall_seconds": 10.600424281037704
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 4.394257580998783,
+          "failures": 0,
+          "wall_seconds": 5.647520276012074
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 557,
+          "cpu_seconds": 7.781645778997699,
+          "failures": 0,
+          "wall_seconds": 7.782371719942603
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 1.9737885810045555,
+          "failures": 0,
+          "wall_seconds": 1.9742059029595111
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 48.7362310229455,
+          "failures": 0,
+          "wall_seconds": 48.735965155829035
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.012220525006341632,
+          "failures": 0,
+          "wall_seconds": 0.029923800997494254
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.4391148649983734,
+          "failures": 0,
+          "wall_seconds": 0.43887375300982967
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 80.54103509800188,
+          "failures": 0,
+          "wall_seconds": 370.5104027589841
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 35417064,
+          "calls": 2850,
+          "cpu_seconds": 0.1224285929947655,
+          "failures": 0,
+          "wall_seconds": 0.12233525803458178
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 12192,
+          "cpu_seconds": 0.5140449020500455,
+          "failures": 0,
+          "wall_seconds": 0.5180241570851649
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 532.334185707,
+      "publication_pairs_per_second": 7.694414730401071
+    },
+    {
+      "batch": 14,
+      "start": 57344,
+      "stop": 61440,
+      "computed": 4064,
+      "reused": 32,
+      "numeric_call_elapsed_seconds": 196.1722165305764,
+      "prefix_modified_ns": 1791808649433985207,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 58,
+          "cpu_seconds": 1231.106606573007,
+          "failures": 0,
+          "wall_seconds": 1233.1386478870118
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 122880,
+          "cpu_seconds": 4.3970082810187705,
+          "failures": 0,
+          "wall_seconds": 4.440989610964607
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1479,
+          "cpu_seconds": 206.64229445700397,
+          "failures": 0,
+          "wall_seconds": 206.6609063210417
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 343,
+          "cpu_seconds": 80.30088443798974,
+          "failures": 0,
+          "wall_seconds": 102.80125977297575
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 9874,
+          "cpu_seconds": 137.03583957095907,
+          "failures": 0,
+          "wall_seconds": 137.0586406482107
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 345,
+          "cpu_seconds": 35.621422072039366,
+          "failures": 0,
+          "wall_seconds": 35.627070245063805
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 61440,
+          "cpu_seconds": 1056.0968714260325,
+          "failures": 0,
+          "wall_seconds": 1056.1266661391564
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 1891,
+          "cpu_seconds": 0.1851682810067814,
+          "failures": 0,
+          "wall_seconds": 0.4835063290374819
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 3841,
+          "cpu_seconds": 17.016221923997364,
+          "failures": 0,
+          "wall_seconds": 17.019194218955818
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 874,
+          "cpu_seconds": 1662.7447587240065,
+          "failures": 0,
+          "wall_seconds": 7705.404566508885
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 641235264,
+          "calls": 51600,
+          "cpu_seconds": 2.2031015919601487,
+          "failures": 0,
+          "wall_seconds": 2.2021020140164183
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 180461,
+          "cpu_seconds": 8.656867514988221,
+          "failures": 0,
+          "wall_seconds": 8.717428099967947
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 13232184,
+        "authority_poll_calls": 423085,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2686972255550,
+        "binding_first_guard_calls": 10248,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 26253007142,
+        "binding_journal_calls": 10248,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 644260383,
+        "binding_second_guard_calls": 10248,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 22820552591,
+        "binding_snapshots_calls": 10248,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 9190187156,
+        "binding_timing_closed": 0,
+        "evictions": 55776,
+        "key_hashed_bytes": 340335008,
+        "lookup_probes": 30370,
+        "lru_link_updates": 118784,
+        "source_guard_calls": 31,
+        "source_hashed_bytes": 4246101
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 84.63671228000203,
+          "failures": 0,
+          "wall_seconds": 84.77582677800092
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.28746022299492324,
+          "failures": 0,
+          "wall_seconds": 0.29038113220303785
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 81,
+          "cpu_seconds": 11.270314244002293,
+          "failures": 0,
+          "wall_seconds": 11.271337201993447
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 20,
+          "cpu_seconds": 4.636393629998565,
+          "failures": 0,
+          "wall_seconds": 5.943676977971336
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 582,
+          "cpu_seconds": 8.018179779985985,
+          "failures": 0,
+          "wall_seconds": 8.018876576883486
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 20,
+          "cpu_seconds": 2.070626097028253,
+          "failures": 0,
+          "wall_seconds": 2.070961608864309
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 52.86490371203581,
+          "failures": 0,
+          "wall_seconds": 52.86471656386857
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.014213750000635628,
+          "failures": 0,
+          "wall_seconds": 0.03626830600114772
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.4523404230021697,
+          "failures": 0,
+          "wall_seconds": 0.45212159395305207
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 44,
+          "cpu_seconds": 84.12106640900129,
+          "failures": 0,
+          "wall_seconds": 386.9554610570194
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 37281120,
+          "calls": 3000,
+          "cpu_seconds": 0.1273490509720432,
+          "failures": 0,
+          "wall_seconds": 0.12727454914420377
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 12195,
+          "cpu_seconds": 0.5212385719642043,
+          "failures": 0,
+          "wall_seconds": 0.525362727297761
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 554.36527352,
+      "publication_pairs_per_second": 7.388630196823156
+    },
+    {
+      "batch": 15,
+      "start": 61440,
+      "stop": 65536,
+      "computed": 4032,
+      "reused": 64,
+      "numeric_call_elapsed_seconds": 173.42879110495414,
+      "prefix_modified_ns": 1791809180589311457,
+      "cumulative_phases": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 62,
+          "cpu_seconds": 1315.8280074970075,
+          "failures": 0,
+          "wall_seconds": 1317.9985092419665
+        },
+        "backend_setup": {
+          "bytes": 48047,
+          "calls": 1,
+          "cpu_seconds": 0.004230411999913031,
+          "failures": 0,
+          "wall_seconds": 0.004236272012349218
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 131072,
+          "cpu_seconds": 4.680864192017452,
+          "failures": 0,
+          "wall_seconds": 4.72774597076932
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 1,
+          "cpu_seconds": 0.00012714899992261053,
+          "failures": 0,
+          "wall_seconds": 0.00012734899792121723
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 3,
+          "cpu_seconds": 155.43351628300005,
+          "failures": 0,
+          "wall_seconds": 160.12689403204422
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 1555,
+          "cpu_seconds": 217.23297446399732,
+          "failures": 0,
+          "wall_seconds": 217.2528010910537
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 362,
+          "cpu_seconds": 84.79656484398726,
+          "failures": 0,
+          "wall_seconds": 108.52420493299724
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 10427,
+          "cpu_seconds": 144.65675425496283,
+          "failures": 0,
+          "wall_seconds": 144.68022215632664
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 364,
+          "cpu_seconds": 37.56423561206242,
+          "failures": 0,
+          "wall_seconds": 37.57031325017306
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 65536,
+          "cpu_seconds": 1104.8635595130627,
+          "failures": 0,
+          "wall_seconds": 1104.8927588610823
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 2026,
+          "cpu_seconds": 0.19815781900729235,
+          "failures": 0,
+          "wall_seconds": 0.5136156070075231
+        },
+        "role_read": {
+          "bytes": 96094,
+          "calls": 18,
+          "cpu_seconds": 0.004220152000073085,
+          "failures": 0,
+          "wall_seconds": 0.004218598987790756
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 4097,
+          "cpu_seconds": 17.461726458001067,
+          "failures": 0,
+          "wall_seconds": 17.46450443592039
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 916,
+          "cpu_seconds": 1742.6146003220072,
+          "failures": 0,
+          "wall_seconds": 8074.52249796089
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 150,
+          "cpu_seconds": 0.2799135479995698,
+          "failures": 0,
+          "wall_seconds": 0.2798676299498766
+        },
+        "source_read": {
+          "bytes": 676652328,
+          "calls": 54450,
+          "cpu_seconds": 2.322660354938307,
+          "failures": 0,
+          "wall_seconds": 2.321604251927056
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 192557,
+          "cpu_seconds": 9.16522263694958,
+          "failures": 0,
+          "wall_seconds": 9.229805446047976
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 2,
+          "cpu_seconds": 0.41389362899999327,
+          "failures": 0,
+          "wall_seconds": 0.4139627369950176
+        }
+      },
+      "cumulative_counters": {
+        "accounted_cache_bytes": 11029208,
+        "authority_poll_calls": 451437,
+        "authority_poll_failures": 0,
+        "authority_poll_ns": 2813402814860,
+        "binding_first_guard_calls": 10828,
+        "binding_first_guard_failures": 0,
+        "binding_first_guard_ns": 27731843220,
+        "binding_journal_calls": 10828,
+        "binding_journal_failures": 0,
+        "binding_journal_ns": 679978036,
+        "binding_second_guard_calls": 10828,
+        "binding_second_guard_failures": 0,
+        "binding_second_guard_ns": 24105925753,
+        "binding_snapshots_calls": 10828,
+        "binding_snapshots_failures": 0,
+        "binding_snapshots_ns": 9709232967,
+        "binding_timing_closed": 0,
+        "evictions": 59808,
+        "key_hashed_bytes": 349350944,
+        "lookup_probes": 32533,
+        "lru_link_updates": 126976,
+        "source_guard_calls": 33,
+        "source_hashed_bytes": 4520043
+      },
+      "phase_deltas": {
+        "authority_boundary": {
+          "bytes": 0,
+          "calls": 4,
+          "cpu_seconds": 84.72140092400059,
+          "failures": 0,
+          "wall_seconds": 84.85986135495477
+        },
+        "backend_setup": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "cache_key": {
+          "bytes": 0,
+          "calls": 8192,
+          "cpu_seconds": 0.2838559109986818,
+          "failures": 0,
+          "wall_seconds": 0.2867563598047127
+        },
+        "checkpoint_inventory": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "entry": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "lease_fingerprint": {
+          "bytes": 0,
+          "calls": 76,
+          "cpu_seconds": 10.590680006993352,
+          "failures": 0,
+          "wall_seconds": 10.591894770012004
+        },
+        "lease_full": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 4.495680405997518,
+          "failures": 0,
+          "wall_seconds": 5.722945160021482
+        },
+        "lease_live": {
+          "bytes": 0,
+          "calls": 553,
+          "cpu_seconds": 7.620914684003765,
+          "failures": 0,
+          "wall_seconds": 7.6215815081159235
+        },
+        "module_auth": {
+          "bytes": 0,
+          "calls": 19,
+          "cpu_seconds": 1.942813540023053,
+          "failures": 0,
+          "wall_seconds": 1.9432430051092524
+        },
+        "pair_numeric": {
+          "bytes": 0,
+          "calls": 4096,
+          "cpu_seconds": 48.76668808703016,
+          "failures": 0,
+          "wall_seconds": 48.766092721925816
+        },
+        "publication": {
+          "bytes": 0,
+          "calls": 135,
+          "cpu_seconds": 0.012989538000510947,
+          "failures": 0,
+          "wall_seconds": 0.03010927797004115
+        },
+        "role_read": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "row_extraction": {
+          "bytes": 0,
+          "calls": 256,
+          "cpu_seconds": 0.44550453400370316,
+          "failures": 0,
+          "wall_seconds": 0.44531021696457174
+        },
+        "source_admission": {
+          "bytes": 0,
+          "calls": 42,
+          "cpu_seconds": 79.86984159800068,
+          "failures": 0,
+          "wall_seconds": 369.117931452005
+        },
+        "source_compile": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        },
+        "source_read": {
+          "bytes": 35417064,
+          "calls": 2850,
+          "cpu_seconds": 0.11955876297815848,
+          "failures": 0,
+          "wall_seconds": 0.11950223791063763
+        },
+        "state_scan": {
+          "bytes": 0,
+          "calls": 12096,
+          "cpu_seconds": 0.5083551219613582,
+          "failures": 0,
+          "wall_seconds": 0.5123773460800294
+        },
+        "storage_scan": {
+          "bytes": 0,
+          "calls": 0,
+          "cpu_seconds": 0.0,
+          "failures": 0,
+          "wall_seconds": 0.0
+        }
+      },
+      "publication_span_seconds": 531.15532625,
+      "publication_pairs_per_second": 7.711491907495486
+    }
+  ],
+  "hash_joined_local_completed_pairs": 65536,
+  "sources": [
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000010.pending.json",
+      "bytes": 205,
+      "sha256": "5b15bfc84a78bfc2047d6fe192124f11159188e8d35dddbc0172614040b059e7"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000010.records.bin",
+      "bytes": 217180,
+      "sha256": "a130f58551e4a03118db01a405eceda83cb8e8908a4b3918149dbe2f0ec4716b"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000010.complete.json",
+      "bytes": 337,
+      "sha256": "da7ea78ace21decda22fc30ccbeab5e45a163cdb1b459157e141d32123844211"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000010.prefix.json",
+      "bytes": 1435,
+      "sha256": "efb106e5346a22a8338581a8de6cf01baba013c23da4778e7fb6cf66dda1c71c"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000010.json",
+      "bytes": 7366,
+      "sha256": "40d48c425926eb428b1fc08598774607767bbe76afa174d57e778f01097e0305"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000011.pending.json",
+      "bytes": 205,
+      "sha256": "acbdfd7193fc39f7c4dde221d6036861e71febf28ca1b56337b1eb21b6320abd"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000011.records.bin",
+      "bytes": 217180,
+      "sha256": "d0f16e2d5adc66ab4ca0e8ea8322f21c32a237d924b5238c8fdd0772c61ee03b"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000011.complete.json",
+      "bytes": 337,
+      "sha256": "f2992de0098b6e3d21bc35301fc15492b5a81c2f0b08fa0d6132ecb4f9d4e50c"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000011.prefix.json",
+      "bytes": 1435,
+      "sha256": "fe80a8c989e6b6f94e862dd60604c0497a64002e4b2d858944f2fd4ed201205a"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000011.json",
+      "bytes": 7366,
+      "sha256": "ad7386dd9b66516e40f20cd97b8a8626399345297640d24c0d2c9dc31d9378c9"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000012.pending.json",
+      "bytes": 205,
+      "sha256": "6f66b693e9a90c36d784d6dde3279fb1f9b55704b8881958870052cce8d24469"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000012.records.bin",
+      "bytes": 217180,
+      "sha256": "21fba081ccaa3fd47a7bc003dfc2d56071b19bdf9ab04d9e373ffe3f135203da"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000012.complete.json",
+      "bytes": 337,
+      "sha256": "7d30d1fbab561736fc1a35c635bcffd1a02709d6dfdbb5e154a562415db30fe6"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000012.prefix.json",
+      "bytes": 1437,
+      "sha256": "9ee705ed2d9eb44261c923fe664d1e50b003ff2705df4cd98309d3d6b4f869ee"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000012.json",
+      "bytes": 7370,
+      "sha256": "b240afbcd56c5cbd9c669e4f42783c445ab623e94191cdeb91a4bb76c6c79541"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000013.pending.json",
+      "bytes": 205,
+      "sha256": "a188cc4cad247be362bfe23b55184a7773e38a75b045c4b852ea07f649fe8d0a"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000013.records.bin",
+      "bytes": 217180,
+      "sha256": "7de7c4654b7e91d5e1c4012cf3d2bdc331cf58511897a181c084bc2a06cfa58c"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000013.complete.json",
+      "bytes": 337,
+      "sha256": "2896dd62ea008058dbdb366fb2d58aa32af507d61959f6f16d91f215d9786e46"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000013.prefix.json",
+      "bytes": 1437,
+      "sha256": "ff4b002d75136fe6ca82d84c8f797534e998e3b4f03993465978a8b6877d44de"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000013.json",
+      "bytes": 7371,
+      "sha256": "7710d0fe7e607c95b8ce729e11b95ce70d67675390ffa6a303f61c87b5d6719e"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000014.pending.json",
+      "bytes": 205,
+      "sha256": "3523a90d5ead6d29837df6f7dd62b34dad31be64b3d8a041e697132e09286ce3"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000014.records.bin",
+      "bytes": 217180,
+      "sha256": "e79bfa513b5f04afa8f61375b36876a13c989c6cbfc86aefe7f674ad5463cdbd"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000014.complete.json",
+      "bytes": 337,
+      "sha256": "4e78d344547e14b018644e4cd8676d9ed6b3a1c4f61d0e4a1b490de7b78daf15"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000014.prefix.json",
+      "bytes": 1441,
+      "sha256": "98903139d34a937647af195a0a3dee918d59612b6d2b3f4f033531154b665e8e"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000014.json",
+      "bytes": 7397,
+      "sha256": "a0b12fbbaac53d4dff2187c014c620c2508b5ed0e7ea55f5f98fbbbad7753977"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000015.pending.json",
+      "bytes": 205,
+      "sha256": "d7fc792a994236557d70c290e0f1d58efe5da68c932fdd14fa6e6bc38f673bc6"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000015.records.bin",
+      "bytes": 217180,
+      "sha256": "b0a92ca4169eee1737381c05cf481d52859760a33e335f97a26798b250464ddf"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000015.complete.json",
+      "bytes": 337,
+      "sha256": "7f2e6bc4489426bcdf307246cc7571f092b2ee07ccb88a723c73d05e683f1d47"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000015.prefix.json",
+      "bytes": 1441,
+      "sha256": "2fcb96634b9d558a466d8c15f7f2172decfb22967735ba9d682188be587c0008"
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000015.json",
+      "bytes": 7372,
+      "sha256": "f0d649207177606341d048938deaf08941a9c6b8a87b6e98d0d358e91c455d40"
+    }
+  ],
+  "qualification": "Existing local commitments, bounded exact binary/purpose/origin checks and unchanged rereads only. Active origin file may append beyond the observed slices. No new authority, independent numerical reference comparison, external recovery, restart eligibility, whole graph, training or capacity. Publication mtime spans are proxies; phase rows are exclusive, callback timers inclusive."
+}

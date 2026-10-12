@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-12T10:24:26.743284+00:00",
+  "root_session": 86263,
+  "guard_sha256": "156a60de55d1bd58d983338de6090cc8f73e0b3827dfad79ca884ee4c51fc909",
+  "guard": {
+    "elapsed_seconds": 2871.8872555609996,
+    "memory_current_bytes": 5091905536,
+    "memory_events": {
+      "high": 114,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": null,
+    "limit_reason": null,
+    "disk_free_bytes": {
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes": 30344183808
+    },
+    "host_mem_available_bytes": 6634508288,
+    "storage_peak_logical_file_bytes": 5582148624,
+    "storage_peak_allocated_bytes": 5162029056,
+    "storage_peak_entries": 18275
+  },
+  "kernel": {
+    "memory.current": "5091643392\n",
+    "memory.peak": "5370785792\n",
+    "memory.swap.current": "0\n",
+    "memory.events": "low 0\nhigh 114\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n",
+    "cpu.stat": "usage_usec 3055912290\nuser_usec 2293831418\nsystem_usec 762080872\ncore_sched.force_idle_usec 0\n"
+  },
+  "processes": [
+    {
+      "pid": 745583,
+      "state": "S",
+      "ppid": 744456,
+      "start_ticks": "5252376",
+      "cpu_seconds": 6.07,
+      "reaped_children_cpu_seconds": 6.66
+    },
+    {
+      "pid": 746180,
+      "state": "R",
+      "ppid": 745583,
+      "start_ticks": "5253359",
+      "cpu_seconds": 1297.28,
+      "reaped_children_cpu_seconds": 25.18
+    },
+    {
+      "pid": 746711,
+      "state": "S",
+      "ppid": 4583,
+      "start_ticks": "5254357",
+      "cpu_seconds": 10.36,
+      "reaped_children_cpu_seconds": 0.0
+    },
+    {
+      "pid": 746724,
+      "state": "R",
+      "ppid": 746711,
+      "start_ticks": "5254395",
+      "cpu_seconds": 1067.97,
+      "reaped_children_cpu_seconds": 1977.55
+    }
+  ],
+  "names": {
+    "": {
+      "names": [
+        "checkpoints",
+        "intent.json",
+        "matching",
+        "stream"
+      ],
+      "truncated": false
+    },
+    "matching": {
+      "names": [
+        "00000000.pending.json"
+      ],
+      "truncated": false
+    },
+    "stream": {
+      "names": [
+        "closure-tokens.bin",
+        "numeric-batches",
+        "numeric-origins.bin",
+        "scores.f32"
+      ],
+      "truncated": false
+    },
+    "stream/numeric-batches": {
+      "names": [],
+      "truncated": false
+    },
+    "checkpoints": {
+      "names": [],
+      "truncated": false
+    },
+    "research_runs/eth-paper-real-data-end-to-end-resource-20261012-39": {
+      "names": [
+        "claim.json",
+        "outputs"
+      ],
+      "truncated": false
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261012-39/outputs": null
+  },
+  "extents": {
+    "matching/00000000.pending.json": {
+      "bytes": 200,
+      "modified_ns": 1791799765868284257
+    },
+    "stream/numeric-origins.bin": {
+      "bytes": 0,
+      "modified_ns": 1791799653434321319
+    },
+    "stream/scores.f32": {
+      "bytes": 0,
+      "modified_ns": 1791799653433321319
+    },
+    "stream/closure-tokens.bin": {
+      "bytes": 0,
+      "modified_ns": 1791799653433321319
+    }
+  },
+  "terminal_names": []
+}

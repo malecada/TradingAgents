@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "decision": "accepted_exact_source_and_synthetic_measurement_only",
+  "candidate_manifest_sha256": "a856f0ecf5d2a8db14837e092586d7340bca711fdca0c18f4ba4be37c226998e",
+  "helper_sha256": "60909f1326dbe0c2ec43992f37af3463fbf5c7bc3443f89e1946fc08b5ff6141",
+  "target_sha256": "95b355399b8e8b562ff2fda98c4000cbac02a4248b1934a932ad4b53a6974d02",
+  "restored_entire_target_module_ast": true,
+  "literal_inverse": "PASS",
+  "independent_controls": [
+    "tuple_identity",
+    "base_header",
+    "aggregate",
+    "validation refusal before rejoin/hash",
+    "original key mismatch/mapping backing mutation",
+    "source roster required and helper code mutation detected"
+  ],
+  "benchmark": {
+    "status": "PASS",
+    "controls": [
+      "tuple_identity",
+      "base_header",
+      "aggregate",
+      "validation refusal before rejoin/hash",
+      "original key mismatch/mapping backing mutation",
+      "source roster required and helper code mutation detected"
+    ],
+    "manifest_literal_inverse": "PASS",
+    "median_wall_seconds": {
+      "original_graph_hash_fresh_validation": 0.06373216700012563,
+      "pin_rejoin_fresh_validation": 0.00527175200113561
+    },
+    "wall_reduction_fraction": 0.9172827121800955,
+    "initial_pin_seconds": 0.0691269709932385,
+    "helper_validation_calls": 10,
+    "helper_hash_calls": 1,
+    "benchmark_digest": "e80a003111aa890802d80aed78fe329466fa8903e977602e9475bd0da408d551"
+  },
+  "source_roster_before_lease_capture_required": true,
+  "actual_caller_opt_in_or_source_registration_executed": false,
+  "atomic_writer_exclusion": false,
+  "full_boundary_or_empirical_gain": null,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-candidate-2026-10-12/SOURCE_MANIFEST01.json": "a856f0ecf5d2a8db14837e092586d7340bca711fdca0c18f4ba4be37c226998e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-candidate-2026-10-12/weekly_graph_digest_pin.py": "60909f1326dbe0c2ec43992f37af3463fbf5c7bc3443f89e1946fc08b5ff6141",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-candidate-2026-10-12/imported_mcm_identity.py": "95b355399b8e8b562ff2fda98c4000cbac02a4248b1934a932ad4b53a6974d02",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-candidate-2026-10-12/BENCHMARK02.json": "5a187f8274b3051671aa9e7e0dddf8a27485a584218049ad6d02fe280052f090",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-candidate-2026-10-12/benchmark01.py": "0ee9818cd1bbbd889a48286aefbef2585e2427b032333f25f6c496605bb325e5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-review-2026-10-12/check01.py": "0ea8ef002e825a2f1114f864e7b14af3b4e27fc49190bb97b47a4dc2b8408078",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-review-2026-10-12/CHECK01.json": "7894b56e7e23cdc3730696352f1e7d00e1d058b12f85072ff9bbc84c8404189a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-review-2026-10-12/CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-weekly-graph-digest-pin-review-2026-10-12/REPORT.md": "29d275c939de0b179b0f57dbd3486362f33fb004df5af19d7b743fc131b886c2"
+  }
+}

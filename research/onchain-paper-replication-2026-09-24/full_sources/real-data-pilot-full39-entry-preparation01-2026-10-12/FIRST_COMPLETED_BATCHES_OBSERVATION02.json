@@ -1,0 +1,386 @@
+{
+  "kind": "read-only-live-batch-prefix-increment",
+  "at": "2026-10-12T10:59:51.409587+00:00",
+  "experiment": "eth-paper-real-data-end-to-end-resource-20261012-39",
+  "root_session": 86263,
+  "prior_observation_sha256": "fa122df567e0f008a25704034235ed27ea4d329b40b02b71dee6097e7c72867c",
+  "previous_hash_joined_pairs": 8192,
+  "new_batch": {
+    "batch": 2,
+    "start": 8192,
+    "stop": 12288,
+    "computed": 3904,
+    "reused": 192,
+    "numeric_call_elapsed_seconds": 176.03928905557405,
+    "prefix_modified_ns": 1791801879285381948,
+    "cumulative_phases": {
+      "authority_boundary": {
+        "bytes": 0,
+        "calls": 10,
+        "cpu_seconds": 212.51094194500172,
+        "failures": 0,
+        "wall_seconds": 212.8564031800197
+      },
+      "backend_setup": {
+        "bytes": 48047,
+        "calls": 1,
+        "cpu_seconds": 0.004230411999913031,
+        "failures": 0,
+        "wall_seconds": 0.004236272012349218
+      },
+      "cache_key": {
+        "bytes": 0,
+        "calls": 24576,
+        "cpu_seconds": 0.9252724070113345,
+        "failures": 0,
+        "wall_seconds": 0.9340616363624576
+      },
+      "checkpoint_inventory": {
+        "bytes": 0,
+        "calls": 1,
+        "cpu_seconds": 0.00012714899992261053,
+        "failures": 0,
+        "wall_seconds": 0.00012734899792121723
+      },
+      "entry": {
+        "bytes": 0,
+        "calls": 3,
+        "cpu_seconds": 155.43351628300005,
+        "failures": 0,
+        "wall_seconds": 160.12689403204422
+      },
+      "lease_fingerprint": {
+        "bytes": 0,
+        "calls": 467,
+        "cpu_seconds": 64.92959988399929,
+        "failures": 0,
+        "wall_seconds": 64.93498886300222
+      },
+      "lease_full": {
+        "bytes": 0,
+        "calls": 101,
+        "cpu_seconds": 23.343177968999328,
+        "failures": 0,
+        "wall_seconds": 29.937992285078508
+      },
+      "lease_live": {
+        "bytes": 0,
+        "calls": 2723,
+        "cpu_seconds": 37.57652939399486,
+        "failures": 0,
+        "wall_seconds": 37.58086076138716
+      },
+      "module_auth": {
+        "bytes": 0,
+        "calls": 103,
+        "cpu_seconds": 10.574944884993045,
+        "failures": 0,
+        "wall_seconds": 10.5765617510624
+      },
+      "pair_numeric": {
+        "bytes": 0,
+        "calls": 12288,
+        "cpu_seconds": 371.6119150220168,
+        "failures": 0,
+        "wall_seconds": 371.63634724274016
+      },
+      "publication": {
+        "bytes": 0,
+        "calls": 271,
+        "cpu_seconds": 0.026073271000768727,
+        "failures": 0,
+        "wall_seconds": 0.07806645702657988
+      },
+      "role_read": {
+        "bytes": 96094,
+        "calls": 18,
+        "cpu_seconds": 0.004220152000073085,
+        "failures": 0,
+        "wall_seconds": 0.004218598987790756
+      },
+      "row_extraction": {
+        "bytes": 0,
+        "calls": 769,
+        "cpu_seconds": 11.553935140995236,
+        "failures": 0,
+        "wall_seconds": 11.559584152033494
+      },
+      "source_admission": {
+        "bytes": 0,
+        "calls": 342,
+        "cpu_seconds": 641.7060253980001,
+        "failures": 0,
+        "wall_seconds": 3007.468893478923
+      },
+      "source_compile": {
+        "bytes": 0,
+        "calls": 150,
+        "cpu_seconds": 0.2799135479995698,
+        "failures": 0,
+        "wall_seconds": 0.2798676299498766
+      },
+      "source_read": {
+        "bytes": 190133712,
+        "calls": 15300,
+        "cpu_seconds": 0.6559544310068759,
+        "failures": 0,
+        "wall_seconds": 0.6556203289728728
+      },
+      "state_scan": {
+        "bytes": 0,
+        "calls": 36125,
+        "cpu_seconds": 2.354566392974334,
+        "failures": 0,
+        "wall_seconds": 2.3667959088124917
+      },
+      "storage_scan": {
+        "bytes": 0,
+        "calls": 2,
+        "cpu_seconds": 0.41389362899999327,
+        "failures": 0,
+        "wall_seconds": 0.4139627369950176
+      }
+    },
+    "cumulative_counters": {
+      "accounted_cache_bytes": 13008824,
+      "authority_poll_calls": 84381,
+      "authority_poll_failures": 0,
+      "authority_poll_ns": 892192165917,
+      "binding_first_guard_calls": 2759,
+      "binding_first_guard_failures": 0,
+      "binding_first_guard_ns": 7086218459,
+      "binding_journal_calls": 2759,
+      "binding_journal_failures": 0,
+      "binding_journal_ns": 173925267,
+      "binding_second_guard_calls": 2759,
+      "binding_second_guard_failures": 0,
+      "binding_second_guard_ns": 6139941634,
+      "binding_snapshots_calls": 2759,
+      "binding_snapshots_failures": 0,
+      "binding_snapshots_ns": 2469976208,
+      "binding_timing_closed": 0,
+      "evictions": 7744,
+      "key_hashed_bytes": 167643040,
+      "lookup_probes": 5078,
+      "lru_link_updates": 20480,
+      "source_guard_calls": 7,
+      "source_hashed_bytes": 958797
+    },
+    "geometry_metrics": {
+      "edge_product": {
+        "histogram": [
+          0,
+          2113,
+          1277,
+          534,
+          127,
+          19,
+          16,
+          10,
+          0
+        ],
+        "max": 37320,
+        "sum": 228701
+      },
+      "left_edges": {
+        "histogram": [
+          0,
+          3776,
+          256,
+          32,
+          0,
+          32,
+          0,
+          0,
+          0
+        ],
+        "max": 933,
+        "sum": 39136
+      },
+      "left_nodes": {
+        "histogram": [
+          0,
+          3776,
+          256,
+          32,
+          0,
+          32,
+          0,
+          0,
+          0
+        ],
+        "max": 934,
+        "sum": 41664
+      },
+      "matrix_product": {
+        "histogram": [
+          0,
+          624,
+          2610,
+          742,
+          85,
+          3,
+          21,
+          11,
+          0
+        ],
+        "max": 22416,
+        "sum": 209622
+      },
+      "right_edges": {
+        "histogram": [
+          0,
+          2816,
+          1024,
+          256,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "max": 40,
+        "sum": 23936
+      },
+      "right_nodes": {
+        "histogram": [
+          0,
+          2688,
+          1280,
+          128,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "max": 24,
+        "sum": 20608
+      }
+    },
+    "completed_operations": 663138735
+  },
+  "hash_joined_local_completed_pairs": 12288,
+  "prefix_mtime_span_seconds": 536.589002253,
+  "prefix_mtime_pair_rate": 7.633402814448197,
+  "phase_deltas": {
+    "authority_boundary": {
+      "calls": 4,
+      "wall_seconds": 85.446793324998,
+      "cpu_seconds": 85.30918065400147
+    },
+    "backend_setup": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    },
+    "cache_key": {
+      "calls": 8192,
+      "wall_seconds": 0.2892782734197681,
+      "cpu_seconds": 0.2864086620038506
+    },
+    "checkpoint_inventory": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    },
+    "entry": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    },
+    "lease_fingerprint": {
+      "calls": 78,
+      "wall_seconds": 10.957008443030645,
+      "cpu_seconds": 10.956461752999303
+    },
+    "lease_full": {
+      "calls": 19,
+      "wall_seconds": 5.674298408004688,
+      "cpu_seconds": 4.425731787998529
+    },
+    "lease_live": {
+      "calls": 564,
+      "wall_seconds": 7.915652908086486,
+      "cpu_seconds": 7.915304726998329
+    },
+    "module_auth": {
+      "calls": 19,
+      "wall_seconds": 1.975061696888588,
+      "cpu_seconds": 1.9748797199940782
+    },
+    "pair_numeric": {
+      "calls": 4096,
+      "wall_seconds": 50.88587552878016,
+      "cpu_seconds": 50.88815160500076
+    },
+    "publication": {
+      "calls": 135,
+      "wall_seconds": 0.038179634015250485,
+      "cpu_seconds": 0.012687656999787578
+    },
+    "role_read": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    },
+    "row_extraction": {
+      "calls": 256,
+      "wall_seconds": 0.44842154901562026,
+      "cpu_seconds": 0.4485988929982341
+    },
+    "source_admission": {
+      "calls": 42,
+      "wall_seconds": 372.2512789519751,
+      "cpu_seconds": 81.54992371400022
+    },
+    "source_compile": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    },
+    "source_read": {
+      "calls": 2850,
+      "wall_seconds": 0.12142182812385727,
+      "cpu_seconds": 0.12148590500646606
+    },
+    "state_scan": {
+      "calls": 11714,
+      "wall_seconds": 0.5011493808633531,
+      "cpu_seconds": 0.4972667889917375
+    },
+    "storage_scan": {
+      "calls": 0,
+      "wall_seconds": 0.0,
+      "cpu_seconds": 0.0
+    }
+  },
+  "sources": [
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000002.pending.json",
+      "sha256": "bbe0c64c71b7625d8d72baf69d258e10ca85d8c46dcbab197306a23aff68694f",
+      "bytes": 204
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000002.records.bin",
+      "sha256": "deaad7d3a392bb832e3e9fcf2cfd675177f92ef488d9eaa216ce388fd63cfec1",
+      "bytes": 217180
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000002.complete.json",
+      "sha256": "fd708aa0731957ec77f1ed824bab061f1f59e8b72a13dd5a29085012d6a29348",
+      "bytes": 337
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000002.prefix.json",
+      "sha256": "1cab632f7ce57d2a49c0047ff4c8be66f31f92bdc5374c754c3166f4597c743d",
+      "bytes": 1425
+    },
+    {
+      "path": "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000002.json",
+      "sha256": "3872ee8d3a5a8949755c320cc833d51897288b587c3509a81bbe4eefd7bf7dbc",
+      "bytes": 7373
+    }
+  ],
+  "qualification": "Self-consistent existing local batch commitments/origin records and unchanged bounded rereads. No new authority, external recovery, restart eligibility, reference comparison, WHOLE graph, score tail completeness or fit. Numeric-call timings exclude driver/batch-boundary/publication work; phase totals are exclusive cumulative process-local. Mtime span is an observed publication proxy, not monotonic full-stage timing. First256centers are not a representative whole-graph rate."
+}

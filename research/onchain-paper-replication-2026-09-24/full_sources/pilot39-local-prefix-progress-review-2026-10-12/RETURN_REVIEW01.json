@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "decision": "accepted_bounded_local_progress_evidence",
+  "scope": "Only actual batches8/9 and prior03 receipt join",
+  "prior_pairs": 32768,
+  "new_pairs": 8192,
+  "joined_local_pairs": 40960,
+  "batches": [
+    {
+      "batch": 8,
+      "computed": 3936,
+      "reused": 160,
+      "source_admission": {
+        "bytes": 0,
+        "calls": 44,
+        "cpu_seconds": 84.66177911600062,
+        "failures": 0,
+        "wall_seconds": 388.3269273509868
+      },
+      "pair_numeric": {
+        "bytes": 0,
+        "calls": 4096,
+        "cpu_seconds": 53.50174402904213,
+        "failures": 0,
+        "wall_seconds": 53.50107319194649
+      },
+      "publication_pairs_per_second": 7.370860388617365,
+      "summary_edge_product_sum": 408034
+    },
+    {
+      "batch": 9,
+      "computed": 4000,
+      "reused": 96,
+      "source_admission": {
+        "bytes": 0,
+        "calls": 60,
+        "cpu_seconds": 114.03967590800175,
+        "failures": 0,
+        "wall_seconds": 530.529956599974
+      },
+      "pair_numeric": {
+        "bytes": 0,
+        "calls": 4096,
+        "cpu_seconds": 124.51347505101558,
+        "failures": 0,
+        "wall_seconds": 124.52064456678636
+      },
+      "publication_pairs_per_second": 5.189120991000022,
+      "summary_edge_product_sum": 4475471
+    }
+  ],
+  "original_body_and_origin_slice_checks": "PASS",
+  "bounded_rereads": "unchanged at review time",
+  "unexpected_missing_offloaded_or_changed_selected_files": false,
+  "atomic_writer_exclusion": false,
+  "independent_numerical_reference_agreement": false,
+  "full_graph_training_or_protocol_release": false,
+  "root_exit_status_provenance": "Root transcript exit0; stdout/empty stderr authenticated, no independent process inspection",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full39-entry-preparation01-2026-10-12/FIRST_COMPLETED_BATCHES_OBSERVATION04.json": "6cfc343f43defb821653e4a665dcbe9ab09454b120669560cc73c4b921302004",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full39-entry-preparation01-2026-10-12/FIRST_COMPLETED_BATCHES_OBSERVATION03.json": "2a85383ffe40ee3cddcfaa753e3eec13dbfdfe1c01d3f14112759c1dc16c0226",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full39-entry-preparation01-2026-10-12/observe_prefix_increment01.py": "b9593dc5bca55cce3b3a2f11c51be2c848338203ac4c9dfffb04350651b01623",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full39-entry-preparation01-2026-10-12/PREFIX_OBSERVER_RUN01.stdout": "c0b1e2787f5ebe735fac214a9ba8cf3d978c8a137d4e3ff5071f256a2d161a36",
+    "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full39-entry-preparation01-2026-10-12/PREFIX_OBSERVER_RUN01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000008.pending.json": "30091b768d0b13afbd8f4dafd7df3bd59895b39dd14c0bd042351e00a36db2f5",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000008.records.bin": "b674d5448486182b5891d1a3c0bcfa028dcb6c5bcd7be2f7aadf8dac6fb2199c",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000008.complete.json": "0aac033b814db7670463627d649868f8f713aebb341280be9e356fc841949543",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000008.prefix.json": "834596f93fedb7785c7b18a696b42ae03bd1a6545bc6df403b6303e30d356692",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000008.json": "205eb6f1ff0a2aff9145b7351ab9826f2b0cbee739223bb42ea4201e917883d5",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000009.pending.json": "c476b51ca39584584eef4e325eac712e7190d58835e3f4a916875134ef7306f8",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000009.records.bin": "042607d0642fcbf40169ad3577a306b8aa592e4b6356fe0f0aef644eac79b31d",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000009.complete.json": "0ba78570e5de5a2fa19f4a95fb93ab42b27b5f6f34cf1d783ed19917ee5bb938",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/matching/00000009.prefix.json": "d0f50578b32279e3feac1c0e16c63bf1a3d57096bdd345cd78997dee1861bf0f",
+    "research_artifacts/onchain_representations/ada9fbd6764c8dc113bf837ff9cc71296dd9c09e6af2a9da4d7a841a2e91329f/eth-paper-real-data-end-to-end-resource-20261012-39/compact/mcm-0114d61904938208c75497bdabe82c5dae32b7d2110a4e460d1942f84dc473ba/stream/numeric-batches/000000000009.json": "3befa3a69c8efea243d63287aca88e347c4d6e3042daffe244e66c9f61f28482",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot39-local-prefix-progress-review-2026-10-12/check01.py": "84af973ed75fbdc277fec9205e0f7e31836e025c0c972198d4c8c7594062e8fe",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot39-local-prefix-progress-review-2026-10-12/CHECK01.json": "14a559b35fe8aad474711e857b32898aac7db983d7ca09727322d02a7437e8c3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot39-local-prefix-progress-review-2026-10-12/CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot39-local-prefix-progress-review-2026-10-12/REPORT.md": "a1e06d69e76633b7b0e69a3069b77ee0e69bcd0bd84d6cca14e67d2a9cc822c9"
+  }
+}

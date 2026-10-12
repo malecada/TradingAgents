@@ -1,0 +1,19 @@
+{
+  "kind": "read-only-failed-baseline-git-diagnosis",
+  "at": "2026-10-12T11:14:32.219197+00:00",
+  "args": [
+    "git",
+    "cat-file",
+    "--batch"
+  ],
+  "request_bytes": 204,
+  "request_sha256": "db1ffcf048d3cf525cf68c15865238019e1ff12b9c180ea6462f42a8fb0b83e9",
+  "returncode": 128,
+  "stdout_bytes": 0,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_bytes": 229,
+  "stderr_sha256": "d7c244dd90672bb4cbd91f44887958d9ba1693d1ffce5972b2df4b95284be18d",
+  "stderr": "fatal: packfile /home/malecada/master_thesis/TradingAgents/.git/objects/pack/.tmp-3244255-pack-15089bd5217ef301717b10204f73557fa4bab6aa.pack cannot be mapped, check sys.vm.max_map_count and/or RLIMIT_DATA: Cannot allocate memory\n",
+  "rlimit_as_bytes": 1073741824,
+  "qualification": "Fresh local read-only Git child, unchanged failing benchmark limits/request framing; subprocess.run returned and reaped the child. No research run or source/protocol change."
+}
