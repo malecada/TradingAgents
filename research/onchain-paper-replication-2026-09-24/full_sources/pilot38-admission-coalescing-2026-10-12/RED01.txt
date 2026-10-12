@@ -1,0 +1,61 @@
+.FFE..F.
+======================================================================
+ERROR: test_mixed_failure_order_is_explicit_selection_deviation (__main__.GraphBundleTests.test_mixed_failure_order_is_explicit_selection_deviation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 88, in test_mixed_failure_order_is_explicit_selection_deviation
+    with self.assertRaisesRegex(RuntimeError,'later role integrity failure'):apply(CANDIDATE,FixtureRun(bodies),POLICY)
+                                                                             ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 52, in apply
+    exec(compile(statements(path),str(path),'exec'),env)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/real_pilot_population_candidate.py", line 78, in <module>
+    require(metadata['asset']=='ETH' and metadata['start_utc']==week
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and metadata['graph_config_hash']==GRAPH_CONFIG_SHA
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and pilot['graph_inputs'].get(key)==role, 'complete graph identity differs')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 49, in require
+    if not ok:raise ValueError(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: complete graph identity differs
+
+======================================================================
+FAIL: test_bundle_error_escapes_unchanged_without_semantic_work (__main__.GraphBundleTests.test_bundle_error_escapes_unchanged_without_semantic_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 78, in test_bundle_error_escapes_unchanged_without_semantic_work
+    with self.assertRaises(RuntimeError) as got:apply(CANDIDATE,run,POLICY)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_invalid_selection_refuses_before_read (__main__.GraphBundleTests.test_invalid_selection_refuses_before_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 74, in test_invalid_selection_refuses_before_read
+    with self.assertRaisesRegex(ValueError,'graph input policy'):apply(CANDIDATE,run,'unknown')
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_selected_one_bounded_sorted_transaction (__main__.GraphBundleTests.test_selected_one_bounded_sorted_transaction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-admission-coalescing-2026-10-12/test_graph_bundle.py", line 64, in test_selected_one_bounded_sorted_transaction
+    self.assertEqual(run.singles,[])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6'] != []
+
+First list contains 7 additional elements.
+First extra element 0:
+'g0'
+
+- ['g0', 'g1', 'g2', 'g3', 'g4', 'g5', 'g6']
++ []
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.017s
+
+FAILED (failures=3, errors=1)

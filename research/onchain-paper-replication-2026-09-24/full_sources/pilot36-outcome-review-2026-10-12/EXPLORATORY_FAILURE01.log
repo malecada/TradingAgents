@@ -1,0 +1,5 @@
+Preserved exploratory metadata-reader failure, before the focused check:
+Attempted list(claim['bindings']) after printing metadata keys.
+TypeError: 'NoneType' object is not iterable
+The original claim has bindings=null. No source/evidence was modified. The focused check retains this null by not inferring a binding from it.
+Earlier rg localization of the ignored parent-log directory returned no matching files; direct directory listing found stdout.log and empty stderr.log. Neither was missing or regenerated.

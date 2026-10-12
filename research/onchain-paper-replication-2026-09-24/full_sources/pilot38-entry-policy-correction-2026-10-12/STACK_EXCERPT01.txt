@@ -1,0 +1,30 @@
+                            ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 655, in operation
+    try:archive_context.close(primary)
+        ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/archive_dispatch.py", line 522, in close
+    if failure is not None:raise failure
+                           ^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/real_pilot_import_caller.py", line 605, in operation
+    result = compact_mcm.produce_imported(execution,g,graph_hash=key,input_name=s['compact_mcm_input'],output_input=s['compact_mcm_output_input'],
+        **({'progress':progress} if progress is not None else {}),
+        **({'diagnostic':diagnostic} if diagnostic is not None else {}))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 306, in produce_imported
+    return compact_mcm_batched.produce(target,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm_batched.py", line 768, in produce
+    graph,kernel,policy,start=producer._prepare(target,graph_hash,input_name,output_input)
+                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 146, in _prepare
+    require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            if durability_selected else ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'} if batched_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        and 3*io.META_LIMIT*(len(owner.required)-1) <= policy['max_workflow_metadata_bytes'] < 2**63,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        'compact MCM policy/cell/metadata allowance differs')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/score_batches.py", line 41, in _require
+    raise ValueError(message)
+ValueError: compact MCM policy/cell/metadata allowance differs

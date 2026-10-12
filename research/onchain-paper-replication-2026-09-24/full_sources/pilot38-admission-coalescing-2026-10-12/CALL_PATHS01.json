@@ -1,0 +1,358 @@
+{
+  "status": "STATIC_CALL_MULTIPLICITY_NOT_EMPIRICAL_STACK_TRACE",
+  "source_calls": [
+    {
+      "source": "tradingagents/research/onchain_replication/real_pilot_population.py",
+      "function": "produce",
+      "line": 54,
+      "calls": [
+        {
+          "line": 57,
+          "call": "run._check_source()"
+        },
+        {
+          "line": 62,
+          "call": "run.read_input(plan_input)"
+        },
+        {
+          "line": 65,
+          "call": "run.read_input(plan['scope_input'])"
+        },
+        {
+          "line": 66,
+          "call": "run.read_input(plan['calendar_input'])"
+        },
+        {
+          "line": 70,
+          "call": "run.read_input(plan['price_panel_input'])"
+        },
+        {
+          "line": 77,
+          "call": "run.read_input(role)"
+        }
+      ],
+      "source_sha256": "e4671b48754c8f56d989d1905e7803d8111c10334f1110ff07cfcc79a1fb45db"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/matching_owner.py",
+      "function": "bind",
+      "line": 283,
+      "calls": [
+        {
+          "line": 288,
+          "call": "run.read_input(job_input)"
+        },
+        {
+          "line": 303,
+          "call": "run.read_input(plan_input)"
+        },
+        {
+          "line": 313,
+          "call": "run.read_input(policy_input)"
+        },
+        {
+          "line": 334,
+          "call": "run.read_input(execution['environment_input'])"
+        },
+        {
+          "line": 384,
+          "call": "bind(run, representation=representation, plan_input=plan_input, producer=producer, policy_input=policy_input, journal_directory=expected, continuation_input=continuation_input, death_input=death_input, job_input=job_input, _resource=_resource)"
+        },
+        {
+          "line": 414,
+          "call": "bound.lease()"
+        }
+      ],
+      "source_sha256": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/matching_owner.py",
+      "function": "Binding.check",
+      "line": 219,
+      "calls": [
+        {
+          "line": 221,
+          "call": "run._check_source()"
+        },
+        {
+          "line": 224,
+          "call": "self.lease()"
+        }
+      ],
+      "source_sha256": "7a7eaf323645007cadd56314e2877f1ea3c5cc1dea499b918108cba7f8519e38"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "function": "prepare",
+      "line": 205,
+      "calls": [
+        {
+          "line": 210,
+          "call": "bound.check()"
+        }
+      ],
+      "source_sha256": "a563026a3b35be559101bab8737b675a0da23e3f03a4ddafa64f06b53c61471a"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "function": "PreparedImport._check",
+      "line": 74,
+      "calls": [
+        {
+          "line": 79,
+          "call": "self._bound.check()"
+        },
+        {
+          "line": 79,
+          "call": "self._cap.check()"
+        }
+      ],
+      "source_sha256": "a563026a3b35be559101bab8737b675a0da23e3f03a4ddafa64f06b53c61471a"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_preparation.py",
+      "function": "PreparedImport.execution_contract",
+      "line": 102,
+      "calls": [
+        {
+          "line": 104,
+          "call": "self._check()"
+        },
+        {
+          "line": 106,
+          "call": "self._check()"
+        }
+      ],
+      "source_sha256": "a563026a3b35be559101bab8737b675a0da23e3f03a4ddafa64f06b53c61471a"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "function": "ImportedExecution.__init__",
+      "line": 153,
+      "calls": [
+        {
+          "line": 155,
+          "call": "stage.lease()"
+        },
+        {
+          "line": 161,
+          "call": "self.check()"
+        }
+      ],
+      "source_sha256": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "function": "ImportedExecution.check",
+      "line": 163,
+      "calls": [
+        {
+          "line": 167,
+          "call": "stage.lease()"
+        },
+        {
+          "line": 173,
+          "call": "prepared._check()"
+        }
+      ],
+      "source_sha256": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/original_import_stage.py",
+      "function": "ImportStage.lease",
+      "line": 65,
+      "calls": [
+        {
+          "line": 66,
+          "call": "self.owner.lease()"
+        },
+        {
+          "line": 66,
+          "call": "self.prepared._check()"
+        }
+      ],
+      "source_sha256": "fada5f7c0f09a911009ced367f29b41b28839c4c24777bdba9b58fdd50a8557c"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "function": "activate",
+      "line": 269,
+      "calls": [
+        {
+          "line": 272,
+          "call": "execution.check()"
+        },
+        {
+          "line": 274,
+          "call": "run.read_input('execution_job')"
+        },
+        {
+          "line": 276,
+          "call": "run.read_input(input_name)"
+        },
+        {
+          "line": 281,
+          "call": "run.read_input(role)"
+        }
+      ],
+      "source_sha256": "926a1af06037746b095bd89faa161f74ad5e47af4512e033596a0858fd073896"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "function": "Lease.__init__",
+      "line": 178,
+      "calls": [
+        {
+          "line": 200,
+          "call": "execution.check()"
+        }
+      ],
+      "source_sha256": "926a1af06037746b095bd89faa161f74ad5e47af4512e033596a0858fd073896"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "function": "Lease._full",
+      "line": 219,
+      "calls": [
+        {
+          "line": 222,
+          "call": "self.execution.check()"
+        }
+      ],
+      "source_sha256": "926a1af06037746b095bd89faa161f74ad5e47af4512e033596a0858fd073896"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "function": "Target.check",
+      "line": 101,
+      "calls": [
+        {
+          "line": 104,
+          "call": "target_lease(self, boundary=True)"
+        },
+        {
+          "line": 105,
+          "call": "self.lease()"
+        },
+        {
+          "line": 107,
+          "call": "self.execution.check()"
+        }
+      ],
+      "source_sha256": "756f05aa9bb7d5109ee8cf6e19b2f65f498b88cfb8aae5184b30dbb278de3691"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "function": "Target.final",
+      "line": 82,
+      "calls": [
+        {
+          "line": 85,
+          "call": "target_lease(self, boundary=True)"
+        }
+      ],
+      "source_sha256": "756f05aa9bb7d5109ee8cf6e19b2f65f498b88cfb8aae5184b30dbb278de3691"
+    },
+    {
+      "source": "tradingagents/research/onchain_replication/compact_mcm.py",
+      "function": "_prepare",
+      "line": 108,
+      "calls": [
+        {
+          "line": 109,
+          "call": "dictionary.check()"
+        },
+        {
+          "line": 111,
+          "call": "dictionary.check()"
+        },
+        {
+          "line": 126,
+          "call": "dictionary.check()"
+        },
+        {
+          "line": 128,
+          "call": "run.read_input(bound.get('job_input', 'execution_job'))"
+        },
+        {
+          "line": 129,
+          "call": "run.read_input(selected['plan_input'])"
+        },
+        {
+          "line": 133,
+          "call": "run.read_input(input_name)"
+        },
+        {
+          "line": 142,
+          "call": "run.read_input(selected['real_pilot_input'])"
+        },
+        {
+          "line": 154,
+          "call": "dictionary.check()"
+        },
+        {
+          "line": 179,
+          "call": "dictionary.check()"
+        }
+      ],
+      "source_sha256": "abd86e24681f0df4ef3ca82cfb016662d9af5a46a38a32bafc65e7c92f2dacf8"
+    }
+  ],
+  "actual_phase_timing_sha256": "df0836521a9d5ecdaf84997fd564ebb1fd2a287097da5a6ed531ea8a8e65fd45",
+  "actual_source_admission": {
+    "bytes": 0,
+    "calls": 160,
+    "cpu_seconds": 257.76146714099946,
+    "failures": 0,
+    "wall_seconds": 1129.0056555070005
+  },
+  "candidate_graph_roles": [
+    {
+      "week": "2022-05-02T00:00:00Z",
+      "role": "graph_20220502",
+      "bytes": 1604,
+      "registered_sha256": "4aa5b107702b464ec2c34a5db8d420506e599a613c079a3ce7d2cfa89c3fb442"
+    },
+    {
+      "week": "2022-05-09T00:00:00Z",
+      "role": "graph_20220509",
+      "bytes": 1604,
+      "registered_sha256": "a05d237ea6803c323e13e8294d8dad9c89a1221a42b7df4a2e6550c054374aec"
+    },
+    {
+      "week": "2022-05-16T00:00:00Z",
+      "role": "graph_20220516",
+      "bytes": 1604,
+      "registered_sha256": "ee16ce45ea27ef1feea1a4b09438d7ef67f1ee4c5cbbcc4f60bab1246a558b04"
+    },
+    {
+      "week": "2022-05-23T00:00:00Z",
+      "role": "graph_20220523",
+      "bytes": 1604,
+      "registered_sha256": "7a1187af8ff01ebdc17779ebc172025088f78c23c546457c5fddfaa2ba69d59d"
+    },
+    {
+      "week": "2022-05-30T00:00:00Z",
+      "role": "graph_20220530",
+      "bytes": 1604,
+      "registered_sha256": "a856a6134263a0b04e3365a2a35f9c7a96792b4739274ad80b2155545eba5830"
+    },
+    {
+      "week": "2022-06-06T00:00:00Z",
+      "role": "graph_20220606",
+      "bytes": 1604,
+      "registered_sha256": "dfca930e8f7daf3f4a17096360b20925f0473a8cd297c00943d06f627ec8487f"
+    },
+    {
+      "week": "2022-06-13T00:00:00Z",
+      "role": "graph_20220613",
+      "bytes": 1604,
+      "registered_sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+    }
+  ],
+  "candidate_role_bytes_total": 11228,
+  "candidate_source_admissions_old": 7,
+  "candidate_source_admissions_new": 2,
+  "expected_eliminated_calls": 5,
+  "elapsed_saving_measured": false
+}

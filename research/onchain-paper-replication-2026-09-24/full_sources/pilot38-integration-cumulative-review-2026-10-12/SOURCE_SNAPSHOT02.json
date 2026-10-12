@@ -1,0 +1,62 @@
+{
+  "status": "PASS_EXACT_SIX_INSTALLED_BODIES_AND_UNCHANGED_FATAL_POISON_SOURCE",
+  "sources": [
+    {
+      "path": "tradingagents/research/admission.py",
+      "sha256": "793c4034d23ff4e486e2a888004b1dc69a11383c4d4460f01d1489fd5794f7a7",
+      "bytes": 20073
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/streamed_gat.py",
+      "sha256": "7eb9c982b80d3a1e1801c4df8bc862fb02025016feae3e805e184506a08eacf1",
+      "bytes": 8137
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/compact_mcm.py",
+      "sha256": "806f1ebeb4e262f1cc0a7945e2717d538e68b3b1f45452c449cf0c42b7d49942",
+      "bytes": 28943
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/job.py",
+      "sha256": "2f842fd6d0bcc8599a92bc89e088406df90f6c0cad171b7e2d0383d0832cab34",
+      "bytes": 41318
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_authority_lease.py",
+      "sha256": "ea25f774d4165e460824eaee0425bb6d860825fb7e97784360bb914f5fada741",
+      "bytes": 22203
+    },
+    {
+      "path": "tradingagents/research/onchain_replication/imported_mcm_identity.py",
+      "sha256": "15d45478fc33602763b65acebd20f571e8fcbd1fd7b40e3aba05c9a900da1ccf",
+      "bytes": 8350
+    },
+    {
+      "path": "tests/research/onchain_replication/test_compact_mcm.py",
+      "sha256": "8c3b9d041c5a44e18bcc24a8b9c1368f70d71bff2920220fc5d549a56cde046f",
+      "bytes": 11241,
+      "inverse_single_assertion_sha256": "340886b53717d7575e02e4222aa88a38e6539fc728e423a450845bf035b8ed0f"
+    }
+  ],
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-2026-10-12/SOURCE02.json": {
+      "sha256": "e382ca785fc842eb91ed39ba169d1ee3570bf1d6dfa92f08c8180bc2cfe106c3",
+      "bytes": 3521
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-2026-10-12/COMPACT_PREFLIGHT_TEST_CORRECTION01.diff": {
+      "sha256": "6ce5e0c6986ba2fe04b83c6bec5299b02aaac0bf0e9d9b2d87f5575e072551e6",
+      "bytes": 570
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-2026-10-12/FAILURE_ISOLATION01.json": {
+      "sha256": "7275d1c0c50068b8b41f69331c714d7a6d86a6c48b15c71b6c8dc7e8bfe06048",
+      "bytes": 442
+    },
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-efficiency-integration-2026-10-12/FAILURE_ISOLATION02.json": {
+      "sha256": "57824db2939bb05896918fa303ce3f2571142fb13a7c3b798d57201db32f4844",
+      "bytes": 438
+    }
+  },
+  "operational_deviation": "Selected Target.check uses actual current entry-boundary checked value instead of redundant middle full execution check; fresh entry and final full/graph checks remain. Mixed late failure priority and corruption poisoning follow final boundary as documented in candidate REPORT, not historical parity. No across-call/interval cache. Legacy no-lease path unchanged.",
+  "whole_suite_pass": false,
+  "remaining_validation": "Original broad suite timed out with failures; obsolete preflight assertion corrected, second-pair isolation/final focused checks remain Root-owned."
+}

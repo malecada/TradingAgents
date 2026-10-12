@@ -1,0 +1,19 @@
+--- imported_mcm_identity.py
++++ imported_mcm_identity.py
+@@ -99,13 +99,12 @@
+         else:self.execution.check();self.final(full_graph=False)
+ 
+     def check(self):
+-        leased=getattr(self.execution,'_sampled_authority_lease',None) is not None
+-        if leased:
++        if getattr(self.execution,'_sampled_authority_lease',None) is not None:
+             from .imported_authority_lease import target_lease
+-            checked=target_lease(self,boundary=True,_return_value=True)
++            target_lease(self,boundary=True)
+         self.lease();run=self.owner.bound._run
+         require(run.admission.inputs[self._input]['sha256']==self._manifest_sha and original_dictionary._read_registered(run,self._input)==self._manifest,'target manifest changed')
+-        require(canonical_bytes(checked if leased else self.execution.check())==self._execution_pin,'completed imported execution identity changed')
++        require(canonical_bytes(self.execution.check())==self._execution_pin,'completed imported execution identity changed')
+         self.final()
+ 
+     def sources(self):

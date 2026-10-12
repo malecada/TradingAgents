@@ -1,0 +1,27 @@
+--- a/tradingagents/research/onchain_replication/real_pilot_population.py
++++ b/tradingagents/research/onchain_replication/real_pilot_population.py
+@@ -51,7 +51,7 @@
+     return positions
+ 
+ 
+-def produce(run, plan_input, pilot):
++def produce(run, plan_input, pilot, *, graph_input_policy=None):
+     from tradingagents.research.lifecycle import ResearchRun
+     require(type(run) is ResearchRun, 'genuine registered worker required')
+     run._active(); run._check_source()
+@@ -73,8 +73,14 @@
+     prices=PricePanel(**{k:tuple(v) if k in ('dates','closes','missing_dates') else v for k,v in price_record.items()})
+     require(prices.symbol=='ETH-USD' and prices.source_hash==PRICE_SOURCE_SHA, 'original actual price source differs')
+     graphs=[];manifest_pins={}
++    require(graph_input_policy is None or graph_input_policy == 'source-checked-resource-graph-manifests-v1',
++            'explicit graph input policy required')
++    graph_bodies = None
++    if graph_input_policy is not None:
++        graph_roles = tuple(role for _, role in sorted(plan['graphs'].items()))
++        graph_bodies = run.read_inputs(graph_roles,max_each_bytes=2*1024**2,max_total_bytes=4*1024**2)
+     for week,role in sorted(plan['graphs'].items()):
+-        raw=run.read_input(role);value=json.loads(raw);metadata=value['metadata'];key=value['graph_hash']
++        raw=run.read_input(role) if graph_bodies is None else graph_bodies[role];value=json.loads(raw);metadata=value['metadata'];key=value['graph_hash']
+         require(metadata['asset']=='ETH' and metadata['start_utc']==week
+                 and metadata['graph_config_hash']==GRAPH_CONFIG_SHA
+                 and pilot['graph_inputs'].get(key)==role, 'complete graph identity differs')

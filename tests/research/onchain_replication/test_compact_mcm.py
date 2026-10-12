@@ -78,7 +78,7 @@ def test_actual_required_graph_mcm_matches_scalar_and_saved_scores(admitted):
 def test_preflight_refuses_before_mcm_stage_or_attempt(admitted):
     produced,t = admitted; m = api(); key,g = target(produced); owner = produced._proof.owner
     with pytest.raises(ValueError): m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
-    assert list(owner.stages) == ['dictionary'] and not owner.poisoned
+    assert list(owner.stages) == ['dictionary'] and owner.poisoned
     assert not m.directory(produced,key).exists()
 
 
@@ -110,7 +110,7 @@ def test_seal_callback_cannot_change_returned_matrix_before_publication(admitted
         value = original(*args,**kwargs); values.append(value['mcm']); return value
     def seal(*args,**kwargs):
         value = finished(*args,**kwargs); values[0][0,0] += .125; return value
-    monkeypatch.setattr(kernel,'mcm',fit); monkeypatch.setattr(m,'_kernel',lambda:kernel)
+    monkeypatch.setattr(kernel,'mcm',fit); monkeypatch.setattr(m,'_kernel',lambda dictionary=None:kernel)
     monkeypatch.setattr(owner,'_finish_stage',seal)
     with pytest.raises(ValueError,match='matrix'): m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
     assert owner.poisoned and owner.stages['mcm-'+key].closed

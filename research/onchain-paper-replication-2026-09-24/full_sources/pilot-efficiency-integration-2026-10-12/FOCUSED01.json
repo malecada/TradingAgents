@@ -1,0 +1,22 @@
+{
+  "command": [
+    "timeout",
+    "240",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/test_admission_batching.py",
+    "tests/research/test_streamed_gat_lifetime_candidate.py",
+    "tests/research/onchain_replication/test_entry_preparation_stop.py",
+    "tests/research/onchain_replication/test_job.py",
+    "tests/research/onchain_replication/test_compact_mcm.py"
+  ],
+  "exit_code": 124,
+  "elapsed_seconds": 240.0575307659965,
+  "scope": "changed source and neighboring synthetic integration contracts; no real data/financial fit"
+}

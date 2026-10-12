@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "180",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_preflight_refuses_before_mcm_stage_or_attempt"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 89.78309981899656,
+  "scope": "four changed obsolete assertions; synthetic preflight refusal before any MCM stage/namespace with fatal Owner poisoning"
+}

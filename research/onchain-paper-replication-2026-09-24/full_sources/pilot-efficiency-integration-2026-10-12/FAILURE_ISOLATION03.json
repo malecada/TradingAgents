@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-xq",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_second_pair_failure_preserves_first_score_and_failed_attempt"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 25.95286614500219,
+  "scope": "isolate fifth partial-suite failure; synthetic only"
+}

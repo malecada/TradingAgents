@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-xq",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_actual_required_graph_mcm_matches_scalar_and_saved_scores"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 37.47627769099927,
+  "scope": "isolate first incomplete focused-suite failure; synthetic only"
+}

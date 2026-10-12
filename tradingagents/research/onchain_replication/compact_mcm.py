@@ -144,7 +144,7 @@ def _prepare(dictionary, key, input_name, output_input):
                 'explicit registered resource-only pilot required')
         durability_policy(policy['durability'])
     require(set(policy) == ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','durability'}
-            if durability_selected else ({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'} if batched_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}))
+            if durability_selected else (({'schema_version','max_entries','max_workflow_metadata_bytes','numeric','batched'} | ({'entry_qualification'} if 'entry_qualification' in policy else set())) if batched_selected else {'schema_version','max_entries','max_workflow_metadata_bytes','numeric'}))
         and type(policy['schema_version']) is int and policy['schema_version'] in (1,2,5,6)
         and type(policy['max_entries']) is int and 0 < pairs <= policy['max_entries'] < 2**63
         and type(policy['max_workflow_metadata_bytes']) is int

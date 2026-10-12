@@ -1,0 +1,162 @@
+test_each_check_gets_fresh_entry_and_exit (__main__.BoundaryTests.test_each_check_gets_fresh_entry_and_exit) ... FAIL
+test_existing_checked_value_mutation_refusals (__main__.BoundaryTests.test_existing_checked_value_mutation_refusals) ... ok
+test_fresh_value_independent_metadata (__main__.BoundaryTests.test_fresh_value_independent_metadata) ... ERROR
+test_interval_never_returns_value (__main__.BoundaryTests.test_interval_never_returns_value) ... ok
+test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) ... 
+  test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=False, value=True) ... ERROR
+  test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=1, value=True) ... ERROR
+  test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=True, value=1) ... ERROR
+test_late_fatal_closes_contract (__main__.BoundaryTests.test_late_fatal_closes_contract) ... ok
+test_legacy_exact_execution_order (__main__.BoundaryTests.test_legacy_exact_execution_order) ... ok
+test_manifest_refusal_priority_and_poison_unchanged (__main__.BoundaryTests.test_manifest_refusal_priority_and_poison_unchanged) ... ok
+test_mixed_late_failure_priority_explicit (__main__.BoundaryTests.test_mixed_late_failure_priority_explicit) ... ERROR
+test_no_numerical_imports (__main__.BoundaryTests.test_no_numerical_imports) ... ok
+test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) ... 
+  test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='current') ... ERROR
+  test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='original') ... ERROR
+  test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='baseline') ... ERROR
+  test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='fingerprint') ... ERROR
+test_postread_graph_mutation_refuses_original_final_graph_guard (__main__.BoundaryTests.test_postread_graph_mutation_refuses_original_final_graph_guard) ... ok
+test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) ... 
+  test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='current') ... FAIL
+  test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='original') ... FAIL
+  test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='revocation') ... FAIL
+test_selected_eliminates_middle_execution (__main__.BoundaryTests.test_selected_eliminates_middle_execution) ... FAIL
+test_unchanged_guard_functions (__main__.BoundaryTests.test_unchanged_guard_functions) ... ok
+
+======================================================================
+ERROR: test_fresh_value_independent_metadata (__main__.BoundaryTests.test_fresh_value_independent_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 93, in test_fresh_value_independent_metadata
+    f=Fixture();value=f.wrapper(f.target,boundary=True,_return_value=True)
+                      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=False, value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 89, in test_interval_value_request_refuses_and_poisons
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=boundary,_return_value=value)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=1, value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 89, in test_interval_value_request_refuses_and_poisons
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=boundary,_return_value=value)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_interval_value_request_refuses_and_poisons (__main__.BoundaryTests.test_interval_value_request_refuses_and_poisons) (boundary=True, value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 89, in test_interval_value_request_refuses_and_poisons
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=boundary,_return_value=value)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_mixed_late_failure_priority_explicit (__main__.BoundaryTests.test_mixed_late_failure_priority_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 141, in test_mixed_late_failure_priority_explicit
+    with self.assertRaisesRegex(MemoryError,'final boundary fatal'):f.target.check()
+                                                                    ~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/baseline_imported_mcm_identity.py", line 107, in check
+    require(canonical_bytes(self.execution.check())==self._execution_pin,'completed imported execution identity changed')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 10, in require
+    if not ok:raise ValueError(why)
+              ^^^^^^^^^^^^^^^^^^^^^
+ValueError: completed imported execution identity changed
+
+======================================================================
+ERROR: test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='current')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 132, in test_postcallback_metadata_and_baseline_mutations_poison
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=True,_return_value=True)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='original')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 132, in test_postcallback_metadata_and_baseline_mutations_poison
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=True,_return_value=True)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='baseline')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 132, in test_postcallback_metadata_and_baseline_mutations_poison
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=True,_return_value=True)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+ERROR: test_postcallback_metadata_and_baseline_mutations_poison (__main__.BoundaryTests.test_postcallback_metadata_and_baseline_mutations_poison) (mode='fingerprint')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 132, in test_postcallback_metadata_and_baseline_mutations_poison
+    with self.assertRaises(ValueError):f.wrapper(f.target,boundary=True,_return_value=True)
+                                       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: target_lease() got an unexpected keyword argument '_return_value'
+
+======================================================================
+FAIL: test_each_check_gets_fresh_entry_and_exit (__main__.BoundaryTests.test_each_check_gets_fresh_entry_and_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 80, in test_each_check_gets_fresh_entry_and_exit
+    f=Fixture();f.target.check();f.target.check();self.assertEqual(f.events.count('execution'),4)
+                                                  ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 6 != 4
+
+======================================================================
+FAIL: test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='current')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 107, in test_postread_mutations_refuse_at_final_and_poison
+    self.assertTrue(f.contract.closed);self.assertTrue(f.contract.scheduler.closed)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='original')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 107, in test_postread_mutations_refuse_at_final_and_poison
+    self.assertTrue(f.contract.closed);self.assertTrue(f.contract.scheduler.closed)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_postread_mutations_refuse_at_final_and_poison (__main__.BoundaryTests.test_postread_mutations_refuse_at_final_and_poison) (mode='revocation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 107, in test_postread_mutations_refuse_at_final_and_poison
+    self.assertTrue(f.contract.closed);self.assertTrue(f.contract.scheduler.closed)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_selected_eliminates_middle_execution (__main__.BoundaryTests.test_selected_eliminates_middle_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot38-target-boundary-coalescing-2026-10-12/test_boundary.py", line 74, in test_selected_eliminates_middle_execution
+    f=Fixture();self.assertIsNone(f.target.check());self.assertEqual(f.events.count('execution'),2)
+                                                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 2
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.330s
+
+FAILED (failures=5, errors=9)

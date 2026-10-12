@@ -1,0 +1,69 @@
+{
+  "format": "root-read-only-live-observation-v1",
+  "observed_utc": "2026-10-11T21:45:07Z",
+  "original_guard_path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-real-data-end-to-end-resource-20261011-36/guard/live.json",
+  "original_guard_sample_sha256": "1b2c71f34aa348af53f1ecea130d1839e30e73f9f23db5b7cd0ac869f968a47a",
+  "qualification": "Copied actual transient guard sample; separate read-only Root observation, not a worker outcome or continuous trace. /proc counters include character I/O and child accounting; not physical wire or causal phase attribution.",
+  "processes": [
+    {
+      "pid": 131407,
+      "stat_raw": "131407 (python) S 130376 130376 130376 0 -1 4194304 121914 433630 0 0 265 68 334 195 20 0 2 0 898658 5389471744 165175 18446744073709551615 4329472 33424632 140729458446400 0 0 0 0 16781312 16386 0 0 0 17 9 0 0 0 0 0 23068672 33424632 852090880 140729458449695 140729458450151 140729458450151 140729458454448 0\n",
+      "io_raw": "rchar: 458264473\nwchar: 339794094\nsyscr: 72317\nsyscw: 66653\nread_bytes: 0\nwrite_bytes: 8192\ncancelled_write_bytes: 4096\n",
+      "wchan": "do_wait",
+      "memory_lines": [
+        "VmRSS:\t  661592 kB",
+        "RssAnon:\t  354856 kB",
+        "RssFile:\t  306736 kB",
+        "Threads:\t2"
+      ]
+    },
+    {
+      "pid": 131916,
+      "stat_raw": "131916 (python) R 131407 130376 130376 0 -1 4194304 135270 785235 0 1 28457 10122 532 543 20 0 4 0 899482 5488320512 168880 18446744073709551615 4329472 33424632 140735725081632 0 0 0 0 16781312 16386 0 0 0 17 5 0 0 0 0 0 23068672 33424632 999206912 140735725086274 140735725086791 140735725086791 140735725092784 0\n",
+      "io_raw": "rchar: 493211490\nwchar: 369162016\nsyscr: 168497\nsyscw: 70284\nread_bytes: 73728\nwrite_bytes: 29745152\ncancelled_write_bytes: 4096\n",
+      "wchan": "0",
+      "memory_lines": [
+        "VmRSS:\t  676464 kB",
+        "RssAnon:\t  369512 kB",
+        "RssFile:\t  306952 kB",
+        "Threads:\t4"
+      ]
+    },
+    {
+      "pid": 132475,
+      "stat_raw": "132475 (python) S 4583 132475 132475 0 -1 4194304 4498 0 0 0 275 29 0 0 20 0 1 0 900340 56729600 6482 18446744073709551615 4329472 33424632 140735784186240 0 0 0 0 16781312 16386 1 0 0 17 0 0 0 0 0 0 23068672 33424632 324849664 140735784193781 140735784194663 140735784194663 140735784198064 0\n",
+      "io_raw": "rchar: 138069944\nwchar: 2216\nsyscr: 17205\nsyscw: 3\nread_bytes: 0\nwrite_bytes: 4096\ncancelled_write_bytes: 0\n",
+      "wchan": "hrtimer_nanosleep",
+      "memory_lines": [
+        "VmRSS:\t   26196 kB",
+        "RssAnon:\t   14760 kB",
+        "RssFile:\t   11436 kB",
+        "Threads:\t1"
+      ]
+    },
+    {
+      "pid": 132478,
+      "stat_raw": "132478 (python) S 132475 132478 132478 0 -1 4194304 1037063 47458697 6 0 21941 4799 42121 22006 20 0 4 0 900377 8246824960 840236 18446744073709551615 4329472 33424632 140723927626336 0 0 0 0 16781312 16386 0 0 0 17 0 0 0 0 0 0 23068672 33424632 141455360 140723927629970 140723927630426 140723927630426 140723927633840 0\n",
+      "io_raw": "rchar: 55899790052\nwchar: 37941306523\nsyscr: 7388803\nsyscw: 7435381\nread_bytes: 3759734784\nwrite_bytes: 524288\ncancelled_write_bytes: 4096\n",
+      "wchan": "ep_poll",
+      "memory_lines": [
+        "VmRSS:\t 3361264 kB",
+        "RssAnon:\t 3052732 kB",
+        "RssFile:\t  308532 kB",
+        "Threads:\t4"
+      ]
+    },
+    {
+      "pid": 193517,
+      "stat_raw": "193517 (git) R 132478 132478 132478 0 -1 4194304 948 0 0 0 1 0 0 0 20 0 1 0 985663 667389952 1952 18446744073709551615 104606309654528 104606312433825 140720666803504 0 0 0 0 0 0 0 0 0 17 1 0 0 0 0 0 104606313166128 104606313247936 104607217557504 140720666804795 140720666804816 140720666804816 140720666808299 0\n",
+      "io_raw": "rchar: 38609\nwchar: 525614\nsyscr: 43\nsyscw: 100\nread_bytes: 0\nwrite_bytes: 0\ncancelled_write_bytes: 0\n",
+      "wchan": "0",
+      "memory_lines": [
+        "VmRSS:\t    7852 kB",
+        "RssAnon:\t     556 kB",
+        "RssFile:\t    7296 kB",
+        "Threads:\t1"
+      ]
+    }
+  ]
+}

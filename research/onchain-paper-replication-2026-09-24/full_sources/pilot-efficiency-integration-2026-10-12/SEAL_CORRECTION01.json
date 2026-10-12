@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-xq",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_seal_callback_cannot_change_returned_matrix_before_publication"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 27.968631566000113,
+  "scope": "corrected synthetic hook signature, unchanged matrix corruption rejection before publication"
+}

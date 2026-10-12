@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-xq",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_compact_mcm.py::test_preflight_refuses_before_mcm_stage_or_attempt[numeric]"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 24.70877406300133,
+  "scope": "isolate observed preflight regression, no real empirical data"
+}

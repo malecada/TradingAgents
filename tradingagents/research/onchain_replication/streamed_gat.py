@@ -139,6 +139,7 @@ class GraphAttention(nn.Module):
         numer=torch.exp(e-maximum[target])
         denom=torch.zeros_like(maximum).scatter_add(0,index,numer)
         attention=F.dropout(numer/denom[target],p=self.dropout,training=self.training)
+        del clean, source_score, target_score, e, maximum, numer, denom
         out=weighted_aggregate(h,attention,source,target,block_edges=self.block_edges)
         if self.activation=='elu':out=F.elu(out)
         elif self.activation!='identity':raise ValueError('unknown GAT activation')

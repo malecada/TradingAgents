@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/test_admission_batching.py",
+    "tests/research/test_streamed_gat_lifetime_candidate.py",
+    "tests/research/onchain_replication/test_entry_preparation_stop.py",
+    "tests/research/onchain_replication/test_job.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 21.66378298500058,
+  "scope": "coherent final fast changed-source contracts; expensive legacyMCM cases checked separately. Does not replace full146-suite completion."
+}

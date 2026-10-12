@@ -1,0 +1,24 @@
+--- imported_authority_lease.py
++++ imported_authority_lease.py
+@@ -290,15 +290,19 @@
+     return contract.check(boundary=boundary,_return_value=_return_value)
+ 
+ 
+-def target_lease(target,*,boundary=False):
++def target_lease(target,*,boundary=False,_return_value=False):
+     from .imported_mcm_identity import Target
+     require(type(target) is Target,'genuine target required')
+     execution=target.execution;contract=getattr(execution,'_sampled_authority_lease',None)
+     require(type(contract) is Lease and contract.execution is execution,'original sampled contract required')
+     try:
++        require(type(_return_value) is bool and (not _return_value or boundary is True),
++                'checked value requires explicit full boundary')
+         if id(target) not in contract.targets:
+             require(boundary,'target requires full entry boundary')
+             target.final(full_graph=False);contract.targets[id(target)]=target
+         require(contract.targets[id(target)] is target,'target identity reused')
+-        contract.target=target;contract.check(boundary=boundary)
++        contract.target=target
++        if _return_value:return contract.check(boundary=boundary,_return_value=True)
++        contract.check(boundary=boundary)
+     except BaseException:contract.closed=True;contract.scheduler.closed=True;raise

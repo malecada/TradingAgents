@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "180",
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/test_streamed_gat_lifetime_candidate.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 5.453935455996543,
+  "scope": "16 focused synthetic cases via finite reviewed tests/research wrapper; repository offline guards remain",
+  "prior_unadmitted_file_attempt": "gat-lifetime01.json"
+}

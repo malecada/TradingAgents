@@ -1,0 +1,11 @@
+--- old-synthetic-assertion
++++ unchanged-fatal-poison-contract
+@@ -78,7 +78,7 @@
+ def test_preflight_refuses_before_mcm_stage_or_attempt(admitted):
+     produced,t = admitted; m = api(); key,g = target(produced); owner = produced._proof.owner
+     with pytest.raises(ValueError): m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+-    assert list(owner.stages) == ['dictionary'] and not owner.poisoned
++    assert list(owner.stages) == ['dictionary'] and owner.poisoned
+     assert not m.directory(produced,key).exists()
+ 
+ 

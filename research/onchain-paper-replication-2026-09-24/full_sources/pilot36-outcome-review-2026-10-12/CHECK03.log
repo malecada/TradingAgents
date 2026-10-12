@@ -1,0 +1,36 @@
+{
+  "status": "ACCEPTED_FAILED_ORIGINAL36_CLOSURE_ONLY",
+  "source_bodies_authenticated": 909,
+  "policy_predicate": {
+    "source_line": 146,
+    "actual_policy_passes": false,
+    "only_entry_qualification_removed_passes": true,
+    "qualification": "Counterfactual metadata control only; no source or policy mutation."
+  },
+  "accounting": {
+    "current": {
+      "complete": 20,
+      "failed": 39
+    },
+    "accepted_original_historical": {
+      "complete": 13,
+      "failed": 4
+    },
+    "total": {
+      "closed": 76,
+      "complete": 33,
+      "failed": 43
+    },
+    "highest_effective_budget": 108,
+    "qualification": "17 historical original joins reused from exact accepted extension108 review; no allowance refund or transfer."
+  },
+  "process_closure": {
+    "guard_cleanup_verified": true,
+    "root_supervisor_reaped": true,
+    "cgroup_absent": true,
+    "known_processes_absent": true,
+    "parent_exit": 1,
+    "source_freeze_release_supported": true,
+    "qualification": "This attempt only; no global writer/process exclusion."
+  }
+}

@@ -1,0 +1,22 @@
+F
+=================================== FAILURES ===================================
+_________ test_preflight_refuses_before_mcm_stage_or_attempt[numeric] __________
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x748eb6e6b230>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    @pytest.mark.parametrize('admitted',['numeric','budget','route','source'],indirect=True)
+    def test_preflight_refuses_before_mcm_stage_or_attempt(admitted):
+        produced,t = admitted; m = api(); key,g = target(produced); owner = produced._proof.owner
+        with pytest.raises(ValueError): m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+>       assert list(owner.stages) == ['dictionary'] and not owner.poisoned
+E       AssertionError: assert (['dictionary'] == ['dictionary']
+E         
+E         Use -v to get more diff and not True)
+E        +  where True = <tradingagents.research.onchain_replication.compact_owner.Owner object at 0x748eb6e69a90>.poisoned
+
+tests/research/onchain_replication/test_compact_mcm.py:81: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_preflight_refuses_before_mcm_stage_or_attempt[numeric]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 23.68s

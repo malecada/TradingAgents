@@ -136,7 +136,7 @@ def _source_files(root, source, design_source, files):
         pending, sizes, total = [], [], 0
         for index, (name, expected, pair) in enumerate(entries):
             current, frozen = extents[2 * index:2 * index + 2]
-            if len(local_path(root, name).read_bytes()) != current[1]:
+            if local_path(root, name).stat().st_size != current[1]:
                 raise ValueError(f"committed source differs: {name}")
             size = current[1] + frozen[1]
             if pending and total + size > _SOURCE_BATCH_BYTES:

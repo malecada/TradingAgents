@@ -193,6 +193,78 @@ def _terminal(path, claim, claim_sha256, root, status):
     return terminal
 
 
+def _resource_pilot_rows(root, claim, claim_sha256):
+    """Recover only terminal-hash-bound registered resource-pilot dispositions."""
+    from ..admission import local_path
+    def registered(name):
+        info = claim['inputs'][name]
+        path = local_path(root, info['path'])
+        with path.open('rb') as stream:
+            body = stream.read(2*1024**2+1)
+        if len(body)>2*1024**2 or digest(body)!=info['sha256']:
+            raise ValueError('resource observer registered metadata changed')
+        return json.loads(body)
+    if 'execution_job' not in claim['inputs']:
+        return {}
+    job = registered('execution_job')
+    if job.get('kind') != 'compact_resource':
+        return {}
+    selections = job.get('payload', {}).get('representation_jobs', {})
+    roles = [value['real_pilot_input'] for value in selections.values()
+             if type(value) is dict and 'real_pilot_input' in value]
+    if not roles:
+        return {}
+    if len(roles)!=1:
+        raise ValueError('resource observer requires one selected pilot ledger')
+    policy = registered(roles[0])
+    if (policy.get('kind')!='real-data-import-training-pilot-v1'
+            or type(policy.get('schema_version')) is not int or policy['schema_version'] not in (1,2)):
+        raise ValueError('resource observer pilot policy differs')
+    name = policy['outputs']['ledger']; cell = policy['cell_id']
+    if (type(name) is not str or Path(name).name!=name
+            or name not in claim['experiment']['outputs']
+            or cell not in claim['experiment']['cells']):
+        raise ValueError('resource observer ledger registration differs')
+    run_dir = local_path(root, 'research_runs/'+claim['experiment_id'])
+    claim_body = (run_dir/'claim.json').read_bytes()
+    if digest(claim_body)!=claim_sha256 or json.loads(claim_body)!=claim:
+        raise ValueError('resource observer original claim differs')
+    terminals = [status for status in ('failed','complete') if (run_dir/(status+'.json')).exists()]
+    if not terminals:
+        return {}
+    if len(terminals)!=1:
+        raise ValueError('contradictory lifecycle terminals')
+    status = terminals[0]; terminal_path = run_dir/(status+'.json')
+    terminal_sha256 = file_hash(terminal_path)
+    terminal = _terminal(terminal_path,claim,claim_sha256,root,status)
+    if name not in terminal['output_sha256']:
+        return {}
+    path = run_dir/'outputs'/name
+    with path.open('rb') as stream:
+        body = stream.read(1024**2+1)
+    if len(body)>1024**2 or digest(body)!=terminal['output_sha256'][name]:
+        raise ValueError('resource observer ledger bytes differ')
+    rows = json.loads(body)
+    if type(rows) is not list or len(rows)!=1 or type(rows[0]) is not dict:
+        raise ValueError('resource observer ledger denominator differs')
+    row = rows[0]; fields = {'id','status','resource_only','financial_fit_complete','paper_financial_fits'}
+    if (row.get('id')!=cell or row.get('status') not in ('complete','failed')
+            or set(row)!=fields | ({'reason'} if row.get('status')=='failed' else set())
+            or row.get('resource_only') is not True or row.get('financial_fit_complete') is not False
+            or type(row.get('paper_financial_fits')) is not int or row['paper_financial_fits']!=0
+            or (row['status']=='failed' and (type(row.get('reason')) is not str or not row['reason']))):
+        raise ValueError('resource observer ledger disposition differs')
+    if status=='complete' and row not in terminal['cells']:
+        raise ValueError('resource observer complete disposition differs')
+    if (file_hash(run_dir/'claim.json')!=claim_sha256 or file_hash(terminal_path)!=terminal_sha256
+            or file_hash(path)!=terminal['output_sha256'][name]
+            or (run_dir/('complete.json' if status=='failed' else 'failed.json')).exists()):
+        raise ValueError('resource observer evidence changed during recovery')
+    if registered('execution_job')!=job or registered(roles[0])!=policy:
+        raise ValueError('resource observer selected metadata changed during recovery')
+    return {cell:row}
+
+
 def _observer_evidence(base):
     names = ('launch.json', 'guard/live.json', 'guard/final.json',
              'guard/observer-death.json', 'postmortem-cells.json', 'unsealed-journals.json')
@@ -540,6 +612,10 @@ def _reconcile(args):
     if set(treatment_rows) & set(recorded):
         raise ValueError('duplicate durable treatment disposition')
     recorded.update(treatment_rows)
+    resource_rows = _resource_pilot_rows(root, claim, file_hash(claim_path))
+    if any(name in recorded and recorded[name] != row for name, row in resource_rows.items()):
+        raise ValueError('conflicting durable resource disposition')
+    recorded.update(resource_rows)
     if not set(recorded) <= set(claim['experiment']['cells']):
         raise ValueError('unregistered durable cell disposition')
     cells = [recorded.get(name, {'id': name, 'status': 'unavailable', 'reason': 'owned worker ended before durable cell disposition; no retry'}) for name in claim['experiment']['cells']]
