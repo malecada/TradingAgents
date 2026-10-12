@@ -189,6 +189,30 @@ class ImmutablePairSession:
                 except BaseException:pass
             raise
 
+        prior_cleanup=self._normalizer_cleanup
+        try:
+            if matching_numeric_policy.cache_selected(self._numeric_adapter):
+                cached_adapter=self._numeric_adapter
+                release_cache=matching_numeric_policy._cache_release
+                def numeric_cleanup():
+                    primary=None
+                    try:release_cache(cached_adapter)
+                    except BaseException as error:primary=error
+                    try:prior_cleanup()
+                    except BaseException as error:
+                        if primary is None:primary=error
+                        else:
+                            try:BaseException.add_note(primary,'remaining session cleanup failed: '+repr(error))
+                            except BaseException:pass
+                    if primary is not None:raise primary
+                self._normalizer_cleanup=numeric_cleanup
+        except BaseException as primary:
+            try:prior_cleanup()
+            except BaseException as cleanup:
+                try:BaseException.add_note(primary,'numeric cleanup setup failed: '+repr(cleanup))
+                except BaseException:pass
+            raise
+
     def _edge_current(self):
         compiled_edge_owner.current_policy(self)
         require(self._edge_lease is self._edge_pin, 'edge lease replaced')

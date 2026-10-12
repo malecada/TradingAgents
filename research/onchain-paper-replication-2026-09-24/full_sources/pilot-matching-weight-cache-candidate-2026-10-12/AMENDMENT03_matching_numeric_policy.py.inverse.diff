@@ -1,0 +1,13 @@
+--- iteration03/matching_numeric_policy.py
++++ iteration02/matching_numeric_policy.py
+@@ -73,9 +73,9 @@
+         if dict(self.policy)['format']==CACHE_POLICY['format']:_cache_initialize(self)
+ 
+     def current(self):
++        if dict(self.policy).get("format")==CACHE_POLICY["format"]:_cache_current(self)
+         if self.policy is not self._pin or kernel.np is not self._numpy:
+             raise ValueError('numeric adapter changed')
+-        if dict(self.policy).get("format")==CACHE_POLICY["format"]:_cache_current(self)
+         for name,function,code in self._functions:
+             if getattr(kernel,name) is not function or function.__code__ is not code:
+                 raise ValueError('numeric helper changed')

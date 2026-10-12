@@ -1,0 +1,422 @@
+........................................s....................F.FF....... [ 66%]
+........................FF.....FF...                                     [100%]
+=================================== FAILURES ===================================
+________ test_nested_cleanup_uncertainty_remains_fatal_through_producer ________
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x7f3aa6725550>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3bdba95a90>
+
+    def test_nested_cleanup_uncertainty_remains_fatal_through_producer(admitted,monkeypatch):
+        produced,t = admitted; m = api(); key,g = target(produced)
+        holder={}; construct=m.MCMScoreStream; real_close=m.os.close; broken=[]
+        def build(*args,**kwargs):
+            obj=construct(*args,**kwargs);holder['stream']=obj;return obj
+        def create(*args,**kwargs):
+            broken.append(holder['stream'].active.record_fd)
+            raise RuntimeError('synthetic primary MCM construction')
+        def close(fd):
+            if fd in broken:raise OSError('synthetic retained tail descriptor')
+            real_close(fd)
+        monkeypatch.setattr(m,'MCMScoreStream',build)
+        monkeypatch.setattr(m.compact_matcher.engine,'create',create)
+        monkeypatch.setattr(m.os,'close',close)
+        try:
+            with pytest.raises(m.io.CleanupFailure) as caught:
+                m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+>           assert isinstance(caught.value.__cause__,RuntimeError)
+E           AssertionError: assert False
+E            +  where False = isinstance(ExceptionGroup('body/cleanup failures', [RuntimeError('synthetic primary MCM construction'), OSError('synthetic retained tail descriptor')]), RuntimeError)
+E            +    where ExceptionGroup('body/cleanup failures', [RuntimeError('synthetic primary MCM construction'), OSError('synthetic retained tail descriptor')]) = CleanupFailure('score storage cleanup unresolved; worker must stop').__cause__
+E            +      where CleanupFailure('score storage cleanup unresolved; worker must stop') = <ExceptionInfo CleanupFailure('score storage cleanup unresolved; worker must stop') tblen=9>.value
+
+tests/research/onchain_replication/test_compact_mcm.py:148: AssertionError
+___ test_final_producer_descriptor_close_is_fatal_and_releases_lock[failure] ___
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x7f3aa54eac60>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3ab5748c50>
+mode = 'failure'
+
+    @pytest.mark.parametrize('mode',['success','failure'])
+    def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,monkeypatch,mode):
+        produced,t = admitted; m=api(); key,g=target(produced); owner=produced._proof.owner
+        root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]
+        def opening(path):
+            value=opened(path)
+            if Path(path)==root and not captured:captured.append(value[1])
+            return value
+        def close(fd):
+            if captured and fd==captured[0]:raise OSError('synthetic retained producer descriptor')
+            real_close(fd)
+        def fail(*args,**kwargs):raise RuntimeError('synthetic primary numerical failure')
+        monkeypatch.setattr(m.io,'_open',opening);monkeypatch.setattr(m.os,'close',close)
+        if mode=='failure':monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
+        try:
+            with pytest.raises(BaseException) as caught:
+                m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+            assert not isinstance(caught.value,Exception),'root close masked fatal uncertainty'
+            assert owner.poisoned and (root/'failed.json').exists()
+>           if mode=='failure':assert isinstance(caught.value.__cause__,RuntimeError)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError: assert False
+E            +  where False = isinstance(ExceptionGroup('body/cleanup failures', [RuntimeError('synthetic primary numerical failure'), OSError('synthetic retained producer descriptor')]), RuntimeError)
+E            +    where ExceptionGroup('body/cleanup failures', [RuntimeError('synthetic primary numerical failure'), OSError('synthetic retained producer descriptor')]) = CleanupFailure('score storage cleanup unresolved; worker must stop').__cause__
+E            +      where CleanupFailure('score storage cleanup unresolved; worker must stop') = <ExceptionInfo CleanupFailure('score storage cleanup unresolved; worker must stop') tblen=5>.value
+
+tests/research/onchain_replication/test_compact_mcm.py:178: AssertionError
+____ test_fatal_log_terminal_cleanup_cannot_be_downgraded_to_primary_error _____
+  | BaseExceptionGroup: body/cleanup failures (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 404, in _produce_locked
+    |     actual,stream_terminal,numeric_pin=compute(log,lease)
+    |                                        ~~~~~~~^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 381, in compute
+    |     actual = kernel.mcm(graph,dictionary.dictionary,thaw(owner.matching),workflow=owner.bound.record['workflow_identity'],
+    |         backend=BACKEND,max_entries=policy['max_entries'],score_pair=stream,policy=policy['numeric'],lease=live,
+    |         **({'imported':dictionary} if _imported(dictionary) else {}))
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py", line 58, in mcm
+    |     lease();value=workload.score(score_pair,purpose,local,m);lease()
+    |                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/workload.py", line 36, in score
+    |     result=callback(thaw(purpose),a,b)
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/mcm_score_stream.py", line 208, in __call__
+    |     result = self.compute(thaw(expected), a, b)
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_matcher.py", line 308, in __call__
+    |     state = self._timed('state_create',engine.create,a, b, self.config, **{k: self.policy[k] for k in pair.ENGINE_FIELDS})
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_matcher.py", line 181, in _timed
+    |     if self._diagnostic is None:return function(*args, **kwargs)
+    |                                        ~~~~~~~~^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_compact_mcm.py", line 191, in fail
+    |     def fail(*args,**kwargs):raise RuntimeError('synthetic primary pair failure')
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | RuntimeError: synthetic primary pair failure
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/owned_io.py", line 34, in _cleanup
+    |     try:close()
+    |         ~~~~~^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_mcm.py", line 439, in <lambda>
+    |     actions.append(lambda:log.fail('MCM producer failed'))
+    |                           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/compact_pair_log.py", line 221, in fail
+    |     def fail(self, reason): return self._terminal('failed', reason)
+    |                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+    |   File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_compact_mcm.py", line 189, in failed_terminal
+    |     if status=='failed':raise m.io.CleanupFailure('synthetic cleanup error after actual log close')
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    | tradingagents.research.onchain_replication.owned_io.CleanupFailure: synthetic cleanup error after actual log close
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+admitted = (<tradingagents.research.onchain_replication.compact_dictionary.Produced object at 0x7f3aa67550f0>, <tests.research.on...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3aa57d2c90>
+
+    def test_fatal_log_terminal_cleanup_cannot_be_downgraded_to_primary_error(admitted,monkeypatch):
+        produced,t=admitted;m=api();key,g=target(produced);terminal=m.compact_pair_log.PairLog._terminal
+        def failed_terminal(log,status,reason):
+            result=terminal(log,status,reason)
+            if status=='failed':raise m.io.CleanupFailure('synthetic cleanup error after actual log close')
+            return result
+        def fail(*args,**kwargs):raise RuntimeError('synthetic primary pair failure')
+        monkeypatch.setattr(m.compact_pair_log.PairLog,'_terminal',failed_terminal)
+        monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
+        with pytest.raises(m.compact_matcher.CleanupFailure) as caught:
+>           m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+
+tests/research/onchain_replication/test_compact_mcm.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_mcm.py:289: in produce
+    return _produce_locked(dictionary,graph_hash=graph_hash,input_name=input_name,output_input=output_input,held=held)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_mcm.py:443: in _produce_locked
+    try:io._cleanup(actions,primary=primary)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+actions = [<function _produce_locked.<locals>.<lambda> at 0x7f3aa6535da0>, <bound method PairLog.close of <tradingagents.researc...on.compact_pair_log.PairLog object at 0x7f3aa68a3050>>, <function _produce_locked.<locals>.<lambda> at 0x7f3aa6535580>]
+primary = RuntimeError('synthetic primary pair failure')
+
+    def _cleanup(actions,*,primary=_UNSET):
+        """Close every owned resource once; first actual fatal outranks uncertainty."""
+        if primary is _UNSET:primary=sys.exception()
+        failures=[]
+        for close in actions:
+            try:close()
+            except BaseException as error:failures.append(error)
+        if not failures:return
+        causes=_flatten(([primary] if primary is not None else [])+failures)
+        selected=next((error for error in causes if _fatal(error)),None)
+        if selected is not None:
+            others=[error for error in causes if error is not selected]
+            if selected is primary:return
+            if others:
+                # Optional evidence attachment must never replace the selected fatal.
+                try:
+                    if selected.__cause__ is not None and all(selected.__cause__ is not e for e in others):others.append(selected.__cause__)
+                    selected.__cause__=others[0] if len(others)==1 else BaseExceptionGroup('prior body/cleanup evidence',others)
+                except BaseException:pass
+            raise selected
+        failure=CleanupFailure('score storage cleanup unresolved; worker must stop')
+        failure.failures=tuple(causes)
+        failure.__cause__=causes[0] if len(causes)==1 else BaseExceptionGroup('body/cleanup failures',causes)
+>       raise failure
+E       tradingagents.research.onchain_replication.owned_io.CleanupFailure: score storage cleanup unresolved; worker must stop
+
+tradingagents/research/onchain_replication/owned_io.py:52: CleanupFailure
+_ test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-False] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_three_batch_driver_contin2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3aa64dee40>
+streamed = True, real_memo = True, complete = False
+
+    @pytest.mark.parametrize('streamed,real_memo,complete',[(False,False,False),(True,False,False),(True,True,False),(True,True,True)])
+    def test_three_batch_driver_continuation_matches_uninterrupted_and_finishes(tmp_path,monkeypatch,streamed,real_memo,complete):
+        import struct
+        from tests.research.onchain_replication.test_matching_reference import graph
+        from tradingagents.research.onchain_replication import batched_driver as driver
+        from tradingagents.research.onchain_replication import adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,matching_numeric_policy
+        from tradingagents.research.onchain_replication.neighborhoods import graph_hash,node_order_hash
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        class Memo:
+            def __init__(self,*args,**kwargs):
+                for module in (adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,matching_numeric_policy):module.attach(self,None)
+                self.active=False;self.occurrences=0;self.counters={'calls':0};self.poisoned=False
+                self.executor=SimpleNamespace(checkpoints=0,reserved_bytes=0,completed_operations=0,advance_calls=0,abandoned_call_operation_limit=0)
+            def begin_batch(self):self.active=True
+            def end_batch(self):self.active=False
+            def restore_ordinal(self,n):assert self.occurrences==0;self.occurrences=n
+            def _poison(self):self.poisoned=True;self.active=False
+            def close(self):pass
+            def __call__(self,a,b,purpose):
+                ordinal=self.occurrences;score=float(.25+.01*float(a.node_features[0,0]));self.occurrences+=1;self.counters['calls']+=1
+                self.executor.completed_operations+=2;self.executor.advance_calls+=1
+                self.last_receipt=dict(schema_version=2,kind='engineering_numeric_occurrence',ordinal=ordinal,purpose_sha256=purpose,
+                    mode='computed',origin_purpose_sha256=purpose,origin_ordinal=ordinal,score_f64_be=struct.pack('>d',score).hex(),
+                    iterations=1,convergence='temperature_complete',cached=False,checkpoint_attempt_delta=0,checkpoint_reserved_byte_delta=0,
+                    retained_cache_bytes=0,old_per_occurrence_execution_credit=False,boundary_validated_batch_complete=False)
+                return score,1,'temperature_complete'
+        if not real_memo:monkeypatch.setattr(ne.reuse,'NumericReuseExecutor',Memo)
+        from tests.research.onchain_replication.test_matching_reference import config as actual_config
+        from tests.research.onchain_replication.test_matching_pair_checkpoints import POLICY as actual_policy
+        actual_schedule=dict(max_checkpoints=2,calls_per_checkpoint=10,operations_per_call=1024,max_total_checkpoints=10,max_total_checkpoint_bytes=4*1024**2)
+        g=graph([[0.],[1.],[2.]],[]);extract={'hop_depth':0,'maximum_neighborhood_nodes':3}
+        with ArrayNeighborhoodIndex(g,max_buffer_bytes=100000,edge_chunk=4) as index:motif=index.neighborhood(0,extract)
+        dictionary=SimpleNamespace(representatives=(motif,)*32,config=extract)
+        descriptor=dict(rows=3,cells=96,motifs=32,graph_hash=graph_hash(g),node_order_hash=node_order_hash(g.node_ids),workload_sha256='1'*64,purpose_schema_version=2)
+        batch_size=40 if complete else 32;parent_batches=3 if complete else 2;imported=96 if complete else 64
+        contract=dict(source_sha256='a'*64,config_sha256='b'*64,dictionary_sha256='c'*64,graph_hash=descriptor['graph_hash'],node_order_hash=descriptor['node_order_hash'],descriptor_sha256=digest(body(descriptor)),workflow_identity='tiny',cells=96,batch_cells=batch_size,numerical_contract_sha256='f'*64)
+        import time
+        boundaries={}
+        def make(name):
+            times=[time.perf_counter()];boundaries[name]=times
+            j=BatchJournal(tmp_path/name,batch_cells=batch_size,max_cells=96,max_bytes=100000,max_body_bytes=8192,boundary=lambda:times.append(time.perf_counter()))
+            n=ne.NumericExecution(j.root,actual_config()|{'max_iterations':1} if real_memo else {}, actual_policy if real_memo else {}, actual_schedule if real_memo else {}, lambda *a:None,cells=96,batch_cells=batch_size,max_origin_bytes=864,max_summary_bytes=25000,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+                numeric_kernel_policy=dict(matching_numeric_policy.POLICY) if real_memo and name=='successor-full' else None)
+            output=bytearray(384)
+            def consumer(ordinal,center,motif,payload):output[ordinal*4:ordinal*4+len(payload)]=payload
+            return j,n,output,consumer
+        def drive(j,n,consumer,**kw):
+            actual_descriptor=kw.pop('actual_descriptor',descriptor)
+            return driver.drive(g,dictionary,descriptor=actual_descriptor,policy={'max_buffer_bytes':100000,'edge_chunk':4,'extraction_limit':3},
+                journal=j,executor=n,numeric=n,consumer=consumer,max_chunk_bytes=128,max_closure_token_bytes=4096,
+                continuation_contract_sha256=contract['numerical_contract_sha256'],**kw)
+>       baseline,bn,expected,bc=make('baseline')
+                                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_batched_continuation.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_batched_continuation.py:238: in make
+    n=ne.NumericExecution(j.root,actual_config()|{'max_iterations':1} if real_memo else {}, actual_policy if real_memo else {}, actual_schedule if real_memo else {}, lambda *a:None,cells=96,batch_cells=batch_size,max_origin_bytes=864,max_summary_bytes=25000,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+tradingagents/research/onchain_replication/batched_numeric_execution.py:82: in __init__
+    self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:123: in __init__
+    attest(self.counters,self._compiled_edge_policy);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:68: in attest
+    require(h.hexdigest()==pin,'numeric source changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, message = 'numeric source changed'
+
+    def require(ok,message):
+>       if not ok:raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: numeric source changed
+
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:39: ValueError
+_ test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-True] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_three_batch_driver_contin3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f3aa5d0d6a0>
+streamed = True, real_memo = True, complete = True
+
+    @pytest.mark.parametrize('streamed,real_memo,complete',[(False,False,False),(True,False,False),(True,True,False),(True,True,True)])
+    def test_three_batch_driver_continuation_matches_uninterrupted_and_finishes(tmp_path,monkeypatch,streamed,real_memo,complete):
+        import struct
+        from tests.research.onchain_replication.test_matching_reference import graph
+        from tradingagents.research.onchain_replication import batched_driver as driver
+        from tradingagents.research.onchain_replication import adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,matching_numeric_policy
+        from tradingagents.research.onchain_replication.neighborhoods import graph_hash,node_order_hash
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        class Memo:
+            def __init__(self,*args,**kwargs):
+                for module in (adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,matching_numeric_policy):module.attach(self,None)
+                self.active=False;self.occurrences=0;self.counters={'calls':0};self.poisoned=False
+                self.executor=SimpleNamespace(checkpoints=0,reserved_bytes=0,completed_operations=0,advance_calls=0,abandoned_call_operation_limit=0)
+            def begin_batch(self):self.active=True
+            def end_batch(self):self.active=False
+            def restore_ordinal(self,n):assert self.occurrences==0;self.occurrences=n
+            def _poison(self):self.poisoned=True;self.active=False
+            def close(self):pass
+            def __call__(self,a,b,purpose):
+                ordinal=self.occurrences;score=float(.25+.01*float(a.node_features[0,0]));self.occurrences+=1;self.counters['calls']+=1
+                self.executor.completed_operations+=2;self.executor.advance_calls+=1
+                self.last_receipt=dict(schema_version=2,kind='engineering_numeric_occurrence',ordinal=ordinal,purpose_sha256=purpose,
+                    mode='computed',origin_purpose_sha256=purpose,origin_ordinal=ordinal,score_f64_be=struct.pack('>d',score).hex(),
+                    iterations=1,convergence='temperature_complete',cached=False,checkpoint_attempt_delta=0,checkpoint_reserved_byte_delta=0,
+                    retained_cache_bytes=0,old_per_occurrence_execution_credit=False,boundary_validated_batch_complete=False)
+                return score,1,'temperature_complete'
+        if not real_memo:monkeypatch.setattr(ne.reuse,'NumericReuseExecutor',Memo)
+        from tests.research.onchain_replication.test_matching_reference import config as actual_config
+        from tests.research.onchain_replication.test_matching_pair_checkpoints import POLICY as actual_policy
+        actual_schedule=dict(max_checkpoints=2,calls_per_checkpoint=10,operations_per_call=1024,max_total_checkpoints=10,max_total_checkpoint_bytes=4*1024**2)
+        g=graph([[0.],[1.],[2.]],[]);extract={'hop_depth':0,'maximum_neighborhood_nodes':3}
+        with ArrayNeighborhoodIndex(g,max_buffer_bytes=100000,edge_chunk=4) as index:motif=index.neighborhood(0,extract)
+        dictionary=SimpleNamespace(representatives=(motif,)*32,config=extract)
+        descriptor=dict(rows=3,cells=96,motifs=32,graph_hash=graph_hash(g),node_order_hash=node_order_hash(g.node_ids),workload_sha256='1'*64,purpose_schema_version=2)
+        batch_size=40 if complete else 32;parent_batches=3 if complete else 2;imported=96 if complete else 64
+        contract=dict(source_sha256='a'*64,config_sha256='b'*64,dictionary_sha256='c'*64,graph_hash=descriptor['graph_hash'],node_order_hash=descriptor['node_order_hash'],descriptor_sha256=digest(body(descriptor)),workflow_identity='tiny',cells=96,batch_cells=batch_size,numerical_contract_sha256='f'*64)
+        import time
+        boundaries={}
+        def make(name):
+            times=[time.perf_counter()];boundaries[name]=times
+            j=BatchJournal(tmp_path/name,batch_cells=batch_size,max_cells=96,max_bytes=100000,max_body_bytes=8192,boundary=lambda:times.append(time.perf_counter()))
+            n=ne.NumericExecution(j.root,actual_config()|{'max_iterations':1} if real_memo else {}, actual_policy if real_memo else {}, actual_schedule if real_memo else {}, lambda *a:None,cells=96,batch_cells=batch_size,max_origin_bytes=864,max_summary_bytes=25000,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+                numeric_kernel_policy=dict(matching_numeric_policy.POLICY) if real_memo and name=='successor-full' else None)
+            output=bytearray(384)
+            def consumer(ordinal,center,motif,payload):output[ordinal*4:ordinal*4+len(payload)]=payload
+            return j,n,output,consumer
+        def drive(j,n,consumer,**kw):
+            actual_descriptor=kw.pop('actual_descriptor',descriptor)
+            return driver.drive(g,dictionary,descriptor=actual_descriptor,policy={'max_buffer_bytes':100000,'edge_chunk':4,'extraction_limit':3},
+                journal=j,executor=n,numeric=n,consumer=consumer,max_chunk_bytes=128,max_closure_token_bytes=4096,
+                continuation_contract_sha256=contract['numerical_contract_sha256'],**kw)
+>       baseline,bn,expected,bc=make('baseline')
+                                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_batched_continuation.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_batched_continuation.py:238: in make
+    n=ne.NumericExecution(j.root,actual_config()|{'max_iterations':1} if real_memo else {}, actual_policy if real_memo else {}, actual_schedule if real_memo else {}, lambda *a:None,cells=96,batch_cells=batch_size,max_origin_bytes=864,max_summary_bytes=25000,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+tradingagents/research/onchain_replication/batched_numeric_execution.py:82: in __init__
+    self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:123: in __init__
+    attest(self.counters,self._compiled_edge_policy);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:68: in attest
+    require(h.hexdigest()==pin,'numeric source changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, message = 'numeric source changed'
+
+    def require(ok,message):
+>       if not ok:raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: numeric source changed
+
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:39: ValueError
+____ test_actual_numeric_constructor_source_guard_and_complete_pair[False] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_actual_numeric_constructo0')
+selected = False
+
+    @pytest.mark.parametrize('selected',[False,True])
+    def test_actual_numeric_constructor_source_guard_and_complete_pair(tmp_path,selected):
+        from tests.research.onchain_replication.test_matching_reference import config
+        from tests.research.onchain_replication.test_matching_pair_checkpoints import POLICY
+        from tradingagents.research.onchain_replication.contracts import AttributedGraph
+        from tradingagents.research.onchain_replication.matching_numeric_policy import POLICY as KERNEL_POLICY
+        from tradingagents.research.onchain_replication.phase_timing import PhaseTotals,activate
+        import numpy as np
+        graph=AttributedGraph(('0',),np.array([[0.]]),np.empty((2,0),dtype=np.int64),np.empty((0,1)), 'a'*64,'0')
+        schedule=dict(max_checkpoints=2,calls_per_checkpoint=10,operations_per_call=1024,max_total_checkpoints=2,max_total_checkpoint_bytes=1024**2)
+        root=tmp_path/'real-numeric';root.mkdir();totals=PhaseTotals()
+        with activate(totals):
+>           numeric=ne.NumericExecution(root,config()|{'max_iterations':1},POLICY,schedule,lambda *args:None,
+                cells=1,batch_cells=1,max_origin_bytes=9,max_summary_bytes=8192,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+                numeric_kernel_policy=dict(KERNEL_POLICY) if selected else None)
+
+tests/research/onchain_replication/test_batched_continuation.py:373: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/batched_numeric_execution.py:82: in __init__
+    self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:123: in __init__
+    attest(self.counters,self._compiled_edge_policy);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:68: in attest
+    require(h.hexdigest()==pin,'numeric source changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, message = 'numeric source changed'
+
+    def require(ok,message):
+>       if not ok:raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: numeric source changed
+
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:39: ValueError
+_____ test_actual_numeric_constructor_source_guard_and_complete_pair[True] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-30/test_actual_numeric_constructo1')
+selected = True
+
+    @pytest.mark.parametrize('selected',[False,True])
+    def test_actual_numeric_constructor_source_guard_and_complete_pair(tmp_path,selected):
+        from tests.research.onchain_replication.test_matching_reference import config
+        from tests.research.onchain_replication.test_matching_pair_checkpoints import POLICY
+        from tradingagents.research.onchain_replication.contracts import AttributedGraph
+        from tradingagents.research.onchain_replication.matching_numeric_policy import POLICY as KERNEL_POLICY
+        from tradingagents.research.onchain_replication.phase_timing import PhaseTotals,activate
+        import numpy as np
+        graph=AttributedGraph(('0',),np.array([[0.]]),np.empty((2,0),dtype=np.int64),np.empty((0,1)), 'a'*64,'0')
+        schedule=dict(max_checkpoints=2,calls_per_checkpoint=10,operations_per_call=1024,max_total_checkpoints=2,max_total_checkpoint_bytes=1024**2)
+        root=tmp_path/'real-numeric';root.mkdir();totals=PhaseTotals()
+        with activate(totals):
+>           numeric=ne.NumericExecution(root,config()|{'max_iterations':1},POLICY,schedule,lambda *args:None,
+                cells=1,batch_cells=1,max_origin_bytes=9,max_summary_bytes=8192,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
+                numeric_kernel_policy=dict(KERNEL_POLICY) if selected else None)
+
+tests/research/onchain_replication/test_batched_continuation.py:373: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/batched_numeric_execution.py:82: in __init__
+    self.memo=reuse.NumericReuseExecutor(config,policy,schedule,checkpoint,max_entries=max_entries,max_retained_bytes=max_retained_bytes,max_key_bytes=max_key_bytes,authority_poll=authority_poll,**({'geometry':True,'max_geometry_summary_bytes':self.geometry['max_body_bytes']} if self.geometry is not None else {}),**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:123: in __init__
+    attest(self.counters,self._compiled_edge_policy);self.configuration=config_bytes(config);self.checkpoint=checkpoint;self._user_checkpoint=checkpoint
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:68: in attest
+    require(h.hexdigest()==pin,'numeric source changed')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ok = False, message = 'numeric source changed'
+
+    def require(ok,message):
+>       if not ok:raise ValueError(message)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: numeric source changed
+
+tradingagents/research/onchain_replication/batched_numeric_reuse.py:39: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_nested_cleanup_uncertainty_remains_fatal_through_producer
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_final_producer_descriptor_close_is_fatal_and_releases_lock[failure]
+FAILED tests/research/onchain_replication/test_compact_mcm.py::test_fatal_log_terminal_cleanup_cannot_be_downgraded_to_primary_error
+FAILED tests/research/onchain_replication/test_batched_continuation.py::test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-False]
+FAILED tests/research/onchain_replication/test_batched_continuation.py::test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-True]
+FAILED tests/research/onchain_replication/test_batched_continuation.py::test_actual_numeric_constructor_source_guard_and_complete_pair[False]
+FAILED tests/research/onchain_replication/test_batched_continuation.py::test_actual_numeric_constructor_source_guard_and_complete_pair[True]
+7 failed, 100 passed, 1 skipped in 328.88s (0:05:28)

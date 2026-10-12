@@ -1,0 +1,126 @@
+{
+  "counter_validators": [
+    {
+      "finding": "NUMERIC_COUNTS fixed whitelist, add cache counters here; add_count68 rejects unknown names",
+      "line": 13,
+      "path": "tradingagents/research/onchain_replication/phase_timing.py"
+    },
+    {
+      "finding": "validate_phase_totals uses subset of phase_timing.NUMERIC_COUNTS at367, no separate literal whitelist; retained summary verifier319 uses this",
+      "line": 361,
+      "path": "tradingagents/research/onchain_replication/batched_numeric_execution.py"
+    },
+    {
+      "finding": "old/imported summary phase_totals route to same validator; additive whitelist keeps old counters accepted",
+      "line": 104,
+      "path": "tradingagents/research/onchain_replication/batched_continuation.py"
+    },
+    {
+      "finding": "retained numeric_kernel_policy is also validated by matching_numeric_policy.freeze including imported summaries; v2 parser must preserve v1 acceptance",
+      "line": 317,
+      "path": "tradingagents/research/onchain_replication/batched_numeric_execution.py"
+    }
+  ],
+  "current_numeric": {
+    "edge_chunk": 4096,
+    "extraction_limit": 350110,
+    "max_buffer_bytes": 461349748,
+    "max_numeric_bytes": 751331316,
+    "max_output_bytes": 289981568,
+    "schema_version": 1
+  },
+  "narrow_rule": "Use one pure selected numeric-policy incremental-charge derivation in batched validate/preflight: absent/v1 returns0, selectedv2 returns cache+extra_scratch (33619968). Require max_numeric_bytes >=4*cells +max_buffer_bytes +selected_charge before numerical/cache allocation; whole7graph preflight uses max cells. Keep max_buffer_bytes unchanged because it independently admits neighborhood index/extraction. Refuse an underfunded selectedv2 rather than silently spending old zero slack. Keep frozen original kernel unchanged. Root chooses actual helper/source placement.",
+  "native_limits_unchanged": {
+    "memory_high_bytes": 5368709120,
+    "memory_max_bytes": 6442450944,
+    "qualification": "v2 charge needs current whole-caller memory accounting under these caps; old storage projection and old sampled peak are not a new32MiB RAM reservation."
+  },
+  "other_current_bounds": {
+    "hardening_buffer": 143195398,
+    "memo_key": 8388608,
+    "memo_retained": 67108864,
+    "pair_state": 275241856,
+    "qualification": "Separate limits and overlapping phase lifetimes; not an asserted additive all-live peak. Resident parents/graph extraction/compiled lifetime/GAT/runtime also remain outside simple output+buffer arithmetic.",
+    "score_buffer": 1048576
+  },
+  "per_session_rule": "Require exact byte charge weights.nbytes+valid.nbytes <=33554432 before allocating (float64 weights+uint8/bool validity generally9*edgeproducts); account all v2 transient arrays simultaneously within65536extra scratch without duplicating full cache via bytes-copy. One owned PairSession only, no multiplier for32motifs; overlap/double-buffer/resume must not evade charge. Ineligible pair must take existing declared fallback unchanged if selected policy promises fallback; structural/budget underfunding must refuse before execution.",
+  "proposed_extra": {
+    "combined_increment_bytes": 33619968,
+    "existing_adaptive_scratch_unchanged_bytes": 262144,
+    "extra_scratch_max_bytes": 65536,
+    "single_pair_session_weights_plus_valid_max_bytes": 33554432
+  },
+  "reservation_arithmetic": {
+    "current_max_numeric_bytes": 751331316,
+    "current_output_plus_buffer_bytes": 751331316,
+    "current_slack_bytes": 0,
+    "max_population_cells": 72495392,
+    "required_max_numeric_bytes_with_increment": 784951284
+  },
+  "schema_version": 1,
+  "scope": "read-only prospective numeric-policy-v2 memory seam; no source/policy/admission change",
+  "seams": [
+    {
+      "finding": "admitted preflight calls real_pilot_reservations.validate with registered MCM/pair/whole7graph inputs",
+      "line": 389,
+      "path": "tradingagents/research/onchain_replication/real_pilot_import_caller.py"
+    },
+    {
+      "finding": "schema5/6 delegates to batched_pilot_reservations.validate",
+      "line": 16,
+      "path": "tradingagents/research/onchain_replication/real_pilot_reservations.py"
+    },
+    {
+      "finding": "current requirement max_numeric >=4*maximum graph cells +max_buffer; no pair-session kernel cache charge",
+      "line": 34,
+      "path": "tradingagents/research/onchain_replication/batched_pilot_reservations.py"
+    },
+    {
+      "finding": "per-graph prepare calls original kernel.validate_policy(numeric,pairs)",
+      "line": 153,
+      "path": "tradingagents/research/onchain_replication/compact_mcm.py"
+    },
+    {
+      "finding": "legacy numeric validator checks output+buffer only and knows no selected execution kernel policy; preserve frozen source",
+      "line": 20,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/kernel.py"
+    },
+    {
+      "finding": "shared _compute calls batched validate before checkpoint/stream allocation594; validation is suitable second per-graph selected-charge check",
+      "line": 588,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py"
+    },
+    {
+      "finding": "whole capacity tool is storage arithmetic only, explicitly memory_fit_proven=False; no all-live RAM proof exists here",
+      "line": 106,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/pilot40-whole-capacity-preparation-2026-10-12/capacity40.py"
+    }
+  ],
+  "source_pins": [
+    {
+      "bytes": 4387,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full40-binding-preparation01-2026-10-12/inputs01/mcm_policy.json",
+      "sha256": "1d3b59ad6f98b6a53787fc9a3852815db61e5c469e13fa0d7e59e67486cf8f05"
+    },
+    {
+      "bytes": 9067,
+      "path": "tradingagents/research/onchain_replication/batched_pilot_reservations.py",
+      "sha256": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6"
+    },
+    {
+      "bytes": 68051,
+      "path": "tradingagents/research/onchain_replication/compact_mcm_batched.py",
+      "sha256": "2634feb93b98e74efe49d495a4f27d7b9c259c3e2534b7af624c3eb02351328a"
+    },
+    {
+      "bytes": 5453,
+      "path": "tradingagents/research/onchain_replication/phase_timing.py",
+      "sha256": "a15fd9ef808252fda0cc386e6b0f862312c56aa92a51c45b4f4e614d94a9f61a"
+    },
+    {
+      "bytes": 32386,
+      "path": "tradingagents/research/onchain_replication/batched_numeric_execution.py",
+      "sha256": "73df442dc6acf2b398e18f795867b605eedb14c9214d4a641ea2c32c4297f99f"
+    }
+  ]
+}

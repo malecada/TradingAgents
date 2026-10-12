@@ -1,0 +1,8 @@
+{
+  "control": "Actual extracted test helper accepts freshly reconstructed same-type/same-message leaves; original injected objects are not arguments to the helper. No producer/numerical execution.",
+  "decision": "test_assertion_identity_gap",
+  "necessary_narrow_fix": "Retain actual injected primary and cleanup objects; compare ordered failures and cause-group members to those exact objects and require exact owned_io.CleanupFailure wrapper type. Preserve all poison/failed-marker/fd/lock checks.",
+  "production_cleanup_change_requested": false,
+  "test_fix_sha256": "609eda6ed22adb0185b3880682f461210e90e39eb8acf2bab67998abd628af55",
+  "test_source_sha256": "94a1553782c5d86c0093101bcd4b7107a9e181d9a2d8fc2f797e63d4de8034b8"
+}

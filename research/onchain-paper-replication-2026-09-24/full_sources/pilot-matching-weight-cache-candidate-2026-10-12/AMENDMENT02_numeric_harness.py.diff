@@ -1,0 +1,53 @@
+--- iteration01/numeric_harness.py
++++ iteration02/numeric_harness.py
+@@ -39,27 +39,40 @@
+ def frozen(array,dtype=np.float64):
+  array=np.asarray(array,dtype=dtype);return np.frombuffer(array.tobytes(),dtype=dtype).reshape(array.shape)
+ 
+-def solve(a,b,c,version,*,checkpoint=None):
++def solve(a,b,c,version,*,checkpoint=None,budget=1024):
++ if type(budget) is not int or budget<=0:raise ValueError('positive original operation budget required')
+  selected=dict(policy.CACHE_POLICY if version==2 else policy.POLICY)
+- state=engine.create(a,b,c,max_state_bytes=16*1024**2,hardening_buffer_bytes=4*1024**2)
+- session=Session(a,b,c,engine=engine,annealing=ann,numeric_kernel_policy=selected)
+- progress=[];counts=[];reloaded=False;totals=phase.PhaseTotals();start=time.perf_counter()
++ progress=[];counts=[];reloaded=False;totals=phase.PhaseTotals()
++ state=session=None;start=time.perf_counter()
+  try:
+   with phase.activate(totals):
++   state=engine.create(a,b,c,max_state_bytes=16*1024**2,hardening_buffer_bytes=4*1024**2)
++   session=Session(a,b,c,engine=engine,annealing=ann,numeric_kernel_policy=selected,
++       edge_cache_policy=dict(ann.ADAPTIVE_EDGE_POLICY))
+    while state['phase']!='done':
+-    used=session.advance(state,max_operations=1024);inner=state['annealing']
++    used=session.advance(state,max_operations=budget);inner=state['annealing']
+     progress.append((used,state['phase'],inner['phase'],inner['cursor'],inner['iterations']))
+     if checkpoint is not None and not reloaded and inner['iterations']>=2:
+      pin=engine.save(state,checkpoint,a,b,c,max_checkpoint_bytes=16*1024**2)
+      session.close();counts.append(session._numeric_adapter.snapshot());engine.close(state)
+      state=engine.load(checkpoint,a,b,c,expected_sha256=pin,max_state_bytes=16*1024**2,hardening_buffer_bytes=4*1024**2)
+-     session=Session(a,b,c,engine=engine,annealing=ann,numeric_kernel_policy=selected);reloaded=True
+-   result=engine.result(state,a,b,c)
+-   session.close();counts.append(session._numeric_adapter.snapshot())
+-  return result,progress,{'adapter_lifetimes':counts,'phases':totals.snapshot(),'wall_seconds':time.perf_counter()-start,'checkpoint_reloaded':reloaded}
++     session=Session(a,b,c,engine=engine,annealing=ann,numeric_kernel_policy=selected,
++         edge_cache_policy=dict(ann.ADAPTIVE_EDGE_POLICY));reloaded=True
++   score=engine.score_only(state,a,b,c,max_buffer_bytes=4*1024**2)
++   # Diagnostic copies only; no dense all-edge-product score computation.
++   assignment=np.zeros(state['annealing']['M'].shape,dtype=np.int8)
++   for u,i in state['hardening']['pairs']:assignment[u,i]=1
++   result=ann.MatchResult(assignment,score.score,score.convergence,score.iterations,state['annealing']['M'].copy())
++   session.close();counts.append(session._numeric_adapter.snapshot());session=None
++   engine.close(state);state=None
++  elapsed=time.perf_counter()-start
++  return result,progress,{'adapter_lifetimes':counts,'phases':totals.snapshot(),'wall_seconds':elapsed,
++      'timing_interval':'cold create + session + advances/hardening + production score_only + diagnostic copies + session/state cleanup',
++      'operation_budget':budget,'checkpoint_reloaded':reloaded}
+  finally:
+   primary=sys.exception()
+-  for closer in (session.close,lambda:engine.close(state)):
++  for closer in ((session.close if session is not None else lambda:None),
++                  (lambda:engine.close(state)) if state is not None else lambda:None):
+    try:closer()
+    except BaseException as error:
+     if primary is None:primary=error

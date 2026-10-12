@@ -1,0 +1,21 @@
+{
+  "kind": "stale-cleanup-contract-assertions-and-v2-constructor-coverage",
+  "targets": [
+    {
+      "target": "tests/research/onchain_replication/test_compact_mcm.py",
+      "baseline_sha256": "d3073795c7b1bbf04a111b6356ca1168eb15abe3daa0cae0b77145545547c6c6",
+      "installed_sha256": "94a1553782c5d86c0093101bcd4b7107a9e181d9a2d8fc2f797e63d4de8034b8",
+      "diff": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/test_compact_mcm.py.test-fix.diff"
+    },
+    {
+      "target": "tests/research/onchain_replication/test_batched_continuation.py",
+      "baseline_sha256": "e2acc34138370117b77e73a637b294884b2b4f1d3e922969766f59dd298d341d",
+      "installed_sha256": "722a0619a7decab46211528f763c9764a3f39ade2534e424a9d5ed16b0c88317",
+      "diff": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/test_batched_continuation.py.test-fix.diff"
+    }
+  ],
+  "production_cleanup_changed": false,
+  "preserved_first_offline_failure": true,
+  "scope": "retain poison/failed-marker/fd/lock checks; assert ordered primary+cleanup objects and exact group evidence; exercise default/v1/v2 constructor binding",
+  "empirical_claim": null
+}

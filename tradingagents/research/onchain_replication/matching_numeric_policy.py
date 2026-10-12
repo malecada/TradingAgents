@@ -8,18 +8,34 @@ edge lease when supplied by ImmutablePairSession. Node agreements remain scalar.
 from types import MappingProxyType
 import numpy as np
 from . import matching_numeric_kernel as kernel, phase_timing
+from . import matching_annealing as annealing
 
 POLICY=MappingProxyType(dict(format='bounded-numpy-agreement-c05-v1',
     min_chunk_entries=256,max_chunk_entries=1024,max_index_bytes=16384,
     atol=1e-8,rtol=1e-6))
 
+CACHE_POLICY=MappingProxyType(dict(POLICY,format='bounded-numpy-agreement-c05-v2',
+    max_cache_retained_bytes=32*1024**2,max_cache_scratch_bytes=64*1024))
+
 
 def freeze(value):
+    if type(value) is dict and value.get('format')==CACHE_POLICY['format']:
+        if set(value)!=set(CACHE_POLICY) or any(type(value[k]) is not type(v) or value[k]!=v for k,v in CACHE_POLICY.items()):
+            raise ValueError('fixed C05 single-pair cache policy required')
+        return tuple(sorted(value.items()))
     if value is None:return None
     if (type(value) is not dict or set(value)!=set(POLICY) or
             any(type(value[k]) is not type(v) or value[k]!=v for k,v in POLICY.items())):
         raise ValueError('fixed C05 numeric kernel policy required')
     return tuple(sorted(value.items()))
+
+
+def cache_reservation(value):
+    selected=freeze(value)
+    if selected is None:return 0
+    policy=dict(selected)
+    if policy['format']==POLICY['format']:return 0
+    return policy['max_cache_retained_bytes']+policy['max_cache_scratch_bytes']
 
 
 def attach(owner,value):
@@ -54,10 +70,12 @@ class NumericAgreementAdapter:
         self._ops=tuple((name,getattr(np,name)) for name in
             ('frombuffer','shares_memory','any','isfinite','abs','subtract','square','sum','negative','divide','exp','geterr'))
         self._counts=dict(numpy_chunks=0,numpy_entries=0,fallback_chunks=0,index_bytes=0)
+        if dict(self.policy)['format']==CACHE_POLICY['format']:_cache_initialize(self)
 
     def current(self):
         if self.policy is not self._pin or kernel.np is not self._numpy:
             raise ValueError('numeric adapter changed')
+        if dict(self.policy).get("format")==CACHE_POLICY["format"]:_cache_current(self)
         for name,function,code in self._functions:
             if getattr(kernel,name) is not function or function.__code__ is not code:
                 raise ValueError('numeric helper changed')
@@ -68,6 +86,21 @@ class NumericAgreementAdapter:
         return dict(self._counts)
 
     def fill(self,out,left,right,li,ri,count,scalar,progress):
+        if hasattr(self,'_cache_owner'):
+            try:
+                self.current()
+                selected=_cache_fill(self,out,left,right,li,ri,count,scalar,progress)
+                if selected is not None:
+                    if not selected:
+                        self._counts['fallback_chunks']+=1
+                        phase_timing.add_count('agreement_fallback_chunks',1)
+                    return selected
+            except BaseException as primary:
+                try:_cache_release(self)
+                except BaseException as cleanup:
+                    try:BaseException.add_note(primary,'cache release failed: '+repr(cleanup))
+                    except BaseException:pass
+                raise
         self.current()
         if (type(count) is int and 256<=count<=1024 and
                 all(type(x) is np.ndarray and x.dtype==np.dtype('int64') and
@@ -87,3 +120,177 @@ class NumericAgreementAdapter:
         self._counts['fallback_chunks']+=1
         phase_timing.add_count('agreement_fallback_chunks',1)
         return False
+
+
+def cache_selected(adapter):
+    return adapter is not None and dict(adapter.policy).get('format')==CACHE_POLICY['format']
+
+
+def _feature_pin(array):
+    if not kernel._immutable(array,np.dtype('float64'),2) or array.dtype.metadata is not None:
+        return None
+    current=array;chain=[]
+    for _ in range(4):
+        if type(current) is bytes:
+            return (array,tuple(chain),current,array.dtype.str,tuple(array.shape),
+                tuple(array.strides),array.nbytes,array.__array_interface__['data'][0])
+        chain.append((current,current.dtype.str,tuple(current.shape),tuple(current.strides),current.nbytes,current.__array_interface__['data'][0]));current=current.base
+    return None
+
+
+def _feature_current(array,pin):
+    if (array is not pin[0] or array.dtype.str!=pin[3] or tuple(array.shape)!=pin[4]
+            or tuple(array.strides)!=pin[5] or array.nbytes!=pin[6]
+            or array.__array_interface__['data'][0]!=pin[7] or array.dtype.metadata is not None):
+        raise ValueError('cached pair feature header changed')
+    current=array
+    for saved in pin[1]:
+        if (current is not saved[0] or type(current) is not np.ndarray or current.flags.writeable
+                or current.dtype.str!=saved[1] or tuple(current.shape)!=saved[2]
+                or tuple(current.strides)!=saved[3] or current.nbytes!=saved[4]
+                or current.__array_interface__['data'][0]!=saved[5]):
+            raise ValueError('cached pair feature base changed')
+        current=current.base
+    if current is not pin[2]:raise ValueError('cached pair immutable byte owner changed')
+
+
+def _cache_initialize(adapter):
+    adapter._cache_owner=id(adapter);adapter._cache_closed=False
+    adapter._cache_class=type(adapter)
+    adapter._cache_methods=tuple((name,getattr(type(adapter),name),getattr(type(adapter),name).__code__)
+        for name in ('__init__','fill','current','snapshot'))
+    adapter._cache_helpers=tuple((name,globals()[name],globals()[name].__code__)
+        for name in ('cache_selected','_feature_pin','_feature_current','_cache_initialize','_cache_current',
+                     '_cache_domain','_cache_fill','_cache_release'))
+    adapter._cache_runtime=(annealing._reuse_runtime,annealing._reuse_runtime.__code__)
+    adapter._cache_round=annealing._nearest_rounding
+    adapter._cache_ops=tuple((name,getattr(np,name)) for name in
+        ('ndarray','dtype','float64','int64','bool_','empty','zeros','flatnonzero','multiply','add','repeat','all'))
+    adapter._cache_pair=adapter._cache_weights=adapter._cache_valid=None
+    adapter._cache_storage=adapter._cache_storage_pins=None
+    adapter._counts.update(cache_hit_entries=0,cache_miss_entries=0,cache_reserved_bytes=0,
+        cache_weight_bytes=0,cache_validity_bytes=0,cache_oversize_chunks=0,cache_peak_retained_bytes=0,cache_hit_chunks=0,cache_allocations=0,cache_allocated_bytes=0,cache_released_bytes=0)
+
+
+def _cache_current(adapter):
+    if (adapter._cache_owner!=id(adapter) or adapter._cache_closed or np is not adapter._numpy
+            or type(adapter) is not adapter._cache_class or type(adapter) is not NumericAgreementAdapter):
+        raise ValueError('single-pair cache identity changed or closed')
+    for name,function,code in adapter._cache_methods:
+        if getattr(type(adapter),name) is not function or function.__code__ is not code or name in vars(adapter):
+            raise ValueError('cached adapter method changed')
+    for name,function,code in adapter._cache_helpers:
+        if globals()[name] is not function or function.__code__ is not code:
+            raise ValueError('cached helper changed')
+    for name,function in adapter._cache_ops:
+        if getattr(np,name) is not function:raise ValueError('cached NumPy runtime changed')
+    runtime,code=adapter._cache_runtime
+    if (annealing._reuse_runtime is not runtime or runtime.__code__ is not code
+            or annealing._nearest_rounding is not adapter._cache_round):
+        raise ValueError('cached runtime checker changed')
+    if adapter._cache_pair is not None:
+        for pin in adapter._cache_pair:_feature_current(pin[0],pin)
+        weights,valid=adapter._cache_storage
+        if (adapter._cache_weights is not weights or adapter._cache_valid is not valid
+                or type(weights) is not np.ndarray or type(valid) is not np.ndarray
+                or weights.shape!=valid.shape or weights.ndim!=1
+                or weights.dtype!=np.dtype('float64') or valid.dtype!=np.dtype('bool')
+                or not weights.flags.c_contiguous or not valid.flags.c_contiguous
+                or weights.nbytes+valid.nbytes+16384!=adapter._counts['cache_reserved_bytes']):
+            raise ValueError('cached storage changed')
+        for array,saved in zip((weights,valid),adapter._cache_storage_pins,strict=True):
+            if (array.dtype.str,tuple(array.shape),tuple(array.strides),array.nbytes,
+                    array.__array_interface__['data'][0],id(array.base))!=saved:
+                raise ValueError('cached storage header changed')
+
+
+def _cache_domain(left,right,il,ir,out,count):
+    # Fresh structural/runtime domain; numeric row domain is proved by original
+    # successful miss evaluation and immutable pair pins for already-valid hits.
+    if not (kernel._immutable(left,np.dtype('float64'),2) and kernel._immutable(right,np.dtype('float64'),2)
+            and kernel._immutable(il,np.dtype('int64'),1) and kernel._immutable(ir,np.dtype('int64'),1)):
+        return False
+    if (left.shape[1] not in (2,4) or right.shape[1]!=left.shape[1]
+            or type(out) is not np.ndarray or out.dtype!=np.dtype('float64')
+            or out.ndim!=1 or not out.flags.c_contiguous or not out.flags.writeable or len(out)<count):
+        return False
+    if np.geterr()!=dict(divide='warn',over='warn',under='ignore',invalid='warn'):
+        return False
+    if any(np.shares_memory(out,x) for x in (left,right,il,ir)):return False
+    if np.any(il<0) or np.any(il>=len(left)) or np.any(ir<0) or np.any(ir>=len(right)):return False
+    return True
+
+
+def _cache_fill(adapter,out,left,right,li,ri,count,scalar,progress):
+    if not annealing._reuse_runtime() or scalar is not annealing.agreement:return False
+    if not (type(count) is int and 256<=count<=1024 and
+            all(type(x) is np.ndarray and x.dtype==np.dtype('int64') and x.ndim==1 and len(x)>=count for x in (li,ri))):
+        return False
+    il=np.frombuffer(li[:count].tobytes(),dtype=np.int64)
+    ir=np.frombuffer(ri[:count].tobytes(),dtype=np.int64)
+    if not _cache_domain(left,right,il,ir,out,count):return False
+    if adapter._cache_pair is not None:
+        _feature_current(left,adapter._cache_pair[0]);_feature_current(right,adapter._cache_pair[1])
+    total=len(left)*len(right);reserved=9*total+16384
+    if total<=16384:return None # Existing adaptive small-pair cache is unchanged.
+    if reserved>dict(adapter.policy)['max_cache_retained_bytes']:
+        adapter._counts['cache_oversize_chunks']+=1
+        return None # Exact original NumPy v1 computation, no retention.
+    initial=adapter._cache_pair is None
+    if initial:
+        pins=(_feature_pin(left),_feature_pin(right))
+        if any(pin is None for pin in pins):return None
+    else:
+        if np.shares_memory(out,adapter._cache_weights) or np.shares_memory(out,adapter._cache_valid):return False
+    adapter._counts['index_bytes']+=16*count
+    positions=il*len(right)+ir
+    missing=None if initial else np.flatnonzero(~adapter._cache_valid[positions])
+    misses=count if initial else len(missing)
+    if misses:
+        ml=il if initial else np.frombuffer(il[missing].tobytes(),dtype=np.int64)
+        mr=ir if initial else np.frombuffer(ir[missing].tobytes(),dtype=np.int64)
+        computed=np.empty(misses,dtype=np.float64)
+        # Original helper validates actual miss rows BEFORE any initial cache
+        # allocation or validity update. Refusal leaves out/progress untouched.
+        if not kernel.fill_agreement(left,right,ml,mr,computed,0,misses):return False
+        computed*=.5
+    if initial:
+        weights=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
+        adapter._cache_weights=weights;adapter._cache_valid=valid
+        adapter._cache_storage=(weights,valid);adapter._cache_pair=pins
+        adapter._cache_storage_pins=tuple((a.dtype.str,tuple(a.shape),tuple(a.strides),a.nbytes,
+            a.__array_interface__['data'][0],id(a.base)) for a in (weights,valid))
+        adapter._counts.update(cache_reserved_bytes=reserved,cache_weight_bytes=weights.nbytes,
+            cache_validity_bytes=valid.nbytes,cache_peak_retained_bytes=reserved)
+        adapter._counts['cache_allocations']+=1;adapter._counts['cache_allocated_bytes']+=reserved
+        phase_timing.add_count('cache_allocations',1)
+        phase_timing.add_count('cache_allocated_bytes',reserved)
+    if misses:
+        locations=positions if initial else positions[missing]
+        adapter._cache_weights[locations]=computed
+        adapter._cache_valid[locations]=True
+    out[:count]=adapter._cache_weights[positions]
+    progress[0]=count
+    adapter._counts['cache_hit_entries']+=count-misses
+    adapter._counts['cache_miss_entries']+=misses
+    if count>misses:
+        adapter._counts['cache_hit_chunks']+=1
+        phase_timing.add_count('cache_hit_chunks',1)
+        phase_timing.add_count('cache_hit_entries',count-misses)
+    if misses:
+        adapter._counts['numpy_chunks']+=1;adapter._counts['numpy_entries']+=misses
+        phase_timing.add_count('agreement_numpy_chunks',1)
+        phase_timing.add_count('agreement_numpy_entries',misses)
+    return True
+
+
+def _cache_release(adapter):
+    # Captured original function: release never depends on current()/validity.
+    adapter._cache_closed=True
+    adapter._cache_pair=adapter._cache_weights=adapter._cache_valid=adapter._cache_storage=adapter._cache_storage_pins=None
+    released=adapter._counts['cache_reserved_bytes']
+    adapter._counts['cache_reserved_bytes']=0
+    adapter._counts['cache_weight_bytes']=adapter._counts['cache_validity_bytes']=0
+    if released:
+        adapter._counts['cache_released_bytes']+=released
+        phase_timing.add_count('cache_released_bytes',released)

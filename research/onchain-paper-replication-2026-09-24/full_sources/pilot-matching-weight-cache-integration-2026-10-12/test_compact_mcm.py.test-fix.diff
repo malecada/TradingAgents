@@ -1,0 +1,46 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/BASELINE_test_compact_mcm.py
++++ tests/research/onchain_replication/test_compact_mcm.py
+@@ -51,6 +51,15 @@
+     return compact_mcm
+ 
+ 
++def _assert_cleanup_group(error,primary_message,cleanup_type,cleanup_message):
++    assert len(error.failures)==2
++    primary,cleanup=error.failures
++    assert type(primary) is RuntimeError and str(primary)==primary_message
++    assert isinstance(cleanup,cleanup_type) and str(cleanup)==cleanup_message
++    assert isinstance(error.__cause__,BaseExceptionGroup)
++    assert error.__cause__.exceptions==error.failures
++
++
+ def target(produced):
+     training = produced._proof._published._draws._training
+     key = training.descriptor['required_graphs'][0]
+@@ -145,7 +154,7 @@
+     try:
+         with pytest.raises(m.io.CleanupFailure) as caught:
+             m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+-        assert isinstance(caught.value.__cause__,RuntimeError)
++        _assert_cleanup_group(caught.value,'synthetic primary MCM construction',OSError,'synthetic retained tail descriptor')
+         assert produced._proof.owner.poisoned and (m.directory(produced,key)/'failed.json').exists()
+         obj=holder['stream'];assert obj.closed and obj.batches.closed and obj.active.closed
+         for fd in (obj.fd,obj.batches.fd,obj.active.fd):
+@@ -175,7 +184,7 @@
+             m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+         assert not isinstance(caught.value,Exception),'root close masked fatal uncertainty'
+         assert owner.poisoned and (root/'failed.json').exists()
+-        if mode=='failure':assert isinstance(caught.value.__cause__,RuntimeError)
++        if mode=='failure':_assert_cleanup_group(caught.value,'synthetic primary numerical failure',OSError,'synthetic retained producer descriptor')
+         assert owner._transition.acquire(blocking=False),'root close skipped lock release'
+         owner._transition.release()
+     finally:
+@@ -191,7 +200,7 @@
+     def fail(*args,**kwargs):raise RuntimeError('synthetic primary pair failure')
+     monkeypatch.setattr(m.compact_pair_log.PairLog,'_terminal',failed_terminal)
+     monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
+-    with pytest.raises(m.compact_matcher.CleanupFailure) as caught:
++    with pytest.raises(m.io.CleanupFailure) as caught:
+         m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
+-    assert isinstance(caught.value.__cause__,RuntimeError)
++    _assert_cleanup_group(caught.value,'synthetic primary pair failure',m.io.CleanupFailure,'synthetic cleanup error after actual log close')
+     assert produced._proof.owner.poisoned and (m.directory(produced,key)/'failed.json').exists()

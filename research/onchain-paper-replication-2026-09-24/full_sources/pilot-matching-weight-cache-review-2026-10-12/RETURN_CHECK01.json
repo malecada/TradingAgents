@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "rows": [
+    {
+      "edge_products": 1024,
+      "baseline_seconds": 0.027228479011682793,
+      "selected_seconds": 0.02652827900601551,
+      "baseline_over_selected_ratio": 1.0263944753260665,
+      "selected_wall_change_percent": -2.5715722327598667,
+      "soft_bytes_equal": true,
+      "scores_equal": true,
+      "cache_released_bytes": 0
+    },
+    {
+      "edge_products": 16384,
+      "baseline_seconds": 0.28719640300550964,
+      "selected_seconds": 0.29878978899796493,
+      "baseline_over_selected_ratio": 0.9611988547823692,
+      "selected_wall_change_percent": 4.036744844688345,
+      "soft_bytes_equal": true,
+      "scores_equal": true,
+      "cache_released_bytes": 0
+    },
+    {
+      "edge_products": 131072,
+      "baseline_seconds": 1.222270120997564,
+      "selected_seconds": 1.0068665860017063,
+      "baseline_over_selected_ratio": 1.2139345351117776,
+      "selected_wall_change_percent": -17.623234937630205,
+      "soft_bytes_equal": true,
+      "scores_equal": true,
+      "cache_released_bytes": 1196032
+    },
+    {
+      "edge_products": 1048576,
+      "baseline_seconds": 9.148809523001546,
+      "selected_seconds": 8.058724985006847,
+      "baseline_over_selected_ratio": 1.1352676186397708,
+      "selected_wall_change_percent": -11.915042446277347,
+      "soft_bytes_equal": true,
+      "scores_equal": true,
+      "cache_released_bytes": 9453568
+    }
+  ],
+  "numeric_tests": 7,
+  "reservation_cases": 6,
+  "kernel_unchanged": "d98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd",
+  "peak_process_rss_kib": 65280,
+  "reservation_whole_refusal_qualification": "whole.validate calls per-graph validation first; observed underfunded whole errors occur there, not independently at later redundant aggregate guard"
+}

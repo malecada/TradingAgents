@@ -1,0 +1,23 @@
+{
+  "baseline_sha256": "1362725cdf967cd4f324e0c5e410fee1971ff07610c3d2b5efb5978e96469586",
+  "candidate_sha256": "3925510198ea32dd35be55b2a46a45d72e12b239f213f799f026ad06a12b785a",
+  "checks": [
+    "all manifest bodies and installed source pins match",
+    "current reuse source equals candidate baseline",
+    "exact two replacements, literal inverse and restored AST equal baseline",
+    "no source verification operation removed or reordered"
+  ],
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-pin-fix-2026-10-12/BASELINE_batched_numeric_reuse.py": "1362725cdf967cd4f324e0c5e410fee1971ff07610c3d2b5efb5978e96469586",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-pin-fix-2026-10-12/PIN_FIX01.diff": "93f8df477d72c18f09cc2ca77af42d824254ed52e5279c7be697e41c02a9b711",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-pin-fix-2026-10-12/PIN_FIX01_INVERSE.diff": "02a2a7227e4253304150603edb6ba7035ee7518b4c719f2cebfd04f4ad230b2a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-pin-fix-2026-10-12/SOURCE_MANIFEST01.json": "9753166b2dbcf618ad8251e1b48f4e9f14e4301ec9f3b8d8404f17eb777028d3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-pin-fix-2026-10-12/batched_numeric_reuse.py": "3925510198ea32dd35be55b2a46a45d72e12b239f213f799f026ad06a12b785a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/INSTALLED_FAILURE01.json": "61cf2ac8c3d1b8c0f268a23baeac4767ec24b9aaeeb5f66fe9fa1e1f8586418d",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/PIN_REVIEW_ATTEMPT01.json": "759d690b29b5c1995ea0f8d80abc22087ced46fc14dffb7419891a0ebbc5158d"
+  },
+  "numerical_execution": false,
+  "pending": "Root installation and selected failed-test retest; original7fail/100pass/1skip remains preserved",
+  "scope": "exact two source-pin literals only; no installed-regression success"
+}

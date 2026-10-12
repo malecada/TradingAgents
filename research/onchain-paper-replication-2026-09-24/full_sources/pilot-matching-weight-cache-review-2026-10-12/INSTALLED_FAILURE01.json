@@ -1,0 +1,31 @@
+{
+  "actual_root_operation_reported": {
+    "chunk": "87d668",
+    "exit": 1,
+    "session": 6907
+  },
+  "decision": "withheld_installed_regression_acceptance",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/INSTALLED_OFFLINE_CHECK01.log": "faf934f75156e888d6eb6741f9b65a73cc099d31c0b12b361b47da9c35c1a160",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/INSTALLED_OFFLINE_CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/SOURCE_INTEGRATION02.json": "52204c5ccd3537ee859c79f9e000e36d338e391d35fdc17f6aedadffc9ccc742",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/INSTALLED_COPY_CHECK01.json": "3916b63dabb015fd6ba1322aafa70f1e504b0e463385041b90e094a47a32a08a"
+  },
+  "failed_tests": [
+    "FAILED tests/research/onchain_replication/test_compact_mcm.py::test_nested_cleanup_uncertainty_remains_fatal_through_producer",
+    "FAILED tests/research/onchain_replication/test_compact_mcm.py::test_final_producer_descriptor_close_is_fatal_and_releases_lock[failure]",
+    "FAILED tests/research/onchain_replication/test_compact_mcm.py::test_fatal_log_terminal_cleanup_cannot_be_downgraded_to_primary_error",
+    "FAILED tests/research/onchain_replication/test_batched_continuation.py::test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-False]",
+    "FAILED tests/research/onchain_replication/test_batched_continuation.py::test_three_batch_driver_continuation_matches_uninterrupted_and_finishes[True-True-True]",
+    "FAILED tests/research/onchain_replication/test_batched_continuation.py::test_actual_numeric_constructor_source_guard_and_complete_pair[False]",
+    "FAILED tests/research/onchain_replication/test_batched_continuation.py::test_actual_numeric_constructor_source_guard_and_complete_pair[True]"
+  ],
+  "result": {
+    "failed": 7,
+    "passed": 100,
+    "seconds": 328.88,
+    "skipped": 1
+  },
+  "review_execution": "Read-only completed raw output; no rerun or source edits",
+  "scope": "Original installed-suite failure preserved. Exact-five-copy acceptance remains valid at its observed bytes, but does not imply integrated regression success. Root reports four source-pin failures and three cleanup expectation failures; repairs and retest are separate."
+}

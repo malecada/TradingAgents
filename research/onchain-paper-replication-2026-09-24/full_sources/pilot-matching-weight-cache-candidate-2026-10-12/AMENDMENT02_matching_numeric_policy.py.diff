@@ -1,0 +1,72 @@
+--- iteration01/matching_numeric_policy.py
++++ iteration02/matching_numeric_policy.py
+@@ -205,7 +205,8 @@
+ 
+ 
+ def _cache_domain(left,right,il,ir,out,count):
+-    # Original selected helper checks are repeated even on an all-hit chunk.
++    # Fresh structural/runtime domain; numeric row domain is proved by original
++    # successful miss evaluation and immutable pair pins for already-valid hits.
+     if not (kernel._immutable(left,np.dtype('float64'),2) and kernel._immutable(right,np.dtype('float64'),2)
+             and kernel._immutable(il,np.dtype('int64'),1) and kernel._immutable(ir,np.dtype('int64'),1)):
+         return False
+@@ -217,9 +218,7 @@
+         return False
+     if any(np.shares_memory(out,x) for x in (left,right,il,ir)):return False
+     if np.any(il<0) or np.any(il>=len(left)) or np.any(ir<0) or np.any(ir>=len(right)):return False
+-    a=left[il];b=right[ir]
+-    return bool(np.isfinite(a).all() and np.isfinite(b).all()
+-        and not np.any(np.abs(a)>256.) and not np.any(np.abs(b)>256.))
++    return True
+ 
+ 
+ def _cache_fill(adapter,out,left,right,li,ri,count,scalar,progress):
+@@ -237,9 +236,25 @@
+     if reserved>dict(adapter.policy)['max_cache_retained_bytes']:
+         adapter._counts['cache_oversize_chunks']+=1
+         return None # Exact original NumPy v1 computation, no retention.
+-    if adapter._cache_pair is None:
++    initial=adapter._cache_pair is None
++    if initial:
+         pins=(_feature_pin(left),_feature_pin(right))
+         if any(pin is None for pin in pins):return None
++    else:
++        if np.shares_memory(out,adapter._cache_weights) or np.shares_memory(out,adapter._cache_valid):return False
++    adapter._counts['index_bytes']+=16*count
++    positions=il*len(right)+ir
++    missing=None if initial else np.flatnonzero(~adapter._cache_valid[positions])
++    misses=count if initial else len(missing)
++    if misses:
++        ml=il if initial else np.frombuffer(il[missing].tobytes(),dtype=np.int64)
++        mr=ir if initial else np.frombuffer(ir[missing].tobytes(),dtype=np.int64)
++        computed=np.empty(misses,dtype=np.float64)
++        # Original helper validates actual miss rows BEFORE any initial cache
++        # allocation or validity update. Refusal leaves out/progress untouched.
++        if not kernel.fill_agreement(left,right,ml,mr,computed,0,misses):return False
++        computed*=.5
++    if initial:
+         weights=np.empty(total,dtype=np.float64);valid=np.zeros(total,dtype=np.bool_)
+         adapter._cache_weights=weights;adapter._cache_valid=valid
+         adapter._cache_storage=(weights,valid);adapter._cache_pair=pins
+@@ -250,18 +265,10 @@
+         adapter._counts['cache_allocations']+=1;adapter._counts['cache_allocated_bytes']+=reserved
+         phase_timing.add_count('cache_allocations',1)
+         phase_timing.add_count('cache_allocated_bytes',reserved)
+-    if np.shares_memory(out,adapter._cache_weights) or np.shares_memory(out,adapter._cache_valid):return False
+-    adapter._counts['index_bytes']+=16*count
+-    positions=il*len(right)+ir
+-    missing=np.flatnonzero(~adapter._cache_valid[positions]);misses=len(missing)
+     if misses:
+-        ml=np.frombuffer(il[missing].tobytes(),dtype=np.int64)
+-        mr=np.frombuffer(ir[missing].tobytes(),dtype=np.int64)
+-        computed=np.empty(misses,dtype=np.float64)
+-        if not kernel.fill_agreement(left,right,ml,mr,computed,0,misses):return False
+-        computed*=.5
+-        adapter._cache_weights[positions[missing]]=computed
+-        adapter._cache_valid[positions[missing]]=True
++        locations=positions if initial else positions[missing]
++        adapter._cache_weights[locations]=computed
++        adapter._cache_valid[locations]=True
+     out[:count]=adapter._cache_weights[positions]
+     progress[0]=count
+     adapter._counts['cache_hit_entries']+=count-misses

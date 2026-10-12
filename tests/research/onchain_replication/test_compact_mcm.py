@@ -51,6 +51,14 @@ def api():
     return compact_mcm
 
 
+def _assert_cleanup_group(error,primary,cleanup,fatal_type):
+    assert type(error) is fatal_type
+    assert len(error.failures)==2
+    assert error.failures[0] is primary and error.failures[1] is cleanup
+    assert isinstance(error.__cause__,BaseExceptionGroup)
+    assert error.__cause__.exceptions==error.failures
+
+
 def target(produced):
     training = produced._proof._published._draws._training
     key = training.descriptor['required_graphs'][0]
@@ -131,13 +139,14 @@ def test_final_live_callback_cannot_hide_changed_completed_stage(admitted,monkey
 def test_nested_cleanup_uncertainty_remains_fatal_through_producer(admitted,monkeypatch):
     produced,t = admitted; m = api(); key,g = target(produced)
     holder={}; construct=m.MCMScoreStream; real_close=m.os.close; broken=[]
+    primary_error=RuntimeError('synthetic primary MCM construction');cleanup_error=OSError('synthetic retained tail descriptor')
     def build(*args,**kwargs):
         obj=construct(*args,**kwargs);holder['stream']=obj;return obj
     def create(*args,**kwargs):
         broken.append(holder['stream'].active.record_fd)
-        raise RuntimeError('synthetic primary MCM construction')
+        raise primary_error
     def close(fd):
-        if fd in broken:raise OSError('synthetic retained tail descriptor')
+        if fd in broken:raise cleanup_error
         real_close(fd)
     monkeypatch.setattr(m,'MCMScoreStream',build)
     monkeypatch.setattr(m.compact_matcher.engine,'create',create)
@@ -145,7 +154,7 @@ def test_nested_cleanup_uncertainty_remains_fatal_through_producer(admitted,monk
     try:
         with pytest.raises(m.io.CleanupFailure) as caught:
             m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
-        assert isinstance(caught.value.__cause__,RuntimeError)
+        _assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)
         assert produced._proof.owner.poisoned and (m.directory(produced,key)/'failed.json').exists()
         obj=holder['stream'];assert obj.closed and obj.batches.closed and obj.active.closed
         for fd in (obj.fd,obj.batches.fd,obj.active.fd):
@@ -160,14 +169,15 @@ def test_nested_cleanup_uncertainty_remains_fatal_through_producer(admitted,monk
 def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,monkeypatch,mode):
     produced,t = admitted; m=api(); key,g=target(produced); owner=produced._proof.owner
     root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]
+    primary_error=RuntimeError('synthetic primary numerical failure');cleanup_error=OSError('synthetic retained producer descriptor')
     def opening(path):
         value=opened(path)
         if Path(path)==root and not captured:captured.append(value[1])
         return value
     def close(fd):
-        if captured and fd==captured[0]:raise OSError('synthetic retained producer descriptor')
+        if captured and fd==captured[0]:raise cleanup_error
         real_close(fd)
-    def fail(*args,**kwargs):raise RuntimeError('synthetic primary numerical failure')
+    def fail(*args,**kwargs):raise primary_error
     monkeypatch.setattr(m.io,'_open',opening);monkeypatch.setattr(m.os,'close',close)
     if mode=='failure':monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
     try:
@@ -175,7 +185,7 @@ def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,mon
             m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
         assert not isinstance(caught.value,Exception),'root close masked fatal uncertainty'
         assert owner.poisoned and (root/'failed.json').exists()
-        if mode=='failure':assert isinstance(caught.value.__cause__,RuntimeError)
+        if mode=='failure':_assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)
         assert owner._transition.acquire(blocking=False),'root close skipped lock release'
         owner._transition.release()
     finally:
@@ -184,14 +194,15 @@ def test_final_producer_descriptor_close_is_fatal_and_releases_lock(admitted,mon
 
 def test_fatal_log_terminal_cleanup_cannot_be_downgraded_to_primary_error(admitted,monkeypatch):
     produced,t=admitted;m=api();key,g=target(produced);terminal=m.compact_pair_log.PairLog._terminal
+    primary_error=RuntimeError('synthetic primary pair failure');cleanup_error=m.io.CleanupFailure('synthetic cleanup error after actual log close')
     def failed_terminal(log,status,reason):
         result=terminal(log,status,reason)
-        if status=='failed':raise m.io.CleanupFailure('synthetic cleanup error after actual log close')
+        if status=='failed':raise cleanup_error
         return result
-    def fail(*args,**kwargs):raise RuntimeError('synthetic primary pair failure')
+    def fail(*args,**kwargs):raise primary_error
     monkeypatch.setattr(m.compact_pair_log.PairLog,'_terminal',failed_terminal)
     monkeypatch.setattr(m.compact_matcher.engine,'create',fail)
-    with pytest.raises(m.compact_matcher.CleanupFailure) as caught:
+    with pytest.raises(m.io.CleanupFailure) as caught:
         m.produce(produced,graph_hash=key,input_name='compact_mcm',output_input='compact_mcm_output')
-    assert isinstance(caught.value.__cause__,RuntimeError)
+    _assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)
     assert produced._proof.owner.poisoned and (m.directory(produced,key)/'failed.json').exists()

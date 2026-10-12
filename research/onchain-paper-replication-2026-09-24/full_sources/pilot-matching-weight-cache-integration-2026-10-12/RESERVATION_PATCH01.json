@@ -1,0 +1,23 @@
+{
+  "incremental_cache_bytes": 33619968,
+  "kind": "selected-cache-reservation-before-allocation",
+  "native_cap_changed": false,
+  "old_total_numeric_bytes": 751331316,
+  "required_total_numeric_bytes": 784951284,
+  "targets": [
+    {
+      "baseline_sha256": "2634feb93b98e74efe49d495a4f27d7b9c259c3e2534b7af624c3eb02351328a",
+      "candidate_sha256": "74b5e4c61d31ad01304475ed6adbdc9a8d4ce908f4bcf0fc7b0386724dd6e3e7",
+      "literal_after": "    _numeric_policy(execution)\n    cache_charge=matching_numeric_policy.cache_reservation(execution.get('numeric_kernel_policy'))\n    if cache_charge:\n        numeric=policy['numeric']\n        fields={'schema_version','max_buffer_bytes','edge_chunk','max_output_bytes','max_numeric_bytes'}\n        require(type(numeric) is dict and set(numeric) in (fields,fields|{'extraction_limit'}) and type(numeric['schema_version']) is int and numeric['schema_version']==1,'cached MCM numeric schema')\n        require(all(type(numeric[k]) is int and 0<numeric[k]<2**63 for k in fields-{'schema_version'}),'cached MCM numeric bounds')\n        require(numeric['max_output_bytes']>=4*pairs and numeric['max_numeric_bytes']>=4*pairs+numeric['max_buffer_bytes']+cache_charge,'MCM incremental cache reservation insufficient')\n",
+      "literal_before": "    _numeric_policy(execution)\n",
+      "target": "tradingagents/research/onchain_replication/compact_mcm_batched.py"
+    },
+    {
+      "baseline_sha256": "dfbdaf6019e7e63c23c74fc33455a9c661fbcee276882d88ea0990f2e08e25c6",
+      "candidate_sha256": "b039ccc35c530b67ff7ed30cd05869c28f16304b4aceeedb2fddc0be7663f656",
+      "literal_after": "    cache_charge=compact_mcm_batched.matching_numeric_policy.cache_reservation(mcm['batched']['execution'].get('numeric_kernel_policy'))\n    require(numeric['max_output_bytes']>=4*max(counts.values()) and numeric['max_numeric_bytes']>=4*max(counts.values())+numeric['max_buffer_bytes']+cache_charge,'MCM numeric reservation insufficient')\n",
+      "literal_before": "    require(numeric['max_output_bytes']>=4*max(counts.values()) and numeric['max_numeric_bytes']>=4*max(counts.values())+numeric['max_buffer_bytes'],'MCM numeric reservation insufficient')\n",
+      "target": "tradingagents/research/onchain_replication/batched_pilot_reservations.py"
+    }
+  ]
+}

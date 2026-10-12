@@ -1,0 +1,110 @@
+{
+  "affinity": [
+    0,
+    1
+  ],
+  "cases": [
+    {
+      "adapter_counts": {
+        "fallback_chunks": 0,
+        "index_bytes": 0,
+        "numpy_chunks": 0,
+        "numpy_entries": 0
+      },
+      "agreement_helper": {
+        "accepted": 0,
+        "calls": 0,
+        "wall_seconds": 0.0
+      },
+      "edges": [
+        6,
+        6
+      ],
+      "helper_fraction": 0.0,
+      "iterations": 48,
+      "nodes": [
+        4,
+        4
+      ],
+      "operations": 1988,
+      "products": 36,
+      "wall_seconds": 0.011621165001997724
+    },
+    {
+      "adapter_counts": {
+        "fallback_chunks": 0,
+        "index_bytes": 0,
+        "numpy_chunks": 0,
+        "numpy_entries": 0
+      },
+      "agreement_helper": {
+        "accepted": 0,
+        "calls": 0,
+        "wall_seconds": 0.0
+      },
+      "edges": [
+        512,
+        32
+      ],
+      "helper_fraction": 0.0,
+      "iterations": 48,
+      "nodes": [
+        32,
+        8
+      ],
+      "operations": 786959,
+      "products": 16384,
+      "wall_seconds": 0.25060173000383656
+    },
+    {
+      "adapter_counts": {
+        "fallback_chunks": 0,
+        "index_bytes": 100663296,
+        "numpy_chunks": 6168,
+        "numpy_entries": 6291456
+      },
+      "agreement_helper": {
+        "accepted": 6168,
+        "calls": 6168,
+        "wall_seconds": 0.5855980408232426
+      },
+      "edges": [
+        1024,
+        128
+      ],
+      "helper_fraction": 0.49975487975736826,
+      "iterations": 48,
+      "nodes": [
+        32,
+        16
+      ],
+      "operations": 6292396,
+      "products": 131072,
+      "wall_seconds": 1.1717705310002202
+    }
+  ],
+  "config": {
+    "alpha": 1.0,
+    "beta0": 1.0,
+    "beta_final": 30.0,
+    "beta_rate": 0.075,
+    "max_iterations": 50,
+    "max_pair_entries": 65536,
+    "normalization_iterations": 1,
+    "solver": "algorithm1_literal"
+  },
+  "exclusions": [
+    "native backend owners",
+    "scientific authority",
+    "whole pilot",
+    "production throughput"
+  ],
+  "kind": "synthetic-instrumented-baseline-only",
+  "peak_rss_kib": 56004,
+  "qualification": "One helper wrapper adds timing overhead; no profiler/runtime primitive patch; no empirical execution.",
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/matching_annealing.py": "1f8e45c4997691d561b498467ea2cbac284fc2e0747b495e81bf97ff189146bf",
+    "tradingagents/research/onchain_replication/matching_numeric_kernel.py": "d98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd",
+    "tradingagents/research/onchain_replication/matching_numeric_policy.py": "cd3000fc02d126026b1ba3e6fbe779e92b1fcd516abfbcbf563ccf3479b02b03"
+  }
+}

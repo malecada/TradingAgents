@@ -1,0 +1,142 @@
+{
+  "actual_root_operations_reported": {
+    "benchmark": {
+      "chunk": "7c64fb",
+      "exit": 0,
+      "session": 70601
+    },
+    "corrected_reservation": {
+      "chunk": "14ff3b",
+      "exit": 0,
+      "session": 82591
+    },
+    "initial_reservation_failure": {
+      "chunk": "ecc967",
+      "exit": 1,
+      "preserved": true,
+      "session": 54550
+    },
+    "numerical": {
+      "chunk": "c551b1",
+      "exit": 0
+    }
+  },
+  "benchmark": {
+    "assignment_and_cursor_equality": "reviewed compare function asserts full equality before emitting shared digest; individual raw histories/assignment arrays not persisted",
+    "interpretation": "One fixed-order baseline/selected observation per fixture. Large selected wall reductions17.623% and11.915%; small1024 reduction2.572%, boundary16384 increase4.037%. No variance/statistical significance or whole-pipeline inference.",
+    "operations_per_call": 1000000,
+    "peak_cgroup_or_physical_fit_proven": false,
+    "peak_process_rss_kib": 65280,
+    "rows": [
+      {
+        "baseline_over_selected_ratio": 1.0263944753260665,
+        "baseline_seconds": 0.027228479011682793,
+        "cache_released_bytes": 0,
+        "edge_products": 1024,
+        "scores_equal": true,
+        "selected_seconds": 0.02652827900601551,
+        "selected_wall_change_percent": -2.5715722327598667,
+        "soft_bytes_equal": true
+      },
+      {
+        "baseline_over_selected_ratio": 0.9611988547823692,
+        "baseline_seconds": 0.28719640300550964,
+        "cache_released_bytes": 0,
+        "edge_products": 16384,
+        "scores_equal": true,
+        "selected_seconds": 0.29878978899796493,
+        "selected_wall_change_percent": 4.036744844688345,
+        "soft_bytes_equal": true
+      },
+      {
+        "baseline_over_selected_ratio": 1.2139345351117776,
+        "baseline_seconds": 1.222270120997564,
+        "cache_released_bytes": 1196032,
+        "edge_products": 131072,
+        "scores_equal": true,
+        "selected_seconds": 1.0068665860017063,
+        "selected_wall_change_percent": -17.623234937630205,
+        "soft_bytes_equal": true
+      },
+      {
+        "baseline_over_selected_ratio": 1.1352676186397708,
+        "baseline_seconds": 9.148809523001546,
+        "cache_released_bytes": 9453568,
+        "edge_products": 1048576,
+        "scores_equal": true,
+        "selected_seconds": 8.058724985006847,
+        "selected_wall_change_percent": -11.915042446277347,
+        "soft_bytes_equal": true
+      }
+    ],
+    "score_and_soft_digest_equal_all4": true,
+    "temperatures": 48,
+    "timing_interval": "cold state/session creation through advances/hardening, sparse score_only, diagnostic copies, session and state cleanup"
+  },
+  "cache_accounting": {
+    "large_allocated_equals_released_bytes": [
+      1196032,
+      9453568
+    ],
+    "large_hit_counts": [
+      6159777,
+      49279770
+    ],
+    "large_miss_counts": [
+      131072,
+      1048576
+    ],
+    "live_retained_bytes_after_close": 0,
+    "note": "Counters are logical accounting and successful explicit release, not independent peak-allocation or heap-forensics proof.",
+    "observed_large_retention_below_cap": true
+  },
+  "decision": "accepted",
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-compiled-connected-qualification03-2026-10-11/matching-config.json": "b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-candidate-2026-10-12/SOURCE_MANIFEST03.json": "706416be05370f50bd6eb193c0210419f11d2a06e97b99ceacf5e5874358e759",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/MATCHING_BENCHMARK01.json": "ade28d799c9f7896c655d66917069209f46b0a39c54ad774e261d9b4c06e8932",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/MATCHING_BENCHMARK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/MEMORY_AND_METHOD.md": "ae108b31c34b08fcba5b06053a29db160a8494f8874475f6cfe8359073c415d5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/NUMERIC_CHECK01.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/NUMERIC_CHECK01.stderr": "b43ccae390e5c8da45a59b6e93a1cc4665675e8aebebc4f4d86dfe96955617af",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/RESERVATION_ATTEMPT01.json": "eb237f72c076c5db18a50645835565410d149decd71a35f69e8b41236ad4a931",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/RESERVATION_CHECK02.json": "f242e13d272d8871fb1b7b52a53b24faabf24dabcdb331fa5fc11793d2b6eaa0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/RESERVATION_CHECK02.log": "ed6e7a066209f16161629a68c8a0721e759b8930cbb52ecf5a7525011f4cf77b",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/RESERVATION_CHECK02.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/RESERVATION_PATCH01.json": "0ca5f3bc612482e45d23f895935a9a565746547a6eab71807f688e9ba274cee7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/check_reservation01.py": "7898d56cc9dff29f9d1499ee83127322567a2d0270fbf25a655ef38607dc33cd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/check_reservation02.py": "634922828bc6fec4628ee3baa81b4636e9deacfc362f086df511d3228a4d1ff7",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/RETURN_CHECK01.json": "95ea0af3ed4a379d93b427f6332d3485f30488dfd0de3a4c91d0683b720523ec",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/RETURN_CHECK01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/SOURCE_REVIEW01.json": "9bb8cf190a06d1ff14535d4603978fa5ae34b65600f835b56c78dd7eb39efb0a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-review-2026-10-12/check_return01.py": "7a18794612bee782e95d41a17553fa9c54a53575b2a71e3894b725a440d5eff5"
+  },
+  "kernel_unchanged_sha256": "d98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd",
+  "not_established": [
+    "Installed five-body equality or installed offline tests (next separate join)",
+    "Genuine selected Owner/compiled backend/runtime admission or empirical claim",
+    "Whole pilot throughput or memory/capacity",
+    "External preservation or release"
+  ],
+  "numerical_tests": {
+    "passed": 7,
+    "scope": "small/empty/large solver C05 and exact assignment/history, checkpoint recomputation, mixed/hit/domain refusals, runtime/header/rounding/tracing changes, fatal cleanup and retained-byte release",
+    "seconds": 0.868
+  },
+  "reservation": {
+    "baseline_v1_accepted": true,
+    "cases": 6,
+    "charge": 33619968,
+    "funded": 784951284,
+    "initial_failure": "Checker supplied original_import dictionary where separate original_import_stage policy was required. Original attempt retained; corrected checker joins public actual stage path/hash. No candidate numeric reservation reached on initial failure.",
+    "physical_capacity_proven": false,
+    "underfunded": [
+      751331316,
+      784951283
+    ],
+    "whole_failure_boundary": "whole.validate calls per-graph validation first; observed underfunded whole errors occur there, not independently at later redundant aggregate guard"
+  },
+  "review_execution": "Stdlib source hashes, raw receipts, arithmetic and public metadata joins only; no numerical import or rerun",
+  "scope": "actual bounded synthetic numerical qualification, paired solver benchmark and public-metadata logical reservation checks of accepted source03 only",
+  "source_review_sha256": "9bb8cf190a06d1ff14535d4603978fa5ae34b65600f835b56c78dd7eb39efb0a"
+}

@@ -1,0 +1,63 @@
+{
+  "target": "tests/research/onchain_replication/test_compact_mcm.py",
+  "candidate": "research/onchain-paper-replication-2026-09-24/full_sources/pilot-matching-weight-cache-integration-2026-10-12/FINAL02_test_compact_mcm.py",
+  "old_test_sha256": "94a1553782c5d86c0093101bcd4b7107a9e181d9a2d8fc2f797e63d4de8034b8",
+  "candidate_sha256": "dd1dbb587e611ee5ae2e2e97e49e4e2dc24d472377bdab38d26af2e771dac0a4",
+  "status": "CANDIDATE_NOT_INSTALLED_WHILE_TEST02_ACTIVE",
+  "correction": "compare actual captured injected exception objects by identity/order and exact outer fatal class; retain group/member identity and all poison/fd/lock/marker assertions",
+  "literal_changes": [
+    [
+      "def _assert_cleanup_group(error,primary_message,cleanup_type,cleanup_message):\n    assert len(error.failures)==2\n    primary,cleanup=error.failures\n    assert type(primary) is RuntimeError and str(primary)==primary_message\n    assert isinstance(cleanup,cleanup_type) and str(cleanup)==cleanup_message\n",
+      "def _assert_cleanup_group(error,primary,cleanup,fatal_type):\n    assert type(error) is fatal_type\n    assert len(error.failures)==2\n    assert error.failures[0] is primary and error.failures[1] is cleanup\n"
+    ],
+    [
+      "    holder={}; construct=m.MCMScoreStream; real_close=m.os.close; broken=[]\n",
+      "    holder={}; construct=m.MCMScoreStream; real_close=m.os.close; broken=[]\n    primary_error=RuntimeError('synthetic primary MCM construction');cleanup_error=OSError('synthetic retained tail descriptor')\n"
+    ],
+    [
+      "        raise RuntimeError('synthetic primary MCM construction')",
+      "        raise primary_error"
+    ],
+    [
+      "        if fd in broken:raise OSError('synthetic retained tail descriptor')",
+      "        if fd in broken:raise cleanup_error"
+    ],
+    [
+      "        _assert_cleanup_group(caught.value,'synthetic primary MCM construction',OSError,'synthetic retained tail descriptor')",
+      "        _assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)"
+    ],
+    [
+      "    root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]\n",
+      "    root=m.directory(produced,key); opened=m.io._open; real_close=m.os.close; captured=[]\n    primary_error=RuntimeError('synthetic primary numerical failure');cleanup_error=OSError('synthetic retained producer descriptor')\n"
+    ],
+    [
+      "        if captured and fd==captured[0]:raise OSError('synthetic retained producer descriptor')",
+      "        if captured and fd==captured[0]:raise cleanup_error"
+    ],
+    [
+      "    def fail(*args,**kwargs):raise RuntimeError('synthetic primary numerical failure')",
+      "    def fail(*args,**kwargs):raise primary_error"
+    ],
+    [
+      "        if mode=='failure':_assert_cleanup_group(caught.value,'synthetic primary numerical failure',OSError,'synthetic retained producer descriptor')",
+      "        if mode=='failure':_assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)"
+    ],
+    [
+      "    produced,t=admitted;m=api();key,g=target(produced);terminal=m.compact_pair_log.PairLog._terminal\n",
+      "    produced,t=admitted;m=api();key,g=target(produced);terminal=m.compact_pair_log.PairLog._terminal\n    primary_error=RuntimeError('synthetic primary pair failure');cleanup_error=m.io.CleanupFailure('synthetic cleanup error after actual log close')\n"
+    ],
+    [
+      "        if status=='failed':raise m.io.CleanupFailure('synthetic cleanup error after actual log close')",
+      "        if status=='failed':raise cleanup_error"
+    ],
+    [
+      "    def fail(*args,**kwargs):raise RuntimeError('synthetic primary pair failure')",
+      "    def fail(*args,**kwargs):raise primary_error"
+    ],
+    [
+      "    _assert_cleanup_group(caught.value,'synthetic primary pair failure',m.io.CleanupFailure,'synthetic cleanup error after actual log close')",
+      "    _assert_cleanup_group(caught.value,primary_error,cleanup_error,m.io.CleanupFailure)"
+    ]
+  ],
+  "production_changed": false
+}

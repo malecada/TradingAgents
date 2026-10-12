@@ -1,0 +1,11 @@
+--- iteration01/static_check01.py
++++ iteration02/static_check01.py
+@@ -26,7 +26,7 @@
+     a.body=[n for n in a.body if not (isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='NUMERIC_COUNTS' for t in n.targets))]
+     b.body=[n for n in b.body if not (isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='NUMERIC_COUNTS' for t in n.targets))]
+    else:
+-    cls=next(n for n in b.body if isinstance(n,ast.ClassDef));ctor=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='__init__');ctor.body=ctor.body[:-1]
++    cls=next(n for n in b.body if isinstance(n,ast.ClassDef));ctor=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='__init__');ctor.body=ctor.body[:-2]
+    self.assertEqual(ast.dump(a),ast.dump(b),name)
+  def test_release_exact_refs_idempotent_and_failure(self):
+   node=next(n for n in ast.parse((P/'matching_numeric_policy.py').read_text()).body if isinstance(n,ast.FunctionDef) and n.name=='_cache_release')

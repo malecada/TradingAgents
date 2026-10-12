@@ -107,6 +107,13 @@ def validate(policy, pairs):
     _edge_policy(execution)
     _backend_input_policy(execution)
     _numeric_policy(execution)
+    cache_charge=matching_numeric_policy.cache_reservation(execution.get('numeric_kernel_policy'))
+    if cache_charge:
+        numeric=policy['numeric']
+        fields={'schema_version','max_buffer_bytes','edge_chunk','max_output_bytes','max_numeric_bytes'}
+        require(type(numeric) is dict and set(numeric) in (fields,fields|{'extraction_limit'}) and type(numeric['schema_version']) is int and numeric['schema_version']==1,'cached MCM numeric schema')
+        require(all(type(numeric[k]) is int and 0<numeric[k]<2**63 for k in fields-{'schema_version'}),'cached MCM numeric bounds')
+        require(numeric['max_output_bytes']>=4*pairs and numeric['max_numeric_bytes']>=4*pairs+numeric['max_buffer_bytes']+cache_charge,'MCM incremental cache reservation insufficient')
     if 'edge_cache_policy' in execution:require(adaptive_edge_policy.freeze(execution['edge_cache_policy']) is not None,'explicit adaptive selection required')
     require(execution['route']=='immutable-input-session+exact-byte-reuse-v1','explicit numerical operation deviation required')
     require(all(type(execution[k]) is int for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')),'finite numeric execution allowances required')

@@ -1,0 +1,8 @@
+{
+  "decision": "withheld_pending_narrow_constructor_cleanup_fix",
+  "candidate_manifest_sha256": "9a6501fbf3e230e14ac7acd110e2cb10d9bed313b9be3d233924c8882465b443",
+  "finding": "Selected numeric cleanup installation is outside the constructor's backend-acquisition cleanup guard. An exception before return leaves the caller without a session to close and skips acquired backend cleanup.",
+  "independent_control": "AST-extracted actual constructor tail, synthetic already-owned cleanup, cache_selected raising an original KeyboardInterrupt: identical primary propagated, zero cleanup calls observed, expected one.",
+  "passed": ["All candidate declared body hashes and literal forward/inverse hunk payloads", "Actual cache-current function synthetic identity/method-shadow/helper/runtime replacement refusals", "Two exact reservation source replacements", "Selected per-graph reservation 784951283 refuses and 784951284 accepts; absent/v1 unchanged"],
+  "scope": "Source and bounded stdlib controls only; no NumPy import, numerical execution, empirical admission or performance qualification"
+}

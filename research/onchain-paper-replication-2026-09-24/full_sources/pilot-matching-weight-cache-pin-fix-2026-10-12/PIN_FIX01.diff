@@ -1,0 +1,20 @@
+--- a/tradingagents/research/onchain_replication/batched_numeric_reuse.py
++++ b/tradingagents/research/onchain_replication/batched_numeric_reuse.py
+@@ -19,7 +19,7 @@
+ 
+ MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter,matching_numeric_policy,matching_numeric_kernel)
+ SOURCE_PINS=(
+-    (matching_numeric_policy, 'cd3000fc02d126026b1ba3e6fbe779e92b1fcd516abfbcbf563ccf3479b02b03'),
++    (matching_numeric_policy, '1402729793c6e32a6eb7948af36701f61b953f11790607c7cf1e8b86328e577f'),
+     (matching_numeric_kernel, 'd98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd'),
+     (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
+     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
+@@ -32,7 +32,7 @@
+     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
+     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
+     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
+-    (immutable_session, 'f5adccc5fcff36ec68892f775cac7d7569ed36338cfd79d049448278ad7c2eb4'),
++    (immutable_session, '9ec80833156fb8f649a076778260d0da666486e25c98d9d4681092fcf65a144c'),
+ )
+ 
+ def require(ok,message):

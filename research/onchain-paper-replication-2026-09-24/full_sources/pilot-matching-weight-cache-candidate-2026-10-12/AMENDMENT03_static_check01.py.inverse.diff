@@ -1,0 +1,12 @@
+--- iteration03/static_check01.py
++++ iteration02/static_check01.py
+@@ -17,8 +17,7 @@
+     for method in candidate.body:
+      if isinstance(method,ast.FunctionDef):
+       if method.name=='__init__':method.body=method.body[:-1]
+-      elif method.name=='current':method.body=method.body[:1]+method.body[2:]
+-      elif method.name=='fill':method.body=method.body[1:]
++      elif method.name in ('current','fill'):method.body=method.body[1:]
+    self.assertEqual(ast.dump(n),ast.dump(candidate),n.name)
+  def test_default_session_close_and_timers_unchanged(self):
+   for name in ('matching_immutable_session.py','phase_timing.py'):

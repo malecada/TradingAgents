@@ -1,0 +1,19 @@
+--- iteration02/numeric_checks01.py
++++ iteration01/numeric_checks01.py
+@@ -53,16 +53,6 @@
+    with self.assertRaises(KeyboardInterrupt) as caught:v2.fill(out,a,b,li,ri,1024,ann.agreement,[0])
+   self.assertIs(caught.exception,fatal);self.assertIsNone(v2._cache_weights)
+   with self.assertRaises(ValueError):v2.current()
+- def test_immutable_hits_reuse_numeric_domain_and_invalid_initial_miss_allocates_nothing(self):
+-  a,b,li,ri=self.arrays();out=np.full(1024,-1.);calls=[];original=policy.kernel.fill_agreement
+-  def measured(*args):calls.append(args[-1]);return original(*args)
+-  with patch.object(policy.kernel,'fill_agreement',measured):
+-   v2=self.adapter();self.assertTrue(v2.fill(out,a,b,li,ri,1024,ann.agreement,[0]));saved=out.copy()
+-   self.assertTrue(v2.fill(out,a,b,li,ri,1024,ann.agreement,[0]));np.testing.assert_array_equal(out,saved)
+-   self.assertEqual(calls,[1024]);policy._cache_release(v2)
+-   invalid=frozen(np.full((130,2),1e200));v2=self.adapter();out[:]=-1.;progress=[0]
+-   self.assertFalse(v2.fill(out,invalid,b,li,ri,1024,ann.agreement,progress))
+-   self.assertTrue(np.all(out==-1));self.assertEqual(progress,[0]);self.assertEqual(v2.snapshot()['cache_reserved_bytes'],0)
+  def test_mutable_and_subclass_fallback(self):
+   a,b,li,ri=self.arrays();out=np.full(1024,-1.);v2=self.adapter()
+   class Sub(np.ndarray):pass

@@ -358,21 +358,22 @@ def test_legacy_requires_actual_counter_body_and_never_synthesizes_commit(tmp_pa
     finally:j.close();dest.close();close_numeric(n);close_numeric(new)
 
 
-@pytest.mark.parametrize('selected',[False,True])
+@pytest.mark.parametrize('selected',[None,'v1','v2'])
 def test_actual_numeric_constructor_source_guard_and_complete_pair(tmp_path,selected):
     from tests.research.onchain_replication.test_matching_reference import config
     from tests.research.onchain_replication.test_matching_pair_checkpoints import POLICY
     from tradingagents.research.onchain_replication.contracts import AttributedGraph
-    from tradingagents.research.onchain_replication.matching_numeric_policy import POLICY as KERNEL_POLICY
+    from tradingagents.research.onchain_replication.matching_numeric_policy import POLICY as KERNEL_POLICY, CACHE_POLICY
     from tradingagents.research.onchain_replication.phase_timing import PhaseTotals,activate
     import numpy as np
     graph=AttributedGraph(('0',),np.array([[0.]]),np.empty((2,0),dtype=np.int64),np.empty((0,1)), 'a'*64,'0')
     schedule=dict(max_checkpoints=2,calls_per_checkpoint=10,operations_per_call=1024,max_total_checkpoints=2,max_total_checkpoint_bytes=1024**2)
     root=tmp_path/'real-numeric';root.mkdir();totals=PhaseTotals()
+    selected_policy=None if selected is None else dict(CACHE_POLICY if selected=='v2' else KERNEL_POLICY)
     with activate(totals):
         numeric=ne.NumericExecution(root,config()|{'max_iterations':1},POLICY,schedule,lambda *args:None,
             cells=1,batch_cells=1,max_origin_bytes=9,max_summary_bytes=8192,max_entries=2,max_retained_bytes=4096,max_key_bytes=2048,
-            numeric_kernel_policy=dict(KERNEL_POLICY) if selected else None)
+            numeric_kernel_policy=selected_policy)
         try:
             score,iterations,status=numeric(graph,graph,'b'*64)
             assert score==.5 and iterations==1
@@ -381,7 +382,8 @@ def test_actual_numeric_constructor_source_guard_and_complete_pair(tmp_path,sele
             assert numeric.memo.executor.completed_operations>0 and numeric.memo.executor.advance_calls>0
             summary=json.loads((root/'numeric-batches'/'000000000000.json').read_bytes())
             ne.validate_phase_totals(summary['phase_totals'])
-            assert ('numeric_kernel_policy' in binding)==selected
+            assert ('numeric_kernel_policy' in binding)==(selected is not None)
+            if selected is not None:assert binding['numeric_kernel_policy']==selected_policy
         finally:numeric.close()
 
 

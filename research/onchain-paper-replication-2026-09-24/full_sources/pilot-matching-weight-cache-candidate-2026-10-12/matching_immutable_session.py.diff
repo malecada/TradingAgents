@@ -1,0 +1,26 @@
+--- a/tradingagents/research/onchain_replication/matching_immutable_session.py
++++ b/tradingagents/research/onchain_replication/matching_immutable_session.py
+@@ -189,6 +189,23 @@
+                 except BaseException:pass
+             raise
+ 
++        if matching_numeric_policy.cache_selected(self._numeric_adapter):
++            prior_cleanup=self._normalizer_cleanup
++            cached_adapter=self._numeric_adapter
++            release_cache=matching_numeric_policy._cache_release
++            def numeric_cleanup():
++                primary=None
++                try:release_cache(cached_adapter)
++                except BaseException as error:primary=error
++                try:prior_cleanup()
++                except BaseException as error:
++                    if primary is None:primary=error
++                    else:
++                        try:BaseException.add_note(primary,'remaining session cleanup failed: '+repr(error))
++                        except BaseException:pass
++                if primary is not None:raise primary
++            self._normalizer_cleanup=numeric_cleanup
++
+     def _edge_current(self):
+         compiled_edge_owner.current_policy(self)
+         require(self._edge_lease is self._edge_pin, 'edge lease replaced')
