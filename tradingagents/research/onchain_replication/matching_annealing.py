@@ -213,7 +213,13 @@ def _advance_checked(state,a,b,c,*,max_operations,edge_cache_policy=None,normali
                     start=state['cursor']
                     positions=np.arange(start,start+count,dtype=np.int64)
                     left,right=np.divmod(positions,right_edges)
-                    u,v=a.edge_index[:,left];i,j=b.edge_index[:,right]
+                    if (type(a.edge_index) is np.ndarray and type(b.edge_index) is np.ndarray
+                            and type(left) is np.ndarray and type(right) is np.ndarray
+                            and not a.edge_index.flags.writeable and not b.edge_index.flags.writeable):
+                        u=a.edge_index[0,left];v=a.edge_index[1,left]
+                        i=b.edge_index[0,right];j=b.edge_index[1,right]
+                    else:
+                        u,v=a.edge_index[:,left];i,j=b.edge_index[:,right]
                     old_values=state['M'][v,j]
                     # Per-chunk proof domain: each product has magnitude <=.5;
                     # at most 1024 additions start from finite |Q|<=1e100.

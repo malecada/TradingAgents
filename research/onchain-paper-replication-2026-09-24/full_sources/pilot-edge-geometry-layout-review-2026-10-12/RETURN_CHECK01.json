@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "rows": [
+    {
+      "edge_products": 1024,
+      "baseline_seconds": 0.018150735995732248,
+      "candidate_seconds": 0.01735367000219412,
+      "wall_reduction_percent": 4.391370100504677,
+      "baseline_over_candidate_ratio": 1.0459306874820917
+    },
+    {
+      "edge_products": 16384,
+      "baseline_seconds": 0.22562575800111517,
+      "candidate_seconds": 0.21428117500909138,
+      "wall_reduction_percent": 5.028053132110788,
+      "baseline_over_candidate_ratio": 1.052942508792676
+    },
+    {
+      "edge_products": 131072,
+      "baseline_seconds": 1.0408065319934394,
+      "candidate_seconds": 0.9856468080106424,
+      "wall_reduction_percent": 5.299709627797055,
+      "baseline_over_candidate_ratio": 1.0559629712534933
+    },
+    {
+      "edge_products": 1048576,
+      "baseline_seconds": 8.38178656999662,
+      "candidate_seconds": 7.4799886560067534,
+      "wall_reduction_percent": 10.759017859246567,
+      "baseline_over_candidate_ratio": 1.1205614012884477
+    }
+  ],
+  "focused_checkpoint_exact": true,
+  "focused_performance_comparison_valid": false,
+  "resource_wrapper_report": {
+    "actual_affinity": [
+      0,
+      1
+    ],
+    "cpu_limit": [
+      120,
+      120
+    ],
+    "file_limit": [
+      4194304,
+      4194304
+    ],
+    "empirical_claim": null
+  },
+  "peak_process_rss_kib": 66532,
+  "legacy_key_qualification": "v1/v2 result field names are inherited from harness; both routes select CACHE_POLICYv2",
+  "exact_result_qualification": "reviewed hook asserts bitwise matrices/packed score and full cursor history before shared digest output; arrays/histories are not separately persisted"
+}

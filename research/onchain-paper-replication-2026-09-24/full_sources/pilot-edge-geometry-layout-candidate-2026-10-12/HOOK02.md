@@ -1,0 +1,9 @@
+# Root-only numerical hook
+
+benchmark01.py reuses exact accepted numeric_harness.py SHAfdc0940ca0b18d75cb933bbaa58c4a0fd38824b638f6ed09d0d1adc3ad3729e8; no helper/source tree duplication. Its existing graph/config/solve/compare methods retain48temperatures, production sparse scoring, adaptive cache and full create-through-cleanup timing. Both baseline and candidate select CACHE_POLICYv2. Only extracted candidate _advance_checked is installed in the existing annealing namespace before a fresh session. Actual baseline source must equal the preserved baseline; original function is restored before every baseline and in finally after the hook. No Main file changes, Run/Owner/claim/registration or empirical inputs.
+
+Fixed original-order paired cases:32²,128²,256×512,1024² edgeproducts,1,000,000 operation budget. Comparisons require bitwise soft bytes, exact assignment bytes, packed float64 score, and complete identical operation/cursor histories, in addition to accepted harness checks. Each case reports original helper complete cold-create→production-score→both-cleanup times. Optional --focused adds one130² case at1024 operations with genuine synthetic checkpoint reload; repeated Q destinations arise naturally from these dense directed edge sets. Existing stdlib exact branch fixtures cover writable and ndarray-subclass fallback; full-module AST inverse preserves fatal agreement-prefix code unchanged. No additional numerical fatal/subclass matrix is claimed here.
+
+Root invocation under120secondsCPU/wall,4MiB output limit and CPUs2,3:
+`.venv/bin/python -B <directory>/benchmark01.py --config <original-matching-config> --config-sha256 b3b8d88424a56a6009a4baa447e00b971d769930299c769414f6d33d9a4e873e [--focused]`.
+The hook has only been compiled without importing it. No numerical results/performance claim; Root owns execution. SOURCE_MANIFEST01 remains unchanged; SOURCE_MANIFEST02 adds hook evidence without changing source candidate.

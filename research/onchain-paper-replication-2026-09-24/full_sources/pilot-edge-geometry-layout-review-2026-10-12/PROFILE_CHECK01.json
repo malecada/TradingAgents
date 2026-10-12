@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "literal_instrumentation_inverse": true,
+  "rows": [
+    {
+      "products": 16384,
+      "advance_wall_seconds": 0.20621163499890827,
+      "geometry_fraction": 0.2529031474047319,
+      "ordered_scatter_fraction": 0.0780055697797582,
+      "timed_exclusive_fraction": 0.7822344662947499,
+      "soft_matches_accepted_v2": true,
+      "operations_match_accepted_v2": true,
+      "snapshot_cache_live_bytes": 0
+    },
+    {
+      "products": 131072,
+      "advance_wall_seconds": 1.1764232749992516,
+      "geometry_fraction": 0.1971479755778576,
+      "ordered_scatter_fraction": 0.07995110074023344,
+      "timed_exclusive_fraction": 0.9210834569888356,
+      "soft_matches_accepted_v2": true,
+      "operations_match_accepted_v2": true,
+      "snapshot_cache_live_bytes": 1196032
+    },
+    {
+      "products": 1048576,
+      "advance_wall_seconds": 9.639676769991638,
+      "geometry_fraction": 0.19782913052995557,
+      "ordered_scatter_fraction": 0.08032414455314744,
+      "timed_exclusive_fraction": 0.9317250159367789,
+      "soft_matches_accepted_v2": true,
+      "operations_match_accepted_v2": true,
+      "snapshot_cache_live_bytes": 9453568
+    }
+  ],
+  "qualification": "Instrumented advance/hardening interval; timers perturb cost and helper dispatch. Soft-result digest and operation totals agree for three synthetic observations; no full sparse score, assignment or failure-prefix proof follows from this profile. Snapshots precede cleanup; live bytes here are not leak evidence."
+}

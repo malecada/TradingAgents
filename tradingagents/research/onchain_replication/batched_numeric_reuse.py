@@ -25,7 +25,7 @@ SOURCE_PINS=(
     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
     (accepted, '0d1c7a14866b53e6bde4b9db6e3eff4740190d16bc3db0f6532d60afd3142005'),
     (engine, 'eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693'),
-    (engine.ann, '1f8e45c4997691d561b498467ea2cbac284fc2e0747b495e81bf97ff189146bf'),
+    (engine.ann, 'b77d6ee6093047715024b9f1cd8033b02f24f06bb1461b854a659e0a336f8f91'),
     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
     (engine.ann.typed_identity, '0d72321bcaef01fe9667e5e6bc42c78ecb4aaca4a9099dcf5ceb924718c8c7d7'),
