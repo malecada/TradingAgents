@@ -2,9 +2,9 @@
 
 Requested on 2026-10-12: prioritize computation of at most one week, preferably less, and retain the existing real-data pilot as the following milestone. This changes work priority, not the scientific protocol or empirical allowance.
 
-**App status:** creation of the new goal was refused because this chat still has an unfinished paused goal. The available goal tools cannot change its objective, cancel it or queue a second unfinished goal. The existing pilot has not been marked complete. This file preserves the requested order; it is not evidence that the new native goal is active.
+**App status:** the user cleared the old paused goal, and the prepared runtime goal was successfully created with status ACTIVE. [Actual activation](RUNTIME_GOAL_ACTIVATION_2026-10-12.json) records the tool result. The original unfinished pilot objective/status/usage remain preserved in GOAL_PRIORITY_REQUEST_2026-10-12.json; the earlier creation refusal is historical. The pilot is the documented next goal, not a second concurrently active native goal.
 
-**Scope:** a clarification was requested. The working target is the representative pilot because that is the current workload. The initial Ethereum experiment and the full 1,420-fit paper study are separate, larger scopes; neither is claimed to fit the one-week target. Update this scope before native activation if the user selects another workload.
+**Scope:** the activated prepared definition covers the representative pilot: all seven full required graphs, 415,968,128 motif cells and the genuine joint update/checkpoint. No larger workload was specified during activation. The initial Ethereum fits and all 1,420 paper fits remain separately accounted; their computation within one week is not claimed.
 
 ## First: computation within 168 hours
 
