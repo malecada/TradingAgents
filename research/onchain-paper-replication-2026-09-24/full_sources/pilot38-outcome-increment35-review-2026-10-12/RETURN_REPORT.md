@@ -1,0 +1,13 @@
+# Actual increment35 returned-scope review
+
+Accepted the actual declared archive return: 257 regular bodies, 46 directories, 4,238,841 regular bytes. The 4,730,880-byte returned tar has SHA256 `2c5392aa8a63c5949f5de06a695318c9ba1347d7461425f3d51a602ed4247c3d`. All names, order, original modes, types, extents and body hashes match the actual selection, capture and current selected originals. Whole canonical PAX reencoding reproduces the exact archive bytes. Nothing was extracted.
+
+All 13 original Git operation records have exit0 and matching raw stdout/stderr hashes. Raw local/remote/fetched source is `f0daad8bd480f4e28838424d0124480bff032af7`; the actual returned commit and blob reconstruct their Git object IDs. The original fresh bare repository has matching FETCH_HEAD, bare configuration and no alternates. No Git or network command was executed by this review.
+
+The exact accepted helper bodies, seven deployed helper artifacts and all 250 fixed source pins are present. Original38 claim, FAILED terminal, all nine terminal outputs, native/parent records and genuine owned feature journal are retained; the accepted component-only outcome review is in the archive. Complete archive-context38 includes its three opaque regular controls and three empty directories. Exactly the previously missing three opaque36 control files are present. Opaque bytes were streamed for hashing only; no content was decoded or referenced connection/credential target opened. Original38 remains FAILED/spent, despite its separate first-graph preparation qualification.
+
+The genuine accepted34 return and capture/selection chain authenticate the inherited scope. Forty explicitly reused unchanged33/34 rows remain exact; old archive bodies and raw returned-tar aliases are not duplicated. All 13 closed directory child/mode rosters still match. The retained source/candidate/raw failure evidence is preservation, not scientific or entry admission.
+
+Actual binder39, the later entry candidate, this current review and subsequent operation receipts are outside the captured scope. No claim is made for unrelated stores, a complete installed runtime, POSIX reconstruction, deletion, full39 physical capacity, scoring/training/financial fit or next empirical release. Root may bind this actual scoped return; later additions need their own explicit preservation treatment.
+
+RETURN_REVIEW01.json uses exact `evidence[path] = sha256` references, including actual recovery/capture/selection and the genuine original38 outcome. RETURN_CHECK01.log records the independently completed finite checks. No original experiment, source, ledger, registration or state was modified.

@@ -1,0 +1,22 @@
+--- iteration02/prepare_entry01.py
++++ iteration01/prepare_entry01.py
+@@ -44,7 +44,6 @@
+     assert resources['storage_budget']['limits']['max_logical_bytes']==17179869184 and resources['storage_budget']['limits']['max_allocated_bytes']==21474836480
+ 
+ def observe(anchor):
+-    assert not (HERE/'BASELINE_STORAGE_OBSERVATION01.json').exists(), 'Root39 observation already used'
+     from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion
+     from tradingagents.research.onchain_replication.resources import mem_available
+     inputs=load(PUBLIC/'ALL_INPUT_REFS01.json');assert len(inputs)==73
+@@ -165,10 +164,7 @@
+     bound=load(PUBLIC/'BOUND01.json')
+     # Root supplies the actual bound transport evidence through its unchanged binder result.
+     binding['transport_binding']=pin(PUBLIC/'BOUND01.json')
+-    transport=bound['private_input']['archive_transport']
+-    assert set(transport)=={'path','sha256','bytes'} and type(transport['bytes']) is int and transport['bytes']>0
+-    assert all(transport[k]==inputs['archive_transport'][k] for k in ('path','sha256'))
+-    binding['transport']=dict(transport)
++    binding['transport']={k:inputs['archive_transport'][k] for k in ('path','sha256')}
+     binding['input_refs']={r:{k:v[k] for k in ('path','sha256')} for r,v in inputs.items()}
+     for role in REVIEW_ROLES[:6]:binding[role]=evidence[role]
+     for role in ('binding_review','complete_increment_recovery','new_increment_recovery_review'):binding[role]=None

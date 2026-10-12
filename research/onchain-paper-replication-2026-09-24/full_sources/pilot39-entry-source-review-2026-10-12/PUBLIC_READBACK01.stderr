@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot39-entry-source-review-2026-10-12/check_public_readback01.py", line 22, in <module>
+    assert op.stat().st_uid==os.getuid() and op.parent.stat().st_uid==os.getuid();auth(opaque) # Never json.loads opaque.
+                                                                                  ~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pilot39-entry-source-review-2026-10-12/check_public_readback01.py", line 10, in auth
+    b=p.read_bytes();assert sha(b)==ref['sha256'] and ('bytes' not in ref or len(b)==ref['bytes']);assert s==p.stat();return b
+                                                                                                          ^^^^^^^^^^^
+AssertionError

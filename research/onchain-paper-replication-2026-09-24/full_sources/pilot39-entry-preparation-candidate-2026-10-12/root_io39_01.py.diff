@@ -1,0 +1,11 @@
+--- research/onchain-paper-replication-2026-09-24/full_sources/real-data-pilot-full38-entry-preparation01-2026-10-12/root_io38_01.py
++++ full39/root_io39_01.py
+@@ -137,7 +137,7 @@
+ 
+ if __name__ == '__main__':
+     # Final exact preflight is separately bound/reviewed in the execution dir.
+-    from preflight38_01 import check
++    from preflight39_01 import check
+     args, preflight = check()
+     result = launch_checked(args,preflight,Path(__file__).resolve().parent)
+     raise SystemExit(result['actual_parent_exit_code'])

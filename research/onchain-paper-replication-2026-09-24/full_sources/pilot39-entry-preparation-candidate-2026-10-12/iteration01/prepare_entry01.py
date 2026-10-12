@@ -1,0 +1,182 @@
+"""Finite Root39 metadata preparation; no admission, binder or pilot execution."""
+import argparse,ast,copy,datetime,difflib,hashlib,json,os,re,subprocess
+from pathlib import Path
+ROOT=Path.cwd().resolve();HERE=Path(__file__).resolve().parent;F=HERE.parent
+OLD=F/'real-data-pilot-full38-entry-preparation01-2026-10-12'
+PUBLIC=F/'real-data-pilot-full39-binding-preparation01-2026-10-12'
+CAP=F/'pilot39-whole-capacity-candidate-2026-10-12'
+CUMULATIVE=F/'real-data-pilot-full38-cumulative-preparation01-2026-10-12'
+OLD_NAME='eth-paper-real-data-end-to-end-resource-20261012-38'
+NAME='eth-paper-real-data-end-to-end-resource-20261012-39'
+REVIEW_ROLES=('prior_outcome_review','prior_root_closure_review','prior_preservation_complete','prior_recovery_review','public_review','integration_review','growth_review')
+
+def read(path):
+    assert path.resolve(strict=True)==path and path.is_file() and not path.is_symlink()
+    before=path.stat();assert before.st_nlink==1 and before.st_size<=4*1024**2
+    raw=path.read_bytes();after=path.stat()
+    assert all(getattr(before,k)==getattr(after,k) for k in ('st_dev','st_ino','st_size','st_mtime_ns','st_ctime_ns'))
+    return raw
+
+def load(path):return json.loads(read(path))
+def pin(path,*,size=True):
+    raw=read(path);value={'path':str(path.relative_to(ROOT)),'sha256':hashlib.sha256(raw).hexdigest()}
+    if size:value['bytes']=len(raw)
+    return value
+
+def reference(ref):
+    assert type(ref) is dict and {'path','sha256'}<=set(ref)
+    path=ROOT/ref['path'];assert path.is_relative_to(ROOT)
+    actual=pin(path);assert all(actual[k]==v for k,v in ref.items() if k in actual)
+    return path
+
+def save(name,value):
+    with (HERE/name).open('x') as stream:json.dump(value,stream,indent=2,sort_keys=True);stream.write('\n')
+def text(name,value):
+    with (HERE/name).open('x') as stream:stream.write(value)
+def module(path,expected):
+    raw=read(path);assert hashlib.sha256(raw).hexdigest()==expected
+    scope={'__file__':str(path),'__name__':'candidate_metadata_dependency'};exec(compile(raw,str(path),'exec'),scope);return scope
+
+def validate_limits(resources):
+    assert resources['storage_budget']['experiment']==NAME
+    assert resources['memory_max_bytes']==6442450944 and resources['memory_high_bytes']==5368709120
+    assert resources['wall_seconds']==28800 and resources['disk_floor_bytes']==10737418240 and resources['start_reserve_bytes']==2684354560
+    assert resources['storage_budget']['limits']['max_logical_bytes']==17179869184 and resources['storage_budget']['limits']['max_allocated_bytes']==21474836480
+
+def observe(anchor):
+    from tradingagents.research.onchain_replication.real_pilot_storage import WritableUnion
+    from tradingagents.research.onchain_replication.resources import mem_available
+    inputs=load(PUBLIC/'ALL_INPUT_REFS01.json');assert len(inputs)==73
+    job=load(reference(inputs['execution_job']));resources=job['resources'];validate_limits(resources)
+    value=WritableUnion(resources['storage_budget'],ROOT,experiment=NAME).check()
+    fs=os.statvfs(ROOT);dev=ROOT.stat().st_dev
+    save('BASELINE_STORAGE_OBSERVATION01.json',{'at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':anchor,'experiment':NAME,'kind':'final-post38-whole39-writable-union','filesystem_identity':{'device':dev,'path':str(ROOT)},'filesystem_block_bytes':fs.f_frsize,'disk_free_bytes':fs.f_bavail*fs.f_frsize,'free_inodes':fs.f_favail,'host_mem_available_bytes':mem_available(),'storage_observation':value,'resources':resources,'qualification':'Actual whole writable union/residual and statvfs sample only; no reservation or training memory proof.'})
+
+def capacity_declaration(anchor,resources,pins,observation,terms,projection,basis,accepted):
+    growth=projection['growth'];directory=terms['directory_allocated_bytes'];other=terms['other_writer_allocated_bytes']
+    return {'schema_version':1,'identity':NAME,'at':observation['at'],'source_anchor':anchor,'source_body_pins':pins,'decision':'accepted' if accepted and projection['storage_caps_and_floor_pass'] else 'DRAFT_NOT_RELEASED','decision_scope':'Whole39 storage arithmetic for fixed resource-pilot caps only; actual training peak remains unmeasured.','whole_graphs':7,'whole_cells':415968128,'entry_qualification_only':None,'full_pilot_capacity_admitted':False,'memory_fit_proven':False,'full_training_memory_fit_proven':False,'physical_reservation':False,'allocation_semantics':'prospective-headroom-sampled-aggregate-guards','new_logical_growth_bytes':growth['logical_file_bytes'],'new_allocated_growth_bytes':growth['allocated_bytes'],'non_directory_new_allocated_growth_bytes':growth['allocated_bytes']-directory-other,'directory_allocated_bound_bytes':directory,'other_writer_reserved_bytes':other,'new_entries':growth['entries'],'directory_and_other_writers_included':True,'runtime_residuals_included':True,'owned_paths':resources['storage_budget']['roots']+resources['storage_budget']['shared_files'],'basis':basis,'whole_projection':projection}
+
+def adapt_control(before,oldname,prepared_ref):
+    after=before.replace(OLD_NAME,NAME).replace('preflight38_01','preflight39_01').replace('full38-binding-preparation01','full39-binding-preparation01').replace('preparation38','preparation39')
+    if oldname.startswith('preflight'):
+        tree=ast.parse(after);assignment=next(n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='FROZEN_PREPARATION' for t in n.targets))
+        after=after.replace(ast.get_source_segment(after,assignment),'FROZEN_PREPARATION='+repr(prepared_ref))
+        after=after.replace("need(mcm.get('entry_qualification')==ENTRY_SELECTION,'exact fixed preparation-only selector required')","need('entry_qualification' not in mcm,'whole39 cannot retain preparation-only stop')")
+        after=after.replace("need(capacity.get('entry_qualification_only')==ENTRY_SELECTION and capacity.get('full_pilot_capacity_admitted') is False,'preparation declaration cannot admit whole pilot')","need(capacity.get('entry_qualification_only') is None and capacity.get('whole_cells')==415968128 and capacity.get('whole_graphs')==7 and capacity.get('whole_projection',{}).get('storage_caps_and_floor_pass') is True and capacity.get('memory_fit_proven') is False,'whole39 storage arithmetic/currentness required; memory remains empirical')")
+    ast.parse(after)
+    return after
+
+def prior_component(evidence):
+    ref=evidence['prior_outcome_review']
+    if ref is None:return False
+    assert ref['sha256']=='70010944ab8cfa0494f80d7034d3b88247411789d66b2864c2146267e324103b'
+    assert evidence['prior_root_closure_review']==ref
+    review=load(reference(ref))
+    assert review['decision']=='accepted' and review['experiment_id']==OLD_NAME
+    assert review['original_outer_status']=='failed' and review['original_outer_attempt_spent'] is True
+    assert review['original_reason'].startswith('EntryPreparationComplete:')
+    assert review['component_qualification']['accepted'] is True and review['closure']['accepted'] is True
+    assert review['component_qualification']['mcm_stage_started'] is False
+    terminal=load(reference(review['original_terminal']));claim=reference(review['original_claim'])
+    assert terminal['status']=='failed' and terminal['experiment_id']==OLD_NAME and terminal['claim_sha256']==pin(claim)['sha256']
+    expected=review['authentication']['all_output_hashes'];assert len(expected)==9 and terminal['output_sha256']==expected
+    for name,digest in expected.items():assert pin(claim.parent/'outputs'/name)['sha256']==digest
+    return True
+
+def prepare(anchor,evidence_path,terms_path):
+    from tradingagents.research.admission import runtime_hashes
+    assert not (HERE/'gate01.json').exists(),'Root39 preparation already used'
+    evidence=load(evidence_path);assert set(evidence)==set(REVIEW_ROLES)|{'extra_source_pins'}
+    for role in REVIEW_ROLES:
+        if evidence[role] is not None:reference(evidence[role])
+    gate=load(OLD/'gate01.json');original=copy.deepcopy(gate);assert len(gate['experiments'])==15
+    experiment=copy.deepcopy(gate['experiments'][OLD_NAME]);assert len(experiment['source_files'])==1036
+    for path,digest in experiment['source_files'].items():assert pin(ROOT/path)['sha256']==digest,path
+    inputs=load(PUBLIC/'ALL_INPUT_REFS01.json');assert len(inputs)==73
+    scratch=load(OLD/'MATCHING_SCRATCH_RESERVATION01.json');assert scratch['experiment']==OLD_NAME
+    scratch['experiment']=NAME;save('MATCHING_SCRATCH_RESERVATION01.json',scratch)
+    inputs['matching_ordered_edge_scratch']={'dataset':'eth',**pin(HERE/'MATCHING_SCRATCH_RESERVATION01.json',size=False)}
+    job=load(reference(inputs['execution_job']));resources=job['resources'];validate_limits(resources)
+    dependencies=load(HERE/'DEPENDENCY_PINS01.json')
+    joined=module(PUBLIC/'join_entry_draft01.py',dependencies['join_entry_draft01.py'])['joined_draft'](ROOT,inputs,load(OLD/'CORE_MANIFEST01.json'),PUBLIC/'build_public01.py')
+    experiment['cells']=joined['experiment_cells'];save('CORE_MANIFEST01.json',joined['core_manifest'])
+    pins=load(OLD/'CAPACITY_SOURCE_MAP01.json');assert len(pins)==428
+    for path,digest in pins.items():assert pin(ROOT/path)['sha256']==digest
+    save('CAPACITY_SOURCE_MAP01.json',pins)
+    public=load(OLD/'PUBLIC_MANIFEST01.json');public.update(experiment=NAME,source_pins=pins);save('PUBLIC_MANIFEST01.json',public)
+    observation=load(HERE/'BASELINE_STORAGE_OBSERVATION01.json');assert observation['source']==anchor and observation['experiment']==NAME and observation['resources']==resources
+    observation['observation_sha256']=pin(HERE/'BASELINE_STORAGE_OBSERVATION01.json')['sha256']
+    qualified=prior_component(evidence)
+    recovered=False
+    if qualified and evidence['prior_preservation_complete'] is not None and evidence['prior_recovery_review'] is not None:
+        recovery=reference(evidence['prior_preservation_complete'])
+        assert recovery==F/'real-data-pilot-full24-preparation-increment01-2026-10-09/full38outcome35/FRESH_GIT_RECOVERY35.json'
+        review=load(reference(evidence['prior_recovery_review']))
+        assert review['decision']=='accepted' and review['evidence'].get(evidence['prior_preservation_complete']['path'])==evidence['prior_preservation_complete']['sha256']
+        recovered=True
+    observation.update(post38_closed_and_recovered=recovered,source_and_scope_current=True)
+    terms=load(terms_path);assert terms['observation_sha256']==observation['observation_sha256']
+    calculator=module(CAP/'capacity.py',dependencies['capacity.py']);metadata=load(CAP/'WHOLE_METADATA01.json')
+    assert pin(CAP/'WHOLE_METADATA01.json')['sha256']==dependencies['WHOLE_METADATA01.json']
+    assert pin(CAP/'INPUT_SOURCE_PINS01.json')['sha256']==dependencies['INPUT_SOURCE_PINS01.json']
+    for path,ref in load(CAP/'INPUT_SOURCE_PINS01.json').items():reference({'path':path,**ref})
+    projection=calculator['project'](metadata,observation,terms,conditional=not recovered)
+    save('WHOLE_CAPACITY_RESULT01.json',projection)
+    accepted=False
+    if evidence['growth_review'] is not None:
+        review=load(reference(evidence['growth_review']))
+        assert review['decision']=='accepted' and review['identity']==NAME
+        assert review['terms']==pin(terms_path) and review['observation']==pin(HERE/'BASELINE_STORAGE_OBSERVATION01.json')
+        accepted=recovered
+    basis={'currentness_sample':pin(HERE/'BASELINE_STORAGE_OBSERVATION01.json'),'terms':pin(terms_path),'growth_review':evidence['growth_review'],'whole_metadata':pin(CAP/'WHOLE_METADATA01.json'),'calculator':pin(CAP/'capacity.py'),'result':pin(HERE/'WHOLE_CAPACITY_RESULT01.json')}
+    capacity=capacity_declaration(anchor,resources,pins,observation,terms,projection,basis,accepted);save('CAPACITY_DECLARATION_ROOT01.json',capacity)
+    for oldname,newname in [('preflight38_01.py','preflight39_01.py'),('root_io38_01.py','root_io39_01.py')]:
+        before=read(OLD/oldname).decode();after=adapt_control(before,oldname,pin(PUBLIC/'PREPARED01.json'))
+        ast.parse(after);text(newname,after);text(newname+'.diff',''.join(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile=oldname,tofile=newname)))
+    sourcefiles=experiment['source_files']
+    for name in ('PREPARED01.json','REQUEST01.json','ROOT_PREPARATION01.json','PUBLIC_INPUT_REFS_DRAFT01.json','EXPECTED_CODE_POLICY01.json','CURRENT_NUMERICAL_GIT_JOIN01.json','MANIFEST01.json','BOUND01.json','BINDING_CHECK01.json','ALL_INPUT_REFS01.json','bind_actual01.py'):
+        path=PUBLIC/name;sourcefiles[str(path.relative_to(ROOT))]=pin(path)['sha256']
+    for ref in inputs.values():
+        path=ROOT/ref['path']
+        if path.is_relative_to(PUBLIC):sourcefiles[str(path.relative_to(ROOT))]=pin(path)['sha256']
+    original_sources=dict(original['experiments'][OLD_NAME]['source_files'])
+    for path,digest in evidence['extra_source_pins'].items():
+        assert pin(ROOT/path)['sha256']==digest
+        assert path not in original_sources or original_sources[path]==digest
+        sourcefiles[path]=digest
+    for role in REVIEW_ROLES:
+        if evidence[role] is not None:sourcefiles[evidence[role]['path']]=evidence[role]['sha256']
+    for path in (terms_path,evidence_path,PUBLIC/'build_public01.py',PUBLIC/'join_entry_draft01.py',CAP/'capacity.py',CAP/'WHOLE_METADATA01.json',CAP/'INPUT_SOURCE_PINS01.json'):
+        sourcefiles[str(path.relative_to(ROOT))]=pin(path)['sha256']
+    for name in ('prepare_entry01.py','DEPENDENCY_PINS01.json','MATCHING_SCRATCH_RESERVATION01.json','BASELINE_STORAGE_OBSERVATION01.json','CORE_MANIFEST01.json','CAPACITY_SOURCE_MAP01.json','PUBLIC_MANIFEST01.json','WHOLE_CAPACITY_RESULT01.json','CAPACITY_DECLARATION_ROOT01.json','preflight39_01.py','root_io39_01.py','preflight39_01.py.diff','root_io39_01.py.diff'):
+        sourcefiles[str((HERE/name).relative_to(ROOT))]=pin(HERE/name)['sha256']
+    assert all(sourcefiles[path]==digest for path,digest in original_sources.items())
+    experiment.update(inputs=inputs,parent=None,runtime_hashes=runtime_hashes(),question='Measure seven whole graphs415968128cells and one actual joint GAT/attention-LSTM update/checkpoint under unchanged physical caps. Training peak and throughput are empirical resource outcomes, not presumed memory success or financial validation.')
+    assert experiment['charter']==original['experiments'][OLD_NAME]['charter'] and experiment['cumulative_budget_extension']==original['experiments'][OLD_NAME]['cumulative_budget_extension']
+    assert NAME not in gate['experiments'];gate['experiments'][NAME]=experiment
+    assert {k:v for k,v in gate['experiments'].items() if k!=NAME}==original['experiments']
+    assert {k:v for k,v in gate.items() if k!='experiments'}=={k:v for k,v in original.items() if k!='experiments'}
+    save('gate01.json',gate)
+    binding=load(OLD/'BINDING01.json');binding.update(identity=NAME,status='DRAFT_NOT_RELEASED',binding_readback=None,endpoint_review=None)
+    binding['public_preparation']=pin(PUBLIC/'ROOT_PREPARATION01.json')
+    for role,name in [('core_manifest','CORE_MANIFEST01.json'),('public_manifest','PUBLIC_MANIFEST01.json'),('capacity_observation','CAPACITY_DECLARATION_ROOT01.json'),('gate','gate01.json')]:binding[role]=pin(HERE/name)
+    for role,path in [('public_refs',PUBLIC/'PUBLIC_INPUT_REFS_DRAFT01.json'),('preparation',PUBLIC/'PREPARED01.json'),('unbound_archive',PUBLIC/'public01/archive_policy.json')]:binding[role]=pin(path)
+    bound=load(PUBLIC/'BOUND01.json')
+    # Root supplies the actual bound transport evidence through its unchanged binder result.
+    binding['transport_binding']=pin(PUBLIC/'BOUND01.json')
+    binding['transport']={k:inputs['archive_transport'][k] for k in ('path','sha256')}
+    binding['input_refs']={r:{k:v[k] for k in ('path','sha256')} for r,v in inputs.items()}
+    for role in REVIEW_ROLES[:6]:binding[role]=evidence[role]
+    for role in ('binding_review','complete_increment_recovery','new_increment_recovery_review'):binding[role]=None
+    save('BINDING_DRAFT01.json',binding)
+    save('REGISTRATION_DRAFT01.json',{'status':'DRAFT_NOT_RELEASED','identity':NAME,'original_gate':pin(OLD/'gate01.json'),'new_gate':pin(HERE/'gate01.json'),'all15_original_definitions_unchanged':True,'all1036_original_source_pins_unchanged':True,'new_source_pins':len(sourcefiles)-1036,'input_roles':73,'prior38_component_review':evidence['prior_outcome_review'],'actual_new_recovery':None,'final_release':None,'claim':False,'execution':False})
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('mode',choices=('observe','prepare'));parser.add_argument('--anchor',required=True);parser.add_argument('--evidence',type=Path);parser.add_argument('--terms',type=Path);args=parser.parse_args()
+    assert HERE==F/'real-data-pilot-full39-entry-preparation01-2026-10-12'
+    assert re.fullmatch('[0-9a-f]{40}',args.anchor) and subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()==args.anchor
+    assert not (ROOT/'research_runs'/NAME).exists(),'unused39 required'
+    if args.mode=='observe':observe(args.anchor)
+    else:
+        assert args.evidence and args.terms
+        prepare(args.anchor,args.evidence.resolve(),args.terms.resolve())

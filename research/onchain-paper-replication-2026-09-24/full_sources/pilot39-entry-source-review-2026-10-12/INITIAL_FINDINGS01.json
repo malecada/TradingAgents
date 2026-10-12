@@ -1,0 +1,28 @@
+{
+  "decision": "withheld_pending_narrow_fixes_and_actual35_review",
+  "source_sha256": "4071b7a932f32190399fef9d8c002ff2e687a15e544e9f9aaa08233f4e6d6ffc",
+  "findings": [
+    {
+      "id": "transport-bytes",
+      "source": "binding['transport']={k:inputs['archive_transport'][k] for k in ('path','sha256')}",
+      "effect": "Generated binding omits bytes required by unchanged committed_refs, validate_opaque and exact private reference inverse; cannot pass actual preflight.",
+      "required": "Preserve actual bounded private_input reference including bytes without decoding."
+    },
+    {
+      "id": "observe-reentry",
+      "effect": "Existing baseline observation is discovered by exclusive save only after WritableUnion.check/statvfs; repeated observe performs a second scan before refusal.",
+      "required": "Refuse existing baseline before observation work."
+    }
+  ],
+  "already_checked": {
+    "original_gate_definitions": 15,
+    "original_source_pins_current": 1036,
+    "capacity_body_pins_current": 428,
+    "whole_graphs": 7,
+    "whole_cells": 415968128,
+    "physical_reservation": false,
+    "training_memory_fit_proven": false
+  },
+  "actual_prior35_review_schema_join": "pending",
+  "actual_helper_binder_admission_scan_numerical_execution": false
+}
