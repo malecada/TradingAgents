@@ -1,0 +1,11 @@
+--- prepare_entry01.before
++++ prepare_entry01.after
+@@ -57,6 +57,8 @@
+     scratch['experiment']=NAME; save('MATCHING_SCRATCH_RESERVATION01.json',scratch)
+     inputs['matching_ordered_edge_scratch']={'dataset':'eth',**pin(HERE/'MATCHING_SCRATCH_RESERVATION01.json',size=False)}
+     job=load(ROOT/inputs['execution_job']['path']); resources=job['resources']
++    selected=next(iter(job['payload']['representation_jobs'].values()))
++    experiment['cells']=[load(ROOT/inputs[selected['real_pilot_input']]['path'])['cell_id']]
+     assert resources['storage_budget']['experiment']==NAME
+     assert resources['memory_max_bytes']==6442450944 and resources['memory_high_bytes']==5368709120 and resources['wall_seconds']==28800
+     assert resources['disk_floor_bytes']==10737418240 and resources['start_reserve_bytes']==2684354560
