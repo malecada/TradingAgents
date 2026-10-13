@@ -33,6 +33,15 @@ def test_every_stage_caps_torch_threads(tmp_path, monkeypatch):
     assert seen['threads'] == 2
 
 
+def test_dictionary_weeks_are_exactly_the_training_weeks():
+    # spec §10: dictionary sampling never reads a week first used by a 2024 decision (2023-12-25 is test-only)
+    from tradingagents.research.onchain_b import calendar as cal
+    used = sorted({cal.available_week(t) for d in cal.decision_dates('train') for t in cal.window(d)})
+    weeks = cli._training_weeks()
+    assert weeks == used and len(weeks) == 103 and weeks[-1] == '2023-12-18'
+    assert '2023-12-25' not in weeks
+
+
 def test_build_graphs_refuses_without_frozen_k(tmp_path, monkeypatch):
     import pytest
     monkeypatch.setattr(cli, 'ARTIFACTS', tmp_path)

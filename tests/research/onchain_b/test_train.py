@@ -44,6 +44,22 @@ def test_svm_arm(tmp_path):
     assert len(json.loads((tmp_path / 'predictions.json').read_text())) == 365 and res['arm'] == 'svm'
 
 
+def test_outputs_are_replaced_atomically_with_marker_last(tmp_path, monkeypatch):
+    import os
+    real = os.replace
+    order = []
+
+    def recording_replace(src, dst):
+        order.append(os.path.basename(str(dst)))
+        return real(src, dst)
+
+    monkeypatch.setattr(os, 'replace', recording_replace)
+    T.fit('lstm', 'regression', 11, tmp_path, epochs=1, prices=_px(5))
+    assert 'checkpoint.pt' in order and order[-1] == 'predictions.json'
+    assert order.index('result.json') < order.index('predictions.json')
+    assert not [p for p in tmp_path.iterdir() if p.name.startswith('.tmp')]
+
+
 def test_label_permutation_diag_changes_targets():
     px = _px(3)
     ex = Dt.examples('train', px, P.Scaler().fit(px, [date(2022, 2, 6)]), 'classification')

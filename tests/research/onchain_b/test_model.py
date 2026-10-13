@@ -19,6 +19,16 @@ def test_encoder_permutation_invariant():
     assert v.shape == (32,) and torch.allclose(v, v2, atol=1e-5)
 
 
+def test_data_self_edge_does_not_double_the_self_neighbor():
+    # model.json: "incoming edges plus self exactly once" — an observed self-transfer must not add a second self entry
+    torch.manual_seed(5)
+    enc = M.GraphEncoder(CFG)
+    mcm = torch.randn(6, 32)
+    ei = torch.tensor([[0, 1, 2, 3], [1, 2, 3, 4]])
+    with_self = torch.cat([ei, torch.tensor([[2], [2]])], 1)
+    assert torch.allclose(enc(mcm, ei), enc(mcm, with_self), atol=1e-6)
+
+
 def test_isolated_nodes_get_self_only():
     enc = M.GraphEncoder(CFG)
     mcm = torch.randn(5, 32)

@@ -30,6 +30,8 @@ class GATLayer(nn.Module):
     def forward(self, h, edge_index):
         K = h.shape[0]
         src, dst = edge_index
+        keep = src != dst                                  # observed self-transfers: self is added once below
+        src, dst = src[keep], dst[keep]
         loop = torch.arange(K, device=h.device)
         src = torch.cat([src, loop])                       # incoming edges + self once
         dst = torch.cat([dst, loop])

@@ -43,7 +43,16 @@ Literal Algorithm 1: `M = V`; while `β ≤ 30` and fewer than 50 iterations,
 columns in the log domain, `β ← 1.075·β` (48 temperatures); greedy global-maximum
 hardening with row-major ties. Score is Eq. 1 on the hard assignment with the
 printed `2·sqrt(l1·l2)` denominator. The batched solver must agree with the
-per-pair reference within 1e-9.
+per-pair reference within 1e-9. It is used for both the dictionary's pairwise
+matrix and MCM; the independent review measured agreement ≤ 5.6e-17 with
+identical hard assignments at real neighbourhood sizes (32 nodes, 31–90 edges).
+The GAT neighbour set is incoming edges plus exactly one self entry; observed
+self-transfers do not add a second one.
+
+Evaluation: circular 14-day moving-block bootstrap (every day equally likely to
+be drawn). The report admits only cells whose `result.json` shows the frozen 100
+epochs (SVM exempt) and lists every other cell as excluded. Runs with another
+epoch count are written to `fits-smoke/`, never to `fits/`.
 
 ## Model and training (`config/model.json`, `config/training.json`)
 

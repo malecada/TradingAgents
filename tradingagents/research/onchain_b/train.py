@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import json
+import os
 import random
+import tempfile
 import time
 from pathlib import Path
 
@@ -18,6 +20,18 @@ from . import prices as P
 from .runlog import Log
 
 ARMS = ('full', 'lstm', 'gru', 'hlstm', 'svm')
+
+
+def _replace_atomically(target: Path, write):
+    """Write through a temp file in the same directory, then os.replace onto the target."""
+    fd, tmp = tempfile.mkstemp(dir=target.parent, prefix='.tmp-')
+    os.close(fd)
+    try:
+        write(tmp)
+        os.replace(tmp, target)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
 
 
 def set_seed(seed):
@@ -126,8 +140,12 @@ def fit(arm, task, seed, out_dir, store=None, epochs=None, diag=None, prices=Non
                 total += loss.item() * len(b.decisions)
                 n += len(b.decisions)
             loss_value = total / n
-            torch.save({'model': model.state_dict(), 'opt': opt.state_dict(), 'epoch': epoch + 1,
-                        'rng': torch.get_rng_state(), 'np_rng': np.random.get_state(), 'py_rng': random.getstate()}, ck)
+            state = {'model': model.state_dict(), 'opt': opt.state_dict(), 'epoch': epoch + 1,
+                     'rng': torch.get_rng_state(), 'np_rng': np.random.get_state(), 'py_rng': random.getstate()}
+            def _save(path, state=state):
+                with open(path, 'wb') as fh:          # file handle: torch rejects dot-prefixed temp names
+                    torch.save(state, fh)
+            _replace_atomically(ck, _save)
             log.event(event='epoch', epoch=epoch + 1, train_loss=loss_value, seconds=round(time.time() - t, 1))
         model.eval()
         preds = []
@@ -140,7 +158,9 @@ def fit(arm, task, seed, out_dir, store=None, epochs=None, diag=None, prices=Non
         target = e.target if task == 'classification' else scaler.inverse(e.target)
         pred = p if task == 'classification' else scaler.inverse(p)
         records.append({'decision': e.decision.isoformat(), 'pred': float(pred), 'target': float(target)})
-    (out_dir / 'predictions.json').write_text(json.dumps(records))
-    (out_dir / 'result.json').write_text(json.dumps({**result, 'diag': diag, 'n_train': len(train), 'n_test': len(test)}, indent=1))
+    summary = json.dumps({**result, 'diag': diag, 'n_train': len(train), 'n_test': len(test)}, indent=1)
+    _replace_atomically(out_dir / 'result.json', lambda path: Path(path).write_text(summary))
+    # predictions.json is the completion marker for cli fit: written last
+    _replace_atomically(out_dir / 'predictions.json', lambda path: Path(path).write_text(json.dumps(records)))
     log.event(event='done', **result)
     return result

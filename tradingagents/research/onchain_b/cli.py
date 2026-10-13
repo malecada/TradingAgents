@@ -153,7 +153,8 @@ def fit_stage(args):
     from . import data as Dt
     from . import train as T
     name = args.arm + (f'-{args.diag}' if args.diag else '')
-    out = ARTIFACTS / 'fits' / args.task / name / f'seed{args.seed}'
+    frozen = args.epochs is None or args.epochs == config.load('training')['epochs']
+    out = ARTIFACTS / ('fits' if frozen else 'fits-smoke') / args.task / name / f'seed{args.seed}'
     if (out / 'predictions.json').exists():
         print('exists', out)
         return
