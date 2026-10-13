@@ -67,7 +67,31 @@ Qualifications recorded before any fit:
 Compute note: at K = 5,000 the MCM workload is 5,000 × 32 = 160,000 cells per
 week, 24,960,000 cells for 156 weeks.
 
-## 2. N_max and compute (to be filled by Task 15 steps 1–2)
+## 2. N_max and compute (run 2026-10-13 on week 2022-03-07, K = 5,000: 17,123 edges)
 
-Pending: batched-solver cells/s and RSS for `n_max ∈ {32, 64}` on week
-2022-03-07; GAT forward+backward time and RSS on the same week.
+Throwaway 64-sample / 8-motif dictionary for timing only (not the scientific
+dictionary); MCM on the first 1,000 nodes of the week; GAT forward+backward with
+random MCM input on the whole week. Numbers from
+`research_artifacts/onchain-replication-b/calibration/compute.json` and the
+post-restart re-measurement.
+
+| measurement | n_max = 32 | n_max = 64 |
+|---|---:|---:|
+| timing-dictionary motif sizes (nodes / edges) | 9,3,4,1,2,3,32,3 / 15,3,3,0,1,3,60,2 | 6,3,7,1,3,64,4,7 / 9,3,6,0,3,120,6,11 |
+| solver cells/s, machine under memory pressure (first run) | 451 | 54 |
+| solver cells/s, idle machine, torch threads 1 / 2 / 4 | 8,212 / 7,514 / 8,178 | — |
+| projected MCM hours per seed, 156 weeks × 5,000 × 32 cells | 0.8 (idle) · 15.4 (pressured) | 128 (pressured) |
+| peak RSS | 576 MB | 576 MB |
+
+GAT encoder, 5,000 nodes / 17,123 edges + 5,000 self loops, forward+backward:
+0.047 s (1 thread), 0.038 s (2), 0.033 s (4) on the idle machine; 0.78 s with 10
+threads under memory pressure (thread oversubscription). Projected full-model
+arm-seed: 100 epochs × 44 batches × ~8 distinct weeks × 2 (checkpoint recompute)
+× 0.04 s ≈ 0.8 h. Peak RSS 576 MB.
+
+**Frozen: `n_max = 32`** (`config/dictionary.json`), **torch threads = 2** for
+solver and fits (declared operational setting; no scientific effect). Both
+projections fit the §9 budget (MCM ≤ 48 h, arm-seed ≤ 6 h, RSS ≤ 12 GiB) with
+wide margin; n_max = 64 would also fit on an idle machine but is not needed and
+was not re-measured after the restart. The first-run figures are retained to show
+the sensitivity to host memory pressure (16 GB laptop shared with editors).

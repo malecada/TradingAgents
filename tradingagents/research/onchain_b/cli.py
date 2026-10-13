@@ -159,7 +159,7 @@ def fit_stage(args):
         print('exists', out)
         return
     store = Dt.WeekStore(ARTIFACTS / 'graphs', ARTIFACTS / 'mcm' / f'seed{args.seed}') if args.arm == 'full' else None
-    torch.set_num_threads(max(1, (os.cpu_count() or 2) - 2))
+    torch.set_num_threads(2)      # CALIBRATION.md §2: small graphs; more threads only add overhead
     print(json.dumps(T.fit(args.arm, args.task, args.seed, out, store=store, epochs=args.epochs, diag=args.diag)))
 
 
