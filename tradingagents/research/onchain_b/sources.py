@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import os
 import re
 import tempfile
 from pathlib import Path
@@ -23,6 +24,14 @@ from .config import ROOT
 COLUMNS = ('hash', 'block_timestamp', 'from_address', 'to_address', 'value', 'receipt_status')
 PLAN_PATH = ROOT / 'research/onchain-graph-2026-09-16/fullpanel/plan.json'
 PLAN_SHA = '19f3716454216afc172aec2939a9908ba3b57921e99249951e1860b995d1d691'
+# Untracked retained captures (e.g. the 2024-01-01 prototype day) exist only in the
+# original data checkout; every byte is still hash-verified against tracked metadata.
+RETAINED_ROOT = Path(os.environ.get('ONCHAIN_B_RETAINED_ROOT', '/home/malecada/master_thesis/TradingAgents-audit-fixes'))
+
+
+def _retained(rel) -> Path:
+    local = ROOT / rel
+    return local if local.exists() else RETAINED_ROOT / rel
 
 
 def digest(b: bytes) -> str:
@@ -41,7 +50,7 @@ def load_plan() -> dict:
 
 
 def _span(blob, start, end, base):
-    path = Path(base) / blob['path']
+    path = Path(base) / blob['path'] if base is not None else _retained(blob['path'])
     if path.stat().st_size != blob['stored_bytes']:
         raise ValueError('stored size differs')
     if blob['raw_bytes'] != end - start or blob['codec'] != 'zstd':
@@ -85,14 +94,16 @@ def _ordinary(entry, day, expected_rows):
 
 
 def _special_2024_01_01(expected_rows):
-    prefix = ROOT / 'research/onchain-graph-2026-09-16'
-    plan = _load(prefix / 'prototype/plan.json', '4e3716ad928b43902b111e0c4a1e849bfd7c9b35cdbc32993dcc887ddcf07800')
-    receipt = _load(prefix / 'pilot/artifacts/results/context-2024-01-01.json')
+    prefix = 'research/onchain-graph-2026-09-16/'
+    plan = _load(_retained(prefix + 'prototype/plan.json'), '4e3716ad928b43902b111e0c4a1e849bfd7c9b35cdbc32993dcc887ddcf07800')
+    # pin from tracked research/onchain-graph-2026-09-16/pilot/partial-artifacts-import.json
+    receipt = _load(_retained(prefix + 'pilot/artifacts/results/context-2024-01-01.json'),
+                    '86be76dbe2aeeb33eb158562679df0dbdcc250a4d280429b271edcd6995a5d52')
     if plan['rows'] != expected_rows:
         raise ValueError('context rows differ')
-    spans = [_span(b, r['start'], r['end'] + 1, ROOT)
+    spans = [_span(b, r['start'], r['end'] + 1, None)
              for r, b in zip(plan['ranges'], receipt['benchmark']['blobs'], strict=True)]
-    footer_path = ROOT / 'research_runs/eth-graph-source-20260916/outputs/request-11.json'
+    footer_path = _retained('research_runs/eth-graph-source-20260916/outputs/request-11.json')
     footer = _load(footer_path, '4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e')
     spans.append({'path': str(footer_path), 'start': plan['footer_start'], 'end': plan['object']['size'],
                   'raw_bytes': footer['bytes'], 'raw_sha256': footer['sha256'],

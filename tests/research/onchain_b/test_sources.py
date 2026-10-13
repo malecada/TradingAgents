@@ -51,6 +51,14 @@ def test_corrupted_span_rejected(tmp_path):
         sources.projected_table(manifest, tmp_path, sources.COLUMNS)
 
 
+def test_special_day_resolves_from_retained_checkout():
+    # 2024-01-01 uses untracked prototype captures that live only in the original data checkout
+    from pathlib import Path
+    m = sources.day_manifest(sources.load_plan(), '2024-01-01')
+    assert len(m['spans']) == 118 and all(Path(s['path']).exists() for s in m['spans'])
+    assert m['spans'][-1]['codec'] == 'receipt_base64'
+
+
 def test_real_plan_resolves_all_days():
     plan = sources.load_plan()
     days = sorted(plan['expected_rows'])
