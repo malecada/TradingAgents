@@ -3,24 +3,45 @@ from __future__ import annotations
 
 import argparse
 import json
+import multiprocessing
 import os
 import shutil
 import tempfile
 import time
+import traceback
 from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 
 import numpy as np
 
 from ..onchain_b import config as b_config
-from ..onchain_b import dictionary as D
-from ..onchain_b import mcm
 from ..onchain_b import weekly as W
 from ..onchain_b.matching.agreement import MatchConfig
 from ..onchain_b.runlog import Log
+from ..onchain_b.weekly import admitted_events
 from . import config, dataset, holdout, labels, market, motiffeat, periods, s3source, screen, weekbuild
 
+# torch-dependent modules (onchain_b.dictionary, onchain_b.mcm) are imported inside the stages
+# that need them, so week-build workers never carry torch.
 ARTIFACTS = config.ARTIFACTS
+STUDY = config.STUDY
+
+
+def _torch():
+    import torch
+    torch.set_num_threads(2)
+    return torch
+
+
+def _peak_rss_mb():
+    try:
+        for line in Path('/proc/self/status').read_text().splitlines():
+            if line.startswith('VmHWM:'):
+                return round(int(line.split()[1]) / 1024, 1)
+    except OSError:
+        pass
+    return None
 
 
 def _write_json(path, obj):
@@ -35,30 +56,55 @@ def build_one(week, scratch):
     out = ARTIFACTS / 'weeks' / f'{week}.json'
     if out.exists():
         return {'week': week, 'status': 'skip'}
-    tables, receipts = [], []
+    events, counters, receipts = [], [], []
     for day in periods.week_days(week):
         try:
             t, r = s3source.read_day(day, scratch=scratch)
         except s3source.DayUnavailable as e:
             _write_json(ARTIFACTS / 'weeks' / f'{week}.unavailable.json', {'week': week, 'day': e.day, 'errors': e.errors})
             return {'week': week, 'status': 'unavailable', 'day': e.day}
-        tables.append(t)
+        ev, c = admitted_events(t)
+        del t                          # keep only the three admitted columns per day
+        events.append(ev)
+        counters.append(c)
         receipts.append(r)
-    summary, graph = weekbuild.build_week(week, tables, labels.exchange_array(ARTIFACTS / 'labels' / 'labels.json'), cfg)
+    exchanges = labels.exchange_array(ARTIFACTS / 'labels' / 'labels.json')
+    summary, graph = weekbuild.build_week_from_events(week, events, counters, exchanges, cfg)
+    del events
     summary['receipts'] = receipts
     gdir = ARTIFACTS / 'graphs' / week
     if gdir.exists():
         shutil.rmtree(gdir)            # a graph without its summary marker is from an interrupted run
     W.save(graph, gdir)
     _write_json(out, summary)          # summary last: it is the completion marker
+    for stale in ('unavailable', 'failed'):
+        (ARTIFACTS / 'weeks' / f'{week}.{stale}.json').unlink(missing_ok=True)
     return {'week': week, 'status': 'done', 'rows': sum(r['rows'] for r in receipts)}
+
+
+def week_status(week):
+    """None when the week has both its summary and MCM features, else the reason it is missing."""
+    wdir = ARTIFACTS / 'weeks'
+    if (wdir / f'{week}.json').exists():
+        return None if (ARTIFACTS / 'mcm' / f'{week}.npy').exists() else 'no_mcm'
+    if (wdir / f'{week}.unavailable.json').exists():
+        return 'unavailable: ' + json.loads((wdir / f'{week}.unavailable.json').read_text()).get('day', '?')
+    if (wdir / f'{week}.failed.json').exists():
+        return 'failed: ' + json.loads((wdir / f'{week}.failed.json').read_text()).get('error', '?')
+    return 'not_built'
 
 
 def _build_job(args):
     week, scratch = args
     t = time.time()
-    res = build_one(week, scratch)
+    try:
+        res = build_one(week, scratch)
+    except Exception as e:             # one bad week must not end the stage; its reason is recorded
+        _write_json(ARTIFACTS / 'weeks' / f'{week}.failed.json',
+                    {'week': week, 'error': repr(e), 'traceback': traceback.format_exc()})
+        res = {'week': week, 'status': 'failed', 'error': repr(e)}
     res['seconds'] = round(time.time() - t, 1)
+    res['peak_rss_mb'] = _peak_rss_mb()
     return res
 
 
@@ -75,9 +121,14 @@ def stage_weeks(args):
             for r in results:
                 log.event(event='week', **r)
         else:
-            with ProcessPoolExecutor(args.workers) as ex:
-                for r in ex.map(_build_job, jobs):
-                    log.event(event='week', **r)
+            ctx = multiprocessing.get_context('forkserver')
+            try:
+                with ProcessPoolExecutor(args.workers, mp_context=ctx, max_tasks_per_child=1) as ex:
+                    for r in ex.map(_build_job, jobs):
+                        log.event(event='week', **r)
+            except BrokenProcessPool as e:
+                log.event(event='pool_broken', error=repr(e))
+                raise SystemExit('week build pool broke (a worker died); completed weeks are kept — rerun to resume')
 
 
 def stage_labels(args):
@@ -97,6 +148,8 @@ def _done_weeks():
 
 
 def stage_dictionary(args):
+    _torch()
+    from ..onchain_b import dictionary as D
     c = config.load()['dictionary']
     log = Log(ARTIFACTS / 'logs' / 'dictionary.jsonl')
     out = ARTIFACTS / 'dictionary'
@@ -113,6 +166,9 @@ def stage_dictionary(args):
 
 
 def stage_mcm(args):
+    _torch()
+    from ..onchain_b import dictionary as D
+    from ..onchain_b import mcm
     i, n = map(int, args.shard.split('/'))
     log = Log(ARTIFACTS / 'logs' / f'mcm-{i}of{n}.jsonl')
     d = D.load(ARTIFACTS / 'dictionary')
@@ -135,11 +191,12 @@ def stage_features(args):
     import pyarrow as pa
     import pyarrow.parquet as pq
     exchanges = set(labels.load(ARTIFACTS / 'labels' / 'labels.json'))
-    rows, missing = {}, []
+    rows, missing = {}, {}
     for w in periods.all_weeks():
         s_path, m_path = ARTIFACTS / 'weeks' / f'{w}.json', ARTIFACTS / 'mcm' / f'{w}.npy'
-        if not (s_path.exists() and m_path.exists()):
-            missing.append(w)
+        why = week_status(w)
+        if why:
+            missing[w] = why
             continue
         s = json.loads(s_path.read_text())
         mf = motiffeat.motif_features(np.load(m_path), W.load(ARTIFACTS / 'graphs' / w), exchanges, set(s['whales']))
@@ -155,7 +212,7 @@ def _transformed():
     import pyarrow.parquet as pq
     raw = pq.read_table(ARTIFACTS / 'features' / 'weekly_raw.parquet').to_pandas()
     t = config.load()['transforms']
-    return dataset.transform(raw, t['z_window'], t['z_min'])
+    return dataset.transform(raw, t['z_window'], t['z_min'], t['z_clip'])
 
 
 def _samples(trans, prices, volumes, window):
@@ -165,6 +222,8 @@ def _samples(trans, prices, volumes, window):
 
 
 def stage_screen(args):
+    if (STUDY / 'selection.json').exists():
+        raise SystemExit('selection.json exists: the screen has already run; a new screen needs a new registration')
     cfg = config.load()
     prices, volumes = market.load_dev(ARTIFACTS / 'market' / 'dev.json', periods.DEV_END)
     samples, excluded = _samples(_transformed(), prices, volumes, 'dev')
@@ -175,29 +234,35 @@ def stage_screen(args):
     head = (f"# B2 screen — development 2017-10 → 2024 (walk-forward 2019–2024)\n\n"
             f"Samples: weekly {len(samples['weekly'])} (excluded {len(excluded['weekly'])}), "
             f"daily {len(samples['daily'])} (excluded {len(excluded['daily'])}).\n\n")
-    (config.STUDY / 'SCREEN.md').write_text(head + screen.report(results, selection) + '\n')
-    _write_json(config.STUDY / 'selection.json', {'registered_from': 'screen.json', 'selected': selection})
+    (STUDY / 'SCREEN.md').write_text(head + screen.report(results, selection) + '\n')
+    _write_json(STUDY / 'selection.json', {'registered_from': 'screen.json', 'selected': selection})
     print(screen.report(results, selection))
 
 
 def stage_holdout(args):
+    lock = ARTIFACTS / 'screen' / 'holdout.lock.json'
+    if lock.exists():
+        raise SystemExit(f'holdout already opened ({lock}); it is one-shot')
     cfg = config.load()
-    selection = holdout.committed_selection(config.STUDY / 'selection.json', config.ROOT)
+    selection = holdout.committed_selection(STUDY / 'selection.json', config.ROOT)
     if not selection['selected']:
         print('screen negative: holdout not opened')
         return
+    identity = holdout.selection_identity(STUDY / 'selection.json', config.ROOT)
+    _write_json(lock, {'opened_at': time.strftime('%Y-%m-%dT%H:%M:%S%z'), **identity})
     trans = _transformed()
     p_dev, v_dev = market.load_dev(ARTIFACTS / 'market' / 'dev.json', periods.DEV_END)
     p_all, v_all = market.load_all(ARTIFACTS / 'market' / 'dev.json', ARTIFACTS / 'sealed' / 'market_sealed.json')
     dev, _ = _samples(trans, p_dev, v_dev, 'dev')
     hold, excluded = _samples(trans, p_all, v_all, 'holdout')
     res = holdout.evaluate(dev, hold, selection, cfg)
-    _write_json(ARTIFACTS / 'screen' / 'holdout.json', {'results': res, 'excluded': excluded})
+    _write_json(ARTIFACTS / 'screen' / 'holdout.json', {'results': res, 'excluded': excluded, **identity})
     lines = ['# B2 holdout — sealed 2025-01-06 → 2026-10-05', '',
+             f"Opened once from selection.json blob {identity['blob']} at commit {identity['head']}.", '',
              '| target | family | comparison | n | mean loss diff | p (one-sided) | p Holm | pass |', '|---|---|---|---|---|---|---|---|']
     lines += [f"| {r['target']} | {r['family']} | {r['set']} vs {r['comparator']} | {r['n']} | {r['mean_diff']:+.5f} | "
               f"{r['p']:.4f} | {r['p_holm']:.4f} | {'PASS' if r['passed'] else '—'} |" for r in res]
-    (config.STUDY / 'HOLDOUT.md').write_text('\n'.join(lines) + '\n')
+    (STUDY / 'HOLDOUT.md').write_text('\n'.join(lines) + '\n')
     print('\n'.join(lines))
 
 
@@ -219,8 +284,6 @@ def main(argv=None):
     sub.add_parser('screen').set_defaults(fn=stage_screen)
     sub.add_parser('holdout').set_defaults(fn=stage_holdout)
     args = p.parse_args(argv)
-    import torch
-    torch.set_num_threads(2)
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
     args.fn(args)
 

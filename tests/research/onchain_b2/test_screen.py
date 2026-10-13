@@ -57,6 +57,35 @@ def test_row_loss():
 
 
 def test_select_prefers_graph_sets_on_ties():
-    base = dict(target='T4', family='linear', passed=True, mean_diff=-0.1, hi=-0.05)
+    base = dict(target='T4', family='linear', passed=True, mean_diff=-0.1, hi=-0.05, loss_comparator=1.0)
     res = [{**base, 'set': 'S1', 'comparator': 'S0'}, {**base, 'set': 'S3', 'comparator': 'S1'}]
     assert SC.select(res, {'gate': {'max_selected': 1}})[0]['set'] == 'S3'
+
+def test_fit_predict_fallback_alpha_is_registered_and_recorded():
+    rng = np.random.default_rng(5)
+    cfg = config.load()
+    X, y = rng.normal(size=(70, 2)), rng.normal(size=70)
+    info = {}
+    SC.fit_predict('linear', 'regression', X, y, X[:3], 52, {**cfg, 'models': {**cfg['models'], 'fallback_alpha': 3.0}}, info)
+    assert info['alpha'] == 3.0                                     # 70 < 2*52: no inner search
+    X2, y2 = rng.normal(size=(200, 2)), rng.normal(size=200)
+    info2 = {}
+    SC.fit_predict('linear', 'regression', X2, y2, X2[:3], 52, cfg, info2)
+    assert info2['alpha'] in cfg['models']['alphas']
+
+
+def test_results_carry_brier_yearly_losses_alphas_and_disclosure():
+    rng = np.random.default_rng(1)
+    res = SC.run_screen({'weekly': _weekly(rng), 'daily': _daily(rng)}, config.load())
+    r = next(x for x in res if x['target'] == 'T2' and x['family'] == 'linear' and x['set'] == 'S1')
+    assert {'brier_S1', 'brier_S0'} <= set(r['extra']) and set(r['years_loss']) == {2019, 2020, 2021, 2022, 2023, 2024}
+    assert set(r['alphas']['S1']) == {2019, 2020, 2021, 2022, 2023, 2024} and 'n_missing_target' in r
+    text = SC.report(res, SC.select(res, config.load()))
+    assert '40 comparisons' in text and 'false passes' in text
+
+
+def test_select_ranks_by_relative_upper_bound():
+    base = dict(family='linear', passed=True, mean_diff=-0.1, set='S1', comparator='S0')
+    res = [{**base, 'target': 'T5', 'hi': -0.05, 'loss_comparator': 10.0},
+           {**base, 'target': 'T2', 'hi': -0.01, 'loss_comparator': 0.1}]
+    assert [s['target'] for s in SC.select(res, {'gate': {'max_selected': 2}})] == ['T2', 'T5']

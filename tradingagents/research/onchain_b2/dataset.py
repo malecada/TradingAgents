@@ -28,7 +28,7 @@ def raw_table(rows):
     return pd.DataFrame.from_dict(data, orient='index').reindex(weeks)
 
 
-def transform(raw, z_window=8, z_min=6):
+def transform(raw, z_window=8, z_min=6, z_clip=10.0):
     out = {}
     for name in raw.columns:
         x = _value(name, raw[name].astype(float))
@@ -37,6 +37,7 @@ def transform(raw, z_window=8, z_min=6):
         std = prev.rolling(z_window, min_periods=z_min).std(ddof=0)
         z = (x - mean) / std
         z[(std == 0) & x.notna()] = 0.0
+        z = z.clip(-z_clip, z_clip)      # amendment 2026-10-13: a near-zero 8-week std must not explode inputs
         out[f'{name}__z8'] = z
         out[f'{name}__d1'] = x - prev
     return pd.DataFrame(out, index=raw.index)

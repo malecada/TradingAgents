@@ -23,6 +23,14 @@ def committed_selection(path, repo):
     return json.loads(path.read_text())
 
 
+def selection_identity(path, repo):
+    """The commit and blob of the committed selection that a holdout read is bound to."""
+    path, repo = Path(path), Path(repo)
+    rel = str(path.resolve().relative_to(repo.resolve()))
+    git = lambda *a: subprocess.run(['git', '-C', str(repo), *a], capture_output=True, text=True, check=True).stdout.strip()
+    return {'head': git('rev-parse', 'HEAD'), 'blob': git('rev-parse', f'HEAD:{rel}')}
+
+
 def holm(pvalues):
     p = np.asarray(pvalues, float)
     m = len(p)

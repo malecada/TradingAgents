@@ -1,13 +1,52 @@
 {
  "registered": "2026-10-13",
  "spec": "docs/superpowers/specs/2026-10-13-onchain-b2-weekly-screen-design.md",
- "targets": {"T1": "daily next-day direction", "T2": "weekly next-week direction", "T3": "weekly next-week log return",
-             "T4": "weekly next-week log realised volatility", "T5": "weekly next-week log Binance quote volume"},
- "comparisons": [["S1", "S0"], ["S2", "S1"], ["S3", "S1"], ["S4", "S2"]],
- "families": ["linear", "trees"],
+ "targets": {
+  "T1": "daily next-day direction",
+  "T2": "weekly next-week direction",
+  "T3": "weekly next-week log return",
+  "T4": "weekly next-week log realised volatility",
+  "T5": "weekly next-week log Binance quote volume"
+ },
+ "comparisons": [
+  [
+   "S1",
+   "S0"
+  ],
+  [
+   "S2",
+   "S1"
+  ],
+  [
+   "S3",
+   "S1"
+  ],
+  [
+   "S4",
+   "S2"
+  ]
+ ],
+ "families": [
+  "linear",
+  "trees"
+ ],
  "screen_gate": "pooled loss difference 95% circular block-bootstrap interval entirely below 0 AND lower loss in >= 4 of 6 test years (2019-2024)",
  "selection": "at most 3 passing configurations by interval upper end; ties prefer S3/S4; selection.json committed before any holdout read",
  "holdout_gate": "refit on all development samples; one-sided bootstrap p of loss difference; Holm-adjusted p < 0.05",
  "sealed_window": "weekly decisions 2025-01-06..2026-10-05; daily decisions 2025-01-01..2026-10-11",
- "no_tuning": "no feature, model or threshold change after any holdout read"
+ "no_tuning": "no feature, model or threshold change after any holdout read",
+ "amendments": [
+  {
+   "date": "2026-10-13",
+   "before_outcomes": true,
+   "source": "independent whole-branch review",
+   "changes": [
+    "selection ranks passing configurations by interval upper bound divided by the comparator loss (scale-free), ties prefer S3/S4",
+    "z-scores clipped to [-10, 10]",
+    "linear models search the alpha grid only when the training window holds >= 2 x inner_len rows; otherwise fallback alpha 10 (registered); chosen alpha recorded per fold",
+    "screen refuses to overwrite an existing selection.json; holdout writes a one-shot lock with the selection commit and blob before any sealed read",
+    "report adds Brier scores, per-year absolute losses, missing-target counts and the multiplicity disclosure"
+   ]
+  }
+ ]
 }

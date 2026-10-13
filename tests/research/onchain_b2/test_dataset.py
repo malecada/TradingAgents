@@ -69,3 +69,8 @@ def test_daily_samples_use_latest_completed_week():
     assert 'T1' in df.columns and df.index.max() == pd.Timestamp('2024-12-30')
     row = df.loc[pd.Timestamp('2020-03-08')]
     assert row['week'] == '2020-02-24'                                        # week 2020-03-02 not finished on 03-08
+
+def test_z_scores_are_clipped():
+    vals = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 + 1e-9, 5.0]
+    raw = pd.DataFrame({'f2_mean_0': vals}, index=[f'w{i}' for i in range(len(vals))])
+    assert DS.transform(raw).iloc[-1]['f2_mean_0__z8'] == 10.0

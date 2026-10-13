@@ -72,3 +72,10 @@ def test_build_week_summary_and_graph():
     summary, g = WB.build_week('2019-06-03', [_day(ROWS)], EX, {'k': 3, 'roles': {'deposit_share': 0.9, 'whales': 2, 'top_share_n': 2}})
     assert summary['week'] == '2019-06-03' and summary['f1']['f1_transfers'] == 8 and summary['whales'] == [A, B]
     assert g.n == 3 and summary['graph']['k_effective'] == 3 and summary['counters'][0]['rows'] == 10
+
+def test_build_from_events_matches_build_week():
+    evs, counters = zip(*(admitted_events(t) for t in [_day(ROWS)]))
+    cfg = {'k': 3, 'roles': {'deposit_share': 0.9, 'whales': 2, 'top_share_n': 2}}
+    a, ga = WB.build_week('2019-06-03', [_day(ROWS)], EX, cfg)
+    b, gb = WB.build_week_from_events('2019-06-03', list(evs), list(counters), EX, cfg)
+    assert a == b and (ga.addresses == gb.addresses).all()

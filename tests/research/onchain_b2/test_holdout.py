@@ -43,3 +43,15 @@ def test_evaluate_detects_signal_once():
     sel = {'selected': [{'target': 'T3', 'family': 'linear', 'set': 'S1', 'comparator': 'S0'}]}
     res = H.evaluate(dev, hold, sel, config.load())
     assert res[0]['n'] == 92 and res[0]['mean_diff'] < 0 and res[0]['passed'] and res[0]['p_holm'] < 0.05
+
+def test_selection_identity_records_head_and_blob(tmp_path):
+    _git(tmp_path, 'init', '-q')
+    _git(tmp_path, 'config', 'user.email', 't@t')
+    _git(tmp_path, 'config', 'user.name', 't')
+    sel = tmp_path / 'selection.json'
+    sel.write_text('{"selected": []}')
+    _git(tmp_path, 'add', 'selection.json')
+    _git(tmp_path, 'commit', '-qm', 'sel')
+    ident = H.selection_identity(sel, tmp_path)
+    head = subprocess.run(['git', '-C', str(tmp_path), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    assert ident['head'] == head and len(ident['blob']) == 40
