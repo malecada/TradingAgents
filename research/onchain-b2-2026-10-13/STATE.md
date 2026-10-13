@@ -14,8 +14,16 @@ Captured and frozen (gitignored artifacts under `research_artifacts/onchain-b2/`
 - Smoke reads: 2017-03-06 57,020 rows in 5.6 s; 2025-06-02 1,417,405 rows in 42 s
   (S3 throughput varies 8–42 s per day).
 
-Running: `onchain-b2-weeks` (2 workers, 10 GiB cap) building 510 weeks; 2017
-weeks ≈ 35 s each. Independent whole-branch review of the B2 code in progress.
+Independent whole-branch review (range 8b185c344..77b8c82f6): development screen
+verified leakage-free; 1 Critical (capture memory: projected 12–17 GB with two
+workers), 2 Important (one failing week ended the stage; holdout not enforced
+one-shot) and re-graded Minors fixed in `d91074e53` before any feature or screen
+(58 B2 tests). Pre-outcome amendments are dated in `gates.json`.
+
+The first capture run was stopped at 30/510 weeks before the memory peak; those
+weeks are kept. Measured after the fix: 8.85M-row week (2024-03-11) peaks at
+2.93 GB in 35 s. Running: `onchain-b2-weeks` as one fresh process per week, one
+worker, 5 GiB cap (host has ~5.4 GB free with swap full); ETA ~12–15 h.
 
 Next safe action: when the build finishes, record counts in `DATA.md` (B2-CP1);
 apply any review fixes; dictionary → MCM → features (B2-CP2); screen and commit
