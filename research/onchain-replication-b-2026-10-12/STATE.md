@@ -1,7 +1,7 @@
 # Branch B state
 
-2026-10-13 — CP1 nearly complete, CP2 running. No fit has been run; the sealed
-2024 holdout is untouched.
+2026-10-13 08:30 — CP2 running, fit grid launched. Price-only baseline cells are
+being fitted; full-model cells start as each seed's MCM completes.
 
 Done:
 - Protocol frozen 2026-10-12 (`PROTOCOL.md`, `config/*.json`, `gates.json`).
@@ -24,6 +24,20 @@ Measured comparison with Branch A for CP2: Branch A pilot39 exclusive numeric
 rate 59.31 cells/s on whole-graph neighborhoods; Branch B 7,010 cells/s on
 paper-scale neighborhoods (different workloads; not a like-for-like speedup).
 
-Next safe action: independent whole-branch review → fix pass → launch the fit grid
-(full × 5 seeds × 2 tasks; LSTM/GRU/HLSTM × 5 × 2; SVM × 2; diagnostics
-constant_graph and label_permutation × 5) → `cli report` (CP3, CP4).
+Independent whole-branch review (fresh reviewer, range 312460acd..6afb0a14d):
+0 Critical; science path verified (batched solver ≡ reference to 5.6e-17 at real
+sizes; no leakage). Fix pass `4470ffbfb` before any fit: GAT self entry once,
+smoke runs isolated in `fits-smoke/`, atomic fit outputs, circular bootstrap,
+report computes every registered gate and lists excluded cells, dictionary-week
+leakage test. 69 tests pass.
+
+Fit grid (`onchain-b-fits`, 3 cells in parallel, 52 cells,
+`research_artifacts/onchain-replication-b/scratch/fit_jobs.txt`):
+LSTM/GRU/HLSTM × 5 seeds × 2 tasks; SVM × 2 tasks (deterministic, seed 11);
+full × 5 seeds × 2 tasks; full classification diagnostics constant_graph and
+label_permutation × 5 seeds. Every cell runs once; status in
+`logs/fit_status.log`. Measured: price-only LSTM 100 epochs in ~20 s.
+
+Next safe action: when all 52 cells have exit=0, run `cli report` → RESULT.md
+(CP4), record CP3 timing from the first full-model `fit.jsonl`, update the
+audit artifact's checkpoint section.
