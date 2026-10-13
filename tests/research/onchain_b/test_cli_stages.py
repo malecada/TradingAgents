@@ -23,6 +23,16 @@ def test_build_graphs_writes_week_and_skips_existing(tmp_path, monkeypatch):
     assert all('rss_mb' in e for e in log)
 
 
+def test_every_stage_caps_torch_threads(tmp_path, monkeypatch):
+    import torch
+    torch.set_num_threads(8)
+    seen = {}
+    monkeypatch.setattr(cli, 'ARTIFACTS', tmp_path)
+    monkeypatch.setattr(cli, 'calibrate', lambda args: seen.setdefault('threads', torch.get_num_threads()))
+    cli.main(['calibrate'])
+    assert seen['threads'] == 2
+
+
 def test_build_graphs_refuses_without_frozen_k(tmp_path, monkeypatch):
     import pytest
     monkeypatch.setattr(cli, 'ARTIFACTS', tmp_path)

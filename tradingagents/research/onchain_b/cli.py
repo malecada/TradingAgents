@@ -152,14 +152,12 @@ def mcm_stage(args):
 def fit_stage(args):
     from . import data as Dt
     from . import train as T
-    import torch
     name = args.arm + (f'-{args.diag}' if args.diag else '')
     out = ARTIFACTS / 'fits' / args.task / name / f'seed{args.seed}'
     if (out / 'predictions.json').exists():
         print('exists', out)
         return
     store = Dt.WeekStore(ARTIFACTS / 'graphs', ARTIFACTS / 'mcm' / f'seed{args.seed}') if args.arm == 'full' else None
-    torch.set_num_threads(2)      # CALIBRATION.md §2: small graphs; more threads only add overhead
     print(json.dumps(T.fit(args.arm, args.task, args.seed, out, store=store, epochs=args.epochs, diag=args.diag)))
 
 
@@ -188,6 +186,8 @@ def main(argv=None):
     a.set_defaults(fn=fit_stage)
     a = sub.add_parser('report'); a.set_defaults(fn=report_stage)
     args = p.parse_args(argv)
+    import torch
+    torch.set_num_threads(2)      # CALIBRATION.md §2: 5k-node graphs; more threads only add overhead
     ARTIFACTS.mkdir(parents=True, exist_ok=True)
     args.fn(args)
 
