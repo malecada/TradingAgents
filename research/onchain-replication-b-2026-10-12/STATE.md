@@ -38,6 +38,13 @@ full × 5 seeds × 2 tasks; full classification diagnostics constant_graph and
 label_permutation × 5 seeds. Every cell runs once; status in
 `logs/fit_status.log`. Measured: price-only LSTM 100 epochs in ~20 s.
 
+CP3 (2026-10-13 10:13): first genuine joint MCM-MLP → GAT → attention-LSTM fit
+completed — `fits/classification/full/seed11`, 100 epochs in 3,364 s (≈ 34 s per
+epoch with three cells in parallel), peak RSS 1.14 GB, exit 0. Final training
+cross-entropy 0.6913 (ln 2 = 0.6931): the model barely fits even the training
+days. No test metric has been read; the 2024 evaluation is reported only by
+`cli report` after all 52 cells finish.
+
 Next safe action: when all 52 cells have exit=0, run `cli report` → RESULT.md
 (CP4), record CP3 timing from the first full-model `fit.jsonl`, update the
 audit artifact's checkpoint section.
