@@ -1,5 +1,14 @@
 # Branch B2 state
 
+2026-10-14 05:00 — **B2-CP3: development screen negative.** 0 of 40 comparisons pass
+(`SCREEN.md`); `selection.json` is empty and committed, so the sealed 2025–26 holdout is
+not opened under the registered rule. `FORENSICS.md` explains the null: the harness
+detects volatility (R² 0.22) and volume (R² 0.96) persistence from price history, but
+activity, exchange/whale flows and motif features add nothing out of sample; motif sets
+are under-regularised (227–379 features vs 65–312 training rows) and a post-hoc
+compressed variant also shows no gain. Screen run on the dev feature table built from
+473 completed weeks (all 418 development weeks complete).
+
 2026-10-13 — Code complete (tasks 1–11 of the plan; 44 tests pass). Capture
 running (B2-CP1 in progress). No feature table, no screen, no holdout read.
 
