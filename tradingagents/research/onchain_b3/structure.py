@@ -40,15 +40,42 @@ def undirected_edges(s, d, n):
     return key // n, key % n
 
 
+def _sym_csr(a, b, n):
+    """Symmetric adjacency (both directions) sorted by row, then column."""
+    rows = np.concatenate([a, b])
+    cols = np.concatenate([b, a])
+    order = np.lexsort((cols, rows))
+    rows, cols = rows[order], cols[order]
+    indptr = np.concatenate([[0], np.cumsum(np.bincount(rows, minlength=n))])
+    return rows, cols, indptr
+
+
+def _neighbours(indptr, cols, nodes):
+    starts = indptr[nodes]
+    lens = indptr[nodes + 1] - starts
+    total = int(lens.sum())
+    if total == 0:
+        return np.empty(0, cols.dtype)
+    offsets = np.arange(total) - np.repeat(np.cumsum(lens) - lens, lens)
+    return cols[np.repeat(starts, lens) + offsets]
+
+
 def kcore_alive(a, b, n, k, alive=None):
+    """Nodes of the k-core of the undirected graph (restricted to `alive`), by frontier peeling:
+    each pass touches only the neighbours of the nodes just removed."""
     alive = np.ones(n, bool) if alive is None else alive.copy()
-    while True:
-        e = alive[a] & alive[b]
-        deg = np.bincount(a[e], minlength=n) + np.bincount(b[e], minlength=n)
-        drop = alive & (deg < k)
-        if not drop.any():
-            return alive
-        alive &= ~drop
+    e = alive[a] & alive[b]
+    _, cols, indptr = _sym_csr(a[e], b[e], n)
+    deg = np.diff(indptr).astype(np.int64)
+    frontier = np.flatnonzero(alive & (deg < k))
+    while len(frontier):
+        alive[frontier] = False
+        nb = _neighbours(indptr, cols, frontier)
+        nb = nb[alive[nb]]
+        np.subtract.at(deg, nb, 1)
+        cand = np.unique(nb)
+        frontier = cand[deg[cand] < k]
+    return alive
 
 
 def pagerank(s, d, w, n, damping, tol, max_iter):
@@ -73,22 +100,36 @@ def transitivity_estimate(a, b, n, samples, seed):
     W = w.sum()
     if W <= 0:
         return 0.0, 0.0
-    rows = np.concatenate([a, b])
-    cols = np.concatenate([b, a])
-    order = np.lexsort((cols, rows))
-    rows, cols = rows[order], cols[order]
-    indptr = np.concatenate([[0], np.cumsum(np.bincount(rows, minlength=n))])
-    keys = rows.astype(np.int64) * n + cols
+    rows, cols, indptr = _sym_csr(a, b, n)
     rng = np.random.Generator(np.random.PCG64(seed))
     c = rng.choice(n, size=samples, p=w / W)
-    dc = deg[c]
-    i = (rng.random(samples) * dc).astype(np.int64)
-    j = (rng.random(samples) * (dc - 1)).astype(np.int64)
+    return _closed_share(rows, cols, indptr, deg, n, c, rng), float(math.log(W))
+
+
+def _closed_share(rows, cols, indptr, deg, n, centres, rng):
+    """Share of closed wedges when one random wedge is drawn at each centre."""
+    keys = rows.astype(np.int64) * n + cols
+    dc = deg[centres]
+    i = (rng.random(len(centres)) * dc).astype(np.int64)
+    j = (rng.random(len(centres)) * (dc - 1)).astype(np.int64)
     j += j >= i
-    u, v = cols[indptr[c] + i], cols[indptr[c] + j]
+    u, v = cols[indptr[centres] + i], cols[indptr[centres] + j]
     q = u.astype(np.int64) * n + v
     pos = np.minimum(np.searchsorted(keys, q), len(keys) - 1)
-    return float((keys[pos] == q).mean()), float(math.log(W))
+    return float((keys[pos] == q).mean())
+
+
+def avg_clustering_estimate(a, b, n, samples, seed):
+    """Mean local clustering over nodes with at least two neighbours (one random wedge per sampled node).
+    Amendment 2026-10-14: hub-dominated global transitivity is ~0 on real weeks."""
+    deg = np.bincount(a, minlength=n) + np.bincount(b, minlength=n)
+    eligible = np.flatnonzero(deg >= 2)
+    if len(eligible) == 0:
+        return 0.0
+    rows, cols, indptr = _sym_csr(a, b, n)
+    rng = np.random.Generator(np.random.PCG64(seed))
+    centres = eligible[rng.integers(0, len(eligible), samples)]
+    return _closed_share(rows, cols, indptr, deg, n, centres, rng)
 
 
 def _share(x, total):
@@ -147,4 +188,5 @@ def structure_features(idx, is_ex, cfg, seed):
         f[f'f4_{name}_ex_share'] = _share(p[is_ex].sum(), p.sum())
 
     f['f4_transitivity'], f['f4_log_wedges'] = transitivity_estimate(a, b, n, cfg['wedges'], seed)
+    f['f4_avg_clustering'] = avg_clustering_estimate(a, b, n, cfg['wedges'], seed)
     return f

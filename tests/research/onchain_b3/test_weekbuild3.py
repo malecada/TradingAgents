@@ -25,7 +25,7 @@ def test_build_week3_outputs():
     ev, c = admitted_events(_day([(A, B, 1.0), (B, C, 2.0), (C, A, 1.5), (A, E, 4.0), (B, A, 0.5)]))
     summary, graph, keys = WB.build_week3('2019-06-03', [ev], [c], EX, EXB, cfg, week_index=127)
     assert summary['f1']['f1_transfers'] == 5 and summary['f3a']['f3a_ex_in_value'] == pytest.approx(4.0)
-    assert len([k for k in summary['f4'] if k.startswith('f4_')]) == 25
+    assert len([k for k in summary['f4'] if k.startswith('f4_')]) == 26
     assert summary['f4']['f4_components'] == 1 and summary['f4']['f4_recip_edge_share'] == pytest.approx(2 / 5)
     assert graph.n == 3 and keys.dtype == np.uint64 and len(keys) == 4
 

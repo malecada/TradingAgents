@@ -97,3 +97,40 @@ def test_exchange_pagerank_share():
     f = ST.structure_features(idx, is_ex, CFG, seed=1)
     p = ST.pagerank(idx[1], idx[2], np.ones(len(idx[1])), len(idx[0]), 0.85, 1e-12, 1000)
     assert f['f4_pr_ex_share'] == pytest.approx(p[is_ex].sum() / p.sum())
+
+def test_kcore_long_chain_is_fast_and_exact():
+    import time
+    rng = np.random.default_rng(3)
+    base = nx.gnm_random_graph(20000, 120000, seed=4)
+    G = nx.Graph(base)
+    prev = 0
+    for i in range(20000, 26000):                      # 6,000-node pendant chain hanging off node 0
+        G.add_edge(prev, i)
+        prev = i
+    a = np.array([min(u, v) for u, v in G.edges()], np.int64)
+    b = np.array([max(u, v) for u, v in G.edges()], np.int64)
+    n = G.number_of_nodes()
+    t = time.time()
+    alive = None
+    got = {}
+    for k in (2, 3, 5, 10):
+        alive = ST.kcore_alive(a, b, n, k, alive)
+        got[k] = int(alive.sum())
+    assert time.time() - t < 3.0
+    core = nx.core_number(G)
+    assert got == {k: sum(1 for v in core.values() if v >= k) for k in (2, 3, 5, 10)}
+
+
+def test_average_clustering_estimate():
+    g = nx.powerlaw_cluster_graph(3000, 4, 0.6, seed=5)
+    a = np.array([min(u, v) for u, v in g.edges()], np.int64)
+    b = np.array([max(u, v) for u, v in g.edges()], np.int64)
+    est = ST.avg_clustering_estimate(a, b, g.number_of_nodes(), 200000, 11)
+    nodes = [v for v in g if g.degree(v) >= 2]
+    assert est == pytest.approx(nx.average_clustering(g, nodes=nodes), abs=0.01)
+
+
+def test_avg_clustering_feature_present_and_finite():
+    idx = _index(pairs([(1, 2, 1, 1.0)]))
+    f = ST.structure_features(idx, np.zeros(2, bool), CFG, seed=1)
+    assert f['f4_avg_clustering'] == 0.0
