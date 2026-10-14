@@ -1,0 +1,1 @@
+"""Branch B3: whole-graph structure features and 20k motifs (spec 2026-10-14-onchain-b3-graph-structure-design.md)."""

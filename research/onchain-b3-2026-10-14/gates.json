@@ -1,0 +1,12 @@
+{
+ "registered": "2026-10-14",
+ "spec": "docs/superpowers/specs/2026-10-14-onchain-b3-graph-structure-design.md",
+ "targets": "T1-T5 as B2; T6 4-week log return; T7 4-week log realised volatility",
+ "comparisons": [["S5", "S1"], ["S6", "S5"], ["S7", "S0"]],
+ "families": ["linear", "trees"],
+ "screen_gate": "pooled loss difference 95% circular block-bootstrap interval entirely below 0 AND lower loss in >= 4 of 6 test years (2019-2024)",
+ "selection": "at most 3 passing configurations by interval upper bound divided by comparator loss; ties prefer S6/S7; selection.json committed before any holdout read; screen never overwrites it",
+ "holdout_gate": "one-shot lock with selection commit and blob; refit on all development samples; one-sided bootstrap p; Holm-adjusted p < 0.05 and mean difference < 0",
+ "sealed_window": "ETH weekly decisions 2025-01-06..2026-10-05 (never read by B2); daily 2025-01-01..2026-10-11",
+ "no_tuning": "no feature, model or threshold change after any holdout read"
+}
