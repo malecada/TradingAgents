@@ -1,5 +1,23 @@
 # Branch B2 state
 
+2026-10-14 08:05 — **B2 complete. Result: negative; sealed holdout not opened (B2-CP4).**
+
+- B2-CP1 data: 510/510 weeks, 0 unavailable, 0 failed (`DATA.md`).
+- B2-CP2 features: 510 × 186, none missing; dictionary and MCM complete.
+- B2-CP3 screen: 0 of 40 comparisons pass (`SCREEN.md`, `FORENSICS.md`); empty
+  `selection.json` committed in `9206893b7`.
+- B2-CP4: `cli holdout` refused to open the sealed window (empty committed selection);
+  no lock written, no sealed data read. The 2025-01-06 → 2026-10-05 window remains
+  available for one future, separately registered hypothesis.
+- Development rows of the final feature table are identical to those the screen used.
+
+Bitcoin: assessment draft `docs/superpowers/specs/2026-10-14-onchain-b2-btc-plan.md`
+(read-only probes; nothing captured or registered).
+
+---
+
+Earlier record:
+
 2026-10-14 05:00 — **B2-CP3: development screen negative.** 0 of 40 comparisons pass
 (`SCREEN.md`); `selection.json` is empty and committed, so the sealed 2025–26 holdout is
 not opened under the registered rule. `FORENSICS.md` explains the null: the harness
