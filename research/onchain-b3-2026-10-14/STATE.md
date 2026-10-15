@@ -37,5 +37,15 @@ holdout command. Closest: trees S5 vs S1 on T6 4-week return (−0.00729, interv
 upper +0.00008, 4/6 years) and on T3 weekly return (−0.00130, upper +0.00011, 4/6).
 Linear on-chain sets are significantly worse on T4/T5 (as in B2).
 
-Next safe action: holdout command (expected to refuse: empty selection), forensics
-(B3-CP4).
+B3-CP4 (2026-10-15 12:45) — holdout command refused on the empty committed
+selection ("screen negative: holdout not opened"); no lock written; the sealed
+2025-01-06 → 2026-10-05 window is unread. Forensics (`FORENSICS.md`): harness detects
+volatility and volume persistence (S0 vs constant R² T4 0.213, T7 0.089, T5 0.955);
+the tree near misses on T3/T6 lose 12–16 % MSE to a constant forecast with every set;
+F4 partial correlations after F0 stay below a circular-shift null for every target.
+Address keys deleted after the screen (spec §4.7); `history.json` retained.
+
+B3 is closed: negative. Together with M2 (0.490) and B2 (0 of 40), the weekly
+on-chain graph line for ETH is closed in this programme. Open user decisions: a
+Bitcoin run (draft `docs/superpowers/specs/2026-10-14-onchain-b2-btc-plan.md`) and
+any future registered use of the unread sealed window.
