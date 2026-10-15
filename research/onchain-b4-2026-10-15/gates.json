@@ -1,0 +1,13 @@
+{
+ "registered": "2026-10-15",
+ "spec": "docs/superpowers/specs/2026-10-15-onchain-b4-exchange-flows-design.md",
+ "targets": "daily T1 next-day direction, R7 7-day log return, V7 7-day log realised volatility; hourly R1/R6/R24 log returns, V6/V24 log realised volatility",
+ "comparisons": {"daily": [["DF", "D0"], ["DA", "D0"]], "hourly": [["HE", "H0"], ["HS", "H0"], ["HA", "H0"]]},
+ "families": ["linear", "trees"],
+ "screen_gate": "pooled loss difference 95% circular block-bootstrap interval entirely below 0 AND lower loss in >= 4 of 6 test years (2019-2024)",
+ "selection": "at most 3 passing configurations by interval upper bound divided by comparator loss; ties prefer DA/HA; selection.json committed before any holdout read; screen never overwrites it",
+ "holdout_gate": "one-shot lock with selection commit and blob; refit on all development samples; one-sided bootstrap p; Holm-adjusted p < 0.05 and mean difference < 0",
+ "sealed_window": "ETH 2025-01-01..2026-10-12 (never read by M2, B2 or B3); daily and hourly samples",
+ "no_tuning": "no feature, model or threshold change after any holdout read",
+ "amendments": []
+}
