@@ -31,5 +31,11 @@ two shards, 08:32 → 12:05); feature table 510 weeks, 0 missing, 150 columns
 (F1 14, F3a 10, F4 30, F5 96), no NaN, infinite or constant column. Address keys
 (6.1 GB) kept until the screen is done.
 
-Next safe action: screen, commit selection (B3-CP3); holdout only for a non-empty
-committed selection (B3-CP4).
+B3-CP3 (2026-10-15 12:20) — screen run once on the development window: 0 of 42
+comparisons pass (`SCREEN.md`); `selection.json` is empty and committed before any
+holdout command. Closest: trees S5 vs S1 on T6 4-week return (−0.00729, interval
+upper +0.00008, 4/6 years) and on T3 weekly return (−0.00130, upper +0.00011, 4/6).
+Linear on-chain sets are significantly worse on T4/T5 (as in B2).
+
+Next safe action: holdout command (expected to refuse: empty selection), forensics
+(B3-CP4).
