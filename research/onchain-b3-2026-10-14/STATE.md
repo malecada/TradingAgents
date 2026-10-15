@@ -24,6 +24,12 @@ B3-CP1 (2026-10-15 08:30) — data pass complete: 510 of 510 weeks built,
 
 All peaks stayed under the unit caps (8 GiB S3, 5.5 GiB local).
 
-Next safe action: history pass (keys kept until after the screen), dictionary, MCM
-in two shards, features (B3-CP2); screen, commit selection (B3-CP3); holdout only for
-a non-empty committed selection (B3-CP4).
+B3-CP2 (2026-10-15 12:10) — history pass 510/510 weeks (40.8 min CPU; new +
+previous-4-week + returning shares sum to 1); dictionary from 104 weeks 2017–18,
+32 motifs (1–18 nodes); MCM 510/510 weeks (20,000 × 32 cells, ≈ 45–52 s/week/shard,
+two shards, 08:32 → 12:05); feature table 510 weeks, 0 missing, 150 columns
+(F1 14, F3a 10, F4 30, F5 96), no NaN, infinite or constant column. Address keys
+(6.1 GB) kept until the screen is done.
+
+Next safe action: screen, commit selection (B3-CP3); holdout only for a non-empty
+committed selection (B3-CP4).
