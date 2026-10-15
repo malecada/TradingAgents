@@ -95,3 +95,14 @@ def test_contract_creation_none_string_is_excluded(tmp_path):
     day = reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
                           tokens=config.load()['tokens'], retries=[])
     assert int((day.asset == 0).sum()) == 1          # the 'None' recipient (contract creation, value 1 ETH) is not a transfer
+
+
+def test_huge_gas_price_is_converted_not_rejected(tmp_path):
+    _fixture(tmp_path)
+    d = tmp_path / 'v1.0' / 'eth' / 'transactions' / 'date=2025-06-02'
+    t = pq.read_table(d / 'part-0.parquet')
+    t = t.set_column(4, 'gas_price', pa.array([11909523809523809] + t['gas_price'].to_pylist()[1:], pa.int64()))
+    pq.write_table(t, d / 'part-0.parquet')
+    day = reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
+                          tokens=config.load()['tokens'], retries=[])
+    assert np.isclose(day.tx_gwei.max(), 11909523.809523809)      # real 2017-09-02 value, above 2**53 wei

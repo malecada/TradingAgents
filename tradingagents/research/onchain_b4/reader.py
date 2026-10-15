@@ -59,7 +59,8 @@ def _strs(col):
 
 
 def _floats(col):
-    return _arr(col).cast(pa.float64()).to_numpy(zero_copy_only=False)
+    # unsafe cast: integers above 2**53 (e.g. a 1.19e16-wei gas price on 2017-09-02) lose precision, not the day
+    return pc.cast(_arr(col), pa.float64(), safe=False).to_numpy(zero_copy_only=False)
 
 
 def _ints(col):
