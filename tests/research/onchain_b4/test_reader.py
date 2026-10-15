@@ -62,3 +62,25 @@ def test_missing_day_retries_then_unavailable(tmp_path):
         reader.read_day('2025-06-03', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
                         tokens=config.load()['tokens'], retries=[1, 2], sleep=slept.append)
     assert slept == [1, 2]
+
+
+def test_token_address_is_normalised(tmp_path):
+    _fixture(tmp_path)
+    d = tmp_path / 'v1.0' / 'eth' / 'token_transfers' / 'date=2025-06-02'
+    pq.write_table(pa.table({
+        'token_address': [pad(USDT).upper().replace('0X', '0x')], 'from_address': [pad(A)], 'to_address': [pad(C)],
+        'value': [7e6], 'block_number': [14], 'block_timestamp': pa.array([TS(6)], pa.timestamp('ns'))}), d / 'part-1.parquet')
+    day = reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
+                          tokens=config.load()['tokens'], retries=[])
+    assert 7.0 in np.round(day.amount, 6).tolist()
+
+
+def test_malformed_address_is_rejected(tmp_path):
+    _fixture(tmp_path)
+    d = tmp_path / 'v1.0' / 'eth' / 'transactions' / 'date=2025-06-02'
+    t = pq.read_table(d / 'part-0.parquet')
+    t = t.set_column(0, 'from_address', pa.array([A[2:]] + t['from_address'].to_pylist()[1:]))
+    pq.write_table(t, d / 'part-0.parquet')
+    with pytest.raises(DayUnavailable, match='address length'):
+        reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
+                        tokens=config.load()['tokens'], retries=[])

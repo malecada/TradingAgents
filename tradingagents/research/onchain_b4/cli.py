@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -25,6 +26,8 @@ ARTIFACTS = config.ARTIFACTS
 STUDY = config.STUDY
 B2 = config.B2_ARTIFACTS
 ROOT = config.ROOT
+MIN_FREE_LAUNCH = 5 * 10**9         # spec §4.4: >= 5 GB free at launch
+MIN_FREE_SNAPSHOT = 25 * 10**8      # room for a second snapshot during the atomic swap
 
 
 def _write_json(path, obj):
@@ -42,6 +45,15 @@ def _peak_rss_mb():
     except OSError:
         pass
     return None
+
+
+def _require_disk(min_bytes, what):
+    p = ARTIFACTS
+    while not p.exists():
+        p = p.parent
+    free = shutil.disk_usage(p).free
+    if free < min_bytes:
+        raise SystemExit(f'only {free / 1e9:.1f} GB disk free; {what} needs {min_bytes / 1e9:.1f} GB')
 
 
 def filesystem():
@@ -97,6 +109,7 @@ def _new_entities(c):
 
 def stage_pass(args):
     c = config.load()
+    _require_disk(MIN_FREE_LAUNCH, 'pass launch')
     days = [d for d in config.days(c) if args.end is None or d <= args.end]
     snap = ARTIFACTS / 'state' / 'entities.npz'
     ent = Entities.load(snap) if snap.exists() else _new_entities(c)
@@ -122,9 +135,9 @@ def stage_pass(args):
             except DayUnavailable as e:
                 _write_json(hours / f'{day}.unavailable.json', {'day': day, 'errors': e.errors})
                 log.event(event='day', day=day, status='unavailable')
-                ent.last_day = day
-                consecutive += 1
+                consecutive += 1           # last_day stays at the last built day, so a relaunch retries the run
                 if consecutive >= p['max_consecutive_unavailable']:
+                    _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
                     ent.save(snap)
                     raise SystemExit(f'{consecutive} consecutive unavailable days up to {day}: stopping the pass')
                 continue
@@ -140,8 +153,10 @@ def stage_pass(args):
             del d
             since += 1
             if since >= p['snapshot_every']:
+                _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
                 ent.save(snap)
                 since = 0
+    _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
     ent.save(snap)
 
 

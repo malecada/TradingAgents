@@ -75,18 +75,29 @@ def _unpad(col):
     return pc.if_else(pc.equal(pc.utf8_length(a), 66), pc.utf8_replace_slice(a, 0, 26, '0x'), a)
 
 
+def _check42(arr, what):
+    if len(arr) and not pc.all(pc.equal(pc.utf8_length(arr), 42)).as_py():
+        raise ValueError(f'address length != 42 in {what}')
+
+
 def admit(tx, tt, blocks, tokens):
     tx = tx.filter(pc.equal(_arr(tx['receipt_status']), 1))
     paid = pc.coalesce(_arr(tx['receipt_effective_gas_price']), _arr(tx['gas_price']))
     frm_e, to_e = _arr(tx['from_address']), _arr(tx['to_address'])
     keep_e = pc.and_(pc.and_(pc.greater(_arr(tx['value']), 0.0), pc.is_valid(to_e)), pc.not_equal(frm_e, to_e))
     e = tx.filter(keep_e)
-    tt = tt.filter(pc.is_in(_arr(tt['token_address']), value_set=pa.array(sorted(tokens))))
+    _check42(_arr(e['from_address']), 'transactions.from_address')
+    _check42(_arr(e['to_address']), 'transactions.to_address')
+    tok_all = _unpad(tt['token_address'])
+    m = pc.is_in(tok_all, value_set=pa.array(sorted(tokens)))
+    tt, tok_all = tt.filter(m), pc.filter(tok_all, m)
     frm, to = _unpad(tt['from_address']), _unpad(tt['to_address'])
     keep = pc.and_(pc.and_(pc.greater(_arr(tt['value']), 0.0), pc.not_equal(frm, to)),
                    pc.and_(pc.not_equal(frm, ZERO), pc.not_equal(to, ZERO)))
-    tt, frm, to = tt.filter(keep), pc.filter(frm, keep), pc.filter(to, keep)
-    tok, raw = _strs(tt['token_address']), _floats(tt['value'])
+    tt, frm, to, tok_all = tt.filter(keep), pc.filter(frm, keep), pc.filter(to, keep), pc.filter(tok_all, keep)
+    _check42(frm, 'token_transfers.from_address')
+    _check42(to, 'token_transfers.to_address')
+    tok, raw = tok_all.to_numpy(zero_copy_only=False), _floats(tt['value'])
     amt = np.zeros(len(raw))
     for addr, meta in tokens.items():
         m = tok == addr

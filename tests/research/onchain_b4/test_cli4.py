@@ -37,6 +37,7 @@ def _setup(tmp_path, monkeypatch, unavailable=()):
     monkeypatch.setattr(cli, 'B2', b2)
     monkeypatch.setattr(cli.config, 'load', lambda: cfg)
     monkeypatch.setattr(cli, 'filesystem', lambda: None)
+    monkeypatch.setattr(cli.shutil, 'disk_usage', lambda p: type('U', (), {'free': 10**12})())
 
     def fake(day, **kw):
         if day in unavailable:
@@ -109,3 +110,21 @@ def test_holdout_refuses_empty_committed_selection(tmp_path, monkeypatch, capsys
     monkeypatch.setattr(cli, 'ROOT', repo)
     cli.main(['holdout'])
     assert 'holdout not opened' in capsys.readouterr().out and not (art / 'screen' / 'holdout.lock.json').exists()
+
+
+def test_stop_then_relaunch_retries_the_run(tmp_path, monkeypatch):
+    art = _setup(tmp_path, monkeypatch, unavailable=('2017-01-02', '2017-01-03', '2017-01-04'))
+    with pytest.raises(SystemExit, match='consecutive'):
+        cli.main(['pass', '--end', '2017-01-05'])
+    monkeypatch.setattr(reader, 'read_day', lambda day, **kw: _day(day))
+    cli.main(['pass', '--end', '2017-01-05'])
+    for d in ('02', '03', '04', '05'):
+        assert (art / 'hours' / f'2017-01-{d}.parquet').exists()
+        assert not (art / 'hours' / f'2017-01-{d}.unavailable.json').exists()
+
+
+def test_pass_refuses_low_disk(tmp_path, monkeypatch):
+    _setup(tmp_path, monkeypatch)
+    monkeypatch.setattr(cli.shutil, 'disk_usage', lambda p: type('U', (), {'free': 10**9})())
+    with pytest.raises(SystemExit, match='disk'):
+        cli.main(['pass', '--end', '2017-01-02'])
