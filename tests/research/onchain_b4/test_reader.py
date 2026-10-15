@@ -84,3 +84,14 @@ def test_malformed_address_is_rejected(tmp_path):
     with pytest.raises(DayUnavailable, match='address length'):
         reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
                         tokens=config.load()['tokens'], retries=[])
+
+
+def test_contract_creation_none_string_is_excluded(tmp_path):
+    _fixture(tmp_path)
+    d = tmp_path / 'v1.0' / 'eth' / 'transactions' / 'date=2025-06-02'
+    t = pq.read_table(d / 'part-0.parquet')
+    t = t.set_column(1, 'to_address', pa.array(t['to_address'].to_pylist()[:2] + ['None'] + t['to_address'].to_pylist()[3:]))
+    pq.write_table(t, d / 'part-0.parquet')
+    day = reader.read_day('2025-06-02', filesystem=pafs.LocalFileSystem(), root=str(tmp_path),
+                          tokens=config.load()['tokens'], retries=[])
+    assert int((day.asset == 0).sum()) == 1          # the 'None' recipient (contract creation, value 1 ETH) is not a transfer

@@ -84,7 +84,9 @@ def admit(tx, tt, blocks, tokens):
     tx = tx.filter(pc.equal(_arr(tx['receipt_status']), 1))
     paid = pc.coalesce(_arr(tx['receipt_effective_gas_price']), _arr(tx['gas_price']))
     frm_e, to_e = _arr(tx['from_address']), _arr(tx['to_address'])
-    keep_e = pc.and_(pc.and_(pc.greater(_arr(tx['value']), 0.0), pc.is_valid(to_e)), pc.not_equal(frm_e, to_e))
+    # contract creations: the dataset writes the missing recipient as null or as the string 'None'
+    has_to = pc.and_(pc.is_valid(to_e), pc.invert(pc.is_in(to_e, value_set=pa.array(['None', '']))))
+    keep_e = pc.and_(pc.and_(pc.greater(_arr(tx['value']), 0.0), has_to), pc.not_equal(frm_e, to_e))
     e = tx.filter(keep_e)
     _check42(_arr(e['from_address']), 'transactions.from_address')
     _check42(_arr(e['to_address']), 'transactions.to_address')
