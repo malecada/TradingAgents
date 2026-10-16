@@ -128,3 +128,27 @@ def test_pass_refuses_low_disk(tmp_path, monkeypatch):
     monkeypatch.setattr(cli.shutil, 'disk_usage', lambda p: type('U', (), {'free': 10**9})())
     with pytest.raises(SystemExit, match='disk'):
         cli.main(['pass', '--end', '2017-01-02'])
+
+
+def test_stalled_read_saves_snapshot_and_exits(tmp_path, monkeypatch):
+    import threading
+    art = _setup(tmp_path, monkeypatch)
+    release = threading.Event()
+
+    def fake(day, **kw):
+        if day == '2017-01-03':
+            release.wait(10)                  # a read that never returns (network lost after suspend)
+        return _day(day)
+    monkeypatch.setattr(reader, 'read_day', fake)
+    monkeypatch.setattr(cli, 'READ_TIMEOUT', 0.5)
+
+    def hard_exit(code):
+        raise SystemExit(f'hard exit {code}')
+    monkeypatch.setattr(cli, '_hard_exit', hard_exit)
+    try:
+        with pytest.raises(SystemExit, match=f'hard exit {cli.STALL_EXIT}'):
+            cli.main(['pass', '--end', '2017-01-04'])
+        z = np.load(art / 'state' / 'entities.npz')
+        assert str(z['last_day'][0]) == '2017-01-02' and not (art / 'hours' / '2017-01-03.parquet').exists()
+    finally:
+        release.set()

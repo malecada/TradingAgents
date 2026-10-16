@@ -10,6 +10,7 @@ import os
 import shutil
 import time
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError as FuturesTimeout
 from pathlib import Path
 
 import numpy as np
@@ -28,6 +29,9 @@ B2 = config.B2_ARTIFACTS
 ROOT = config.ROOT
 MIN_FREE_LAUNCH = 5 * 10**9         # spec §4.4: >= 5 GB free at launch
 MIN_FREE_SNAPSHOT = 25 * 10**8      # room for a second snapshot during the atomic swap
+READ_TIMEOUT = 1200                 # seconds one day's read may take (retries included) before the pass is stalled
+STALL_EXIT = 75                     # exit status of a stalled pass; the unit restarts only on this status
+_hard_exit = os._exit               # a hung S3 read never returns, so the interpreter cannot join its thread
 
 
 def _write_json(path, obj):
@@ -123,7 +127,8 @@ def stage_pass(args):
         return reader.read_day(day, filesystem=fs, root=c['s3']['bucket'], tokens=c['tokens'], retries=c['s3']['retries'])
 
     consecutive, since = 0, 0
-    with ThreadPoolExecutor(max_workers=max(1, p['prefetch'])) as pool:
+    pool = ThreadPoolExecutor(max_workers=max(1, p['prefetch']))
+    try:
         futures = {}
         for i, day in enumerate(todo):
             for nxt in todo[i:i + p['prefetch'] + 1]:
@@ -131,7 +136,13 @@ def stage_pass(args):
                     futures[nxt] = pool.submit(fetch, nxt)
             t = time.time()
             try:
-                d = futures.pop(day).result()
+                d = futures.pop(day).result(timeout=READ_TIMEOUT)
+            except FuturesTimeout:
+                log.event(event='stall', day=day, after_seconds=READ_TIMEOUT)
+                _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
+                ent.save(snap)                 # state after the last built day; a restart resumes from here
+                pool.shutdown(wait=False, cancel_futures=True)
+                _hard_exit(STALL_EXIT)
             except DayUnavailable as e:
                 _write_json(hours / f'{day}.unavailable.json', {'day': day, 'errors': e.errors})
                 log.event(event='day', day=day, status='unavailable')
@@ -156,6 +167,8 @@ def stage_pass(args):
                 _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
                 ent.save(snap)
                 since = 0
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
     _require_disk(MIN_FREE_SNAPSHOT, 'snapshot')
     ent.save(snap)
 
