@@ -43,8 +43,10 @@ selection ("screen negative: holdout not opened"); no lock written; the sealed
 volatility and volume persistence (S0 vs constant R² T4 0.213, T7 0.089, T5 0.955);
 the tree near misses on T3/T6 lose 12–16 % MSE to a constant forecast with every set;
 F4 partial correlations after F0 stay below a circular-shift null for every target.
-Address keys (6.1 GB, `research_artifacts/onchain-b3/keys/`) are still on disk: the
-deletion was not approved in this session; `history.json` retains everything they fed.
+Intermediates deleted 2026-10-16 with user approval (record:
+`research_artifacts/onchain-b3/DELETED.md`): address keys 6.1 GB, 20k graphs 1.3 GB,
+MCM 1.3 GB. Kept: weekly summaries, `history.json`, dictionary, the screened feature
+table, `screen.json`, exploration outputs and logs; the screen can be re-run from them.
 
 B3 is closed: negative. Together with M2 (0.490) and B2 (0 of 40), the weekly
 on-chain graph line for ETH is closed in this programme. Open user decisions: a
