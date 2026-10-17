@@ -57,6 +57,13 @@ Sealed 2025-01-01 → 2026-10-12, Holm at α = 0.05 (`HOLDOUT.md`):
 3. R7 trees DA vs D0: +0.00026 over 643 days, p 0.867 → fail.
 The sealed ETH window 2025–26 is now spent.
 
-Next safe action: forensics (mechanism, richer price baseline, timing canary,
-labels-only vs deposit-expanded, per-month stability) — exploratory, recorded in
-`FORENSICS.md`.
+Forensics (`FORENSICS.md`, exploratory): sealed gains are negative in every quarter of
+2025–26 (−6.6 % and −3.4 % squared error); over 2019–2024 most of the gain is last-hour
+exchange activity missing from the registered price baseline (a richer intraday baseline
+removes it), while in 2025–26 stablecoin flows still add about 2–4 % over that baseline
+(post hoc); the signal is current-hour stablecoin transfer intensity, not net flow
+direction; no flow feature predicts returns.
+
+B4 is closed: registered volatility result confirmed with the stated qualification.
+The ETH sealed window 2025-01-01 → 2026-10-12 is spent; a follow-up claim needs a new
+sealed period (from 2026-10-13) and the richer intraday baseline registered up front.
