@@ -49,5 +49,14 @@ before any holdout command:
 3. R7 7-day log return, trees, DA (price + all Coin Metrics) vs D0: −0.00089, upper −0.00005,
    5/6; both arms lose to a constant forecast (R² −0.271 vs −0.337), the B3 near-miss pattern.
 
-Next safe action: holdout dry run on development data only (simulated cutoff), then the
-one-shot holdout for the committed selection (B4-CP4), forensics.
+B4-CP4 (2026-10-17) — holdout opened once (lock with selection blob d25c3680, commit
+fd8f24924) after a full rehearsal on development data with a simulated 2023 cutoff.
+Sealed 2025-01-01 → 2026-10-12, Holm at α = 0.05 (`HOLDOUT.md`):
+1. V6 linear HS vs H0: −0.02225 over 15,529 hours, p < 0.0001 → PASS.
+2. V6 trees HE vs H0: −0.01083 over 15,529 hours, p < 0.0001 → PASS.
+3. R7 trees DA vs D0: +0.00026 over 643 days, p 0.867 → fail.
+The sealed ETH window 2025–26 is now spent.
+
+Next safe action: forensics (mechanism, richer price baseline, timing canary,
+labels-only vs deposit-expanded, per-month stability) — exploratory, recorded in
+`FORENSICS.md`.
