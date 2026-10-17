@@ -26,7 +26,19 @@ fixed (`reader.py`, test) and the pass relaunched from 2017-01-01. One real day 
 2018-03-01, 1,824 on 2019-03-01). token_transfers has no partition for 2020-11-01
 (that day will be marked unavailable).
 
-Running (B4-CP2 data): `onchain-b4-pass` (8 GiB cap), launched 2026-10-15 13:41.
+B4-CP2 (2026-10-17) — chain pass complete: 3,569 days built, 2 unavailable
+(2020-11-01: no token_transfers partition; 2025-09-24: S3 timeouts on all three
+attempts, kept as registered). Interruptions, all resumed from snapshots with identical
+outputs: user reboot (restart from scratch after the gas-price fix), laptop suspend
+(watchdog fix `c93b82b0c`), one OOM kill at the 8 GiB cap on 2025-12-06 (prefetch 2 → 1,
+`411cb34ca`). Final state: 87.8M candidates, 84.8M deposit addresses; peak 7.0 GB.
+Feature tables: 85,704 hours × 32 registered hourly columns; 20 daily columns.
+
+Sanity (features only, no targets): deposit-expanded ETH inflow is below labels-only
+inflow in every year (e.g. 2019: 244k vs 450k ETH/day) because entity grouping makes
+sweeps, gas top-ups and exchange-internal moves internal; daily log inflow correlates
+with Coin Metrics FlowInExNtv at 0.85 (deposit-expanded) and 0.92 (labels-only),
+2019–24. No zero-transfer day; no day after 2019-06 with < 1,000 stablecoin transfers.
 
 Next safe action: whole-branch review fixes (if any), then launch the chain pass
 (`onchain-b4-pass`, 6 GiB cap, ≥ 5 GB disk free), features (B4-CP2), screen and
