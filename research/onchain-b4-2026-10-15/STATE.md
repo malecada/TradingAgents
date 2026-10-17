@@ -40,6 +40,14 @@ sweeps, gas top-ups and exchange-internal moves internal; daily log inflow corre
 with Coin Metrics FlowInExNtv at 0.85 (deposit-expanded) and 0.92 (labels-only),
 2019–24. No zero-transfer day; no day after 2019-06 with < 1,000 stablecoin transfers.
 
-Next safe action: whole-branch review fixes (if any), then launch the chain pass
-(`onchain-b4-pass`, 6 GiB cap, ≥ 5 GB disk free), features (B4-CP2), screen and
-committed selection (B4-CP3), holdout only for a non-empty committed selection (B4-CP4).
+B4-CP3 (2026-10-17) — screen run once on the development window: 3 of 42 comparisons
+pass (`SCREEN.md`; about 2 false passes expected by chance); `selection.json` committed
+before any holdout command:
+1. V6 next-6-hour log realised volatility, linear, HS (price + stablecoin flows) vs H0:
+   −0.00443 MSE, interval upper −0.00282, better in 4/6 years; R² vs constant 0.405 vs 0.397.
+2. V6, trees, HE (price + ETH flows) vs H0: −0.00353, upper −0.00198, 5/6; R² 0.478 vs 0.472.
+3. R7 7-day log return, trees, DA (price + all Coin Metrics) vs D0: −0.00089, upper −0.00005,
+   5/6; both arms lose to a constant forecast (R² −0.271 vs −0.337), the B3 near-miss pattern.
+
+Next safe action: holdout dry run on development data only (simulated cutoff), then the
+one-shot holdout for the committed selection (B4-CP4), forensics.
