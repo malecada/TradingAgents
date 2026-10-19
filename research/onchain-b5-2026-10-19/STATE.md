@@ -19,6 +19,13 @@ B5-CP1 (2026-10-19) — data stored, no unavailable day:
 B5-CP2 (2026-10-19) — decision tables: BTC_S24 1985 rows (neg raw spread 38%); BTC_S6 1987 rows (neg raw spread 41%); ETH_S24 1980 rows (neg raw spread 32%); ETH_S6 1983 rows (neg raw spread 33%). Eligible decisions per
 year 2022–2025: 356–366; 2021 from April; 2026 to 12 October.
 
-Next safe action: implement plan tasks 2–8; fetch option trades, DVOL and BTC bars
-(B5-CP1); decision tables (B5-CP2); forecast comparison and backtests (B5-CP3); event
-study, Tron probe, `RESULTS.md` (B5-CP4).
+B5-CP3/CP4 (2026-10-19) — all pre-declared analyses run once (`TABLES.md`) and read in
+`RESULTS.md`: option-market information dominates price history (7 of 8 cells); flows add
+nothing reliable on top (1 of 16 cells, reversed in 2025–26); straddle rules with and
+without flows differ inside noise (pre-declared criterion met literally in 7 of 24 cells,
+consistent with chance); the 6-hour short-straddle premium is independent of flows and
+disappears with strike-level pricing plus one tick per leg (post hoc); event study shows
+no post-inflow volatility surprise. Tron: go (labels-only via SQD).
+
+B5 is closed: no flow-based trading strategy. A possible later study concerns the
+short-dated volatility premium itself (quote-level spreads, margin, forward test).
