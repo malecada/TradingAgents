@@ -8,15 +8,18 @@ import time
 import numpy as np
 import pandas as pd
 
+from .deribit import with_retries
+
 URL = 'https://api.binance.com/api/v3/klines?symbol={symbol}&interval=1m&startTime={ms}&limit=30'
 MINUTE = 60_000
 
 
-def fetch(get, symbol, dates, sleep=time.sleep, pause=0.05):
+def fetch(get, symbol, dates, sleep=time.sleep, pause=0.05, retries=(5, 30, 120)):
     out = {}
     for d in dates:
         ms = int((pd.Timestamp(d, tz='UTC') + pd.Timedelta(hours=7, minutes=30)).timestamp() * 1000)
-        rows = [r for r in json.loads(get(URL.format(symbol=symbol, ms=ms))) if ms <= r[0] < ms + 30 * MINUTE]
+        url = URL.format(symbol=symbol, ms=ms)
+        rows = [r for r in json.loads(with_retries(lambda: get(url), list(retries), sleep)) if ms <= r[0] < ms + 30 * MINUTE]
         out[d] = float(np.mean([float(r[4]) for r in rows])) if len(rows) == 30 else None
         sleep(pause)
     return out

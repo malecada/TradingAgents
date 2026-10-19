@@ -22,3 +22,14 @@ def test_twap_from_minute_klines():
 
 def test_incomplete_minutes_give_none():
     assert settle.fetch(_get(29), 'ETHUSDT', ['2023-06-01'], sleep=lambda s: None) == {'2023-06-01': None}
+
+
+def test_retries_a_failed_minute_request():
+    calls = {'n': 0}
+
+    def flaky(url):
+        calls['n'] += 1
+        if calls['n'] == 1:
+            raise OSError('timed out')
+        return _get(30)(url)
+    assert settle.fetch(flaky, 'ETHUSDT', ['2023-06-01'], sleep=lambda s: None, retries=[1]) == {'2023-06-01': 114.5}
