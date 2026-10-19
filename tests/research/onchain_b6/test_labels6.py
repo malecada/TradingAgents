@@ -49,3 +49,12 @@ def test_activation_is_day_after_first_observation(tmp_path):
     st2 = labels6.LabelState.load(tmp_path / 'labels_state.npz', doc, CFG['issuer']['usdt_treasury'])
     st2.begin_day(11)
     assert st2.is_exchange(np.array([ka], np.uint64)).tolist() == [True]
+
+
+def test_empty_class_lookup_is_all_false():
+    doc = labels6.classify({}, [], [], [], CFG)
+    st = labels6.LabelState(doc, CFG['issuer']['usdt_treasury'])
+    st.begin_day(3)
+    k = np.array([1, 2], np.uint64)
+    assert st.in_class('dex', k).tolist() == [False, False] and st.is_exchange(k).tolist() == [False, False]
+    assert st.entity_of(k).tolist() == [-1, -1]

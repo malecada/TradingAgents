@@ -113,20 +113,24 @@ class LabelState:
         pos[pos == len(sorted_keys)] = 0
         return sorted_keys[pos] == keys, pos
 
+    @staticmethod
+    def _active_hits(hit, pos, active):
+        return hit & active[pos] if len(active) else hit
+
     def is_exchange(self, keys):
         hit, pos = self._lookup(self.ex_keys, keys)
-        return hit & self._ex_active[pos]
+        return self._active_hits(hit, pos, self._ex_active)
 
     def entity_of(self, keys):
         hit, pos = self._lookup(self.ex_keys, keys)
         out = np.full(len(hit), -1, np.int32)
-        m = hit & self._ex_active[pos]
+        m = self._active_hits(hit, pos, self._ex_active)
         out[m] = self.ex_entity[pos[m]]
         return out
 
     def in_class(self, name, keys):
         hit, pos = self._lookup(self.cls_keys[name], keys)
-        return hit & self._cls_active[name][pos]
+        return self._active_hits(hit, pos, self._cls_active[name])
 
     def observe(self, keys, day_ord):
         keys = np.unique(np.asarray(keys, np.uint64))
