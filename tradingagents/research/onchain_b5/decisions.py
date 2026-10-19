@@ -49,15 +49,18 @@ def realized_logvol(closes, t, tau_h):
 
 
 def fill_spread(df, window):
+    # amendment 2: half-spread = max(0, (ask - bid) / 2); a missing side takes the median of the previous
+    # rows' half-spreads; execution IVs are symmetric around the mid
     df = df.copy()
-    hs = ((df['iv_ask'] - df['iv_bid']) / 2).where(df['iv_ask'].notna() & df['iv_bid'].notna())
-    med = hs.shift(1).rolling(window, min_periods=1).median()
-    df['iv_ask'] = df['iv_ask'].fillna(df['iv_mid'] + med)
-    df['iv_bid'] = df['iv_bid'].fillna(df['iv_mid'] - med)
+    df['hs_raw'] = (df['iv_ask'] - df['iv_bid']) / 2
+    hs = df['hs_raw'].clip(lower=0)
+    hs = hs.fillna(hs.shift(1).rolling(window, min_periods=1).median())
+    df['iv_ask'] = df['iv_mid'] + hs
+    df['iv_bid'] = df['iv_mid'] - hs
     return df
 
 
-def build(sched, bars, dvol, flows, trades_for_day, cfg):
+def build(sched, bars, dvol, flows, trades_for_day, cfg, settle=None):
     s = cfg['schedules'][sched]
     tau = s['tau_h']
     full = _full(bars)
@@ -76,7 +79,8 @@ def build(sched, bars, dvol, flows, trades_for_day, cfg):
         bar = t - H
         if iv is None or bar not in pf.index:
             continue
-        s0, s_t = closes.get(bar), closes.get(expiry - H)
+        s0 = closes.get(bar)
+        s_t = closes.get(expiry - H) if settle is None else settle.get(expiry.date().isoformat())
         dv, dv24 = dvol.get(bar), dvol.get(bar - 24 * H)
         frow = flows.loc[bar].to_dict() if bar in flows.index else {c: np.nan for c in flows.columns}
         rows[t] = {**pf.loc[bar].to_dict(), **frow,
@@ -92,4 +96,4 @@ def build(sched, bars, dvol, flows, trades_for_day, cfg):
         return df
     df = fill_spread(df, cfg['implied']['spread_window'])
     need = [c for c in df.columns if c.startswith(('h0_', 'px_', 'mk_', 'eth_', 'stable_'))] + ['y', 's0', 'sT', 'K', 'iv_ask', 'iv_bid']
-    return df[df[need].notna().all(axis=1)]
+    return df[np.isfinite(df[need].astype(float).to_numpy()).all(axis=1)]

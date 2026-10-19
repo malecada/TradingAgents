@@ -65,3 +65,23 @@ def test_build_skips_ineligible_and_is_causal():
     b = decisions.build('S6', bars2, dvol, flows2, get, cfg)
     feats = [c for c in a.columns if c.startswith(('h0_', 'px_', 'mk_', 'eth_', 'stable_'))]
     pd.testing.assert_series_equal(a.loc[t, feats], b.loc[t, feats])
+
+
+def test_fill_spread_clamps_negative_and_is_symmetric():
+    df = pd.DataFrame({'iv_mid': [50.0, 50.0], 'iv_ask': [45.0, 53.0], 'iv_bid': [55.0, 49.0]},
+                      index=pd.date_range('2023-01-01', periods=2))
+    f = decisions.fill_spread(df, 30)
+    assert f['iv_ask'].iloc[0] == 50.0 and f['iv_bid'].iloc[0] == 50.0    # negative raw spread -> zero
+    assert f['iv_ask'].iloc[1] == 52.0 and f['iv_bid'].iloc[1] == 48.0    # symmetric around mid
+    assert f['hs_raw'].iloc[0] == -5.0
+
+
+def test_build_uses_twap_settlement_when_given():
+    cfg = json.loads(json.dumps(CFG))
+    cfg['window'] = {'start': '2023-06-10', 'end': '2023-06-10'}
+    bars = _bars('2023-05-01', 24 * 50)
+    dvol = pd.Series(60.0, index=bars.index)
+    flows = pd.DataFrame({'eth_x__h1z': 1.0, 'stable_x__h1z': 1.0}, index=bars.index)
+    a = decisions.build('S6', bars, dvol, flows, lambda d: _trades_for(d, 0), cfg, settle={'2023-06-10': 1234.0})
+    assert a['sT'].iloc[0] == 1234.0
+    assert len(decisions.build('S6', bars, dvol, flows, lambda d: _trades_for(d, 0), cfg, settle={})) == 0

@@ -20,6 +20,6 @@ so no B5 result is confirmatory. Confirmation is a later forward study.
 
 - Option prices come from executed trades (taker side gives ask or bid), not quotes.
 - Deribit's current fee schedule is applied to all years.
-- Settlement uses the Binance close at the expiry hour instead of Deribit's 30-minute
-  delivery index.
+- Settlement uses the 07:30–08:00 UTC mean of Binance 1-minute closes in place of
+  Deribit's 30-minute delivery index (amendment 4 in `PLAN.md`).
 - BTC and ETH volatility co-move; the BTC check is a generalisation check.

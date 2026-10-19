@@ -54,3 +54,16 @@ def test_iv_series_uses_nearest_live_expiry():
                                        for i, (h, n, iv) in enumerate(rows)]))
     s = events.iv_series(lambda d: df if d == '2023-06-01' else None, ['2023-06-01'], CFG)
     assert s.loc[pd.Timestamp('2023-06-01 06:00')] == 55.0
+
+
+def test_pre_window_and_iv_baseline_exclude_event_hour():
+    idx = pd.date_range('2022-01-01', periods=500, freq='h')
+    S = pd.DataFrame({'s1': 0.0}, index=idx)
+    R = pd.DataFrame({'r1': 0.0}, index=idx)
+    ev = [idx[100], idx[200], idx[300]]
+    iv = pd.Series(50.0, index=idx)
+    for e in ev:
+        S.loc[e - pd.Timedelta(hours=1), 's1'] = 5.0      # covers the event hour itself
+        iv.loc[e] = 99.0                                  # the event hour's own IV bin
+    out = events.responses(ev, S, R, iv, 1, {**CFG['gate'], 'block': 1})[0]
+    assert out['pre_vol']['mean'] == 0.0 and out['d_iv']['mean'] == 0.0

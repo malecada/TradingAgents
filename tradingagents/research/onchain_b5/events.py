@@ -82,7 +82,7 @@ def iv_series(trades_for_day, days, cfg):
         tr = trades_for_day(day)
         if tr is None or not len(tr):
             continue
-        tr = tr.assign(bin=tr['ts'].dt.floor('h'))
+        tr = tr[np.isfinite(tr['iv']) & (tr['iv'] > 0)].assign(bin=lambda x: x['ts'].dt.floor('h'))
         tr = tr[tr['expiry'] >= tr['bin'] + H + pd.Timedelta(hours=e['iv_min_ahead_h'])]
         tr = tr[np.abs(np.log(tr['strike'] / tr['index_price'])) <= c['moneyness']]
         for b, g in tr.groupby('bin'):
@@ -105,8 +105,8 @@ def responses(evts, S, R, iv, kmax, gate):
     out = []
     for k in range(1, kmax + 1):
         post = S[f's{k}'].reindex(ev).to_numpy()
-        pre = S[f's{k}'].reindex(ev - k * H).to_numpy()
-        div = iv.reindex(ev + k * H).to_numpy() - iv.reindex(ev).to_numpy()
+        pre = S[f's{k}'].reindex(ev - (k + 1) * H).to_numpy()        # bars h-k .. h-1: ends before the event hour
+        div = iv.reindex(ev + k * H).to_numpy() - iv.reindex(ev - H).to_numpy()   # baseline: the hour before
         ret = R[f'r{k}'].reindex(ev).to_numpy()
         out.append({'k': k, 'n': int(len(ev)), 'post_vol': _stat(post, gate), 'pre_vol': _stat(pre, gate),
                     'd_iv': _stat(div, gate), 'ret': _stat(ret, gate)})

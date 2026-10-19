@@ -46,3 +46,15 @@ def test_sides_and_backtest_benchmarks():
     assert ('always_buy', None, None) in get and ('always_sell', None, None) in get
     assert get[('signal', 'M2', 0.1)]['groups']['2022-24']['total'] > get[('signal', 'M1', 0.1)]['groups']['2022-24']['total']
     assert get[('flip', 'M2', 0.1)]['groups']['2022-24']['total'] < 0
+
+
+def test_signal_removes_log_rv_bias():
+    b6 = straddle.logrv_bias(6)
+    assert np.isclose(b6, -0.0879, atol=1e-4) and np.isclose(straddle.logrv_bias(24), -0.0211, atol=1e-4)
+    idx = pd.date_range('2022-01-03 02:00', periods=400, freq='D')
+    df = pd.DataFrame({'s0': 2000.0, 'K': 2000.0, 'sT': 2010.0, 'tau_h': 6.0, 'mk_iv': np.log(0.5),
+                       'iv_ask': 51.0, 'iv_bid': 49.0}, index=idx)
+    preds = pd.DataFrame({'linear:M1': np.log(0.5) + b6, 'linear:M2': np.log(0.5) + b6}, index=idx)
+    out = straddle.backtest(df, preds, {**config.load(), 'families': ['linear']})
+    sig = [o for o in out if o['rule'] == 'signal' and o['theta'] == 0.05]
+    assert all(o['groups']['2022-24']['trades'] == 0 for o in sig) and all(abs(o['mean_z']) < 1e-9 for o in sig)

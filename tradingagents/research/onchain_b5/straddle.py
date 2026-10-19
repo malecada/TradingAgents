@@ -4,7 +4,7 @@ implied volatility, Deribit fees capped at 12.5 % of each leg, payoff |S_T - K| 
 from __future__ import annotations
 
 import numpy as np
-from scipy.special import ndtr
+from scipy.special import digamma, ndtr
 
 from ..onchain_b4.screen4 import interval
 
@@ -32,6 +32,11 @@ def pnl(side, s0, K, sT, T, iv_ask, iv_bid, rate, cap):
     return out, premium
 
 
+def logrv_bias(n):
+    """E[log sqrt(chi2_n / n)]: small-sample bias of log realised volatility from n Gaussian returns."""
+    return float(0.5 * (digamma(n / 2) - np.log(n / 2)))
+
+
 def sides(z, theta):
     z = np.asarray(z, float)
     return np.where(z > theta, 1, np.where(z < -theta, -1, 0))
@@ -51,7 +56,7 @@ def metrics(p, side, premium, index, groups, gate):
         tr = sm != 0
         tp = pm[tr]
         lo, hi = interval(tp, gate['block'], gate['draws'], gate['seed'], gate['chunk']) if len(tp) >= gate['block'] else (np.nan, np.nan)
-        sd = pm.std()
+        sd = pm.std() if len(pm) > 1 else 0.0
         out[name] = {'decisions': int(m.sum()), 'trades': int(tr.sum()), 'mean_trade': float(tp.mean()) if len(tp) else np.nan,
                      'lo': lo, 'hi': hi, 'total': float(pm.sum()), 'hit': float((tp > 0).mean()) if len(tp) else np.nan,
                      'sharpe': float(pm.mean() / sd * np.sqrt(365)) if sd > 0 else np.nan, 'maxdd': _maxdd(pm),
@@ -71,18 +76,20 @@ def backtest(df, preds, cfg):
             d['iv_ask'].to_numpy(float), d['iv_bid'].to_numpy(float), st['fee_rate'], st['fee_cap'])
     out = []
 
-    def add(rule, fam, var, theta, side):
+    def add(rule, fam, var, theta, side, mean_z=None):
         p, prem = pnl(side, *args)
-        out.append({'rule': rule, 'family': fam, 'variant': var, 'theta': theta,
+        out.append({'rule': rule, 'family': fam, 'variant': var, 'theta': theta, 'mean_z': mean_z,
                     'groups': metrics(p, side, prem, d.index, cfg['groups'], g)})
 
     add('always_buy', None, None, None, np.ones(len(d), int))
     add('always_sell', None, None, None, -np.ones(len(d), int))
     for fam in cfg['families']:
         for var in st['variants']:
-            z = P[f'{fam}:{var}'].to_numpy(float) - d['mk_iv'].to_numpy(float)
+            # amendment 5: put the log-RV forecast on the implied-volatility scale before comparing
+            bias = np.array([logrv_bias(n) for n in d['tau_h'].to_numpy(float)])
+            z = P[f'{fam}:{var}'].to_numpy(float) - bias - d['mk_iv'].to_numpy(float)
             for theta in st['thetas']:
                 s = sides(z, theta)
-                add('signal', fam, var, theta, s)
-                add('flip', fam, var, theta, -s)
+                add('signal', fam, var, theta, s, float(np.mean(z)))
+                add('flip', fam, var, theta, -s, float(np.mean(z)))
     return out

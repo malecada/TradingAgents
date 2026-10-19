@@ -38,3 +38,12 @@ def test_decision_iv_window_moneyness_sides_and_eligibility():
     assert r['n_trades'] == 3 and r['iv_mid'] == 50.0 and r['iv_ask'] == 50.0 and r['iv_bid'] == 48.0
     assert r['strikes'] == [1900.0, 1925.0]
     assert implied.decision_iv(tr, t, pd.Timestamp('2023-06-02 08:00'), C) is None    # fewer than 3 trades
+
+
+def test_decision_iv_ignores_zero_iv_trades():
+    t, exp = pd.Timestamp('2023-06-01 03:00'), pd.Timestamp('2023-06-01 08:00')
+    rows = [(1.0, 'ETH-1JUN23-1900-C', 50.0, 1, 'buy'), (1.2, 'ETH-1JUN23-1900-P', 52.0, 1, 'sell'),
+            (1.4, 'ETH-1JUN23-1875-C', 0.0, 9, 'buy')]                     # iv 0: at/below intrinsic
+    assert implied.decision_iv(_day(rows), t, exp, C) is None              # only 2 usable trades
+    r = implied.decision_iv(_day(rows + [(1.6, 'ETH-1JUN23-1900-C', 51.0, 1, 'sell')]), t, exp, C)
+    assert r['n_trades'] == 3 and r['iv_mid'] == 51.0 and r['iv_ask'] == 50.0

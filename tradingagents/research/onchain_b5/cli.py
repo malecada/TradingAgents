@@ -15,7 +15,7 @@ import pandas as pd
 from ..onchain_b.runlog import Log
 from ..onchain_b2 import market
 from ..onchain_b4 import hourmarket
-from . import config, decisions, deribit, events, forecast, implied, straddle
+from . import config, decisions, deribit, events, forecast, implied, settle, straddle
 
 ARTIFACTS = config.ARTIFACTS
 STUDY = config.STUDY
@@ -90,6 +90,16 @@ def stage_fetch_bars(args):
     print(json.dumps({'btc_hours': len(bars)}))
 
 
+def stage_fetch_settle(args):
+    c = config.load()
+    w = c['window']
+    dates = [d.date().isoformat() for d in pd.date_range(w['start'], pd.Timestamp(w['end']) + pd.Timedelta(days=1), freq='D')]
+    for asset in c['assets']:
+        out = settle.fetch(market.http_get, c['binance'][asset], dates)
+        _write_json(ARTIFACTS / 'market' / f'settle_{asset}.json', out)
+        print(json.dumps({'asset': asset, 'dates': len(out), 'missing': sum(v is None for v in out.values())}))
+
+
 def _bars(asset):
     if asset == 'ETH':
         return hourmarket.load_all(B4 / 'market' / 'hourly_dev.json', B4 / 'sealed' / 'hourly_sealed.json')
@@ -110,12 +120,14 @@ def stage_decisions(args):
     for asset in c['assets']:
         bars = _bars(asset)
         dvol = pd.read_parquet(ARTIFACTS / 'market' / f'dvol_{asset}.parquet')['dvol']
+        st = {k: v for k, v in json.loads((ARTIFACTS / 'market' / f'settle_{asset}.json').read_text()).items() if v is not None}
         for sched in c['schedules']:
-            df = decisions.build(sched, bars, dvol, flows, trades_loader(asset), c)
+            df = decisions.build(sched, bars, dvol, flows, trades_loader(asset), c, settle=st)
             p = ARTIFACTS / 'decisions' / f'{asset}_{sched}.parquet'
             p.parent.mkdir(parents=True, exist_ok=True)
             df.to_parquet(p)
-            counts[f'{asset}_{sched}'] = {'rows': len(df), 'by_year': df.index.year.value_counts().sort_index().to_dict()}
+            counts[f'{asset}_{sched}'] = {'rows': len(df), 'by_year': df.index.year.value_counts().sort_index().to_dict(),
+                                          'neg_raw_spread_share': float((df['hs_raw'] < 0).mean()) if len(df) else None}
     _write_json(ARTIFACTS / 'decisions' / 'counts.json', counts)
     print(json.dumps(counts, default=str))
 
@@ -210,7 +222,7 @@ def main(argv=None):
     a = sub.add_parser('fetch-options')
     a.add_argument('--asset', required=True, choices=['ETH', 'BTC'])
     a.set_defaults(fn=stage_fetch_options)
-    for name, fn in (('fetch-dvol', stage_fetch_dvol), ('fetch-bars', stage_fetch_bars), ('decisions', stage_decisions),
+    for name, fn in (('fetch-dvol', stage_fetch_dvol), ('fetch-bars', stage_fetch_bars), ('fetch-settle', stage_fetch_settle), ('decisions', stage_decisions),
                      ('forecast', stage_forecast), ('backtest', stage_backtest), ('events', stage_events), ('report', stage_report)):
         sub.add_parser(name).set_defaults(fn=fn)
     args = p.parse_args(argv)

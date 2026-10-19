@@ -41,6 +41,7 @@ def wmedian(values, weights):
 def decision_iv(trades, t, expiry, c):
     lo = t - pd.Timedelta(hours=c['lookback_h'])
     win = trades[(trades['ts'] >= lo) & (trades['ts'] < t) & (trades['expiry'] == expiry)]
+    win = win[np.isfinite(win['iv']) & (win['iv'] > 0)]          # iv 0: trade at or below intrinsic (amendment 3)
     atm = win[np.abs(np.log(win['strike'] / win['index_price'])) <= c['moneyness']]
     if len(atm) < c['min_trades']:
         return None
