@@ -43,6 +43,16 @@ def iv_hourly(trades_for_day, days, min_trades, ffill_hours, implied_cfg):
     return full.ffill(limit=ffill_hours)
 
 
+def tron_features(tron, index, c):
+    """Tron series on the full hourly index: hours inside the stream's coverage without a
+    label-touching transfer are zeros; hours outside the coverage stay NaN."""
+    t = tron.sort_index()
+    full = t.reindex(index)
+    inside = (index >= t.index.min()) & (index <= t.index.max())
+    full.loc[inside] = full.loc[inside].fillna(0.0)
+    return transform_raw(full, c)
+
+
 def market_hourly(bars, dvol, iv):
     f = dataset4.price_features(bars).join(px_features(bars))
     if dvol is not None:

@@ -59,9 +59,11 @@ def post_json(url, body):
         with urllib.request.urlopen(req, timeout=300) as r:
             return r.read()
     except urllib.error.HTTPError as e:
-        if e.code in (429, 529, 503):
+        if e.code in (429, 500, 502, 503, 504, 529):
             raise tron.Overloaded(e.code)
         raise
+    except (urllib.error.URLError, TimeoutError, OSError) as e:          # network drop, timeout: back off, do not die
+        raise tron.Overloaded(0) from e
 
 
 def stage_labels(args):
@@ -194,7 +196,7 @@ def stage_tron(args):
     c = config.load()
     lab = json.loads((ARTIFACTS / 'labels' / 'tron_labels.json').read_text())['hex']
     (ARTIFACTS / 'tron').mkdir(parents=True, exist_ok=True)
-    tron.run(lambda body: post_json(c['tron']['url'], body), lab, ARTIFACTS / 'tron' / 'state.json',
+    tron.run(lambda body: post_json(c['tron']['url'], body), lab, ARTIFACTS / 'tron' / 'bundle.npz',
              ARTIFACTS / 'tron' / 'hourly.parquet', c)
     print('tron stream complete')
 
@@ -218,9 +220,6 @@ def stage_features(args):
     days = config.days(c)
     frames = [pd.read_parquet(ARTIFACTS / 'hours' / f'{d}.parquet') for d in days if day_status(d) == 'done']
     raw = pd.concat(frames).sort_index().reindex(pd.date_range(days[0], periods=24 * len(days), freq='h'))
-    if tron_complete():
-        t = pd.read_parquet(ARTIFACTS / 'tron' / 'hourly.parquet').reindex(raw.index)
-        raw = raw.join(t)
     trans = dataset6.transform_raw(raw, c['transforms'])
     flows = pd.read_parquet(B4 / 'features' / 'hourly.parquet')
     flows = flows[[x for x in flows.columns if x.startswith(tuple(c['blocks']['F']))]]
@@ -235,17 +234,28 @@ def stage_features(args):
     raw.to_parquet(out / 'hourly_raw.parquet')
     feats.to_parquet(out / 'features_A.parquet')
     feats.join(mk, how='left').to_parquet(out / 'features_B.parquet')
+    if tron_complete():                                     # kept apart: its coverage would truncate every other comparison
+        tron_t = pd.read_parquet(ARTIFACTS / 'tron' / 'hourly.parquet')
+        dataset6.tron_features(tron_t, raw.index, c['transforms']).to_parquet(out / 'features_T.parquet')
     print(json.dumps({'hours': len(raw), 'raw_columns': raw.shape[1], 'feature_columns': feats.shape[1], 'tron': bool(tron_complete())}))
 
 
 def stage_forecast(args):
     c = config.load()
     bars = hourmarket.load_all(B4 / 'market' / 'hourly_dev.json', B4 / 'sealed' / 'hourly_sealed.json')
-    with_tron = tron_complete()
-    sb = {tr: dataset6.samples(tr, pd.read_parquet(ARTIFACTS / 'features' / f'features_{tr}.parquet'), bars, c) for tr in ('A', 'B')}
-    res = forecast6.run_all(sb, c, with_tron)
+    tp = ARTIFACTS / 'features' / 'features_T.parquet'
+    with_tron = tp.exists()
+    feats = {tr: pd.read_parquet(ARTIFACTS / 'features' / f'features_{tr}.parquet') for tr in ('A', 'B')}
+    sb = {tr: dataset6.samples(tr, f, bars, c) for tr, f in feats.items()}
+    res = forecast6.run_all(sb, c, with_tron=False)
+    n = {k: len(v) for k, v in sb.items()}
+    if with_tron:                                           # X5 vs X4 on the sub-sample where the Tron block exists
+        ft = pd.read_parquet(tp)
+        sbt = {tr: dataset6.samples(tr, f.join(ft, how='left'), bars, c) for tr, f in feats.items()}
+        res += forecast6.run_all(sbt, c, with_tron=True, only_tron=True)
+        n.update({f'{k}_tron': len(v) for k, v in sbt.items()})
     (ARTIFACTS / 'forecast').mkdir(parents=True, exist_ok=True)
-    _write_json(ARTIFACTS / 'forecast' / 'results.json', {'results': res, 'with_tron': with_tron, 'n': {k: len(v) for k, v in sb.items()}})
+    _write_json(ARTIFACTS / 'forecast' / 'results.json', {'results': res, 'with_tron': with_tron, 'n': n})
     print(json.dumps({'rows': len(res), 'passed': sum(r['passed'] for r in res), 'with_tron': with_tron}))
 
 
@@ -260,7 +270,7 @@ def stage_events(args):
         out[asset] = {}
         for (direction, tier), g in ev.groupby(['direction', 'tier']):
             key = f"{'deposit' if direction == 1 else 'withdrawal'}_tier{tier}"
-            pl = minutes.placebo(g, closes, m)
+            pl = minutes.placebo(g, closes, m, exclude=pd.DatetimeIndex(ev['minute']))
             out[asset][key] = {}
             for gname, yrs in m['groups'].items():
                 e = pd.DatetimeIndex(g.loc[g['minute'].dt.year.isin(yrs), 'minute'])

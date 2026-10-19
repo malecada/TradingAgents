@@ -32,3 +32,12 @@ def test_set_prefixes_and_run_all_criteria():
     assert not get[('A', 'V24', 'X2', '2019-24')]['passed']
     text = F.report(res)
     assert '| A | V6 | linear | X2 vs X1 | 2019-24 |' in text
+
+
+def test_tron_runs_only_its_own_comparison_on_its_subsample():
+    cfg = {**CFG, 'families': ['linear']}
+    rng = np.random.default_rng(6)
+    res = F.run_all({'B': _samples('2021-04-01', '2026-10-12', rng)}, cfg, with_tron=True, only_tron=True)
+    assert {(r['set'], r['comparator']) for r in res} == {('X5', 'X4')} and len(res) == 2 * 2
+    base = F.run_all({'B': _samples('2021-04-01', '2026-10-12', rng).drop(columns=['tron_in_val__h1z'])}, cfg, with_tron=False)
+    assert all(r['set'] != 'X5' for r in base) and len(base) == 2 * 4 * 2

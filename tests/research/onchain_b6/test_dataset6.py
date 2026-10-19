@@ -40,3 +40,12 @@ def test_samples_windows_and_targets():
     s = D.samples('B', feats, bars, cfg)
     assert s.index.min() >= pd.Timestamp('2021-04-01') and s['V24'].last_valid_index() == pd.Timestamp('2022-01-30 23:00')
     assert s['V6'].last_valid_index() == pd.Timestamp('2022-01-31 17:00') and {'V6', 'V24', 'h0_r1', 'px_rv6'} <= set(s.columns)
+
+
+def test_tron_features_zero_fill_inside_coverage_only():
+    idx = pd.date_range('2024-01-01', periods=24 * 60, freq='h')
+    tron = pd.DataFrame({'tron_in_val': 5.0, 'tron_out_val': 1.0, 'tron_in_cnt': 1.0, 'tron_out_cnt': 1.0, 'tron_big_in': 0.0},
+                        index=idx[200:1000]).drop(idx[300:310])
+    f = D.tron_features(tron, idx, CFG['transforms'])
+    assert f.loc[idx[100]].isna().all() and f.loc[idx[1100]].isna().all()
+    assert f.loc[idx[900]].notna().all() and set(c.split('__')[0] for c in f.columns) == set(tron.columns)

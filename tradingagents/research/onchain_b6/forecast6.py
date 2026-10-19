@@ -19,10 +19,13 @@ def set_prefixes(name, track, cfg, with_tron):
     return out
 
 
-def _run_cfg(track, target, cfg, with_tron):
+def _run_cfg(track, target, cfg, with_tron, only_tron=False):
     tc = cfg['tracks'][track]
-    sets = SETS + (['X5'] if with_tron else [])
-    comps = cfg['comparisons'] + ([cfg['tron_comparison']] if with_tron else [])
+    if only_tron:
+        sets, comps = ['X4', 'X5'], [cfg['tron_comparison']]
+    else:
+        sets = SETS + (['X5'] if with_tron else [])
+        comps = cfg['comparisons'] + ([cfg['tron_comparison']] if with_tron else [])
     return {'sets': {s: set_prefixes(s, track, cfg, with_tron) for s in sets}, 'comparisons': comps,
             'families': cfg['families'], 'folds': {'test_years': tc['test_years'], 'inner_len': cfg['folds']['inner_len'],
                                                    'min_train': cfg['folds']['min_train']},
@@ -39,14 +42,14 @@ def _passed(r, track_cfg, group_rows, min_wins):
     return bool(r['hi'] < 0 and other is not None and other['mean_diff'] < 0)
 
 
-def run_all(samples_by_track, cfg, with_tron):
+def run_all(samples_by_track, cfg, with_tron, only_tron=False):
     results = []
     for track, df in samples_by_track.items():
         tc = cfg['tracks'][track]
         for target, h in cfg['targets'].items():
             d = df[df[target].notna()].copy()
             d['y'], d['tau_h'] = d[target], float(h)
-            _, res = F5.run(d, _run_cfg(track, target, cfg, with_tron))
+            _, res = F5.run(d, _run_cfg(track, target, cfg, with_tron, only_tron))
             for r in res:
                 r['track'], r['target'] = track, target
             by = {}

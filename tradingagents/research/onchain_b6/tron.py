@@ -8,6 +8,7 @@ import os
 import time
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
@@ -78,17 +79,37 @@ def _body(cfg, frm, to, key, tops):
             'fields': {'block': {'number': True, 'timestamp': True}, 'log': {'topics': True, 'data': True}}}
 
 
-def run(post, labels_hex, state_path, out_path, cfg, sleep=time.sleep, stop_block=None):
+def load_bundle(path):
+    z = np.load(path)
+    hours = pd.to_datetime(z['hours'])
+    rows = {h: {c: float(v) for c, v in zip(COLS, vals)} for h, vals in zip(hours, z['values'])}
+    return rows, int(z['next_block'])
+
+
+def save_bundle(path, rows, next_block, out_path):
+    """The npz bundle (hours, values, next_block) is the truth and is replaced atomically; the
+    parquet is a derived view written afterwards."""
+    hours = sorted(rows)
+    values = np.array([[rows[h][c] for c in COLS] for h in hours], float).reshape(len(hours), len(COLS))
+    tmp = path.with_name('.' + path.name + '.tmp.npz')
+    np.savez(tmp, hours=np.array(hours, dtype='datetime64[ns]'), values=values, next_block=np.array(next_block))
+    os.replace(tmp, path)
+    df = pd.DataFrame(values, index=pd.DatetimeIndex(hours), columns=COLS)
+    tmp2 = out_path.with_name('.' + out_path.name + '.tmp')
+    df.to_parquet(tmp2)
+    os.replace(tmp2, out_path)
+
+
+def run(post, labels_hex, bundle_path, out_path, cfg, sleep=time.sleep, stop_block=None):
     t = cfg['tron']
     tops = ['0' * 24 + h for h in labels_hex]
     label_set = set(labels_hex)
     end_ms = int(pd.Timestamp(t['end'], tz='UTC').timestamp() * 1000)
-    state_path, out_path = Path(state_path), Path(out_path)
-    state = json.loads(state_path.read_text()) if state_path.exists() else {'next_block': t['start_block']}
-    rows = pd.read_parquet(out_path).to_dict('index') if out_path.exists() else {}
-    rows = {pd.Timestamp(k): v for k, v in rows.items()}
+    bundle_path, out_path = Path(bundle_path), Path(out_path)
+    bundle_path.parent.mkdir(parents=True, exist_ok=True)
+    rows, nxt = load_bundle(bundle_path) if bundle_path.exists() else ({}, t['start_block'])
     back = Backoff(t['backoff'], sleep)
-    nxt = state['next_block']
+    empties = 0
     done = False
     while not done:
         frm, to = nxt, nxt + t['chunk_blocks'] - 1
@@ -104,8 +125,12 @@ def run(post, labels_hex, state_path, out_path, cfg, sleep=time.sleep, stop_bloc
                     continue
                 back.reset()
                 if not blocks:
+                    empties += 1
+                    if empties >= 3:
+                        raise SystemExit(f'tron stream: no blocks returned three times from block {cur}; head reached or portal empty')
                     cur = to + 1
                     break
+                empties = 0
                 for hour, agg in aggregate(blocks, label_set, t['big_usd']).items():
                     r = rows.setdefault(hour, {c: 0.0 for c in COLS})
                     if key == 'topic2':
@@ -121,9 +146,4 @@ def run(post, labels_hex, state_path, out_path, cfg, sleep=time.sleep, stop_bloc
         nxt = to + 1
         if stop_block is not None and nxt > stop_block:
             done = True
-        df = pd.DataFrame.from_dict(rows, orient='index').sort_index()[COLS] if rows else pd.DataFrame(columns=COLS)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = out_path.with_name('.' + out_path.name + '.tmp')
-        df.to_parquet(tmp)
-        os.replace(tmp, out_path)
-        state_path.write_text(json.dumps({'next_block': nxt}))
+        save_bundle(bundle_path, rows, nxt, out_path)

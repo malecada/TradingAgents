@@ -61,3 +61,30 @@ def test_fetch_retries_a_failed_page():
         return json.dumps([[t, '0', '0', '0', '100', '0', 0, '0'] for t in range(ms, min(stop, ms + 1000 * 60000), 60000)]).encode()
     s = minutes.fetch(flaky, 'ETHUSDT', '2023-01-01', '2023-01-01 01:00', sleep=lambda x: None, retries=[1])
     assert len(s) == 60 and calls['n'] == 2
+
+
+def test_pre_windows_exclude_block_minute_and_placebo_gap_over_all_events():
+    idx = pd.date_range('2023-06-01', periods=3 * 24 * 60, freq='min')
+    closes = pd.Series(100.0, index=idx)
+    e = pd.Timestamp('2023-06-01 10:00')
+    closes.loc[e:] = 110.0                                     # the block minute itself already moved
+    r = minutes.responses(pd.DatetimeIndex([e]), closes, {**CFG['minutes'], 'block': 1})
+    assert np.isclose(r['pre_ret']['mean'], 0.0) and np.isclose(r['ret1']['mean'], 0.0)
+    noisy = pd.Series(100 * np.exp(np.cumsum(np.random.default_rng(4).normal(0, 1e-4, len(idx)))), index=idx)
+    noisy.loc[e:] *= 1.5                                       # a persistent jump at the block minute
+    r2 = minutes.responses(pd.DatetimeIndex([e]), noisy, {**CFG['minutes'], 'block': 1})
+    assert abs(r2['vol5']['mean']) < 3.0                       # the spike is not in the pre-event baseline
+    ev = pd.DataFrame({'minute': [e], 'direction': [1], 'tier': [1], 'token': [1]})
+    other = pd.DatetimeIndex([pd.Timestamp('2023-06-02 10:30')])
+    pl = minutes.placebo(ev, closes, CFG['minutes'], exclude=other.append(pd.DatetimeIndex([e])))
+    assert all(abs((p - o).total_seconds()) >= 3600 for p in pl for o in list(other) + [e])
+
+
+def test_placebo_is_fast_at_scale():
+    import time
+    idx = pd.date_range('2023-01-01', periods=365 * 24 * 60, freq='min')
+    closes = pd.Series(100.0, index=idx)
+    ev = pd.DataFrame({'minute': idx[::120][:3000], 'direction': 1, 'tier': 1, 'token': 1})
+    t = time.time()
+    pl = minutes.placebo(ev, closes, CFG['minutes'], exclude=pd.DatetimeIndex(ev['minute']))
+    assert time.time() - t < 10 and len(pl) == 3000
