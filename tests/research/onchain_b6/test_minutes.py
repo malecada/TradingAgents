@@ -47,3 +47,17 @@ def test_response_alignment_and_placebo_gap():
     ev = pd.DataFrame({'minute': [e], 'direction': [1], 'tier': [1], 'token': [1]})
     pl = minutes.placebo(ev, closes, CFG['minutes'])
     assert len(pl) == 1 and pl[0].hour == 10 and abs((pl[0] - e).total_seconds()) >= 3600
+
+
+def test_fetch_retries_a_failed_page():
+    calls = {'n': 0}
+    stop = int(pd.Timestamp('2023-01-01 01:00', tz='UTC').timestamp() * 1000)
+
+    def flaky(url):
+        calls['n'] += 1
+        if calls['n'] == 1:
+            raise OSError('timed out')
+        ms = int(url.split('startTime=')[1].split('&')[0])
+        return json.dumps([[t, '0', '0', '0', '100', '0', 0, '0'] for t in range(ms, min(stop, ms + 1000 * 60000), 60000)]).encode()
+    s = minutes.fetch(flaky, 'ETHUSDT', '2023-01-01', '2023-01-01 01:00', sleep=lambda x: None, retries=[1])
+    assert len(s) == 60 and calls['n'] == 2

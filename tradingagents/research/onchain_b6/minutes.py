@@ -11,16 +11,18 @@ import numpy as np
 import pandas as pd
 
 from ..onchain_b4.screen4 import interval
+from ..onchain_b5.deribit import with_retries
 
 URL = 'https://api.binance.com/api/v3/klines?symbol={symbol}&interval=1m&startTime={ms}&limit=1000'
 MIN_MS = 60_000
 
 
-def fetch(get, symbol, start, end, sleep=time.sleep, pause=0.05):
+def fetch(get, symbol, start, end, sleep=time.sleep, pause=0.05, retries=(5, 30, 120)):
     ms, stop = int(pd.Timestamp(start, tz='UTC').timestamp() * 1000), int(pd.Timestamp(end, tz='UTC').timestamp() * 1000)
     vals = {}
     while ms < stop:
-        rows = json.loads(get(URL.format(symbol=symbol, ms=ms)))
+        url = URL.format(symbol=symbol, ms=ms)
+        rows = json.loads(with_retries(lambda: get(url), list(retries), sleep))
         for k in rows:
             if k[0] < stop:
                 vals[int(k[0])] = float(k[4])
