@@ -16,6 +16,9 @@ B5-CP1 (2026-10-19) — data stored, no unavailable day:
   and 2021-09-29 (Binance gaps; those expiries are excluded).
 - Tron probe: go, labels-only via SQD (`TRON_PROBE.md`).
 
+B5-CP2 (2026-10-19) — decision tables: BTC_S24 1985 rows (neg raw spread 38%); BTC_S6 1987 rows (neg raw spread 41%); ETH_S24 1980 rows (neg raw spread 32%); ETH_S6 1983 rows (neg raw spread 33%). Eligible decisions per
+year 2022–2025: 356–366; 2021 from April; 2026 to 12 October.
+
 Next safe action: implement plan tasks 2–8; fetch option trades, DVOL and BTC bars
 (B5-CP1); decision tables (B5-CP2); forecast comparison and backtests (B5-CP3); event
 study, Tron probe, `RESULTS.md` (B5-CP4).
