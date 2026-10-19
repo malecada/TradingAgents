@@ -101,25 +101,29 @@ def pass_complete():
 
 
 def _load_state(c):
+    # one atomic bundle: label first-seen tables, Bloom bits and last_day change together on resume
     doc = labels6.load(ARTIFACTS / 'labels' / 'labels6.json')
-    sp, bp, mp = ARTIFACTS / 'state' / 'labels_state.npz', ARTIFACTS / 'state' / 'bloom.npy', ARTIFACTS / 'state' / 'meta.json'
     st_c = c['structure']
-    if sp.exists() and bp.exists() and mp.exists():
-        st = LabelState.load(sp, doc, c['issuer']['usdt_treasury'])
-        bloom = Bloom(st_c['bloom_bits_log2'], st_c['bloom_hashes'])
-        bloom.bits = np.load(bp)
-        return st, bloom, json.loads(mp.read_text())['last_day']
-    return LabelState(doc, c['issuer']['usdt_treasury']), Bloom(st_c['bloom_bits_log2'], st_c['bloom_hashes']), None
+    st = LabelState(doc, c['issuer']['usdt_treasury'])
+    bloom = Bloom(st_c['bloom_bits_log2'], st_c['bloom_hashes'])
+    p = ARTIFACTS / 'state' / 'state.npz'
+    if not p.exists():
+        return st, bloom, None
+    z = np.load(p)
+    st.ex_first = z['ex_first'].copy()
+    for cname in labels6.CLASSES:
+        st.cls_first[cname] = z[f'cls_first_{cname}'].copy()
+    bloom.bits = z['bits'].copy()
+    return st, bloom, str(z['last_day'][0]) or None
 
 
 def _save_state(st, bloom, last_day):
     d = ARTIFACTS / 'state'
     d.mkdir(parents=True, exist_ok=True)
-    st.save(d / 'labels_state.npz')
-    tmp = d / '.bloom.tmp.npy'
-    np.save(tmp, bloom.bits)
-    os.replace(tmp, d / 'bloom.npy')
-    _write_json(d / 'meta.json', {'last_day': last_day})
+    tmp = d / '.state.tmp.npz'
+    np.savez(tmp, ex_first=st.ex_first, **{f'cls_first_{cname}': st.cls_first[cname] for cname in labels6.CLASSES},
+             bits=bloom.bits, last_day=np.array([last_day or '']))
+    os.replace(tmp, d / 'state.npz')
 
 
 def stage_pass(args):

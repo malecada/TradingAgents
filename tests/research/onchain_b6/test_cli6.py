@@ -49,7 +49,8 @@ def test_pass_writes_rows_large_and_activates(tmp_path, monkeypatch):
     h = pd.read_parquet(art / 'hours' / '2017-01-03.parquet')
     assert len(h) == 24 and h['tk_usdt_in'].iloc[0] == 2e6            # X active from day 2 on
     assert pd.read_parquet(art / 'hours' / '2017-01-01.parquet')['tk_usdt_in'].iloc[0] == 0.0
-    assert (art / 'large' / '2017-01-03.parquet').exists() and (art / 'state' / 'labels_state.npz').exists()
+    assert (art / 'large' / '2017-01-03.parquet').exists() and (art / 'state' / 'state.npz').exists()
+    assert not (art / 'state' / 'bloom.npy').exists()                     # one atomic bundle, not three files
     assert cli.pass_complete()
 
 

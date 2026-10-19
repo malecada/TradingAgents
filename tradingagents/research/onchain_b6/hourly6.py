@@ -44,7 +44,8 @@ def day_rows(day, d, state, bloom, cfg):
         row[col['is_usdt_treasury_out']] = amt[(src == state.treasury_key) & (tok == 1)].sum()
         row[col['is_usdt_treasury_in']] = amt[(dst == state.treasury_key) & (tok == 1)].sum()
         ex_s, ex_d = state.is_exchange(src), state.is_exchange(dst)
-        dep, wd = ~ex_s & ex_d, ex_s & ~ex_d
+        issuer = (src == state.treasury_key) | (dst == state.treasury_key)       # issuance delivery is not a flow
+        dep, wd = ~ex_s & ex_d & ~issuer, ex_s & ~ex_d & ~issuer
         for code, name in TOKENS.items():
             row[col[f'tk_{name}_in']] = amt[dep & (tok == code)].sum()
             row[col[f'tk_{name}_out']] = amt[wd & (tok == code)].sum()
@@ -66,14 +67,14 @@ def day_rows(day, d, state, bloom, cfg):
                 new = ~bloom.contains(cp[idx])
                 ent = np.where(direction == 1, ent_d[idx], ent_s[idx])
                 large += [{'ts': int(d.ts[m][tr][i]), 'token': int(tok[i]), 'amount': float(amt[i]), 'direction': direction,
-                           'entity': int(ent[j]), 'cp_new': bool(new[j])} for j, i in enumerate(idx)]
+                           'entity': int(ent[j]), 'cp_new': bool(new[j]), 'cp': int(cp[i])} for j, i in enumerate(idx)]
         keys = np.unique(np.concatenate([src, dst]))
         bloom.add(keys)
         seen_today.append(keys)
     if seen_today:
         state.observe(np.concatenate(seen_today), day_ord(day))
     rows = pd.DataFrame(out, columns=COLUMNS, index=pd.date_range(day, periods=24, freq='h'))
-    cols = ['ts', 'token', 'amount', 'direction', 'entity', 'cp_new']
-    types = ('int64', 'int64', 'float64', 'int64', 'int64', 'bool')
+    cols = ['ts', 'token', 'amount', 'direction', 'entity', 'cp_new', 'cp']
+    types = ('int64', 'int64', 'float64', 'int64', 'int64', 'bool', 'uint64')
     lg = pd.DataFrame(large, columns=cols) if large else pd.DataFrame({c: pd.Series(dtype=t) for c, t in zip(cols, types)})
     return rows, lg.astype(dict(zip(cols, types)))

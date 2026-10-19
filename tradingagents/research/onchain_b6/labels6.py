@@ -25,6 +25,15 @@ def _stem(name):
     return (name or '').split(':')[0].split(' ')[0].strip().lower()
 
 
+def canon(name):
+    """Canonical entity: lower-case first token after '-', '.', '_' and ':' become spaces
+    ('Binance 14', 'binance', 'Coinbase Prime', 'crypto.com', 'celsius-network' -> binance, coinbase, crypto, celsius)."""
+    t = (name or '').lower()
+    for ch in '-._:':
+        t = t.replace(ch, ' ')
+    return t.split()[0] if t.split() else ''
+
+
 def parse_sql_addresses(text):
     return [(a.lower(), n) for a, n in re.findall(r"(0x[0-9a-fA-F]{40})\s*,\s*'([^']+)'", text)]
 
@@ -32,7 +41,7 @@ def parse_sql_addresses(text):
 def classify(b2, eth_rows, spell_bridges, spell_funds, cfg):
     L = cfg['labels']
     stems = ({_stem(v.get('name')) for v in b2.values()} - {''}) | set(L['exchange_labels'])
-    exchange = {a.lower(): v.get('name') or '' for a, v in b2.items()}
+    exchange = {a.lower(): canon(v.get('name')) or 'unknown' for a, v in b2.items()}
     cls = {c: set() for c in CLASSES}
     for r in eth_rows:
         if r.get('chainId', '1') != '1':
@@ -42,7 +51,7 @@ def classify(b2, eth_rows, spell_bridges, spell_funds, cfg):
             continue
         tl = tag.lower()
         if lab in stems or lab.replace('-', ' ') in stems or lab.replace('-', '.') in stems:
-            exchange.setdefault(a, lab)
+            exchange.setdefault(a, canon(lab))
         elif lab == 'dex' or 'router' in tl:
             cls['dex'].add(a)
         elif lab == 'bridge' or 'bridge' in tl:
@@ -53,8 +62,9 @@ def classify(b2, eth_rows, spell_bridges, spell_funds, cfg):
             cls['funds'].add(a)
     cls['bridge'] |= {a for a, _ in spell_bridges}
     cls['funds'] |= {a for a, _ in spell_funds}
+    exchange.pop(cfg['issuer']['usdt_treasury'].lower(), None)        # the issuer is neither an exchange nor a class
     for c in CLASSES:
-        cls[c] -= set(exchange)
+        cls[c] -= set(exchange) | {cfg['issuer']['usdt_treasury'].lower()}
     return {'exchange': dict(sorted(exchange.items())), **{c: sorted(cls[c]) for c in CLASSES},
             'issuer': {'usdt_treasury': cfg['issuer']['usdt_treasury']}}
 

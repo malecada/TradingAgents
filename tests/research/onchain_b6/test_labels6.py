@@ -21,7 +21,7 @@ def _rows():
 def test_classify_precedence_and_sources():
     b2 = {G: {'name': 'Kraken 4', 'added': None, 'sources': ['spellbook']}}
     doc = labels6.classify(b2, _rows(), [(E, 'Arbitrum: Bridge'), (F, 'Other: Bridge')], [(D, 'Wintermute Trading')], CFG)
-    assert doc['exchange'] == {G: 'Kraken 4', A: 'binance', B: 'coinbase'}
+    assert doc['exchange'] == {G: 'kraken', A: 'binance', B: 'coinbase'}            # canonical entity names
     assert doc['dex'] == [] and doc['mev'] == [C] and doc['funds'] == [D]
     assert doc['bridge'] == [E, F]                                 # spellbook bridge on another chain still an address
     assert doc['issuer']['usdt_treasury'] == CFG['issuer']['usdt_treasury']
@@ -58,3 +58,20 @@ def test_empty_class_lookup_is_all_false():
     k = np.array([1, 2], np.uint64)
     assert st.in_class('dex', k).tolist() == [False, False] and st.is_exchange(k).tolist() == [False, False]
     assert st.entity_of(k).tolist() == [-1, -1]
+
+
+def test_entity_names_are_canonical_and_treasury_excluded():
+    tre = CFG['issuer']['usdt_treasury']
+    b2 = {G: {'name': 'Kraken 4'}, tre: {'name': 'Bitfinex: Treasury'}, F: {'name': 'Coinbase Prime'}}
+    rows = [{'address': A, 'chainId': '1', 'label': 'kraken', 'nameTag': 'Kraken 9'},
+            {'address': B, 'chainId': '1', 'label': 'coinbase', 'nameTag': 'Coinbase 3'},
+            {'address': C, 'chainId': '1', 'label': 'celsius-network', 'nameTag': 'Celsius Network: Wallet'}]
+    doc = labels6.classify(b2, rows, [], [], CFG)
+    assert tre not in doc['exchange']
+    assert doc['exchange'] == {G: 'kraken', A: 'kraken', B: 'coinbase', F: 'coinbase', C: 'celsius'}
+    st = labels6.LabelState(doc, tre)
+    kg, ka = addr_keys(np.array([G, A], object))
+    st.observe(np.array([kg, ka], np.uint64), 0)
+    st.begin_day(1)
+    e = st.entity_of(np.array([kg, ka], np.uint64))
+    assert e[0] == e[1] and st.entity_names[e[0]] == 'kraken'

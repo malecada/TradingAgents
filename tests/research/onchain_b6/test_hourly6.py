@@ -46,10 +46,11 @@ def test_day_rows_flows_issuance_large_and_bloom():
     assert h['tk_usdt_in'].iloc[0] == 2e6 and h['tk_usdc_out'].iloc[0] == 5e5
     assert h['cl_dex_eth_in'].iloc[0] == 3.0 and h['cl_mev_stable_out'].iloc[0] == 100.0
     assert h['is_usdc_mint'].iloc[1] == 7e6 and h['is_dai_burn'].iloc[1] == 1e6 and h['is_usdt_treasury_out'].iloc[1] == 3e7
-    assert h['tk_usdt_in'].iloc[1] == 3e7 and h['gs_cex_cex_usd'].iloc[2] == 50.0
+    assert h['tk_usdt_in'].iloc[1] == 0.0 and h['gs_cex_cex_usd'].iloc[2] == 50.0        # issuance delivery is not a deposit
     assert h['gs_active'].iloc[1] == 2.0                                   # mint/burn rows are not graph edges
-    assert sorted(zip(large['direction'], large['amount'])) == [(1, 600.0), (1, 2e6), (1, 3e7)]
-    assert large['entity'].tolist() == [st.entity_names.index('okx')] * 3 and large['cp_new'].tolist()[0] == False
+    assert sorted(zip(large['direction'], large['amount'])) == [(1, 600.0), (1, 2e6)]           # no treasury record
+    assert large['entity'].tolist() == [st.entity_names.index('okx')] * 2 and large['cp_new'].tolist()[0] == False
+    assert large['cp'].tolist() == [K['A'], K['A']]
     assert h['gs_new_share'].iloc[0] > 0 and bloom.contains(np.array([K['B']], np.uint64)).all()
 
 
