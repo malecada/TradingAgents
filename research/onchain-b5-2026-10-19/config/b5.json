@@ -1,0 +1,23 @@
+{
+ "window": {"start": "2021-03-24", "end": "2026-10-12"},
+ "assets": ["ETH", "BTC"],
+ "binance": {"ETH": "ETHUSDT", "BTC": "BTCUSDT", "start": "2017-08-17", "end": "2026-10-13"},
+ "deribit": {"trades_url": "https://history.deribit.com/api/v2/public/get_last_trades_by_currency_and_time",
+             "dvol_url": "https://www.deribit.com/api/v2/public/get_volatility_index_data",
+             "count": 1000, "retries": [10, 60], "pause": 0.05},
+ "schedules": {"S6": {"hour": 2, "tau_h": 6, "expiry_days": 0}, "S24": {"hour": 8, "tau_h": 24, "expiry_days": 1}},
+ "implied": {"lookback_h": 2, "moneyness": 0.02, "min_trades": 3, "spread_window": 30},
+ "flow_prefixes": ["eth_", "stable_"],
+ "sets": {"M0": ["h0_", "px_"], "M1": ["h0_", "px_", "mk_"], "M2": ["h0_", "px_", "mk_", "eth_", "stable_"], "IV": ["mk_iv"]},
+ "comparisons": [["M1", "M0"], ["M2", "M1"], ["M2", "IV"]],
+ "families": ["linear", "trees"],
+ "folds": {"test_years": [2022, 2023, 2024, 2025, 2026], "inner_len": 365, "min_train": 30},
+ "groups": {"2022-24": [2022, 2023, 2024], "2025-26": [2025, 2026]},
+ "models": {"alphas": [0.1, 1, 10, 100, 1000, 10000, 100000], "fallback_alpha": 100.0,
+            "trees": {"max_iter": 100, "learning_rate": 0.05, "max_leaf_nodes": 7, "min_samples_leaf": 30,
+                      "l2_regularization": 1.0, "random_state": 11}},
+ "gate": {"draws": 2000, "seed": 20261019, "block": 20, "chunk": 100},
+ "straddle": {"thetas": [0.05, 0.10, 0.20], "fee_rate": 0.0003, "fee_cap": 0.125, "variants": ["M1", "M2"]},
+ "events": {"z": 3.0, "spacing_h": 24, "kmax": 12, "test_years": [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026],
+            "inner_len": 8760, "placebo_seed": 20261019, "iv_min_ahead_h": 2, "z_window": 168, "z_min": 120}
+}
