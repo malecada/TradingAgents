@@ -69,3 +69,11 @@ def test_bundle_is_single_file_and_empty_responses_stop(tmp_path):
     with pytest.raises(SystemExit, match='no blocks'):
         tron.run(post, [lab], tmp_path / 'bundle.npz', tmp_path / 'hourly.parquet', cfg, sleep=lambda s: None)
     assert len(calls) == 3
+
+
+def test_backoff_keeps_waiting_at_the_last_value():
+    slept = []
+    b = tron.Backoff([1, 2], slept.append)
+    for _ in range(5):
+        b.wait()
+    assert slept == [1, 2, 2, 2, 2]

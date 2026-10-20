@@ -63,9 +63,8 @@ class Backoff:
         self.waits, self.sleep, self.i = list(waits), sleep, 0
 
     def wait(self):
-        if self.i >= len(self.waits):
-            raise SystemExit('tron stream: back-off exhausted')
-        self.sleep(self.waits[self.i])
+        # a persistently throttled portal is waited out at the longest interval, never abandoned
+        self.sleep(self.waits[min(self.i, len(self.waits) - 1)])
         self.i += 1
 
     def reset(self):
