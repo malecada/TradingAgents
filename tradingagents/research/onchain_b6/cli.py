@@ -196,8 +196,9 @@ def stage_tron(args):
     c = config.load()
     lab = json.loads((ARTIFACTS / 'labels' / 'tron_labels.json').read_text())['hex']
     (ARTIFACTS / 'tron').mkdir(parents=True, exist_ok=True)
+    log = Log(ARTIFACTS / 'logs' / 'tron.jsonl')
     tron.run(lambda body: post_json(c['tron']['url'], body), lab, ARTIFACTS / 'tron' / 'bundle.npz',
-             ARTIFACTS / 'tron' / 'hourly.parquet', c)
+             ARTIFACTS / 'tron' / 'hourly.parquet', c, log=log.event)
     print('tron stream complete')
 
 

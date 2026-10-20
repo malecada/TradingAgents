@@ -100,7 +100,7 @@ def save_bundle(path, rows, next_block, out_path):
     os.replace(tmp2, out_path)
 
 
-def run(post, labels_hex, bundle_path, out_path, cfg, sleep=time.sleep, stop_block=None):
+def run(post, labels_hex, bundle_path, out_path, cfg, sleep=time.sleep, stop_block=None, log=None):
     t = cfg['tron']
     tops = ['0' * 24 + h for h in labels_hex]
     label_set = set(labels_hex)
@@ -118,12 +118,17 @@ def run(post, labels_hex, bundle_path, out_path, cfg, sleep=time.sleep, stop_blo
         for key in ('topic2', 'topic1'):
             cur = frm
             while cur <= to:
+                t0 = time.time()
                 try:
                     blocks = parse_lines(post(_body(cfg, cur, to, key, tops)))
-                except Overloaded:
+                except Overloaded as e:
+                    if log:
+                        log(event='overloaded', status=e.status, block=cur, wait=back.waits[min(back.i, len(back.waits) - 1)])
                     back.wait()
                     continue
                 back.reset()
+                if log:
+                    log(event='request', key=key, frm=cur, to=to, blocks=len(blocks), seconds=round(time.time() - t0, 1))
                 if not blocks:
                     empties += 1
                     if empties >= 3:
