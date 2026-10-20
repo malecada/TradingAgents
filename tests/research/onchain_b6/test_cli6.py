@@ -70,3 +70,17 @@ def test_unavailable_day_marked_and_features_refuse_incomplete(tmp_path, monkeyp
     assert (art / 'hours' / '2017-01-02.unavailable.json').exists()
     with pytest.raises(SystemExit, match='pass incomplete'):
         cli.main(['features'])
+
+
+def test_market_skips_assets_already_stored(tmp_path, monkeypatch):
+    art = _setup(tmp_path, monkeypatch)
+    (art / 'market').mkdir(parents=True)
+    pd.DataFrame({'close': [1.0]}, index=pd.DatetimeIndex(['2023-01-01'])).to_parquet(art / 'market' / 'minutes_ETH.parquet')
+    fetched = []
+
+    def fake(get, symbol, start, end, **kw):
+        fetched.append(symbol)
+        return pd.Series([1.0], index=pd.DatetimeIndex(['2023-01-01']), name='close')
+    monkeypatch.setattr(cli.minutes, 'fetch', fake)
+    cli.main(['market'])
+    assert fetched == ['BTCUSDT']

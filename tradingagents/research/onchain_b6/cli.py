@@ -85,6 +85,8 @@ def stage_market(args):
     c = config.load()['minutes']
     (ARTIFACTS / 'market').mkdir(parents=True, exist_ok=True)
     for asset, sym in c['symbols'].items():
+        if (ARTIFACTS / 'market' / f'minutes_{asset}.parquet').exists():      # resume after an interruption
+            continue
         s = minutes.fetch(market.http_get, sym, c['start'], c['end'])
         s.to_frame().to_parquet(ARTIFACTS / 'market' / f'minutes_{asset}.parquet')
         print(json.dumps({'asset': asset, 'minutes': len(s), 'first': str(s.index.min()), 'last': str(s.index.max())}))
