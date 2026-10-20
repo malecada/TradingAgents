@@ -72,10 +72,12 @@ class Backoff:
         self.i = 0
 
 
-def _body(cfg, frm, to, key, tops):
+def _body(cfg, frm, to, tops):
+    """One request per range: transfers to (topic2) or from (topic1) a labelled address."""
     t = cfg['tron']
+    base = {'address': [t['usdt']], 'topic0': [t['topic0']]}
     return {'type': 'tron', 'fromBlock': frm, 'toBlock': to,
-            'logs': [{'address': [t['usdt']], 'topic0': [t['topic0']], key: tops}],
+            'logs': [{**base, 'topic2': tops}, {**base, 'topic1': tops}],
             'fields': {'block': {'number': True, 'timestamp': True}, 'log': {'topics': True, 'data': True}}}
 
 
@@ -115,39 +117,36 @@ def run(post, labels_hex, bundle_path, out_path, cfg, sleep=time.sleep, stop_blo
         frm, to = nxt, nxt + t['chunk_blocks'] - 1
         if stop_block is not None:
             to = min(to, stop_block)
-        for key in ('topic2', 'topic1'):
-            cur = frm
-            while cur <= to:
-                t0 = time.time()
-                try:
-                    blocks = parse_lines(post(_body(cfg, cur, to, key, tops)))
-                except Overloaded as e:
-                    if log:
-                        log(event='overloaded', status=e.status, block=cur, wait=back.waits[min(back.i, len(back.waits) - 1)])
-                    back.wait()
-                    continue
-                back.reset()
+        cur = frm
+        while cur <= to:
+            if t.get('pause', 0) > 0:
+                sleep(t['pause'])                                  # the keyless portal throttles bursts
+            t0 = time.time()
+            try:
+                blocks = parse_lines(post(_body(cfg, cur, to, tops)))
+            except Overloaded as e:
                 if log:
-                    log(event='request', key=key, frm=cur, to=to, blocks=len(blocks), seconds=round(time.time() - t0, 1))
-                if not blocks:
-                    empties += 1
-                    if empties >= 3:
-                        raise SystemExit(f'tron stream: no blocks returned three times from block {cur}; head reached or portal empty')
-                    cur = to + 1
-                    break
-                empties = 0
-                for hour, agg in aggregate(blocks, label_set, t['big_usd']).items():
-                    r = rows.setdefault(hour, {c: 0.0 for c in COLS})
-                    if key == 'topic2':
-                        for c in ('tron_in_val', 'tron_in_cnt', 'tron_big_in'):
-                            r[c] += agg[c]
-                    else:
-                        for c in ('tron_out_val', 'tron_out_cnt'):
-                            r[c] += agg[c]
-                last = blocks[-1]['header']
-                if int(last['timestamp']) >= end_ms:
-                    done = True
-                cur = int(last['number']) + 1
+                    log(event='overloaded', status=e.status, block=cur, wait=back.waits[min(back.i, len(back.waits) - 1)])
+                back.wait()
+                continue
+            back.reset()
+            if log:
+                log(event='request', frm=cur, to=to, blocks=len(blocks), seconds=round(time.time() - t0, 1))
+            if not blocks:
+                empties += 1
+                if empties >= 3:
+                    raise SystemExit(f'tron stream: no blocks returned three times from block {cur}; head reached or portal empty')
+                cur = to + 1
+                break
+            empties = 0
+            for hour, agg in aggregate(blocks, label_set, t['big_usd']).items():
+                r = rows.setdefault(hour, {c: 0.0 for c in COLS})
+                for c in COLS:
+                    r[c] += agg[c]
+            last = blocks[-1]['header']
+            if int(last['timestamp']) >= end_ms:
+                done = True
+            cur = int(last['number']) + 1
         nxt = to + 1
         if stop_block is not None and nxt > stop_block:
             done = True

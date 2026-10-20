@@ -48,10 +48,11 @@ def test_stream_continues_partial_and_backs_off(tmp_path):
         lines = [_block(n, t0 + (n - 20000000) * 3000, [_log('a' * 40, lab, 1.0)] if 'topic2' in body['logs'][0] else []) for n in range(frm, last + 1)]
         return b'\n'.join(lines)
     cfg = json.loads(json.dumps(CFG))
-    cfg['tron'].update({'start_block': 20000000, 'chunk_blocks': 4, 'backoff': [1, 2]})
+    cfg['tron'].update({'start_block': 20000000, 'chunk_blocks': 4, 'backoff': [1, 2], 'pause': 0})
     tron.run(post, [lab], tmp_path / 'bundle.npz', tmp_path / 'hourly.parquet', cfg, sleep=slept.append, stop_block=20000007)
     out = pd.read_parquet(tmp_path / 'hourly.parquet')
     assert out['tron_in_cnt'].sum() == 8 and slept[0] == 1
+    assert all(len(b['logs']) == 2 and 'topic2' in b['logs'][0] and 'topic1' in b['logs'][1] for b in calls)   # one combined request
     import numpy as np
     assert int(np.load(tmp_path / 'bundle.npz')['next_block']) == 20000008 and not (tmp_path / 'state.json').exists()
 
@@ -64,7 +65,7 @@ def test_bundle_is_single_file_and_empty_responses_stop(tmp_path):
         calls.append(body)
         return b''                                                 # nothing returned at all
     cfg = json.loads(json.dumps(CFG))
-    cfg['tron'].update({'start_block': 20000000, 'chunk_blocks': 4, 'backoff': [1]})
+    cfg['tron'].update({'start_block': 20000000, 'chunk_blocks': 4, 'backoff': [1], 'pause': 0})
     with pytest.raises(SystemExit, match='no blocks'):
         tron.run(post, [lab], tmp_path / 'bundle.npz', tmp_path / 'hourly.parquet', cfg, sleep=lambda s: None)
     assert len(calls) == 3
