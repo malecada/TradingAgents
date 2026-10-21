@@ -30,6 +30,13 @@ tables: 85,704 hours, 39 raw series → 78 B6 columns + 22 B4 flow columns (trac
 option-market columns (track B). Tron block not run (stream at ≈ 2021 after
 portal throttling; reported as not run per spec §7).
 
+B6-CP3 (2026-10-21) — forecast comparisons run once (`TABLES.md`): 48 rows (track A
+16, track B 32 over two groups). Pre-declared criteria met only by the flows block
+against the option-market baseline for next-6-hour volatility (track B, X1 vs X0, both
+families); structure (X2) and entity detail (X3, X4) pass nowhere; linear models with the
+entity block are far worse in track A. Event study run once: 100,078 events. Tron stream
+stopped at ≈ 2021 (portal throttled); block reported as not run.
+
 Next safe action: implement plan tasks 2–9; freeze labels and fetch 1-minute bars
 (B6-CP1); run the pass and the Tron stream (B6-CP2); forecasts (B6-CP3); events and
 `RESULTS.md` (B6-CP4).
