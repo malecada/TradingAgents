@@ -37,6 +37,12 @@ families); structure (X2) and entity detail (X3, X4) pass nowhere; linear models
 entity block are far worse in track A. Event study run once: 100,078 events. Tron stream
 stopped at ≈ 2021 (portal throttled); block reported as not run.
 
-Next safe action: implement plan tasks 2–9; freeze labels and fetch 1-minute bars
-(B6-CP1); run the pass and the Tron stream (B6-CP2); forecasts (B6-CP3); events and
-`RESULTS.md` (B6-CP4).
+B6-CP4 (2026-10-21) — `RESULTS.md`: structure (X2) and entity detail (X3, X4) pass no
+criterion in either track; the flow block passes against the option-market baseline for
+next-6-hour volatility (2–4 % of error, both families, both periods); the linear entity
+rows in track A are a first-fold extrapolation artefact (diagnostics.txt); 100,078
+minute-level events show no return, no anticipation and no volatility reaction beyond
+coinciding with active periods; Tron not run.
+
+B6 is closed: negative for graph structure and entity detail. The on-chain graph line of
+the programme is closed (M2, B2, B3, B4, B5, B6).
