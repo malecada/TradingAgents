@@ -22,6 +22,14 @@ minutes (exchange outages). Pass running (`onchain-b6-pass`, resumable; interrup
 two reboots and resumed from snapshots); Tron stream running but portal-throttled
 (≈ 25 days of blocks per hour), expected not to finish before the forecast stage.
 
+B6-CP2 (2026-10-21 03:40) — pass complete: 3,570 days built, 1 unavailable (2020-11-01,
+no token_transfers partition); 23.6 s per day on average, peak 6.2 GB; three watchdog
+restarts and two reboot resumes, all from snapshots. Large transfers (≥ $1M stablecoin
+or ≥ 500 ETH to or from an exchange): 2.65M records (2021 341k … 2025 574k). Feature
+tables: 85,704 hours, 39 raw series → 78 B6 columns + 22 B4 flow columns (track A) + 3
+option-market columns (track B). Tron block not run (stream at ≈ 2021 after
+portal throttling; reported as not run per spec §7).
+
 Next safe action: implement plan tasks 2–9; freeze labels and fetch 1-minute bars
 (B6-CP1); run the pass and the Tron stream (B6-CP2); forecasts (B6-CP3); events and
 `RESULTS.md` (B6-CP4).
