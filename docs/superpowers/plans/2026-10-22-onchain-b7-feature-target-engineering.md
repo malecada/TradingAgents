@@ -801,7 +801,7 @@ def test_predict_compare_criteria_and_report():
     sa = F.samples('A', ta.drop(columns=['mk_iv']), ya, cfg)
     P, meta = F.predict_all(sa, 'V6', 'A', cfg)
     assert {'ridge:X0', 'trees_es:Y2', 'trees_fixed:Y2', 'y', 'const', 'tested'} <= set(P.columns)
-    assert P['tested'].sum() == (sa.index.year >= 2020).sum() - 1                   # the last V6 row is NaN
+    assert P['tested'].sum() == (sa.index.year >= 2020).sum()                       # every test-year row is tested (last row 2024-12-31 00:00 keeps V6)
     assert set(meta['trees_es:Y2']) == {2020, 2021, 2022, 2023, 2024} and meta['trees_es:Y2'][2022]['n_iter'] >= 5
     res = F.compare(P, 'V6', 'A', cfg)
     assert len(res) == 11
