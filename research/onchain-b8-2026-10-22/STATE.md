@@ -38,3 +38,11 @@ tokens per hour. Forecast unit `onchain-b8-forecast` launched (9 GiB cap, resuma
 2026-10-23 00:55 — First forecast unit OOM-killed at 00:43 after 2.5 h of swap thrashing (8.8 GB RSS
 during the ridge fits; no unit file written, nothing read). Stage changed to load one target at a
 time with only the needed columns and to release memory between fits; relaunched under an 8 GiB cap.
+
+2026-10-23 01:35 — Forecast stage: four launches ended in OOM kills (00:43 after 2.5 h of swap
+thrashing on the full sample frame; 00:49 at the 2026 fold from per-fold mask copies; 01:16 after
+the V6 unit finished, at the panel reload for V24; 01:22 in the pandas conversion with the system
+allocator). Fixes, each with a test: one float32 matrix per target with fold slices as views; the
+panel read column by column from the arrow file into arrays, no pandas frame; freed arenas
+released between fits. Fifth launch 01:31: lifetime peak 4.7 GB, cgroup charge 3.4 GB, V6 unit
+(24 min, from the third launch) kept by the per-target resume; V24 and XV24 running.
