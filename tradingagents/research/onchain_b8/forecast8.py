@@ -42,37 +42,66 @@ def samples(panel, cfg):
     return df
 
 
-def predict_all(df, target, cfg, log=None):
+def bundle(d, target, cfg):
+    """Arrays for one target from a filtered, hour-sorted frame: one float32 matrix of every
+    feature column (sets are column subsets of it), the target, the token and the index."""
+    cols = columns(d, needed_columns(cfg))
+    return {'X': d[cols].to_numpy(np.float32), 'cols': cols, 'y': d[target].to_numpy(float),
+            'token': d['token'].to_numpy(), 'index': pd.DatetimeIndex(d.index)}
+
+
+def fold_slices(index, test_years, purge_days, min_train):
+    """B2's walk-forward folds as slices: on an hour-sorted index the training rows are a
+    prefix and the test rows one block, so no fold copies the matrix."""
+    out = []
+    for yr, tr, te in folds(index, test_years, purge_days):
+        n_tr = int(tr.sum())
+        if not te.any() or n_tr < min_train:
+            continue
+        te_pos = np.flatnonzero(te)
+        if not tr[:n_tr].all() or te_pos[-1] - te_pos[0] + 1 != len(te_pos):
+            raise ValueError('folds are not contiguous: the rows must be sorted by hour')
+        out.append((yr, slice(0, n_tr), slice(int(te_pos[0]), int(te_pos[-1]) + 1)))
+    return out
+
+
+def predict_bundle(b, target, cfg, log=None):
     fc = cfg['folds']
     h = cfg['targets'][target]['h']
-    ok = df[target].notna()
-    d = df if bool(ok.all()) else df[ok]                       # no copy when the caller already filtered
-    if not d.index.is_monotonic_increasing:
-        d = d.sort_index(kind='stable')
-    y = d[target].to_numpy(float)
-    fl = [(yr, tr, te) for yr, tr, te in folds(d.index, fc['test_years'], h / 24) if te.any() and tr.sum() >= fc['min_train']]
-    tested, const = np.zeros(len(d), bool), np.full(len(d), np.nan)
+    X_all, cols, y = b['X'], b['cols'], b['y']
+    fl = fold_slices(b['index'], fc['test_years'], h / 24, fc['min_train'])
+    tested, const = np.zeros(len(y), bool), np.full(len(y), np.nan)
     for _, tr, te in fl:
-        tested |= te
+        tested[te] = True
         const[te] = y[tr].mean()
     preds, meta = {}, {}
     for fam in cfg['families']:
         for s in cfg['sets']:
             key = f'{fam}:{s}'
-            X = d[columns(d, set_prefixes(s, cfg))].to_numpy(np.float32)
-            p, meta[key] = np.full(len(d), np.nan), {}
+            want = [c for c in cols if c.startswith(tuple(set_prefixes(s, cfg)))]
+            X = X_all if want == cols else np.ascontiguousarray(X_all[:, [cols.index(c) for c in want]])
+            p, meta[key] = np.full(len(y), np.nan), {}
             for yr, tr, te in fl:
                 info = {}
                 p[te] = fit_predict7(fam, 'regression', X[tr], y[tr], X[te], cfg, info)
                 meta[key][int(yr)] = info
                 if log is not None:
-                    log(event='fit', target=target, fit=key, year=int(yr), n_train=int(tr.sum()), **info)
+                    log(event='fit', target=target, fit=key, year=int(yr), n_train=int(tr.stop), **info)
             preds[key] = p
-            del X
-    P = pd.DataFrame(preds, index=d.index)
-    P['token'] = d['token'].to_numpy()
+            if X is not X_all:
+                del X
+    P = pd.DataFrame(preds, index=b['index'])
+    P['token'] = b['token']
     P['y'], P['const'], P['tested'] = y, const, tested
     return P, meta
+
+
+def predict_all(df, target, cfg, log=None):
+    ok = df[target].notna()
+    d = df if bool(ok.all()) else df[ok]                       # no copy when the caller already filtered
+    if not d.index.is_monotonic_increasing:
+        d = d.sort_index(kind='stable')
+    return predict_bundle(bundle(d, target, cfg), target, cfg, log)
 
 
 def _gain(loss, const):

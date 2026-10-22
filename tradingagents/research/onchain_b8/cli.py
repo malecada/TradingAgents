@@ -172,6 +172,11 @@ def _release():
     """Return freed arenas to the OS so the cgroup charge follows the live data."""
     gc.collect()
     try:
+        import pyarrow as pa
+        pa.default_memory_pool().release_unused()
+    except Exception:                                         # the pool may not support it
+        pass
+    try:
         ctypes.CDLL('libc.so.6').malloc_trim(0)
     except (OSError, AttributeError):
         pass
@@ -210,8 +215,11 @@ def stage_forecast(args):
         t0 = time.time()
         d = _samples_for(c, target)
         log.event(event='samples', target=target, rows=int(len(d)))
-        P, meta = forecast8.predict_all(d, target, c, log=log.event)
-        del d
+        b = forecast8.bundle(d, target, c)
+        del d                                                  # only the float32 matrix stays in memory
+        _release()
+        P, meta = forecast8.predict_bundle(b, target, c, log=log.event)
+        del b
         _release()
         res = forecast8.compare(P, target, c)
         P.to_parquet(out / f'pred_{target}.parquet')

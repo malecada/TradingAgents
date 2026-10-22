@@ -66,3 +66,20 @@ def test_predict_all_prefiltered_sorted_input_gives_identical_predictions():
     P2, _ = F.predict_all(d, 'V6', {**SMALL, 'families': ['ridge']})
     pd.testing.assert_frame_equal(P1, P2)
     assert F.needed_columns(SMALL, p) == sorted(set(['token'] + [c for c in p.columns if c.startswith(tuple(F.set_prefixes('P2', SMALL)))] + list(SMALL['targets'])))
+
+
+def test_bundle_predictions_match_frame_path_and_folds_are_slices():
+    rng = np.random.default_rng(34)
+    p = _panel(rng)
+    s = F.samples(p, SMALL)
+    cfg = {**SMALL, 'families': ['ridge']}
+    P1, _ = F.predict_all(s, 'V6', cfg)
+    b = F.bundle(s[s['V6'].notna()], 'V6', cfg)
+    assert set(b) == {'X', 'cols', 'y', 'token', 'index'} and b['X'].dtype == np.float32 and b['X'].shape[1] == len(b['cols'])
+    P2, _ = F.predict_bundle(b, 'V6', cfg)
+    pd.testing.assert_frame_equal(P1, P2)
+    fl = F.fold_slices(b['index'], cfg['folds']['test_years'], 6 / 24, cfg['folds']['min_train'])
+    assert [yr for yr, _, _ in fl] == [2022, 2023] and all(isinstance(tr, slice) and isinstance(te, slice) for _, tr, te in fl)
+    assert fl[0][0] == 2022 and fl[0][1].start == 0 and fl[0][2].start == fl[0][1].stop or fl[0][2].start > fl[0][1].stop
+    yrs = b['index'].year
+    assert (yrs[fl[1][2]] == 2023).all() and (b['index'][:fl[1][1].stop] + pd.Timedelta(days=6 / 24) <= pd.Timestamp('2023-01-01')).all()
