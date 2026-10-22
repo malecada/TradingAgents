@@ -1071,7 +1071,7 @@ def test_panel_forecast_report(tmp_path, monkeypatch):
     assert p['token'].nunique() == 3 and p.index.min() >= pd.Timestamp(T0) + pd.Timedelta(days=30)
     assert {'n_dep_usd__ex1', 'xs_n_dep_usd__s24z', 'xs_h0_rv24', 'h0_rv24', 'px_rv6', 'V6', 'V24', 'XV24'} <= set(p.columns)
     assert p['n_dep_usd__ex1'].dtype == np.float32
-    assert p.loc['2021-06-15':'2021-06-16', 'n_dep_usd__s24z'].isna().all() and p.loc['2021-06-20', 'n_dep_usd__s24z'].notna().all()
+    assert p.loc['2021-06-15':'2021-06-16 22:00', 'n_dep_usd__s24z'].isna().all() and p.loc['2021-06-16 23:00':'2021-06-17', 'n_dep_usd__s24z'].notna().all()
     cli.main(['forecast', '--only', 'V6'])
     assert (art / 'forecast' / 'V6.json').exists()
     cli.main(['forecast'])
