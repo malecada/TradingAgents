@@ -34,3 +34,7 @@ B8-CP3 (2026-10-22 22:10) — panel built in 4.8 min (peak 6.0 GB): 5,166,317 to
 columns (146 tokens, 2020-07-01 → 2026-07-29), 4,647,052 rows with complete features; per test
 year 596k (2022), 818k (2023), 1,146k (2024), 1,083k (2025), 574k (2026) V6 rows; median 103
 tokens per hour. Forecast unit `onchain-b8-forecast` launched (9 GiB cap, resumable per target).
+
+2026-10-23 00:55 — First forecast unit OOM-killed at 00:43 after 2.5 h of swap thrashing (8.8 GB RSS
+during the ridge fits; no unit file written, nothing read). Stage changed to load one target at a
+time with only the needed columns and to release memory between fits; relaunched under an 8 GiB cap.
