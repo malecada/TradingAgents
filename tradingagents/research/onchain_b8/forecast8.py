@@ -30,15 +30,23 @@ def needed_columns(cfg, panel=None):
     return sorted(set(['token'] + columns(panel, pre) + list(cfg['targets'])))
 
 
-def samples(panel, cfg):
+def samples(panel, cfg, target=None):
+    """Rows with every feature finite; targets are NaN where the horizon runs past the window
+    end. With `target`, only rows holding that target are kept and the other targets are
+    dropped, in one copy of the rows (the panel is never copied whole)."""
     end = pd.Timestamp(cfg['window']['last_day']) + pd.Timedelta(days=1)
     pre = needed_columns(cfg)
-    tcols = list(cfg['targets'])
+    tcols = list(cfg['targets']) if target is None else [target]
     feat = columns(panel, pre)
-    df = panel[['token'] + feat + tcols]
-    df = df[np.isfinite(df[feat].to_numpy(np.float32)).all(axis=1)].copy()
-    for name, t in cfg['targets'].items():
-        df.loc[df.index + pd.Timedelta(hours=t['h']) > end - H, name] = np.nan
+    keep = np.ones(len(panel), bool)
+    for col in feat:                                           # column by column: no 2-D float copy of the panel
+        keep &= np.isfinite(panel[col].to_numpy(np.float32))
+    late = {name: (panel.index + pd.Timedelta(hours=t['h']) > end - H) for name, t in cfg['targets'].items() if name in tcols}
+    if target is not None:
+        keep &= panel[target].notna().to_numpy() & ~late[target]
+    df = panel.loc[keep, ['token'] + feat + tcols].copy()
+    for name, lt in late.items():
+        df.loc[lt[keep], name] = np.nan
     return df
 
 

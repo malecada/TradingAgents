@@ -83,3 +83,14 @@ def test_bundle_predictions_match_frame_path_and_folds_are_slices():
     assert fl[0][0] == 2022 and fl[0][1].start == 0 and fl[0][2].start == fl[0][1].stop or fl[0][2].start > fl[0][1].stop
     yrs = b['index'].year
     assert (yrs[fl[1][2]] == 2023).all() and (b['index'][:fl[1][1].stop] + pd.Timedelta(days=6 / 24) <= pd.Timestamp('2023-01-01')).all()
+
+
+def test_samples_for_one_target_matches_filtered_full_samples():
+    rng = np.random.default_rng(35)
+    p = _panel(rng)
+    p.iloc[7, p.columns.get_loc('h0_r1')] = np.nan
+    full = F.samples(p, SMALL)
+    one = F.samples(p, SMALL, target='V24')
+    ref = full[full['V24'].notna()].drop(columns=['V6', 'XV24'])
+    pd.testing.assert_frame_equal(one, ref[one.columns])
+    assert 'V6' not in one.columns and len(one) == len(ref) and one['V24'].notna().all()

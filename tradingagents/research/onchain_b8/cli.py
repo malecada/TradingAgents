@@ -186,14 +186,16 @@ def _samples_for(c, target=None):
     """Samples with every feature column and either every target or one target: the panel is
     read with only the needed columns and dropped before the samples are returned."""
     path = ARTIFACTS / 'panel' / 'panel.parquet'
-    names = [col for col in pq.read_schema(path).names if col not in ('__index_level_0__',)]
+    all_names = pq.read_schema(path).names
+    idx_cols = [col for col in all_names if col.startswith('__index_level_')]
+    names = [col for col in all_names if col not in idx_cols]
     cfg = c if target is None else {**c, 'targets': {target: c['targets'][target]}}
     cols = [col for col in forecast8.needed_columns(cfg, pd.DataFrame(columns=names)) if col in names]
-    panel = pd.read_parquet(path, columns=cols)
-    df = forecast8.samples(panel, cfg)
+    table = pq.read_table(path, columns=cols + idx_cols)                # the hour index is a stored column
+    panel = table.to_pandas(self_destruct=True, split_blocks=True)    # arrow buffers freed during conversion
+    del table
+    df = forecast8.samples(panel, cfg, target=target)
     del panel
-    if target is not None:
-        df = df[df[target].notna()]
     _release()
     return df
 
@@ -226,6 +228,8 @@ def stage_forecast(args):
         forecast8.per_token(P, target, c).to_csv(out / f'per_token_{target}.csv', index=False)
         _write_json(unit, {'results': res, 'meta': meta, 'seconds': round(time.time() - t0, 1)})
         log.event(event='unit', target=target, seconds=round(time.time() - t0, 1), passed=sum(r['passed'] for r in res))
+        del P, res, meta
+        _release()
     units = [out / f'{t}.json' for t in c['targets'] if (out / f'{t}.json').exists()]
     docs = {u.stem: json.loads(u.read_text()) for u in units}
     results = [r for d in docs.values() for r in d['results']]
