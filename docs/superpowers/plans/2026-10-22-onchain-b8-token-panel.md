@@ -714,8 +714,8 @@ def cross_section(panel, c):
     cols = [col for col in panel.columns if col.startswith('n_') and col.endswith(tuple(pc['xs_series']))] + list(pc['xs_price'])
     g = panel.groupby(level=0)
     mean, std, cnt = g[cols].transform('mean'), g[cols].transform('std'), g[cols].transform('count')
-    z = (panel[cols] - mean) / std
-    z = z.where((cnt >= pc['min_tokens_hour']) & (std > 0))
+    z = ((panel[cols] - mean) / std).where(std > 0, 0.0)      # no spread across tokens: zero, as B4's z-score
+    z = z.where(cnt >= pc['min_tokens_hour'])
     vm, vc = g['V24'].transform('mean'), g['V24'].transform('count')
     out = panel.copy()
     for col in cols:                     # positional assignment: the hour index is not unique, so no join

@@ -49,3 +49,13 @@ def test_cross_section_min_tokens_and_xv24():
     assert np.allclose(h0['XV24'], h0['V24'] - h0['V24'].mean())
     assert x.loc[hours[2], cols + ['XV24']].isna().all().all() and x.loc[hours[3], cols].notna().all().all()
     assert len(x) == len(p) and (x['token'] == p['token']).all()
+
+
+def test_cross_section_zero_spread_is_zero_not_nan():
+    rng = np.random.default_rng(23)
+    hours = pd.date_range('2023-01-01', periods=3, freq='h')
+    cfg = {**CFG, 'panel': {**CFG['panel'], 'min_tokens_hour': 3}}
+    p = _panel(4, hours, rng)
+    p.loc[hours[1], 'n_dep_usd__ex1'] = 0.0                                              # every token equal: no spread
+    x = P.cross_section(p, cfg)
+    assert (x.loc[hours[1], 'xs_n_dep_usd__ex1'] == 0.0).all() and x.loc[hours[0], 'xs_n_dep_usd__ex1'].notna().all()
