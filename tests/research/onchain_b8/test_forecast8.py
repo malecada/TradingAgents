@@ -94,3 +94,22 @@ def test_samples_for_one_target_matches_filtered_full_samples():
     ref = full[full['V24'].notna()].drop(columns=['V6', 'XV24'])
     pd.testing.assert_frame_equal(one, ref[one.columns])
     assert 'V6' not in one.columns and len(one) == len(ref) and one['V24'].notna().all()
+
+
+def test_load_bundle_from_parquet_matches_frame_path(tmp_path):
+    rng = np.random.default_rng(36)
+    p = _panel(rng)
+    p.iloc[7, p.columns.get_loc('h0_r1')] = np.nan
+    p.iloc[9, p.columns.get_loc('V24')] = np.nan
+    feat = [c for c in p.columns if c not in ('token', 'V6', 'V24', 'XV24', 'other')]
+    q = p.copy()
+    q[feat] = q[feat].astype(np.float32)
+    q.to_parquet(tmp_path / 'panel.parquet')
+    ref = F.bundle(F.samples(q, SMALL, target='V24'), 'V24', SMALL)
+    b = F.load_bundle(tmp_path / 'panel.parquet', 'V24', SMALL)
+    assert b['cols'] == ref['cols'] and np.array_equal(b['X'], ref['X']) and np.array_equal(b['y'], ref['y'])
+    assert np.array_equal(b['token'], ref['token']) and b['index'].equals(ref['index'])
+    sup = F.support(tmp_path / 'panel.parquet', SMALL)
+    full = F.samples(q, SMALL)
+    assert sup['V24']['n'] == int(full['V24'].notna().sum()) and sup['V6']['years'][2021]['tokens'] == 6
+    assert sup['V24']['years'][2023]['hours'] == full.loc['2023', 'V24'].dropna().index.nunique()

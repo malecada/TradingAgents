@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import pyarrow.parquet as pq
 
 from ..onchain_b2.screen import folds, row_loss
 from ..onchain_b4.screen4 import interval
@@ -56,6 +57,68 @@ def bundle(d, target, cfg):
     cols = columns(d, needed_columns(cfg))
     return {'X': d[cols].to_numpy(np.float32), 'cols': cols, 'y': d[target].to_numpy(float),
             'token': d['token'].to_numpy(), 'index': pd.DatetimeIndex(d.index)}
+
+
+def _arrow_panel(path, cfg, extra):
+    """The panel's needed feature columns plus `extra` columns and the hour index, as an arrow
+    table (float32 features) with helpers to pull one column as a numpy array."""
+    schema = pq.read_schema(path)
+    idx_cols = [c for c in schema.names if c.startswith('__index_level_')]
+    names = [c for c in schema.names if c not in idx_cols]
+    feat = columns(pd.DataFrame(columns=names), needed_columns(cfg))
+    table = pq.read_table(path, columns=feat + [c for c in extra if c in names] + idx_cols)
+    index = pd.DatetimeIndex(table[idx_cols[0]].to_numpy(zero_copy_only=False)) if idx_cols else None
+    return table, feat, index
+
+
+def _col(table, name, dtype=None):
+    a = table[name].to_numpy(zero_copy_only=False)
+    return a if dtype is None else a.astype(dtype, copy=False)
+
+
+def _finite_rows(table, feat):
+    keep = np.ones(table.num_rows, bool)
+    for c in feat:
+        keep &= np.isfinite(_col(table, c, np.float32))
+    return keep
+
+
+def _late(index, h, cfg):
+    end = pd.Timestamp(cfg['window']['last_day']) + pd.Timedelta(days=1)
+    return np.asarray(index + pd.Timedelta(hours=h) > end - H)
+
+
+def load_bundle(path, target, cfg):
+    """`bundle` for one target straight from the panel file: rows with every feature finite
+    and the target known inside the window; never builds a pandas frame of the panel."""
+    table, feat, index = _arrow_panel(path, cfg, ['token', target])
+    keep = _finite_rows(table, feat)
+    y_all = _col(table, target, float)
+    keep &= np.isfinite(y_all) & ~_late(index, cfg['targets'][target]['h'], cfg)
+    X = np.empty((int(keep.sum()), len(feat)), np.float32)
+    for j, c in enumerate(feat):
+        X[:, j] = _col(table, c, np.float32)[keep]
+    b = {'X': X, 'cols': feat, 'y': y_all[keep], 'token': _col(table, 'token')[keep], 'index': index[keep]}
+    del table
+    return b
+
+
+def support(path, cfg):
+    """Rows, hours and tokens per year for every target, on the same rows `load_bundle` uses."""
+    table, feat, index = _arrow_panel(path, cfg, ['token'] + list(cfg['targets']))
+    keep = _finite_rows(table, feat)
+    years, tok = index.year.to_numpy(), _col(table, 'token')
+    out = {}
+    for t, spec in cfg['targets'].items():
+        y = _col(table, t, float)
+        ok = keep & np.isfinite(y) & ~_late(index, spec['h'], cfg)
+        per = {}
+        for yr in np.unique(years[ok]):
+            m = ok & (years == yr)
+            per[int(yr)] = {'rows': int(m.sum()), 'hours': int(index[m].nunique()), 'tokens': int(np.unique(tok[m]).size)}
+        out[t] = {'n': int(ok.sum()), 'mean': float(y[ok].mean()) if ok.any() else np.nan, 'years': per}
+    del table
+    return out
 
 
 def fold_slices(index, test_years, purge_days, min_train):

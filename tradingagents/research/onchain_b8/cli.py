@@ -158,16 +158,6 @@ def stage_panel(args):
                       'first': str(panel.index.min()), 'last': str(panel.index.max())}))
 
 
-def _support(df, target):
-    s = df[target]
-    ok, yrs, tok = s.notna().to_numpy(), df.index.year.to_numpy(), df['token'].to_numpy()
-    years = {}
-    for yr in np.unique(yrs):
-        m = ok & (yrs == yr)
-        years[int(yr)] = {'rows': int(m.sum()), 'hours': int(df.index[m].nunique()), 'tokens': int(np.unique(tok[m]).size)}
-    return {'n': int(ok.sum()), 'mean': float(s.mean()), 'years': years}
-
-
 def _release():
     """Return freed arenas to the OS so the cgroup charge follows the live data."""
     gc.collect()
@@ -182,44 +172,23 @@ def _release():
         pass
 
 
-def _samples_for(c, target=None):
-    """Samples with every feature column and either every target or one target: the panel is
-    read with only the needed columns and dropped before the samples are returned."""
-    path = ARTIFACTS / 'panel' / 'panel.parquet'
-    all_names = pq.read_schema(path).names
-    idx_cols = [col for col in all_names if col.startswith('__index_level_')]
-    names = [col for col in all_names if col not in idx_cols]
-    cfg = c if target is None else {**c, 'targets': {target: c['targets'][target]}}
-    cols = [col for col in forecast8.needed_columns(cfg, pd.DataFrame(columns=names)) if col in names]
-    table = pq.read_table(path, columns=cols + idx_cols)                # the hour index is a stored column
-    panel = table.to_pandas(self_destruct=True, split_blocks=True)    # arrow buffers freed during conversion
-    del table
-    df = forecast8.samples(panel, cfg, target=target)
-    del panel
-    _release()
-    return df
-
-
 def stage_forecast(args):
     c = config.load()
     only = set(args.only.split(',')) if args.only else None
     out = ARTIFACTS / 'forecast'
     out.mkdir(parents=True, exist_ok=True)
     log = Log(ARTIFACTS / 'logs' / 'forecast.jsonl')
-    df = _samples_for(c)
-    n = {t: _support(df, t) for t in c['targets']}
-    del df
+    path = ARTIFACTS / 'panel' / 'panel.parquet'
+    n = forecast8.support(path, c)
     _release()
     for target in c['targets']:
         unit = out / f'{target}.json'
         if (only is not None and target not in only) or unit.exists():
             continue
         t0 = time.time()
-        d = _samples_for(c, target)
-        log.event(event='samples', target=target, rows=int(len(d)))
-        b = forecast8.bundle(d, target, c)
-        del d                                                  # only the float32 matrix stays in memory
+        b = forecast8.load_bundle(path, target, c)             # arrays only: no pandas frame of the panel
         _release()
+        log.event(event='samples', target=target, rows=int(len(b['y'])))
         P, meta = forecast8.predict_bundle(b, target, c, log=log.event)
         del b
         _release()
