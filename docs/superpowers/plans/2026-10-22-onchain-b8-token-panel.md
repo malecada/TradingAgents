@@ -784,7 +784,7 @@ def test_samples_and_prefixes():
     p.iloc[10, p.columns.get_loc('n_dep_usd__z1')] = np.nan
     s = F.samples(p, SMALL)
     assert 'other' not in s.columns and 'token' in s.columns and len(s) == len(p) - 1
-    assert s.loc[pd.Timestamp('2023-12-31 12:00'), 'V24'].isna().all() and s.loc[pd.Timestamp('2023-12-31 12:00'), 'V6'].notna().all()
+    assert s.loc[pd.Timestamp('2023-12-31 00:00'), 'V24'].isna().all() and s.loc[pd.Timestamp('2023-12-31 00:00'), 'V6'].notna().all()   # the 12-hourly range ends at 00:00
 
 
 def test_compare_weights_hours_not_rows():
