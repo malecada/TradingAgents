@@ -91,7 +91,7 @@ tradingagents/research/onchain_b8/
   panel8.py (features, cross-sectional z, targets, rows), forecast8.py (pooled folds,
   hour-block bootstrap, criteria, report), cli.py (universe, pass, panel, forecast, report)
 tests/research/onchain_b8/
-research/onchain-b8-2026-10-23/   # CHARTER.md, PLAN.md, config/{b8.json,universe.json}, STATE.md, RESULTS.md
+research/onchain-b8-2026-10-22/   # CHARTER.md, PLAN.md, config/{b8.json,universe.json}, STATE.md, RESULTS.md
 research_artifacts/onchain-b8/     # gitignored: days/, panel/, forecast/, logs/
 ```
 
