@@ -20,3 +20,13 @@ criteria, bootstrap, serialization and resume verified on the real tables; one C
 (positive-free validation tail → 600 iterations on first-fold J targets) fixed with a test and
 recorded as PLAN.md amendment 1 before any forecast run; per-year support added to the
 tables. Minors deferred (ledger). Forecast unit launched after the fix.
+
+B7-CP2 (2026-10-22 10:52) — forecast unit `onchain-b7-forecast` complete in 16 minutes (12 units,
+56–134 s each, peak 1.5 GB): 198 comparison rows in `TABLES.md` with per-year support and
+per-fold alphas, iteration counts and tail support.
+
+B7-CP3 (2026-10-22) — `RESULTS.md`: new engineering (Y1) null or worse against B4's columns;
+B6 series (Y2) worse; early-stopped larger trees worse than B4's fixed trees for V and M
+targets; tail targets null; the flow block (X1 vs X0) passes for V6 and M6 in track B in both
+families (1.4–3.3 % of squared error) and nothing in track A′ once range features are in the
+baseline. B7 closed.
