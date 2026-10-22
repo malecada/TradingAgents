@@ -29,3 +29,8 @@ peak 731 MB; projected end ≈ 19:45.
 B8-CP2 (2026-10-22 22:03) — pass complete in 11.5 h without a stall or restart: 2,249 days built,
 1 unavailable (2020-11-01, no token_transfers partition, as in B4/B6); 18.4 s per day on average
 (12 s in 2020–23, 30 s in 2025, 39 s in 2026), peak 3.6 GB; day files 118 MB. Panel stage running.
+
+B8-CP3 (2026-10-22 22:10) — panel built in 4.8 min (peak 6.0 GB): 5,166,317 token-hours × 75
+columns (146 tokens, 2020-07-01 → 2026-07-29), 4,647,052 rows with complete features; per test
+year 596k (2022), 818k (2023), 1,146k (2024), 1,083k (2025), 574k (2026) V6 rows; median 103
+tokens per hour. Forecast unit `onchain-b8-forecast` launched (9 GiB cap, resumable per target).
