@@ -135,6 +135,7 @@ def detail_report(meta_by_unit):
             vals = []
             for yr, info in sorted(years.items(), key=lambda kv: int(kv[0])):
                 v = info.get('n_iter') if info.get('n_iter') is not None else info.get('alpha')
-                vals.append(f'{yr} {v if v is not None else "—"}')
+                sup = f" (tail +{info['tail_pos']}/{info['tail_n']})" if 'tail_pos' in info else ''
+                vals.append(f'{yr} {v if v is not None else "—"}{sup}')
             lines.append(f"| {unit} | {key} | {', '.join(vals)} |")
     return '\n'.join(lines)

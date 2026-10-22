@@ -54,3 +54,26 @@ def test_fit_predict7_single_class_fallback():
     head_only[-20:] = 1.0                                                          # positives only in the tail: the head has one class
     p = M.fit_predict7('trees_es', 'classification', X[:800], head_only, X[800:], cfg)
     assert p.shape == (200,) and np.isfinite(p).all()
+
+
+def test_choose_iter_guards_degenerate_tail():
+    rng = np.random.default_rng(13)
+    X, y = _data(4000, rng)
+    yc = (y > np.quantile(y, 0.9)).astype(float)
+    cfg_es = {**ES, 'min_tail_pos': 10}
+    none = yc.copy()
+    none[-400:] = 0.0                                                              # tail without a positive
+    info = {}
+    n_iter, losses = M.choose_iter('classification', X, none, cfg_es, info)
+    assert n_iter == 5 and len(losses) == 0 and info['tail_n'] == 400 and info['tail_pos'] == 0
+    few = yc.copy()
+    few[-400:] = 0.0
+    few[-3:] = 1.0                                                                 # three positives: below the floor
+    n_few, _ = M.choose_iter('classification', X, few, cfg_es, info)
+    assert n_few == 5 and info['tail_pos'] == 3
+    n_ok, lo = M.choose_iter('classification', X, yc, cfg_es, info)
+    assert len(lo) == 80 and info['tail_pos'] >= 10
+    cfg = {**CFG, 'models': {**CFG['models'], 'trees_es': cfg_es}}
+    out = {}
+    p = M.fit_predict7('trees_es', 'classification', X, none, X[:10], cfg, out)
+    assert out['n_iter'] == 5 and out['tail_pos'] == 0 and p.shape == (10,)

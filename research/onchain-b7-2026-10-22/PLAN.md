@@ -33,3 +33,15 @@ Q2 — X1 vs X0 and Y2 vs X0 on J and M targets, with V6/V24 as the reference.
 
 `TABLES.md` (generated) holds every row with chosen alphas and iteration counts per fold;
 `RESULTS.md` reads them. Post hoc additions are labelled.
+
+## Amendment 1 (2026-10-22, before any forecast run)
+
+Fresh review finding: on rare-event targets (J6, J24; base rate ≈ 1.9 %) the time-ordered
+validation tail of a first fold can hold no positive, and the staged log loss then falls
+monotonically with every extra stage, selecting 600 iterations (on the real 2022 fold of
+track B, J24: 0 positives in 592 tail rows → test log loss 0.223 against 0.103 for the base
+rate). Rule added before any forecast is run: trees_es falls back to the minimum count (20)
+when the head or the tail holds a single class or the tail holds fewer than 10 positives
+(`min_tail_pos`); the tail support (positives / rows) is recorded per fold and printed in
+`TABLES.md`. `TABLES.md` also reports rows (and positives) per test year for every track and
+target, so the per-year and sign criteria can be read against their support.

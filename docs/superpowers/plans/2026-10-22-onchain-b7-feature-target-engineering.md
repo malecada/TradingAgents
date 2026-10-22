@@ -1245,7 +1245,7 @@ git commit -m "feat(onchain-b7): stage runner with resumable forecasts and table
 - [ ] **Step 2: Build the tables**
 
 Run: `.venv/bin/python -m tradingagents.research.onchain_b7.cli features`
-Expected: JSON with `hours: 85704`, `columns` ≈ 383 (324 `n_` + 32 flow + 13 market + 2 range + 2 event + 3 interaction + 3 option), target counts, J base rates ≈ 0.01–0.03. Record in STATE.md (B7-CP1).
+Expected: JSON with `hours: 85704`, `columns` 379 (324 `n_` + 32 flow + 13 market + 2 range + 2 event + 3 interaction + 3 option), target counts, J base rates ≈ 0.01–0.03. Record in STATE.md (B7-CP1).
 
 - [ ] **Step 3: Forecast stage as a systemd user unit**
 

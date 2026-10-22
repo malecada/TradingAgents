@@ -62,6 +62,14 @@ def stage_features(args):
                       'base_rate': {t: round(float(targets[t].mean()), 4) for t in ('J6', 'J24')}}))
 
 
+def _support(s, task):
+    """Rows per year (and positives for a classification target) of one target column."""
+    years = {}
+    for yr, g in s.groupby(s.index.year):
+        years[int(yr)] = {'n': int(g.notna().sum()), **({'pos': int(g.sum())} if task == 'classification' else {})}
+    return {'n': int(s.notna().sum()), 'mean': float(s.mean()), 'years': years}
+
+
 def stage_forecast(args):
     c = config.load()
     only = set(args.only.split(',')) if args.only else None
@@ -73,7 +81,7 @@ def stage_forecast(args):
     n = {}
     for track in c['tracks']:
         df = forecast7.samples(track, table, targets, c)
-        n[track] = {t: {'n': int(df[t].notna().sum()), 'mean': float(df[t].mean())} for t in c['targets']}
+        n[track] = {t: _support(df[t], c['targets'][t]['task']) for t in c['targets']}
         for target in c['targets']:
             unit = out / f'{track}_{target}.json'
             if (only is not None and f'{track}:{target}' not in only) or unit.exists():
@@ -94,10 +102,12 @@ def stage_forecast(args):
 
 def stage_report(args):
     res = json.loads((ARTIFACTS / 'forecast' / 'results.json').read_text())
-    lines = ['# B7 tables (generated; interpretation in RESULTS.md)', '', '## Samples', '', '| track | target | rows | mean |', '|---|---|---|---|']
+    lines = ['# B7 tables (generated; interpretation in RESULTS.md)', '', '## Samples', '',
+             '| track | target | rows | mean | rows per year (positives) |', '|---|---|---|---|---|']
     for track, ts in res['n'].items():
         for t, v in ts.items():
-            lines.append(f"| {track} | {t} | {v['n']} | {v['mean']:.4f} |")
+            per = ', '.join(f"{yr} {d['n']}" + (f" ({d['pos']})" if 'pos' in d else '') for yr, d in sorted(v['years'].items(), key=lambda kv: int(kv[0])))
+            lines.append(f"| {track} | {t} | {v['n']} | {v['mean']:.4f} | {per} |")
     lines += ['', '## Comparisons', '', forecast7.report(res['results']), '', '## Model detail', '', forecast7.detail_report(res['meta'])]
     STUDY.mkdir(parents=True, exist_ok=True)
     (STUDY / 'TABLES.md').write_text('\n'.join(lines) + '\n')

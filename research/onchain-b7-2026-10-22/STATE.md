@@ -14,3 +14,9 @@ interactions, 3 option-market); targets V6 79,932, V24 79,428, J6 79,531 (base r
 J24 79,507 (1.9 %), M6 68,005, M24 67,757 non-missing hours. Complete feature rows: track A′
 47,119 of 50,448 window hours, track B 47,456 of 48,480 (most gaps from 168-hour price
 windows after Binance outages, as in B4–B6). No forecast run yet.
+
+2026-10-22 10:05 — Fresh whole-branch review (fable): causality, alignment, row-set fairness,
+criteria, bootstrap, serialization and resume verified on the real tables; one Critical
+(positive-free validation tail → 600 iterations on first-fold J targets) fixed with a test and
+recorded as PLAN.md amendment 1 before any forecast run; per-year support added to the
+tables. Minors deferred (ledger). Forecast unit launched after the fix.

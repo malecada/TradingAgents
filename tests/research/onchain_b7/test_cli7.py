@@ -80,6 +80,8 @@ def test_forecast_stage_resumes_per_unit(tmp_path, monkeypatch):
     res = json.loads((art / 'forecast' / 'results.json').read_text())
     assert len(res['results']) == 3 * 11 + 3 * 22 and set(res['meta']) == {'A_V6', 'A_J6', 'A_M6', 'B_V6', 'B_J6', 'B_M6'}
     assert res['n']['A']['J6']['mean'] < 0.2 and res['n']['B']['V6']['n'] > 1000
+    assert res['n']['A']['J6']['years']['2021']['pos'] >= 0 and 'pos' not in res['n']['A']['V6']['years']['2021']
     cli.main(['report'])
     text = (tmp_path / 'study' / 'TABLES.md').read_text()
     assert '| B | M6 | trees_es|trees_fixed | Y2 vs Y2 | 2021b |' in text and 'A_V6 | trees_es:Y2' in text
+    assert '| A | J6 |' in text and '2021 ' in text and '(tail +' in text
