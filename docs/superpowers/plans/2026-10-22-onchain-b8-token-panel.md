@@ -366,7 +366,7 @@ def test_read_day8_retries_then_unavailable(monkeypatch):
 
     def fake_read(filesystem, root, table, day):
         calls.append(table)
-        if len(calls) < 3:
+        if len(calls) < 3 or day == '2023-05-02':
             raise OSError('timeout')
         return _table(day)
     monkeypatch.setattr(R, '_read_table', fake_read)
@@ -482,13 +482,13 @@ from tradingagents.research.onchain_b6.labels6 import LabelState
 from tradingagents.research.onchain_b8 import config, hourly8 as Hh
 from tradingagents.research.onchain_b8.reader8 import Day8
 
-A, B, X, Y = ('0x' + ch * 40 for ch in 'abxy')
+A, B, X, Y, Z = ('0x' + ch * 40 for ch in 'abxyc')
 
 
 def _state(first_seen):
-    doc = {'exchange': {X: 'okx', Y: 'binance'}, 'dex': [], 'bridge': [], 'mev': [], 'funds': []}
+    doc = {'exchange': {X: 'okx', Y: 'binance', Z: 'bybit'}, 'dex': [], 'bridge': [], 'mev': [], 'funds': []}
     st = LabelState(doc, '0x5754284f345afc66a98fbb0a0afe71e0f007b949')
-    keys = addr_keys(np.array([X, Y], object))
+    keys = addr_keys(np.array([X, Y, Z], object))
     for k, day in zip(keys, first_seen):
         st.ex_first[np.searchsorted(st.ex_keys, k)] = day
     return st
@@ -497,13 +497,13 @@ def _state(first_seen):
 def test_day_rows_flows_activation_and_prices():
     day = '2023-05-01'
     t0 = int(pd.Timestamp(day, tz='UTC').timestamp())
-    ka, kb, kx, ky = addr_keys(np.array([A, B, X, Y], object))
-    #            A->X dep   X->B wd    X->Y ex-ex   A->B plain  B->Y dep(Y seen today: not exchange)  A->X tok1 no price
+    ka, kb, kx, ky, kz = addr_keys(np.array([A, B, X, Y, Z], object))
+    #            A->X dep   X->B wd    X->Y ex-ex   A->B plain  B->Z (Z seen today: not an exchange)  A->X tok1 no price
     src = np.array([ka, kx, kx, ka, kb, ka], np.uint64)
-    dst = np.array([kx, kb, ky, kb, ky, kx], np.uint64)
+    dst = np.array([kx, kb, ky, kb, kz, kx], np.uint64)
     d = Day8(src=src, dst=dst, token=np.array([0, 0, 0, 0, 0, 1], np.int16), amount=np.array([10.0, 4.0, 100.0, 1.0, 50.0, 3.0]),
              ts=np.array([t0 + 60, t0 + 120, t0 + 3700, t0 + 3800, t0 + 7300, t0 + 60], np.int64))
-    st = _state([config.day_ord('2023-01-01'), config.day_ord(day)])
+    st = _state([config.day_ord('2023-01-01'), config.day_ord('2023-01-01'), config.day_ord(day)])
     st.begin_day(config.day_ord(day))
     prices = np.full((24, 2), np.nan)
     prices[:, 0] = 2.0                                                          # token 0 priced at 2 all day; token 1 unpriced
@@ -515,7 +515,7 @@ def test_day_rows_flows_activation_and_prices():
     assert r.loc[(h(0), 0), 'dep_cnt'] == 1 and r.loc[(h(0), 0), 'wd_cnt'] == 1 and r.loc[(h(0), 0), 'tx_cnt'] == 2
     assert r.loc[(h(0), 0), 'active'] == 3 and r.loc[(h(0), 0), 'big_cnt'] == 1    # A, X, B; only the $20 deposit is big
     assert r.loc[(h(1), 0), 'dep_usd'] == 0.0 and r.loc[(h(1), 0), 'wd_usd'] == 0.0 and r.loc[(h(1), 0), 'tx_cnt'] == 2   # ex→ex and plain
-    assert r.loc[(h(2), 0), 'dep_usd'] == 0.0 and r.loc[(h(2), 0), 'tx_cnt'] == 1   # Y first seen today: not yet an exchange
+    assert r.loc[(h(2), 0), 'dep_usd'] == 0.0 and r.loc[(h(2), 0), 'tx_cnt'] == 1   # Z first seen today: not yet an exchange
     assert np.isnan(r.loc[(h(0), 1), 'dep_usd']) and r.loc[(h(0), 1), 'dep_cnt'] == 1 and r.loc[(h(0), 1), 'big_cnt'] == 0
     assert np.isnan(r.loc[(h(5), 1), 'dep_usd']) and r.loc[(h(5), 1), 'tx_cnt'] == 0 and r.loc[(h(5), 0), 'dep_usd'] == 0.0
     st.begin_day(config.day_ord('2023-05-02'))
@@ -716,10 +716,11 @@ def cross_section(panel, c):
     mean, std, cnt = g[cols].transform('mean'), g[cols].transform('std'), g[cols].transform('count')
     z = (panel[cols] - mean) / std
     z = z.where((cnt >= pc['min_tokens_hour']) & (std > 0))
-    z.columns = [f'xs_{col}' for col in cols]
     vm, vc = g['V24'].transform('mean'), g['V24'].transform('count')
-    out = panel.join(z)
-    out['XV24'] = (panel['V24'] - vm).where(vc >= pc['min_tokens_hour'])
+    out = panel.copy()
+    for col in cols:                     # positional assignment: the hour index is not unique, so no join
+        out[f'xs_{col}'] = z[col].to_numpy()
+    out['XV24'] = (panel['V24'] - vm).where(vc >= pc['min_tokens_hour']).to_numpy()
     return out
 ```
 
@@ -977,7 +978,7 @@ from tradingagents.research.onchain_b8 import cli, config, reader8
 from tradingagents.research.onchain_b8.reader8 import Day8
 
 A, B, X = ('0x' + ch * 40 for ch in 'abx')
-T0, T1 = '2021-01-01', '2021-12-31'
+T0, T1 = '2020-06-01', '2021-12-31'
 
 
 def _klines(path, symbol, n, rng, start=T0):
@@ -1000,7 +1001,7 @@ def _setup(tmp_path, monkeypatch, unavailable=()):
     k, b6, art, study = tmp_path / 'k', tmp_path / 'b6', tmp_path / 'b8', tmp_path / 'study'
     for p in (k, b6 / 'labels', b6 / 'state', study / 'config'):
         p.mkdir(parents=True)
-    n = 24 * 365
+    n = 24 * 579
     for sym in ('AAAUSDT', 'BBBUSDT', 'CCCUSDT'):
         _klines(k, sym, n, rng)
     tm = {'map': {'AAAUSDT': {'address': '0x' + '1' * 40, 'decimals': 18, 'how': 'binance_spot'},
@@ -1048,16 +1049,16 @@ def test_universe_stage_freezes_once(tmp_path, monkeypatch):
 
 
 def test_pass_resumes_and_marks_unavailable(tmp_path, monkeypatch):
-    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable=('2021-01-03',))
+    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable=('2020-06-03',))
     cli.main(['universe'])
-    cli.main(['pass', '--end', '2021-01-05'])
-    d = pd.read_parquet(art / 'days' / '2021-01-02.parquet')
+    cli.main(['pass', '--end', '2020-06-05'])
+    d = pd.read_parquet(art / 'days' / '2020-06-02.parquet')
     assert len(d) == 72 and list(d.columns) == ['hour', 'token'] + cli.hourly8.SERIES and d['dep_usd'].notna().all()
-    assert (art / 'days' / '2021-01-03.unavailable.json').exists() and not (art / 'days' / '2021-01-03.parquet').exists()
-    stamp = (art / 'days' / '2021-01-02.parquet').stat().st_mtime_ns
-    cli.main(['pass', '--end', '2021-01-07'])
-    assert (art / 'days' / '2021-01-02.parquet').stat().st_mtime_ns == stamp and (art / 'days' / '2021-01-07.parquet').exists()
-    assert not cli.pass_complete() and cli.day_status('2021-01-03') == 'unavailable'
+    assert (art / 'days' / '2020-06-03.unavailable.json').exists() and not (art / 'days' / '2020-06-03.parquet').exists()
+    stamp = (art / 'days' / '2020-06-02.parquet').stat().st_mtime_ns
+    cli.main(['pass', '--end', '2020-06-07'])
+    assert (art / 'days' / '2020-06-02.parquet').stat().st_mtime_ns == stamp and (art / 'days' / '2020-06-07.parquet').exists()
+    assert not cli.pass_complete() and cli.day_status('2020-06-03') == 'unavailable'
 
 
 def test_panel_forecast_report(tmp_path, monkeypatch):
@@ -1069,7 +1070,8 @@ def test_panel_forecast_report(tmp_path, monkeypatch):
     p = pd.read_parquet(art / 'panel' / 'panel.parquet')
     assert p['token'].nunique() == 3 and p.index.min() >= pd.Timestamp(T0) + pd.Timedelta(days=30)
     assert {'n_dep_usd__ex1', 'xs_n_dep_usd__s24z', 'xs_h0_rv24', 'h0_rv24', 'px_rv6', 'V6', 'V24', 'XV24'} <= set(p.columns)
-    assert p['n_dep_usd__ex1'].dtype == np.float32 and p.loc['2021-06-16':'2021-06-22', 'n_dep_usd__s24z'].isna().all()
+    assert p['n_dep_usd__ex1'].dtype == np.float32
+    assert p.loc['2021-06-15':'2021-06-16', 'n_dep_usd__s24z'].isna().all() and p.loc['2021-06-20', 'n_dep_usd__s24z'].notna().all()
     cli.main(['forecast', '--only', 'V6'])
     assert (art / 'forecast' / 'V6.json').exists()
     cli.main(['forecast'])
@@ -1246,11 +1248,12 @@ def stage_panel(args):
 
 def _support(df, target):
     s = df[target]
+    ok, yrs, tok = s.notna().to_numpy(), df.index.year.to_numpy(), df['token'].to_numpy()
     years = {}
-    for yr, g in s.groupby(s.index.year):
-        ok = g.notna()
-        years[int(yr)] = {'rows': int(ok.sum()), 'hours': int(g.index[ok].nunique()), 'tokens': int(df.loc[g.index[ok], 'token'].nunique())}
-    return {'n': int(s.notna().sum()), 'mean': float(s.mean()), 'years': years}
+    for yr in np.unique(yrs):
+        m = ok & (yrs == yr)
+        years[int(yr)] = {'rows': int(m.sum()), 'hours': int(df.index[m].nunique()), 'tokens': int(np.unique(tok[m]).size)}
+    return {'n': int(ok.sum()), 'mean': float(s.mean()), 'years': years}
 
 
 def stage_forecast(args):
