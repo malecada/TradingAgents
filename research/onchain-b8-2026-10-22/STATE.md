@@ -25,3 +25,7 @@ re-frozen at 146 tokens. Pass launched as `onchain-b8-pass` (6 GiB cap, restart 
 2026-10-22 12:45 — Pass check after 150 days (to 2020-10-28): 64 tokens active, 27 priced; USD per
 exchange deposit from $514 (LRC) to $43k (YFI), no decimal or multiplier anomaly; 12 s per day,
 peak 731 MB; projected end ≈ 19:45.
+
+B8-CP2 (2026-10-22 22:03) — pass complete in 11.5 h without a stall or restart: 2,249 days built,
+1 unavailable (2020-11-01, no token_transfers partition, as in B4/B6); 18.4 s per day on average
+(12 s in 2020–23, 30 s in 2025, 39 s in 2026), peak 3.6 GB; day files 118 MB. Panel stage running.
