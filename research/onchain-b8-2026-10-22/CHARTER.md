@@ -24,3 +24,7 @@ only, no return or direction claim.
   USD series and `big_cnt` 0.
 - §82 (smw_xs) tested DEX-swap smart-money features for next-day returns on this kind of
   universe and closed; B8 uses exchange transfers and volatility targets only.
+- Amendment 1 (pre-pass): two wrong-contract members removed (`1000SATSUSDT`, `OMNIUSDT`);
+  "1000X" symbols priced per token; 146 tokens frozen. Wrapped or bridged representations
+  with little mainnet activity (e.g. BONK, SRM, ICP, WAVES) stay in by the mechanical rule;
+  their on-chain series will be near-constant.

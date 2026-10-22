@@ -14,3 +14,10 @@ peak 631 MB, 30,950 universe transfers, 39 of 148 tokens active, USD series only
 tokens with bars on that day (prices start at each token's listing). Projection: 9–15 h for
 2,250 days. B7 commits fast-forwarded into `research/onchain-paper-replication-2026-09-24`
 (f5ce7d227); audit page v8 published.
+
+2026-10-22 12:10 — Fresh whole-branch review (fable): flow semantics, activation, NaN-USD,
+per-hour cross-section, hour-weighted bootstrap and atomic day files verified; one Critical
+("1000X" perps priced per 1,000 tokens → USD and `big_cnt` 1000× off for five tokens) and
+three Important (two wrong contracts in the universe; unavailable days never retried; panel
+stage peak ≈ 12 GB) fixed with tests before the pass (PLAN.md amendment 1); universe
+re-frozen at 146 tokens. Pass launched as `onchain-b8-pass` (6 GiB cap, restart on stall).

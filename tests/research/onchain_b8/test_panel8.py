@@ -45,7 +45,7 @@ def test_cross_section_min_tokens_and_xv24():
     cols = ['xs_n_dep_usd__s24z', 'xs_n_dep_usd__ex1', 'xs_h0_rv24', 'xs_h0_lvol24']
     assert set(c for c in x.columns if c.startswith('xs_')) == set(cols) and 'XV24' in x.columns
     h0 = x.loc[hours[0]]
-    assert np.isclose(h0['xs_h0_rv24'].mean(), 0) and np.isclose(h0['xs_h0_rv24'].std(ddof=1), 1)
+    assert np.isclose(h0['xs_h0_rv24'].mean(), 0, atol=1e-5) and np.isclose(h0['xs_h0_rv24'].std(ddof=1), 1, atol=1e-5)   # float32
     assert np.allclose(h0['XV24'], h0['V24'] - h0['V24'].mean())
     assert x.loc[hours[2], cols + ['XV24']].isna().all().all() and x.loc[hours[3], cols].notna().all().all()
     assert len(x) == len(p) and (x['token'] == p['token']).all()
@@ -59,3 +59,16 @@ def test_cross_section_zero_spread_is_zero_not_nan():
     p.loc[hours[1], 'n_dep_usd__ex1'] = 0.0                                              # every token equal: no spread
     x = P.cross_section(p, cfg)
     assert (x.loc[hours[1], 'xs_n_dep_usd__ex1'] == 0.0).all() and x.loc[hours[0], 'xs_n_dep_usd__ex1'].notna().all()
+
+
+def test_token_frame_zero_variance_targets_are_nan_and_float32():
+    rng = np.random.default_rng(24)
+    hours = pd.date_range('2023-01-01', periods=3000, freq='h')
+    close = 10 * np.exp(np.cumsum(rng.normal(0, 0.01, 3000)))
+    close[2000:2100] = close[1999]                                                   # 100 flat hours (no trade)
+    bars = pd.DataFrame({'close': close, 'qvol': rng.gamma(2, 1e5, 3000)}, index=hours)
+    series = pd.DataFrame({s: rng.gamma(2, 3, 3000) for s in Hh.SERIES}, index=hours)
+    f = P.token_frame(series, bars, CFG)
+    assert f.loc[hours[2000:2093], 'V6'].isna().all() and np.isfinite(f.loc[hours[1990], 'V6'])
+    assert f.loc[hours[2000:2075], 'V24'].isna().all() and np.isfinite(f.loc[hours[2099], 'V6'])
+    assert f['n_dep_usd__ex1'].dtype == np.float32 and f['h0_rv24'].dtype == np.float32 and f['V6'].dtype == np.float64

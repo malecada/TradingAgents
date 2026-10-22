@@ -36,3 +36,17 @@ def test_load_bars_naive_utc_close_and_qvol(tmp_path):
     b = U.load_bars(tmp_path, 'AAAUSDT')
     assert list(b.columns) == ['close', 'qvol'] and b.index.tz is None and b.index[0] == pd.Timestamp('2021-01-01')
     assert b['qvol'].iloc[0] == 5.0 and np.isclose(b['close'].iloc[-1], 2.0)
+
+
+def test_build_multiplier_and_exclusions(tmp_path):
+    k = tmp_path / 'k'
+    k.mkdir()
+    for sym in ('1000CCCUSDT', '1000000DDDUSDT', 'EEEUSDT', 'FFFUSDT'):
+        _klines(k, sym, 20000)
+    tm = {'map': {'1000CCCUSDT': {'address': '0xcccc', 'decimals': 9, 'how': 'binance_spot'},
+                  '1000000DDDUSDT': {'address': '0xdddd', 'decimals': 18, 'how': 'binance_spot'},
+                  'EEEUSDT': {'address': '0xeeee', 'decimals': 18, 'how': 'binance_spot'},
+                  'FFFUSDT': {'address': '0xffff', 'decimals': 18, 'how': 'fallback_single_unranked'}}}
+    (tmp_path / 'map.json').write_text(json.dumps(tm))
+    u = U.build(tmp_path / 'map.json', k, 17520, exclude=['FFFUSDT'])
+    assert [(r['symbol'], r['multiplier']) for r in u] == [('1000000DDDUSDT', 1000000), ('1000CCCUSDT', 1000), ('EEEUSDT', 1)]

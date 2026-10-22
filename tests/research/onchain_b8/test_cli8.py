@@ -62,7 +62,7 @@ def _setup(tmp_path, monkeypatch, unavailable=()):
     ka, kb, kx = addr_keys(np.array([A, B, X], object))
 
     def fake(day, **kw):
-        if day in unavailable:
+        if day in unavailable:                                                      # a set: tests may clear it
             raise DayUnavailable(day, ['boom'])
         t0 = int(pd.Timestamp(day, tz='UTC').timestamp())
         r = np.random.default_rng(int(day.replace('-', '')))
@@ -85,7 +85,7 @@ def test_universe_stage_freezes_once(tmp_path, monkeypatch):
 
 
 def test_pass_resumes_and_marks_unavailable(tmp_path, monkeypatch):
-    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable=('2020-06-03',))
+    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable={'2020-06-03'})
     cli.main(['universe'])
     cli.main(['pass', '--end', '2020-06-05'])
     d = pd.read_parquet(art / 'days' / '2020-06-02.parquet')
@@ -98,7 +98,7 @@ def test_pass_resumes_and_marks_unavailable(tmp_path, monkeypatch):
 
 
 def test_panel_forecast_report(tmp_path, monkeypatch):
-    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable=('2021-06-15',))
+    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable={'2021-06-15'})
     cli.main(['universe'])
     cli.main(['pass'])
     assert cli.pass_complete()
@@ -117,3 +117,15 @@ def test_panel_forecast_report(tmp_path, monkeypatch):
     cli.main(['report'])
     text = (study / 'TABLES.md').read_text()
     assert '| XV24 | trees_es | P2 vs P0 |' in text and 'V6 | trees_es:P2' in text
+
+
+def test_pass_retries_unavailable_days_on_relaunch(tmp_path, monkeypatch):
+    bad = {'2020-06-03'}
+    cfg, art, study = _setup(tmp_path, monkeypatch, unavailable=bad)
+    cli.main(['universe'])
+    cli.main(['pass', '--end', '2020-06-04'])
+    assert cli.day_status('2020-06-03') == 'unavailable'
+    bad.clear()                                                                       # the outage is over
+    cli.main(['pass', '--end', '2020-06-04'])
+    assert cli.day_status('2020-06-03') == 'done' and not (art / 'days' / '2020-06-03.unavailable.json').exists()
+    assert len(pd.read_parquet(art / 'days' / '2020-06-03.parquet')) == 72

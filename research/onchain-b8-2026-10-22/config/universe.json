@@ -1,4 +1,8 @@
 {
+ "exclude": [
+  "1000SATSUSDT",
+  "OMNIUSDT"
+ ],
  "klines": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h",
  "min_rows": 17520,
  "token_map": "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/smw/token_map.json",
@@ -7,6 +11,7 @@
    "address": "0x1151cb3d861920e07a38e03eead12c32178567f6",
    "decimals": 5,
    "how": "binance_spot",
+   "multiplier": 1000,
    "rows": 23499,
    "symbol": "1000BONKUSDT"
   },
@@ -14,6 +19,7 @@
    "address": "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e",
    "decimals": 9,
    "how": "binance_spot",
+   "multiplier": 1000,
    "rows": 28297,
    "symbol": "1000FLOKIUSDT"
   },
@@ -21,20 +27,15 @@
    "address": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1000,
    "rows": 28321,
    "symbol": "1000PEPEUSDT"
-  },
-  {
-   "address": "0x6c22910c6f75f828b305e57c6a54855d8adeabf8",
-   "decimals": 9,
-   "how": "fallback_single_unranked",
-   "rows": 23019,
-   "symbol": "1000SATSUSDT"
   },
   {
    "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1000,
    "rows": 45720,
    "symbol": "1000SHIBUSDT"
   },
@@ -42,6 +43,7 @@
    "address": "0x111111111117dc0aa78b770fa6a738034120c302",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 48991,
    "symbol": "1INCHUSDT"
   },
@@ -49,6 +51,7 @@
    "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 50674,
    "symbol": "AAVEUSDT"
   },
@@ -56,6 +59,7 @@
    "address": "0xed04915c23f00a313a544955524eb7dbd823143d",
    "decimals": 8,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30051,
    "symbol": "ACHUSDT"
   },
@@ -63,6 +67,7 @@
    "address": "0xb528edbef013aff855ac3c50b381f253af13b997",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 20812,
    "symbol": "AEVOUSDT"
   },
@@ -70,6 +75,7 @@
    "address": "0x5b7533812759b45c2b44c19e320ba2cd2681b542",
    "decimals": 8,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 30195,
    "symbol": "AGIXUSDT"
   },
@@ -77,6 +83,7 @@
    "address": "0x32353a6c91143bfd6c7d363b546e62a9a2489a20",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 26295,
    "symbol": "AGLDUSDT"
   },
@@ -84,6 +91,7 @@
    "address": "0xac51066d7bec65dc4589368da368b212745d63e8",
    "decimals": 6,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 47054,
    "symbol": "ALICEUSDT"
   },
@@ -91,6 +99,7 @@
    "address": "0xa1faa113cbe53436df28ff0aee54275c13b40975",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 49762,
    "symbol": "ALPHAUSDT"
   },
@@ -98,6 +107,7 @@
    "address": "0x8457ca5040ad67fdebbcc8edce889a335bc0fbfb",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21985,
    "symbol": "ALTUSDT"
   },
@@ -105,6 +115,7 @@
    "address": "0x8290333cef9e6d528dd5618fb97a76f268f3edd4",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 48227,
    "symbol": "ANKRUSDT"
   },
@@ -112,6 +123,7 @@
    "address": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 21196,
    "symbol": "ANTUSDT"
   },
@@ -119,6 +131,7 @@
    "address": "0x4d224452801aced8b2f0aebe155379bb5d594381",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 38259,
    "symbol": "APEUSDT"
   },
@@ -126,6 +139,7 @@
    "address": "0x0b38210ea11411557c13457d4da7dc6ea731b88a",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 38823,
    "symbol": "API3USDT"
   },
@@ -133,6 +147,7 @@
    "address": "0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 29355,
    "symbol": "ARBUSDT"
   },
@@ -140,6 +155,7 @@
    "address": "0x6e2a43be0b1d33b726f0ca3b8de60b3482b8b050",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 26320,
    "symbol": "ARKMUSDT"
   },
@@ -147,6 +163,7 @@
    "address": "0xba50933c268f567bdc86e1ac131be072c6b0b71a",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 41847,
    "symbol": "ARPAUSDT"
   },
@@ -154,6 +171,7 @@
    "address": "0xf27441230eadeac85b764610325cc9a0d7859689",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30256,
    "symbol": "ASTRUSDT"
   },
@@ -161,6 +179,7 @@
    "address": "0xa2120b9e674d3fc3875f415a7df52e382f141225",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 43044,
    "symbol": "ATAUSDT"
   },
@@ -168,6 +187,7 @@
    "address": "0xa9b1eb5908cfc3cdf91f9b8b3a74108598009096",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 22970,
    "symbol": "AUCTIONUSDT"
   },
@@ -175,6 +195,7 @@
    "address": "0x18aaa7115705e8be94bffebde57af9bfc265b998",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 24317,
    "symbol": "AUDIOUSDT"
   },
@@ -182,6 +203,7 @@
    "address": "0x467719ad09025fcc6cf6f8311755809d45a5e5f3",
    "decimals": 6,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21120,
    "symbol": "AXLUSDT"
   },
@@ -189,6 +211,7 @@
    "address": "0xbb0e17ef65f82ab018d8edd776e8dd940327b28b",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 49835,
    "symbol": "AXSUSDT"
   },
@@ -196,6 +219,7 @@
    "address": "0xba100000625a3754423978a60c9317c58a424e3d",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 51755,
    "symbol": "BALUSDT"
   },
@@ -203,6 +227,7 @@
    "address": "0xba11d00c5f74255f56a5e366f4f77f5a186d7f55",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 52571,
    "symbol": "BANDUSDT"
   },
@@ -210,6 +235,7 @@
    "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53970,
    "symbol": "BATUSDT"
   },
@@ -217,6 +243,7 @@
    "address": "0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 23642,
    "symbol": "BEAMXUSDT"
   },
@@ -224,6 +251,7 @@
    "address": "0xa91ac63d040deb1b7a5e4d4134ad23eb0ba07e14",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 49883,
    "symbol": "BELUSDT"
   },
@@ -231,6 +259,7 @@
    "address": "0xf17e65822b568b3903685a7c9f496cf7656cc6c2",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 24843,
    "symbol": "BICOUSDT"
   },
@@ -238,6 +267,7 @@
    "address": "0x64bc2ca1be492be7185faa2c8835d9b824c8a194",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 24484,
    "symbol": "BIGTIMEUSDT"
   },
@@ -245,6 +275,7 @@
    "address": "0x5283d291dbcf85356a21ba090e6db59121208b44",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 28494,
    "symbol": "BLURUSDT"
   },
@@ -252,6 +283,7 @@
    "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 51371,
    "symbol": "BLZUSDT"
   },
@@ -259,6 +291,7 @@
    "address": "0xb8c77482e45f1f44de1745f52c74426c631bdd52",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53970,
    "symbol": "BNBUSDT"
   },
@@ -266,6 +299,7 @@
    "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 25998,
    "symbol": "BNTUSDT"
   },
@@ -273,6 +307,7 @@
    "address": "0x0391d2021f89dc339f60fff84546ea23e337750f",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 24412,
    "symbol": "BONDUSDT"
   },
@@ -280,6 +315,7 @@
    "address": "0xae12c5930881c53715b369cec7606b70d8eb229f",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 43191,
    "symbol": "C98USDT"
   },
@@ -287,6 +323,7 @@
    "address": "0x152649ea73beab28c5b49b26eb48f7ead6d4c898",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 23982,
    "symbol": "CAKEUSDT"
   },
@@ -294,6 +331,7 @@
    "address": "0x4f9254c83eb525f9fcf346490bbb3ed28a81c667",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 46739,
    "symbol": "CELRUSDT"
   },
@@ -301,6 +339,7 @@
    "address": "0x8a2279d4a90b6fe1c4b30fa660cc9f926797baa2",
    "decimals": 6,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 47147,
    "symbol": "CHRUSDT"
   },
@@ -308,6 +347,7 @@
    "address": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 48347,
    "symbol": "CHZUSDT"
   },
@@ -315,6 +355,7 @@
    "address": "0xffffffff2ba8f66d4e51811c5190992176930278",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 27675,
    "symbol": "COMBOUSDT"
   },
@@ -322,6 +363,7 @@
    "address": "0xc00e94cb662c3520282e6f5717214004a7f26888",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53265,
    "symbol": "COMPUSDT"
   },
@@ -329,6 +371,7 @@
    "address": "0xddb3422497e61e13543bea06989c0789117555c5",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 47195,
    "symbol": "COTIUSDT"
   },
@@ -336,6 +379,7 @@
    "address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51755,
    "symbol": "CRVUSDT"
   },
@@ -343,6 +387,7 @@
    "address": "0x491604c0fdf08347dd1fa4ee062a822a5dd06b5d",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 41679,
    "symbol": "CTSIUSDT"
   },
@@ -350,6 +395,7 @@
    "address": "0x14778860e937f509e651192a90589de711fb88a9",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 25755,
    "symbol": "CYBERUSDT"
   },
@@ -357,6 +403,7 @@
    "address": "0x081131434f93063751813c619ecca9c4dc7862a3",
    "decimals": 6,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 37260,
    "symbol": "DARUSDT"
   },
@@ -364,6 +411,7 @@
    "address": "0x3597bfd533a99c9aa083587b074434e61eb0a258",
    "decimals": 8,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 46862,
    "symbol": "DENTUSDT"
   },
@@ -371,6 +419,7 @@
    "address": "0x940a2db1b7008b6c776d4faaca729d6d4a4aa551",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 39928,
    "symbol": "DUSKUSDT"
   },
@@ -378,6 +427,7 @@
    "address": "0xf8173a39c56a554837c4c7f104153a005d284d11",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 28447,
    "symbol": "EDUUSDT"
   },
@@ -385,6 +435,7 @@
    "address": "0x57e114b691db790c35207b2e685d4a43181e6061",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 20335,
    "symbol": "ENAUSDT"
   },
@@ -392,6 +443,7 @@
    "address": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51084,
    "symbol": "ENJUSDT"
   },
@@ -399,6 +451,7 @@
    "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 40840,
    "symbol": "ENSUSDT"
   },
@@ -406,6 +459,7 @@
    "address": "0xfe0c30065b384f05761f15d0cc899d4f9f9cc0eb",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 20692,
    "symbol": "ETHFIUSDT"
   },
@@ -413,6 +467,7 @@
    "address": "0xaea46a60368a7bd060eec7df8cba43b7ef41ad85",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30929,
    "symbol": "FETUSDT"
   },
@@ -420,6 +475,7 @@
    "address": "0x50d1c9771902476076ecfc8b2a83ad6b9355a4c9",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 37597,
    "symbol": "FTTUSDT"
   },
@@ -427,6 +483,7 @@
    "address": "0xd1d2eb1b1e90b638588728b4130137d262c87cae",
    "decimals": 8,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 42592,
    "symbol": "GALAUSDT"
   },
@@ -434,6 +491,7 @@
    "address": "0x5faa989af96af85384b8a938c2ede4a7378d9875",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 19601,
    "symbol": "GALUSDT"
   },
@@ -441,6 +499,7 @@
    "address": "0x7dd9c5cba05e151c895fde1cf355c9a1d5da6429",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21318,
    "symbol": "GLMUSDT"
   },
@@ -448,6 +507,7 @@
    "address": "0xe3c408bd53c31c085a1746af401a4042954ff740",
    "decimals": 8,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 38271,
    "symbol": "GMTUSDT"
   },
@@ -455,6 +515,7 @@
    "address": "0xc944e90c64b2c07662a292be6244bdf05cda44a7",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 49020,
    "symbol": "GRTUSDT"
   },
@@ -462,6 +523,7 @@
    "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 44848,
    "symbol": "GTCUSDT"
   },
@@ -469,6 +531,7 @@
    "address": "0xb3999f658c0391d94a37f7ff328f3fec942bcadc",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 29044,
    "symbol": "HFTUSDT"
   },
@@ -476,6 +539,7 @@
    "address": "0x4b9278b94a1112cad404048903b8d343a810b07e",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 25130,
    "symbol": "HIFIUSDT"
   },
@@ -483,6 +547,7 @@
    "address": "0x71ab77b7dbb4fa7e017bc15090b2163221420282",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 30425,
    "symbol": "HIGHUSDT"
   },
@@ -490,6 +555,7 @@
    "address": "0x6c6ee5e31d828de241282b9606c8e98ea48526e2",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 46596,
    "symbol": "HOTUSDT"
   },
@@ -497,6 +563,7 @@
    "address": "0x00f3c42833c3170159af4e92dbb451fb3f708917",
    "decimals": 8,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 45086,
    "symbol": "ICPUSDT"
   },
@@ -504,6 +571,7 @@
    "address": "0x2dff88a56767223a5529ea5960da7a3f5f766406",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 29357,
    "symbol": "IDUSDT"
   },
@@ -511,6 +579,7 @@
    "address": "0xf57e7e7c23978c3caec3c3548e3d615c346e79ff",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 38968,
    "symbol": "IMXUSDT"
   },
@@ -518,6 +587,7 @@
    "address": "0xe28b3b32b6c345a34ff64674606124dd5aceca30",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 34601,
    "symbol": "INJUSDT"
   },
@@ -525,6 +595,7 @@
    "address": "0x6fb3e0a217407efff7ca062d46c26e5d60a14d69",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 43480,
    "symbol": "IOTXUSDT"
   },
@@ -532,6 +603,7 @@
    "address": "0x7420b4b9a0110cdc71fb720908340c03f9bc03ec",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 37456,
    "symbol": "JASMYUSDT"
   },
@@ -539,6 +611,7 @@
    "address": "0x4cc19356f2d37338b9802aa8e8fc58b0373296e7",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 27892,
    "symbol": "KEYUSDT"
   },
@@ -546,6 +619,7 @@
    "address": "0xdefa4e8a7bcba345f687a2f1456f5edd9ce97202",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53339,
    "symbol": "KNCUSDT"
   },
@@ -553,6 +627,7 @@
    "address": "0x5a98fcbea516cf06857215779fd812ca3bef1b32",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 33727,
    "symbol": "LDOUSDT"
   },
@@ -560,6 +635,7 @@
    "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53971,
    "symbol": "LINKUSDT"
   },
@@ -567,6 +643,7 @@
    "address": "0x42476f744292107e34519f9c357927074ea3f75d",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 24530,
    "symbol": "LOOMUSDT"
   },
@@ -574,6 +651,7 @@
    "address": "0x58b6a8a3302369daec383334672404ee733ab239",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 41297,
    "symbol": "LPTUSDT"
   },
@@ -581,6 +659,7 @@
    "address": "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 29672,
    "symbol": "LQTYUSDT"
   },
@@ -588,6 +667,7 @@
    "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 50485,
    "symbol": "LRCUSDT"
   },
@@ -595,6 +675,7 @@
    "address": "0x6033f7f88332b8db6ad452b7c6d5bb643990ae3f",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21986,
    "symbol": "LSKUSDT"
   },
@@ -602,6 +683,7 @@
    "address": "0xb0c7a3ba49c7a6eaba6cd4a96c55a1391070ac9a",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30737,
    "symbol": "MAGICUSDT"
   },
@@ -609,6 +691,7 @@
    "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 46957,
    "symbol": "MANAUSDT"
   },
@@ -616,6 +699,7 @@
    "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 43001,
    "symbol": "MASKUSDT"
   },
@@ -623,6 +707,7 @@
    "address": "0x7448c7456a97769f6cd04f1e83a4a23ccdc46abd",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 27028,
    "symbol": "MAVUSDT"
   },
@@ -630,6 +715,7 @@
    "address": "0x814e0908b12a99fecf5bc101bb5d0b8b5cdf7d26",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 27004,
    "symbol": "MDTUSDT"
   },
@@ -637,6 +723,7 @@
    "address": "0xb131f4a55907b10d1f0a50d8ab8fa09ec342cd74",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 23960,
    "symbol": "MEMEUSDT"
   },
@@ -644,6 +731,7 @@
    "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 52093,
    "symbol": "MKRUSDT"
   },
@@ -651,6 +739,7 @@
    "address": "0x5cf04716ba20127f1e2297addcf4b5035000c9eb",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 46497,
    "symbol": "NKNUSDT"
   },
@@ -658,6 +747,7 @@
    "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 27196,
    "symbol": "NMRUSDT"
   },
@@ -665,6 +755,7 @@
    "address": "0x967da4048cd07ab37855c090aaf366e4ce1b9f48",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 50125,
    "symbol": "OCEANUSDT"
   },
@@ -672,6 +763,7 @@
    "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 46549,
    "symbol": "OGNUSDT"
   },
@@ -679,20 +771,15 @@
    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 53099,
    "symbol": "OMGUSDT"
-  },
-  {
-   "address": "0x9e20461bc2c4c980f62f1b279d71734207a6a356",
-   "decimals": 18,
-   "how": "fallback_single_unranked",
-   "rows": 19995,
-   "symbol": "OMNIUSDT"
   },
   {
    "address": "0xfaba6f8e4a5e8ab82f62fe7c39859fa577269be3",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 22087,
    "symbol": "ONDOUSDT"
   },
@@ -700,6 +787,7 @@
    "address": "0xff56cc6b1e6ded347aa0b7676c85ab0b3d08b0fa",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 24395,
    "symbol": "ORBSUSDT"
   },
@@ -707,6 +795,7 @@
    "address": "0x808507121b80c02388fad14726482e061b8da827",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 26322,
    "symbol": "PENDLEUSDT"
   },
@@ -714,6 +803,7 @@
    "address": "0x7a58c0be72be218b41c608b7fe7c5bb630736c71",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 40144,
    "symbol": "PEOPLEUSDT"
   },
@@ -721,6 +811,7 @@
    "address": "0xbc396689893d065f41bc2c6ecbee5e0085233447",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 29768,
    "symbol": "PERPUSDT"
   },
@@ -728,6 +819,7 @@
    "address": "0x3429d03c6f7521aec737a0bbf2e5ddcef2c3ae31",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21386,
    "symbol": "PIXELUSDT"
   },
@@ -735,6 +827,7 @@
    "address": "0x1bbe973bef3a977fc51cbed703e8ffdefe001fed",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21146,
    "symbol": "PORTALUSDT"
   },
@@ -742,6 +835,7 @@
    "address": "0x595832f8fc6bf59c85c527fec3740a1b7a361269",
    "decimals": 6,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 24159,
    "symbol": "POWRUSDT"
   },
@@ -749,6 +843,7 @@
    "address": "0x4a220e6096b25eadb88358cb44068a3248254675",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 33087,
    "symbol": "QNTUSDT"
   },
@@ -756,6 +851,7 @@
    "address": "0x31c8eacbffdd875c74b94b077895bd78cf1e64a3",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 28229,
    "symbol": "RADUSDT"
   },
@@ -763,6 +859,7 @@
    "address": "0x137ddb47ee24eaa998a535ab00378d6bfa84f893",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 29069,
    "symbol": "RDNTUSDT"
   },
@@ -770,6 +867,7 @@
    "address": "0x6de037ef9ad2725eb40118bb1702ebb27e4aeb24",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 17599,
    "symbol": "RENDERUSDT"
   },
@@ -777,6 +875,7 @@
    "address": "0x408e41876cccdc0f92210600ef50372656052a38",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 50749,
    "symbol": "RENUSDT"
   },
@@ -784,6 +883,7 @@
    "address": "0x3b50805453023a91a8bf641e279401a0b23fa6f9",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 19683,
    "symbol": "REZUSDT"
   },
@@ -791,6 +891,7 @@
    "address": "0x01b603be3d545f096015741e6503440282bf45fb",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 24293,
    "symbol": "RIFUSDT"
   },
@@ -798,6 +899,7 @@
    "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
    "decimals": 9,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 52405,
    "symbol": "RLCUSDT"
   },
@@ -805,6 +907,7 @@
    "address": "0x320623b8e4ff03373931769a31fc52a4e78b5d70",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 50485,
    "symbol": "RSRUSDT"
   },
@@ -812,6 +915,7 @@
    "address": "0x3845badade8e6dff049820680d1f14bd3903a5d0",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 48133,
    "symbol": "SANDUSDT"
   },
@@ -819,6 +923,7 @@
    "address": "0x12e2b8033420270db2f3b328e32370cb5b2ca134",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 47533,
    "symbol": "SFPUSDT"
   },
@@ -826,6 +931,7 @@
    "address": "0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 49285,
    "symbol": "SKLUSDT"
   },
@@ -833,6 +939,7 @@
    "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 52190,
    "symbol": "SNXUSDT"
   },
@@ -840,6 +947,7 @@
    "address": "0x090185f2135308bad17527004364ebcc2d37e5f6",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 34133,
    "symbol": "SPELLUSDT"
   },
@@ -847,6 +955,7 @@
    "address": "0x476c5e26a75bd202a9683ffd34359c0cc15be0ff",
    "decimals": 6,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 32670,
    "symbol": "SRMUSDT"
   },
@@ -854,6 +963,7 @@
    "address": "0x9d65ff81a3c488d585bbfb0bfe3c7707c7917f54",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30009,
    "symbol": "SSVUSDT"
   },
@@ -861,6 +971,7 @@
    "address": "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 34401,
    "symbol": "STGUSDT"
   },
@@ -868,6 +979,7 @@
    "address": "0xa62cc35625b0c8dc1faea39d33625bb4c15bd71c",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 46910,
    "symbol": "STMXUSDT"
   },
@@ -875,6 +987,7 @@
    "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
    "decimals": 8,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51278,
    "symbol": "STORJUSDT"
   },
@@ -882,6 +995,7 @@
    "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 21340,
    "symbol": "STRKUSDT"
   },
@@ -889,6 +1003,7 @@
    "address": "0xe53ec727dbdeb9e2d5456c3be40cff031ab40a55",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 23428,
    "symbol": "SUPERUSDT"
   },
@@ -896,6 +1011,7 @@
    "address": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51566,
    "symbol": "SUSHIUSDT"
   },
@@ -903,6 +1019,7 @@
    "address": "0x8ce9137d39326ad0cd6491fb5cc0cba0e089b6a9",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 51375,
    "symbol": "SXPUSDT"
   },
@@ -910,6 +1027,7 @@
    "address": "0x4507cef57c46789ef8d1a19ea45f4216bae2b528",
    "decimals": 9,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 23978,
    "symbol": "TOKENUSDT"
   },
@@ -917,6 +1035,7 @@
    "address": "0x88df592f8eb5d7bd38bfef7deb0fbc02cf3778a0",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51590,
    "symbol": "TRBUSDT"
   },
@@ -924,6 +1043,7 @@
    "address": "0xa35923162c49cf95e6bf26623385eb431ad920d3",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 18942,
    "symbol": "TURBOUSDT"
   },
@@ -931,6 +1051,7 @@
    "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 30580,
    "symbol": "TUSDT"
   },
@@ -938,6 +1059,7 @@
    "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 28229,
    "symbol": "UMAUSDT"
   },
@@ -945,6 +1067,7 @@
    "address": "0x441761326490cacf7af299725b6292597ee822c2",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 47534,
    "symbol": "UNFIUSDT"
   },
@@ -952,6 +1075,7 @@
    "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51350,
    "symbol": "UNIUSDT"
   },
@@ -959,6 +1083,7 @@
    "address": "0x8de5b80a0c1b02fe4976851d030b36122dbb8624",
    "decimals": 18,
    "how": "fallback_single_unranked",
+   "multiplier": 1,
    "rows": 20832,
    "symbol": "VANRYUSDT"
   },
@@ -966,6 +1091,7 @@
    "address": "0x1cf4592ebffd730c7dc92c1bdffdfc3b9efcf29a",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 52118,
    "symbol": "WAVESUSDT"
   },
@@ -973,6 +1099,7 @@
    "address": "0x163f8c2467924be0ae7b5347228cabf260318753",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 26409,
    "symbol": "WLDUSDT"
   },
@@ -980,6 +1107,7 @@
    "address": "0x4691937a7508860f876c9c0a2a617e7d9e945d4b",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 37746,
    "symbol": "WOOUSDT"
   },
@@ -987,6 +1115,7 @@
    "address": "0xb0ffa8000886e57f86dd5264b9582b2ad87b2b91",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 20310,
    "symbol": "WUSDT"
   },
@@ -994,6 +1123,7 @@
    "address": "0xd3cc9d8f3689b83c91b7b59cab4946b063eb894a",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 28888,
    "symbol": "XVSUSDT"
   },
@@ -1001,6 +1131,7 @@
    "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 51662,
    "symbol": "YFIUSDT"
   },
@@ -1008,6 +1139,7 @@
    "address": "0x25f8087ead173b73d6e8b84329989a8eea16cf73",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 26130,
    "symbol": "YGGUSDT"
   },
@@ -1015,6 +1147,7 @@
    "address": "0xf091867ec603a6628ed83d274e835539d82e9cc8",
    "decimals": 18,
    "how": "fallback_single_ranked",
+   "multiplier": 1,
    "rows": 21802,
    "symbol": "ZETAUSDT"
   },
@@ -1022,6 +1155,7 @@
    "address": "0x66a5cfb2e9c529f14fe6364ad1075df3a649c0a5",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 18535,
    "symbol": "ZKUSDT"
   },
@@ -1029,6 +1163,7 @@
    "address": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 18439,
    "symbol": "ZROUSDT"
   },
@@ -1036,6 +1171,7 @@
    "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
    "decimals": 18,
    "how": "binance_spot",
+   "multiplier": 1,
    "rows": 53412,
    "symbol": "ZRXUSDT"
   }

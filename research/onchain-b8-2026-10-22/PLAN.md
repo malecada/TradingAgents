@@ -26,3 +26,15 @@ liquidity tercile of mean quote volume.
 
 `TABLES.md` (generated) holds every row with per-year rows, hours and tokens; `RESULTS.md`
 reads it. Post hoc additions are labelled.
+
+## Amendment 1 (2026-10-22, before any day is read)
+
+Fresh review findings, applied before the pass: (1) Binance "1000X" perps are quoted per
+1,000 tokens, so the per-token USD price is the close divided by the symbol's multiplier
+(1000BONK, 1000FLOKI, 1000PEPE, 1000SHIB); (2) `1000SATSUSDT` (map: "Satoshis Vision", the
+perp is the BRC-20 SATS) and `OMNIUSDT` (map: "OmniCat", the perp is Omni Network) are
+excluded as wrong contracts, leaving 146 tokens; (3) days marked unavailable are retried on
+every relaunch of the pass and the marker is removed on success; (4) V6 / V24 are missing,
+not −18.4, when the future window has no price change; (5) feature columns are float32 and
+the cross-section is built in place (memory). Reporting: differences, intervals and years are
+hour-weighted; losses and gains row-weighted, labelled in `TABLES.md`.

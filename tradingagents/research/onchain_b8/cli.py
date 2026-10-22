@@ -47,8 +47,9 @@ def stage_universe(args):
     out = STUDY / 'config' / 'universe.json'
     if out.exists():
         raise SystemExit('universe already frozen')
-    tokens = universe8.build(config.TOKEN_MAP, config.KLINES, c['universe']['min_rows'])
-    _write_json(out, {'tokens': tokens, 'min_rows': c['universe']['min_rows'], 'token_map': str(config.TOKEN_MAP), 'klines': str(config.KLINES)})
+    tokens = universe8.build(config.TOKEN_MAP, config.KLINES, c['universe']['min_rows'], exclude=c['universe'].get('exclude', ()))
+    _write_json(out, {'tokens': tokens, 'min_rows': c['universe']['min_rows'], 'exclude': list(c['universe'].get('exclude', ())),
+                      'token_map': str(config.TOKEN_MAP), 'klines': str(config.KLINES)})
     print(json.dumps({'tokens': len(tokens)}))
 
 
@@ -83,13 +84,13 @@ def stage_pass(args):
     contracts = {t['address']: (i, t['decimals']) for i, t in enumerate(tokens)}
     days = [d for d in config.days(c) if args.end is None or d <= args.end]
     hours = pd.date_range(days[0], periods=24 * len(days), freq='h')
-    prices = hourly8.price_matrix(_bars_all(tokens), hours)
+    prices = hourly8.price_matrix(_bars_all(tokens), hours, multipliers=[t.get('multiplier', 1) for t in tokens])
     st = _state()
     log = Log(ARTIFACTS / 'logs' / 'pass.jsonl')
     fs, p = filesystem(), c['pass']
     out = ARTIFACTS / 'days'
     out.mkdir(parents=True, exist_ok=True)
-    todo = [d for d in days if day_status(d) is None]
+    todo = [d for d in days if day_status(d) != 'done']        # unavailable days are retried on every launch
 
     def fetch(day):
         return reader8.read_day8(day, filesystem=fs, root=c['s3']['bucket'], contracts=contracts, retries=c['s3']['retries'])
@@ -123,6 +124,7 @@ def stage_pass(args):
             tmp = out / f'.{day}.parquet.tmp'
             rows.to_parquet(tmp)
             os.replace(tmp, out / f'{day}.parquet')
+            (out / f'{day}.unavailable.json').unlink(missing_ok=True)
             log.event(event='day', day=day, status='done', seconds=round(time.time() - t, 1), transfers=int(len(d.src)), peak_rss_mb=_peak_rss_mb())
             del d
     finally:
@@ -143,10 +145,10 @@ def stage_panel(args):
         f = panel8.token_frame(panel8.token_series(frames, hours, i), bars[i], c)
         f['token'] = np.int16(i)
         parts.append(f)
+    del frames, bars
     panel = pd.concat(parts).sort_index(kind='stable')
+    del parts
     panel = panel8.cross_section(panel, c)
-    feat = [col for col in panel.columns if col not in ('token', 'V6', 'V24', 'XV24')]
-    panel[feat] = panel[feat].astype(np.float32)
     (ARTIFACTS / 'panel').mkdir(parents=True, exist_ok=True)
     panel.to_parquet(ARTIFACTS / 'panel' / 'panel.parquet')
     print(json.dumps({'rows': len(panel), 'tokens': int(panel['token'].nunique()), 'columns': panel.shape[1],
@@ -168,6 +170,7 @@ def stage_forecast(args):
     only = set(args.only.split(',')) if args.only else None
     panel = pd.read_parquet(ARTIFACTS / 'panel' / 'panel.parquet')
     df = forecast8.samples(panel, c)
+    del panel
     out = ARTIFACTS / 'forecast'
     out.mkdir(parents=True, exist_ok=True)
     log = Log(ARTIFACTS / 'logs' / 'forecast.jsonl')
@@ -201,7 +204,8 @@ def stage_report(args):
     for t, v in res['n'].items():
         per = ', '.join(f"{yr} {d['rows']} / {d['hours']} / {d['tokens']}" for yr, d in sorted(v['years'].items(), key=lambda kv: int(kv[0])))
         lines.append(f"| {t} | {v['n']} | {v['mean']:.4f} | {per} |")
-    lines += ['', '## Comparisons', '', forecast8.report(res['results']), '', '## Model detail', '', detail_report(res['meta']),
+    lines += ['', '## Comparisons', '', 'Differences, intervals and years are hour-weighted (per-hour means over tokens); losses and gains are row-weighted.', '',
+              forecast8.report(res['results']), '', '## Model detail', '', detail_report(res['meta']),
               '', 'Per-token differences (post hoc): `research_artifacts/onchain-b8/forecast/per_token.csv`.']
     STUDY.mkdir(parents=True, exist_ok=True)
     (STUDY / 'TABLES.md').write_text('\n'.join(lines) + '\n')

@@ -56,3 +56,10 @@ def test_price_matrix_aligns_tokens_and_hours():
     m = Hh.price_matrix([b0, b1], hours)
     assert m.shape == (48, 2) and m[0, 0] == 1.0 and m[23, 0] == 24.0 and np.isnan(m[24, 0])
     assert np.isnan(m[26, 1]) and m[27, 1] == 7.0 and np.isnan(m[28, 1]) and m[29, 1] == 8.0
+
+
+def test_price_matrix_divides_by_multiplier():
+    hours = pd.date_range('2023-05-01', periods=2, freq='h')
+    b = pd.DataFrame({'close': [4.2, 4.4], 'qvol': 1.0}, index=hours)
+    m = Hh.price_matrix([b, b], hours, multipliers=[1, 1000])
+    assert m[0, 0] == 4.2 and np.isclose(m[0, 1], 0.0042) and np.isclose(m[1, 1], 0.0044)

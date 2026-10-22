@@ -5,24 +5,35 @@ wins). Hourly bars as close / quote volume on a naive UTC index."""
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pandas as pd
 import pyarrow.parquet as pq
 
 
-def build(token_map_path, klines_dir, min_rows):
+_MULT = re.compile(r'^(1000000|1000)(?=[A-Z])')
+
+
+def multiplier(symbol):
+    """Binance quotes "1000X" and "1000000X" perps per 1,000 / 1,000,000 tokens."""
+    m = _MULT.match(symbol)
+    return int(m.group(1)) if m else 1
+
+
+def build(token_map_path, klines_dir, min_rows, exclude=()):
     tm = json.loads(Path(token_map_path).read_text())['map']
     rows = []
     for sym, v in sorted(tm.items()):
         addr = v.get('address')
         p = Path(klines_dir) / f'{sym}.parquet'
-        if not addr or not p.exists():
+        if not addr or not p.exists() or sym in set(exclude):
             continue
         n = pq.read_metadata(p).num_rows
         if n < min_rows:
             continue
-        rows.append({'symbol': sym, 'address': addr.lower(), 'decimals': int(v['decimals']), 'rows': int(n), 'how': v.get('how')})
+        rows.append({'symbol': sym, 'address': addr.lower(), 'decimals': int(v['decimals']), 'rows': int(n), 'how': v.get('how'),
+                     'multiplier': multiplier(sym)})
     best = {}
     for r in rows:
         if r['address'] not in best or r['rows'] > best[r['address']]['rows']:

@@ -10,10 +10,13 @@ import pandas as pd
 SERIES = ['dep_usd', 'wd_usd', 'dep_cnt', 'wd_cnt', 'tx_cnt', 'active', 'big_cnt']
 
 
-def price_matrix(bars_by_index, hours):
+def price_matrix(bars_by_index, hours, multipliers=None):
+    """Per-token USD price of one token per hour: the perp close divided by the symbol's
+    multiplier (1,000 for "1000X" perps)."""
     m = np.full((len(hours), len(bars_by_index)), np.nan)
     for j, b in enumerate(bars_by_index):
-        m[:, j] = b['close'].reindex(hours).to_numpy(float)
+        mult = 1 if multipliers is None else multipliers[j]
+        m[:, j] = b['close'].reindex(hours).to_numpy(float) / mult
     return m
 
 

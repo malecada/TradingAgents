@@ -23,7 +23,8 @@ def token_frame(series, bars, c):
     f = multiscale(series, c['engineering'])
     m = dataset4.price_features(bars).join(px_features(bars))
     t = dataset4.hourly_targets(bars)[['V6', 'V24']]
-    df = f.join(m, how='inner').join(t, how='left')
+    t = t.where(t > np.log(1e-8) + 1e-6)              # a window without any price change measures no volatility: NaN
+    df = f.join(m, how='inner').astype(np.float32).join(t, how='left')
     start = bars.index.min() + pd.Timedelta(days=c['panel']['entry_days'])
     return df[df.index >= start]
 
@@ -36,8 +37,7 @@ def cross_section(panel, c):
     z = ((panel[cols] - mean) / std).where(std > 0, 0.0)      # no spread across tokens: zero, as B4's z-score
     z = z.where(cnt >= pc['min_tokens_hour'])
     vm, vc = g['V24'].transform('mean'), g['V24'].transform('count')
-    out = panel.copy()
-    for col in cols:                     # positional assignment: the hour index is not unique, so no join
-        out[f'xs_{col}'] = z[col].to_numpy()
-    out['XV24'] = (panel['V24'] - vm).where(vc >= pc['min_tokens_hour']).to_numpy()
-    return out
+    for col in cols:                     # positional, in place: the hour index is not unique (no join), and no copy (memory)
+        panel[f'xs_{col}'] = z[col].to_numpy(np.float32)
+    panel['XV24'] = (panel['V24'] - vm).where(vc >= pc['min_tokens_hour']).to_numpy()
+    return panel
