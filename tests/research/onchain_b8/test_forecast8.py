@@ -55,3 +55,14 @@ def test_compare_weights_hours_not_rows():
     assert set(t['token']) == set(range(6)) and len(t) == 6 * 6 and (t['n'] > 0).all()
     text = F.report(res)
     assert '| V6 | ridge | P2 vs P1 |' in text
+
+
+def test_predict_all_prefiltered_sorted_input_gives_identical_predictions():
+    rng = np.random.default_rng(33)
+    p = _panel(rng)
+    s = F.samples(p, SMALL)
+    P1, _ = F.predict_all(s, 'V6', {**SMALL, 'families': ['ridge']})
+    d = s[s['V6'].notna()]                                                             # already filtered and hour-sorted
+    P2, _ = F.predict_all(d, 'V6', {**SMALL, 'families': ['ridge']})
+    pd.testing.assert_frame_equal(P1, P2)
+    assert F.needed_columns(SMALL, p) == sorted(set(['token'] + [c for c in p.columns if c.startswith(tuple(F.set_prefixes('P2', SMALL)))] + list(SMALL['targets'])))

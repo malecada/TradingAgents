@@ -21,9 +21,18 @@ def set_prefixes(name, cfg):
     return out
 
 
+def needed_columns(cfg, panel=None):
+    """`token`, every feature column of every set and every target; with `panel`, the names
+    present in it, otherwise the prefix list is resolved by the caller."""
+    pre = sorted({p for s in cfg['sets'] for p in set_prefixes(s, cfg)})
+    if panel is None:
+        return pre
+    return sorted(set(['token'] + columns(panel, pre) + list(cfg['targets'])))
+
+
 def samples(panel, cfg):
     end = pd.Timestamp(cfg['window']['last_day']) + pd.Timedelta(days=1)
-    pre = sorted({p for s in cfg['sets'] for p in set_prefixes(s, cfg)})
+    pre = needed_columns(cfg)
     tcols = list(cfg['targets'])
     feat = columns(panel, pre)
     df = panel[['token'] + feat + tcols]
@@ -36,7 +45,10 @@ def samples(panel, cfg):
 def predict_all(df, target, cfg, log=None):
     fc = cfg['folds']
     h = cfg['targets'][target]['h']
-    d = df[df[target].notna()].sort_index(kind='stable')
+    ok = df[target].notna()
+    d = df if bool(ok.all()) else df[ok]                       # no copy when the caller already filtered
+    if not d.index.is_monotonic_increasing:
+        d = d.sort_index(kind='stable')
     y = d[target].to_numpy(float)
     fl = [(yr, tr, te) for yr, tr, te in folds(d.index, fc['test_years'], h / 24) if te.any() and tr.sum() >= fc['min_train']]
     tested, const = np.zeros(len(d), bool), np.full(len(d), np.nan)
@@ -56,6 +68,7 @@ def predict_all(df, target, cfg, log=None):
                 if log is not None:
                     log(event='fit', target=target, fit=key, year=int(yr), n_train=int(tr.sum()), **info)
             preds[key] = p
+            del X
     P = pd.DataFrame(preds, index=d.index)
     P['token'] = d['token'].to_numpy()
     P['y'], P['const'], P['tested'] = y, const, tested

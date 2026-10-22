@@ -4,6 +4,8 @@ file, read watchdog), the panel, pooled forecasts (resumable per target) and the
 from __future__ import annotations
 
 import argparse
+import ctypes
+import gc
 import json
 import os
 import shutil
@@ -13,6 +15,7 @@ from concurrent.futures import TimeoutError as FuturesTimeout
 
 import numpy as np
 import pandas as pd
+import pyarrow.parquet as pq
 
 from ..onchain_b.runlog import Log
 from ..onchain_b2.s3source import DayUnavailable
@@ -165,22 +168,51 @@ def _support(df, target):
     return {'n': int(ok.sum()), 'mean': float(s.mean()), 'years': years}
 
 
+def _release():
+    """Return freed arenas to the OS so the cgroup charge follows the live data."""
+    gc.collect()
+    try:
+        ctypes.CDLL('libc.so.6').malloc_trim(0)
+    except (OSError, AttributeError):
+        pass
+
+
+def _samples_for(c, target=None):
+    """Samples with every feature column and either every target or one target: the panel is
+    read with only the needed columns and dropped before the samples are returned."""
+    path = ARTIFACTS / 'panel' / 'panel.parquet'
+    names = [col for col in pq.read_schema(path).names if col not in ('__index_level_0__',)]
+    cfg = c if target is None else {**c, 'targets': {target: c['targets'][target]}}
+    cols = [col for col in forecast8.needed_columns(cfg, pd.DataFrame(columns=names)) if col in names]
+    panel = pd.read_parquet(path, columns=cols)
+    df = forecast8.samples(panel, cfg)
+    del panel
+    if target is not None:
+        df = df[df[target].notna()]
+    _release()
+    return df
+
+
 def stage_forecast(args):
     c = config.load()
     only = set(args.only.split(',')) if args.only else None
-    panel = pd.read_parquet(ARTIFACTS / 'panel' / 'panel.parquet')
-    df = forecast8.samples(panel, c)
-    del panel
     out = ARTIFACTS / 'forecast'
     out.mkdir(parents=True, exist_ok=True)
     log = Log(ARTIFACTS / 'logs' / 'forecast.jsonl')
+    df = _samples_for(c)
     n = {t: _support(df, t) for t in c['targets']}
+    del df
+    _release()
     for target in c['targets']:
         unit = out / f'{target}.json'
         if (only is not None and target not in only) or unit.exists():
             continue
         t0 = time.time()
-        P, meta = forecast8.predict_all(df, target, c, log=log.event)
+        d = _samples_for(c, target)
+        log.event(event='samples', target=target, rows=int(len(d)))
+        P, meta = forecast8.predict_all(d, target, c, log=log.event)
+        del d
+        _release()
         res = forecast8.compare(P, target, c)
         P.to_parquet(out / f'pred_{target}.parquet')
         forecast8.per_token(P, target, c).to_csv(out / f'per_token_{target}.csv', index=False)
