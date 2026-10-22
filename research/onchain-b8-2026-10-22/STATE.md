@@ -21,3 +21,7 @@ per-hour cross-section, hour-weighted bootstrap and atomic day files verified; o
 three Important (two wrong contracts in the universe; unavailable days never retried; panel
 stage peak ≈ 12 GB) fixed with tests before the pass (PLAN.md amendment 1); universe
 re-frozen at 146 tokens. Pass launched as `onchain-b8-pass` (6 GiB cap, restart on stall).
+
+2026-10-22 12:45 — Pass check after 150 days (to 2020-10-28): 64 tokens active, 27 priced; USD per
+exchange deposit from $514 (LRC) to $43k (YFI), no decimal or multiplier anomaly; 12 s per day,
+peak 731 MB; projected end ≈ 19:45.
