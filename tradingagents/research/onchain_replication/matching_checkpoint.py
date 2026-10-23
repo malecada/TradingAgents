@@ -70,14 +70,23 @@ def advance(s,a,b,c,*,max_operations):
     if type(max_operations) is not int or max_operations<=0:raise ValueError('positive operation allowance required')
     return _advance_owned(s,a,b,c,max_operations=max_operations)
 
-def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None,edge_chunk_fill=None):
+def _advance_owned(s,a,b,c,*,max_operations,edge_cache_policy=None,normalizer=None,edge_chunk_fill=None,native_full_lease=None):
     """Private body; composite/input/budget checks precede entry, no callbacks."""
     selected=adaptive_edge_policy.freeze(edge_cache_policy)
     s['safe']=False
     try:
         used=0
         if s['phase']=='annealing':
-            used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}),**({'normalizer':normalizer} if normalizer is not None else {}),**({'edge_chunk_fill':edge_chunk_fill} if edge_chunk_fill is not None else {}))
+            if native_full_lease is None:
+                used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}),**({'normalizer':normalizer} if normalizer is not None else {}),**({'edge_chunk_fill':edge_chunk_fill} if edge_chunk_fill is not None else {}))
+            else:
+                native_full_lease.current()
+                used=native_full_lease.advance(s['annealing'],a,b,c,max_operations=max_operations)
+                native_full_lease.current()
+                if used is None:
+                    used=ann._advance_checked(s['annealing'],a,b,c,max_operations=max_operations,**({'edge_cache_policy':dict(selected)} if selected is not None else {}),**({'normalizer':normalizer} if normalizer is not None else {}),**({'edge_chunk_fill':edge_chunk_fill} if edge_chunk_fill is not None else {}))
+                elif type(used) is not int or not 0<=used<=max_operations:
+                    raise ValueError('native full operation counter differs')
             if s['annealing']['phase']=='done':
                 matrix=s['annealing']['M'];digest=matrix_identity(matrix)
                 h=hard.create(matrix,max_pair_entries=c['max_pair_entries'],max_explicit_bytes=s['policy']['hardening_buffer_bytes'])

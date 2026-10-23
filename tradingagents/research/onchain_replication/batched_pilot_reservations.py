@@ -32,6 +32,7 @@ def validate(envelope,import_stage,mcm,output,archive,typed,pair,graph_keys):
     compact_policy.positive(numeric[k] for k in fields-{'schema_version'})
     if 'extraction_limit' in numeric:compact_policy.positive((numeric['extraction_limit'],))
     cache_charge=compact_mcm_batched.matching_numeric_policy.cache_reservation(mcm['batched']['execution'].get('numeric_kernel_policy'))
+    cache_charge+=compact_mcm_batched.native_full_owner.reservation(mcm['batched']['execution'].get('native_full_policy'))
     require(numeric['max_output_bytes']>=4*max(counts.values()) and numeric['max_numeric_bytes']>=4*max(counts.values())+numeric['max_buffer_bytes']+cache_charge,'MCM numeric reservation insufficient')
     require(type(output) is dict and set(output)=={'schema_version','backend','max_artifact_bytes','max_workflow_output_bytes'} and type(output['schema_version']) is int and output['schema_version']==1 and output['backend']==compact_policy.BACKEND,'batched local output reservation schema')
     compact_policy.positive((output['max_artifact_bytes'],output['max_workflow_output_bytes']))

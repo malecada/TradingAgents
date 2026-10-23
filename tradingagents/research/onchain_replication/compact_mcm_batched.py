@@ -1,3 +1,4 @@
+from . import native_full_owner
 """Explicit batched MCM closure; genuine owner boundaries, never old pair seals.
 
 Selected local/typed-offload route. No registration or empirical admission.
@@ -102,12 +103,14 @@ def validate(policy, pairs):
         require(type(b[k]) is int and 0 < b[k] < 2**63, 'positive batched allowance required')
     require(b['batch_cells'] <= 4096 and 1024 <= b['max_body_bytes'] <= 1024**2 and b['max_closure_token_bytes'] <= 64*1024**2, 'batch bounds differ')
     execution=b['execution']
-    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'backend_input_policy'} if 'backend_input_policy' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()) | ({'numeric_kernel_policy'} if 'numeric_kernel_policy' in execution else set()),'explicit numeric execution schema required')
+    require(type(execution) is dict and set(execution)=={'route','max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes'} | ({'geometry'} if 'geometry' in execution else set()) | ({'binding_timing'} if 'binding_timing' in execution else set()) | ({'backend_input_policy'} if 'backend_input_policy' in execution else set()) | ({'edge_cache_policy'} if 'edge_cache_policy' in execution else set()) | ({'compiled_normalization_policy','compiled_normalization_inputs'} if 'compiled_normalization_policy' in execution else set()) | ({'compiled_edge_policy','compiled_edge_inputs'} if 'compiled_edge_policy' in execution else set()) | ({'numeric_kernel_policy'} if 'numeric_kernel_policy' in execution else set()) | ({'native_full_policy','native_full_inputs'} if 'native_full_policy' in execution else set()),'explicit numeric execution schema required')
     _compiled_policy(execution)
     _edge_policy(execution)
     _backend_input_policy(execution)
     _numeric_policy(execution)
+    _full_policy(execution)
     cache_charge=matching_numeric_policy.cache_reservation(execution.get('numeric_kernel_policy'))
+    cache_charge+=native_full_owner.reservation(execution.get('native_full_policy'))
     if cache_charge:
         numeric=policy['numeric']
         fields={'schema_version','max_buffer_bytes','edge_chunk','max_output_bytes','max_numeric_bytes'}
@@ -226,10 +229,43 @@ def _edge_inputs(execution,run,*,registered=None):
     require((run.read_input('environment') if registered is None else registered['environment'])==body,'edge environment genuine input differs')
     return value
 
+def _full_policy(execution):
+    if 'native_full_policy' not in execution:
+        require('native_full_inputs' not in execution,'native full roles without selection')
+        return None
+    value=native_full_owner.freeze(execution['native_full_policy'])
+    require(value is not None,'explicit native full selection required')
+    roles=execution.get('native_full_inputs')
+    require(type(roles) is dict and set(roles)=={'source','adapter','library','runtime','abi'},'exact five native full roles required')
+    require(all(type(role) is str and 0<len(role)<=128 and role.isascii() and all(c.isalnum() or c in '_-' for c in role) for role in roles.values()) and len(set(roles.values()))==5 and 'environment' not in roles.values(),'distinct finite native full roles required')
+    return value
+
+def _full_inputs(execution,run,*,registered=None):
+    value=_full_policy(execution)
+    if value is None:return None
+    policy=dict(value);ad=run.admission;runtime=None
+    for kind in ('source','adapter','library','runtime','abi'):
+        role=execution['native_full_inputs'][kind]
+        require(role in ad.inputs,'native full role not admitted')
+        info=ad.inputs[role];path=ad.root/info['path']
+        require(str(path)==policy[kind+'_path'] and path.resolve()==path and info['sha256']==policy[kind+'_sha256'],'native full registered path/hash differs')
+        limit=4096 if kind in ('runtime','abi') else 65536
+        size=policy[kind+'_bytes'] if kind in ('runtime','abi') else None
+        body=native_full_owner.read_reference(path,info['sha256'],limit,size,owned=kind=='library')
+        require((run.read_input(role) if registered is None else registered[role])==body,'native full genuine input body differs')
+        if kind=='runtime':runtime=compiled_normalization_policy.runtime_metadata(body)
+        if kind=='abi':native_full_owner.abi_metadata(body)
+        if kind=='adapter':
+            require(path==ad.root/'tradingagents/research/onchain_replication/native_full_adapter.py' and ad.experiment['source_files'].get('tradingagents/research/onchain_replication/native_full_adapter.py')==info['sha256'],'native full adapter input/source join differs')
+    require('environment' in ad.inputs and runtime['runtime_inventory_sha256']==ad.inputs['environment']['sha256'],'native full runtime inventory/environment differs')
+    info=ad.inputs['environment'];body=native_full_owner.read_reference(ad.root/info['path'],info['sha256'],1024**2)
+    require((run.read_input('environment') if registered is None else registered['environment'])==body,'native full environment genuine input differs')
+    return value
+
 def _backend_input_policy(execution):
     if 'backend_input_policy' not in execution:return False
     require(type(execution['backend_input_policy']) is str and execution['backend_input_policy']==BACKEND_INPUT_POLICY,'unsupported backend input selection')
-    require(_compiled_policy(execution) is not None or _edge_policy(execution) is not None,'backend input bundle requires selected backend')
+    require(_compiled_policy(execution) is not None or _edge_policy(execution) is not None or _full_policy(execution) is not None,'backend input bundle requires selected backend')
     return True
 
 
@@ -248,19 +284,22 @@ def _backend_inputs(execution,run):
     """
     with phase_timing.measure('backend_setup'):
         if not _backend_input_policy(execution):
+            if _full_policy(execution) is not None:_full_inputs(execution,run)
             return _compiled_inputs(execution,run),_edge_inputs(execution,run)
         roles={'environment'}
         if _compiled_policy(execution) is not None:roles.update(execution['compiled_normalization_inputs'].values())
         if _edge_policy(execution) is not None:roles.update(execution['compiled_edge_inputs'].values())
+        if _full_policy(execution) is not None:roles.update(execution['native_full_inputs'].values())
         names=tuple(sorted(roles))
         require(all(name in run.admission.inputs for name in names),'backend bundle role not admitted')
         registered=run.read_inputs(names,max_each_bytes=2*1024**2,max_total_bytes=4*1024**2)
         require(type(registered) is dict and set(registered)==roles and all(type(body) is bytes for body in registered.values()),'backend bundle exact immutable role bodies required')
         phase_timing.add_bytes('backend_setup',sum(len(body) for body in registered.values()))
+        if _full_policy(execution) is not None:_full_inputs(execution,run,registered=registered)
         return _compiled_inputs(execution,run,registered=registered),_edge_inputs(execution,run,registered=registered)
 
 
-def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False, numeric=False, continuation=False):
+def _modules(root, admission=None, *, grouped=False, geometry=False, binding_timing=False, compiled=False, edge=False, numeric=False, continuation=False, native_full=False):
     import importlib
     result={name:importlib.import_module(PACKAGE+'.'+module) for name,module in MODULES.items()}
     # ONE packaged journal class is shared with the exact typed semantics helper.
@@ -273,6 +312,7 @@ def _modules(root, admission=None, *, grouped=False, geometry=False, binding_tim
         if edge:names+=('compiled_edge_owner','edge_chunk_adapter','compiled_normalization_policy','matching_annealing','matching_checkpoint')
         if numeric:names+=('matching_numeric_policy','matching_numeric_kernel','matching_annealing','matching_checkpoint')
         if continuation:names+=('batched_continuation',)
+        if native_full:names+=('native_full_owner','native_full_adapter','matching_checkpoint','matching_immutable_session')
         for name in names:
             module=importlib.import_module(PACKAGE+'.'+name)
             relative='tradingagents/research/onchain_replication/'+name+'.py'
@@ -482,6 +522,7 @@ def verify_content(root, contract, reference, modules=None):
         require(compiled_normalization_policy.freeze(binding.get('compiled_normalization_policy'))==compiled_normalization_policy.freeze(binding['numeric_execution'].get('compiled_normalization_policy')),'batched/numeric normalization selection differs')
         require(compiled_edge_owner.freeze(binding.get('compiled_edge_policy'))==compiled_edge_owner.freeze(binding['numeric_execution'].get('compiled_edge_policy')),'batched/numeric edge selection differs')
         require(matching_numeric_policy.freeze(binding.get('numeric_kernel_policy'))==matching_numeric_policy.freeze(binding['numeric_execution'].get('numeric_kernel_policy')),'batched/numeric kernel selection differs')
+        require(native_full_owner.freeze(binding.get('native_full_policy'))==native_full_owner.freeze(binding['numeric_execution'].get('native_full_policy')),'batched/numeric native full selection differs')
         numeric=modules['numeric_execution'].verify(root/'stream',binding['numeric_execution'])
         require(numeric['cells']==binding['cells'] and binding['numeric_execution']['batch_cells']==binding['batch_cells'],'numeric occurrence/full MCM denominator differs')
         if binding['retention']=='local-v2':
@@ -575,6 +616,10 @@ def stage_content(stage):
         policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
         execution=validate(policy,binding['cells'])['execution']
         require(_edge_inputs(execution,stage.owner.bound._run)==compiled_edge_owner.freeze(binding['compiled_edge_policy']),'closed edge policy differs from admitted input')
+    if 'native_full_policy' in binding:
+        policy=json.loads(stage.owner.bound._run.read_input(binding['mcm_policy_input']))
+        execution=validate(policy,binding['cells'])['execution']
+        require(_full_inputs(execution,stage.owner.bound._run)==native_full_owner.freeze(binding['native_full_policy']),'closed native full policy differs from admitted input')
     return verify_content(stage.root,contract,stage.reference)
 
 
@@ -635,7 +680,7 @@ def _compute(target, stage, graph, policy, start, modules, boundary, progress=No
         durable_scores=0
         def observe_numeric(value):
             progress.poll_batched(value,journal_cells=journal.cells,score_cells=durable_scores)
-        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}),**({'progress':observe_numeric} if progress is not None else {}))
+        executor=modules['numeric_execution'].NumericExecution(stream,compact_policy.effective_matching(thaw(target.owner.matching),p['pair']),compact_policy.pair_policy(p['pair']),p['schedule'],checkpoint,cells=start['cells'],batch_cells=b['batch_cells'],authority_poll=authority_poll,**{k:execution[k] for k in ('max_entries','max_retained_bytes','max_key_bytes','max_origin_bytes','max_summary_bytes')},**({'geometry':execution['geometry']} if 'geometry' in execution else {}),**({'binding_timing':execution['binding_timing'],'binding_owner':target.owner} if 'binding_timing' in execution else {}),**({'edge_cache_policy':execution['edge_cache_policy']} if 'edge_cache_policy' in execution else {}),**({'compiled_normalization_policy_value':dict(_compiled_policy(execution))} if 'compiled_normalization_policy' in execution else {}),**({'compiled_edge_policy_value':dict(_edge_policy(execution))} if 'compiled_edge_policy' in execution else {}),**({'numeric_kernel_policy':dict(_numeric_policy(execution))} if 'numeric_kernel_policy' in execution else {}),**({'native_full_policy_value':dict(_full_policy(execution))} if 'native_full_policy' in execution else {}),**({'progress':observe_numeric} if progress is not None else {}))
         external=None;post_batch=final_batches=None
         if b['retention']=='typed-recover-before-retire-v2':
             from . import registered_offload as offload
@@ -792,7 +837,7 @@ def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
             b=validate(policy,start['cells'])
             _entry_lease(target,b['execution'])
             with phase_timing.measure('module_auth'):
-                modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'],numeric='numeric_kernel_policy' in b['execution'],continuation='continuation' in b)
+                modules=_modules(owner.bound._run.admission.root,owner.bound._run.admission,grouped=policy['schema_version']==6,geometry='geometry' in b['execution'],binding_timing='binding_timing' in b['execution'],compiled='compiled_normalization_policy' in b['execution'],edge='compiled_edge_policy' in b['execution'],numeric='numeric_kernel_policy' in b['execution'],continuation='continuation' in b,native_full='native_full_policy' in b['execution'])
             output_policy,_=publication._output_policy(owner,output_input,start['cells'])
             require(output_policy['schema_version']==1,'batched local producer requires explicit local output policy; external route unadmitted')
             own_source='tradingagents/research/onchain_replication/compact_mcm_batched.py'
@@ -801,6 +846,7 @@ def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
             _entry_lease(target,b['execution'])
             normalization,edge_selection=_backend_inputs(b['execution'],owner.bound._run)
             numeric_selection=_numeric_policy(b['execution'])
+            full_selection=_full_policy(b['execution'])
             _entry_lease(target,b['execution'])
             owner.boundary();target.check()
         _stop_after_entry(target,policy)
@@ -816,6 +862,7 @@ def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
                 require(_compiled_policy(b['execution'])==normalization,'batched normalization selection changed')
                 require(_edge_policy(b['execution'])==edge_selection,'batched edge selection changed')
                 require(_numeric_policy(b['execution'])==numeric_selection,'batched numeric selection changed')
+                require(_full_policy(b['execution'])==full_selection,'batched native full selection changed')
                 require(io._read(fd,'start.json',io.META_LIMIT)==io._json(start),'batched producer start changed')
         if progress is not None:progress.begin(graph_hash,start['rows'],start['motifs'])
         boundary();binding=_compute(target,stage,graph,policy,start,modules,boundary,**({'progress':progress} if progress is not None else {}));boundary()
@@ -825,6 +872,8 @@ def produce(target, *, graph_hash,input_name,output_input,held,progress=None):
         if edge_selection is not None:binding['compiled_edge_policy']=dict(edge_selection)
         require(matching_numeric_policy.freeze(binding['numeric_execution'].get('numeric_kernel_policy'))==numeric_selection,'completed numeric kernel selection differs')
         if numeric_selection is not None:binding['numeric_kernel_policy']=dict(numeric_selection)
+        require(native_full_owner.freeze(binding['numeric_execution'].get('native_full_policy'))==full_selection,'completed native full selection differs')
+        if full_selection is not None:binding['native_full_policy']=dict(full_selection)
         binding.update(mcm_policy_input=input_name,mcm_policy_sha256=start['policy_sha256'])
         with phase_timing.measure('publication'):
             contract={'owner':owner.identity,'scope':thaw(stage.scope),'policy':thaw(owner.policy),'kind':'mcm','pairs':start['cells'],'batched':binding}

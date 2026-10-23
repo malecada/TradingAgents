@@ -1,3 +1,4 @@
+from . import native_full_owner
 """Source-only private matching session for exclusively owned immutable inputs.
 
 Caller supplies the changed engine/annealing modules. No Run, Owner, checkpoint
@@ -73,12 +74,13 @@ def rejoin(graph, pin):
 
 
 class ImmutablePairSession:
-    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None,numeric_kernel_policy=None):
+    def __init__(self, a, b, config, *, engine, annealing, edge_cache_policy=None,compiled_normalization_policy_value=None,_normalization_owner=None,edge_chunk_owner=None,numeric_kernel_policy=None,native_full_policy_value=None,full_owner=None):
         require(engine.ann is annealing and
                 callable(getattr(engine, '_check_owned', None)) and
                 callable(getattr(engine, '_advance_owned', None)) and
                 callable(getattr(annealing, '_check_state_identity', None)),
                 'explicit changed engine required')
+        native_full_owner.attach(self,native_full_policy_value)
         matching_numeric_policy.attach(self,numeric_kernel_policy)
         self._numeric_adapter = None if numeric_kernel_policy is None else matching_numeric_policy.NumericAgreementAdapter(numeric_kernel_policy)
         self._numeric_pin = self._numeric_adapter
@@ -213,6 +215,56 @@ class ImmutablePairSession:
                 except BaseException:pass
             raise
 
+        full_setup_cleanup=self._normalizer_cleanup
+        try:
+            self._full_lease=None;self._full_lease_pin=None;self._full_functions=()
+            if self._native_full_policy is not None or full_owner is not None:
+                full_prior_cleanup=self._normalizer_cleanup
+                lease=None;full_cleanup=None
+                def combined_full_cleanup():
+                    primary=None
+                    try:full_prior_cleanup()
+                    except BaseException as error:primary=error
+                    try:
+                        if full_cleanup is not None:full_cleanup()
+                    except BaseException as error:
+                        if primary is None:primary=error
+                        else:
+                            try:BaseException.add_note(primary,'native full lease cleanup failed: '+repr(error))
+                            except BaseException:pass
+                    if primary is not None:raise primary
+                self._normalizer_cleanup=combined_full_cleanup
+                try:
+                    require(type(full_owner) is native_full_owner.FullOwner,'typed native full parent required')
+                    native_full_owner.join(self,full_owner)
+                    lease=full_owner.borrow(self)
+                    full_cleanup=lease.close
+                    import types
+                    full_cleanup=types.FunctionType(full_cleanup.__code__,full_cleanup.__globals__,closure=full_cleanup.__closure__)
+                    self._full_lease=self._full_lease_pin=lease
+                    self._full_functions=tuple((name,getattr(lease,name),getattr(lease,name).__code__) for name in ('advance','current','close','snapshot'))
+                except BaseException as primary:
+                    try:
+                        if lease is not None and full_cleanup is None:full_cleanup=lease.close
+                        combined_full_cleanup()
+                    except BaseException as error:
+                        try:BaseException.add_note(primary,'native full session construction cleanup failed: '+repr(error))
+                        except BaseException:pass
+                    raise
+        except BaseException as primary:
+            try:full_setup_cleanup()
+            except BaseException as cleanup:
+                try:BaseException.add_note(primary,'native full setup cleanup failed: '+repr(cleanup))
+                except BaseException:pass
+            raise
+
+    def _full_current(self):
+        native_full_owner.current(self)
+        require(self._full_lease is self._full_lease_pin,'native full lease replaced')
+        for name,function,code in self._full_functions:
+            require(getattr(self._full_lease,name) is function and function.__code__ is code,'native full lease method replaced')
+        if self._full_lease is not None:self._full_functions[1][1]()
+
     def _edge_current(self):
         compiled_edge_owner.current_policy(self)
         require(self._edge_lease is self._edge_pin, 'edge lease replaced')
@@ -232,6 +284,7 @@ class ImmutablePairSession:
         require(type(self)._fill_edge is self._fill_edge_function and type(self)._fill_edge.__code__ is self._fill_edge_code and '_fill_edge' not in vars(self), 'numeric fill seam changed')
         if self._numeric_adapter is not None:self._numeric_adapter.current()
         self._edge_current()
+        self._full_current()
         adaptive_edge_policy.current(self)
         compiled_normalization_policy.current(self)
         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
@@ -276,7 +329,7 @@ class ImmutablePairSession:
                 'positive operation allowance required')
         # No external callback between current-input/state check and body.
         result = self.engine._advance_owned(
-            state, self.a, self.b, self.config, max_operations=max_operations,**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._fill_edge} if self._numeric_adapter is not None else ({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {})))
+            state, self.a, self.b, self.config, max_operations=max_operations,**({"native_full_lease":self._full_lease} if self._full_lease is not None else {}),**adaptive_edge_policy.options(self),**({"normalizer":self._normalizer} if self._normalizer is not None else {}),**({"edge_chunk_fill":self._fill_edge} if self._numeric_adapter is not None else ({"edge_chunk_fill":self._edge_functions[0][1]} if self._edge_lease is not None else {})))
         adaptive_edge_policy.current(self)
         compiled_normalization_policy.current(self)
         require(self._normalizer is self._normalizer_pin, "normalization backend changed")
@@ -284,6 +337,7 @@ class ImmutablePairSession:
             require(getattr(self._normalizer,name) is function and function.__code__ is code, "normalization function changed")
         if len(self._normalizer_functions)==3:self._normalizer_functions[2][1]()
         self._edge_current()
+        self._full_current()
         matching_numeric_policy.current(self)
         if self._numeric_adapter is not None:self._numeric_adapter.current()
         self.advances += 1

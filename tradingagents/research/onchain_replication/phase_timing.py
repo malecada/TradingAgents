@@ -14,7 +14,7 @@ NUMERIC_COUNTS=frozenset(('agreement_scalar_chunks','agreement_numpy_chunks',
     'agreement_native_chunks','agreement_fallback_chunks','agreement_scalar_entries',
     'agreement_numpy_entries','agreement_native_entries','chunk_lt8_calls',
     'chunk_8to255_calls','chunk_256to1023_calls','chunk_1024_calls',
-    'cache_hit_chunks','cache_hit_entries','cache_allocations','cache_allocated_bytes','cache_released_bytes'))
+    'cache_hit_chunks','cache_hit_entries','cache_allocations','cache_allocated_bytes','cache_released_bytes','native_full_selected_calls','native_full_completed_calls','native_full_failed_calls','native_full_refused_calls','native_full_unknown_prefix_calls','native_full_node_callback_attempts','native_full_edge_callback_attempts','native_full_callback_failures','native_full_operations','native_full_iterations'))
 _ACTIVE=ContextVar('onchain_phase_totals',default=None)
 
 

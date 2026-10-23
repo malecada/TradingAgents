@@ -425,7 +425,7 @@ def _close(journal, owner, targets, reference, binding, plan, training, artifact
     return value
 
 
-def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False, numeric=False, continuation=False):
+def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge=False, numeric=False, continuation=False, full=False):
     """Load the selected pilot's deferred modules before its immutable roster.
 
     Imports only: no model/graph construction, claims or authority refresh.
@@ -456,6 +456,10 @@ def _prepare_lease_modules(*, batched=False, grouped=False, compiled=False, edge
             from . import compiled_edge_owner, edge_chunk_adapter
         if numeric:
             from . import matching_numeric_policy, matching_numeric_kernel
+        if full:
+            # Definitions only; the admitted lease must capture these source bodies
+            # before a selected backend acquires or loads its sealed artifact.
+            from . import native_full_owner, native_full_adapter
         if continuation:
             from . import batched_continuation
 
@@ -583,7 +587,7 @@ def execute(run, payload):
                     from .imported_authority_lease import activate
                     if diagnostic is not None:diagnostic.startup_enter('lease_activation')
                     selected_mcm=_read(run.admission,s['compact_mcm_input'])
-                    _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'],numeric=selected_mcm.get('schema_version') in (5,6) and 'numeric_kernel_policy' in selected_mcm['batched']['execution'],continuation=selected_mcm.get('schema_version') in (5,6) and 'continuation' in selected_mcm['batched'])
+                    _prepare_lease_modules(batched=selected_mcm.get('schema_version') in (5,6),grouped=selected_mcm.get('schema_version')==6,compiled=selected_mcm.get('schema_version') in (5,6) and 'compiled_normalization_policy' in selected_mcm['batched']['execution'],edge=selected_mcm.get('schema_version') in (5,6) and 'compiled_edge_policy' in selected_mcm['batched']['execution'],numeric=selected_mcm.get('schema_version') in (5,6) and 'numeric_kernel_policy' in selected_mcm['batched']['execution'],continuation=selected_mcm.get('schema_version') in (5,6) and 'continuation' in selected_mcm['batched'],full=selected_mcm.get('schema_version') in (5,6) and 'native_full_policy' in selected_mcm['batched']['execution'])
                     activate(execution,p['imported_authority_lease_input'])
                     if diagnostic is not None:diagnostic.startup_complete()
                 require(len(execution._materialized._dictionary.representatives) == 32, 'all original motifs required')

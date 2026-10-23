@@ -1,3 +1,4 @@
+from . import native_full_owner, native_full_adapter
 """Explicit engineering result reuse; never old per-occurrence execution credit."""
 from . import phase_timing
 import array,copy,ctypes,hashlib,json,math,struct,sys,types,time
@@ -17,14 +18,16 @@ from . import batched_pair_executor as accepted
 from .geometry_summary import Geometry
 from . import matching_immutable_session as immutable_session
 
-MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter,matching_numeric_policy,matching_numeric_kernel)
+MODULES=(accepted,engine,engine.ann,engine.hard,engine.sparse,engine.ann.typed_identity,pair,reference,contracts,immutable_session,adaptive_edge_policy,compiled_normalization_policy,compiled_edge_owner,edge_chunk_adapter,matching_numeric_policy,matching_numeric_kernel,native_full_owner,native_full_adapter)
 SOURCE_PINS=(
+    (native_full_owner, 'c29d08fad530a62dd33b1c7e2b84e162b6d76fa1ced30909a03c08f4db528a71'),
+    (native_full_adapter, '7b415579f79fb368eb7dce2e20749836b81ecd9d8e9b0c502b75cd23b719394d'),
     (matching_numeric_policy, '1402729793c6e32a6eb7948af36701f61b953f11790607c7cf1e8b86328e577f'),
     (matching_numeric_kernel, 'd98da7cc1078362582d5e2fc8e7c8a7b89408d37d1fdabb3d6b63eabeca494cd'),
     (compiled_normalization_policy, 'f60237416454998bbe41a969400775b134a9f285c4b64c1a5507453515b25c01'),
     (adaptive_edge_policy, '31e1242a3312586560cff8da10ff96e329874f4edc0751b838f7f88035f126af'),
-    (accepted, '0d1c7a14866b53e6bde4b9db6e3eff4740190d16bc3db0f6532d60afd3142005'),
-    (engine, 'eebc1cd361f884259beb2dd0bd11fa31322440fb5eaa0f153c37051364ecd693'),
+    (accepted, '7edfe42c8a42fc7f33288be82f10d7b3501e78860113ecbcc858eb759aa5cfb5'),
+    (engine, '3ad464074b15d1d6e51cc381257ff285fa775c937c8a3a32505a86d046386841'),
     (engine.ann, 'b77d6ee6093047715024b9f1cd8033b02f24f06bb1461b854a659e0a336f8f91'),
     (engine.hard, '3c34a2fab8657747b2ed984120c13ddfde6f86c7eb53dcb47c011dacb9189a1c'),
     (engine.sparse, '06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e'),
@@ -32,7 +35,7 @@ SOURCE_PINS=(
     (pair, '4a99532c84afabc5768ae0fe450fa5c9619ec25ee2833e0766dce023e477a20e'),
     (reference, '75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332'),
     (contracts, '3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a'),
-    (immutable_session, '9ec80833156fb8f649a076778260d0da666486e25c98d9d4681092fcf65a144c'),
+    (immutable_session, 'c7808701a4b8feced41a72bae73571b3fd90d4b09e3fe1ba79d555c5ca8687f0'),
 )
 
 def require(ok,message):
@@ -107,9 +110,10 @@ def entry_size(entry):
 
 class NumericReuseExecutor:
     """Explicit batches; source/runtime attestation is NOT continuous authority."""
-    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None):
+    def __init__(self,config,policy,schedule,checkpoint,*,max_entries,max_retained_bytes,max_key_bytes,authority_poll=None,geometry=False,max_geometry_summary_bytes=8192,edge_cache_policy=None,compiled_normalization_policy_value=None,compiled_edge_policy_value=None,numeric_kernel_policy=None,native_full_policy_value=None):
         adaptive_edge_policy.attach(self,edge_cache_policy)
         matching_numeric_policy.attach(self,numeric_kernel_policy)
+        native_full_owner.attach(self,native_full_policy_value)
         compiled_normalization_policy.attach(self,compiled_normalization_policy_value)
         compiled_edge_owner.attach(self,compiled_edge_policy_value)
         require(type(max_entries) is int and 0<max_entries<=4096,'finite entry bound required')
@@ -153,7 +157,7 @@ class NumericReuseExecutor:
                         compiled_edge_owner._note(primary,timing_error)
             authority_poll=measured_poll
         self.authority_poll=authority_poll
-        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**matching_numeric_policy.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
+        self.executor=accepted.PairExecutor(config,policy,schedule,self._checkpoint,authority_poll=authority_poll,**matching_numeric_policy.options(self),**native_full_owner.options(self),**adaptive_edge_policy.options(self),**compiled_normalization_policy.options(self),**compiled_edge_owner.options(self))
         cleanup=self.executor.close
         try:
             self._executor_pin=self.executor;self._executor_cleanup=self.executor.close
@@ -182,6 +186,7 @@ class NumericReuseExecutor:
     def _current(self):
         require(self.executor is self._executor_pin,'numeric executor replaced')
         matching_numeric_policy.join(self,self.executor)
+        native_full_owner.join(self,self.executor)
         adaptive_edge_policy.join(self,self.executor)
         compiled_normalization_policy.join(self,self.executor)
         compiled_edge_owner.join(self,self.executor)
