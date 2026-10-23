@@ -46,3 +46,8 @@ allocator). Fixes, each with a test: one float32 matrix per target with fold sli
 panel read column by column from the arrow file into arrays, no pandas frame; freed arenas
 released between fits. Fifth launch 01:31: lifetime peak 4.7 GB, cgroup charge 3.4 GB, V6 unit
 (24 min, from the third launch) kept by the per-target resume; V24 and XV24 running.
+
+B8-CP4 (2026-10-23 02:30) — forecast complete (V6 24 min, V24 22 min, XV24 21 min; peak 5.1 GB):
+18 rows in `TABLES.md`; `RESULTS.md`: on-chain block null for V6 / V24, passes for XV24 in both
+families (0.5–1.1 % of squared error, 3–4 of 5 years, fading in 2026); post hoc per-token and
+liquidity terciles reported. B8 closed.
