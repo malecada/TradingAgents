@@ -42,7 +42,7 @@ def main() -> int:
     rng = random.Random(args.seed)
     sample = rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
-    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_effort=None, reasoning_max_tokens=1500, max_tokens=6000)
+    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_enabled=False, max_tokens=3000)   # non-thinking mode: the guess itself is the probe
     if args.provider:
         client.provider = args.provider
     from tradingagents.dossier.or_client import ORError
@@ -82,7 +82,8 @@ def main() -> int:
     df["month_within_6"] = (gm - tm).abs() <= pd.Timedelta(days=183)
     summary = {"n": len(df), "asset_accuracy": float(df["asset_hit"].mean()), "chance": 1 / len(tickers),
                "month_within_6_rate": float(df["month_within_6"].fillna(False).mean()),
-               "spent_usd": client.spent_usd, "failures": failures}
+               "spent_usd": client.spent_usd, "failures": failures,
+               "model": client.model, "provider": client.provider, "reasoning": "disabled"}
     Path("data/dossier/reid_probe.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0

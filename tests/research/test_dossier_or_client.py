@@ -55,3 +55,8 @@ def test_drift_and_retry():
 def test_reasoning_cap_overrides_effort():
     c = StructuredClient.pinned("pro", "k", reasoning_max_tokens=1500)
     assert c.body("p", {"type": "object"}, "t")["reasoning"] == {"max_tokens": 1500}
+
+
+def test_reasoning_disabled_body():
+    c = StructuredClient.pinned("pro", "k", reasoning_enabled=False)
+    assert c.body("p", {"type": "object"}, "t")["reasoning"] == {"enabled": False}
