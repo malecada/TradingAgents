@@ -25,3 +25,13 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 - Macro calendar block (FOMC/CPI) not yet in the dossier.
 - Cards end 2026-06-26: Sealed-B / forward need card rebuild from Binance public funding + klines (week 5).
 - Alpaca/Benzinga store lives on the laptop; sync when available (`data/sentiment/alpaca`).
+
+## Phase 2 scaffolding (written 2026-11-08, ahead of schedule; awaits dossiers)
+- `tradingagents/agents_v2/{schemas,roles,graph,runner,evaluate}.py` + `scripts/agents_run.py`: three analysts
+  (market, fundamental, news) + forecast interpreter; debate in both orders with one rebuttal each; judge per
+  order, probabilities averaged; debate only for the 20 most contested/convinced aliases per week, analysts' mean
+  probability for the rest; weekly PM with constraint validation and a deterministic rule twin as fallback and
+  baseline; results cached per (dossier sha, config sha) in `data/agents_v2/runs/<friday>/`.
+- Evaluation: residualized weekly rank IC (controls vol, 4w momentum, size), Newey-West t, Brier skill vs 0.5,
+  calibration slope (`agents_v2/evaluate.py`).
+- Target definition: P(asset 7-day return > universe median return), decision Saturday 00:00 UTC after the Friday card.

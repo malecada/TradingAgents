@@ -1,0 +1,87 @@
+"""Weekly orchestration over dossiers: analysts on every universe member, full debate on the
+most-contested candidates, judge probabilities for all, one portfolio call per week.
+
+Results are cached per (dossier sha, config sha) so ablations and re-runs reuse calls.
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pandas as pd
+
+from tradingagents.agents_v2 import roles, schemas
+from tradingagents.agents_v2.graph import config_sha, run_asset, run_portfolio
+
+RUNS = Path("data/agents_v2/runs")
+N_DEBATE = 20
+
+
+def select_debate_candidates(analyst_runs: dict[str, dict], n: int = N_DEBATE) -> list[str]:
+    """Aliases whose analysts' mean probability is farthest from 0.5 (conviction) or most
+    dispersed (disagreement); union ranked by max of the two normalized scores."""
+    scores = {}
+    for alias, analysts in analyst_runs.items():
+        ps = [a["p_outperform_7d"] for a in analysts.values()]
+        mean = sum(ps) / len(ps)
+        spread = max(ps) - min(ps)
+        scores[alias] = max(abs(mean - 0.5) * 2, spread)
+    return sorted(scores, key=lambda a: -scores[a])[:n]
+
+
+def analysts_only(dossier_text: str, client, analyst_roles=("market", "fundamental", "news")) -> tuple[dict, list]:
+    out, meta = {}, []
+    for r in analyst_roles:
+        parsed, m = client.call(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}", system=roles.COMMON)
+        out[r] = parsed
+        meta.append({"role": f"analyst_{r}", **m})
+    return out, meta
+
+
+def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debate: int = N_DEBATE,
+             runs_dir: Path = RUNS, debate: bool = True) -> dict:
+    """``dossiers``: symbol -> dossier json. Returns per-symbol results and the portfolio."""
+    day_dir = Path(runs_dir) / pd.Timestamp(friday).strftime("%Y-%m-%d")
+    day_dir.mkdir(parents=True, exist_ok=True)
+    cfg = config_sha()
+    results = {}
+    analyst_runs = {}
+    for sym, d in dossiers.items():
+        target = day_dir / f"{sym}.json"
+        if target.exists():
+            cached = json.loads(target.read_text())
+            if cached.get("config_sha") == cfg and cached.get("dossier_sha") == d["sha256"]:
+                results[sym] = cached
+                analyst_runs[d["alias"]] = cached["analysts"]
+                continue
+        analysts, meta = analysts_only(d["text"], client)
+        results[sym] = {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
+                        "analysts": analysts, "meta": meta, "debated": False,
+                        "p_outperform": sum(a["p_outperform_7d"] for a in analysts.values()) / len(analysts),
+                        "confidence": sum(a["confidence"] for a in analysts.values()) / len(analysts), "abstain": False}
+        analyst_runs[d["alias"]] = analysts
+    alias_to_sym = {d["alias"]: s for s, d in dossiers.items()}
+    if debate:
+        for alias in select_debate_candidates(analyst_runs, n_debate):
+            sym = alias_to_sym[alias]
+            if results[sym].get("debated"):
+                continue
+            run = run_asset(dossiers[sym]["text"], alias, client)
+            results[sym].update({"debated": True, "forecast": run.forecast, "debates": run.debates,
+                                 "p_outperform": run.p_outperform, "confidence": run.confidence,
+                                 "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta,
+                                 "analysts": run.analysts})
+    for sym, r in results.items():
+        (day_dir / f"{sym}.json").write_text(json.dumps(r, indent=1, default=str))
+    candidates = [{"alias": r["alias"], "p_outperform_7d": r["p_outperform"], "confidence": r["confidence"],
+                   "abstain": r["abstain"],
+                   "vol_ann": (dossiers[s]["numeric"].get("vol_ewma20_ann_pct") or 80.0) / 100.0}
+                  for s, r in results.items()]
+    pm_path = day_dir / "_portfolio.json"
+    if pm_path.exists() and json.loads(pm_path.read_text()).get("config_sha") == cfg:
+        portfolio = json.loads(pm_path.read_text())
+    else:
+        portfolio = run_portfolio(candidates, client)
+        portfolio["weights_by_symbol"] = {alias_to_sym[a]: w for a, w in portfolio["weights"].items() if a in alias_to_sym}
+        pm_path.write_text(json.dumps(portfolio, indent=1, default=str))
+    return {"results": results, "portfolio": portfolio}
