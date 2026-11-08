@@ -26,11 +26,11 @@ def test_numeric_block_is_relative_and_renders(tmp_path):
     k.index.name = "ts"
     k.to_parquet(tmp_path / "AUSDT.parquet")
     path = weekly_path("AUSDT", friday, klines_dir=tmp_path)
-    assert path["indexed_path"][-1] == 100.0 and path["weeks"] == 26 and path["drawdown_90d_pct"] == 0.0
+    assert path["indexed_path"][-1] == 100.0 and path["weeks"] == 12 and path["drawdown_90d_pct"] == 0.0
     block = numeric_block(cards, "AUSDT", friday, path)
-    assert block["size_bucket"] == "top-10 by size" and block["volume_rank_pct"] > 0.8
+    assert block["size_bucket"] == "top-20 by size" and block["volume_rank_pct"] > 0.8 and block["category"] == "network or infrastructure"
     assert block["ret_4w_pct"] == 10.0 and block["funding_3d_ann_pct"] == 11.0
     text = render_numeric(block)
     assert "pct" in text and "2024" not in text and "$" not in text and "AUSDT" not in text
     b = numeric_block(cards, "BUSDT", friday, None)
-    assert b["category"] == "unknown" and b["unlock_next30_pct_supply"] == 3.1 and b["listing_age"] == "listed under 6 months"
+    assert b["category"] == "unknown" and b["unlock_next30_pct_supply"] == 3.1 and b["listing_age"] == "listed under a year"

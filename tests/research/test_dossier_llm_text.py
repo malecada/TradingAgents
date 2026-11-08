@@ -69,3 +69,11 @@ def test_truncated_answer_retries_with_headroom(tmp_path):
     s = S([R(200, payload(GOOD, finish="length")), R(200, payload(GOOD))])
     llm = TextLLM(api_key="k", session=s, cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
     assert llm.classify("t")["type"] == "event" and s.n == 2
+
+
+def test_scrub_proper_nouns_keeps_tokens_and_sentence_starts():
+    from tradingagents.dossier.llm_text import scrub_proper_nouns
+    text = "Asset_K partnered with WonderFi and Sun Hung Kai Properties. The deal, led by Exchange_1, is worth about $100 million in US dollars."
+    out, n = scrub_proper_nouns(text)
+    assert "WonderFi" not in out and "Sun Hung Kai" not in out and n == 2
+    assert "Asset_K" in out and "Exchange_1" in out and out.startswith("Asset_K") and "The deal" in out and "US dollars" in out

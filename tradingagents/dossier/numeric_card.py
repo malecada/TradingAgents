@@ -13,7 +13,7 @@ import pandas as pd
 KLINES = Path("data/xsect/klines")
 PCT_FIELDS = ["ret_4w", "ret_12w", "dist_26w_high", "vol_ewma20", "volvol_20", "dvol_30d", "mcap_cm",
               "funding_3d", "funding_30d", "d_adract_30d", "d_txcnt_30d"]
-_SIZE_BUCKETS = [(10, "top-10 by size"), (30, "top-30"), (100, "top-100"), (10**9, "below top-100")]
+_SIZE_BUCKETS = [(20, "top-20 by size"), (100, "top-100"), (10**9, "below top-100")]
 
 
 def _pct(series: pd.Series, value) -> float | None:
@@ -38,16 +38,32 @@ def _age(weeks) -> str:
     if weeks is None or pd.isna(weeks):
         return "listing age unknown"
     years = weeks / 52.18
-    if years < 0.5:
-        return "listed under 6 months"
     if years < 1:
-        return "listed 6-12 months"
-    if years < 3:
-        return "listed 1-3 years"
-    return "listed over 3 years"
+        return "listed under a year"
+    return "listed over a year"
 
 
-def weekly_path(symbol: str, friday: pd.Timestamp, weeks: int = 26, klines_dir: Path = KLINES) -> dict | None:
+_FAMILIES = [("meme", "meme"), ("gaming", "gaming or NFT"), ("nft", "gaming or NFT"), ("metaverse", "gaming or NFT"),
+             ("chain", "network or infrastructure"), ("bridge", "network or infrastructure"), ("rollup", "network or infrastructure"),
+             ("layer", "network or infrastructure"), ("dex", "DeFi"), ("lending", "DeFi"), ("yield", "DeFi"), ("cdp", "DeFi"),
+             ("derivative", "DeFi"), ("staking", "DeFi"), ("stablecoin", "DeFi"), ("launchpad", "DeFi"), ("farm", "DeFi"),
+             ("oracle", "infrastructure services"), ("storage", "infrastructure services"), ("ai", "infrastructure services"),
+             ("data", "infrastructure services"), ("privacy", "infrastructure services"), ("exchange", "exchange token"),
+             ("cex", "exchange token"), ("payment", "payments"), ("wallet", "payments")]
+
+
+def category_family(category) -> str:
+    """Coarse family instead of the raw category label, which can single out an asset."""
+    if category is None or (isinstance(category, float) and pd.isna(category)):
+        return "unknown"
+    c = str(category).lower()
+    for key, fam in _FAMILIES:
+        if key in c:
+            return fam
+    return "other"
+
+
+def weekly_path(symbol: str, friday: pd.Timestamp, weeks: int = 12, klines_dir: Path = KLINES) -> dict | None:
     """Indexed close path (last = 100), weekly returns, drawdown; only bars with ts <= friday."""
     path = Path(klines_dir) / f"{symbol}.parquet"
     if not path.exists():
@@ -62,7 +78,7 @@ def weekly_path(symbol: str, friday: pd.Timestamp, weeks: int = 26, klines_dir: 
     if len(wk) < 3:
         return None
     rets = wk.pct_change().dropna()
-    indexed = (wk / wk.iloc[-1] * 100).round(1)
+    indexed = (wk / wk.iloc[-1] * 100).round(0)
     daily = close.tail(90)
     dd = float(daily.iloc[-1] / daily.max() - 1)
     rv20 = float(np.log(close).diff().tail(20).std() * np.sqrt(365)) if len(close) > 21 else None
@@ -85,7 +101,7 @@ def numeric_block(cards: pd.DataFrame, symbol: str, friday: pd.Timestamp, path: 
         "size_bucket": _bucket(r.get("size_rank")),
         "volume_rank_pct": pct["dvol_30d"],
         "listing_age": _age(r.get("age_weeks")),
-        "category": (str(r["category"]) if pd.notna(r.get("category")) else "unknown"),
+        "category": category_family(r.get("category")),
         "ret_4w_pct": None if pd.isna(r["ret_4w"]) else round(float(r["ret_4w"]) * 100, 1),
         "ret_12w_pct": None if pd.isna(r["ret_12w"]) else round(float(r["ret_12w"]) * 100, 1),
         "ret_4w_xs_pct": pct["ret_4w"], "ret_12w_xs_pct": pct["ret_12w"],

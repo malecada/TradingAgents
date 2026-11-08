@@ -20,11 +20,11 @@ from tradingagents.dossier import store
 from tradingagents.dossier.anonymizer import Masker
 from tradingagents.dossier.calendar import render_calendar
 from tradingagents.dossier.entities import Dictionary, Linker
-from tradingagents.dossier.llm_text import TextLLMError
+from tradingagents.dossier.llm_text import TextLLMError, scrub_proper_nouns
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.3"
+BUILDER_VERSION = "dossier-v2.4"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 4
@@ -170,6 +170,7 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
     counts["retrieved"] = int(len(rows))
     counts["failed"] = 0
     counts["leaky"] = 0
+    counts["scrubbed"] = 0
     classified = []
     candidates = []
     for r in rows.itertuples(index=False):
@@ -200,6 +201,8 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
                 continue
             summary = translate_aliases(out["summary"], canon_map, masker)
             summary = masker.mask_text(summary)               # the model may re-derive names from context
+            summary, scrubbed = scrub_proper_nouns(summary)   # residual names the model failed to generalize
+            counts["scrubbed"] += scrubbed
             if masker.verify(summary):
                 counts["leaky"] += 1
                 continue
