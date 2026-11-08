@@ -13,8 +13,13 @@ import json
 
 from tradingagents.agents_v2 import roles, schemas
 
-CONFIG_VERSION = "agents-v2.1"
-EFFORT = {"analyst": "low", "forecast": "low", "debate": "low", "judge": "medium", "portfolio": "medium"}
+CONFIG_VERSION = "agents-v2.2"
+# Reasoning per role. Providers did not honour effort/cap settings for DeepSeek V4-Pro (pilot: ~2,000 reasoning
+# tokens and ~45 s per call regardless), so evidence-gathering roles run in non-thinking mode (~9 s, 5x cheaper,
+# and they cite dossier items), while the two judgment roles think.
+REASONING = {"analyst": {"enabled": False}, "forecast": {"enabled": False}, "debate": {"enabled": False},
+             "judge": {"effort": "medium"}, "portfolio": {"effort": "medium"}}
+EFFORT = {k: ("none" if v.get("enabled") is False else v.get("effort")) for k, v in REASONING.items()}
 
 
 @dataclass
@@ -37,7 +42,7 @@ class AssetRun:
 
 
 def config_sha() -> str:
-    payload = {"version": CONFIG_VERSION, "effort": EFFORT, "common": roles.COMMON, "analysts": roles.ANALYSTS,
+    payload = {"version": CONFIG_VERSION, "reasoning": REASONING, "common": roles.COMMON, "analysts": roles.ANALYSTS,
                "forecast": roles.FORECAST, "bull": roles.BULL, "bear": roles.BEAR, "rebuttal": roles.REBUTTAL,
                "judge": roles.JUDGE, "portfolio": roles.PORTFOLIO, "schemas": {
                    "analyst": schemas.ANALYST, "forecast": schemas.FORECAST_INTERPRETER, "turn": schemas.DEBATE_TURN,
@@ -51,7 +56,7 @@ def run_asset(dossier_text: str, alias: str, client, *, analyst_roles=("market",
     meta = []
 
     def ask(prompt, schema, name, effort_key):
-        parsed, m = client.call(prompt, schema, name, system=roles.COMMON, reasoning_effort=EFFORT[effort_key])
+        parsed, m = client.call(prompt, schema, name, system=roles.COMMON, reasoning=REASONING[effort_key])
         meta.append({"role": name, **m})
         return parsed
 
@@ -115,7 +120,7 @@ def validate_portfolio(out: dict, candidates: list[dict], max_weight: float = 0.
 
 def run_portfolio(candidates: list[dict], client) -> dict:
     parsed, m = client.call(roles.portfolio_prompt(candidates), schemas.PORTFOLIO, "portfolio", system=roles.COMMON,
-                            reasoning_effort=EFFORT["portfolio"])
+                            reasoning=REASONING["portfolio"])
     problems = validate_portfolio(parsed, candidates)
     weights = {p["alias"]: p["weight"] for p in parsed["positions"]}
     if problems:

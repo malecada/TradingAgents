@@ -24,7 +24,7 @@ quant-only cross-sectional model fed identical cards?
 ## 3. Frozen inputs (hashes recorded at freeze)
 - Dossier builder version and anonymizer dictionary; dossier files (one hash per file, manifest hashed).
 - Agent config sha (`tradingagents/agents_v2/graph.py::config_sha`): prompts and schemas.
-- Model pins: `deepseek/deepseek-v4-pro` on Baidu fp8, reasoning effort medium, temperature 0; Flash for typing.
+- Model pins: `deepseek/deepseek-v4-pro` fp8, ordered providers Baidu then StreamLake (same weights; echoed provider recorded per call), temperature 0. Reasoning: non-thinking mode for analysts, forecast interpreter and debaters (providers did not honour effort or token caps; pilot latency 45 s and ~2,000 reasoning tokens per call otherwise), medium reasoning for judge and portfolio manager. Flash (non-thinking) for article typing.
 - Text sources admitted: Wayback captures of CoinDesk, Cointelegraph, The Block (as_of = first capture);
   Arctic Shift Reddit posts for r/CryptoCurrency, r/Bitcoin, r/ethereum (as_of = created; scores are
   retrieval-time and used for nothing). Alpaca/Benzinga store if synced before freeze.

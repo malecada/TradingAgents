@@ -62,3 +62,9 @@ def test_reasoning_cap_overrides_effort():
 def test_reasoning_disabled_body():
     c = StructuredClient.pinned("pro", "k", reasoning_enabled=False)
     assert c.body("p", {"type": "object"}, "t")["reasoning"] == {"enabled": False}
+
+
+def test_per_call_reasoning_override():
+    c = StructuredClient.pinned("pro", "k")
+    assert c.body("p", {"type": "object"}, "t", reasoning={"enabled": False})["reasoning"] == {"enabled": False}
+    assert c.body("p", {"type": "object"}, "t", reasoning={"effort": "medium"})["reasoning"] == {"effort": "medium"}
