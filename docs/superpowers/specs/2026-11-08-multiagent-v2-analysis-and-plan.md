@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-08
 **Status:** ANALYSIS AND PLAN ONLY. Nothing here is registered. No gate, ledger row, holdout or LLM spend is touched by this document. Execution requires a charter under `RESEARCH_LOOP_GUIDE.md` and the house rails.
-**Decision log:** 2026-11-08 (user): primary model stack = DeepSeek via OpenRouter (section 7.5); Anthropic models only in the optional frontier ablation.
+**Decision log (2026-11-08, user):** primary model stack = DeepSeek via OpenRouter (7.5); Claude Opus 5.5 kept as the frontier ablation only. **Submission deadline 2027-01-08** (8.5 weeks); plan re-timed in section 10. Universe top-50 perps weekly plus the BTC/ETH daily arm. Reddit (Arctic Shift) and Common Crawl News admitted with survivorship disclosure. Forward run on this devbox; a VPS later.
 **Scope:** the assignment's hybrid system (prediction model feeding a multi-agent LLM debate that reaches trading decisions), rebuilt on the knowledge, data, models and methodology accumulated since the first attempt. The document explains why the first attempt could not have worked as built, what has changed, how context retrieval and anonymization should be done, and lays out a phased, pre-registrable plan.
 
 ---
@@ -21,7 +21,7 @@ The assignment (`topic/thesis_assignment.md`) requires five things:
 
 The thesis as it stands (checkpoint 2026-10-22) is a well-documented negative result with an audit story. The gap to the assignment is (A), (D) and (E) done properly, at a power level that can actually detect an effect, with leakage controlled. That is what this plan targets.
 
-A note on the calendar: the assignment lists September 2026 as the planned defence month. That date has passed, so the plan below assumes a later term and sizes the work at roughly sixteen part-time weeks. The exact defence date is an open input (section 14).
+A note on the calendar: the assignment lists September 2026 as the planned defence month. The actual submission deadline is 8 January 2027, which leaves eight and a half weeks from the date of this document. Section 10 fits the work to that window; section 10.1 lists what was cut to make it fit.
 
 ---
 
@@ -89,7 +89,7 @@ Any LLM evaluated on a period inside its training window may recall outcomes. De
 
 **Layer 2: sealed windows, one shot each.**
 - Sealed-A: 2025-01 → 2026-04, anonymized, before the V4-Pro release (2026-04-24, the conservative cutoff bound). Spent once, after the design is frozen.
-- Sealed-B: 2026-05 → (defence minus one month), after the V4-Pro release. This is the Profit-Mirage test (Li et al. 2025): if anonymized pre-cutoff skill is real, it should persist here. A collapse from Layer 1/Sealed-A to Sealed-B is itself a thesis result about memorization.
+- Sealed-B: 2026-05 → 2026-12-11 (last decision Friday whose 5-day outcome is known before the results freeze on 2026-12-21), after the V4-Pro release. About 32 weeks. This is the Profit-Mirage test (Li et al. 2025): if anonymized pre-cutoff skill is real, it should persist here. A collapse from Layer 1/Sealed-A to Sealed-B is itself a thesis result about memorization.
 
 **Layer 3: forward paper trading.** The application runs from the end of Phase 2 onward on this devbox against Binance testnet or paper fills, journaling decisions. It is the assignment's deliverable (E) and the only evaluation nobody can dispute.
 
@@ -329,39 +329,34 @@ One charter per phase, registered under the research loop with gates, denominato
 
 ---
 
-## 10. Phased plan
+## 10. Phased plan, fitted to the 8 January 2027 submission
 
-Durations assume roughly twelve hours a week. Each phase ends with a committed artifact and, where marked, a gate.
+Eight and a half weeks at roughly twelve hours a week is about one hundred hours. The schedule below spends them on the items the assignment grades and treats everything else as optional. Results freeze on Sunday 21 December; the last two and a half weeks are writing only. Dates are Mondays unless stated.
 
-**Phase 0, weeks 1–2: admission and the cheapest kill test.**
-- Restore corpora and the `llm-jev-probe` worktree from the Storage Box; admit News_fulltext or exclude it with a reason.
-- Confirm model cutoffs from the Models API; freeze the model list.
-- Charter 0: event extraction with Sonnet 5.5 and Opus 5.5, no prefilter, on the frozen 400-article set against the C1 floors. Cost < $10. Gate decides whether the text layer is in the plan or the plan proceeds numeric-first.
-- Decide tier, windows and universe (section 14).
+| Week | Dates | Work | Gate or artifact |
+|---|---|---|---|
+| 1 | Nov 9 – 15 | OpenRouter key on the devbox; restore `llm_event_xs` truth set (local worktree or Storage Box); confirm model IDs and pinned providers; **Charter 0** registered and run: V4-Pro extraction on the frozen 400 articles, no prefilter | Charter 0 verdict (text layer in or out); registration of Charter 1 drafted |
+| 2 | Nov 16 – 22 | Dossier builder core: Alpaca + GDELT extension to present, entity linking, article typing (Flash batch), selection and budgeting, numeric card from `cards.parquet` + derivatives, calendar block; anonymizer v2 with verification pass | 60-dossier coverage/noise audit; re-identification probe |
+| 3 | Nov 23 – 29 | CC-NEWS ingest for the six main crypto outlets and Reddit (r/CryptoCurrency, r/Bitcoin, r/ethereum) for the top-50; story threading; event extraction over the event-typed corpus if Charter 0 passed; agent graph v2 (dossier-fed roles, JSON schemas, order-swapped debate, PM) | Pilot (2 weeks of dev data, ~$40): validity probes, measured cost |
+| 4 | Nov 30 – Dec 6 | **Charter 1** registered (gates, trial count, budget); full dev run 2022-01 → 2024-12, top-50 weekly + BTC/ETH daily arm; thesis chapter 2 and 3 drafts start in parallel | Dev verdict on forecast-quality and portfolio gates |
+| 5 | Dec 7 – 13 | Core ablations on the 10% subsample: leave-one-analyst-out, no-debate, named vs anonymized, text-free, Flash vs Pro, Claude Opus 5.5; V3.2 chronological control on 2025-12 → 2026-12; forward paper run starts on the devbox (Friday Dec 11 first live decision) | Ablation table; forward journal live |
+| 6 | Dec 14 – 20 | **Sealed-A** (2025-01 → 2026-04) and **Sealed-B** (2026-05 → 2026-12-11) one-shots with frozen configuration; forensic verification of both verdicts; famous-episode sensitivity | Sealed verdicts; results freeze Dec 21 |
+| 7 | Dec 21 – 27 | Writing: chapters 2 (design v2), 3 (implementation), 4/5 (results ladder, ablations, leakage analysis, Profit-Mirage comparison), chapter 7 extension dated at the new checkpoint; figures and tables generated from committed artifacts | Full draft |
+| 8 | Dec 28 – Jan 3 | Read-through, assignment-coverage check against items A–E, reproducibility appendix, Czech abstract, bibliography | Review draft tagged |
+| 8.5 | Jan 4 – 8 | Corrections, PDF build, submission; forward journal snapshot included as of Jan 5 | Submitted |
 
-**Phase 1, weeks 2–5: dossier builder and anonymizer.**
-- Ingest CC-NEWS crypto outlets and Reddit dumps for the universe; extend Alpaca/GDELT forward to present.
-- Entity linking, article typing, threading, selection, numeric card, calendar, anonymizer v2 with verification.
-- Retrieval audits (6.3) and re-identification probe. Gate.
+### 10.1 What was cut to fit
 
-**Phase 2, weeks 5–8: agent system v2 and pilot.**
-- Replace the LangGraph tool-calling analysts with dossier-fed, schema-constrained roles; debate with order swap; PM at portfolio level.
-- Two-week pilot (~$150) for validity probes and measured cost per asset-week; replace the cost table with measured numbers.
-- Charter 1 registration (dev window, forecast-quality gates, portfolio gates, trial count, budget).
-- Full dev run. Gates 4–5. Forward paper trading starts the week the dev run completes, regardless of its verdict.
+- Historical-analog arm, episodic memory arm, debate-depth sweep (0/1/2 rounds): dropped. Mentioned as future work.
+- Reddit limited to three subreddits; CC-NEWS limited to six outlets; protocol forums and project blogs dropped.
+- Ablations reduced from eight variants to six; all on the 10% subsample.
+- Forward record at submission is about four weekly decisions; it is reported as a started live run, with the journal continuing to the defence.
+- The daily BTC/ETH arm keeps only the analyst-plus-judge path (no full debate) to stay inside the week-4 compute window.
+- No second amendment round anywhere; every charter is one shot. A gate that fails is written up, not re-tried.
 
-**Phase 3, weeks 8–10: ablations and controls.**
-- Ablation grid on the 10% subsample; named vs anonymized; chrono-control arm if budgeted.
-- Episode-exclusion sensitivity.
+### 10.2 Default if gates fail early
 
-**Phase 4, weeks 10–12: sealed one-shots.**
-- Sealed-A, then Sealed-B, with frozen configuration. Forensic verification of whatever the verdict is (honest denominators, placebo, convention swap).
-
-**Phase 5, weeks 10–16, in parallel: application hardening and thesis.**
-- Timers, journal, monitor scoreboard, runbook.
-- Thesis: chapter 2 (design v2: dossier, anonymization, roles), chapter 3 (implementation), chapter 4/5 (results ladder, ablations, leakage analysis, Profit-Mirage test), chapter 7 extension dated at the new checkpoint. Impersonal voice, author's solo work.
-
-Default if gates fail early: the thesis gains a measured retrieval-quality chapter, a second extraction verdict with frontier models, a leakage-measurement methodology, and a running application with a forward record. That is already more than the current checkpoint has on the assignment's items (A), (D) and (E).
+If Charter 0 fails, the dossier carries article summaries and typed numeric cards instead of extracted events, and the thesis gains a second, frontier-tier extraction negative. If the dev run fails the forecast-quality gate, the sealed runs still execute once (the gates are frozen either way) and the thesis reports the full ladder. The retrieval-quality audit, the anonymization measurement, the ablation table and the running application are deliverables regardless of sign, and together they cover assignment items (A), (D) and (E), which the current checkpoint does not.
 
 ---
 
@@ -403,15 +398,19 @@ Default if gates fail early: the thesis gains a measured retrieval-quality chapt
 
 ---
 
-## 14. Open decisions for the user
+## 14. Decisions
 
-1. **Defence date** and therefore the available weeks; the plan assumes about sixteen.
-2. **Budget**: with DeepSeek the full plan is about $1,500 (pro-judgment stack) or $350 (flash everywhere); see 7.4. Recommendation: pro-judgment, with the pilot confirming per-asset-week cost.
-3. **Universe and cadence**: top-50 or top-100 perps weekly, plus the BTC/ETH daily arm for continuity. Recommendation: top-50 weekly plus the daily arm.
-4. **Provider**: DECIDED 2026-11-08, DeepSeek via OpenRouter (V4-Pro judgment roles, V4.1-Flash classification, V3.2 chronological control). Open sub-question: keep the optional $120 Claude Opus 5.5 ablation or drop it.
-5. **Reddit and CC-NEWS admission**: both carry survivorship caveats; recommendation is to admit with disclosure.
-6. **Chronological-control arm**: now DeepSeek V3.2 at about $120. Recommendation: include.
-7. **Where the forward run lives**: this devbox (recommended; no production footprint) or a separate small VPS.
+Resolved 2026-11-08 with the user:
+
+1. **Submission deadline:** 8 January 2027. Plan fitted in section 10.
+2. **Budget:** pro-judgment DeepSeek stack, about $1,500 total, about $530 for the dev run.
+3. **Universe and cadence:** top-50 perps weekly plus the BTC/ETH daily arm.
+4. **Provider:** DeepSeek via OpenRouter (V4-Pro judgment roles, V4.1-Flash classification, V3.2 chronological control). Claude Opus 5.5 kept as the $120 frontier ablation.
+5. **Reddit and Common Crawl News:** admitted, survivorship disclosed.
+6. **Chronological control:** V3.2, included.
+7. **Forward run:** this devbox now; a dedicated VPS later, outside the thesis window.
+
+Prerequisite before Charter 0: an OpenRouter API key on the devbox (`OPENROUTER_API_KEY`) with a credit limit set to the charter cap.
 
 ---
 
