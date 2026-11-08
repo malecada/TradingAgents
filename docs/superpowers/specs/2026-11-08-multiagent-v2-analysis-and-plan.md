@@ -335,7 +335,7 @@ Eight and a half weeks at roughly twelve hours a week is about one hundred hours
 
 | Week | Dates | Work | Gate or artifact |
 |---|---|---|---|
-| 1 | Nov 9 – 15 | OpenRouter key on the devbox; restore `llm_event_xs` truth set (local worktree or Storage Box); confirm model IDs and pinned providers; **Charter 0** registered and run: V4-Pro extraction on the frozen 400 articles, no prefilter | Charter 0 verdict (text layer in or out); registration of Charter 1 drafted |
+| 1 | Nov 9 – 15 | **DONE EARLY (Nov 8): Charter 0 registered, run and closed — FAIL.** V4-Pro on the frozen 400 articles, no prefilter, 550 calls, $0.22; recall 0.26 on human-adjudicated rows, 135/400 rows declined as ambiguous (title-only GDELT). Verdict determined under both review bounds (`research/llm-v2-charter0-2026-11-09/p0_bounds.json`); E2 not run. Remaining week-1 work: Charter 1 registration draft | Text layer routed to summaries + numeric cards (10.2); typed events need full text, not titles |
 | 2 | Nov 16 – 22 | Dossier builder core: Alpaca + GDELT extension to present, entity linking, article typing (Flash batch), selection and budgeting, numeric card from `cards.parquet` + derivatives, calendar block; anonymizer v2 with verification pass | 60-dossier coverage/noise audit; re-identification probe |
 | 3 | Nov 23 – 29 | CC-NEWS ingest for the six main crypto outlets and Reddit (r/CryptoCurrency, r/Bitcoin, r/ethereum) for the top-50; story threading; event extraction over the event-typed corpus if Charter 0 passed; agent graph v2 (dossier-fed roles, JSON schemas, order-swapped debate, PM) | Pilot (2 weeks of dev data, ~$40): validity probes, measured cost |
 | 4 | Nov 30 – Dec 6 | **Charter 1** registered (gates, trial count, budget); full dev run 2022-01 → 2024-12, top-50 weekly + BTC/ETH daily arm; thesis chapter 2 and 3 drafts start in parallel | Dev verdict on forecast-quality and portfolio gates |
@@ -356,7 +356,7 @@ Eight and a half weeks at roughly twelve hours a week is about one hundred hours
 
 ### 10.2 Default if gates fail early
 
-If Charter 0 fails, the dossier carries article summaries and typed numeric cards instead of extracted events, and the thesis gains a second, frontier-tier extraction negative. If the dev run fails the forecast-quality gate, the sealed runs still execute once (the gates are frozen either way) and the thesis reports the full ladder. The retrieval-quality audit, the anonymization measurement, the ablation table and the running application are deliverables regardless of sign, and together they cover assignment items (A), (D) and (E), which the current checkpoint does not.
+Charter 0 failed on 2026-11-08: the dossier carries article summaries and typed numeric cards instead of extracted events, and the thesis gains a second extraction negative, this time at a frontier-class tier with the mechanism identified (the model declines to assert events from headlines alone; gpt-5.4-mini asserted them). The lesson feeds Phase 1 directly: Common Crawl full text replaces GDELT titles wherever available, and summaries are generated only from articles with a body. If the dev run fails the forecast-quality gate, the sealed runs still execute once (the gates are frozen either way) and the thesis reports the full ladder. The retrieval-quality audit, the anonymization measurement, the ablation table and the running application are deliverables regardless of sign, and together they cover assignment items (A), (D) and (E), which the current checkpoint does not.
 
 ---
 
