@@ -1,0 +1,278 @@
+{
+ "note": "Unregistered diagnostic; not a lifecycle receipt. E2 requires the filled sheet.",
+ "e1": "llm-v2c0-p0-label-20261109",
+ "worst_case": {
+  "primary": "FAIL",
+  "secondary": "FAIL",
+  "gate_rows": {
+   "hack": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 11,
+    "n_true": 14,
+    "precision": 1.0,
+    "recall": 0.21428571428571427,
+    "precision_ci95": [
+     0.4385029682449546,
+     1.0
+    ],
+    "recall_ci95": [
+     0.07571386712693184,
+     0.47589230586600295
+    ]
+   },
+   "insolvency_halt": {
+    "tp": 7,
+    "fp": 2,
+    "fn": 7,
+    "n_true": 14,
+    "precision": 0.7777777777777778,
+    "recall": 0.5,
+    "precision_ci95": [
+     0.45258896910698887,
+     0.9367748928821533
+    ],
+    "recall_ci95": [
+     0.26799202452413634,
+     0.7320079754758637
+    ]
+   },
+   "listing_delisting": {
+    "tp": 5,
+    "fp": 1,
+    "fn": 5,
+    "n_true": 10,
+    "precision": 0.8333333333333334,
+    "recall": 0.5,
+    "precision_ci95": [
+     0.43649717781352987,
+     0.9699466302516935
+    ],
+    "recall_ci95": [
+     0.236593090512564,
+     0.7634069094874361
+    ]
+   },
+   "regulatory": {
+    "tp": 13,
+    "fp": 6,
+    "fn": 22,
+    "n_true": 35,
+    "precision": 0.6842105263157895,
+    "recall": 0.37142857142857144,
+    "precision_ci95": [
+     0.46010407675327475,
+     0.8463562091220773
+    ],
+    "recall_ci95": [
+     0.2316581950336571,
+     0.5366306315640468
+    ]
+   },
+   "upgrade_partnership": {
+    "tp": 8,
+    "fp": 2,
+    "fn": 13,
+    "n_true": 21,
+    "precision": 0.8,
+    "recall": 0.38095238095238093,
+    "precision_ci95": [
+     0.49016247153664183,
+     0.9433178485456247
+    ],
+    "recall_ci95": [
+     0.20751011368564493,
+     0.5912134622488425
+    ]
+   },
+   "pooled_small": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 2,
+    "n_true": 2,
+    "precision": 0.0,
+    "recall": 0.0,
+    "precision_ci95": null,
+    "recall_ci95": [
+     0.0,
+     0.6576197724933469
+    ]
+   }
+  },
+  "asset_link": {
+   "min": 0.9,
+   "hits": 31,
+   "pairs": 36,
+   "value": 0.8611111111111112,
+   "unverified": 0,
+   "lenient_value": 0.8611111111111112,
+   "pass": false
+  },
+  "anon_agreement": {
+   "min": 0.8,
+   "agree": 94,
+   "n": 100,
+   "value": 0.94,
+   "pass": true
+  }
+ },
+ "best_case": {
+  "primary": "FAIL",
+  "secondary": "FAIL",
+  "gate_rows": {
+   "hack": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 7,
+    "n_true": 10,
+    "precision": 1.0,
+    "recall": 0.3,
+    "precision_ci95": [
+     0.4385029682449546,
+     1.0
+    ],
+    "recall_ci95": [
+     0.10779126740630099,
+     0.6032218525388546
+    ]
+   },
+   "insolvency_halt": {
+    "tp": 7,
+    "fp": 2,
+    "fn": 5,
+    "n_true": 12,
+    "precision": 0.7777777777777778,
+    "recall": 0.5833333333333334,
+    "precision_ci95": [
+     0.45258896910698887,
+     0.9367748928821533
+    ],
+    "recall_ci95": [
+     0.31951131254954973,
+     0.8067396863412435
+    ]
+   },
+   "listing_delisting": {
+    "tp": 5,
+    "fp": 1,
+    "fn": 5,
+    "n_true": 10,
+    "precision": 0.8333333333333334,
+    "recall": 0.5,
+    "precision_ci95": [
+     0.43649717781352987,
+     0.9699466302516935
+    ],
+    "recall_ci95": [
+     0.236593090512564,
+     0.7634069094874361
+    ]
+   },
+   "regulatory": {
+    "tp": 16,
+    "fp": 3,
+    "fn": 13,
+    "n_true": 29,
+    "precision": 0.8421052631578947,
+    "recall": 0.5517241379310345,
+    "precision_ci95": [
+     0.6243452472967093,
+     0.9447952836146585
+    ],
+    "recall_ci95": [
+     0.37547963210970914,
+     0.7158683197696281
+    ]
+   },
+   "upgrade_partnership": {
+    "tp": 8,
+    "fp": 2,
+    "fn": 9,
+    "n_true": 17,
+    "precision": 0.8,
+    "recall": 0.47058823529411764,
+    "precision_ci95": [
+     0.49016247153664183,
+     0.9433178485456247
+    ],
+    "recall_ci95": [
+     0.26165106442409436,
+     0.6903676493999558
+    ]
+   },
+   "pooled_small": {
+    "tp": 0,
+    "fp": 0,
+    "fn": 1,
+    "n_true": 1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "precision_ci95": null,
+    "recall_ci95": [
+     0.0,
+     0.7934506856227626
+    ]
+   }
+  },
+  "asset_link": {
+   "min": 0.9,
+   "hits": 36,
+   "pairs": 36,
+   "value": 1.0,
+   "unverified": 3,
+   "lenient_value": 1.0,
+   "pass": true
+  },
+  "anon_agreement": {
+   "min": 0.8,
+   "agree": 94,
+   "n": 100,
+   "value": 0.94,
+   "pass": true
+  }
+ },
+ "mechanism": {
+  "stored_truth_all": {
+   "rows": 400,
+   "tp": 36,
+   "fp": 11,
+   "fn": 60,
+   "precision": 0.7659574468085106,
+   "recall": 0.375
+  },
+  "human_adjudicated_rows": {
+   "rows": 154,
+   "tp": 14,
+   "fp": 7,
+   "fn": 39,
+   "precision": 0.6666666666666666,
+   "recall": 0.2641509433962264
+  },
+  "unaudited_rows": {
+   "rows": 246,
+   "tp": 22,
+   "fp": 4,
+   "fn": 21,
+   "precision": 0.8461538461538461,
+   "recall": 0.5116279069767442
+  },
+  "raw_events": 52,
+  "kept_events": 47,
+  "spans_dropped": 5,
+  "ambiguous_rate": 0.345,
+  "ambiguous_empty_rows": 135,
+  "ambiguous_empty_rows_with_truth_events": 32,
+  "truth_events_in_ambiguous_empty_rows": 34,
+  "repeat_class_set_flips": 2,
+  "repeat_n": 50,
+  "class_dispute_pattern": {
+   "upgrade_partnership -> NO EVENTS": 4,
+   "hack -> NO EVENTS": 3,
+   "regulatory -> NO EVENTS": 8,
+   "NO EVENTS -> regulatory": 3,
+   "unlock_emission -> NO EVENTS": 1,
+   "hack; insolvency_halt -> NO EVENTS": 1,
+   "insolvency_halt -> NO EVENTS": 1
+  }
+ }
+}
