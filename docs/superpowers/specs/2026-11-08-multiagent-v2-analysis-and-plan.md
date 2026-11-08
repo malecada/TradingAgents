@@ -2,6 +2,7 @@
 
 **Date:** 2026-11-08
 **Status:** ANALYSIS AND PLAN ONLY. Nothing here is registered. No gate, ledger row, holdout or LLM spend is touched by this document. Execution requires a charter under `RESEARCH_LOOP_GUIDE.md` and the house rails.
+**Decision log:** 2026-11-08 (user): primary model stack = DeepSeek via OpenRouter (section 7.5); Anthropic models only in the optional frontier ablation.
 **Scope:** the assignment's hybrid system (prediction model feeding a multi-agent LLM debate that reaches trading decisions), rebuilt on the knowledge, data, models and methodology accumulated since the first attempt. The document explains why the first attempt could not have worked as built, what has changed, how context retrieval and anonymization should be done, and lays out a phased, pre-registrable plan.
 
 ---
@@ -69,7 +70,7 @@ Windows were bounded below by the LLM cutoff (post-2026-01 for gpt-5.4-mini), so
 
 | Area | Then (Q1–Q3 2026) | Now (Nov 2026) |
 |---|---|---|
-| Models | gpt-4o-mini, gpt-5.4-mini/nano; Claude 4.x in catalog but unused | Claude Opus 5.5 ($4/$20 per MTok), Sonnet 5.5 ($2/$10), Haiku 5.5 ($0.10/$0.50); 1M context; structured outputs (`output_config.format`); adaptive thinking; batch API at 50%; prompt caching. Knowledge cutoff June 2026 for Opus 5.5 (and Fable 5.1); Sonnet/Haiku 5.5 to be confirmed from the Models API before registration. |
+| Models | gpt-4o-mini, gpt-5.4-mini/nano; Claude 4.x in catalog but unused | **Chosen: DeepSeek via OpenRouter** (live prices 2026-11-08): V4-Pro $0.40/$0.81 per MTok (fp8, 1M context), V4.1-Flash $0.05/$0.20 on-demand and $0.011/$0.20 batch, V3.2 $0.26/$0.38 (164K context). All expose `response_format` JSON schema, `seed` and `temperature`. DeepSeek publishes no knowledge cutoffs; release dates are used as conservative cutoff bounds (V3.2 2025-12, V4-Pro 2026-04, V4.1-Flash 2026-09). Reference frontier for the optional ablation: Claude Opus 5.5 $4/$20, Sonnet 5.5 $2/$10 (batch halves), cutoff June 2026. |
 | Text corpora | Alpaca BTC/ETH 2023-10→2026-04 (13.5K) | Alpaca 2021-01→2026-04 across 797 perp bases (~57K rows incl. backfills); GDELT 2021-01→2025-03 (~405K title rows); HF bitcoin_news 2011→2025-06; 400 human-adjudicated event labels (C1 P0, reusable truth set); News_fulltext archive (~20 GB, Storage Box, provenance to be admitted) |
 | Numeric PIT data | BTC/ETH on-chain + indicators | 799-symbol daily klines + funding with PIT universe; 217-symbol hourly; 47.5K-card panel (287 Fridays × top-200 × 15 PIT fields, `data/llm_rank_xs/cards.parquet`); Coinglass OI/liq/long-short 2020+; DVOL; DefiLlama multi-chain; unlock CSVs; DEX 15.3M-swap store; funding/premium-index/book-depth stores in `crypto-research-loop/data` |
 | Forecasts with verified skill | none | realized-vol HARQ (G1.1 PASS), funding persistence/forecast (G1.2), exchange-flow vol (B4 2/3 holdout PASS). Direction forecasts: none (all ≈ 50%) |
@@ -82,17 +83,17 @@ The last row matters: the one LLM construction that reached its effect-size test
 
 ## 4. The binding constraint: knowledge cutoff versus evaluation window
 
-Any LLM evaluated on a period inside its training window may recall outcomes. With a June 2026 cutoff, the clean post-cutoff window today is 2026-07-01 → 2026-11-08, four months. By a mid-2027 defence it is about eleven months. Daily BTC/ETH on eleven months is again unpowered; cross-sectional weekly on 100 assets over 45 weeks is borderline. Three complementary evaluation layers resolve this; the plan uses all three.
+Any LLM evaluated on a period inside its training window may recall outcomes. DeepSeek does not publish cutoffs, so the model's release date is taken as the cutoff bound. For V4-Pro (released 2026-04-24) the clean window today is 2026-05 → 2026-11, six months; for V4.1-Flash (released 2026-09) it is two months, which is why Flash is confined to classification roles where recall of outcomes is irrelevant. By a mid-2027 defence it is about eleven months. Daily BTC/ETH on eleven months is again unpowered; cross-sectional weekly on 100 assets over 45 weeks is borderline. Three complementary evaluation layers resolve this; the plan uses all three.
 
 **Layer 1: anonymized pre-cutoff development window.** Dev 2022-01 → 2024-12 (156 weeks), anonymized as in section 5, used for all design iteration. Anonymization reduces memorization leakage but cannot eliminate it for famous episodes, so Layer 1 results are never the headline. They are the engineering signal.
 
 **Layer 2: sealed windows, one shot each.**
-- Sealed-A: 2025-01 → 2026-06, anonymized, pre-cutoff. Spent once, after the design is frozen.
-- Sealed-B: 2026-07 → (defence minus one month), post-cutoff. This is the Profit-Mirage test (Li et al. 2025): if anonymized pre-cutoff skill is real, it should persist here. A collapse from Layer 1/Sealed-A to Sealed-B is itself a thesis result about memorization.
+- Sealed-A: 2025-01 → 2026-04, anonymized, before the V4-Pro release (2026-04-24, the conservative cutoff bound). Spent once, after the design is frozen.
+- Sealed-B: 2026-05 → (defence minus one month), after the V4-Pro release. This is the Profit-Mirage test (Li et al. 2025): if anonymized pre-cutoff skill is real, it should persist here. A collapse from Layer 1/Sealed-A to Sealed-B is itself a thesis result about memorization.
 
 **Layer 3: forward paper trading.** The application runs from the end of Phase 2 onward on this devbox against Binance testnet or paper fills, journaling decisions. It is the assignment's deliverable (E) and the only evaluation nobody can dispute.
 
-**Optional Layer 4: chronological control model.** An open-weights model with a documented early cutoff (for example a Llama-3.1-class model, cutoff Dec 2023) run through the identical pipeline via OpenRouter on 2024-01 → 2026-06 gives a 2.5-year clean window at lower capability. It triangulates leakage: if the frontier model's anonymized pre-cutoff performance far exceeds both its own post-cutoff performance and the chrono-control, memorization is the likely explanation. Cost is small; include it if the budget tier allows.
+**Layer 4: chronological control model.** DeepSeek V3.2 (released 2025-12-01; its V3.2-Exp sibling lists a 2025-07-31 cutoff) run through the identical pipeline on 2025-12 → defence gives an eleven-month window that is clean for V3.2 and overlaps Sealed-A for V4-Pro, at about $120. Because it is the same model family and the same API route, the comparison isolates the cutoff rather than the provider. It triangulates leakage: if the frontier model's anonymized pre-cutoff performance far exceeds both its own post-cutoff performance and the chrono-control, memorization is the likely explanation. Cost is small; include it if the budget tier allows.
 
 The leakage-related probes in section 5.4 are run in every layer.
 
@@ -215,20 +216,20 @@ Passing these converts "context retrieval was not good enough" from an impressio
 - Every opinion is a probability or an ordering with cited dossier item IDs, never a bare label. Calibration is scored.
 - Presentation effects are controlled by construction: every debate runs twice with roles and item order swapped; outputs are averaged (the C3-P lesson).
 - Breadth over depth: the system decides over a cross-section (top-50 or top-100 perps by PIT volume), weekly, with a secondary daily BTC/ETH arm for continuity with the first attempt.
-- Frontier models where judgment is needed; cheap models where classification is needed; batch API for everything that is not the live loop.
+- DeepSeek V4-Pro in every judgment role (analysts, debate, judge, PM); V4.1-Flash batch in classification roles (article typing, entity verification, redaction pass); V3.2 as the chronological control. A frontier model (Claude Opus 5.5) appears only in the model-tier ablation on the 10% subsample, so the thesis can still say whether capability changes the verdict.
 - Memory (FinMem-style episodic memory) is a tested ablation, PIT-safe: episodes become visible only after their outcome's as_of time, and are anonymized like everything else. It is not in the baseline configuration because it makes every prompt unique and defeats replay caching.
 
 ### 7.2 Roles
 
-| Role | Model (standard tier) | Input | Output (schema) |
+| Role | Model | Input | Output (schema) |
 |---|---|---|---|
-| Market-structure analyst | Sonnet 5.5 | numeric card, vol forecast, derivatives block | `P_up_{h}`, regime label, key risks, cited fields |
-| On-chain / fundamentals analyst | Sonnet 5.5 | on-chain block, supply calendar, asset descriptors | `P_up_{h}`, fundamental drift flag, cited fields |
-| News and events analyst | Sonnet 5.5 | threaded events and articles | event summary, `P_up_{h}`, severity-weighted shock score, novelty flag |
-| Forecast interpreter | Sonnet 5.5 | quant forecast block with calibration record | recommended weight on the quant forecast ∈ [0,1], rationale |
-| Bull / Bear researchers | Opus 5.5 | all four analyst outputs + dossier | steelman cases with cited evidence (one round each, then one rebuttal each) |
-| Judge (research manager) | Opus 5.5 | debate transcript | calibrated `P_up_{h}`, confidence, invalidation conditions, abstain flag |
-| Risk / portfolio manager | Opus 5.5, weekly, portfolio-level | judges' outputs for all candidates, vol forecasts, current book, cost model | target weights (long tilt or long-short), per-asset size ∈ [0,1], abstentions |
+| Market-structure analyst | DeepSeek V4-Pro | numeric card, vol forecast, derivatives block | `P_up_{h}`, regime label, key risks, cited fields |
+| On-chain / fundamentals analyst | DeepSeek V4-Pro | on-chain block, supply calendar, asset descriptors | `P_up_{h}`, fundamental drift flag, cited fields |
+| News and events analyst | DeepSeek V4-Pro | threaded events and articles | event summary, `P_up_{h}`, severity-weighted shock score, novelty flag |
+| Forecast interpreter | DeepSeek V4-Pro | quant forecast block with calibration record | recommended weight on the quant forecast ∈ [0,1], rationale |
+| Bull / Bear researchers | DeepSeek V4-Pro | all four analyst outputs + dossier | steelman cases with cited evidence (one round each, then one rebuttal each) |
+| Judge (research manager) | DeepSeek V4-Pro | debate transcript | calibrated `P_up_{h}`, confidence, invalidation conditions, abstain flag |
+| Risk / portfolio manager | DeepSeek V4-Pro, weekly, portfolio-level | judges' outputs for all candidates, vol forecasts, current book, cost model | target weights (long tilt or long-short), per-asset size ∈ [0,1], abstentions |
 
 Horizon h: 5 trading days for the weekly cross-section (matches C3-P's residual IC horizon and the 21-day diagnostic can be reported); 1 day for the BTC/ETH arm.
 
@@ -242,24 +243,38 @@ Honest options, in order of preference:
 2. **Add the forecasts that do have skill as sizing inputs**: HARQ realized-vol forecasts (G1.1 PASS) and, for BTC/ETH, the exchange-flow vol forecast (B4). These go to the risk/PM role, not the direction debate. The thesis checkpoint (chapter 7) already proposes exactly this integration and notes it was never evaluated.
 3. **Report the quant baseline as a first-class arm**: quant-only portfolio from the same forecasts with the same cost model. The hybrid must beat it or the LLM layer's contribution is zero by construction.
 
-### 7.4 Cost model
+### 7.4 Cost model (DeepSeek via OpenRouter, live prices 2026-11-08)
 
-Assumptions: dev window 156 weeks; universe 50 (lean) or 100 (standard); dossier ~12K tokens; batch pricing (50% off list); prompt caching on the dossier prefix for the four analyst calls.
+Assumptions: dev window 156 weeks; universe top-50 (7,800 asset-weeks); dossier ~12K tokens; four analyst calls per asset-week (52K in, 3.2K out); 20 debated candidates per week, each debate 5 calls in both orders (150K in, 12K out); V4-Pro on-demand at $0.40/$0.81 (StreamLake or Baidu fp8); V4.1-Flash batch at $0.011/$0.20; V3.2 at $0.26/$0.38. Cache-read discounts (V4-Pro cache read $0.034/MTok on several routes) are not counted and would lower the input lines further.
 
-| Component | Lean tier | Standard tier |
-|---|---|---|
-| Corpus typing (Haiku 5.5, ~450K articles) | $40 | $40 |
-| Event extraction (Sonnet 5.5, event-typed ~25%) | $300 | $300 (Opus: $600) |
-| Analysts (4 × Sonnet 5.5 per asset-week) | top-50: $500 | top-100: $1,000 |
-| Debate + judge (Opus 5.5, both orders) | 20 candidates/week: $500 | 40 candidates/week: $1,000 |
-| Portfolio manager (Opus 5.5, weekly) | $30 | $30 |
-| BTC/ETH daily arm (Sonnet analysts, Opus judge, 2 × 1,100 bars) | $350 | $350 |
-| Ablations (10% subsample × ~8 variants) | $250 | $500 |
-| Probes (re-identification, named vs anon, order swap, seed repeat) | $100 | $200 |
-| Sealed-A + Sealed-B + forward (one pass each) | $400 | $800 |
-| **Total** | **≈ $2,500** | **≈ $4,800** |
+| Line | Arithmetic | Pro-judgment stack | Flash-everywhere stack |
+|---|---|---|---|
+| Article typing + entity verification | ~450K articles × 1.5K in + 100 out, Flash batch | $17 | $17 |
+| Event extraction | ~112K event-typed articles × 1.5K in + 300 out | $100 (Pro) | $10 (Flash) |
+| Analysts | 7,800 × (52K in + 3.2K out) | $185 | $10 |
+| Debate + judge | 3,120 debates × (150K in + 12K out) | $220 | $13 |
+| Portfolio manager | 156 × (80K in + 4K out) | $6 | $1 |
+| BTC/ETH daily arm | 2,200 asset-days, analysts + judge both orders | $40 | $5 |
+| Ablations | 780 asset-weeks × 8 variants × per-asset-week cost | $325 | $25 |
+| Probes | re-identification, named vs anonymized, seed repeats | $30 | $5 |
+| Sealed-A + Sealed-B + forward | 123 weeks at dev per-week cost; forward ~$3/week live | $325 | $25 |
+| Chronological control (V3.2, ~45 weeks) | same pipeline, V3.2 prices | $120 | $120 |
+| Optional frontier ablation (Opus 5.5 batch, 780 asset-weeks) | | $120 | $120 |
+| **Total** | | **≈ $1,500** | **≈ $350** |
 
-A minimal tier (Haiku analysts, Sonnet judge, top-50, dev 2023-01→2024-12) runs for about $700 and answers only "does the pipeline work and is there any signal", not "do frontier models help". The tier is an open decision (section 14). Every number here is an estimate to be replaced by a measured 2-week pilot before registration; the pilot is itself budgeted at $150.
+The pro-judgment stack is the recommendation. Its dev run alone (typing, extraction, analysts, debate, PM) is about $530, roughly a fifth of the Claude mixed stack costed earlier, and it keeps the six-month post-release window for Sealed-B. The flash-everywhere stack is an order of magnitude cheaper but V4.1-Flash's September 2026 release leaves a two-month post-release window and its judgment quality is untested; it is run as the model-tier ablation, not as the baseline. Every number is replaced by the measured two-week pilot (~$40 at these prices) before registration.
+
+### 7.5 OpenRouter operating rules
+
+The client layer already supports OpenRouter (`tradingagents/llm_clients/openai_client.py`, provider `openrouter`, `OPENROUTER_API_KEY`), and the Jev probe charter established the drift rules. Registered runs follow:
+
+- **Pin the route.** Request body `provider: {order: ["<provider>"], allow_fallbacks: false, quantizations: ["fp8"]}`. V4-Pro: StreamLake or Baidu fp8 ($0.40/$0.81; 384K–393K max output). V4.1-Flash batch: the `deepseek/deepseek-v4.1-flash:batch` variant with the same provider pin. Never use the `-latest` aliases.
+- **Freeze model IDs with dates** where OpenRouter exposes them (`deepseek-v4-pro`, `deepseek-v4.1-flash-1017`, `deepseek-v3.2`), and record the `provider_name`, `quantization` and model ID echoed in every response; a mismatch fails the run (Jev rule).
+- **Determinism.** `temperature: 0`, fixed `seed`; the two-seed agreement probe uses two seeds rather than two samples. Replay-cache key includes model ID, provider and seed.
+- **Structured outputs.** `response_format: {type: "json_schema", strict: true}`; providers lacking `structured_outputs` are excluded from the pin list (checked from the endpoints API). Schema-valid rate ≥0.99 remains a gate.
+- **Cutoff bound.** Release date is the cutoff for evaluation-window purposes until DeepSeek publishes one; this rule is recorded in the charter.
+- **Spend caps.** OpenRouter per-key credit limits set to the charter cap; HTTP 402 or a cap breach fails the run; retries on 408/429/5xx with the Jev back-off table.
+- **Data handling.** Dossiers are anonymized public information; no keys or account data ever enter a prompt. Provider terms are reviewed once at registration.
 
 ---
 
@@ -309,7 +324,7 @@ One charter per phase, registered under the research loop with gates, denominato
 
 - A `dossier-build` job and a `decide` job run as systemd user timers on this devbox (never the production VPS): daily 00:15 UTC for the BTC/ETH arm, Friday 00:15 UTC for the cross-section.
 - Decisions are journaled with the dossier hash, every agent's JSON, and the PM weights; the existing executor (`tradingagents/execution/live`) posts testnet orders or paper fills; the monitor UI shows the current book, the latest debate and the running forecast-quality scoreboard.
-- Live calls use the Messages API with streaming and structured outputs; batch is used for backtests. Prompt caching on the dossier prefix. Replay cache stays keyed on (model, prompt hash).
+- Live calls go through OpenRouter Chat Completions with the pinned provider and JSON-schema outputs; batch variants are used for backtests where offered. Replay cache keyed on (model ID, provider, seed, prompt hash).
 - Operational safeguards from the pipeline audit remain: kill switch, max position, hedge-mode checks. Real funds are out of scope for the thesis run unless the user decides otherwise after Sealed-B.
 
 ---
@@ -357,7 +372,9 @@ Default if gates fail early: the thesis gains a measured retrieval-quality chapt
 | Memorization leakage despite anonymization | Probes 5.4 registered; Sealed-B is the arbiter; report the drop rather than hide it |
 | Extraction fails again at frontier tier | Phase 0 gate; proceed numeric-plus-summaries; record the negative |
 | Cost overrun | Measured pilot before registration; batch API; cached dossier prefix; memory off in baseline; hard cap per charter with a STOP on 110% |
-| Nondeterminism without temperature control | Two-seed repeat as a validity probe; average both debate orders |
+| Nondeterminism | `temperature: 0` and fixed seeds; two-seed repeat as a validity probe; average both debate orders |
+| OpenRouter provider or quantization drift | Pinned provider and fp8, no fallbacks, echoed provider/model checked per call, run fails on mismatch (Jev rule) |
+| Unknown DeepSeek cutoffs | Release date used as the cutoff bound; V3.2 chronological control; Profit-Mirage comparison across Sealed-A/B |
 | Timestamp infidelity in news (backfilled `created_at`) | Fidelity probe; conservative decision-time buffer; disclose lag distribution |
 | Survivorship in Reddit dumps and news archives | Disclose; compare Alpaca (live-collected since 2023-10) vs archive-derived periods |
 | Universe survivorship | PIT universe from the 799-symbol store with listing/delisting history (LUNA lesson) |
@@ -389,11 +406,11 @@ Default if gates fail early: the thesis gains a measured retrieval-quality chapt
 ## 14. Open decisions for the user
 
 1. **Defence date** and therefore the available weeks; the plan assumes about sixteen.
-2. **Budget tier**: minimal (~$700), lean (~$2.5K), standard (~$4.8K). Recommendation: lean, with the Phase 2 pilot deciding whether to extend to standard for the sealed runs.
+2. **Budget**: with DeepSeek the full plan is about $1,500 (pro-judgment stack) or $350 (flash everywhere); see 7.4. Recommendation: pro-judgment, with the pilot confirming per-asset-week cost.
 3. **Universe and cadence**: top-50 or top-100 perps weekly, plus the BTC/ETH daily arm for continuity. Recommendation: top-50 weekly plus the daily arm.
-4. **Provider**: Anthropic models as primary (Claude 5.5 family); keep one OpenAI model as a cross-provider ablation or drop it. Recommendation: Anthropic primary, one Sonnet-class OpenAI comparator in the tier ablation only.
+4. **Provider**: DECIDED 2026-11-08, DeepSeek via OpenRouter (V4-Pro judgment roles, V4.1-Flash classification, V3.2 chronological control). Open sub-question: keep the optional $120 Claude Opus 5.5 ablation or drop it.
 5. **Reddit and CC-NEWS admission**: both carry survivorship caveats; recommendation is to admit with disclosure.
-6. **Chronological-control arm** (open-weights early-cutoff model via OpenRouter): include or skip. Recommendation: include at the lean tier, it costs little and strengthens the leakage analysis.
+6. **Chronological-control arm**: now DeepSeek V3.2 at about $120. Recommendation: include.
 7. **Where the forward run lives**: this devbox (recommended; no production footprint) or a separate small VPS.
 
 ---
