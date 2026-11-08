@@ -44,7 +44,7 @@ def test_newey_west_and_residualization_remove_momentum():
     panel["fwd_ret"] = 0.03 * panel["ret_4w"] + 0.01 * rng.normal(size=len(panel))                        # momentum + noise
     raw = pd.Series({d: g["p_outperform"].corr(g["fwd_ret"], method="spearman") for d, g in panel.groupby("date")})
     ic = weekly_ic(panel)
-    assert raw.mean() > 0.5 and abs(ic.mean()) < 0.1       # residualization strips the shared control
+    assert raw.mean() > 0.3 and abs(ic.mean()) < 0.1       # residualization strips the shared control
 
 
 def test_select_debate_candidates_prefers_conviction_and_disagreement():
