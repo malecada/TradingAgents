@@ -123,4 +123,4 @@ def render_numeric(block: dict) -> str:
     if path:
         lines.append(f"Price path, weekly, indexed to 100 at decision: {path['indexed_path']}")
         lines.append(f"Weekly returns % (oldest first): {path['weekly_returns_pct']}; 90d drawdown {path['drawdown_90d_pct']}%; realized vol 20d {p(path['realized_vol_20d_ann_pct'])}% ann.")
-    return "\n".join(lines)
+    return "\n".join(f"[n{i}] {line}" for i, line in enumerate(lines, 1))

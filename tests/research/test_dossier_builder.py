@@ -70,3 +70,11 @@ def test_select_items_priority_and_budget():
     out = select_items(items, budget_tokens=50, max_items=10)
     assert [i["summary"][0] for i in out] == ["b", "c"] or [i["summary"][0] for i in out] == ["c", "b"]
     assert all(i["type"] != "price_recap" for i in select_items(items))
+
+
+def test_calendar_block_and_item_ids():
+    from tradingagents.dossier.calendar import next_fomc_days, render_calendar
+    ts = pd.Timestamp("2024-01-06", tz="UTC")
+    assert next_fomc_days(ts) == 25
+    text = render_calendar(ts, {"unlock_next30_pct_supply": 3.1})
+    assert "in 25 days" in text and "3.1%" in text and "2024" not in text

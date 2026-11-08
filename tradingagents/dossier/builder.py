@@ -16,11 +16,12 @@ import pandas as pd
 
 from tradingagents.dossier import store
 from tradingagents.dossier.anonymizer import Masker
+from tradingagents.dossier.calendar import render_calendar
 from tradingagents.dossier.entities import Dictionary, Linker
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.0"
+BUILDER_VERSION = "dossier-v2.1"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 MAX_ITEMS = 25
@@ -90,17 +91,19 @@ def select_items(classified: list[dict], budget_tokens: int = TOKEN_BUDGET, max_
     return out
 
 
-def render(alias: str, numeric_text: str, items: list[dict], counts: dict, decision_ts: pd.Timestamp) -> str:
+def render(alias: str, numeric_text: str, items: list[dict], counts: dict, decision_ts: pd.Timestamp,
+           calendar_text: str = "") -> str:
     lines = [f"# Dossier for {alias}", "", "## Numeric profile (relative to this week's universe)", numeric_text, "",
+             calendar_text,
              f"## News and discussion, last {TEXT_LOOKBACK_DAYS} days",
              f"Items retrieved: {counts['retrieved']}; events {counts['event']}, analysis {counts['analysis_opinion']}, "
              f"price recaps {counts['price_recap']} (omitted), promotional/unrelated {counts['promotional'] + counts['unrelated']} (omitted); "
              f"shown: {len(items)}.", ""]
-    for it in items:
+    for n, it in enumerate(items, 1):
         days = (decision_ts.normalize() - it["event_ts"].normalize()).days
         when = "today" if days == 0 else f"{days} days ago"
         src = "community post" if it["source"] == "reddit" else "news"
-        lines.append(f"- [{when}, {src}, {it['type']}, {it['novelty']}] {it['summary']}")
+        lines.append(f"- [t{n}] [{when}, {src}, {it['type']}, {it['novelty']}] {it['summary']}")
     if not items:
         lines.append("- No qualifying items.")
     return "\n".join(lines) + "\n"
@@ -133,7 +136,7 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
                            "as_of_ts": pd.Timestamp(r.as_of_ts), "salience": r.salience, "type": out["type"],
                            "novelty": out["novelty"], "summary": out["summary"]})
     items = select_items(classified)
-    text = render(alias, numeric_text, items, counts, decision_ts)
+    text = render(alias, numeric_text, items, counts, decision_ts, render_calendar(decision_ts, numeric))
     leaks = masker.verify(text)
     payload = {"builder_version": BUILDER_VERSION, "symbol": symbol, "friday": friday.isoformat(),
                "text": text, "numeric": numeric}
