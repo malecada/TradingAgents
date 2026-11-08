@@ -50,3 +50,8 @@ def test_drift_and_retry():
         c.call("p", {"type": "object"})
     c = StructuredClient.pinned("flash", "k", session=S([R(503), R(200, ok({"z": 2}, model="deepseek/deepseek-v4.1-flash"))]), sleep=lambda x: None)
     assert c.call("p", {"type": "object"})[0] == {"z": 2}
+
+
+def test_reasoning_cap_overrides_effort():
+    c = StructuredClient.pinned("pro", "k", reasoning_max_tokens=1500)
+    assert c.body("p", {"type": "object"}, "t")["reasoning"] == {"max_tokens": 1500}

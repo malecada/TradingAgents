@@ -34,6 +34,7 @@ class StructuredClient:
     quantization: str = "fp8"
     cost_cap_usd: float = 10.0
     reasoning_effort: str | None = "medium"
+    reasoning_max_tokens: int | None = None      # hard cap on reasoning tokens (OpenRouter unified param)
     max_tokens: int = 4000
     max_attempts: int = 5
     session: object = None
@@ -53,7 +54,9 @@ class StructuredClient:
              "response_format": {"type": "json_schema", "json_schema": {"name": schema_name, "strict": True, "schema": schema}},
              "provider": {"order": [self.provider], "allow_fallbacks": False, "quantizations": [self.quantization]},
              "usage": {"include": True}}
-        if self.reasoning_effort:
+        if self.reasoning_max_tokens:
+            b["reasoning"] = {"max_tokens": int(self.reasoning_max_tokens)}
+        elif self.reasoning_effort:
             b["reasoning"] = {"effort": self.reasoning_effort}
         return b
 

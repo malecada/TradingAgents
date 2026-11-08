@@ -42,7 +42,7 @@ def main() -> int:
     rng = random.Random(args.seed)
     sample = rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
-    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_effort="low", max_tokens=12000)
+    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_effort=None, reasoning_max_tokens=1500, max_tokens=6000)
     if args.provider:
         client.provider = args.provider
     from tradingagents.dossier.or_client import ORError
