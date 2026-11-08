@@ -13,7 +13,8 @@ import json
 
 from tradingagents.agents_v2 import roles, schemas
 
-CONFIG_VERSION = "agents-v2.0"
+CONFIG_VERSION = "agents-v2.1"
+EFFORT = {"analyst": "low", "forecast": "low", "debate": "low", "judge": "medium", "portfolio": "medium"}
 
 
 @dataclass
@@ -36,7 +37,7 @@ class AssetRun:
 
 
 def config_sha() -> str:
-    payload = {"version": CONFIG_VERSION, "common": roles.COMMON, "analysts": roles.ANALYSTS,
+    payload = {"version": CONFIG_VERSION, "effort": EFFORT, "common": roles.COMMON, "analysts": roles.ANALYSTS,
                "forecast": roles.FORECAST, "bull": roles.BULL, "bear": roles.BEAR, "rebuttal": roles.REBUTTAL,
                "judge": roles.JUDGE, "portfolio": roles.PORTFOLIO, "schemas": {
                    "analyst": schemas.ANALYST, "forecast": schemas.FORECAST_INTERPRETER, "turn": schemas.DEBATE_TURN,
@@ -45,16 +46,18 @@ def config_sha() -> str:
 
 
 def run_asset(dossier_text: str, alias: str, client, *, analyst_roles=("market", "fundamental", "news"),
-              with_forecast: bool = True, debate: bool = True) -> AssetRun:
+              with_forecast: bool = True, debate: bool = True, analysts: dict | None = None) -> AssetRun:
+    """``analysts`` may be supplied from a prior analysts-only pass so they are not re-run."""
     meta = []
 
-    def ask(prompt, schema, name):
-        parsed, m = client.call(prompt, schema, name, system=roles.COMMON)
+    def ask(prompt, schema, name, effort_key):
+        parsed, m = client.call(prompt, schema, name, system=roles.COMMON, reasoning_effort=EFFORT[effort_key])
         meta.append({"role": name, **m})
         return parsed
 
-    analysts = {r: ask(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}") for r in analyst_roles}
-    forecast = ask(roles.forecast_prompt(dossier_text), schemas.FORECAST_INTERPRETER, "forecast") if with_forecast else {}
+    if analysts is None:
+        analysts = {r: ask(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}", "analyst") for r in analyst_roles}
+    forecast = ask(roles.forecast_prompt(dossier_text), schemas.FORECAST_INTERPRETER, "forecast", "forecast") if with_forecast else {}
     all_analysts = dict(analysts)
     if forecast:
         all_analysts["forecast_interpreter"] = forecast
@@ -62,17 +65,17 @@ def run_asset(dossier_text: str, alias: str, client, *, analyst_roles=("market",
     if debate:
         for order in ("bull_first", "bear_first"):
             first, second = ("bull", "bear") if order == "bull_first" else ("bear", "bull")
-            t1 = ask(roles.debate_prompt(first, dossier_text, all_analysts), schemas.DEBATE_TURN, f"{first}_open")
-            t2 = ask(roles.debate_prompt(second, dossier_text, all_analysts, opponent=t1), schemas.DEBATE_TURN, f"{second}_rebut")
-            t3 = ask(roles.debate_prompt(first, dossier_text, all_analysts, opponent=t2), schemas.DEBATE_TURN, f"{first}_rebut")
+            t1 = ask(roles.debate_prompt(first, dossier_text, all_analysts), schemas.DEBATE_TURN, f"{first}_open", "debate")
+            t2 = ask(roles.debate_prompt(second, dossier_text, all_analysts, opponent=t1), schemas.DEBATE_TURN, f"{second}_rebut", "debate")
+            t3 = ask(roles.debate_prompt(first, dossier_text, all_analysts, opponent=t2), schemas.DEBATE_TURN, f"{first}_rebut", "debate")
             transcript = [(first, t1), (second, t2), (first, t3)]
-            judge = ask(roles.judge_prompt(dossier_text, all_analysts, transcript), schemas.JUDGE, f"judge_{order}")
+            judge = ask(roles.judge_prompt(dossier_text, all_analysts, transcript), schemas.JUDGE, f"judge_{order}", "judge")
             debates[order] = {"transcript": [{"speaker": s, **t} for s, t in transcript], "judge": judge}
         p = sum(d["judge"]["p_outperform_7d"] for d in debates.values()) / len(debates)
         conf = sum(d["judge"]["confidence"] for d in debates.values()) / len(debates)
         abstain = all(d["judge"]["abstain"] for d in debates.values())
     else:
-        judge = ask(roles.judge_prompt(dossier_text, all_analysts, []), schemas.JUDGE, "judge_no_debate")
+        judge = ask(roles.judge_prompt(dossier_text, all_analysts, []), schemas.JUDGE, "judge_no_debate", "judge")
         debates["none"] = {"transcript": [], "judge": judge}
         p, conf, abstain = judge["p_outperform_7d"], judge["confidence"], judge["abstain"]
     return AssetRun(alias, analysts, forecast, debates, float(p), float(conf), bool(abstain), meta, config_sha())
@@ -111,7 +114,8 @@ def validate_portfolio(out: dict, candidates: list[dict], max_weight: float = 0.
 
 
 def run_portfolio(candidates: list[dict], client) -> dict:
-    parsed, m = client.call(roles.portfolio_prompt(candidates), schemas.PORTFOLIO, "portfolio", system=roles.COMMON)
+    parsed, m = client.call(roles.portfolio_prompt(candidates), schemas.PORTFOLIO, "portfolio", system=roles.COMMON,
+                            reasoning_effort=EFFORT["portfolio"])
     problems = validate_portfolio(parsed, candidates)
     weights = {p["alias"]: p["weight"] for p in parsed["positions"]}
     if problems:

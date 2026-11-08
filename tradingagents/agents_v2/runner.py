@@ -12,12 +12,12 @@ from pathlib import Path
 import pandas as pd
 
 from tradingagents.agents_v2 import roles, schemas
-from tradingagents.agents_v2.graph import config_sha, run_asset, run_portfolio
+from tradingagents.agents_v2.graph import EFFORT, config_sha, run_asset, run_portfolio
 from tradingagents.dossier.or_client import ORError
 
 RUNS = Path("data/agents_v2/runs")
-N_DEBATE = 20
-WORKERS = 5
+N_DEBATE = 12
+WORKERS = 12
 
 
 def select_debate_candidates(analyst_runs: dict[str, dict], n: int = N_DEBATE) -> list[str]:
@@ -35,7 +35,8 @@ def select_debate_candidates(analyst_runs: dict[str, dict], n: int = N_DEBATE) -
 def analysts_only(dossier_text: str, client, analyst_roles=("market", "fundamental", "news")) -> tuple[dict, list]:
     out, meta = {}, []
     for r in analyst_roles:
-        parsed, m = client.call(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}", system=roles.COMMON)
+        parsed, m = client.call(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}", system=roles.COMMON,
+                                reasoning_effort=EFFORT["analyst"])
         out[r] = parsed
         meta.append({"role": f"analyst_{r}", **m})
     return out, meta
@@ -85,7 +86,8 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
 
         def debate_one(sym):
             try:
-                return sym, run_asset(dossiers[sym]["text"], dossiers[sym]["alias"], client), None
+                return sym, run_asset(dossiers[sym]["text"], dossiers[sym]["alias"], client,
+                                      analysts=results[sym]["analysts"]), None
             except ORError as exc:
                 return sym, None, str(exc)
 
@@ -96,8 +98,7 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
                     continue
                 results[sym].update({"debated": True, "forecast": run.forecast, "debates": run.debates,
                                      "p_outperform": run.p_outperform, "confidence": run.confidence,
-                                     "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta,
-                                     "analysts": run.analysts})
+                                     "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta})
     for sym, r in results.items():
         (day_dir / f"{sym}.json").write_text(json.dumps(r, indent=1, default=str))
     candidates = [{"alias": r["alias"], "p_outperform_7d": r["p_outperform"], "confidence": r["confidence"],

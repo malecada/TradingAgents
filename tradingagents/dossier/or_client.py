@@ -60,7 +60,8 @@ class StructuredClient:
             with open(LOG, "a") as fh:
                 fh.write(json.dumps({"ts": time.time(), **fields}) + "\n")
 
-    def body(self, prompt: str, schema: dict, schema_name: str, system: str | None = None) -> dict:
+    def body(self, prompt: str, schema: dict, schema_name: str, system: str | None = None,
+             reasoning_effort: str | None = None) -> dict:
         messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
         b = {"model": self.model, "messages": messages, "temperature": 0, "max_tokens": self.max_tokens,
              "response_format": {"type": "json_schema", "json_schema": {"name": schema_name, "strict": True, "schema": schema}},
@@ -70,18 +71,19 @@ class StructuredClient:
             b["reasoning"] = {"enabled": False}
         elif self.reasoning_max_tokens:
             b["reasoning"] = {"max_tokens": int(self.reasoning_max_tokens)}
-        elif self.reasoning_effort:
-            b["reasoning"] = {"effort": self.reasoning_effort}
+        elif reasoning_effort or self.reasoning_effort:
+            b["reasoning"] = {"effort": reasoning_effort or self.reasoning_effort}
         return b
 
-    def call(self, prompt: str, schema: dict, schema_name: str = "answer", system: str | None = None) -> tuple[dict, dict]:
+    def call(self, prompt: str, schema: dict, schema_name: str = "answer", system: str | None = None,
+             reasoning_effort: str | None = None) -> tuple[dict, dict]:
         """Returns (parsed_json, meta) where meta has usage, cost, latency, model, provider."""
         with self._lock:
             if self.spent_usd > self.cost_cap_usd:
                 raise ORError(f"spend cap reached: {self.spent_usd:.4f} of {self.cost_cap_usd}")
         session = self.session or requests
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
-        body = self.body(prompt, schema, schema_name, system)
+        body = self.body(prompt, schema, schema_name, system, reasoning_effort)
         for attempt in range(1, self.max_attempts + 1):
             started = time.monotonic()
             try:

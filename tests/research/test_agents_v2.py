@@ -16,8 +16,9 @@ class StubClient:
     def __init__(self, p_bull_first=0.7, p_bear_first=0.6):
         self.prompts, self.p = [], {"bull_first": p_bull_first, "bear_first": p_bear_first}
 
-    def call(self, prompt, schema, name="answer", system=None):
+    def call(self, prompt, schema, name="answer", system=None, reasoning_effort=None):
         self.prompts.append((name, prompt))
+        self.efforts = getattr(self, "efforts", []) + [reasoning_effort]
         meta = {"cost": 0.001, "latency_s": 0.1, "model": "m", "provider": "p"}
         if schema is schemas.ANALYST:
             return {"p_outperform_7d": 0.55, "confidence": 0.4, "key_facts": ["f"], "bullish_evidence": ["b [n1]"],
@@ -43,6 +44,9 @@ def test_run_asset_order_swap_and_averaging():
     assert names[:4] == ["analyst_market", "analyst_fundamental", "analyst_news", "forecast"]
     assert "bull_open" in names and "bear_open" in names and names.count("bear_rebut") == 2 and names.count("bull_rebut") == 2
     assert len(run.meta) == 4 + 2 * 4 and run.config_sha == config_sha()
+    assert set(c.efforts) == {"low", "medium"} and c.efforts[-1] == "medium"     # judge at medium, analysts/debate low
+    run2 = run_asset("d", "Asset_A", StubClient(), analysts=run.analysts)
+    assert len(run2.meta) == 1 + 2 * 4                                           # analysts not re-run
     for _, prompt in c.prompts:
         assert "Asset_A" in prompt and "Bitcoin" not in prompt
 
