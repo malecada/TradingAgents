@@ -1,0 +1,224 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "a1b41f72853b2f96170f0087dfd1afbf8ce3b90e",
+  "effective_attempt_budget": 12,
+  "experiment": {
+    "cells": [
+      "label-v1",
+      "label-v2",
+      "anon-v1",
+      "anon-v2",
+      "repeat-v1",
+      "review-sheet"
+    ],
+    "charter": {
+      "path": "docs/superpowers/specs/2026-11-09-llm-v2-charter0-extraction-charter.md",
+      "sha256": "4d23deadfe31d871cc84de19d8876ca053bc0fa2f0015c7d9de1ee2f3ed394fb"
+    },
+    "family": "llm-news-event-extraction",
+    "inputs": {
+      "anon_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_extractor_labels_anon.json",
+        "sha256": "9c4f36c6a5e7638b139fd8e08f8f7eb39fe3735313a4da49aefc3495ee5d4e36"
+      },
+      "anon_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0v2_extractor_labels_anon.json",
+        "sha256": "1090bed6e652a3592847bb2bed9e1ba639f48446f4291a788adff96063b572a9"
+      },
+      "extractor_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_extractor_labels.json",
+        "sha256": "5f32afa7aab7e8c8be91a3936706d6ffee0c18491fb4ad647be50a980449d415"
+      },
+      "extractor_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0v2_extractor_labels.json",
+        "sha256": "1c64f5f5c559d1ce0e3e3060de3dbe55754f803889acb27da10b3982e7f7dd05"
+      },
+      "key_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_adjudication_key.json",
+        "sha256": "c83d7aae3bb599685a513593f8bdc651278c99a142eb5300424ff8c29f4c8d3c"
+      },
+      "key_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0v2_adjudication_key.json",
+        "sha256": "f54c14b8b516a6c0055f45f83e2e2f475cf4d2b58e526ede97a2c0f0b1add992"
+      },
+      "result_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_result.json",
+        "sha256": "81e5e517faa628462b9c48ef508bd378ea724ba483e1f1ccf3fe11052e66edd8"
+      },
+      "result_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0v2_result.json",
+        "sha256": "dcd9cf3e3d23a12ddd3fe042897442df69b478b1440d35c4f2bac293533f59f2"
+      },
+      "sample_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_sample.parquet",
+        "sha256": "58a2533d73cde6fff5038e212173262d6671fa565152c71ecb87b8da3c8bc59f"
+      },
+      "sample_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_sample_v2.parquet",
+        "sha256": "32c5f1787c673ee1da641753945b0cc8aad386016d97a0ba0f1af78d042d44ca"
+      },
+      "sheet_v1": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0_adjudication.md",
+        "sha256": "b34e22464468f74bfd9b23b96d96e55ae8a13a9ce9ce2cdedfe5eb4963efd404"
+      },
+      "sheet_v2": {
+        "dataset": "c1-p0-samples",
+        "path": "data/llm_event_xs/p0v2_adjudication.md",
+        "sha256": "28d5df4ffa09d28f5b27440035308e28aa7c85a5bc606de05399870f01e90d6d"
+      }
+    },
+    "outputs": [
+      "ds_labels.json",
+      "ds_labels_anon.json",
+      "ds_labels_repeat.json",
+      "review_sheet.json",
+      "review_key.json",
+      "run_meta.json"
+    ],
+    "parent": null,
+    "question": "Label the 400 adjudicated C1 P0 articles with DeepSeek V4-Pro via OpenRouter (C1 v2 prompt, structured output, no keyword prefilter, single full-text pass) and emit the blind review sheet, without computing metrics.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+      "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+      "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+    },
+    "selection": null,
+    "source_files": {
+      "scripts/llm_event_xs_extract.py": "2c0d5b0c2578da38d4e985b1dd1cae8d477be7534cd6c1dec15af574bd5f6f32",
+      "scripts/llm_event_xs_p0_score.py": "62274c99f35c97cda23a656793c5e912da0984a6c62fc720dbcf6eb7d4e37903",
+      "scripts/llm_event_xs_truth.py": "483d9b92d892d77cea0fd6ebf6c10257b46478b36006399df257e43f40f913e7",
+      "scripts/llm_jev_questions.py": "4efa5565cd751f1b41ec2abb3e7ce94d37b628adb77084125649edc45989a82c",
+      "scripts/llm_jev_review.py": "2bfcbcaf9b08a38e08eba350f440a3fa6ca0d85c51e44e3e32e41f9040ad917e",
+      "scripts/llm_jev_score.py": "cc2786e1bb2aa5ae1d86a2cf12b5896073a0074906e26c49cafe1874bce9a8fa",
+      "scripts/llm_jev_smoke.py": "7811b6511a77713f167f9e3a7ec24be38a01098f9517f7d1ba420e680136b3a9",
+      "scripts/llm_v2c0_client.py": "abc20afc0c1c43ee2aface18aff512c91fc0a8f8750bc85d3e15f6a3085ec29e",
+      "scripts/llm_v2c0_labels.py": "258805cf21714f66a8ef5e5fd28bb47e6709276da3507679caef3ebb2b006981",
+      "scripts/llm_v2c0_p0.py": "89d6f10211ea64bd23436c944916dcbfc513ab4ae814a7888a4d74a6cc1c4a08",
+      "scripts/llm_v2c0_prompt.py": "2713b4c2e64cb96702d3bcfc9c4d294a4492457b81f1f50713e544f79e8dab9f",
+      "scripts/llm_v2c0_review.py": "0f81d212555eaa2660b256d554cab3b4e149f13edecade618330454bc60adce5",
+      "scripts/llm_v2c0_score.py": "be1fc31600aae81b0c6845a5fcf0983f6c8797649be696aab812559f3ee3379a",
+      "scripts/llm_v2c0_smoke.py": "3aecf0de65a6205ebf20c9c0928bcd0944bd4a09f79518abf270c0c69321bd86",
+      "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+      "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "c1-p0-samples",
+        "end": "2025-04-01T00:00:00Z",
+        "start": "2021-01-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "llm-v2c0-p0-label-20261109",
+  "family": {
+    "attempt_budget": 12,
+    "history_reference": "docs/superpowers/specs/2026-08-11-llm-c1-event-xs-charter.md and data/llm_event_xs/trial_ledger.jsonl: llm_c1_event_xs declared <=12 ledgered configs; P0 v1 (FAIL) and P0 v2 (STOP) consumed 2 on 2026-08-14 with gpt-5.4-mini (THESIS_FINDINGS section 63). The Jev probe (research/llm-jev-event-2026-09-29/gates.json) was registered on 2026-09-29 but never started, so it consumed no attempt.",
+    "mechanism_id": "llm-typed-news-event-extraction",
+    "prior_attempts": 2
+  },
+  "inputs": {
+    "anon_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_extractor_labels_anon.json",
+      "sha256": "9c4f36c6a5e7638b139fd8e08f8f7eb39fe3735313a4da49aefc3495ee5d4e36"
+    },
+    "anon_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0v2_extractor_labels_anon.json",
+      "sha256": "1090bed6e652a3592847bb2bed9e1ba639f48446f4291a788adff96063b572a9"
+    },
+    "extractor_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_extractor_labels.json",
+      "sha256": "5f32afa7aab7e8c8be91a3936706d6ffee0c18491fb4ad647be50a980449d415"
+    },
+    "extractor_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0v2_extractor_labels.json",
+      "sha256": "1c64f5f5c559d1ce0e3e3060de3dbe55754f803889acb27da10b3982e7f7dd05"
+    },
+    "key_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_adjudication_key.json",
+      "sha256": "c83d7aae3bb599685a513593f8bdc651278c99a142eb5300424ff8c29f4c8d3c"
+    },
+    "key_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0v2_adjudication_key.json",
+      "sha256": "f54c14b8b516a6c0055f45f83e2e2f475cf4d2b58e526ede97a2c0f0b1add992"
+    },
+    "result_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_result.json",
+      "sha256": "81e5e517faa628462b9c48ef508bd378ea724ba483e1f1ccf3fe11052e66edd8"
+    },
+    "result_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0v2_result.json",
+      "sha256": "dcd9cf3e3d23a12ddd3fe042897442df69b478b1440d35c4f2bac293533f59f2"
+    },
+    "sample_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_sample.parquet",
+      "sha256": "58a2533d73cde6fff5038e212173262d6671fa565152c71ecb87b8da3c8bc59f"
+    },
+    "sample_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_sample_v2.parquet",
+      "sha256": "32c5f1787c673ee1da641753945b0cc8aad386016d97a0ba0f1af78d042d44ca"
+    },
+    "sheet_v1": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0_adjudication.md",
+      "sha256": "b34e22464468f74bfd9b23b96d96e55ae8a13a9ce9ce2cdedfe5eb4963efd404"
+    },
+    "sheet_v2": {
+      "dataset": "c1-p0-samples",
+      "path": "data/llm_event_xs/p0v2_adjudication.md",
+      "sha256": "28d5df4ffa09d28f5b27440035308e28aa7c85a5bc606de05399870f01e90d6d"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "llm-c1-event-xs-p0-samples-20260813",
+      "start": "2021-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "llm-v2-charter0-2026-11-09",
+  "registration": "research/llm-v2-charter0-2026-11-09/gates.json",
+  "registration_sha256": "245588d9aaaa8d9c79771141a688c00311bc01793070a9dde58bd72bccf63a3a",
+  "schema_version": 1,
+  "source": "a1b41f72853b2f96170f0087dfd1afbf8ce3b90e",
+  "started_at": "2026-11-08T06:54:23.923488+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "c1-p0-samples",
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "llm-c1-event-xs-p0-samples-20260813",
+      "start": "2021-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
