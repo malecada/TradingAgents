@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import pytest
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,7 +38,7 @@ class StubClient:
 def test_run_asset_order_swap_and_averaging():
     c = StubClient(0.7, 0.6)
     run = run_asset("# Dossier for Asset_A\n...", "Asset_A", c)
-    assert run.p_outperform == 0.65 and run.abstain is False
+    assert run.p_outperform == pytest.approx(0.65) and run.abstain is False
     names = [n for n, _ in c.prompts]
     assert names[:4] == ["analyst_market", "analyst_fundamental", "analyst_news", "forecast"]
     assert "bull_open" in names and "bear_open" in names and names.count("bear_rebut") == 2 and names.count("bull_rebut") == 2

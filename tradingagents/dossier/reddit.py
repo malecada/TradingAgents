@@ -14,7 +14,7 @@ import requests
 API = "https://arctic-shift.photon-reddit.com/api/posts/search"
 USER_AGENT = "master-thesis-research-bot/0.1 (academic research; contact: malecekadam1@gmail.com)"
 FIELDS = "id,created_utc,title,selftext,score,num_comments,author,link_flair_text,url,subreddit"
-INTERVAL_S = 1.2
+INTERVAL_S = 2.5
 PAGE = 100
 SUBREDDITS = ("CryptoCurrency", "Bitcoin", "ethereum")
 
@@ -30,14 +30,15 @@ def fetch_day(subreddit: str, day: pd.Timestamp, session=None, sleep=time.sleep)
     while True:
         params = {"subreddit": subreddit, "after": after, "before": end, "limit": PAGE,
                   "sort": "asc", "fields": FIELDS}
-        for attempt in range(1, 6):
+        for attempt in range(1, 9):
             try:
                 r = session.get(API, params=params, timeout=60)
             except requests.RequestException:
                 r = None
             if r is not None and r.status_code == 200:
                 break
-            sleep(min(5 * 2 ** (attempt - 1), 60))
+            # 422 "Timeout. Maybe slow down a bit" is the API's soft rate limit: short pause, not exponential
+            sleep(4.0 if (r is not None and r.status_code == 422) else min(5 * 2 ** (attempt - 1), 60))
         else:
             raise RuntimeError(f"Arctic Shift failed for {subreddit} {day}")
         data = r.json().get("data") or []
