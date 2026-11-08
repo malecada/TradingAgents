@@ -7,6 +7,7 @@ typing/summaries -> selection within a token budget -> verification -> hash.
 """
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 import hashlib
 import json
@@ -25,6 +26,7 @@ from tradingagents.dossier.universe import base_symbol
 BUILDER_VERSION = "dossier-v2.1"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
+CLASSIFY_WORKERS = 4
 MAX_ITEMS = 25
 MIN_BODY_CHARS = 120
 OUT = Path("data/dossier/dossiers")
@@ -125,22 +127,31 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
     counts["retrieved"] = int(len(rows))
     counts["failed"] = 0
     classified = []
+    candidates = []
     for r in rows.itertuples(index=False):
         body = (r.body or "")[:6000]
         if len((r.title or "") + body) < MIN_BODY_CHARS and r.source != "reddit":
             continue
-        masked = masker.mask_text(f"{r.title}\n{body}".strip())
+        candidates.append((r, masker.mask_text(f"{r.title}\n{body}".strip())))
+
+    def classify(pair):
+        r, masked = pair
         try:
-            out = text_llm.classify(masked)
-        except TextLLMError as exc:          # one bad article must not sink the dossier; counted and disclosed
-            counts["failed"] += 1
-            continue
-        counts[out["type"]] += 1
-        if alias not in out["affected_aliases"] and r.salience != "primary":
-            continue
-        classified.append({"doc_id": r.doc_id, "source": r.source, "outlet": r.outlet, "event_ts": pd.Timestamp(r.event_ts),
-                           "as_of_ts": pd.Timestamp(r.as_of_ts), "salience": r.salience, "type": out["type"],
-                           "novelty": out["novelty"], "summary": out["summary"]})
+            return r, text_llm.classify(masked)
+        except TextLLMError:
+            return r, None
+
+    with ThreadPoolExecutor(max_workers=CLASSIFY_WORKERS) as pool:
+        for r, out in pool.map(classify, candidates):
+            if out is None:                  # one bad article must not sink the dossier; counted and disclosed
+                counts["failed"] += 1
+                continue
+            counts[out["type"]] += 1
+            if alias not in out["affected_aliases"] and r.salience != "primary":
+                continue
+            classified.append({"doc_id": r.doc_id, "source": r.source, "outlet": r.outlet, "event_ts": pd.Timestamp(r.event_ts),
+                               "as_of_ts": pd.Timestamp(r.as_of_ts), "salience": r.salience, "type": out["type"],
+                               "novelty": out["novelty"], "summary": out["summary"]})
     items = select_items(classified)
     text = render(alias, numeric_text, items, counts, decision_ts, render_calendar(decision_ts, numeric))
     leaks = masker.verify(text)
