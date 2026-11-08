@@ -68,6 +68,27 @@ NETWORKS = ["Ethereum", "Ether", "Bitcoin", "Solana", "BNB Chain", "BSC", "Binan
             "Pump.fun", "Terra", "Luna", "UST", "TerraUSD", "Anchor Protocol", "USDC", "USDT", "DAI", "BUSD",
             "USDe", "FDUSD", "PYUSD", "TUSD", "WBTC", "stETH", "Pepe", "Shiba Inu", "Dogwifhat", "Bonk",
             "Floki", "Worldcoin", "Render", "Fetch.ai", "Bittensor", "Hyperliquid", "Ondo", "Mantra"]
+SYNONYMS = {
+    "SEC": ["Securities and Exchange Commission"], "CFTC": ["Commodity Futures Trading Commission"],
+    "DOJ": ["Department of Justice"], "Federal Reserve": ["Fed"], "ECB": ["European Central Bank"],
+    "PBoC": ["People's Bank of China"], "RBI": ["Reserve Bank of India"],
+    "OKX": ["OKEx"], "Huobi": ["HTX"], "FTX": ["FTX US"], "Three Arrows Capital": ["3AC"],
+    "Alameda Research": ["Alameda"], "Silicon Valley Bank": ["SVB"], "Ripple Labs": ["Ripple"],
+    "MicroStrategy": ["Strategy"],
+    "Sam Bankman-Fried": ["Bankman-Fried", "SBF"], "Changpeng Zhao": ["CZ"], "Michael Saylor": ["Saylor"],
+    "Gary Gensler": ["Gensler"], "Jerome Powell": ["Powell"], "Brian Armstrong": ["Armstrong"],
+    "Vitalik Buterin": ["Buterin", "Vitalik"], "Elon Musk": ["Musk"], "Donald Trump": ["Trump"],
+    "Joe Biden": ["Biden"], "Elizabeth Warren": ["Warren"],
+    "BNB Chain": ["BSC", "Binance Smart Chain"], "Terra": ["Luna", "TerraUSD", "UST"], "TON": ["Toncoin"],
+    "Maker": ["MakerDAO"], "Sushi": ["SushiSwap"],
+}
+_ALIAS_TO_CANON = {a: c for c, aliases in SYNONYMS.items() for a in aliases}
+
+
+def canonical_key(term: str) -> str:
+    return _ALIAS_TO_CANON.get(term, term)
+
+
 _MONTHS = ("January|February|March|April|May|June|July|August|September|October|November|December|"
            "Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec")
 DATE_RE = re.compile(rf"\b(?:{_MONTHS})\.? ?\d{{0,2}}(?:st|nd|rd|th)?,? ?(?:20\d{{2}})?\b|\b20\d{{2}}\b"
@@ -89,10 +110,10 @@ class Dictionary:
         out = []
         for base, aliases in self.assets.items():
             out += [(a, "asset", base) for a in aliases]
-        out += [(x, "exchange", x) for x in self.exchanges]
-        out += [(x, "person", x) for x in self.people]
-        out += [(x, "regulator", x) for x in self.regulators]
-        out += [(x, "network", x) for x in self.networks]
+        out += [(x, "exchange", canonical_key(x)) for x in self.exchanges]
+        out += [(x, "person", canonical_key(x)) for x in self.people]
+        out += [(x, "regulator", canonical_key(x)) for x in self.regulators]
+        out += [(x, "network", canonical_key(x)) for x in self.networks]
         return sorted(out, key=lambda t: -len(t[0]))
 
 

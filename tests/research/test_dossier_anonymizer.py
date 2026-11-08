@@ -43,3 +43,13 @@ def test_masker_roles_dates_prices_and_verify():
     assert {"asset:Bitcoin", "year"} <= set(m.verify("Bitcoin 2021"))
     m2 = Masker(d, decision_ts=pd.Timestamp("2024-01-15", tz="UTC"), seed=8, focus_asset="BTC")
     assert m2.alias("asset", "BTC") != m.alias("asset", "BTC") or m2.alias("asset", "ETH") != m.alias("asset", "ETH")
+
+
+def test_synonyms_share_one_token():
+    d = build_dictionary(BASES)
+    m = Masker(d, decision_ts=pd.Timestamp("2024-01-15", tz="UTC"), seed=1)
+    out = m.mask_text("The SEC and the Securities and Exchange Commission; SBF and Sam Bankman-Fried; OKX and OKEx.")
+    toks = out.replace(";", " ").replace(".", " ").split()
+    assert len({t for t in toks if t.startswith("Regulator_")}) == 1
+    assert len({t for t in toks if t.startswith("Person_")}) == 1
+    assert len({t for t in toks if t.startswith("Exchange_")}) == 1
