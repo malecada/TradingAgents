@@ -16,7 +16,7 @@ from tradingagents.dossier.entities import DATE_RE, PRICE_LEVEL_RE, Dictionary, 
 _ALPHA = "ABCDEFGHJKLMNPQRSTUVWXYZ"
 _ROLE_PREFIX = {"asset": "Asset", "exchange": "Exchange", "person": "Person", "regulator": "Regulator",
                 "network": "Network"}
-_YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+_YEAR_RE = re.compile(r"(?<![\d.])(?:19|20)\d{2}(?!\.?\d)")
 
 
 @dataclass

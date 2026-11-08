@@ -21,7 +21,7 @@ class StubLLM:
     def classify(self, text):
         self.seen.append(text)
         if "exploit" in text:
-            return {"type": "event", "summary": "An exploit drained funds from a lending protocol on Asset_X's network.",
+            return {"type": "event", "summary": "An exploit drained funds from a Bitcoin lending protocol on Ethereum.",
                     "novelty": "new_information", "affected_aliases": [text.split()[0]]}
         if "price" in text.lower():
             return {"type": "price_recap", "summary": "Prices moved.", "novelty": "none", "affected_aliases": []}
@@ -55,6 +55,7 @@ def test_build_dossier_end_to_end(tmp_path):
     assert dossier.counts["retrieved"] == 2          # ETF item not observable yet; Solana item not linked
     assert dossier.counts["event"] == 1 and dossier.counts["price_recap"] == 1
     assert len(dossier.items) == 1 and dossier.items[0]["type"] == "event"
+    assert "Bitcoin" not in dossier.items[0]["summary"] and "Ethereum" not in dossier.items[0]["summary"]
     assert "Bitcoin" not in dossier.text and "$45,000" not in dossier.text and dossier.leaks == []
     assert dossier.text.startswith(f"# Dossier for {dossier.alias}") and dossier.alias.startswith("Asset_")
     assert all("Bitcoin" not in t for t in llm.seen)   # the LLM only ever saw masked text
@@ -63,10 +64,10 @@ def test_build_dossier_end_to_end(tmp_path):
 
 def test_select_items_priority_and_budget():
     ts = pd.Timestamp("2024-01-01", tz="UTC")
-    items = [{"type": "analysis_opinion", "salience": "primary", "novelty": "none", "event_ts": ts, "summary": "a" * 40},
-             {"type": "event", "salience": "mentioned", "novelty": "follow_up", "event_ts": ts, "summary": "b" * 40},
-             {"type": "event", "salience": "primary", "novelty": "new_information", "event_ts": ts + pd.Timedelta(days=1), "summary": "c" * 40},
-             {"type": "price_recap", "salience": "primary", "novelty": "none", "event_ts": ts, "summary": "d" * 40}]
+    items = [{"type": "analysis_opinion", "salience": "primary", "novelty": "none", "event_ts": ts, "summary": "a" * 40, "source": "wayback"},
+             {"type": "event", "salience": "mentioned", "novelty": "follow_up", "event_ts": ts, "summary": "b" * 40, "source": "wayback"},
+             {"type": "event", "salience": "primary", "novelty": "new_information", "event_ts": ts + pd.Timedelta(days=1), "summary": "c" * 40, "source": "reddit"},
+             {"type": "price_recap", "salience": "primary", "novelty": "none", "event_ts": ts, "summary": "d" * 40, "source": "wayback"}]
     out = select_items(items, budget_tokens=50, max_items=10)
     assert [i["summary"][0] for i in out] == ["b", "c"] or [i["summary"][0] for i in out] == ["c", "b"]
     assert all(i["type"] != "price_recap" for i in select_items(items))

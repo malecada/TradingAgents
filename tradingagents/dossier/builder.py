@@ -23,10 +23,11 @@ from tradingagents.dossier.llm_text import TextLLMError
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.1"
+BUILDER_VERSION = "dossier-v2.2"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 4
+REDDIT_SHOWN_CAP = 8           # community posts among shown items
 REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
 _LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
 MAX_ITEMS = 25
@@ -107,11 +108,15 @@ def select_items(classified: list[dict], budget_tokens: int = TOKEN_BUDGET, max_
     keep = [c for c in classified if c["type"] in ("event", "analysis_opinion")]
     keep.sort(key=lambda c: (TYPE_PRIORITY[c["type"]], 0 if c["salience"] == "primary" else 1,
                              0 if c["novelty"] == "new_information" else 1, -c["event_ts"].value))
-    out, used = [], 0
+    out, used, reddit_shown = [], 0, 0
     for c in keep:
         cost = _tokens(c["summary"]) + 12
         if used + cost > budget_tokens or len(out) >= max_items:
             break
+        if c["source"] == "reddit":
+            if reddit_shown >= REDDIT_SHOWN_CAP:
+                continue
+            reddit_shown += 1
         out.append(c)
         used += cost
     out.sort(key=lambda c: c["event_ts"])
@@ -150,6 +155,7 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
     counts = {k: 0 for k in TYPE_PRIORITY}
     counts["retrieved"] = int(len(rows))
     counts["failed"] = 0
+    counts["leaky"] = 0
     classified = []
     candidates = []
     for r in rows.itertuples(index=False):
@@ -173,9 +179,13 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
             counts[out["type"]] += 1
             if alias not in out["affected_aliases"] and r.salience != "primary":
                 continue
+            summary = masker.mask_text(out["summary"])       # the model may re-derive names from context
+            if masker.verify(summary):
+                counts["leaky"] += 1
+                continue
             classified.append({"doc_id": r.doc_id, "source": r.source, "outlet": r.outlet, "event_ts": pd.Timestamp(r.event_ts),
                                "as_of_ts": pd.Timestamp(r.as_of_ts), "salience": r.salience, "type": out["type"],
-                               "novelty": out["novelty"], "summary": out["summary"]})
+                               "novelty": out["novelty"], "summary": summary})
     items = select_items(classified)
     text = render(alias, numeric_text, items, counts, decision_ts, render_calendar(decision_ts, numeric))
     leaks = masker.verify(text)

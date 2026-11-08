@@ -53,3 +53,14 @@ def test_synonyms_share_one_token():
     assert len({t for t in toks if t.startswith("Regulator_")}) == 1
     assert len({t for t in toks if t.startswith("Person_")}) == 1
     assert len({t for t in toks if t.startswith("Exchange_")}) == 1
+
+
+def test_alias_filters_and_token_safety():
+    from tradingagents.dossier.entities import alias_ok
+    assert not alias_ok("A") and not alias_ok("4") and not alias_ok("$4") and alias_ok("$AI") and not alias_ok("AI") and alias_ok("$OP")
+    assert not alias_ok("Across") and not alias_ok("Render") and alias_ok("Ether") and alias_ok("Across Protocol")
+    d = build_dictionary(["BTC", "ETH", "ACX", "A", "4"])
+    assert d.assets.get("A", []) == ["Vaulta"] and "4" not in d.assets and "Across" not in d.assets.get("ACX", [])
+    m = Masker(d, decision_ts=pd.Timestamp("2024-01-15", tz="UTC"), seed=1, focus_asset="BTC")
+    out = m.mask_text("Asset_A rose; price 102.4 and 0.2023 ratio; Bitcoin and Ether fell.")
+    assert "Asset_Asset" not in out and "102.4" in out and "0.2023" in out and "Bitcoin" not in out and "Ether" not in out

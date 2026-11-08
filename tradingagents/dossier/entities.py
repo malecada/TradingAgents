@@ -91,7 +91,7 @@ def canonical_key(term: str) -> str:
 
 _MONTHS = ("January|February|March|April|May|June|July|August|September|October|November|December|"
            "Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec")
-DATE_RE = re.compile(rf"\b(?:{_MONTHS})\.? ?\d{{0,2}}(?:st|nd|rd|th)?,? ?(?:20\d{{2}})?\b|\b20\d{{2}}\b"
+DATE_RE = re.compile(rf"\b(?:{_MONTHS})\.? ?\d{{0,2}}(?:st|nd|rd|th)?,? ?(?:20\d{{2}})?\b|(?<![\d.])20\d{{2}}(?!\.?\d)"
                      rf"|\b(?:Q[1-4]|H[12]|FY)\s?20\d{{2}}\b", re.IGNORECASE)
 PRICE_LEVEL_RE = re.compile(r"\$\s?\d{1,3}(?:,\d{3})+(?:\.\d+)?(?!\s*(?:million|billion|trillion|mln|bln|[mbk]\b))"
                             r"|\$\s?\d{2,6}(?:\.\d+)?(?!\s*(?:million|billion|trillion|mln|bln|[mbk]\b))\b")
@@ -126,6 +126,27 @@ def _name_aliases(name: str) -> list[str]:
     return sorted(out)
 
 
+_WORDS_FILE = Path("/usr/share/dict/words")
+_ENGLISH = {w.strip().lower() for w in _WORDS_FILE.read_text(errors="ignore").splitlines()} if _WORDS_FILE.exists() else set()
+NAME_ALLOWLIST = {"Ether", "Bitcoin", "Ethereum", "Solana", "Cardano", "Polkadot", "Chainlink", "Uniswap", "Cosmos",
+                  "Avalanche", "Polygon", "Stellar", "Monero", "Litecoin", "Dogecoin", "Tron", "Optimism", "Arbitrum"}
+
+
+def alias_ok(alias: str) -> bool:
+    """Reject aliases that cannot be matched safely: shorter than 3 characters, purely numeric,
+    or a single ordinary English word (Across, Render, Venus) unless allow-listed."""
+    core = alias[1:] if alias.startswith("$") else alias
+    if core.isdigit():
+        return False
+    if alias.startswith("$"):
+        return len(core) >= 2          # the dollar sign disambiguates two-letter tickers ($OP, $AI)
+    if len(core) < 3:
+        return False
+    if " " not in core and core.lower() in _ENGLISH and core not in NAME_ALLOWLIST:
+        return False
+    return True
+
+
 def build_dictionary(bases: list[str], coingecko_path: Path = COINGECKO) -> Dictionary:
     coins = json.loads(Path(coingecko_path).read_text())["coins"]
     by_symbol: dict[str, list[dict]] = {}
@@ -144,16 +165,18 @@ def build_dictionary(bases: list[str], coingecko_path: Path = COINGECKO) -> Dict
             for alias in _name_aliases(cands[0]["name"]):
                 if len(alias) >= 3 and alias.upper() != base:
                     aliases.add(alias)
-        assets[base] = sorted(aliases, key=lambda a: -len(a))
+        aliases = {a for a in aliases if alias_ok(a)}
+        if aliases:
+            assets[base] = sorted(aliases, key=lambda a: -len(a))
     return Dictionary(assets=assets)
 
 
 def _pattern(term: str) -> re.Pattern:
     body = re.escape(term)
     if term.startswith("$"):
-        return re.compile(rf"(?<![A-Za-z0-9]){body}(?![A-Za-z0-9])")
+        return re.compile(rf"(?<![A-Za-z0-9_]){body}(?![A-Za-z0-9_])")
     flags = re.IGNORECASE if len(term) > 4 and not term.isupper() else 0
-    return re.compile(rf"(?<![A-Za-z0-9$]){body}(?![A-Za-z0-9])", flags)
+    return re.compile(rf"(?<![A-Za-z0-9_$]){body}(?![A-Za-z0-9_])", flags)
 
 
 class Linker:
