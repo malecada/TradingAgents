@@ -5,6 +5,7 @@ Results are cached per (dossier sha, config sha) so ablations and re-runs reuse 
 """
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from tradingagents.dossier.or_client import ORError
 
 RUNS = Path("data/agents_v2/runs")
 N_DEBATE = 20
+WORKERS = 5
 
 
 def select_debate_candidates(analyst_runs: dict[str, dict], n: int = N_DEBATE) -> list[str]:
@@ -47,6 +49,7 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
     cfg = config_sha()
     results = {}
     analyst_runs = {}
+    pending = []
     for sym, d in dossiers.items():
         target = day_dir / f"{sym}.json"
         if target.exists():
@@ -55,33 +58,46 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
                 results[sym] = cached
                 analyst_runs[d["alias"]] = cached["analysts"]
                 continue
+        pending.append(sym)
+
+    def analyze(sym):
+        d = dossiers[sym]
         try:
             analysts, meta = analysts_only(d["text"], client)
         except ORError as exc:                       # counted, never silently defaulted
-            results[sym] = {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
-                            "failed": str(exc), "analysts": {}, "meta": [], "debated": False,
-                            "p_outperform": None, "confidence": None, "abstain": True}
-            continue
-        results[sym] = {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
-                        "analysts": analysts, "meta": meta, "debated": False,
-                        "p_outperform": sum(a["p_outperform_7d"] for a in analysts.values()) / len(analysts),
-                        "confidence": sum(a["confidence"] for a in analysts.values()) / len(analysts), "abstain": False}
-        analyst_runs[d["alias"]] = analysts
+            return sym, {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
+                         "failed": str(exc), "analysts": {}, "meta": [], "debated": False,
+                         "p_outperform": None, "confidence": None, "abstain": True}
+        return sym, {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
+                     "analysts": analysts, "meta": meta, "debated": False,
+                     "p_outperform": sum(a["p_outperform_7d"] for a in analysts.values()) / len(analysts),
+                     "confidence": sum(a["confidence"] for a in analysts.values()) / len(analysts), "abstain": False}
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        for sym, res in pool.map(analyze, pending):
+            results[sym] = res
+            if not res.get("failed"):
+                analyst_runs[dossiers[sym]["alias"]] = res["analysts"]
     alias_to_sym = {d["alias"]: s for s, d in dossiers.items()}
     if debate:
-        for alias in select_debate_candidates(analyst_runs, n_debate):
-            sym = alias_to_sym[alias]
-            if results[sym].get("debated") or results[sym].get("failed"):
-                continue
+        todo = [alias_to_sym[a] for a in select_debate_candidates(analyst_runs, n_debate)
+                if not results[alias_to_sym[a]].get("debated") and not results[alias_to_sym[a]].get("failed")]
+
+        def debate_one(sym):
             try:
-                run = run_asset(dossiers[sym]["text"], alias, client)
+                return sym, run_asset(dossiers[sym]["text"], dossiers[sym]["alias"], client), None
             except ORError as exc:
-                results[sym]["debate_failed"] = str(exc)
-                continue
-            results[sym].update({"debated": True, "forecast": run.forecast, "debates": run.debates,
-                                 "p_outperform": run.p_outperform, "confidence": run.confidence,
-                                 "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta,
-                                 "analysts": run.analysts})
+                return sym, None, str(exc)
+
+        with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            for sym, run, err in pool.map(debate_one, todo):
+                if run is None:
+                    results[sym]["debate_failed"] = err
+                    continue
+                results[sym].update({"debated": True, "forecast": run.forecast, "debates": run.debates,
+                                     "p_outperform": run.p_outperform, "confidence": run.confidence,
+                                     "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta,
+                                     "analysts": run.analysts})
     for sym, r in results.items():
         (day_dir / f"{sym}.json").write_text(json.dumps(r, indent=1, default=str))
     candidates = [{"alias": r["alias"], "p_outperform_7d": r["p_outperform"], "confidence": r["confidence"],
