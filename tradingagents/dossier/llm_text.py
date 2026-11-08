@@ -65,9 +65,9 @@ def validate(obj) -> dict:
     return obj
 
 
-def request_body(text: str) -> dict:
+def request_body(text: str, max_tokens: int = 3000) -> dict:
     return {"model": MODEL, "messages": [{"role": "user", "content": PROMPT.format(text=text)}],
-            "temperature": 0, "max_tokens": 1200, "reasoning": {"effort": "low"},
+            "temperature": 0, "max_tokens": max_tokens, "reasoning": {"effort": "low"},
             "response_format": {"type": "json_schema", "json_schema": {"name": "news_item", "strict": True, "schema": SCHEMA}},
             "provider": {"order": [PROVIDER], "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
             "usage": {"include": True}}
@@ -110,6 +110,8 @@ class TextLLM:
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         body = request_body(text)
         for attempt in range(1, self.max_attempts + 1):
+            if attempt == 2 and body["max_tokens"] < 8000:
+                body = request_body(text, max_tokens=8000)   # one retry with headroom after a truncated answer
             try:
                 r = session.post(ENDPOINT, json=body, timeout=120, headers=headers)
             except requests.RequestException:
@@ -127,6 +129,8 @@ class TextLLM:
                 if data.get("model") != MODEL or data.get("provider") != PROVIDER:
                     raise TextLLMError(f"drift: {data.get('model')} / {data.get('provider')}")
                 choice = data["choices"][0]
+                if choice.get("finish_reason") == "length" and attempt < self.max_attempts:
+                    continue
                 if choice.get("finish_reason") != "stop":
                     raise TextLLMError(f"finish_reason {choice.get('finish_reason')}")
                 try:

@@ -18,6 +18,7 @@ from tradingagents.dossier import store
 from tradingagents.dossier.anonymizer import Masker
 from tradingagents.dossier.calendar import render_calendar
 from tradingagents.dossier.entities import Dictionary, Linker
+from tradingagents.dossier.llm_text import TextLLMError
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
@@ -122,13 +123,18 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
     rows = retrieve_text(base, linker, decision_ts, root=store_root)
     counts = {k: 0 for k in TYPE_PRIORITY}
     counts["retrieved"] = int(len(rows))
+    counts["failed"] = 0
     classified = []
     for r in rows.itertuples(index=False):
         body = (r.body or "")[:6000]
         if len((r.title or "") + body) < MIN_BODY_CHARS and r.source != "reddit":
             continue
         masked = masker.mask_text(f"{r.title}\n{body}".strip())
-        out = text_llm.classify(masked)
+        try:
+            out = text_llm.classify(masked)
+        except TextLLMError as exc:          # one bad article must not sink the dossier; counted and disclosed
+            counts["failed"] += 1
+            continue
         counts[out["type"]] += 1
         if alias not in out["affected_aliases"] and r.salience != "primary":
             continue

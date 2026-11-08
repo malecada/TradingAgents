@@ -51,7 +51,7 @@ def test_classify_caches_and_validates(tmp_path):
 @pytest.mark.parametrize("resp,needle", [
     (R(200, payload(GOOD, model="deepseek/deepseek-v4-pro")), "drift"),
     (R(200, payload({"type": "weird", "summary": "", "novelty": "none", "affected_aliases": []})), "invalid"),
-    (R(200, payload(GOOD, finish="length")), "finish_reason"),
+    (R(200, payload(GOOD, finish="content_filter")), "finish_reason"),
     (R(402), "402"),
 ])
 def test_failures(tmp_path, resp, needle):
@@ -63,3 +63,9 @@ def test_failures(tmp_path, resp, needle):
 def test_retry_then_success(tmp_path):
     llm = TextLLM(api_key="k", session=S([R(429), R(200, payload(GOOD))]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
     assert llm.classify("t")["novelty"] == "new_information"
+
+
+def test_truncated_answer_retries_with_headroom(tmp_path):
+    s = S([R(200, payload(GOOD, finish="length")), R(200, payload(GOOD))])
+    llm = TextLLM(api_key="k", session=s, cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
+    assert llm.classify("t")["type"] == "event" and s.n == 2
