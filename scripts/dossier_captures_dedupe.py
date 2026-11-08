@@ -37,6 +37,7 @@ def main() -> int:
         if not files:
             continue
         df = pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
+        df["first_ts"] = pd.to_datetime(df["first_ts"], utc=True)
         before = len(df)
         df = df.sort_values("first_ts").drop_duplicates("url", keep="first")
         old = load_old(Path(old_paths[outlet]), outlet) if outlet in old_paths else set()
