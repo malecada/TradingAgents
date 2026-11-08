@@ -92,7 +92,7 @@ def canonical_key(term: str) -> str:
 _MONTHS = ("January|February|March|April|May|June|July|August|September|October|November|December|"
            "Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec")
 DATE_RE = re.compile(rf"\b(?:{_MONTHS})\.? ?\d{{0,2}}(?:st|nd|rd|th)?,? ?(?:20\d{{2}})?\b|(?<![\d.])20\d{{2}}(?!\.?\d)"
-                     rf"|\b(?:Q[1-4]|H[12]|FY)\s?20\d{{2}}\b", re.IGNORECASE)
+                     rf"|\b(?:Q[1-4]|H[12]|FY)\s?20\d{{2}}\b")
 PRICE_LEVEL_RE = re.compile(r"\$\s?\d{1,3}(?:,\d{3})+(?:\.\d+)?(?!\s*(?:million|billion|trillion|mln|bln|[mbk]\b))"
                             r"|\$\s?\d{2,6}(?:\.\d+)?(?!\s*(?:million|billion|trillion|mln|bln|[mbk]\b))\b")
 

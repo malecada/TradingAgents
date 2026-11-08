@@ -71,3 +71,10 @@ def test_english_word_names_match_case_sensitively():
     m = Masker(d, decision_ts=pd.Timestamp("2022-01-08", tz="UTC"), seed=1, focus_asset="LUNA")
     out = m.mask_text("Terra and LUNA rallied; luna moths and terra firma are unrelated.")
     assert out.count(m.alias("asset", "LUNA")) == 2 and "terra firma" in out and "luna moths" in out
+
+
+def test_month_names_are_case_sensitive():
+    d = build_dictionary(["BTC"])
+    m = Masker(d, decision_ts=pd.Timestamp("2024-01-15", tz="UTC"), seed=1)
+    out = m.mask_text("It may have happened in March; they march on. Dec 2023 and december.")
+    assert "may have" in out and "march on" in out and "december" in out and "March" not in out and "Dec 2023" not in out
