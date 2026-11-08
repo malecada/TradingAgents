@@ -45,3 +45,15 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 - Consequence for the plan: §5 anonymization must be hardened (generic rewriting of news summaries,
   removal of non-dictionary proper nouns, coarser numeric rendering) and re-probed; otherwise pre-release
   windows cannot be claimed leakage-controlled and Sealed-B carries the whole evidential weight.
+
+## 2026-11-08 late — hardening result (builder v2.4) and the leakage-measurement decision
+- v2.4 (de-identified generic summaries + proper-noun scrub + coarse numeric profile) cut re-identification
+  from 81% to 52% (text-only 75% → 50%); month within ±6 months 81% → 69%. Numeric-only stays ~7%.
+- Residual identification comes from what the asset *is* and *does* (governance-reward mechanics, "NFT creature
+  battling game", ecosystem relations), i.e. the information the agents need. Further masking would remove the
+  signal itself. Conclusion for the thesis: anonymization removes name priors and dates but cannot prevent a
+  knowledgeable model from recognizing well-known assets from content.
+- Decision: keep v2.4; treat re-identification as a MEASURED covariate, not a solved problem. The probe runs on
+  every dev dossier (`dossier_reid_probe.py --all`, ≈ $1 per 7,800) and writes `data/dossier/reid_flags.parquet`;
+  forecast skill is then reported for identified vs non-identified dossiers (and named vs anonymized, and
+  Sealed-B post-release). A skill gap concentrated in identified dossiers is the memorization signature.

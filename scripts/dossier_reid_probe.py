@@ -35,6 +35,7 @@ Dossier:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=300)
+    ap.add_argument("--all", action="store_true", help="probe every dossier (for the identified-subset analysis)")
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
     ap.add_argument("--section", default="full", choices=("full", "numeric", "text"),
@@ -42,7 +43,7 @@ def main() -> int:
     args = ap.parse_args()
     files = sorted(OUT.glob("*/*.json"))
     rng = random.Random(args.seed)
-    sample = rng.sample(files, min(args.n, len(files)))
+    sample = files if args.all else rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
     client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_enabled=False, max_tokens=3000)   # non-thinking mode: the guess itself is the probe
     if args.provider:
@@ -93,6 +94,11 @@ def main() -> int:
                "spent_usd": client.spent_usd, "failures": failures,
                "model": client.model, "provider": client.provider, "reasoning": "disabled"}
     summary["section"] = args.section
+    if args.all:   # per-dossier identification flags for the evaluation covariate
+        flags = pd.DataFrame([{"friday": Path(r["file"]).parent.name, "symbol": Path(r["file"]).stem,
+                               "identified": bool(h), "month_within_6": bool(m)}
+                              for r, h, m in zip(results, df["asset_hit"], df["month_within_6"].fillna(False))])
+        flags.to_parquet("data/dossier/reid_flags.parquet", index=False)
     Path(f"data/dossier/reid_probe_{args.section}.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0

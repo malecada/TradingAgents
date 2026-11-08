@@ -36,8 +36,9 @@ quant-only cross-sectional model fed identical cards?
 | Schema-valid answers | ≥ 0.99 of calls |
 | Order-swap consistency: Spearman between judge p in bull-first vs bear-first across debated assets | ≥ 0.75 |
 | Repeat agreement: Spearman of p across two identical runs on 50 assets | ≥ 0.85 |
-| Re-identification: asset accuracy on 300 anonymized dossiers | ≤ 2× chance (≈ 4% for ~50 candidates) |
-| Re-identification: month within ±6 months | ≤ 25% |
+| Re-identification (measured on EVERY dev dossier, non-thinking V4-Pro): asset accuracy | reported, not gated (pilot: 81% before hardening, 52% after; residual identification stems from asset-intrinsic content) |
+| Re-identification: month within ±6 months | reported (pilot 69%) |
+| Identified-subset analysis | forecast gates (§5) computed separately for identified and non-identified dossiers; a gap is reported as the memorization estimate |
 | Dossier noise share (price recaps + promotional + unrelated among retrieved) | reported; ≤ 0.6 of retrieved |
 | Measured cost per asset-week | recorded; budget set at 1.3× projection |
 
@@ -66,5 +67,7 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.
 - Disclosures: Wayback capture survivorship; Reddit deletions; cards end 2026-06-26; model cutoff unknown
-  (release-date bound 2026-04-24); dev window is pre-release so memorization is controlled only by
-  anonymization and measured by the probes in §4 and the Sealed-B comparison.
+  (release-date bound 2026-04-24); dev window is pre-release. Anonymization removes names, dates and exact
+  figures but does not prevent content-based recognition of well-known assets (pilot 52%); leakage is
+  therefore MEASURED, not assumed absent: identified-vs-non-identified subsets, named-vs-anonymized ablation,
+  and the Sealed-B post-release comparison together bound it.
