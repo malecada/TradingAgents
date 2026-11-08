@@ -42,21 +42,44 @@ def main() -> int:
     sample = rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
     client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0)
-    results = []
-    for p in sample:
-        d = json.loads(p.read_text())
-        text = PROMPT.format(tickers=", ".join(tickers), text=d["text"][:12000])
-        guess, _ = client.call(text, SCHEMA, "reid")
-        results.append({"file": str(p), "true_asset": d["base"], "true_month": d["friday"][:7],
-                        "asset": str(guess.get("asset", "")), "year_month": str(guess.get("year_month", "")),
-                        "confidence": guess.get("confidence")})
+    from tradingagents.dossier.or_client import ORError
+    partial = Path("data/dossier/reid_probe_rows.jsonl")
+    done = {}
+    if partial.exists():
+        for line in partial.read_text().splitlines():
+            if line.strip():
+                row = json.loads(line)
+                done[row["file"]] = row
+    results, failures = [], 0
+    with partial.open("a") as out:
+        for p in sample:
+            if str(p) in done:
+                results.append(done[str(p)])
+                continue
+            d = json.loads(p.read_text())
+            text = PROMPT.format(tickers=", ".join(tickers), text=d["text"][:12000])
+            try:
+                guess, _ = client.call(text, SCHEMA, "reid")
+            except ORError as exc:
+                failures += 1
+                print(f"skip {p.name}: {exc}", flush=True)
+                continue
+            row = {"file": str(p), "true_asset": d["base"], "true_month": d["friday"][:7],
+                   "asset": str(guess.get("asset", "")), "year_month": str(guess.get("year_month", "")),
+                   "confidence": guess.get("confidence")}
+            results.append(row)
+            out.write(json.dumps(row) + "\n")
+            out.flush()
+    if not results:
+        print("no results")
+        return 1
     df = pd.DataFrame(results)
     df["asset_hit"] = df["asset"].str.upper() == df["true_asset"].str.upper()
     tm = pd.to_datetime(df["true_month"]); gm = pd.to_datetime(df["year_month"], errors="coerce")
     df["month_within_6"] = (gm - tm).abs() <= pd.Timedelta(days=183)
     summary = {"n": len(df), "asset_accuracy": float(df["asset_hit"].mean()), "chance": 1 / len(tickers),
                "month_within_6_rate": float(df["month_within_6"].fillna(False).mean()),
-               "spent_usd": client.spent_usd}
+               "spent_usd": client.spent_usd, "failures": failures}
     Path("data/dossier/reid_probe.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0
