@@ -27,6 +27,8 @@ BUILDER_VERSION = "dossier-v2.1"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 4
+REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
+_LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
 MAX_ITEMS = 25
 MIN_BODY_CHARS = 120
 OUT = Path("data/dossier/dossiers")
@@ -63,18 +65,40 @@ class Dossier:
                 "alias_map": self.alias_map, "leaks": self.leaks, "text": self.text, "sha256": self.sha256}
 
 
+def _links_for(row, linker: Linker) -> dict:
+    cached = _LINK_CACHE.get(row.doc_id)
+    if cached is None:
+        if len(_LINK_CACHE) > 300_000:
+            _LINK_CACHE.clear()
+        cached = dict(linker.link_assets(row.title, row.body))
+        _LINK_CACHE[row.doc_id] = cached
+    return cached
+
+
+def _comments(extra: str) -> int:
+    try:
+        return int(json.loads(extra or "{}").get("num_comments") or 0)
+    except (ValueError, TypeError):
+        return 0
+
+
 def retrieve_text(base: str, linker: Linker, decision_ts: pd.Timestamp, root=store.DEFAULT_ROOT,
-                  lookback_days: int = TEXT_LOOKBACK_DAYS) -> pd.DataFrame:
-    """Store rows in the lookback window, observable at decision time, linked to ``base``."""
+                  lookback_days: int = TEXT_LOOKBACK_DAYS, reddit_cap: int = REDDIT_CAP) -> pd.DataFrame:
+    """Store rows in the lookback window, observable at decision time, linked to ``base``.
+    News rows are all kept; community posts are capped at ``reddit_cap`` per dossier, taking the
+    most-commented posts where the asset is the primary subject."""
     rows = store.query(decision_ts - pd.Timedelta(days=lookback_days), decision_ts, decision_ts, root=root)
     if rows.empty:
         return rows.assign(salience=pd.Series(dtype=str))
-    salience = []
-    for r in rows.itertuples(index=False):
-        links = dict(linker.link_assets(r.title, r.body))
-        salience.append(links.get(base))
+    salience = [_links_for(r, linker).get(base) for r in rows.itertuples(index=False)]
     rows = rows.assign(salience=salience)
-    return rows[rows["salience"].notna()].reset_index(drop=True)
+    rows = rows[rows["salience"].notna()]
+    news = rows[rows["source"] != "reddit"]
+    reddit = rows[(rows["source"] == "reddit") & (rows["salience"] == "primary")].copy()
+    if len(reddit) > reddit_cap:
+        reddit["_c"] = reddit["extra"].map(_comments)
+        reddit = reddit.sort_values("_c", ascending=False).head(reddit_cap).drop(columns="_c")
+    return pd.concat([news, reddit]).sort_values("event_ts").reset_index(drop=True)
 
 
 def select_items(classified: list[dict], budget_tokens: int = TOKEN_BUDGET, max_items: int = MAX_ITEMS) -> list[dict]:

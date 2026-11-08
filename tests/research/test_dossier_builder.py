@@ -78,3 +78,19 @@ def test_calendar_block_and_item_ids():
     assert next_fomc_days(ts) == 25
     text = render_calendar(ts, {"unlock_next30_pct_supply": 3.1})
     assert "in 25 days" in text and "3.1%" in text and "2024" not in text
+
+
+def test_reddit_cap_by_comments(tmp_path):
+    from tradingagents.dossier.builder import retrieve_text
+    rows = []
+    for i in range(40):
+        rows.append({"doc_id": f"r{i}", "event_ts": "2024-01-03", "as_of_ts": "2024-01-03", "source": "reddit",
+                     "outlet": "cryptocurrency", "url": f"u{i}", "title": f"Bitcoin thought {i}", "body": "", "lang": "en",
+                     "author": "", "extra": f'{{"num_comments": {i}}}'})
+    rows.append({"doc_id": "n1", "event_ts": "2024-01-03", "as_of_ts": "2024-01-03", "source": "wayback", "outlet": "coindesk",
+                 "url": "n", "title": "Bitcoin news", "body": "Bitcoin " * 30, "lang": "en", "author": "", "extra": "{}"})
+    store.upsert(pd.DataFrame(rows), root=tmp_path / "t")
+    d = build_dictionary(["BTC", "ETH"])
+    got = retrieve_text("BTC", Linker(d), pd.Timestamp("2024-01-06", tz="UTC"), root=tmp_path / "t", reddit_cap=5)
+    assert (got["source"] == "reddit").sum() == 5 and (got["source"] == "wayback").sum() == 1
+    assert set(got[got["source"] == "reddit"]["doc_id"]) == {f"r{i}" for i in range(35, 40)}
