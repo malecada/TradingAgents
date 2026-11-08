@@ -36,12 +36,15 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=300)
     ap.add_argument("--seed", type=int, default=20261109)
+    ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
     args = ap.parse_args()
     files = sorted(OUT.glob("*/*.json"))
     rng = random.Random(args.seed)
     sample = rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
     client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0)
+    if args.provider:
+        client.provider = args.provider
     from tradingagents.dossier.or_client import ORError
     partial = Path("data/dossier/reid_probe_rows.jsonl")
     done = {}
