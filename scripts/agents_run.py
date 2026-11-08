@@ -33,7 +33,7 @@ def main() -> int:
     args = ap.parse_args()
     client = StructuredClient.pinned(args.role, load_api_key(), cost_cap_usd=args.cost_cap)
     if args.provider:
-        client.provider = args.provider
+        client.provider = [p.strip() for p in args.provider.split(",")]
     from pathlib import Path as _P
     runs_dir = _P(args.runs_dir) if args.runs_dir else None
     days = sorted(p for p in DOSSIERS.iterdir() if args.start <= p.name <= args.end)

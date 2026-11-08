@@ -40,11 +40,13 @@ def test_pinned_call_and_meta():
     parsed, meta = c.call("p", {"type": "object"}, "t", system="sys")
     assert parsed == {"a": 1} and meta["reasoning_tokens"] == 5 and c.spent_usd == pytest.approx(0.001)
     body = s.bodies[0]
-    assert body["messages"][0]["role"] == "system" and body["provider"]["order"] == ["Baidu"]
+    assert body["messages"][0]["role"] == "system" and body["provider"]["order"] == ["Baidu", "StreamLake"]
     assert body["reasoning"] == {"effort": "medium"} and body["response_format"]["json_schema"]["strict"]
 
 
 def test_drift_and_retry():
+    c = StructuredClient.pinned("pro", "k", session=S([R(200, ok({"a": 1}, provider="StreamLake"))]), sleep=lambda x: None)
+    assert c.call("p", {"type": "object"})[1]["provider"] == "StreamLake"      # second provider in the pinned list is fine
     c = StructuredClient.pinned("flash", "k", session=S([R(200, ok({}, provider="Nebius"))]), sleep=lambda x: None)
     with pytest.raises(ORError, match="drift"):
         c.call("p", {"type": "object"})

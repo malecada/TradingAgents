@@ -8,6 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import json
 import math
+import os
 import threading
 import time
 
@@ -15,11 +16,12 @@ import requests
 
 ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
 RETRY_STATUS = frozenset({408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 529})
-PINS = {  # role -> (model, provider, quantization)
-    "pro": ("deepseek/deepseek-v4-pro", "Baidu", "fp8"),
-    "flash": ("deepseek/deepseek-v4.1-flash", "Baidu", "fp8"),
-    "chrono": ("deepseek/deepseek-v3.2", "Baidu", "fp8"),
+PINS = {  # role -> (model, ordered providers, quantization); every listed provider serves the same fp8 weights
+    "pro": ("deepseek/deepseek-v4-pro", ["Baidu", "StreamLake"], "fp8"),
+    "flash": ("deepseek/deepseek-v4.1-flash", ["Baidu", "DeepInfra"], "fp8"),
+    "chrono": ("deepseek/deepseek-v3.2", ["Baidu", "AtlasCloud"], "fp8"),
 }
+LOG = os.environ.get("OR_CLIENT_LOG")   # path; when set, one JSON line per attempt
 
 
 class ORError(RuntimeError):
@@ -30,7 +32,7 @@ class ORError(RuntimeError):
 class StructuredClient:
     api_key: str = field(repr=False)
     model: str
-    provider: str
+    provider: str | list[str]
     quantization: str = "fp8"
     cost_cap_usd: float = 10.0
     reasoning_effort: str | None = "medium"
@@ -46,14 +48,23 @@ class StructuredClient:
 
     @classmethod
     def pinned(cls, role: str, api_key: str, **kw) -> "StructuredClient":
-        model, provider, quant = PINS[role]
-        return cls(api_key=api_key, model=model, provider=provider, quantization=quant, **kw)
+        model, providers, quant = PINS[role]
+        return cls(api_key=api_key, model=model, provider=list(providers), quantization=quant, **kw)
+
+    @property
+    def providers(self) -> list[str]:
+        return [self.provider] if isinstance(self.provider, str) else list(self.provider)
+
+    def _log(self, **fields):
+        if LOG:
+            with open(LOG, "a") as fh:
+                fh.write(json.dumps({"ts": time.time(), **fields}) + "\n")
 
     def body(self, prompt: str, schema: dict, schema_name: str, system: str | None = None) -> dict:
         messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
         b = {"model": self.model, "messages": messages, "temperature": 0, "max_tokens": self.max_tokens,
              "response_format": {"type": "json_schema", "json_schema": {"name": schema_name, "strict": True, "schema": schema}},
-             "provider": {"order": [self.provider], "allow_fallbacks": False, "quantizations": [self.quantization]},
+             "provider": {"order": self.providers, "allow_fallbacks": False, "quantizations": [self.quantization]},
              "usage": {"include": True}}
         if not self.reasoning_enabled:
             b["reasoning"] = {"enabled": False}
@@ -75,7 +86,8 @@ class StructuredClient:
             started = time.monotonic()
             try:
                 r = session.post(ENDPOINT, json=body, timeout=240, headers=headers)
-            except requests.RequestException:
+            except requests.RequestException as exc:
+                self._log(schema=schema_name, attempt=attempt, outcome=f"network:{type(exc).__name__}")
                 if attempt == self.max_attempts:
                     raise ORError("network failure") from None
                 self.sleep(min(10 * 2 ** (attempt - 1), 120))
@@ -83,11 +95,13 @@ class StructuredClient:
             if r.status_code == 200:
                 data = r.json()
                 if "error" in data and "choices" not in data:
+                    self._log(schema=schema_name, attempt=attempt, outcome="provider_error",
+                              detail=str(data["error"])[:160], latency_s=round(time.monotonic() - started, 1))
                     if attempt < self.max_attempts:
-                        self.sleep(min(10 * 2 ** (attempt - 1), 120))
+                        self.sleep(min(5 * 2 ** (attempt - 1), 60))
                         continue
                     raise ORError(f"provider error: {str(data['error'])[:200]}")
-                if data.get("model") != self.model or data.get("provider") != self.provider:
+                if data.get("model") != self.model or data.get("provider") not in self.providers:
                     raise ORError(f"drift: {data.get('model')} / {data.get('provider')}")
                 choice = data["choices"][0]
                 if choice.get("finish_reason") != "stop":
@@ -107,11 +121,14 @@ class StructuredClient:
                         "prompt_tokens": usage.get("prompt_tokens"), "completion_tokens": usage.get("completion_tokens"),
                         "reasoning_tokens": (usage.get("completion_tokens_details") or {}).get("reasoning_tokens"),
                         "latency_s": time.monotonic() - started, "id": data.get("id")}
+                self._log(schema=schema_name, attempt=attempt, outcome="ok", provider=data["provider"],
+                          latency_s=round(meta["latency_s"], 1), cost=cost, reasoning_tokens=meta["reasoning_tokens"])
                 return parsed, meta
             if r.status_code == 402:
                 raise ORError("insufficient credits (402)")
+            self._log(schema=schema_name, attempt=attempt, outcome=f"http_{r.status_code}")
             if r.status_code in RETRY_STATUS and attempt < self.max_attempts:
-                self.sleep(min(10 * 2 ** (attempt - 1), 120))
+                self.sleep(min(5 * 2 ** (attempt - 1), 60))
                 continue
             raise ORError(f"HTTP {r.status_code}")
         raise ORError("retries exhausted")
