@@ -22,7 +22,7 @@ AMBIGUOUS_TICKERS = {"OP", "ARB", "LINK", "ONE", "SUN", "GAS", "PEOPLE", "ME", "
                      "TON", "APE", "BAT", "ICP", "FET", "TIA", "SEI", "SUI", "JUP", "RAY", "IO", "ZK",
                      "GMT", "GMX", "CRV", "SNX", "COMP", "YFI", "CAKE", "RUNE", "ROSE", "IOTA", "ATOM",
                      "EOS", "NEO", "DASH", "ZEC", "XAU", "XAG", "CL", "LAB", "MU", "SNDK", "HYPE"}
-EXTRA_ALIASES = {"BTC": ["Bitcoin", "XBT"], "ETH": ["Ethereum", "Ether"], "SOL": ["Solana"],
+EXTRA_ALIASES = {"LUNA": ["Terra", "Luna", "Terra Luna"], "LUNC": ["Terra Classic", "Luna Classic"], "BTC": ["Bitcoin", "XBT"], "ETH": ["Ethereum", "Ether"], "SOL": ["Solana"],
                  "XRP": ["Ripple", "XRP Ledger"], "DOGE": ["Dogecoin"], "BNB": ["BNB Chain", "Binance Coin"],
                  "ADA": ["Cardano"], "AVAX": ["Avalanche"], "DOT": ["Polkadot"], "MATIC": ["Polygon"],
                  "POL": ["Polygon"], "LTC": ["Litecoin"], "LINK": ["Chainlink"], "TON": ["Toncoin"],
@@ -128,8 +128,15 @@ def _name_aliases(name: str) -> list[str]:
 
 _WORDS_FILE = Path("/usr/share/dict/words")
 _ENGLISH = {w.strip().lower() for w in _WORDS_FILE.read_text(errors="ignore").splitlines()} if _WORDS_FILE.exists() else set()
-NAME_ALLOWLIST = {"Ether", "Bitcoin", "Ethereum", "Solana", "Cardano", "Polkadot", "Chainlink", "Uniswap", "Cosmos",
-                  "Avalanche", "Polygon", "Stellar", "Monero", "Litecoin", "Dogecoin", "Tron", "Optimism", "Arbitrum"}
+# Single English words that are too common in finance prose to serve as case-sensitive proper-name aliases.
+NAME_BLOCKLIST = {"Across", "Just", "Only", "Bounce", "Civic", "Origin", "Quant", "Measurable", "Request", "Status",
+                  "Function", "Data", "Chain", "Bit", "Coin", "Token", "Prime", "Trust", "Safe", "Zero", "Ever", "Big",
+                  "Act", "Mode", "Move", "Sign", "Super", "Turbo", "Book", "Mother", "Drift", "Hunt", "Mango", "Orca",
+                  "Ray", "Usual", "Layer", "Swell", "Alpha", "Beta", "Gamma", "Delta", "Omega", "Pixel", "Pixels", "Story",
+                  "Virtual", "Magic", "Spell", "Echo", "Fire", "Air", "Beam", "Cool", "Ice", "Port", "Moon", "Sun", "Dog",
+                  "Cat", "People", "Band", "Core", "Ark", "Gas", "Mask", "Blur", "Flow", "Near", "Lit", "Wave", "Waves",
+                  "Link", "One", "Stable", "Meme", "Hype", "Protocol", "Network", "Finance", "Swap", "Dash", "Neo", "Hedera",
+                  "Celestia", "Fantom", "Mantle", "Blast", "Base", "Sonic", "Kaspa", "Render", "Ondo", "Venus", "Jupiter"}
 
 
 def alias_ok(alias: str) -> bool:
@@ -142,9 +149,19 @@ def alias_ok(alias: str) -> bool:
         return len(core) >= 2          # the dollar sign disambiguates two-letter tickers ($OP, $AI)
     if len(core) < 3:
         return False
-    if " " not in core and core.lower() in _ENGLISH and core not in NAME_ALLOWLIST:
+    if " " not in core and core in NAME_BLOCKLIST:
         return False
     return True
+
+
+# Crypto proper names that the system dictionary lists as words but that never appear in ordinary prose
+# with another meaning; these keep case-insensitive matching.
+NAME_ALLOWLIST = {"Bitcoin", "Ethereum", "Ether", "Litecoin", "Dogecoin", "Solana", "Cardano", "Polkadot", "Chainlink",
+                  "Uniswap", "Monero", "Tron", "Tether", "Binance", "Coinbase", "Kraken"}
+
+
+def is_english_word(term: str) -> bool:
+    return " " not in term and term not in NAME_ALLOWLIST and term.lower() in _ENGLISH
 
 
 def build_dictionary(bases: list[str], coingecko_path: Path = COINGECKO) -> Dictionary:
@@ -175,7 +192,8 @@ def _pattern(term: str) -> re.Pattern:
     body = re.escape(term)
     if term.startswith("$"):
         return re.compile(rf"(?<![A-Za-z0-9_]){body}(?![A-Za-z0-9_])")
-    flags = re.IGNORECASE if len(term) > 4 and not term.isupper() else 0
+    # proper names that are also English words (Terra, Origin) match case-sensitively only
+    flags = re.IGNORECASE if len(term) > 4 and not term.isupper() and not is_english_word(term) else 0
     return re.compile(rf"(?<![A-Za-z0-9_$]){body}(?![A-Za-z0-9_])", flags)
 
 
