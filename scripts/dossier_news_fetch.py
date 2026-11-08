@@ -38,7 +38,13 @@ def main() -> int:
     done = load_ledger()
     frames = []
     for outlet in args.outlets.split(","):
-        for path in sorted((CAPTURES / outlet).glob("*.parquet")):
+        dedup = CAPTURES / f"{outlet}_dedup.parquet"
+        if dedup.exists():
+            d = pd.read_parquet(dedup)
+            ym = d["first_ts"].dt.strftime("%Y-%m")
+            frames.append(d[(ym >= args.start) & (ym <= args.end)])
+            continue
+        for path in sorted((CAPTURES / outlet).glob("????-??.parquet")):
             if args.start <= path.stem <= args.end:
                 frames.append(pd.read_parquet(path))
     todo = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
@@ -66,7 +72,7 @@ def main() -> int:
                 n_ok += 1
             if not outcome.startswith("error"):
                 ledger.write(json.dumps({"url": row.url, "outcome": outcome,
-                                         "ts": pd.Timestamp.utcnow().isoformat()}) + "\n")
+                                         "ts": pd.Timestamp.now("UTC").isoformat()}) + "\n")
                 ledger.flush()
             if len(batch) >= 50:
                 store.upsert(pd.DataFrame(batch))
