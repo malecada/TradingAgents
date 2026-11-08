@@ -45,8 +45,10 @@ def main() -> int:
     # walk-forward quant forecasts for every Friday in range (all card symbols)
     if FORECASTS.exists():
         preds = pd.read_parquet(FORECASTS)
+        preds["date"] = pd.to_datetime(preds["date"], utc=True)
     else:
-        preds = pd.DataFrame(columns=["date", "symbol", "pred_rank_pct"])
+        preds = pd.DataFrame({"date": pd.Series(dtype="datetime64[ns, UTC]"), "symbol": pd.Series(dtype=str),
+                              "pred_rank_pct": pd.Series(dtype=float)})
     fwd = forward_returns(sorted(cards["symbol"].unique()), sorted(cards["date"].unique()))
     new = []
     for f in fridays:
@@ -56,6 +58,7 @@ def main() -> int:
                 new.append(p.assign(date=f))
     if new:
         preds = pd.concat([preds, *new], ignore_index=True)
+        preds["date"] = pd.to_datetime(preds["date"], utc=True)
         FORECASTS.parent.mkdir(parents=True, exist_ok=True)
         preds.to_parquet(FORECASTS, index=False)
     started, n = time.monotonic(), 0
