@@ -35,3 +35,13 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 - Evaluation: residualized weekly rank IC (controls vol, 4w momentum, size), Newey-West t, Brier skill vs 0.5,
   calibration slope (`agents_v2/evaluate.py`).
 - Target definition: P(asset 7-day return > universe median return), decision Saturday 00:00 UTC after the Friday card.
+
+## 2026-11-08 evening — pilot findings on Q1-2022 dossiers (builder v2.3)
+- Audit (145 dossiers): 93% with shown items, median 9 items, noise share 27%, 0 leaks by dictionary verification.
+- **Re-identification probe FAIL**: DeepSeek V4-Pro (non-thinking, StreamLake route because Baidu returned 502s)
+  names the asset in 81/100 anonymized dossiers (chance 1.9%) and the month within ±6 months in 81/100.
+  Name masking is insufficient: content (project-specific events, partners, products, price-path shape)
+  identifies the asset. Per-section probes (numeric-only, text-only) running to locate the channel.
+- Consequence for the plan: §5 anonymization must be hardened (generic rewriting of news summaries,
+  removal of non-dictionary proper nouns, coarser numeric rendering) and re-probed; otherwise pre-release
+  windows cannot be claimed leakage-controlled and Sealed-B carries the whole evidential weight.
