@@ -11,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -23,10 +24,11 @@ from tradingagents.dossier.llm_text import TextLLMError
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.2"
+BUILDER_VERSION = "dossier-v2.3"
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 4
+CANONICAL_SEED = 0
 REDDIT_SHOWN_CAP = 8           # community posts among shown items
 REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
 _LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
@@ -81,6 +83,18 @@ def _comments(extra: str) -> int:
         return int(json.loads(extra or "{}").get("num_comments") or 0)
     except (ValueError, TypeError):
         return 0
+
+
+def translate_aliases(text: str, canon_map: dict, masker: Masker) -> str:
+    """Rewrite canonical role tokens into the dossier's own aliases (two passes avoid collisions)."""
+    placeholders = {}
+    for i, (alias_c, role_key) in enumerate(sorted(canon_map.items(), key=lambda kv: -len(kv[0]))):
+        role, key = role_key.split(":", 1)
+        placeholders[f"\x00{i}\x00"] = masker.alias(role, key)
+        text = re.sub(rf"(?<![A-Za-z0-9_]){re.escape(alias_c)}(?![A-Za-z0-9_])", f"\x00{i}\x00", text)
+    for ph, alias in placeholders.items():
+        text = text.replace(ph, alias)
+    return text
 
 
 def retrieve_text(base: str, linker: Linker, decision_ts: pd.Timestamp, root=store.DEFAULT_ROOT,
@@ -162,24 +176,30 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
         body = (r.body or "")[:6000]
         if len((r.title or "") + body) < MIN_BODY_CHARS and r.source != "reddit":
             continue
-        candidates.append((r, masker.mask_text(f"{r.title}\n{body}".strip())))
+        # Canonical masking (fixed seed, dates relative to the article itself) so one article is
+        # classified once and the cached result is shared across all assets and weeks.
+        canon = Masker(dictionary, pd.Timestamp(r.event_ts), CANONICAL_SEED)
+        candidates.append((r, canon, canon.mask_text(f"{r.title}\n{body}".strip())))
 
-    def classify(pair):
-        r, masked = pair
+    def classify(job):
+        r, canon, masked = job
         try:
-            return r, text_llm.classify(masked)
+            return r, canon, text_llm.classify(masked)
         except TextLLMError:
-            return r, None
+            return r, canon, None
 
     with ThreadPoolExecutor(max_workers=CLASSIFY_WORKERS) as pool:
-        for r, out in pool.map(classify, candidates):
+        for r, canon, out in pool.map(classify, candidates):
             if out is None:                  # one bad article must not sink the dossier; counted and disclosed
                 counts["failed"] += 1
                 continue
             counts[out["type"]] += 1
-            if alias not in out["affected_aliases"] and r.salience != "primary":
+            canon_map = canon.mapping()                       # canonical alias -> "role:key"
+            affected = {canon_map.get(a, "") for a in out["affected_aliases"]}
+            if f"asset:{base}" not in affected and r.salience != "primary":
                 continue
-            summary = masker.mask_text(out["summary"])       # the model may re-derive names from context
+            summary = translate_aliases(out["summary"], canon_map, masker)
+            summary = masker.mask_text(summary)               # the model may re-derive names from context
             if masker.verify(summary):
                 counts["leaky"] += 1
                 continue

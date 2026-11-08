@@ -21,8 +21,9 @@ class StubLLM:
     def classify(self, text):
         self.seen.append(text)
         if "exploit" in text:
-            return {"type": "event", "summary": "An exploit drained funds from a Bitcoin lending protocol on Ethereum.",
-                    "novelty": "new_information", "affected_aliases": [text.split()[0]]}
+            first = text.split()[0]
+            return {"type": "event", "summary": f"An exploit drained funds from a {first} lending protocol on Ethereum.",
+                    "novelty": "new_information", "affected_aliases": [first]}
         if "price" in text.lower():
             return {"type": "price_recap", "summary": "Prices moved.", "novelty": "none", "affected_aliases": []}
         return {"type": "analysis_opinion", "summary": "Commentary on the asset.", "novelty": "none",
@@ -56,6 +57,12 @@ def test_build_dossier_end_to_end(tmp_path):
     assert dossier.counts["event"] == 1 and dossier.counts["price_recap"] == 1
     assert len(dossier.items) == 1 and dossier.items[0]["type"] == "event"
     assert "Bitcoin" not in dossier.items[0]["summary"] and "Ethereum" not in dossier.items[0]["summary"]
+    assert dossier.alias in dossier.items[0]["summary"]      # canonical token translated into this dossier's alias
+    eth = build("ETHUSDT", friday, cards, d, Linker(d), llm, seed=2, store_root=tmp_path / "text",
+                klines_dir=tmp_path / "nokl", out_dir=tmp_path / "out")
+    assert eth.alias != dossier.alias
+    seen_btc_article = [t for t in llm.seen if "exploit" in t]
+    assert len(set(seen_btc_article)) == 1                   # same canonical text for both dossiers -> one cache key
     assert "Bitcoin" not in dossier.text and "$45,000" not in dossier.text and dossier.leaks == []
     assert dossier.text.startswith(f"# Dossier for {dossier.alias}") and dossier.alias.startswith("Asset_")
     assert all("Bitcoin" not in t for t in llm.seen)   # the LLM only ever saw masked text
@@ -95,3 +102,16 @@ def test_reddit_cap_by_comments(tmp_path):
     got = retrieve_text("BTC", Linker(d), pd.Timestamp("2024-01-06", tz="UTC"), root=tmp_path / "t", reddit_cap=5)
     assert (got["source"] == "reddit").sum() == 5 and (got["source"] == "wayback").sum() == 1
     assert set(got[got["source"] == "reddit"]["doc_id"]) == {f"r{i}" for i in range(35, 40)}
+
+
+def test_translate_aliases_two_pass():
+    from tradingagents.dossier.anonymizer import Masker
+    from tradingagents.dossier.builder import translate_aliases
+    d = build_dictionary(["BTC", "ETH"])
+    canon = Masker(d, pd.Timestamp("2024-01-01", tz="UTC"), 0)
+    canon_text = canon.mask_text("Bitcoin and Ethereum on Binance")
+    cmap = canon.mapping()
+    target = Masker(d, pd.Timestamp("2024-01-06", tz="UTC"), 9, focus_asset="ETH")
+    out = translate_aliases(canon_text, cmap, target)
+    assert target.alias("asset", "ETH") in out and target.alias("asset", "BTC") in out and target.alias("exchange", "Binance") in out
+    assert out.count("Asset_") == 2 and "\x00" not in out
