@@ -19,7 +19,7 @@ import requests
 
 CDX = "http://web.archive.org/cdx/search/cdx"
 USER_AGENT = "master-thesis-research-bot/0.1 (academic research; contact: malecekadam1@gmail.com)"
-FETCH_INTERVAL_S = 3.5
+FETCH_INTERVAL_S = 2.5
 CDX_INTERVAL_S = 2.0
 TIMEOUT_S = 90
 
