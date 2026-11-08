@@ -37,6 +37,8 @@ def main() -> int:
     ap.add_argument("--n", type=int, default=300)
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
+    ap.add_argument("--section", default="full", choices=("full", "numeric", "text"),
+                    help="probe the whole dossier, only the numeric/calendar part, or only the news part")
     args = ap.parse_args()
     files = sorted(OUT.glob("*/*.json"))
     rng = random.Random(args.seed)
@@ -46,7 +48,7 @@ def main() -> int:
     if args.provider:
         client.provider = args.provider
     from tradingagents.dossier.or_client import ORError
-    partial = Path("data/dossier/reid_probe_rows.jsonl")
+    partial = Path(f"data/dossier/reid_probe_rows_{args.section}.jsonl")
     done = {}
     if partial.exists():
         for line in partial.read_text().splitlines():
@@ -60,7 +62,13 @@ def main() -> int:
                 results.append(done[str(p)])
                 continue
             d = json.loads(p.read_text())
-            text = PROMPT.format(tickers=", ".join(tickers), text=d["text"][:12000])
+            body = d["text"]
+            cut = body.find("## News and discussion")
+            if args.section == "numeric" and cut > 0:
+                body = body[:cut]
+            elif args.section == "text" and cut > 0:
+                body = "# Dossier for " + d["alias"] + "\n\n" + body[cut:]
+            text = PROMPT.format(tickers=", ".join(tickers), text=body[:12000])
             try:
                 guess, _ = client.call(text, SCHEMA, "reid")
             except ORError as exc:
@@ -84,7 +92,8 @@ def main() -> int:
                "month_within_6_rate": float(df["month_within_6"].fillna(False).mean()),
                "spent_usd": client.spent_usd, "failures": failures,
                "model": client.model, "provider": client.provider, "reasoning": "disabled"}
-    Path("data/dossier/reid_probe.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
+    summary["section"] = args.section
+    Path(f"data/dossier/reid_probe_{args.section}.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0
 
