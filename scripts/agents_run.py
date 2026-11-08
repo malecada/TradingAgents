@@ -28,16 +28,24 @@ def main() -> int:
     ap.add_argument("--cost-cap", type=float, default=100.0)
     ap.add_argument("--no-debate", action="store_true")
     ap.add_argument("--role", default="pro", choices=("pro", "flash", "chrono"))
+    ap.add_argument("--provider", default=None, help="override pinned provider (pilot/diagnostics only)")
+    ap.add_argument("--runs-dir", default=None, help="alternative output directory (repeat runs, ablations)")
     args = ap.parse_args()
     client = StructuredClient.pinned(args.role, load_api_key(), cost_cap_usd=args.cost_cap)
+    if args.provider:
+        client.provider = args.provider
+    from pathlib import Path as _P
+    runs_dir = _P(args.runs_dir) if args.runs_dir else None
     days = sorted(p for p in DOSSIERS.iterdir() if args.start <= p.name <= args.end)
     started = time.monotonic()
     for day in days:
         dossiers = {p.stem: json.loads(p.read_text()) for p in sorted(day.glob("*.json"))}
+        kwargs = {"runs_dir": runs_dir} if runs_dir else {}
         out = run_week(pd.Timestamp(day.name, tz="UTC"), dossiers, client, n_debate=args.n_debate,
-                       debate=not args.no_debate)
+                       debate=not args.no_debate, **kwargs)
         debated = sum(r.get("debated", False) for r in out["results"].values())
-        print(f"{day.name}: {len(dossiers)} assets, {debated} debated, calls {client.calls}, spent ${client.spent_usd:.2f}, "
+        failed = sum(1 for r in out["results"].values() if r.get("failed") or r.get("debate_failed"))
+        print(f"{day.name}: {len(dossiers)} assets, {debated} debated, {failed} failed, calls {client.calls}, spent ${client.spent_usd:.2f}, "
               f"{(time.monotonic() - started) / 60:.1f} min", flush=True)
     print(f"done: calls {client.calls}, spent ${client.spent_usd:.2f}")
     return 0

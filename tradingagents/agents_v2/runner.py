@@ -12,6 +12,7 @@ import pandas as pd
 
 from tradingagents.agents_v2 import roles, schemas
 from tradingagents.agents_v2.graph import config_sha, run_asset, run_portfolio
+from tradingagents.dossier.or_client import ORError
 
 RUNS = Path("data/agents_v2/runs")
 N_DEBATE = 20
@@ -54,7 +55,13 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
                 results[sym] = cached
                 analyst_runs[d["alias"]] = cached["analysts"]
                 continue
-        analysts, meta = analysts_only(d["text"], client)
+        try:
+            analysts, meta = analysts_only(d["text"], client)
+        except ORError as exc:                       # counted, never silently defaulted
+            results[sym] = {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
+                            "failed": str(exc), "analysts": {}, "meta": [], "debated": False,
+                            "p_outperform": None, "confidence": None, "abstain": True}
+            continue
         results[sym] = {"symbol": sym, "alias": d["alias"], "dossier_sha": d["sha256"], "config_sha": cfg,
                         "analysts": analysts, "meta": meta, "debated": False,
                         "p_outperform": sum(a["p_outperform_7d"] for a in analysts.values()) / len(analysts),
@@ -64,9 +71,13 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
     if debate:
         for alias in select_debate_candidates(analyst_runs, n_debate):
             sym = alias_to_sym[alias]
-            if results[sym].get("debated"):
+            if results[sym].get("debated") or results[sym].get("failed"):
                 continue
-            run = run_asset(dossiers[sym]["text"], alias, client)
+            try:
+                run = run_asset(dossiers[sym]["text"], alias, client)
+            except ORError as exc:
+                results[sym]["debate_failed"] = str(exc)
+                continue
             results[sym].update({"debated": True, "forecast": run.forecast, "debates": run.debates,
                                  "p_outperform": run.p_outperform, "confidence": run.confidence,
                                  "abstain": run.abstain, "meta": results[sym]["meta"] + run.meta,
@@ -76,12 +87,17 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
     candidates = [{"alias": r["alias"], "p_outperform_7d": r["p_outperform"], "confidence": r["confidence"],
                    "abstain": r["abstain"],
                    "vol_ann": (dossiers[s]["numeric"].get("vol_ewma20_ann_pct") or 80.0) / 100.0}
-                  for s, r in results.items()]
+                  for s, r in results.items() if not r.get("failed")]
     pm_path = day_dir / "_portfolio.json"
     if pm_path.exists() and json.loads(pm_path.read_text()).get("config_sha") == cfg:
         portfolio = json.loads(pm_path.read_text())
     else:
-        portfolio = run_portfolio(candidates, client)
+        try:
+            portfolio = run_portfolio(candidates, client)
+        except ORError as exc:
+            from tradingagents.agents_v2.graph import rule_weights
+            portfolio = {"pm_output": None, "problems": [f"pm call failed: {exc}"], "weights": rule_weights(candidates),
+                         "rule_weights": rule_weights(candidates), "meta": {}, "config_sha": cfg}
         portfolio["weights_by_symbol"] = {alias_to_sym[a]: w for a, w in portfolio["weights"].items() if a in alias_to_sym}
         pm_path.write_text(json.dumps(portfolio, indent=1, default=str))
     return {"results": results, "portfolio": portfolio}
