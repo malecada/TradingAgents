@@ -81,10 +81,16 @@ class Masker:
         years = round(days / 365.25, 1)
         return f"about {years} years ago" if years > 0 else f"in about {-years} years"
 
+    def _terms(self):
+        cached = getattr(self.dictionary, "_terms_cache", None)
+        if cached is None:
+            cached = [(t, r, k, _pattern(t)) for t, r, k in self.dictionary.all_terms()]
+            object.__setattr__(self.dictionary, "_terms_cache", cached)
+        return cached
+
     def mask_text(self, text: str) -> str:
         out = text
-        for term, role, key in self.dictionary.all_terms():
-            pat = _pattern(term)
+        for term, role, key, pat in self._terms():
             if pat.search(out):
                 out = pat.sub(self.alias(role, key), out)
         out = DATE_RE.sub(self.relative_date, out)
@@ -95,8 +101,8 @@ class Masker:
     def verify(self, text: str) -> list[str]:
         """Residual identity leaks: dictionary terms or four-digit years left in ``text``."""
         leaks = []
-        for term, role, key in self.dictionary.all_terms():
-            if _pattern(term).search(text):
+        for term, role, key, pat in self._terms():
+            if pat.search(text):
                 leaks.append(f"{role}:{term}")
         if _YEAR_RE.search(text):
             leaks.append("year")

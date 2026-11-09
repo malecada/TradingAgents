@@ -8,6 +8,7 @@ the asset appears in the title or at least twice in the body.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import functools
 import json
 from pathlib import Path
 import re
@@ -188,6 +189,7 @@ def build_dictionary(bases: list[str], coingecko_path: Path = COINGECKO) -> Dict
     return Dictionary(assets=assets)
 
 
+@functools.lru_cache(maxsize=None)
 def _pattern(term: str) -> re.Pattern:
     body = re.escape(term)
     if term.startswith("$"):

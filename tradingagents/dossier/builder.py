@@ -27,7 +27,7 @@ from tradingagents.dossier.universe import base_symbol
 BUILDER_VERSION = "dossier-v2.4"   # unchanged output semantics; provider list and failure policy only
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
-CLASSIFY_WORKERS = 4
+CLASSIFY_WORKERS = 8
 CANONICAL_SEED = 0
 REDDIT_SHOWN_CAP = 8           # community posts among shown items
 REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
