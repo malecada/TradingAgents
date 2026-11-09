@@ -116,3 +116,6 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   prompts allow full probability range; --dossiers flags on manifest/probe/audit. Tests: 12 agents/quant + 36 dossier pass.
 - Cost: judge-all adds ≈ $0.5–0.8/week → dev run ≈ $410–450; cap $400 truncates oldest weeks per §6a.
 - Wayback fetch (newest-first) at 27.5K/74K ledger rows, ~1,440/h; rebuild waits for it.
+- Live smoke of the fixed runner (2022-09-30, scratch dir): cap path stops correctly; full week 50/12/38, 0 failed,
+  $2.48, 15.3 min; rule twin net 0, gross 1; p compressed (0.35–0.55). 156 weeks ≈ $387.
+- Realized funding fetcher + realized_funding() + book with/without funding wired into llm_v2c1_run.py.

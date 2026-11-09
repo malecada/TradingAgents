@@ -20,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from tradingagents.agents_v2.evaluate import evaluate_panel  # noqa: E402
 from tradingagents.agents_v2.graph import config_sha, rule_weights  # noqa: E402
-from tradingagents.agents_v2.portfolio_eval import summarize_book  # noqa: E402
+from tradingagents.agents_v2.portfolio_eval import realized_funding, summarize_book  # noqa: E402
 from tradingagents.agents_v2.runner import run_week  # noqa: E402
 from tradingagents.dossier.or_client import SpendCapError, StructuredClient  # noqa: E402
 from tradingagents.dossier.quant_forecast import forward_returns  # noqa: E402
@@ -108,7 +108,10 @@ def main() -> int:
             for name, g in (("identified", panel[panel["identified"] == True]), ("not_identified", panel[panel["identified"] == False])):
                 subsets[name] = {"n": int(len(g)), **evaluate_panel(g, "p_outperform")}
         evaluation["identified_subsets"] = subsets
-        portfolio = {"rule_twin": summarize_book(weights, fwd)}
+        funding = realized_funding(sorted(panel["symbol"].unique()), fridays)
+        portfolio = {"rule_twin": summarize_book(weights, fwd, funding=funding),
+                     "rule_twin_no_funding": summarize_book(weights, fwd),
+                     "funding_coverage": float(funding.groupby("date").size().reindex(fridays).fillna(0).mean() / max(panel.groupby("date").size().mean(), 1))}
         run.write_json("forecasts.json", {"rows": json.loads(panel.to_json(orient="records", date_format="iso"))})
         run.write_json("evaluation.json", evaluation)
         run.write_json("portfolio.json", portfolio)

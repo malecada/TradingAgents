@@ -71,6 +71,22 @@ cap stays at $400; under the newest-first rule (charter §6a) this covers roughl
 truncation is disclosed rather than hidden. The cap can be raised before registration if more credit is
 available.
 
+## F2. Live verification of the fixed runner (2026-11-10, pilot week 2022-09-30, scratch directory)
+
+- Cap path: with a $0.40 cap the run raised the spend-cap error on the first call past the cap and stopped;
+  24 finished per-asset results were on disk.
+- Full week with a $4.50 cap: 50 assets, 12 debated, 38 judged without debate, 0 failures, 335 calls,
+  **$2.48**, 15.3 min. All 50 probabilities come from the judge role; the analysts' mean is stored for all 50.
+  Rule twin: net 0.0000, gross 1.000, max |w| 0.100. The PM output still violated the caps, confirming the
+  rule twin as primary book.
+- Measured cost replaces the §F estimate: 156 weeks ≈ $387, inside the $400 cap with little headroom.
+- Probability spread remains compressed (mean 0.452, sd 0.050, range 0.35–0.55; judge-only sd 0.049,
+  debated sd 0.026). The calibration-slope gate will register this honestly; no further prompt tuning before
+  registration (tuning on dev-window output would be a post-hoc step).
+- Realized funding: `scripts/dossier_funding_fetch.py` stores Binance USDT-M funding history per symbol;
+  `realized_funding` sums the settlements in (Friday, Friday+7] and the book charges longs / credits shorts.
+  `portfolio.json` reports the book with and without funding and the funding coverage.
+
 ## G. Remaining before registration
 
 1. Fresh v2.6 rebuild of the dev window into a new directory (2024 first) after the Wayback fetch completes.

@@ -69,9 +69,9 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.
-- Spend cap: $400 for the dev run (pilot measured $2.07 per week with 12–20 debates; the uniform judge panel adds an
-  estimated $0.5–0.8 per week, so 156 weeks ≈ $410–450 and the cap is expected to truncate the oldest 1–16 weeks under
-  §6a); Flash typing and the identification probe are separate, ≈ $12.
+- Spend cap: $400 for the dev run (measured $2.48 per week with 12 debates and a judge call for every other asset,
+  so 156 weeks ≈ $387; a cost overrun truncates the oldest weeks under §6a); Flash typing and the identification probe
+  are separate, ≈ $12. Realized funding (Binance public history) is charged to the rule-twin book.
 - Family: `llm-multiagent-v2` (new mechanism: dossier-fed debate on anonymized cross-section), attempt budget 6,
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.

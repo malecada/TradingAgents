@@ -41,3 +41,18 @@ def test_placebos_separate_signal_from_noise():
     weights0, fwd0 = _data(0.0, seed=3)
     s0 = summarize_book(weights0, fwd0)
     assert s0["p_asset_shuffle"] > 0.05
+
+
+def test_realized_funding_and_book_cost(tmp_path):
+    import pandas as pd
+    from tradingagents.agents_v2.portfolio_eval import book_returns, realized_funding
+    f = pd.Timestamp("2024-01-05", tz="UTC")
+    times = pd.date_range("2024-01-04", "2024-01-14", freq="8h", tz="UTC")
+    pd.DataFrame({"fundingTime": times, "fundingRate": 0.0001}).to_parquet(tmp_path / "AAAUSDT.parquet")
+    fund = realized_funding(["AAAUSDT", "MISSING"], [f], funding_dir=tmp_path)
+    assert list(fund["symbol"]) == ["AAAUSDT"] and fund.iloc[0]["n_settlements"] == 21   # 7 days x 3 settlements
+    assert abs(fund.iloc[0]["funding_week"] - 0.0021) < 1e-12
+    fwd = pd.DataFrame({"date": [f], "symbol": ["AAAUSDT"], "fwd_ret": [0.0]})
+    r0 = book_returns({f: {"AAAUSDT": 0.1}}, fwd, cost_per_side=0.0)
+    r1 = book_returns({f: {"AAAUSDT": 0.1}}, fwd, cost_per_side=0.0, funding=fund)
+    assert abs((r0 - r1).iloc[0] - 0.1 * 0.0021) < 1e-12                                   # long pays funding
