@@ -16,7 +16,7 @@ class StubClient:
     def __init__(self, p_bull_first=0.7, p_bear_first=0.6):
         self.prompts, self.p = [], {"bull_first": p_bull_first, "bear_first": p_bear_first}
 
-    def call(self, prompt, schema, name="answer", system=None, reasoning_effort=None, reasoning=None):
+    def call(self, prompt, schema, name="answer", system=None, reasoning_effort=None, reasoning=None, max_tokens=None):
         self.prompts.append((name, prompt))
         self.efforts = getattr(self, "efforts", []) + [("none" if (reasoning or {}).get("enabled") is False else (reasoning or {}).get("effort"))]
         meta = {"cost": 0.001, "latency_s": 0.1, "model": "m", "provider": "p"}

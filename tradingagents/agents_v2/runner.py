@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 
 from tradingagents.agents_v2 import roles, schemas
-from tradingagents.agents_v2.graph import REASONING, config_sha, run_asset, run_portfolio
+from tradingagents.agents_v2.graph import MAX_TOKENS, REASONING, config_sha, run_asset, run_portfolio
 from tradingagents.dossier.or_client import ORError
 
 RUNS = Path("data/agents_v2/runs")
@@ -36,7 +36,7 @@ def analysts_only(dossier_text: str, client, analyst_roles=("market", "fundament
     out, meta = {}, []
     for r in analyst_roles:
         parsed, m = client.call(roles.analyst_prompt(r, dossier_text), schemas.ANALYST, f"analyst_{r}", system=roles.COMMON,
-                                reasoning=REASONING["analyst"])
+                                reasoning=REASONING["analyst"], max_tokens=MAX_TOKENS["analyst"])
         out[r] = parsed
         meta.append({"role": f"analyst_{r}", **m})
     return out, meta

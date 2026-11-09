@@ -68,3 +68,11 @@ def test_per_call_reasoning_override():
     c = StructuredClient.pinned("pro", "k")
     assert c.body("p", {"type": "object"}, "t", reasoning={"enabled": False})["reasoning"] == {"enabled": False}
     assert c.body("p", {"type": "object"}, "t", reasoning={"effort": "medium"})["reasoning"] == {"effort": "medium"}
+
+
+def test_truncated_answer_retries_with_bigger_budget():
+    first = ok({"a": 1}); first["choices"][0]["finish_reason"] = "length"
+    s = S([R(200, first), R(200, ok({"a": 2}))])
+    c = StructuredClient.pinned("pro", "k", session=s, sleep=lambda x: None)
+    assert c.call("p", {"type": "object"}, "t", max_tokens=4000)[0] == {"a": 2}
+    assert s.bodies[0]["max_tokens"] == 4000 and s.bodies[1]["max_tokens"] == 16000

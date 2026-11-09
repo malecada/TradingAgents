@@ -61,9 +61,9 @@ class StructuredClient:
                 fh.write(json.dumps({"ts": time.time(), **fields}) + "\n")
 
     def body(self, prompt: str, schema: dict, schema_name: str, system: str | None = None,
-             reasoning_effort: str | None = None, reasoning: dict | None = None) -> dict:
+             reasoning_effort: str | None = None, reasoning: dict | None = None, max_tokens: int | None = None) -> dict:
         messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": prompt}]
-        b = {"model": self.model, "messages": messages, "temperature": 0, "max_tokens": self.max_tokens,
+        b = {"model": self.model, "messages": messages, "temperature": 0, "max_tokens": max_tokens or self.max_tokens,
              "response_format": {"type": "json_schema", "json_schema": {"name": schema_name, "strict": True, "schema": schema}},
              "provider": {"order": self.providers, "allow_fallbacks": False, "quantizations": [self.quantization]},
              "usage": {"include": True}}
@@ -78,14 +78,17 @@ class StructuredClient:
         return b
 
     def call(self, prompt: str, schema: dict, schema_name: str = "answer", system: str | None = None,
-             reasoning_effort: str | None = None, reasoning: dict | None = None) -> tuple[dict, dict]:
+             reasoning_effort: str | None = None, reasoning: dict | None = None,
+             max_tokens: int | None = None) -> tuple[dict, dict]:
         """Returns (parsed_json, meta) where meta has usage, cost, latency, model, provider."""
         with self._lock:
             if self.spent_usd > self.cost_cap_usd:
                 raise ORError(f"spend cap reached: {self.spent_usd:.4f} of {self.cost_cap_usd}")
         session = self.session or requests
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
-        body = self.body(prompt, schema, schema_name, system, reasoning_effort, reasoning)
+        budget = max_tokens or self.max_tokens
+        body = self.body(prompt, schema, schema_name, system, reasoning_effort, reasoning, budget)
+        truncations = 0
         for attempt in range(1, self.max_attempts + 1):
             started = time.monotonic()
             try:
@@ -108,6 +111,12 @@ class StructuredClient:
                 if data.get("model") != self.model or data.get("provider") not in self.providers:
                     raise ORError(f"drift: {data.get('model')} / {data.get('provider')}")
                 choice = data["choices"][0]
+                if choice.get("finish_reason") == "length" and truncations == 0 and budget < 32000:
+                    truncations += 1                             # one retry with four times the output budget
+                    budget = min(32000, budget * 4)
+                    body = self.body(prompt, schema, schema_name, system, reasoning_effort, reasoning, budget)
+                    self._log(schema=schema_name, attempt=attempt, outcome="truncated_retry", budget=budget)
+                    continue
                 if choice.get("finish_reason") != "stop":
                     raise ORError(f"finish_reason {choice.get('finish_reason')}")
                 try:
