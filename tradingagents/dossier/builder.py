@@ -24,16 +24,17 @@ from tradingagents.dossier.llm_text import CreditError, TextLLMError, scrub_prop
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.5"   # non-thinking typing summaries; final dev dossiers must all carry this version
+BUILDER_VERSION = "dossier-v2.6"   # audit fixes: recency-selected posts, dedup, corrected numeric semantics, no time fingerprints
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 16
 CANONICAL_SEED = 0
 REDDIT_SHOWN_CAP = 8           # community posts among shown items
-REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
+REDDIT_CAP = 25               # community posts per dossier, the most recent primary-subject posts (no engagement fields: retrieval-time)
 _LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
 _CANON_CACHE: dict[str, tuple] = {}  # doc_id -> (canonical alias map, canonically masked text); dossier-independent
 _WEEK_CACHE: dict = {}               # decision_ts -> (rows, links); the week's rows are shared by all symbols
+_ROLE_TOKEN = re.compile(r"\b(?:Asset|Exchange|Person|Regulator|Network)_[A-Za-z0-9]+\b")   # hallucinated tokens -> [entity]
 MAX_ITEMS = 25
 MIN_BODY_CHARS = 120
 OUT = Path("data/dossier/dossiers")
@@ -116,17 +117,32 @@ def retrieve_text(base: str, linker: Linker, decision_ts: pd.Timestamp, root=sto
     rows = rows.assign(salience=[l.get(base) for l in links])
     rows = rows[rows["salience"].notna()]
     news = rows[rows["source"] != "reddit"]
-    reddit = rows[(rows["source"] == "reddit") & (rows["salience"] == "primary")].copy()
-    if len(reddit) > reddit_cap:
-        reddit["_c"] = reddit["extra"].map(_comments)
-        reddit = reddit.sort_values("_c", ascending=False).head(reddit_cap).drop(columns="_c")
+    reddit = rows[(rows["source"] == "reddit") & (rows["salience"] == "primary")]
+    if len(reddit) > reddit_cap:   # newest first; never by score or comments (those accrue after the decision)
+        reddit = reddit.sort_values("event_ts", ascending=False).head(reddit_cap)
     return pd.concat([news, reddit]).sort_values("event_ts").reset_index(drop=True)
+
+
+def _norm_tokens(text: str) -> set:
+    return set(re.findall(r"[a-z0-9]+", text.lower()))
+
+
+def dedupe_items(items: list[dict], threshold: float = 0.8) -> list[dict]:
+    """Drop items whose summary token set overlaps an already kept one by Jaccard >= threshold."""
+    kept, sets = [], []
+    for it in items:
+        toks = _norm_tokens(it["summary"])
+        if any(len(toks & s) / max(1, len(toks | s)) >= threshold for s in sets):
+            continue
+        kept.append(it)
+        sets.append(toks)
+    return kept
 
 
 def select_items(classified: list[dict], budget_tokens: int = TOKEN_BUDGET, max_items: int = MAX_ITEMS) -> list[dict]:
     """Events first, then analysis; new information before follow-ups; newer before older;
-    primary-salience before mentioned. Price recaps are counted, not included."""
-    keep = [c for c in classified if c["type"] in ("event", "analysis_opinion")]
+    primary-salience before mentioned. Price recaps are counted, not included. Near-duplicates dropped."""
+    keep = dedupe_items([c for c in classified if c["type"] in ("event", "analysis_opinion")])
     keep.sort(key=lambda c: (TYPE_PRIORITY[c["type"]], 0 if c["salience"] == "primary" else 1,
                              0 if c["novelty"] == "new_information" else 1, -c["event_ts"].value))
     out, used, reddit_shown = [], 0, 0
@@ -163,14 +179,15 @@ def render(alias: str, numeric_text: str, items: list[dict], counts: dict, decis
 
 
 def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Dictionary, linker: Linker,
-          text_llm, seed: int, store_root=store.DEFAULT_ROOT, klines_dir=None, out_dir: Path | None = OUT) -> Dossier:
+          text_llm, seed: int, store_root=store.DEFAULT_ROOT, klines_dir=None, out_dir: Path | None = OUT,
+          universe_symbols=None) -> Dossier:
     friday = pd.Timestamp(friday)
     decision_ts = decision_time(friday)
     base = base_symbol(symbol)
     masker = Masker(dictionary, decision_ts, seed, focus_asset=base)
     alias = masker.alias("asset", base)
     path = weekly_path(symbol, friday, **({"klines_dir": klines_dir} if klines_dir else {}))
-    numeric = numeric_block(cards, symbol, friday, path)
+    numeric = numeric_block(cards, symbol, friday, path, universe_symbols=universe_symbols)
     numeric_text = masker.mask_text(render_numeric(numeric))
     rows = retrieve_text(base, linker, decision_ts, root=store_root)
     counts = {k: 0 for k in TYPE_PRIORITY}
@@ -218,6 +235,7 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
             summary = translate_aliases(out["summary"], canon_map, masker)
             summary = masker.mask_text(summary)               # the model may re-derive names from context
             summary, scrubbed = scrub_proper_nouns(summary)   # residual names the model failed to generalize
+            summary = _ROLE_TOKEN.sub(lambda m: m.group(0) if m.group(0) in masker.mapping() else "[entity]", summary)
             counts["scrubbed"] += scrubbed
             if masker.verify(summary):
                 counts["leaky"] += 1

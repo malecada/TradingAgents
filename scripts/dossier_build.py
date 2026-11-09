@@ -76,13 +76,17 @@ def main() -> int:
             # stable across processes (Python's hash() is randomized per process)
             sym_hash = int(hashlib.sha256(sym.encode()).hexdigest()[:8], 16) % 1000
             seed = args.seed + int(pd.Timestamp(f).timestamp() // 86400) * 7 + sym_hash
-            d = build(sym, f, cards, dictionary, linker, llm, seed=seed, out_dir=out_dir)
+            d = build(sym, f, cards, dictionary, linker, llm, seed=seed, out_dir=out_dir,
+                      universe_symbols=week["symbol"].tolist())
             row = preds[(preds["date"] == f) & (preds["symbol"] == sym)]
             pr = float(row["pred_rank_pct"].iloc[0]) if len(row) else None
             payload = json.loads(target.read_text())
             payload["quant_forecast"] = {"pred_rank_pct": pr, "calibration": calib,
                                          "text": render_forecast(pr, calib)}
             payload["text"] = payload["text"] + "\n## Quant forecast\n" + payload["quant_forecast"]["text"] + "\n"
+            payload["sha256"] = hashlib.sha256(json.dumps({"builder_version": payload["builder_version"], "symbol": sym,
+                                                           "friday": payload["friday"], "text": payload["text"],
+                                                           "numeric": payload["numeric"]}, sort_keys=True, default=str).encode()).hexdigest()
             target.write_text(json.dumps(payload, indent=1, default=str))
             n += 1
             if n % 25 == 0:

@@ -28,9 +28,10 @@ def last_fomc_days(decision_ts: pd.Timestamp) -> int | None:
 
 def render_calendar(decision_ts: pd.Timestamp, numeric: dict) -> str:
     lines = ["## Scheduled events (known in advance)"]
-    nxt, last = next_fomc_days(decision_ts), last_fomc_days(decision_ts)
-    if nxt is not None:
-        lines.append(f"- Next US central-bank rate decision in {nxt} days" + (f"; the last one was {last} days ago." if last is not None else "."))
+    nxt = next_fomc_days(decision_ts)
+    if nxt is not None:   # bucketed: exact day counts within the 6-week cycle date the dossier
+        lines.append("- A US central-bank rate decision falls within the next two weeks." if nxt <= 14
+                     else "- No US central-bank rate decision in the next two weeks.")
     unlock = numeric.get("unlock_next30_pct_supply")
     if unlock:
         lines.append(f"- Token unlock within the next 30 days equal to {unlock}% of circulating supply.")

@@ -80,7 +80,8 @@ _PROPER = re.compile(r"\b(?!(?:Asset|Exchange|Person|Regulator|Network)_[A-Za-z0
 _ALLOWED_CAPS = {"I", "US", "U.S.", "UK", "EU", "ETF", "ETFs", "NFT", "NFTs", "DeFi", "CeFi", "DAO", "DAOs", "DEX", "DEXs", "CEX",
                  "APY", "APR", "TVL", "USD", "DApp", "DApps", "AI", "CEO", "CFO", "CTO", "IPO", "SEC", "L1", "L2", "The", "A", "An",
                  "In", "On", "At", "It", "Its", "This", "That", "These", "Those", "After", "Before", "During", "Over", "Under",
-                 "About", "Roughly", "Several", "Many", "Some", "No", "Not", "Users", "Traders", "Investors", "Holders"}
+                 "About", "Roughly", "Several", "Many", "Some", "No", "Not", "Users", "Traders", "Investors", "Holders",
+                 "Layer", "Layer 1", "Layer 2", "Web3", "Web 3", "Proof", "Proof of Stake", "Proof of Work", "Bitcoin", "ETF"}
 
 
 def scrub_proper_nouns(text: str) -> tuple[str, int]:
@@ -177,7 +178,14 @@ class TextLLM:
                 self.sleep(min(5 * 2 ** (attempt - 1), 60))
                 continue
             if r.status_code == 200:
-                data = r.json()
+                try:
+                    data = r.json()
+                except ValueError:
+                    _log(attempt=attempt, outcome="bad_json")
+                    if attempt < self.max_attempts:
+                        self.sleep(min(5 * 2 ** (attempt - 1), 60))
+                        continue
+                    raise TextLLMError("non-JSON 200 response")
                 if "error" in data and "choices" not in data:
                     code = (data.get("error") or {}).get("code")
                     _log(attempt=attempt, outcome="provider_error", code=code, detail=str(data["error"])[:160])

@@ -13,7 +13,8 @@ import pandas as pd
 KLINES = Path("data/xsect/klines")
 PCT_FIELDS = ["ret_4w", "ret_12w", "dist_26w_high", "vol_ewma20", "volvol_20", "dvol_30d", "mcap_cm",
               "funding_3d", "funding_30d", "d_adract_30d", "d_txcnt_30d"]
-_SIZE_BUCKETS = [(20, "top-20 by size"), (100, "top-100"), (10**9, "below top-100")]
+# size_rank in the card panel is a cross-sectional PERCENTILE (0-1, higher = larger market cap)
+_SIZE_BUCKETS = [(0.9, "top decile by market cap"), (0.5, "upper half by market cap"), (0.0, "lower half by market cap")]
 
 
 def _pct(series: pd.Series, value) -> float | None:
@@ -28,10 +29,20 @@ def _pct(series: pd.Series, value) -> float | None:
 def _bucket(rank) -> str:
     if rank is None or pd.isna(rank):
         return "size rank unavailable"
-    for limit, label in _SIZE_BUCKETS:
-        if rank <= limit:
+    for floor, label in _SIZE_BUCKETS:
+        if rank >= floor:
             return label
-    return "below top-100"
+    return "lower half by market cap"
+
+
+def _pct_from_log(x):
+    """Card returns are log returns; render as simple percentage changes."""
+    return None if x is None or pd.isna(x) else round(float(np.expm1(x)) * 100, 1)
+
+
+def _ann_funding(x):
+    """Card funding fields are mean DAILY funding (sum of the 8-hour rates); annualize x365."""
+    return None if x is None or pd.isna(x) else round(float(x) * 365 * 100, 1)
 
 
 def _age(weeks) -> str:
@@ -88,28 +99,32 @@ def weekly_path(symbol: str, friday: pd.Timestamp, weeks: int = 12, klines_dir: 
             "realized_vol_20d_ann_pct": round(rv20 * 100, 1) if rv20 is not None else None}
 
 
-def numeric_block(cards: pd.DataFrame, symbol: str, friday: pd.Timestamp, path: dict | None) -> dict:
-    """Structured, anonymizable numbers for the dossier (keys are stable for the schema)."""
+def numeric_block(cards: pd.DataFrame, symbol: str, friday: pd.Timestamp, path: dict | None,
+                  universe_symbols=None) -> dict:
+    """Structured, anonymizable numbers for the dossier (keys are stable for the schema).
+    Percentiles are taken within ``universe_symbols`` (the week's decision universe) when given, so the
+    reference class matches the forecast target (outperformance of the universe median)."""
     day = cards[cards["date"] == friday]
+    if universe_symbols is not None:
+        day = day[day["symbol"].isin(set(universe_symbols) | {symbol})]
     row = day[day["symbol"] == symbol]
     if row.empty:
         raise KeyError(f"{symbol} not in cards on {friday.date()}")
     r = row.iloc[0]
     pct = {f: _pct(day[f], r[f]) for f in PCT_FIELDS}
     block = {
-        "universe_size": int(len(day)),
         "size_bucket": _bucket(r.get("size_rank")),
         "volume_rank_pct": pct["dvol_30d"],
         "listing_age": _age(r.get("age_weeks")),
         "category": category_family(r.get("category")),
-        "ret_4w_pct": None if pd.isna(r["ret_4w"]) else round(float(r["ret_4w"]) * 100, 1),
-        "ret_12w_pct": None if pd.isna(r["ret_12w"]) else round(float(r["ret_12w"]) * 100, 1),
+        "ret_4w_pct": _pct_from_log(r["ret_4w"]),
+        "ret_12w_pct": _pct_from_log(r["ret_12w"]),
         "ret_4w_xs_pct": pct["ret_4w"], "ret_12w_xs_pct": pct["ret_12w"],
-        "dist_26w_high_pct": None if pd.isna(r["dist_26w_high"]) else round(float(r["dist_26w_high"]) * 100, 1),
+        "dist_26w_high_pct": _pct_from_log(r["dist_26w_high"]),
         "vol_ewma20_ann_pct": None if pd.isna(r["vol_ewma20"]) else round(float(r["vol_ewma20"]) * 100, 1),
         "vol_xs_pct": pct["vol_ewma20"], "volvol_xs_pct": pct["volvol_20"],
-        "funding_3d_ann_pct": None if pd.isna(r["funding_3d"]) else round(float(r["funding_3d"]) * 3 * 365 * 100, 1),
-        "funding_30d_ann_pct": None if pd.isna(r["funding_30d"]) else round(float(r["funding_30d"]) * 3 * 365 * 100, 1),
+        "funding_3d_ann_pct": _ann_funding(r["funding_3d"]),
+        "funding_30d_ann_pct": _ann_funding(r["funding_30d"]),
         "funding_xs_pct": pct["funding_3d"],
         "active_addresses_30d_change_pct": None if pd.isna(r["d_adract_30d"]) else round(float(r["d_adract_30d"]) * 100, 1),
         "tx_count_30d_change_pct": None if pd.isna(r["d_txcnt_30d"]) else round(float(r["d_txcnt_30d"]) * 100, 1),
@@ -128,7 +143,7 @@ def render_numeric(block: dict) -> str:
     def xs(v):
         return "n/a" if v is None else f"pct {round(v * 100)}"
     lines = [
-        f"Universe: {block['universe_size']} assets this week; {block['size_bucket']}; volume rank {xs(block['volume_rank_pct'])}; {block['listing_age']}; category: {block['category']}.",
+        f"Profile: {block['size_bucket']}; volume rank {xs(block['volume_rank_pct'])} within this week's universe; {block['listing_age']}; category: {block['category']}.",
         f"Returns: 4w {p(block['ret_4w_pct'])}% ({xs(block['ret_4w_xs_pct'])}), 12w {p(block['ret_12w_pct'])}% ({xs(block['ret_12w_xs_pct'])}); distance to 26w high {p(block['dist_26w_high_pct'])}%.",
         f"Volatility: EWMA20 {p(block['vol_ewma20_ann_pct'])}% ann ({xs(block['vol_xs_pct'])}); vol-of-vol {xs(block['volvol_xs_pct'])}.",
         f"Funding (annualized): 3d {p(block['funding_3d_ann_pct'])}%, 30d {p(block['funding_30d_ann_pct'])}% ({xs(block['funding_xs_pct'])}).",
