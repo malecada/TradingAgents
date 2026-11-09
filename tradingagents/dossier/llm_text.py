@@ -19,7 +19,7 @@ import requests
 
 ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "deepseek/deepseek-v4.1-flash"
-PROVIDERS = ["Baidu", "DeepInfra"]        # same fp8 weights; ordered, no fallbacks beyond this list
+PROVIDERS = ["Morph", "CoreWeave", "DeepInfra"]   # same fp8 weights, fastest first (Baidu rate-limits at 8 workers)
 PROVIDER = PROVIDERS[0]
 LOG = os.environ.get("LLM_TEXT_LOG")
 QUANTIZATION = "fp8"
