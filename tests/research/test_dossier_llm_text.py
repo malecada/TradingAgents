@@ -45,7 +45,7 @@ def test_classify_caches_and_validates(tmp_path):
     llm2 = TextLLM(api_key="k", session=S([]), cache_path=tmp_path / "c.jsonl")
     assert llm2.classify("t")["summary"].startswith("Exchange_1") and llm2.calls == 0
     body = request_body("x")
-    assert body["provider"]["order"] == PROVIDERS and body["response_format"]["json_schema"]["strict"]
+    assert body["provider"]["only"] == PROVIDERS and body["provider"]["sort"] == "throughput" and body["response_format"]["json_schema"]["strict"]
 
 
 @pytest.mark.parametrize("resp,needle", [

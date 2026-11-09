@@ -115,7 +115,7 @@ def request_body(text: str, max_tokens: int = 3000) -> dict:
     return {"model": MODEL, "messages": [{"role": "user", "content": PROMPT.format(text=text)}],
             "temperature": 0, "max_tokens": max_tokens, "reasoning": dict(REASONING),
             "response_format": {"type": "json_schema", "json_schema": {"name": "news_item", "strict": True, "schema": SCHEMA}},
-            "provider": {"order": PROVIDERS, "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
+            "provider": {"only": PROVIDERS, "sort": "throughput", "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
             "usage": {"include": True}}
 
 
@@ -136,6 +136,15 @@ class TextLLM:
     cache_hits: int = 0
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
     _cache: dict = field(default_factory=dict)
+    _local: threading.local = field(default_factory=threading.local, repr=False)
+
+    def _session(self):
+        """One pooled HTTP session per thread: avoids a TLS handshake on every call."""
+        if self.session is not None:
+            return self.session
+        if getattr(self._local, "session", None) is None:
+            self._local.session = requests.Session()
+        return self._local.session
 
     def __post_init__(self):
         if self.cache_path and Path(self.cache_path).exists():
@@ -152,10 +161,11 @@ class TextLLM:
                 return dict(self._cache[key])
             if self.spent_usd > self.cost_cap_usd:
                 raise TextLLMError(f"spend cap reached: {self.spent_usd:.4f}")
-        session = self.session or requests
+        session = self._session()
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         body = request_body(text)
         for attempt in range(1, self.max_attempts + 1):
+            started = time.monotonic()
             if attempt == 2 and body["max_tokens"] < 8000:
                 body = request_body(text, max_tokens=8000)   # one retry with headroom after a truncated answer
             try:
@@ -179,7 +189,7 @@ class TextLLM:
                     raise TextLLMError(f"provider error: {str(data['error'])[:200]}")
                 if data.get("model") != MODEL or data.get("provider") not in PROVIDERS:
                     raise TextLLMError(f"drift: {data.get('model')} / {data.get('provider')}")
-                _log(attempt=attempt, outcome="ok", provider=data.get("provider"))
+                _log(attempt=attempt, outcome="ok", provider=data.get("provider"), latency_s=round(time.monotonic() - started, 1))
                 choice = data["choices"][0]
                 if choice.get("finish_reason") == "length" and attempt < self.max_attempts:
                     continue
