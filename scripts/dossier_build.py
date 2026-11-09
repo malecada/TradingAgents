@@ -6,6 +6,7 @@ Idempotent: existing dossier files are skipped. Quant forecasts are computed wal
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -72,7 +73,9 @@ def main() -> int:
             target = out_dir / pd.Timestamp(f).strftime("%Y-%m-%d") / f"{sym}.json"
             if target.exists():
                 continue
-            seed = args.seed + int(pd.Timestamp(f).timestamp() // 86400) * 7 + hash(sym) % 1000
+            # stable across processes (Python's hash() is randomized per process)
+            sym_hash = int(hashlib.sha256(sym.encode()).hexdigest()[:8], 16) % 1000
+            seed = args.seed + int(pd.Timestamp(f).timestamp() // 86400) * 7 + sym_hash
             d = build(sym, f, cards, dictionary, linker, llm, seed=seed, out_dir=out_dir)
             row = preds[(preds["date"] == f) & (preds["symbol"] == sym)]
             pr = float(row["pred_rank_pct"].iloc[0]) if len(row) else None
