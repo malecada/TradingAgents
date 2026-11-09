@@ -101,3 +101,8 @@ Identification probe over all 1,500 dossiers running (non-thinking V4-Pro) → `
   DOGE, XRP, DOT, LINK, AXS, SOL) identified in nearly every week. Month within ±6 months: 89%.
 - Cost $3.90 for 1,500 (non-thinking V4-Pro, full dossier text as input); per-dossier flags saved for the
   identified-subset analysis in Charter 1. Credit left ≈ $0.6: LLM steps paused again until top-up.
+
+## 2026-11-09 17:30 UTC — Reddit ingest complete
+1,118,556 posts stored (r/CryptoCurrency, r/Bitcoin, r/ethereum; 1,772 days each, 2022-01-01 → 2026-11-07;
+2 zero-post days), 215 MB. Bodies are empty for ~87% (link posts/removed); titles carry the signal.
+News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA ≈ 2026-11-11.
