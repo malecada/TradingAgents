@@ -22,6 +22,7 @@ MODEL = "deepseek/deepseek-v4.1-flash"
 PROVIDERS = ["Morph", "CoreWeave", "DeepInfra"]   # same fp8 weights, fastest first (Baidu rate-limits at 8 workers)
 PROVIDER = PROVIDERS[0]
 LOG = os.environ.get("LLM_TEXT_LOG")
+REASONING = {"enabled": False}            # classification needs no chain of thought; thinking cost ~5x latency
 QUANTIZATION = "fp8"
 TYPES = ["price_recap", "event", "analysis_opinion", "promotional", "unrelated"]
 SCHEMA = {
@@ -112,14 +113,14 @@ def validate(obj) -> dict:
 
 def request_body(text: str, max_tokens: int = 3000) -> dict:
     return {"model": MODEL, "messages": [{"role": "user", "content": PROMPT.format(text=text)}],
-            "temperature": 0, "max_tokens": max_tokens, "reasoning": {"effort": "low"},
+            "temperature": 0, "max_tokens": max_tokens, "reasoning": dict(REASONING),
             "response_format": {"type": "json_schema", "json_schema": {"name": "news_item", "strict": True, "schema": SCHEMA}},
             "provider": {"order": PROVIDERS, "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
             "usage": {"include": True}}
 
 
 def prompt_sha256() -> str:
-    return hashlib.sha256(json.dumps({"prompt": PROMPT, "schema": SCHEMA, "model": MODEL}, sort_keys=True).encode()).hexdigest()
+    return hashlib.sha256(json.dumps({"prompt": PROMPT, "schema": SCHEMA, "model": MODEL, "reasoning": REASONING}, sort_keys=True).encode()).hexdigest()
 
 
 @dataclass
