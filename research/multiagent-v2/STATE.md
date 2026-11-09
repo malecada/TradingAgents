@@ -134,3 +134,11 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Categories: CoinGecko labels for 281/345 universe symbols (64 ambiguous ids → unknown); family mapping ignores
   ecosystem/portfolio/index labels and matches by family priority (meme before network). Distribution: network 118,
   DeFi 65, unknown 64, meme 35, AI 21, gaming/NFT 19, other 11, misc 12. data/dossier/categories.json committed.
+
+## 2026-11-09 19:30 UTC — check-in
+- Wayback fetch alive, newest-first pass 11,700/47,502 (~1,400/h); ledger 38,306 rows. Fully fetched months:
+  2022-01→2022-11 (earlier oldest-first pass) and 2024-07→2024-12; remaining 2022-12→2024-06 ≈ 26 h.
+- Builder bumped to v2.7 (category fallback + unlock wording); the December v2.6 pilot directory was cleared so the
+  Charter 1 set has one builder version. Rebuild running (log /tmp/build_v27_a.log): Fridays 2024-08-02→2024-12-27
+  (30-day lookback fully fetched), then 2022-01-07→2022-11-25; est. ≈ $6 Flash typing.
+- OpenRouter: $45 total credits, $23.46 used → $21.54 available.
