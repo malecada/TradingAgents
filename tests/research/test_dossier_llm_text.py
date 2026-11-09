@@ -55,12 +55,6 @@ def test_classify_caches_and_validates(tmp_path):
 ])
 
 
-def test_402_is_a_credit_error(tmp_path):
-    llm = TextLLM(api_key="k", session=S([R(402)]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
-    with pytest.raises(CreditError):
-        llm.classify("t")
-    llm = TextLLM(api_key="k", session=S([R(200, payload(GOOD, provider="DeepInfra"))]), cache_path=tmp_path / "d.jsonl")
-    assert llm.classify("u")["type"] == "event"          # second pinned provider accepted
 def test_failures(tmp_path, resp, needle):
     llm = TextLLM(api_key="k", session=S([resp]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
     with pytest.raises(TextLLMError, match=needle):
@@ -84,3 +78,11 @@ def test_scrub_proper_nouns_keeps_tokens_and_sentence_starts():
     out, n = scrub_proper_nouns(text)
     assert "WonderFi" not in out and "Sun Hung Kai" not in out and n == 2
     assert "Asset_K" in out and "Exchange_1" in out and out.startswith("Asset_K") and "The deal" in out and "US dollars" in out
+
+
+def test_402_is_a_credit_error(tmp_path):
+    llm = TextLLM(api_key="k", session=S([R(402)]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
+    with pytest.raises(CreditError):
+        llm.classify("t")
+    llm = TextLLM(api_key="k", session=S([R(200, payload(GOOD, provider="DeepInfra"))]), cache_path=tmp_path / "d.jsonl")
+    assert llm.classify("u")["type"] == "event"          # second pinned provider accepted
