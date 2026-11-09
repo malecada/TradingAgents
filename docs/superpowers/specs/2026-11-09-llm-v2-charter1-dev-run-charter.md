@@ -40,7 +40,7 @@ quant-only cross-sectional model fed identical cards?
 | Re-identification: month within ±6 months | reported (pilot 69%) |
 | Identified-subset analysis | forecast gates (§5) computed separately for identified and non-identified dossiers; a gap is reported as the memorization estimate |
 | Dossier noise share (price recaps + promotional + unrelated among retrieved) | reported; ≤ 0.6 of retrieved |
-| Measured cost per asset-week | recorded; budget set at 1.3× projection |
+| Measured cost per asset-week | $0.041 (pilot, 2 weeks); budget set at 1.2× projection |
 
 ## 5. Gates (dev window, forecast quality before any portfolio claim)
 | Gate | Floor |
@@ -51,7 +51,7 @@ quant-only cross-sectional model fed identical cards?
 | Incremental: system IC ≥ quant-only ridge IC on common weeks | required |
 | Sub-periods (2022, 2023, 2024) | same sign of mean IC in ≥ 2 of 3 |
 
-Portfolio gates (only if all forecast gates pass): rule-twin and PM books, taker costs 5 bp per side plus
+Portfolio gates (only if all forecast gates pass): the rule-twin book is primary (the PM prompt violated its constraints in both pilot weeks and is kept as an ablation with its violation rate reported), taker costs 5 bp per side plus
 funding, net SR ≥ 0.8, dual-family placebo (shuffled dates, shuffled assets) p ≤ 0.05, DSR at the declared
 trial count (1 configuration; ablations are descriptive).
 
@@ -62,7 +62,7 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.
-- Spend cap: set at freeze from the pilot (plan estimate ≈ $530 for the dev run at pro-judgment prices).
+- Spend cap: $400 for the dev run (pilot measured $2.07 per week × 156 weeks ≈ $325, plus 20% headroom); Flash typing and the identification probe are separate, ≈ $12.
 - Family: `llm-multiagent-v2` (new mechanism: dossier-fed debate on anonymized cross-section), attempt budget 6,
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.

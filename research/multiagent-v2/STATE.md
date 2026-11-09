@@ -65,3 +65,19 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 - OpenRouter account credit ($10) exhausted; dossier build stopped at 178 clean dossiers (22 degraded ones removed).
   Fetch and Reddit ingests continue (no LLM). Resume steps in memory/plan; Charter 1 freeze waits for the repeat
   probe and the completed dev dossiers.
+
+## 2026-11-09 06:30 UTC — pilot complete (config v2.2, weeks 2022-01-07 and 2022-01-14 + repeat of week 1)
+| Probe | Result | Floor |
+|---|---|---|
+| Schema/call failures | 0 of 100 asset-weeks | ≤ 1% |
+| Order-swap consistency (Spearman, judges) | 0.89 (mean abs gap 0.016) | ≥ 0.75 |
+| Repeat agreement (50 assets, identical run) | 0.91 (mean abs gap 0.015) | ≥ 0.85 |
+| Abstain share | 2% | reported |
+| Cost | $0.041 per asset-week; $0.10 per debated asset; $2.07 per week | — |
+| Wall time | ~12 min per week with 12 workers | — |
+- Judge probabilities are tight (mean 0.47, sd 0.05, range 0.35–0.58): cautious, bearish lean in a falling market.
+- PM prompt violated its constraints in both weeks (weights above cap, gross > 1, net −0.75/−0.55, weights on
+  abstentions) → fallback to the rule twin. **Decision:** the deterministic rule twin is the primary portfolio
+  constructor; the PM call is kept as an ablation and its violation rate is a reported diagnostic.
+- Dev-run budget at measured rates: 156 weeks × $2.07 ≈ $325; plus Flash typing ≈ $10, identification probe ≈ $2,
+  ablations ≈ $100, sealed windows ≈ $260. Current balance $6.62 covers the H1-2022 dossier build and the probe only.
