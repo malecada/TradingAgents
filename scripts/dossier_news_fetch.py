@@ -66,7 +66,7 @@ def main() -> int:
             except Exception as exc:  # network, rate limit or parse failure: retried on a later run
                 rec, outcome = None, f"error:{type(exc).__name__}:{exc}"
                 print(f"transient {row.url[-60:]}: {outcome}", flush=True)
-                time.sleep(60)
+                time.sleep(20)
             if rec:
                 batch.append(rec)
                 n_ok += 1

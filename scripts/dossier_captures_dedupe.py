@@ -44,12 +44,16 @@ def main() -> int:
         df = df[~df["url"].isin(old)]
         note = f"old-excluded {len(old)}"
         if outlet == "theblock":
+            slug = df["url"].str.extract(r"/post/\d+/([^/]+)/?$")[0]
+            junk = slug.isin(["privacy-policy", "terms-service", "security"]) | (slug.str.len() <= 3)
+            df = df[~junk]                      # site pages captured under post ids, not articles
+            note = f"junk slugs dropped {int(junk.sum())}"
             pid = df["url"].str.extract(r"/post/(\d+)/")[0].astype(float)
             df = df.assign(pid=pid)
             medians = df.assign(m=df["first_ts"].dt.to_period("M")).groupby("m")["pid"].median()
             floor = float(medians.iloc[0]) * 0.75
             df = df[df["pid"] >= floor].drop(columns="pid")
-            note += f"; pid floor {floor:.0f}"
+            note += f"; pid floor {floor:.0f}; old-excluded {len(old)}"
         target = CAPTURES / f"{outlet}_dedup.parquet"
         df.reset_index(drop=True).to_parquet(target, index=False)
         print(f"{outlet}: {before} rows -> {len(df)} unique urls ({note}); dev-window "
