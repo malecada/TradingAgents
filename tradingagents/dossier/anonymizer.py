@@ -11,7 +11,7 @@ import re
 
 import pandas as pd
 
-from tradingagents.dossier.entities import DATE_RE, PRICE_LEVEL_RE, Dictionary, _pattern
+from tradingagents.dossier.entities import DATE_RE, PRICE_LEVEL_RE, Dictionary, _pattern, is_english_word
 
 _ALPHA = "ABCDEFGHJKLMNPQRSTUVWXYZ"
 _ROLE_PREFIX = {"asset": "Asset", "exchange": "Exchange", "person": "Person", "regulator": "Regulator",
@@ -81,18 +81,40 @@ class Masker:
         years = round(days / 365.25, 1)
         return f"about {years} years ago" if years > 0 else f"in about {-years} years"
 
-    def _terms(self):
-        cached = getattr(self.dictionary, "_terms_cache", None)
+    def _combined(self):
+        """Two alternation patterns over the whole dictionary (case-sensitive and case-insensitive terms),
+        longest term first so alternation prefers the longest match; built once per dictionary."""
+        cached = getattr(self.dictionary, "_combined_cache", None)
         if cached is None:
-            cached = [(t, r, k, _pattern(t)) for t, r, k in self.dictionary.all_terms()]
-            object.__setattr__(self.dictionary, "_terms_cache", cached)
+            cs, ci, lookup = [], [], {}
+            for term, role, key in self.dictionary.all_terms():      # already longest-first
+                insensitive = len(term) > 4 and not term.isupper() and not is_english_word(term) and not term.startswith("$")
+                lk = term.lower() if insensitive else term
+                if lk in lookup:                          # assets are listed first and keep precedence (Bitcoin: asset, not network)
+                    continue
+                lookup[lk] = (role, key, insensitive)
+                (ci if insensitive else cs).append(re.escape(term))
+            pat_cs = re.compile(r"(?<![A-Za-z0-9_$])(?:" + "|".join(cs) + r")(?![A-Za-z0-9_])") if cs else None
+            pat_ci = re.compile(r"(?<![A-Za-z0-9_$])(?:" + "|".join(ci) + r")(?![A-Za-z0-9_])", re.IGNORECASE) if ci else None
+            cached = (pat_cs, pat_ci, lookup)
+            object.__setattr__(self.dictionary, "_combined_cache", cached)
         return cached
 
+    def _sub(self, match: re.Match) -> str:
+        token = match.group(0)
+        hit = self._combined()[2].get(token) or self._combined()[2].get(token.lower())
+        if hit is None:
+            return token
+        role, key, _ = hit
+        return self.alias(role, key)
+
     def mask_text(self, text: str) -> str:
+        pat_cs, pat_ci, _ = self._combined()
         out = text
-        for term, role, key, pat in self._terms():
-            if pat.search(out):
-                out = pat.sub(self.alias(role, key), out)
+        if pat_cs is not None:
+            out = pat_cs.sub(self._sub, out)
+        if pat_ci is not None:
+            out = pat_ci.sub(self._sub, out)
         out = DATE_RE.sub(self.relative_date, out)
         out = _YEAR_RE.sub("[year]", out)
         out = PRICE_LEVEL_RE.sub("[price level]", out)
@@ -101,9 +123,15 @@ class Masker:
     def verify(self, text: str) -> list[str]:
         """Residual identity leaks: dictionary terms or four-digit years left in ``text``."""
         leaks = []
-        for term, role, key, pat in self._terms():
-            if pat.search(text):
-                leaks.append(f"{role}:{term}")
+        pat_cs, pat_ci, lookup = self._combined()
+        for pat in (pat_cs, pat_ci):
+            if pat is None:
+                continue
+            for m in pat.finditer(text):
+                token = m.group(0)
+                hit = lookup.get(token) or lookup.get(token.lower())
+                if hit:
+                    leaks.append(f"{hit[0]}:{token}")
         if _YEAR_RE.search(text):
             leaks.append("year")
         return leaks

@@ -33,6 +33,7 @@ REDDIT_SHOWN_CAP = 8           # community posts among shown items
 REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
 _LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
 _CANON_CACHE: dict[str, tuple] = {}  # doc_id -> (canonical alias map, canonically masked text); dossier-independent
+_WEEK_CACHE: dict = {}               # decision_ts -> (rows, links); the week's rows are shared by all symbols
 MAX_ITEMS = 25
 MIN_BODY_CHARS = 120
 OUT = Path("data/dossier/dossiers")
@@ -103,11 +104,16 @@ def retrieve_text(base: str, linker: Linker, decision_ts: pd.Timestamp, root=sto
     """Store rows in the lookback window, observable at decision time, linked to ``base``.
     News rows are all kept; community posts are capped at ``reddit_cap`` per dossier, taking the
     most-commented posts where the asset is the primary subject."""
-    rows = store.query(decision_ts - pd.Timedelta(days=lookback_days), decision_ts, decision_ts, root=root)
+    key = (str(root), decision_ts, lookback_days)
+    if key not in _WEEK_CACHE:
+        _WEEK_CACHE.clear()                               # weeks are processed in order; keep one
+        rows = store.query(decision_ts - pd.Timedelta(days=lookback_days), decision_ts, decision_ts, root=root)
+        links = [_links_for(r, linker) for r in rows.itertuples(index=False)] if len(rows) else []
+        _WEEK_CACHE[key] = (rows, links)
+    rows, links = _WEEK_CACHE[key]
     if rows.empty:
         return rows.assign(salience=pd.Series(dtype=str))
-    salience = [_links_for(r, linker).get(base) for r in rows.itertuples(index=False)]
-    rows = rows.assign(salience=salience)
+    rows = rows.assign(salience=[l.get(base) for l in links])
     rows = rows[rows["salience"].notna()]
     news = rows[rows["source"] != "reddit"]
     reddit = rows[(rows["source"] == "reddit") & (rows["salience"] == "primary")].copy()
