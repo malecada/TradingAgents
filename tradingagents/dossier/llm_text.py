@@ -9,6 +9,7 @@ from dataclasses import dataclass, field
 import hashlib
 import json
 import math
+import os
 import re
 from pathlib import Path
 import threading
@@ -18,7 +19,9 @@ import requests
 
 ENDPOINT = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "deepseek/deepseek-v4.1-flash"
-PROVIDER = "Baidu"
+PROVIDERS = ["Baidu", "DeepInfra"]        # same fp8 weights; ordered, no fallbacks beyond this list
+PROVIDER = PROVIDERS[0]
+LOG = os.environ.get("LLM_TEXT_LOG")
 QUANTIZATION = "fp8"
 TYPES = ["price_recap", "event", "analysis_opinion", "promotional", "unrelated"]
 SCHEMA = {
@@ -61,6 +64,16 @@ class TextLLMError(RuntimeError):
     pass
 
 
+class CreditError(TextLLMError):
+    """Account credit exhausted: the whole build must stop, not degrade dossier by dossier."""
+
+
+def _log(**fields):
+    if LOG:
+        with open(LOG, "a") as fh:
+            fh.write(json.dumps({"ts": time.time(), **fields}) + "\n")
+
+
 _SENTENCE_START = re.compile(r"(?:^|[.!?]\s+)([A-Z][a-z]+)")
 _PROPER = re.compile(r"\b(?!(?:Asset|Exchange|Person|Regulator|Network)_[A-Za-z0-9]+\b)[A-Z][A-Za-z0-9&'-]*(?: [A-Z][A-Za-z0-9&'-]*)*")
 _ALLOWED_CAPS = {"I", "US", "U.S.", "UK", "EU", "ETF", "ETFs", "NFT", "NFTs", "DeFi", "CeFi", "DAO", "DAOs", "DEX", "DEXs", "CEX",
@@ -101,7 +114,7 @@ def request_body(text: str, max_tokens: int = 3000) -> dict:
     return {"model": MODEL, "messages": [{"role": "user", "content": PROMPT.format(text=text)}],
             "temperature": 0, "max_tokens": max_tokens, "reasoning": {"effort": "low"},
             "response_format": {"type": "json_schema", "json_schema": {"name": "news_item", "strict": True, "schema": SCHEMA}},
-            "provider": {"order": [PROVIDER], "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
+            "provider": {"order": PROVIDERS, "allow_fallbacks": False, "quantizations": [QUANTIZATION]},
             "usage": {"include": True}}
 
 
@@ -146,7 +159,8 @@ class TextLLM:
                 body = request_body(text, max_tokens=8000)   # one retry with headroom after a truncated answer
             try:
                 r = session.post(ENDPOINT, json=body, timeout=120, headers=headers)
-            except requests.RequestException:
+            except requests.RequestException as exc:
+                _log(attempt=attempt, outcome=f"network:{type(exc).__name__}")
                 if attempt == self.max_attempts:
                     raise TextLLMError("network failure") from None
                 self.sleep(min(5 * 2 ** (attempt - 1), 60))
@@ -154,12 +168,17 @@ class TextLLM:
             if r.status_code == 200:
                 data = r.json()
                 if "error" in data and "choices" not in data:
+                    code = (data.get("error") or {}).get("code")
+                    _log(attempt=attempt, outcome="provider_error", code=code, detail=str(data["error"])[:160])
+                    if code == 402:
+                        raise CreditError("insufficient credits (402 in body)")
                     if attempt < self.max_attempts:
                         self.sleep(min(5 * 2 ** (attempt - 1), 60))
                         continue
                     raise TextLLMError(f"provider error: {str(data['error'])[:200]}")
-                if data.get("model") != MODEL or data.get("provider") != PROVIDER:
+                if data.get("model") != MODEL or data.get("provider") not in PROVIDERS:
                     raise TextLLMError(f"drift: {data.get('model')} / {data.get('provider')}")
+                _log(attempt=attempt, outcome="ok", provider=data.get("provider"))
                 choice = data["choices"][0]
                 if choice.get("finish_reason") == "length" and attempt < self.max_attempts:
                     continue
@@ -181,8 +200,9 @@ class TextLLM:
                         with Path(self.cache_path).open("a") as fh:
                             fh.write(json.dumps({"key": key, "value": value, "cost": cost}) + "\n")
                 return dict(value)
+            _log(attempt=attempt, outcome=f"http_{r.status_code}", detail=str(r.text)[:160])
             if r.status_code == 402:
-                raise TextLLMError("insufficient credits (402)")
+                raise CreditError("insufficient credits (402)")
             if r.status_code in RETRY_STATUS and attempt < self.max_attempts:
                 self.sleep(min(5 * 2 ** (attempt - 1), 60))
                 continue

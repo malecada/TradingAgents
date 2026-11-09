@@ -20,11 +20,11 @@ from tradingagents.dossier import store
 from tradingagents.dossier.anonymizer import Masker
 from tradingagents.dossier.calendar import render_calendar
 from tradingagents.dossier.entities import Dictionary, Linker
-from tradingagents.dossier.llm_text import TextLLMError, scrub_proper_nouns
+from tradingagents.dossier.llm_text import CreditError, TextLLMError, scrub_proper_nouns
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.4"
+BUILDER_VERSION = "dossier-v2.4"   # unchanged output semantics; provider list and failure policy only
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 4
@@ -186,6 +186,8 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
         r, canon, masked = job
         try:
             return r, canon, text_llm.classify(masked)
+        except CreditError:
+            raise                                  # stop the whole build; never degrade silently
         except TextLLMError:
             return r, canon, None
 
@@ -209,6 +211,8 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
             classified.append({"doc_id": r.doc_id, "source": r.source, "outlet": r.outlet, "event_ts": pd.Timestamp(r.event_ts),
                                "as_of_ts": pd.Timestamp(r.as_of_ts), "salience": r.salience, "type": out["type"],
                                "novelty": out["novelty"], "summary": summary})
+    if candidates and counts["failed"] > 0.2 * len(candidates):
+        raise RuntimeError(f"degraded dossier for {symbol} {friday.date()}: {counts['failed']} of {len(candidates)} classifications failed")
     items = select_items(classified)
     text = render(alias, numeric_text, items, counts, decision_ts, render_calendar(decision_ts, numeric))
     leaks = masker.verify(text)

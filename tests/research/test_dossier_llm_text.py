@@ -9,7 +9,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from tradingagents.dossier.llm_text import MODEL, PROVIDER, TextLLM, TextLLMError, request_body  # noqa: E402
+from tradingagents.dossier.llm_text import MODEL, PROVIDER, PROVIDERS, CreditError, TextLLM, TextLLMError, request_body  # noqa: E402
 
 
 class R:
@@ -45,15 +45,22 @@ def test_classify_caches_and_validates(tmp_path):
     llm2 = TextLLM(api_key="k", session=S([]), cache_path=tmp_path / "c.jsonl")
     assert llm2.classify("t")["summary"].startswith("Exchange_1") and llm2.calls == 0
     body = request_body("x")
-    assert body["provider"]["order"] == [PROVIDER] and body["response_format"]["json_schema"]["strict"]
+    assert body["provider"]["order"] == PROVIDERS and body["response_format"]["json_schema"]["strict"]
 
 
 @pytest.mark.parametrize("resp,needle", [
     (R(200, payload(GOOD, model="deepseek/deepseek-v4-pro")), "drift"),
     (R(200, payload({"type": "weird", "summary": "", "novelty": "none", "affected_aliases": []})), "invalid"),
     (R(200, payload(GOOD, finish="content_filter")), "finish_reason"),
-    (R(402), "402"),
 ])
+
+
+def test_402_is_a_credit_error(tmp_path):
+    llm = TextLLM(api_key="k", session=S([R(402)]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
+    with pytest.raises(CreditError):
+        llm.classify("t")
+    llm = TextLLM(api_key="k", session=S([R(200, payload(GOOD, provider="DeepInfra"))]), cache_path=tmp_path / "d.jsonl")
+    assert llm.classify("u")["type"] == "event"          # second pinned provider accepted
 def test_failures(tmp_path, resp, needle):
     llm = TextLLM(api_key="k", session=S([resp]), cache_path=tmp_path / "c.jsonl", sleep=lambda x: None)
     with pytest.raises(TextLLMError, match=needle):
