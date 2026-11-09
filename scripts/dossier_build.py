@@ -34,10 +34,13 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=50)
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--cost-cap", type=float, default=30.0)
+    ap.add_argument("--out", default=None, help="output directory for dossiers (default data/dossier/dossiers)")
+    ap.add_argument("--newest-first", action="store_true", help="build the latest Fridays first")
     args = ap.parse_args()
     cards = load_cards()
     top = weekly_top(cards, args.top, args.start, args.end)
-    fridays = sorted(top["date"].unique())
+    fridays = sorted(top["date"].unique(), reverse=args.newest_first)
+    out_dir = Path(args.out) if args.out else OUT
     bases = sorted({base_symbol(s) for s in cards["symbol"].unique()})
     dictionary = build_dictionary(bases)
     linker = Linker(dictionary)
@@ -66,11 +69,11 @@ def main() -> int:
         calib = calibration(preds, fwd, f)
         week = top[top["date"] == f]
         for sym in week["symbol"]:
-            target = OUT / pd.Timestamp(f).strftime("%Y-%m-%d") / f"{sym}.json"
+            target = out_dir / pd.Timestamp(f).strftime("%Y-%m-%d") / f"{sym}.json"
             if target.exists():
                 continue
             seed = args.seed + int(pd.Timestamp(f).timestamp() // 86400) * 7 + hash(sym) % 1000
-            d = build(sym, f, cards, dictionary, linker, llm, seed=seed)
+            d = build(sym, f, cards, dictionary, linker, llm, seed=seed, out_dir=out_dir)
             row = preds[(preds["date"] == f) & (preds["symbol"] == sym)]
             pr = float(row["pred_rank_pct"].iloc[0]) if len(row) else None
             payload = json.loads(target.read_text())
