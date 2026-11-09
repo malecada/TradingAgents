@@ -60,7 +60,7 @@ def main() -> int:
     else:
         cards = pd.read_parquet("data/llm_rank_xs/cards.parquet")
         cards["date"] = pd.to_datetime(cards["date"], utc=True)
-        symbols = sorted(weekly_top(cards, args.top, start=start)["symbol"].unique())
+        symbols = sorted(weekly_top(cards, args.top, start=args.start)["symbol"].unique())
     OUT.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
     done = 0
