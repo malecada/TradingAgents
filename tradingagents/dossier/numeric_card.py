@@ -55,7 +55,12 @@ def _age(weeks) -> str:
     return "listed over a year"
 
 
+_LABEL_SKIP = ("ecosystem", "portfolio", "index", "alleged", "made in", "launchpool", "launchpad", "binance", "coinbase", "okx")
 _FAMILIES = [("meme", "meme"), ("smart contract", "network or infrastructure"), ("artificial intelligence", "AI"),
+             ("decentralized finance", "DeFi"), ("defi", "DeFi"), ("gambl", "gaming or NFT"), ("fan token", "gaming or NFT"),
+             ("sports", "gaming or NFT"), ("socialfi", "social"), ("social", "social"), ("e-commerce", "payments"),
+             ("inscription", "meme"), ("brc-20", "meme"), ("depin", "infrastructure services"),
+             ("internet of things", "infrastructure services"), ("infrastructure", "network or infrastructure"),
              ("ai agent", "AI"), ("oracle", "infrastructure services"), ("storage", "infrastructure services"),
              ("real world asset", "real-world assets"), ("liquid staking", "DeFi"), ("perpetual", "DeFi"), ("gaming", "gaming or NFT"), ("nft", "gaming or NFT"), ("metaverse", "gaming or NFT"),
              ("chain", "network or infrastructure"), ("bridge", "network or infrastructure"), ("rollup", "network or infrastructure"),
@@ -88,11 +93,10 @@ def category_family(category, symbol: str | None = None) -> str:
         labels.extend(_fallback_categories(symbol))
     if not labels:
         return "unknown"
-    for label in labels:
-        c = label.lower()
-        for key, fam in _FAMILIES:
-            if key in c:
-                return fam
+    labels = [l.lower() for l in labels if not any(k in l.lower() for k in _LABEL_SKIP)] or ["other"]
+    for key, fam in _FAMILIES:                       # family priority (meme before network) over label order
+        if any(key in c for c in labels):
+            return fam
     return "other"
 
 

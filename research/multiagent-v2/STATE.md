@@ -131,3 +131,6 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA â
   market-cap rank; categories filled from CoinGecko labels (stable attribute, present label used for all weeks,
   disclosed) via scripts/dossier_categories_fetch.py -> data/dossier/categories.json; unlock line reads
   "unavailable" instead of "n/a%". The Charter 1 rebuild uses these.
+- Categories: CoinGecko labels for 281/345 universe symbols (64 ambiguous ids â†’ unknown); family mapping ignores
+  ecosystem/portfolio/index labels and matches by family priority (meme before network). Distribution: network 118,
+  DeFi 65, unknown 64, meme 35, AI 21, gaming/NFT 19, other 11, misc 12. data/dossier/categories.json committed.
