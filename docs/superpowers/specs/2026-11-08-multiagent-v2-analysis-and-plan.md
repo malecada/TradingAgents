@@ -421,7 +421,11 @@ Charter 0 failed on 2026-11-08: the dossier carries article summaries and typed 
 - Pilot week 1 (50 assets, 20 debates): 0 failures, order-swap Spearman 0.91 (floor 0.75), mean |Δp| 0.017,
   abstain 4%, $2.27 per week with 20 debates (≈ $1.75 with 12). Dev run (156 weeks) ≈ $275 at these rates.
 - Charter 0 (extraction) FAIL recorded earlier; dossier uses summaries, not typed events.
-- **Blocker:** OpenRouter account credit ($10) exhausted on 2026-11-09; all LLM steps paused until topped up.
+- Credit recharged to $20 on 2026-11-09; pilot completed (order-swap 0.89, repeat 0.91, 0 failures, $2.07 per week),
+  the rule-twin book replaces the PM prompt as primary constructor; 1,500 dossiers built for Jan–Jul 2022 (typing $1.53).
+- Identification probe on all 1,500 dossiers: 51% of assets identified (65% for top-20 assets, 40% for smaller),
+  month within ±6 months 89%; flags stored per dossier for the identified-subset analysis. Credit ≈ $0.6 again.
+- **Blocker:** a further top-up (≈ $400 for the dev run, ≈ $700 through the sealed windows) is needed before the dev run.
 
 ## 14. Decisions
 

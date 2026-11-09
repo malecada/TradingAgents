@@ -95,3 +95,9 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 Audit: 91% of dossiers have linked text, 88% show items (median 11 shown, 30 retrieved), noise share 28%,
 events 36% of retrieved, community posts 37% of shown items, 0 dictionary leaks, median ~1,300 tokens of text.
 Identification probe over all 1,500 dossiers running (non-thinking V4-Pro) → `data/dossier/reid_flags.parquet`.
+
+## 2026-11-09 15:00 UTC — identification probe on all 1,500 H1-2022 dossiers (`data/dossier/reid_flags.parquet`)
+- Asset identified: 51% overall (chance 1.1%); top-20-by-size assets 65%, smaller assets 40%; majors (BTC, ETH,
+  DOGE, XRP, DOT, LINK, AXS, SOL) identified in nearly every week. Month within ±6 months: 89%.
+- Cost $3.90 for 1,500 (non-thinking V4-Pro, full dossier text as input); per-dossier flags saved for the
+  identified-subset analysis in Charter 1. Credit left ≈ $0.6: LLM steps paused again until top-up.
