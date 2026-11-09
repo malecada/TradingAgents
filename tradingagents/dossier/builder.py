@@ -24,7 +24,7 @@ from tradingagents.dossier.llm_text import CreditError, TextLLMError, scrub_prop
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.4"   # unchanged output semantics; provider list and failure policy only
+BUILDER_VERSION = "dossier-v2.5"   # non-thinking typing summaries; final dev dossiers must all carry this version
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 8
