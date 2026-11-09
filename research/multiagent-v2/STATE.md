@@ -81,3 +81,12 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
   constructor; the PM call is kept as an ablation and its violation rate is a reported diagnostic.
 - Dev-run budget at measured rates: 156 weeks × $2.07 ≈ $325; plus Flash typing ≈ $10, identification probe ≈ $2,
   ablations ≈ $100, sealed windows ≈ $260. Current balance $6.62 covers the H1-2022 dossier build and the probe only.
+
+## 2026-11-09 09:30 UTC — build performance settings (builder v2.5)
+- Flash typing: non-thinking, providers Morph/CoreWeave/DeepInfra selected by throughput, pooled HTTP sessions,
+  16 workers; median latency 1.4 s, ≈ $0.00008 per article. Baidu rate-limits concurrent Flash calls (429).
+- Masking: one combined alternation pattern per case class (≈17 ms per mask+verify); canonical masked text,
+  week rows and entity links cached per document/week.
+- The cache key includes the reasoning setting, so the one-time re-typing of the ~7K already-cached articles is
+  in progress; dossiers built before this (250, v2.4) stay for probing only. The dev set gets a clean v2.5 rebuild
+  into a fresh directory before the Charter 1 freeze.
