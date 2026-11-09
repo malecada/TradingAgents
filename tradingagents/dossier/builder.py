@@ -32,6 +32,7 @@ CANONICAL_SEED = 0
 REDDIT_SHOWN_CAP = 8           # community posts among shown items
 REDDIT_CAP = 25               # community posts per dossier, ranked by comment count (retrieval-time; disclosed)
 _LINK_CACHE: dict[str, dict] = {}   # doc_id -> {base: salience}; rows repeat across the 50 symbols of a week
+_CANON_CACHE: dict[str, tuple] = {}  # doc_id -> (canonical alias map, canonically masked text); dossier-independent
 MAX_ITEMS = 25
 MIN_BODY_CHARS = 120
 OUT = Path("data/dossier/dossiers")
@@ -178,26 +179,33 @@ def build(symbol: str, friday: pd.Timestamp, cards: pd.DataFrame, dictionary: Di
         if len((r.title or "") + body) < MIN_BODY_CHARS and r.source != "reddit":
             continue
         # Canonical masking (fixed seed, dates relative to the article itself) so one article is
-        # classified once and the cached result is shared across all assets and weeks.
-        canon = Masker(dictionary, pd.Timestamp(r.event_ts), CANONICAL_SEED)
-        candidates.append((r, canon, canon.mask_text(f"{r.title}\n{body}".strip())))
+        # classified once and the cached result is shared across all assets and weeks. The masked text
+        # and alias map are themselves cached per document: they do not depend on the dossier.
+        cached = _CANON_CACHE.get(r.doc_id)
+        if cached is None:
+            if len(_CANON_CACHE) > 200_000:
+                _CANON_CACHE.clear()
+            canon = Masker(dictionary, pd.Timestamp(r.event_ts), CANONICAL_SEED)
+            masked = canon.mask_text(f"{r.title}\n{body}".strip())
+            cached = (canon.mapping(), masked)
+            _CANON_CACHE[r.doc_id] = cached
+        candidates.append((r, cached[0], cached[1]))
 
     def classify(job):
-        r, canon, masked = job
+        r, canon_map, masked = job
         try:
-            return r, canon, text_llm.classify(masked)
+            return r, canon_map, text_llm.classify(masked)
         except CreditError:
             raise                                  # stop the whole build; never degrade silently
         except TextLLMError:
-            return r, canon, None
+            return r, canon_map, None
 
     with ThreadPoolExecutor(max_workers=CLASSIFY_WORKERS) as pool:
-        for r, canon, out in pool.map(classify, candidates):
+        for r, canon_map, out in pool.map(classify, candidates):
             if out is None:                  # one bad article must not sink the dossier; counted and disclosed
                 counts["failed"] += 1
                 continue
             counts[out["type"]] += 1
-            canon_map = canon.mapping()                       # canonical alias -> "role:key"
             affected = {canon_map.get(a, "") for a in out["affected_aliases"]}
             if f"asset:{base}" not in affected and r.salience != "primary":
                 continue
