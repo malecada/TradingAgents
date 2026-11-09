@@ -5,6 +5,7 @@ returns, z-scores and buckets. No price levels, no absolute market caps, no date
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -54,7 +55,9 @@ def _age(weeks) -> str:
     return "listed over a year"
 
 
-_FAMILIES = [("meme", "meme"), ("gaming", "gaming or NFT"), ("nft", "gaming or NFT"), ("metaverse", "gaming or NFT"),
+_FAMILIES = [("meme", "meme"), ("smart contract", "network or infrastructure"), ("artificial intelligence", "AI"),
+             ("ai agent", "AI"), ("oracle", "infrastructure services"), ("storage", "infrastructure services"),
+             ("real world asset", "real-world assets"), ("liquid staking", "DeFi"), ("perpetual", "DeFi"), ("gaming", "gaming or NFT"), ("nft", "gaming or NFT"), ("metaverse", "gaming or NFT"),
              ("chain", "network or infrastructure"), ("bridge", "network or infrastructure"), ("rollup", "network or infrastructure"),
              ("layer", "network or infrastructure"), ("dex", "DeFi"), ("lending", "DeFi"), ("yield", "DeFi"), ("cdp", "DeFi"),
              ("derivative", "DeFi"), ("staking", "DeFi"), ("stablecoin", "DeFi"), ("launchpad", "DeFi"), ("farm", "DeFi"),
@@ -63,14 +66,33 @@ _FAMILIES = [("meme", "meme"), ("gaming", "gaming or NFT"), ("nft", "gaming or N
              ("cex", "exchange token"), ("payment", "payments"), ("wallet", "payments")]
 
 
-def category_family(category) -> str:
-    """Coarse family instead of the raw category label, which can single out an asset."""
-    if category is None or (isinstance(category, float) and pd.isna(category)):
+CATEGORIES_PATH = Path("data/dossier/categories.json")
+_CATEGORIES: dict | None = None
+
+
+def _fallback_categories(symbol: str) -> list[str]:
+    """CoinGecko category labels fetched by scripts/dossier_categories_fetch.py (stable attribute, not dated)."""
+    global _CATEGORIES
+    if _CATEGORIES is None:
+        _CATEGORIES = json.loads(CATEGORIES_PATH.read_text()) if CATEGORIES_PATH.exists() else {}
+    return _CATEGORIES.get(symbol, {}).get("categories", [])
+
+
+def category_family(category, symbol: str | None = None) -> str:
+    """Coarse family instead of the raw category label, which can single out an asset. Falls back to the
+    CoinGecko labels when the card panel has no category for the symbol."""
+    labels = []
+    if not (category is None or (isinstance(category, float) and pd.isna(category))):
+        labels.append(str(category))
+    if symbol is not None:
+        labels.extend(_fallback_categories(symbol))
+    if not labels:
         return "unknown"
-    c = str(category).lower()
-    for key, fam in _FAMILIES:
-        if key in c:
-            return fam
+    for label in labels:
+        c = label.lower()
+        for key, fam in _FAMILIES:
+            if key in c:
+                return fam
     return "other"
 
 
@@ -116,7 +138,7 @@ def numeric_block(cards: pd.DataFrame, symbol: str, friday: pd.Timestamp, path: 
         "size_bucket": _bucket(r.get("size_rank")),
         "volume_rank_pct": pct["dvol_30d"],
         "listing_age": _age(r.get("age_weeks")),
-        "category": category_family(r.get("category")),
+        "category": category_family(r.get("category"), symbol),
         "ret_4w_pct": _pct_from_log(r["ret_4w"]),
         "ret_12w_pct": _pct_from_log(r["ret_12w"]),
         "ret_4w_xs_pct": pct["ret_4w"], "ret_12w_xs_pct": pct["ret_12w"],
@@ -148,7 +170,8 @@ def render_numeric(block: dict) -> str:
         f"Volatility: EWMA20 {p(block['vol_ewma20_ann_pct'])}% ann ({xs(block['vol_xs_pct'])}); vol-of-vol {xs(block['volvol_xs_pct'])}.",
         f"Funding (annualized): 3d {p(block['funding_3d_ann_pct'])}%, 30d {p(block['funding_30d_ann_pct'])}% ({xs(block['funding_xs_pct'])}).",
         f"On-chain 30d change: active addresses {p(block['active_addresses_30d_change_pct'])}%, transactions {p(block['tx_count_30d_change_pct'])}% ({xs(block['onchain_activity_xs_pct'])}).",
-        f"Supply schedule: unlock next 30d {p(block['unlock_next30_pct_supply'])}% of supply; previous 30d {p(block['unlock_prev30_pct_supply'])}%.",
+        ("Supply schedule: unlock data unavailable for this asset." if block['unlock_next30_pct_supply'] is None and block['unlock_prev30_pct_supply'] is None
+         else f"Supply schedule: unlock next 30d {p(block['unlock_next30_pct_supply'])}% of supply; previous 30d {p(block['unlock_prev30_pct_supply'])}%."),
     ]
     path = block.get("price_path")
     if path:

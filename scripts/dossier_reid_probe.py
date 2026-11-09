@@ -101,7 +101,8 @@ def main() -> int:
                                "identified": bool(h), "month_within_6": bool(m)}
                               for r, h, m in zip(results, df["asset_hit"], df["month_within_6"].fillna(False))])
         flags.to_parquet(args.out, index=False)
-    Path(f"data/dossier/reid_probe_{args.section}.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
+    summary_path = Path(args.out).with_suffix("") .as_posix() + f"_probe_{args.section}.json"   # next to --out, never overwrites another set's record
+    Path(summary_path).write_text(json.dumps({"summary": summary, "dossiers": args.dossiers, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0
 

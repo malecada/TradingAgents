@@ -119,3 +119,15 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Live smoke of the fixed runner (2022-09-30, scratch dir): cap path stops correctly; full week 50/12/38, 0 failed,
   $2.48, 15.3 min; rule twin net 0, gross 1; p compressed (0.35–0.55). 156 weeks ≈ $387.
 - Realized funding fetcher + realized_funding() + book with/without funding wired into llm_v2c1_run.py.
+
+## 2026-11-10 — v2.6 pilot build, December 2024 (data/dossier/dossiers_v26, 4 weeks)
+- 200 dossiers, $0.33 Flash typing, 25 with no shown items (87.5 % with items), 0 leaked names, 0 exact duplicates,
+  0 residual role tokens, 0 year literals; median 10 items shown, tokens ≈ 1.2K.
+- Identification probe (60 sampled, V4-Pro non-thinking, $0.18): asset 57 %, month within 6 months 97 %.
+  The late-2024 rally is recognizable from the price path alone; this is the measured covariate, not a defect.
+- Coverage gaps found: market-cap rank present for only 24–48 % of the top-50 (none after mid-2025; CoinMetrics
+  community panel), DefiLlama categories for ~40 %. CoinGecko historical market cap is not free beyond 365 days.
+  Decisions: size control in the evaluation = 30-day dollar volume (100 % coverage) instead of the half-empty
+  market-cap rank; categories filled from CoinGecko labels (stable attribute, present label used for all weeks,
+  disclosed) via scripts/dossier_categories_fetch.py -> data/dossier/categories.json; unlock line reads
+  "unavailable" instead of "n/a%". The Charter 1 rebuild uses these.

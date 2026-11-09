@@ -7,7 +7,9 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-CONTROLS = ["vol_ewma20", "ret_4w", "size_rank"]
+# size is controlled through 30-day dollar volume (100 % coverage); the market-cap rank covers only 24-48 %
+# of the universe (none after mid-2025) and would enter as a half-filled constant
+CONTROLS = ["vol_ewma20", "ret_4w", "dvol_30d"]
 
 
 def residualize(day: pd.DataFrame, col: str) -> pd.Series:

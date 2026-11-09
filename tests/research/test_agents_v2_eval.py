@@ -23,7 +23,7 @@ def _panel(signal_strength, seed=0, weeks=60, n=50):
         fwd = 0.02 * latent * signal_strength + 0.05 * rng.normal(0, 1, n) + 0.01 * mom
         p = 0.5 + 0.1 * latent + 0.02 * rng.normal(0, 1, n)
         rows.append(pd.DataFrame({"date": d, "symbol": [f"S{i}" for i in range(n)], "vol_ewma20": vol, "ret_4w": mom,
-                                  "size_rank": size, "fwd_ret": fwd, "p_outperform": np.clip(p, 0, 1)}))
+                                  "size_rank": size, "dvol_30d": size, "fwd_ret": fwd, "p_outperform": np.clip(p, 0, 1)}))
     return pd.concat(rows, ignore_index=True)
 
 

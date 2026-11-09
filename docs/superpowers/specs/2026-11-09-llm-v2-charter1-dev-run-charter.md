@@ -78,7 +78,10 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
 - Disclosures: Wayback capture survivorship (only archived pages are retrievable; coverage differs by outlet and
   year); Reddit deletions; DefiLlama and CoinMetrics daily series carry publication slack (values dated day D may
   have been revised after D; treated as available at D+1); delisting weeks booked at the last traded close and
-  flagged; cards end 2026-06-26; model cutoff unknown
+  flagged; market-cap rank covers only 24–48 % of the universe (CoinMetrics community; none after mid-2025), so
+  the size control is 30-day dollar volume and the card shows a market-cap bucket only where available; asset
+  categories come from present-day CoinGecko labels (stable attribute, not point-in-time); cards end 2026-06-26;
+  model cutoff unknown
   (release-date bound 2026-04-24); dev window is pre-release. Anonymization removes names, dates and exact
   figures but does not prevent content-based recognition of well-known assets (pilot 52%); leakage is
   therefore MEASURED, not assumed absent: identified-vs-non-identified subsets, named-vs-anonymized ablation,
