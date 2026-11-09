@@ -130,8 +130,33 @@ def fetch_capture(url: str, capture_ts: pd.Timestamp, session=None) -> Fetched:
     meta = trafilatura.extract(r.text, output_format="json", with_metadata=True,
                                include_comments=False, favor_precision=True)
     m = json.loads(meta) if meta else {}
-    return Fetched(url, capture_ts, 200, m.get("title"), m.get("date"), m.get("author"),
-                   m.get("text"))
+    ld = ld_json(r.text)
+    return Fetched(url, capture_ts, 200, m.get("title") or ld.get("headline"), m.get("date") or ld.get("date"),
+                   m.get("author"), m.get("text") or ld.get("body"))
+
+
+_LD = re.compile(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', re.S)
+
+
+def ld_json(html: str) -> dict:
+    """Headline, publication date and body from schema.org JSON-LD when present (fallback for the extractor)."""
+    out: dict = {}
+    for m in _LD.finditer(html):
+        try:
+            data = json.loads(m.group(1).strip())
+        except ValueError:
+            continue
+        for obj in (data if isinstance(data, list) else [data]):
+            if not isinstance(obj, dict):
+                continue
+            typ = str(obj.get("@type", ""))
+            if "Article" in typ or "NewsArticle" in typ or "BlogPosting" in typ:
+                out.setdefault("headline", obj.get("headline"))
+                out.setdefault("date", (obj.get("datePublished") or "")[:10] or None)
+                body = obj.get("articleBody")
+                if body and len(body) > 200:
+                    out.setdefault("body", body)
+    return out
 
 
 def date_from_url(url: str):

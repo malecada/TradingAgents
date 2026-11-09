@@ -77,3 +77,12 @@ def test_reddit_rows_strip_removed_bodies():
     rows = to_store_rows(posts)
     assert rows["body"].tolist() == ["", "hello"] and rows["outlet"].iloc[0] == "cryptocurrency"
     assert (rows["as_of_ts"] == rows["event_ts"]).all()
+
+
+def test_ld_json_fallback():
+    from tradingagents.dossier.wayback import ld_json
+    html = ('<html><script type="application/ld+json">{"@type":"NewsArticle","headline":"H","datePublished":"2022-07-01T07:12:43-04:00",'
+            '"articleBody":"' + "x" * 300 + '"}</script></html>')
+    out = ld_json(html)
+    assert out["headline"] == "H" and out["date"] == "2022-07-01" and len(out["body"]) == 300
+    assert ld_json("<html>no ld</html>") == {}

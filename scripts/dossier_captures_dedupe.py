@@ -50,8 +50,13 @@ def main() -> int:
             note = f"junk slugs dropped {int(junk.sum())}"
             pid = df["url"].str.extract(r"/post/(\d+)/")[0].astype(float)
             df = df.assign(pid=pid)
-            medians = df.assign(m=df["first_ts"].dt.to_period("M")).groupby("m")["pid"].median()
-            floor = float(medians.iloc[0]) * 0.75
+            medians = df.assign(m=df["first_ts"].dt.tz_localize(None).dt.to_period("M")).groupby("m")["pid"].median()
+            # post ids grow roughly linearly; extrapolate the monthly median back to the window start (2022-01)
+            # minus one month of margin instead of a loose fraction of the first observed month
+            months = [(p.year - 2022) * 12 + (p.month - 1) for p in medians.index]
+            import numpy as np
+            slope, intercept = np.polyfit(months, medians.to_numpy(), 1) if len(medians) > 2 else (0.0, float(medians.iloc[0]))
+            floor = float(intercept - slope)              # month index -1 = 2021-12
             df = df[df["pid"] >= floor].drop(columns="pid")
             note += f"; pid floor {floor:.0f}; old-excluded {len(old)}"
         target = CAPTURES / f"{outlet}_dedup.parquet"
