@@ -32,11 +32,18 @@ def forward_returns(symbols, fridays, klines_dir: Path = KLINES, horizon_days: i
         k = pd.read_parquet(path)
         close = k["close"].astype(float)
         close.index = pd.to_datetime(close.index, utc=True)
+        last_bar = close.index.max()
         for f in fridays:
             end = f + pd.Timedelta(days=horizon_days)
-            if f in close.index and end in close.index:
-                rows.append((f, sym, close.loc[end] / close.loc[f] - 1))
-    return pd.DataFrame(rows, columns=["date", "symbol", "fwd_ret"])
+            if f not in close.index:
+                continue
+            if end in close.index:
+                rows.append((f, sym, close.loc[end] / close.loc[f] - 1, False))
+            elif last_bar < end and last_bar > f:
+                # the contract stopped trading inside the week (delisting): book the last available close,
+                # so the week is kept in the target and in the book instead of vanishing
+                rows.append((f, sym, close.loc[last_bar] / close.loc[f] - 1, True))
+    return pd.DataFrame(rows, columns=["date", "symbol", "fwd_ret", "delisted"])
 
 
 def _xs_rank(s: pd.Series) -> pd.Series:

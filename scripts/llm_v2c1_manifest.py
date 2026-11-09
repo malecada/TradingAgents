@@ -1,7 +1,7 @@
 """Freeze the inputs of Charter 1: a manifest of dev-window dossier files (path -> sha256, builder version),
 a digest of the kline store, and the agent config sha. Written to data/agents_v2/charter1/ and committed before
 registration; the lifecycle runner verifies every dossier against it.
-Usage: llm_v2c1_manifest.py --start 2022-01-07 --end 2024-12-30
+Usage: llm_v2c1_manifest.py --start 2022-01-07 --end 2024-12-30 [--dossiers data/dossier/dossiers_v26]
 """
 from __future__ import annotations
 
@@ -26,17 +26,18 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--start", required=True)
     ap.add_argument("--end", required=True)
+    ap.add_argument("--dossiers", default=str(DOSSIERS), help="dossier directory (the dossier_build.py --out)")
     args = ap.parse_args()
     TARGET.mkdir(parents=True, exist_ok=True)
     files = {}
     versions = set()
-    for day in sorted(p for p in DOSSIERS.iterdir() if args.start <= p.name <= args.end):
+    for day in sorted(p for p in Path(args.dossiers).iterdir() if p.is_dir() and args.start <= p.name <= args.end):
         for f in sorted(day.glob("*.json")):
             files[str(f)] = sha(f)
             versions.add(json.loads(f.read_text()).get("builder_version"))
     if len(versions) != 1:
         raise SystemExit(f"mixed builder versions in window: {versions}")
-    manifest = {"builder_version": versions.pop(), "start": args.start, "end": args.end,
+    manifest = {"builder_version": versions.pop(), "start": args.start, "end": args.end, "dossiers_dir": args.dossiers,
                 "n_dossiers": len(files), "n_weeks": len({Path(p).parent.name for p in files}), "files": files}
     (TARGET / "dossier_manifest.json").write_text(json.dumps(manifest, indent=0, sort_keys=True) + "\n")
     klines = {str(p): sha(p) for p in sorted(Path("data/xsect/klines").glob("*.parquet"))}

@@ -20,9 +20,10 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--start", default="2000-01-01")
     ap.add_argument("--end", default="2100-01-01")
+    ap.add_argument("--dossiers", default=str(OUT), help="dossier directory (the dossier_build.py --out)")
     args = ap.parse_args()
     rows = []
-    for day in sorted(OUT.iterdir()):
+    for day in sorted(p for p in Path(args.dossiers).iterdir() if p.is_dir()):
         if not (args.start <= day.name <= args.end):
             continue
         for p in day.glob("*.json"):

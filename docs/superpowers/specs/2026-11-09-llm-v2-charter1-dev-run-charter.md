@@ -69,11 +69,16 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.
-- Spend cap: $400 for the dev run (pilot measured $2.07 per week × 156 weeks ≈ $325, plus 20% headroom); Flash typing and the identification probe are separate, ≈ $12.
+- Spend cap: $400 for the dev run (pilot measured $2.07 per week with 12–20 debates; the uniform judge panel adds an
+  estimated $0.5–0.8 per week, so 156 weeks ≈ $410–450 and the cap is expected to truncate the oldest 1–16 weeks under
+  §6a); Flash typing and the identification probe are separate, ≈ $12.
 - Family: `llm-multiagent-v2` (new mechanism: dossier-fed debate on anonymized cross-section), attempt budget 6,
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.
-- Disclosures: Wayback capture survivorship; Reddit deletions; cards end 2026-06-26; model cutoff unknown
+- Disclosures: Wayback capture survivorship (only archived pages are retrievable; coverage differs by outlet and
+  year); Reddit deletions; DefiLlama and CoinMetrics daily series carry publication slack (values dated day D may
+  have been revised after D; treated as available at D+1); delisting weeks booked at the last traded close and
+  flagged; cards end 2026-06-26; model cutoff unknown
   (release-date bound 2026-04-24); dev window is pre-release. Anonymization removes names, dates and exact
   figures but does not prevent content-based recognition of well-known assets (pilot 52%); leakage is
   therefore MEASURED, not assumed absent: identified-vs-non-identified subsets, named-vs-anonymized ablation,

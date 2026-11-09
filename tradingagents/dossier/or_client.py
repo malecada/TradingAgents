@@ -28,6 +28,10 @@ class ORError(RuntimeError):
     pass
 
 
+class SpendCapError(ORError):
+    """Registered spend cap reached: the run must stop, not degrade asset by asset."""
+
+
 @dataclass
 class StructuredClient:
     api_key: str = field(repr=False)
@@ -83,7 +87,7 @@ class StructuredClient:
         """Returns (parsed_json, meta) where meta has usage, cost, latency, model, provider."""
         with self._lock:
             if self.spent_usd > self.cost_cap_usd:
-                raise ORError(f"spend cap reached: {self.spent_usd:.4f} of {self.cost_cap_usd}")
+                raise SpendCapError(f"spend cap reached: {self.spent_usd:.4f} of {self.cost_cap_usd}")
         session = self.session or requests
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         budget = max_tokens or self.max_tokens
@@ -100,7 +104,14 @@ class StructuredClient:
                 self.sleep(min(10 * 2 ** (attempt - 1), 120))
                 continue
             if r.status_code == 200:
-                data = r.json()
+                try:
+                    data = r.json()
+                except ValueError:
+                    self._log(schema=schema_name, attempt=attempt, outcome="bad_json")
+                    if attempt < self.max_attempts:
+                        self.sleep(min(5 * 2 ** (attempt - 1), 60))
+                        continue
+                    raise ORError("non-JSON 200 response")
                 if "error" in data and "choices" not in data:
                     self._log(schema=schema_name, attempt=attempt, outcome="provider_error",
                               detail=str(data["error"])[:160], latency_s=round(time.monotonic() - started, 1))

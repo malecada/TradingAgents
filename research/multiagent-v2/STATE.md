@@ -106,3 +106,13 @@ Identification probe over all 1,500 dossiers running (non-thinking V4-Pro) → `
 1,118,556 posts stored (r/CryptoCurrency, r/Bitcoin, r/ethereum; 1,772 days each, 2022-01-01 → 2026-11-07;
 2 zero-post days), 215 MB. Bodies are empty for ~87% (link posts/removed); titles carry the signal.
 News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA ≈ 2026-11-11.
+
+## 2026-11-10 — pre-run audit, batch 2 (agents/runner side)
+- Reviewer findings C1–C2, M1–M9 all fixed (see audit doc §E). Batch 1 = 9235ce11a (dossier side, builder v2.6).
+- Batch 2: SpendCapError + newest-first stop-at-cap in llm_v2c1_run.py; rule twin net-neutral (iterative demean/clip);
+  uniform judge panel for non-debated assets (judge_all) + analyst-mean secondary panel; per-asset results persisted
+  immediately; vol fallback = week median; runs dir per experiment; config_sha covers PINS/N_DEBATE/roles/temperature;
+  kline digest verified at run time; forward_returns keeps delisting weeks (last close, flagged); optional funding cost;
+  prompts allow full probability range; --dossiers flags on manifest/probe/audit. Tests: 12 agents/quant + 36 dossier pass.
+- Cost: judge-all adds ≈ $0.5–0.8/week → dev run ≈ $410–450; cap $400 truncates oldest weeks per §6a.
+- Wayback fetch (newest-first) at 27.5K/74K ledger rows, ~1,440/h; rebuild waits for it.

@@ -12,8 +12,12 @@ import hashlib
 import json
 
 from tradingagents.agents_v2 import roles, schemas
+from tradingagents.dossier.or_client import PINS
 
-CONFIG_VERSION = "agents-v2.2"
+CONFIG_VERSION = "agents-v2.3"
+N_DEBATE = 12
+ANALYST_ROLES = ("market", "fundamental", "news")
+TEMPERATURE = 0
 # Reasoning per role. Providers did not honour effort/cap settings for DeepSeek V4-Pro (pilot: ~2,000 reasoning
 # tokens and ~45 s per call regardless), so evidence-gathering roles run in non-thinking mode (~9 s, 5x cheaper,
 # and they cite dossier items), while the two judgment roles think.
@@ -43,7 +47,8 @@ class AssetRun:
 
 
 def config_sha() -> str:
-    payload = {"version": CONFIG_VERSION, "reasoning": REASONING, "max_tokens": MAX_TOKENS, "common": roles.COMMON, "analysts": roles.ANALYSTS,
+    payload = {"version": CONFIG_VERSION, "reasoning": REASONING, "max_tokens": MAX_TOKENS, "pins": PINS,
+               "n_debate": N_DEBATE, "analyst_roles": ANALYST_ROLES, "temperature": TEMPERATURE, "common": roles.COMMON, "analysts": roles.ANALYSTS,
                "forecast": roles.FORECAST, "bull": roles.BULL, "bear": roles.BEAR, "rebuttal": roles.REBUTTAL,
                "judge": roles.JUDGE, "portfolio": roles.PORTFOLIO, "schemas": {
                    "analyst": schemas.ANALYST, "forecast": schemas.FORECAST_INTERPRETER, "turn": schemas.DEBATE_TURN,
@@ -89,16 +94,32 @@ def run_asset(dossier_text: str, alias: str, client, *, analyst_roles=("market",
 
 
 def rule_weights(candidates: list[dict], max_weight: float = 0.10, gross_cap: float = 1.0) -> dict[str, float]:
-    """Deterministic twin of the PM prompt: score = (p-0.5)*confidence/vol, scaled to the caps.
-    Used as the quant baseline for the PM role and as a fallback when the PM output violates constraints."""
-    raw = {c["alias"]: 0.0 if c.get("abstain") else (c["p_outperform_7d"] - 0.5) * c["confidence"] / max(c["vol_ann"], 0.05)
-           for c in candidates}
-    gross = sum(abs(v) for v in raw.values())
-    if gross == 0:
-        return {k: 0.0 for k in raw}
-    scaled = {k: v / gross * gross_cap for k, v in raw.items()}
-    clipped = {k: max(-max_weight, min(max_weight, v)) for k, v in scaled.items()}
-    return clipped
+    """Deterministic, market-neutral book: score = (p-0.5)*confidence/vol, demeaned across the week's
+    active assets (net exposure 0), scaled to gross 1 and clipped per asset. Primary portfolio constructor;
+    also the fallback when the PM output violates constraints."""
+    active = [c for c in candidates if not c.get("abstain") and c.get("p_outperform_7d") is not None]
+    raw = {c["alias"]: (c["p_outperform_7d"] - 0.5) * c["confidence"] / max(c["vol_ann"], 0.05) for c in active}
+    out = {c["alias"]: 0.0 for c in candidates}
+    if len(raw) < 2:
+        return out
+    w = dict(raw)
+    for _ in range(100):                             # alternate demeaning and clipping until both hold
+        mean = sum(w.values()) / len(w)
+        w = {k: v - mean for k, v in w.items()}
+        gross = sum(abs(v) for v in w.values())
+        if gross == 0:
+            return out
+        w = {k: max(-max_weight, min(max_weight, v / gross * gross_cap)) for k, v in w.items()}
+        if abs(sum(w.values())) < 1e-12:
+            break
+    mean = sum(w.values()) / len(w)                  # final centering; a shrink keeps caps and neutrality
+    w = {k: v - mean for k, v in w.items()}
+    scale = min(1.0, gross_cap / max(sum(abs(v) for v in w.values()), 1e-12), max_weight / max(max(abs(v) for v in w.values()), 1e-12))
+    out.update({k: v * scale for k, v in w.items()})
+    return out
+    for k, v in centered.items():
+        out[k] = max(-max_weight, min(max_weight, v / gross * gross_cap))
+    return out
 
 
 def validate_portfolio(out: dict, candidates: list[dict], max_weight: float = 0.10) -> list[str]:

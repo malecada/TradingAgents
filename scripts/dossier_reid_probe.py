@@ -38,10 +38,12 @@ def main() -> int:
     ap.add_argument("--all", action="store_true", help="probe every dossier (for the identified-subset analysis)")
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
+    ap.add_argument("--dossiers", default=str(OUT), help="dossier directory (the dossier_build.py --out)")
+    ap.add_argument("--out", default="data/dossier/reid_flags.parquet")
     ap.add_argument("--section", default="full", choices=("full", "numeric", "text"),
                     help="probe the whole dossier, only the numeric/calendar part, or only the news part")
     args = ap.parse_args()
-    files = sorted(OUT.glob("*/*.json"))
+    files = sorted(Path(args.dossiers).glob("*/*.json"))
     rng = random.Random(args.seed)
     sample = files if args.all else rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
@@ -98,7 +100,7 @@ def main() -> int:
         flags = pd.DataFrame([{"friday": Path(r["file"]).parent.name, "symbol": Path(r["file"]).stem,
                                "identified": bool(h), "month_within_6": bool(m)}
                               for r, h, m in zip(results, df["asset_hit"], df["month_within_6"].fillna(False))])
-        flags.to_parquet("data/dossier/reid_flags.parquet", index=False)
+        flags.to_parquet(args.out, index=False)
     Path(f"data/dossier/reid_probe_{args.section}.json").write_text(json.dumps({"summary": summary, "rows": results}, indent=1))
     print(json.dumps(summary, indent=1))
     return 0

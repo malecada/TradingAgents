@@ -46,3 +46,20 @@ def test_walk_forward_shapes_and_leak_guard(tmp_path):
     text = render_forecast(0.83, calib)
     assert "percentile 83" in text and "2022" not in text
     assert "unavailable" in render_forecast(None, calib)
+
+
+
+def test_forward_returns_keep_delisted_week(tmp_path):
+    import numpy as np
+    import pandas as pd
+    from tradingagents.dossier.quant_forecast import forward_returns
+    idx = pd.date_range("2024-01-01", "2024-01-10", freq="D", tz="UTC")       # stops trading Jan 10
+    pd.DataFrame({"close": np.linspace(100, 50, len(idx))}, index=idx).to_parquet(tmp_path / "XXXUSDT.parquet")
+    idx2 = pd.date_range("2024-01-01", "2024-01-20", freq="D", tz="UTC")
+    pd.DataFrame({"close": np.linspace(10, 20, len(idx2))}, index=idx2).to_parquet(tmp_path / "YYYUSDT.parquet")
+    f = pd.Timestamp("2024-01-05", tz="UTC")
+    out = forward_returns(["XXXUSDT", "YYYUSDT"], [f], klines_dir=tmp_path)
+    assert set(out["symbol"]) == {"XXXUSDT", "YYYUSDT"}
+    x = out[out["symbol"] == "XXXUSDT"].iloc[0]
+    assert bool(x["delisted"]) and x["fwd_ret"] < 0                        # last close booked, week kept
+    assert not bool(out[out["symbol"] == "YYYUSDT"].iloc[0]["delisted"])

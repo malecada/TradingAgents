@@ -1,7 +1,7 @@
 # Pre-run audit of the multi-agent v2 pipeline (before Charter 1 registration)
 
-**Date:** 2026-11-09/10. **Status:** in progress; findings are added as they are verified, fixes are listed with
-their commit. Two sources: a checklist review by the author of the code and an independent reviewer (fresh
+**Date:** 2026-11-09/10. **Status:** fixes applied and tested (sections E–F); re-verification on the fresh v2.6
+rebuild is the remaining step before registration. Two sources: a checklist review by the author of the code and an independent reviewer (fresh
 agent, read-only, no API access) briefed on the same files and questions. Nothing is registered until every
 critical finding is fixed and re-tested.
 
@@ -45,4 +45,35 @@ Scope: `tradingagents/dossier/*`, `tradingagents/agents_v2/*`, `scripts/dossier_
 | D2 | Config sha coverage | Prompts, schemas, reasoning map and token budgets enter `config_sha`; model pins live in `or_client.PINS` and are recorded per call but not in the sha. | major | include PINS in config_sha |
 | D3 | Mixed builder versions | Dossier dir mixes v2.4/v2.5 outputs; manifest script rejects mixed versions. Final dev set is a fresh rebuild. | ok | rebuild into a fresh directory |
 
-(Independent reviewer findings and the fix commits are appended below when available.)
+## E. Independent reviewer findings (fresh agent, read-only, same files)
+
+| # | Finding (condensed) | Severity | Fix | Commit |
+|---|---|---|---|---|
+| C1 | Reddit posts selected by retrieval-time `num_comments` (82 % of comments accrue after decision time): a future-information channel that the charter declared absent. | critical | Selection by recency only (newest `event_ts` first, cap 25); scores and comment counts are never read. | 9235ce11a |
+| C2 | Delisting weeks vanish: `forward_returns` requires a bar at Friday+7, so a contract that stops trading mid-week (LUNA 2022-05) leaves the target and is booked at 0 % in the book. | critical | Last available close inside the week is booked with a `delisted` flag; the week stays in the target, the median and the book; count disclosed in `evaluation.json`. | this commit |
+| M1 | Stop rule not implemented: oldest-first iteration, cap trips caught per asset so the run degrades instead of stopping; incomplete week kept. | major | `SpendCapError` propagates through runner and threads; `llm_v2c1_run.py` iterates newest-first, stops at the cap, excludes the incomplete week, records completed weeks and `truncated_at`. | this commit |
+| M2 | Rule twin not market-neutral (gross-scaled, never demeaned; pilot mean p 0.47 → net short, SR measures beta); funding costs absent. | major | `rule_weights` alternates demeaning and clipping until net 0, gross ≤ 1, |w| ≤ 0.10; `book_returns` accepts a funding table (longs pay, shorts receive, 7 days). | this commit |
+| M3 | Mixed probability sources: 12 debated assets replaced by compressed judge probabilities, 38 others keep analyst means → extremes pulled back relative to the rest. | major | Uniform primary panel: every non-debated asset gets a judge-without-debate call (same role, same scale); analysts' mean kept as a separate secondary panel (`p_analyst_mean`, evaluated as `analyst_mean`). | this commit |
+| M4 | Percentiles and "Universe: N assets" computed over the ~130-asset card panel while the target median is over the top-50. | major | Percentiles within the decision universe (`universe_symbols` passed per week); universe size no longer printed. | 9235ce11a |
+| M5 | Freeze gaps: dossier sha computed before the quant section was appended; `config_sha` omits model pins, N_DEBATE, analyst roles, temperature; runs dir shared across experiments; kline digest never verified at run time. | major | Sha recomputed over the final text; `config_sha` covers PINS, N_DEBATE, ANALYST_ROLES, TEMPERATURE; runs dir `data/agents_v2/runs/<experiment>`; kline digest verified before the first call. | 9235ce11a + this commit |
+| M6 | Structural time fingerprints: exact FOMC day counts (34 distinct pairs over 261 weeks) and universe size nearly identify the week. | major | FOMC bucketed to "within the next two weeks"/"no meeting"; universe size removed. | 9235ce11a |
+| M7 | Numeric rendering errors: `size_rank` percentile compared to 20/100 (every asset "top-20"); log returns printed as simple; funding annualized twice. | major | Percentile-based size buckets; `expm1` on log returns; funding annualized once (×365). | 9235ce11a |
+| M8 | 6.8 % exact-duplicate items plus near-duplicates across outlets inflate evidence weight. | major | Jaccard-0.8 near-duplicate removal before item selection. | 9235ce11a |
+| M9 | Prompts push p toward 0.5 (pilot range 0.35–0.58) so the calibration-slope gate fails on under-confidence even with skill; PM prompt inconsistent with the validator. | major | Prompt now asks for the full range when evidence is one-sided and 0.5 only when it is not; PM prompt restated as the demeaned formula with binding constraints (net ±0.05). The rule twin remains the primary book. | this commit |
+| minor | `r.json()` on a non-JSON 200 raised a bare `ValueError`; `--out` of `dossier_build.py` not honoured by manifest/probe/audit; disclosures incomplete. | minor | Non-JSON 200 is retried then raised as `ORError`; `--dossiers` (and probe `--out`) flags added; charter disclosures extended (DefiLlama/CoinMetrics daily slack, Wayback survivorship, delisting convention). | this commit |
+
+## F. Cost consequence of M3 and the budget rule
+
+The uniform judge panel adds one judge call for each of the ~38 non-debated assets per week. Pilot cost was
+$2.07 per week with 12–20 debates and no judge for the rest; the extra judge calls are estimated at $0.5–0.8
+per week, so the dev run is expected at $2.6–2.9 per week, about $410–450 for all 156 weeks. The registered
+cap stays at $400; under the newest-first rule (charter §6a) this covers roughly 140–155 weeks and the
+truncation is disclosed rather than hidden. The cap can be raised before registration if more credit is
+available.
+
+## G. Remaining before registration
+
+1. Fresh v2.6 rebuild of the dev window into a new directory (2024 first) after the Wayback fetch completes.
+2. Identification probe on the rebuilt set (`dossier_reid_probe.py --all --dossiers <dir> --out <parquet>`).
+3. `dossier_audit.py --dossiers <dir>` re-check: duplicates ≈ 0, no leaked names, no residual role tokens.
+4. Manifest, charter freeze (remove DRAFT), registration, run with the funded cap.

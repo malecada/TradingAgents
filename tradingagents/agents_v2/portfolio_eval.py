@@ -9,16 +9,21 @@ COST_PER_SIDE = 0.0005   # 5 bp taker per side
 WEEKS_PER_YEAR = 52
 
 
-def book_returns(weights: dict[pd.Timestamp, dict[str, float]], fwd: pd.DataFrame, cost_per_side: float = COST_PER_SIDE) -> pd.Series:
-    """weights: friday -> {symbol: weight}; fwd: columns date, symbol, fwd_ret (Friday close -> next Friday close)."""
+def book_returns(weights: dict[pd.Timestamp, dict[str, float]], fwd: pd.DataFrame, cost_per_side: float = COST_PER_SIDE,
+                 funding: pd.DataFrame | None = None) -> pd.Series:
+    """weights: friday -> {symbol: weight}; fwd: columns date, symbol, fwd_ret (Friday close -> next Friday close).
+    ``funding``: optional columns date, symbol, funding_daily (mean daily perp funding at the Friday); longs pay
+    positive funding for the 7 held days, shorts receive it."""
     f = fwd.set_index(["date", "symbol"])["fwd_ret"]
+    fd = funding.set_index(["date", "symbol"])["funding_daily"] if funding is not None else None
     prev: dict[str, float] = {}
     out = {}
     for d in sorted(weights):
         w = weights[d]
         gross = sum(w.get(s, 0.0) * f.get((d, s), 0.0) for s in w)
         turnover = sum(abs(w.get(s, 0.0) - prev.get(s, 0.0)) for s in set(w) | set(prev))
-        out[d] = gross - turnover * cost_per_side
+        fund = sum(w.get(s, 0.0) * float(fd.get((d, s), 0.0) or 0.0) * 7 for s in w) if fd is not None else 0.0
+        out[d] = gross - turnover * cost_per_side - fund
         prev = w
     return pd.Series(out).sort_index()
 
@@ -53,8 +58,8 @@ def placebo_pvalues(weights: dict, fwd: pd.DataFrame, n: int = 500, seed: int = 
             "n": n}
 
 
-def summarize_book(weights: dict, fwd: pd.DataFrame) -> dict:
-    r = book_returns(weights, fwd)
+def summarize_book(weights: dict, fwd: pd.DataFrame, funding: pd.DataFrame | None = None) -> dict:
+    r = book_returns(weights, fwd, funding=funding)
     years = {}
     for y, g in r.groupby(r.index.year):
         years[str(y)] = {"weeks": int(len(g)), "sharpe": sharpe(g), "mean_weekly_pct": float(g.mean() * 100)}
