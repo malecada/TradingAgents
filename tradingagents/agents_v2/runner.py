@@ -55,8 +55,9 @@ def run_week(friday: pd.Timestamp, dossiers: dict[str, dict], client, *, n_debat
         target = day_dir / f"{sym}.json"
         if target.exists():
             cached = json.loads(target.read_text())
-            if cached.get("config_sha") == cfg and cached.get("dossier_sha") == d["sha256"]:
-                results[sym] = cached
+            if (cached.get("config_sha") == cfg and cached.get("dossier_sha") == d["sha256"]
+                    and not cached.get("failed") and not cached.get("debate_failed")):
+                results[sym] = cached                 # failed results are never reused; the asset is redone
                 analyst_runs[d["alias"]] = cached["analysts"]
                 continue
         pending.append(sym)
