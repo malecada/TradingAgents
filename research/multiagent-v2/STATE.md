@@ -90,3 +90,8 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
 - The cache key includes the reasoning setting, so the one-time re-typing of the ~7K already-cached articles is
   in progress; dossiers built before this (250, v2.4) stay for probing only. The dev set gets a clean v2.5 rebuild
   into a fresh directory before the Charter 1 freeze.
+
+## 2026-11-09 13:30 UTC — H1-2022 dossier set complete (1,500 dossiers, 30 weeks × top-50; typing $1.53)
+Audit: 91% of dossiers have linked text, 88% show items (median 11 shown, 30 retrieved), noise share 28%,
+events 36% of retrieved, community posts 37% of shown items, 0 dictionary leaks, median ~1,300 tokens of text.
+Identification probe over all 1,500 dossiers running (non-thinking V4-Pro) → `data/dossier/reid_flags.parquet`.
