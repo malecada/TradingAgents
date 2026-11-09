@@ -57,3 +57,11 @@ run scripts with `PYTHONPATH=. .venv/bin/python scripts/<name>.py`. Key: `OPENRO
   every dev dossier (`dossier_reid_probe.py --all`, ≈ $1 per 7,800) and writes `data/dossier/reid_flags.parquet`;
   forecast skill is then reported for identified vs non-identified dossiers (and named vs anonymized, and
   Sealed-B post-release). A skill gap concentrated in identified dossiers is the memorization signature.
+
+## 2026-11-09 01:30 UTC — pilot result and credit stop
+- Pilot week 2022-01-07 (config v2.2, 20 debates via CLI default, now 12): 0 failed, order-swap Spearman 0.906,
+  mean |Δp| 0.017, abstain 4%, p mean 0.46 sd 0.045, $2.27/week (6.6 calls per asset-week), 11 min/week.
+  Repeat-agreement probe not run (credits). Week 2 discarded (402 errors mid-run).
+- OpenRouter account credit ($10) exhausted; dossier build stopped at 178 clean dossiers (22 degraded ones removed).
+  Fetch and Reddit ingests continue (no LLM). Resume steps in memory/plan; Charter 1 freeze waits for the repeat
+  probe and the completed dev dossiers.

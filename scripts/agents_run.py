@@ -24,7 +24,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--start", required=True)
     ap.add_argument("--end", required=True)
-    ap.add_argument("--n-debate", type=int, default=20)
+    ap.add_argument("--n-debate", type=int, default=12)
     ap.add_argument("--cost-cap", type=float, default=100.0)
     ap.add_argument("--no-debate", action="store_true")
     ap.add_argument("--role", default="pro", choices=("pro", "flash", "chrono"))
