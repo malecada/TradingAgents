@@ -59,6 +59,13 @@ trial count (1 configuration; ablations are descriptive).
 Leave-one-analyst-out (3); no debate; named vs anonymized dossiers; text-free (numeric only); Flash in all roles;
 Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological control on 2025-12 → 2026-12.
 
+## 6a. Execution order and budget truncation (declared before the freeze)
+- Weeks are processed newest-first (2024-12-27 backwards to 2022-01-07). The run stops only when the registered
+  spend cap is reached or the window is complete; no interim gate value is computed or inspected before the stop.
+- If the cap stops the run early, all gates in §5 are evaluated on the completed contiguous window and the number
+  of completed weeks is disclosed; the sub-period gate then applies to the years present. Detectable IC at t ≥ 2
+  is about 0.036 for 52 weeks, 0.026 for 104, 0.021 for 156.
+
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.

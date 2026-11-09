@@ -37,6 +37,7 @@ def main() -> int:
     ap.add_argument("--end", default="2026-12")
     ap.add_argument("--max", type=int, default=None)
     ap.add_argument("--workers", type=int, default=3, help="overlapping requests; start spacing stays FETCH_INTERVAL_S")
+    ap.add_argument("--newest-first", action="store_true", help="process captures from the latest first_ts backwards")
     args = ap.parse_args()
     done = load_ledger()
     frames = []
@@ -51,7 +52,7 @@ def main() -> int:
             if args.start <= path.stem <= args.end:
                 frames.append(pd.read_parquet(path))
     todo = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
-    todo = todo[~todo["url"].isin(done)].sort_values("first_ts") if len(todo) else todo
+    todo = todo[~todo["url"].isin(done)].sort_values("first_ts", ascending=not args.newest_first) if len(todo) else todo
     if args.max:
         todo = todo.head(args.max)
     print(f"to fetch: {len(todo)} (ledger {len(done)})", flush=True)
