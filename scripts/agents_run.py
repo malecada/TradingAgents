@@ -30,13 +30,16 @@ def main() -> int:
     ap.add_argument("--role", default="pro", choices=("pro", "flash", "chrono"))
     ap.add_argument("--provider", default=None, help="override pinned provider (pilot/diagnostics only)")
     ap.add_argument("--runs-dir", default=None, help="alternative output directory (repeat runs, ablations)")
+    ap.add_argument("--dossiers", default=str(DOSSIERS), help="dossier directory (the dossier_build.py --out)")
     args = ap.parse_args()
     client = StructuredClient.pinned(args.role, load_api_key(), cost_cap_usd=args.cost_cap)
     if args.provider:
         client.provider = [p.strip() for p in args.provider.split(",")]
     from pathlib import Path as _P
     runs_dir = _P(args.runs_dir) if args.runs_dir else None
-    days = sorted(p for p in DOSSIERS.iterdir() if args.start <= p.name <= args.end)
+    days = sorted(p for p in Path(args.dossiers).iterdir() if p.is_dir() and args.start <= p.name <= args.end)
+    if not days:
+        raise SystemExit(f"no dossier weeks in {args.dossiers} for {args.start}..{args.end}")
     started = time.monotonic()
     for day in days:
         dossiers = {p.stem: json.loads(p.read_text()) for p in sorted(day.glob("*.json"))}

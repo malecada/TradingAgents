@@ -111,6 +111,24 @@ findings; all implemented in commit 14d192547 except the ablations, which are re
 Cost consequence: +12 judge calls and −4 debate calls per debated asset and −1 PM call per week → ≈ $2.5 per week,
 unchanged from the §F2 measurement within noise; ablations ≈ $130 (registered, separate from the $400 cap).
 
+### H2. Live check of agents v2.4 on a v2.8 week (2024-12-27, scratch directory)
+
+| Item | Result |
+|---|---|
+| Calls, cost, time | 322, **$2.45**, 13.8 min (50 assets, 12 debated, 0 failures) |
+| Cited-item existence | 1.00 for every role (analysts, debaters, judges) |
+| Number grounding of evidence bullets | 0.82–0.99 by role |
+| Identical analyst probability triples | 0 of 50 (was 19 of 50 with the shared dossier) |
+| Judge-without-debate panel | mean 0.447, sd 0.056, range 0.28–0.55 |
+| Interpreter weight on the quant forecast | mean 0.48, sd 0.08, range 0.35–0.75 |
+| Hybrid panel | mean 0.497, sd 0.229 (the quant percentile dominates the dispersion at w ≈ 0.5) |
+| Paired debate shift | mean absolute shift 0.028; sd 0.040 (debate) vs 0.050 (no debate) on the same 12 assets |
+| Book | 50 weights keyed by symbol, net 0.0000, gross 1.000, max 0.079, 1 abstention flat |
+
+Reading: the level bias of the judge persists (mean 0.447 on a relative target) and is reported through the
+weekly-centered Brier; the hybrid's ranking is driven mostly by the ridge at the weights the interpreter
+assigns, which is exactly what the encompassing test on `p_judge` is registered to attribute.
+
 ## G. Remaining before registration
 
 1. Fresh v2.6 rebuild of the dev window into a new directory (2024 first) after the Wayback fetch completes.

@@ -169,3 +169,6 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   v2.8 detached (log /tmp/build_v28_a.log; typing cached).
 - Cost per week changes: +12 paired judge calls, −4 debate calls per debated asset, −1 PM call → ≈ $2.5/week.
 - Fetch 25,400/47,502 at 05:03 UTC (~15.5 h left).
+- Live check agents v2.4 on v2.8 week 2024-12-27: 322 calls, $2.45, 13.8 min, 0 failed; citations exist 1.00 all roles;
+  analyst triples all distinct; judge-nd mean 0.447 sd 0.056; interpreter weight mean 0.48; hybrid sd 0.229 (ridge
+  dominates); paired debate shift 0.028; book 50 symbols net 0 gross 1. agents_run.py gained --dossiers.
