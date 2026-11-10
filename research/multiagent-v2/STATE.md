@@ -172,3 +172,11 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Live check agents v2.4 on v2.8 week 2024-12-27: 322 calls, $2.45, 13.8 min, 0 failed; citations exist 1.00 all roles;
   analyst triples all distinct; judge-nd mean 0.447 sd 0.056; interpreter weight mean 0.48; hybrid sd 0.229 (ridge
   dominates); paired debate shift 0.028; book 50 symbols net 0 gross 1. agents_run.py gained --dossiers.
+
+## 2026-11-10 09:45 UTC — check-in
+- v2.8 rebuild of the 91 weeks complete (4,550 dossiers; audit: 0 leaks/dups/role-token defects/year literals;
+  84 % with shown items; quant record short only during the 2022-H1 burn-in, monotonic, no batch resets).
+- Fetch 32,000/47,502 (~1,420/h, ≈ 11 h left); 2023-08→2024-02 now fully fetched (2023-12 at 99 %, residual = fetch
+  failures ≈ 1.4 % overall, not retried).
+- Batch C started detached (log /tmp/build_v28_b.log): Fridays 2023-09-01→2024-02-23 (26 weeks).
+- OpenRouter $45 total, $30.09 used → $14.91 available (live check $2.45 + rebuild typing).
