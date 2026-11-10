@@ -142,3 +142,10 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   Charter 1 set has one builder version. Rebuild running (log /tmp/build_v27_a.log): Fridays 2024-08-02→2024-12-27
   (30-day lookback fully fetched), then 2022-01-07→2022-11-25; est. ≈ $6 Flash typing.
 - OpenRouter: $45 total credits, $23.46 used → $21.54 available.
+
+## 2026-11-10 02:35 UTC — check-in
+- Rebuild batch A complete (00:40 UTC): 3,450 v2.7 dossiers, 69 weeks (2024-08-02→12-27, 2022-01-07→11-25), $2.66;
+  audit: 0 leaks / 0 duplicates / 0 role-token defects / 0 year literals; 83 % with shown items; category known 95 %.
+- Fetch 21,800/47,502 (~1,416/h); 2024-02→2024-06 now fully fetched (2024-01 at 80 %, 2022-12 at 16 %).
+- Batch B started detached (log /tmp/build_v27_b.log): Fridays 2024-03-01→2024-07-26 (22 weeks, ≈1,100 dossiers).
+- OpenRouter $45 total, $26.12 used → $18.88 available.
