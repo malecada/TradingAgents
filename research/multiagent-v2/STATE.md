@@ -193,3 +193,9 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   interpretable); no change to prompts or design follows from this (pre-registration discipline). File:
   research/multiagent-v2/preview_4weeks.json.
 - Credit after preview: ≈ $153.9 available. Registered run cap stays $140.
+
+## 2026-11-10 15:45 UTC — check-in
+- 117 weeks built (batch C done). Fetch 40,600/47,502 (~1,420/h, ≈ 5 h left); 2023-04→2023-08 fetched (2023-05 at 98 %).
+- Batch D started detached (log /tmp/build_v28_c.log): Fridays 2023-05-05→2023-08-25 (17 weeks). Remaining after the
+  fetch: 2022-12-02→2023-04-28 (22 weeks).
+- OpenRouter $195 total, $38.65 used → $156.35 available.
