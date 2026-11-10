@@ -55,7 +55,8 @@ def main() -> int:
                               "pred_rank_pct": pd.Series(dtype=float)})
     fwd = forward_returns(sorted(cards["symbol"].unique()), sorted(cards["date"].unique()))
     new = []
-    for f in fridays:
+    all_fridays = sorted(cards["date"].unique())      # the full history, so the trailing record never resets at a batch boundary
+    for f in all_fridays:
         if not ((preds["date"] == f).any() if len(preds) else False):
             p = fit_predict(cards, fwd, f)
             if len(p):

@@ -24,7 +24,7 @@ from tradingagents.dossier.llm_text import CreditError, TextLLMError, scrub_prop
 from tradingagents.dossier.numeric_card import numeric_block, render_numeric, weekly_path
 from tradingagents.dossier.universe import base_symbol
 
-BUILDER_VERSION = "dossier-v2.7"   # v2.6 audit fixes + category fallback (CoinGecko families), unlock line wording
+BUILDER_VERSION = "dossier-v2.8"   # v2.7 + percentile direction wording; quant record over the full forecast history
 TEXT_LOOKBACK_DAYS = 30
 TOKEN_BUDGET = 9000           # approximate tokens for the text section (chars / 4)
 CLASSIFY_WORKERS = 16

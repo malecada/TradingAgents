@@ -11,37 +11,45 @@ COMMON = (
     "futures. The asset is anonymized (its alias is given); do not try to identify it and do not use any knowledge "
     "about real assets, dates or events outside the dossier. Base every statement on dossier content and cite the "
     "item ids (for example n3, t7) in the cited_items array. The forecast target is the probability that this asset's "
-    "7-day return exceeds the median asset of this week's universe. Be calibrated: 0.5 when the evidence gives no "
-    "lean, and use the full range (for example 0.3 or 0.7) when the evidence is clearly one-sided. Return only JSON "
-    "matching the schema."
+    "7-day return exceeds the median asset of this week's universe. Exactly half of the universe beats the median "
+    "every week, so across the universe probabilities average 0.5; forecast the asset's RELATIVE standing, not "
+    "the market's direction. Be calibrated: 0.5 when the evidence gives no lean, and use the full range (for "
+    "example 0.3 or 0.7) when the evidence is clearly one-sided. Numeric lines show cross-sectional percentiles "
+    "as 'pct K': the value is higher than K percent of this week's universe (pct 5 = among the lowest, pct 95 = "
+    "among the highest); judge every number by its percentile, not by absolute size. Return only JSON matching "
+    "the schema."
 )
 
 ANALYSTS = {
     "market": (
-        "Role: market-structure analyst. Use the numeric profile and price path only: momentum and reversal "
-        "signatures, volatility regime, funding and positioning, liquidity rank. Ignore the news section except "
-        "to note contradictions with the numbers."),
+        "Role: market-structure analyst. You receive only the price, volatility and funding lines and the calendar: "
+        "momentum and reversal signatures, volatility regime, funding and positioning, scheduled events. Judge the "
+        "asset's relative standing from these alone."),
     "fundamental": (
-        "Role: on-chain and supply analyst. Use on-chain activity changes, supply schedule (unlocks), listing age, "
-        "category and size bucket. Judge whether fundamentals are improving, deteriorating or uninformative."),
+        "Role: on-chain, supply and profile analyst. You receive only the profile, on-chain and supply lines and the "
+        "event-typed news items: activity changes, unlock schedule, listing age, category, size and volume rank, "
+        "and concrete events. Judge whether fundamentals are improving, deteriorating or uninformative."),
     "news": (
-        "Role: news and events analyst. Use only the news and discussion section: events, their recency, novelty "
-        "and severity; distinguish facts from commentary; weigh community posts lower than news. State explicitly "
-        "if the week carries no material event."),
+        "Role: news and events analyst. You receive only the calendar and the news and discussion section: events, "
+        "their recency, novelty and severity; distinguish facts from commentary; weigh community posts lower than "
+        "news. State explicitly if the week carries no material event."),
 }
 
 FORECAST = (
     "Role: forecast interpreter. The dossier ends with a quantitative model's rank forecast and its own trailing "
     "calibration record. Decide how much weight (0 to 1) that forecast deserves this week given its record and "
-    "the rest of the dossier, and give your own probability. A model whose trailing rank correlation is near zero "
-    "deserves little weight."
+    "the rest of the dossier, and give your own probability. The weight is applied mechanically: the deployed "
+    "probability mixes the model's rank percentile and the research judge's probability on the logit scale with "
+    "this weight. A trailing rank correlation around +0.05 to +0.10 is typical for a usable cross-sectional "
+    "model; near zero or negative deserves little weight, above +0.15 deserves substantial weight."
 )
 
 BULL = ("Role: bull researcher. Build the strongest honest case that the asset will outperform the universe median "
         "over the next 7 days, using the analysts' outputs and the dossier. Concede the points you cannot rebut.")
 BEAR = ("Role: bear researcher. Build the strongest honest case that the asset will underperform (or merely match) "
         "the universe median over the next 7 days. Concede the points you cannot rebut.")
-REBUTTAL = "Now rebut the opposing researcher's argument shown below. Keep only what survives."
+REBUTTAL = ("The opposing researcher has opened as shown below. Make your own case AND rebut their argument "
+            "point by point; keep only what survives.")
 
 JUDGE = (
     "Role: research judge. Read the analyst outputs and the debate. Produce a calibrated probability that the asset "
@@ -51,7 +59,8 @@ JUDGE = (
 )
 
 PORTFOLIO = (
-    "Role: portfolio manager for a weekly cross-sectional book. You receive, for each candidate alias, the judge's "
+    "Role: portfolio manager for a weekly cross-sectional book. You receive, for each candidate id (use the id as the alias "
+    "field in your output), the judge's "
     "probability of outperforming the universe median, the judge's confidence and abstain flag, and the asset's "
     "annualized volatility. Build a market-neutral book: compute a score (probability - 0.5) times confidence divided by "
     "volatility for each non-abstained asset, subtract the average score so the weights sum to zero, scale so that "

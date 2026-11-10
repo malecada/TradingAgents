@@ -43,7 +43,7 @@ def main() -> int:
         kwargs = {"runs_dir": runs_dir} if runs_dir else {}
         out = run_week(pd.Timestamp(day.name, tz="UTC"), dossiers, client, n_debate=args.n_debate,
                        debate=not args.no_debate, **kwargs)
-        debated = sum(r.get("debated", False) for r in out["results"].values())
+        debated = sum(bool(r.get("debated")) for r in out["results"].values())
         failed = sum(1 for r in out["results"].values() if r.get("failed") or r.get("debate_failed"))
         print(f"{day.name}: {len(dossiers)} assets, {debated} debated, {failed} failed, calls {client.calls}, spent ${client.spent_usd:.2f}, "
               f"{(time.monotonic() - started) / 60:.1f} min", flush=True)

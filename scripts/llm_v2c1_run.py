@@ -18,8 +18,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from tradingagents.agents_v2.evaluate import evaluate_panel  # noqa: E402
-from tradingagents.agents_v2.graph import config_sha, rule_weights  # noqa: E402
+from tradingagents.agents_v2.evaluate import encompassing, evaluate_panel, newey_west_t  # noqa: E402
+from tradingagents.agents_v2.graph import config_sha  # noqa: E402
 from tradingagents.agents_v2.portfolio_eval import realized_funding, summarize_book  # noqa: E402
 from tradingagents.agents_v2.runner import run_week  # noqa: E402
 from tradingagents.dossier.or_client import SpendCapError, StructuredClient  # noqa: E402
@@ -65,6 +65,7 @@ def main() -> int:
         # agent run, newest week first, cached per asset-week under a runs directory scoped to this experiment
         runs_dir = ROOT / "data/agents_v2/runs" / args.experiment
         rows, weights, completed, truncated_at = [], {}, [], None
+        weights_llm, weights_nd, weights_conf = {}, {}, {}
         for day in sorted(by_day, reverse=True):
             try:
                 out = run_week(pd.Timestamp(day, tz="UTC"), by_day[day], client, runs_dir=runs_dir)
@@ -72,13 +73,26 @@ def main() -> int:
                 truncated_at = {"week": day, "reason": str(exc)}
                 print(f"{day}: spend cap reached, week excluded; stopping", flush=True)
                 break
-            alias_to_sym = {by_day[day][s]["alias"]: s for s in by_day[day]}
-            weights[pd.Timestamp(day, tz="UTC")] = {alias_to_sym[a]: w for a, w in rule_weights(out["candidates"]).items()}
+            weights[pd.Timestamp(day, tz="UTC")] = out["portfolio"]["rule_weights"]      # keyed by symbol
             for s, r in out["results"].items():
-                rows.append({"date": day, "symbol": s, "p_outperform": r.get("p_outperform"), "confidence": r.get("confidence"),
-                             "p_analyst_mean": r.get("p_analyst_mean"), "abstain": r.get("abstain"),
-                             "debated": r.get("debated", False), "judged": r.get("judged", False), "failed": bool(r.get("failed")),
-                             "pm_problems": len(out["portfolio"].get("problems", []))})
+                cites = {}
+                for stage in ("nd", "debate"):
+                    for role, rep in (r.get("stages", {}).get(stage, {}).get("citations") or {}).items():
+                        cites[role] = rep
+                rows.append({"date": day, "symbol": s, "p_outperform": r.get("p_outperform"), "p_judge": r.get("p_judge"),
+                             "p_hybrid": r.get("p_hybrid"), "p_judge_nd": r.get("p_judge_nd"), "p_hybrid_nd": r.get("p_hybrid_nd"),
+                             "p_judge_debate": r.get("p_judge_debate"), "p_analyst_mean": r.get("p_analyst_mean"),
+                             "weight_on_quant": r.get("weight_on_quant"), "quant_rank_pct": r.get("quant_rank_pct"),
+                             "confidence": r.get("confidence"), "abstain": r.get("abstain"),
+                             "debated": r.get("debated", False), "debate_selected": r.get("debate_selected", False),
+                             "failed": bool(r.get("failed")),
+                             "cite_exist_mean": (sum(v["cite_exist_rate"] for v in cites.values() if v.get("cite_exist_rate") is not None)
+                                                 / max(sum(1 for v in cites.values() if v.get("cite_exist_rate") is not None), 1)) if cites else None,
+                             "number_grounded_mean": (sum(v["number_grounded_rate"] for v in cites.values() if v.get("number_grounded_rate") is not None)
+                                                      / max(sum(1 for v in cites.values() if v.get("number_grounded_rate") is not None), 1)) if cites else None})
+            weights_llm[pd.Timestamp(day, tz="UTC")] = out["portfolio"]["rule_weights_llm_only"]
+            weights_nd[pd.Timestamp(day, tz="UTC")] = out["portfolio"]["rule_weights_judge_nd"]
+            weights_conf[pd.Timestamp(day, tz="UTC")] = out["portfolio"]["rule_weights_confidence"]
             completed.append(day)
             print(f"{day}: calls {client.calls} spent ${client.spent_usd:.2f}", flush=True)
         if not completed:
@@ -94,9 +108,30 @@ def main() -> int:
         qf = pd.read_parquet(ROOT / "data/dossier/quant_forecasts.parquet")
         qf["date"] = pd.to_datetime(qf["date"], utc=True)
         panel = panel.merge(qf.rename(columns={"pred_rank_pct": "p_quant"}), on=["date", "symbol"], how="left")
-        evaluation = {"system": evaluate_panel(panel, "p_outperform"),
+        paired = panel.dropna(subset=["p_judge_debate", "p_judge_nd"])
+        contrast = {}
+        if len(paired) >= 30:                           # paired within-asset-week debate effect (finding 4)
+            def _wk_ic(col):
+                return pd.Series({d: g[col].rank(pct=True).corr(g["fwd_ret"].rank(pct=True), method="spearman")
+                                  for d, g in paired.dropna(subset=["fwd_ret"]).groupby("date") if len(g) >= 8})
+            diff = (_wk_ic("p_judge_debate") - _wk_ic("p_judge_nd")).dropna()
+            contrast = {"n_pairs": int(len(paired)), "weeks": int(len(diff)), "delta_ic_mean": float(diff.mean()) if len(diff) else None,
+                        "delta_ic_nw_t": newey_west_t(diff) if len(diff) >= 3 else None,
+                        "mean_abs_shift": float((paired["p_judge_debate"] - paired["p_judge_nd"]).abs().mean()),
+                        "sd_debate": float(paired["p_judge_debate"].std()), "sd_nd": float(paired["p_judge_nd"].std())}
+        evaluation = {"system": evaluate_panel(panel, "p_outperform"),            # deployed hybrid (debate where available)
+                      "llm_only": evaluate_panel(panel.dropna(subset=["p_judge"]), "p_judge"),
+                      "hybrid_uniform": evaluate_panel(panel.dropna(subset=["p_hybrid_nd"]), "p_hybrid_nd"),
+                      "llm_only_uniform": evaluate_panel(panel.dropna(subset=["p_judge_nd"]), "p_judge_nd"),
                       "analyst_mean": evaluate_panel(panel.dropna(subset=["p_analyst_mean"]), "p_analyst_mean"),
                       "quant_twin": evaluate_panel(panel.dropna(subset=["p_quant"]), "p_quant"),
+                      "encompassing_llm_vs_quant": encompassing(panel, "p_judge", "p_quant"),
+                      "encompassing_hybrid_vs_quant": encompassing(panel, "p_hybrid", "p_quant"),
+                      "debate_paired_contrast": contrast,
+                      "weight_on_quant": {"mean": float(panel["weight_on_quant"].mean()) if panel["weight_on_quant"].notna().any() else None,
+                                          "sd": float(panel["weight_on_quant"].std()) if panel["weight_on_quant"].notna().any() else None},
+                      "citations": {"cite_exist_mean": float(panel["cite_exist_mean"].mean()) if panel["cite_exist_mean"].notna().any() else None,
+                                    "number_grounded_mean": float(panel["number_grounded_mean"].mean()) if panel["number_grounded_mean"].notna().any() else None},
                       "by_year": {str(y): evaluate_panel(g, "p_outperform") for y, g in panel.groupby(panel["date"].dt.year)},
                       "weeks": {"completed": sorted(completed), "n_completed": len(completed), "n_manifested": len(by_day),
                                 "truncated_at": truncated_at},
@@ -111,6 +146,9 @@ def main() -> int:
         funding = realized_funding(sorted(panel["symbol"].unique()), fridays)
         portfolio = {"rule_twin": summarize_book(weights, fwd, funding=funding),
                      "rule_twin_no_funding": summarize_book(weights, fwd),
+                     "rule_twin_llm_only": summarize_book(weights_llm, fwd, funding=funding),
+                     "rule_twin_judge_nd": summarize_book(weights_nd, fwd, funding=funding),
+                     "rule_twin_confidence": summarize_book(weights_conf, fwd, funding=funding),
                      "funding_coverage": float(funding.groupby("date").size().reindex(fridays).fillna(0).mean() / max(panel.groupby("date").size().mean(), 1))}
         run.write_json("forecasts.json", {"rows": json.loads(panel.to_json(orient="records", date_format="iso"))})
         run.write_json("evaluation.json", evaluation)

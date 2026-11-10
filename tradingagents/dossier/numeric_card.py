@@ -167,7 +167,11 @@ def render_numeric(block: dict) -> str:
     def p(v):
         return "n/a" if v is None else f"{v}"
     def xs(v):
-        return "n/a" if v is None else f"pct {round(v * 100)}"
+        # percentile with its direction spelled out (design review finding 6: models read "pct 5" as "extreme")
+        if v is None:
+            return "n/a"
+        k = round(v * 100)
+        return f"pct {k}, higher than {k}% of the universe"
     lines = [
         f"Profile: {block['size_bucket']}; volume rank {xs(block['volume_rank_pct'])} within this week's universe; {block['listing_age']}; category: {block['category']}.",
         f"Returns: 4w {p(block['ret_4w_pct'])}% ({xs(block['ret_4w_xs_pct'])}), 12w {p(block['ret_12w_pct'])}% ({xs(block['ret_12w_xs_pct'])}); distance to 26w high {p(block['dist_26w_high_pct'])}%.",
