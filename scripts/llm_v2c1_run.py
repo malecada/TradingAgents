@@ -40,6 +40,7 @@ def main() -> int:
     ap.add_argument("--registration", required=True)
     ap.add_argument("--experiment", required=True)
     ap.add_argument("--cost-cap", type=float, required=True)
+    ap.add_argument("--runs-dir", default=None, help="per-asset call cache (default data/agents_v2/runs/<experiment>); a pre-registration preview cache may be reused")
     args = ap.parse_args()
     from tradingagents.research import ResearchRun
     client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=args.cost_cap)
@@ -63,7 +64,7 @@ def main() -> int:
                 raise SystemExit(f"dossier changed since freeze: {path}")
             by_day.setdefault(p.parent.name, {})[p.stem] = json.loads(p.read_text())
         # agent run, newest week first, cached per asset-week under a runs directory scoped to this experiment
-        runs_dir = ROOT / "data/agents_v2/runs" / args.experiment
+        runs_dir = Path(args.runs_dir) if args.runs_dir else ROOT / "data/agents_v2/runs" / args.experiment
         rows, weights, completed, truncated_at = [], {}, [], None
         weights_llm, weights_nd, weights_conf = {}, {}, {}
         for day in sorted(by_day, reverse=True):
@@ -154,7 +155,8 @@ def main() -> int:
         run.write_json("evaluation.json", evaluation)
         run.write_json("portfolio.json", portfolio)
         run.write_json("cost.json", {"calls": client.calls, "spent_usd": client.spent_usd, "cost_cap_usd": args.cost_cap,
-                                     "config_sha": config_sha(), "weeks_completed": len(completed), "truncated_at": truncated_at})
+                                     "config_sha": config_sha(), "weeks_completed": len(completed), "truncated_at": truncated_at,
+                                     "runs_dir": str(runs_dir)})
         run.finish([{"id": c, "status": "complete" if (c != "identified-subsets" or subsets) else "unavailable",
                      **({} if (c != "identified-subsets" or subsets) else {"reason": "no reid flags registered"})} for c in CELLS])
         print(json.dumps({"system": evaluation["system"], "quant_twin": evaluation["quant_twin"]}, indent=1))

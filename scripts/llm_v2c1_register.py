@@ -21,7 +21,8 @@ SOURCE_FILES = (
     "tradingagents/agents_v2/__init__.py", "tradingagents/agents_v2/schemas.py", "tradingagents/agents_v2/roles.py",
     "tradingagents/agents_v2/graph.py", "tradingagents/agents_v2/runner.py", "tradingagents/agents_v2/evaluate.py",
     "tradingagents/agents_v2/portfolio_eval.py", "tradingagents/dossier/or_client.py", "tradingagents/dossier/quant_forecast.py",
-    "tradingagents/dossier/numeric_card.py", "scripts/llm_v2c1_run.py", "scripts/llm_v2c1_manifest.py", "scripts/llm_v2c0_client.py",
+    "tradingagents/dossier/numeric_card.py", "tradingagents/dossier/universe.py", "scripts/llm_v2c1_run.py",
+    "scripts/llm_v2c1_manifest.py", "scripts/llm_v2c0_client.py",
     "uv.lock", "tradingagents/__init__.py",
 )
 FAMILY_KEY = "llm-multiagent-v2"
@@ -40,6 +41,7 @@ def _sha(path: str) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", required=True, help="YYYYMMDD used in program/experiment ids")
+    ap.add_argument("--reid-flags", default="data/dossier/reid_flags_v26.parquet")
     args = ap.parse_args()
     charter = (ROOT / CHARTER).read_text()
     if "DRAFT, NOT FROZEN" in charter:
@@ -55,16 +57,23 @@ def main() -> int:
         "cards": {"path": "data/llm_rank_xs/cards.parquet", "sha256": _sha("data/llm_rank_xs/cards.parquet"), "dataset": DATASET},
         "quant_forecasts": {"path": "data/dossier/quant_forecasts.parquet", "sha256": _sha("data/dossier/quant_forecasts.parquet"), "dataset": DATASET},
     }
-    if (ROOT / "data/dossier/reid_flags.parquet").exists():
-        (ROOT / "data/agents_v2/charter1/reid_flags_path.json").write_text(json.dumps({"path": "data/dossier/reid_flags.parquet"}) + "\n")
+    if (ROOT / args.reid_flags).exists():
+        (ROOT / "data/agents_v2/charter1/reid_flags_path.json").write_text(json.dumps({"path": args.reid_flags}) + "\n")
         inputs["reid_flags_path"] = {"path": "data/agents_v2/charter1/reid_flags_path.json", "sha256": _sha("data/agents_v2/charter1/reid_flags_path.json"), "dataset": DATASET}
-        inputs["reid_flags"] = {"path": "data/dossier/reid_flags.parquet", "sha256": _sha("data/dossier/reid_flags.parquet"), "dataset": DATASET}
+        inputs["reid_flags"] = {"path": args.reid_flags, "sha256": _sha(args.reid_flags), "dataset": DATASET}
     spec = {"schema_version": 1, "program_id": program, "families": {FAMILY_KEY: dict(FAMILY)},
             "datasets": {DATASET: {"identity": f"multiagent-v2-dev-dossiers-{manifest['builder_version']}",
-                                   "history_reference": ("Dossiers built from Wayback news, Arctic Shift Reddit and the card panel; "
-                                                         "pilot weeks 2022-01-07 and 2022-01-14 were exposed during validity probes "
-                                                         "(research/multiagent-v2/STATE.md); the re-identification probe inspected every dossier."),
-                                   "exposures": [{"start": "2022-01-01T00:00:00Z", "end": "2022-01-22T00:00:00Z", "state": "exposed"}]}},
+                                   "history_reference": ("Dossiers built from Wayback news, Arctic Shift Reddit and the card panel (builder v2.8). "
+                                                         "Exposed before registration: pilot weeks 2022-01-07/14 and the smoke week 2022-09-30 on "
+                                                         "earlier builder versions; the agents v2.4 live check 2024-12-27 and the descriptive preview "
+                                                         "weeks 2022-05-13, 2022-11-11, 2024-06-28 on v2.8 (cached calls reused by the run); the "
+                                                         "re-identification probe inspected a 20 % stratified sample (research/multiagent-v2/STATE.md)."),
+                                   "exposures": [{"start": "2022-01-01T00:00:00Z", "end": "2022-01-22T00:00:00Z", "state": "exposed"},
+                                                 {"start": "2022-05-13T00:00:00Z", "end": "2022-05-20T00:00:00Z", "state": "exposed"},
+                                                 {"start": "2022-09-30T00:00:00Z", "end": "2022-10-07T00:00:00Z", "state": "exposed"},
+                                                 {"start": "2022-11-11T00:00:00Z", "end": "2022-11-18T00:00:00Z", "state": "exposed"},
+                                                 {"start": "2024-06-28T00:00:00Z", "end": "2024-07-05T00:00:00Z", "state": "exposed"},
+                                                 {"start": "2024-12-27T00:00:00Z", "end": "2025-01-03T00:00:00Z", "state": "exposed"}]}},
             "experiments": {experiment: {
                 "family": FAMILY_KEY, "parent": None,
                 "question": ("Does the dossier-fed anonymized multi-agent system produce weekly cross-sectional forecasts with "

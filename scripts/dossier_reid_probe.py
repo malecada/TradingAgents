@@ -36,6 +36,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=300)
     ap.add_argument("--all", action="store_true", help="probe every dossier (for the identified-subset analysis)")
+    ap.add_argument("--frac", type=float, default=None, help="stratified per-week sample fraction (flags written for the sample)")
+    ap.add_argument("--cost-cap", type=float, default=5.0)
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
     ap.add_argument("--dossiers", default=str(OUT), help="dossier directory (the dossier_build.py --out)")
@@ -45,9 +47,17 @@ def main() -> int:
     args = ap.parse_args()
     files = sorted(Path(args.dossiers).glob("*/*.json"))
     rng = random.Random(args.seed)
-    sample = files if args.all else rng.sample(files, min(args.n, len(files)))
+    if args.all:
+        sample = files
+    elif args.frac:
+        by_week = {}
+        for f in files:
+            by_week.setdefault(f.parent.name, []).append(f)
+        sample = [f for wk in sorted(by_week) for f in rng.sample(by_week[wk], max(1, round(len(by_week[wk]) * args.frac)))]
+    else:
+        sample = rng.sample(files, min(args.n, len(files)))
     tickers = sorted({base_symbol(p.stem) for p in files})
-    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=5.0, reasoning_enabled=False, max_tokens=3000)   # non-thinking mode: the guess itself is the probe
+    client = StructuredClient.pinned("pro", load_api_key(), cost_cap_usd=args.cost_cap, reasoning_enabled=False, max_tokens=3000)   # non-thinking mode: the guess itself is the probe
     if args.provider:
         client.provider = args.provider
     from tradingagents.dossier.or_client import ORError
@@ -96,7 +106,7 @@ def main() -> int:
                "spent_usd": client.spent_usd, "failures": failures,
                "model": client.model, "provider": client.provider, "reasoning": "disabled"}
     summary["section"] = args.section
-    if args.all:   # per-dossier identification flags for the evaluation covariate
+    if args.all or args.frac:   # per-dossier identification flags for the evaluation covariate
         flags = pd.DataFrame([{"friday": Path(r["file"]).parent.name, "symbol": Path(r["file"]).stem,
                                "identified": bool(h), "month_within_6": bool(m)}
                               for r, h, m in zip(results, df["asset_hit"], df["month_within_6"].fillna(False))])
