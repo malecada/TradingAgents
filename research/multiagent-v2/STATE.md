@@ -199,3 +199,15 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Batch D started detached (log /tmp/build_v28_c.log): Fridays 2023-05-05→2023-08-25 (17 weeks). Remaining after the
   fetch: 2022-12-02→2023-04-28 (22 weeks).
 - OpenRouter $195 total, $38.65 used → $156.35 available.
+
+## 2026-11-11 — FREEZE of Charter 1 (llm-v2-charter1-20261111)
+- All 156 weeks built with builder v2.8 (7,800 dossiers; audit 0 leaks / 0 duplicates / 0 role-token defects /
+  0 year literals; 84 % with shown items; noise share of retrieved 0.26). Fetch final: 46,873/47,502 captures.
+- Manifest data/agents_v2/charter1/{dossier_manifest,klines_digest,agent_config}.json; agent config agents-v2.4
+  sha a97972476be6f5b1…; identification flags from a 20 % stratified probe (data/dossier/reid_flags_v26.parquet).
+- Cap $140 (newest-first → ≈ 2024 + late 2023); cache data/agents_v2/runs/charter1-preview reused.
+- Run: `llm_v2c1_run.py --registration research/llm-v2-charter1-20261111/gates.json --experiment
+  llm-v2c1-dev-run-20261111 --cost-cap 140 --runs-dir data/agents_v2/runs/charter1-preview`, log /tmp/charter1_run.log.
+  NO commits/checkouts in this checkout while the run is active.
+- Probe sample: 1,560 dossiers (20 % per week), V4-Pro non-thinking, $2.46, 0 failures: asset identified 48.0 %
+  (2022 52.5 %, 2023 47.7 %, 2024 43.8 %), month within ±6 months 58.1 %. Balance at freeze ≈ $151.

@@ -38,6 +38,7 @@ def main() -> int:
     ap.add_argument("--all", action="store_true", help="probe every dossier (for the identified-subset analysis)")
     ap.add_argument("--frac", type=float, default=None, help="stratified per-week sample fraction (flags written for the sample)")
     ap.add_argument("--cost-cap", type=float, default=5.0)
+    ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--seed", type=int, default=20261109)
     ap.add_argument("--provider", default=None, help="override the pinned provider (diagnostic only)")
     ap.add_argument("--dossiers", default=str(OUT), help="dossier directory (the dossier_build.py --out)")
@@ -69,31 +70,38 @@ def main() -> int:
                 row = json.loads(line)
                 done[row["file"]] = row
     results, failures = [], 0
-    with partial.open("a") as out:
-        for p in sample:
-            if str(p) in done:
-                results.append(done[str(p)])
-                continue
-            d = json.loads(p.read_text())
-            body = d["text"]
-            cut = body.find("## News and discussion")
-            if args.section == "numeric" and cut > 0:
-                body = body[:cut]
-            elif args.section == "text" and cut > 0:
-                body = "# Dossier for " + d["alias"] + "\n\n" + body[cut:]
-            text = PROMPT.format(tickers=", ".join(tickers), text=body[:12000])
-            try:
-                guess, _ = client.call(text, SCHEMA, "reid")
-            except ORError as exc:
-                failures += 1
-                print(f"skip {p.name}: {exc}", flush=True)
-                continue
-            row = {"file": str(p), "true_asset": d["base"], "true_month": d["friday"][:7],
+    pending = [p for p in sample if str(p) not in done]
+    results.extend(done[str(p)] for p in sample if str(p) in done)
+
+    def probe_one(p):
+        d = json.loads(p.read_text())
+        body = d["text"]
+        cut = body.find("## News and discussion")
+        if args.section == "numeric" and cut > 0:
+            body = body[:cut]
+        elif args.section == "text" and cut > 0:
+            body = "# Dossier for " + d["alias"] + "\n\n" + body[cut:]
+        text = PROMPT.format(tickers=", ".join(tickers), text=body[:12000])
+        try:
+            guess, _ = client.call(text, SCHEMA, "reid")
+        except ORError as exc:
+            return p, None, str(exc)
+        return p, {"file": str(p), "true_asset": d["base"], "true_month": d["friday"][:7],
                    "asset": str(guess.get("asset", "")), "year_month": str(guess.get("year_month", "")),
-                   "confidence": guess.get("confidence")}
+                   "confidence": guess.get("confidence")}, None
+
+    from concurrent.futures import ThreadPoolExecutor
+    with partial.open("a") as out, ThreadPoolExecutor(max_workers=args.workers) as pool:
+        for n, (p, row, err) in enumerate(pool.map(probe_one, pending), 1):
+            if row is None:
+                failures += 1
+                print(f"skip {p.name}: {err}", flush=True)
+                continue
             results.append(row)
             out.write(json.dumps(row) + "\n")
             out.flush()
+            if n % 100 == 0:
+                print(f"{n}/{len(pending)} probed, spent ${client.spent_usd:.2f}", flush=True)
     if not results:
         print("no results")
         return 1

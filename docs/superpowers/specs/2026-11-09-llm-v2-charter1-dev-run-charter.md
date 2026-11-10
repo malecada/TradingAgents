@@ -1,8 +1,10 @@
-# Charter 1 — Multi-agent v2 development run (`llm-v2-charter1`) — DRAFT, NOT FROZEN
+# Charter 1 — Multi-agent v2 development run (`llm-v2-charter1`) — FROZEN 2026-11-11
 
-**Status:** draft written 2026-11-08 while the corpora are being ingested. It is frozen (hashes, budget,
-exact windows) only after the two-week pilot has measured cost and validity (plan §10, week 3–4). No
-dev-window result may be looked at before the freeze commit.
+**Status:** drafted 2026-11-08; frozen 2026-11-11 after the pre-run audit (mechanics A–F, design review H,
+`docs/superpowers/specs/2026-11-10-multiagent-v2-pre-run-audit.md`), the v2.8 rebuild of all 156 weeks and
+the agents v2.4 live check. Dev-window exposure before the freeze is limited to the disclosed pilot, smoke
+and preview weeks listed in §6a; their per-asset calls are cached and reused by the run, and no prompt, schema,
+weight or gate was changed on the basis of them.
 **Parent plan:** `docs/superpowers/specs/2026-11-08-multiagent-v2-analysis-and-plan.md`.
 **Prior cycle:** Charter 0 (`llm-v2-charter0-2026-11-09`) FAIL → dossier carries summaries and numeric cards,
 no typed-event store.
@@ -22,12 +24,15 @@ quant-only cross-sectional model fed identical cards?
   Sealed-B 2026-05 → 2026-12-11: untouched by this charter.
 
 ## 3. Frozen inputs (hashes recorded at freeze)
-- Dossier builder version and anonymizer dictionary; dossier files (one hash per file, manifest hashed).
-- Agent config sha (`tradingagents/agents_v2/graph.py::config_sha`): prompts and schemas.
+- Dossier builder `dossier-v2.8`; dossier files (one hash per file, `data/agents_v2/charter1/dossier_manifest.json`).
+- Agent config `agents-v2.4`, sha a97972476be6f5b1… (`tradingagents/agents_v2/graph.py::config_sha`: prompts, schemas,
+  reasoning map, token budgets, model pins, debate count and selection rule, analyst input partition, temperature).
+- Re-identification flags: V4-Pro non-thinking probe on a 20 % stratified-per-week sample of the dossiers
+  (`data/dossier/reid_flags_v26.parquet`); the identified-subset analysis runs on that sample.
 - Model pins: `deepseek/deepseek-v4-pro` fp8, ordered providers Baidu then StreamLake (same weights; echoed provider recorded per call), temperature 0. Reasoning: non-thinking mode for analysts, forecast interpreter and debaters (providers did not honour effort or token caps; pilot latency 45 s and ~2,000 reasoning tokens per call otherwise), medium reasoning for judge and portfolio manager. Flash (non-thinking) for article typing.
 - Text sources admitted: Wayback captures of CoinDesk, Cointelegraph, The Block (as_of = first capture);
   Arctic Shift Reddit posts for r/CryptoCurrency, r/Bitcoin, r/ethereum (as_of = created; scores are
-  retrieval-time and used for nothing). Alpaca/Benzinga store if synced before freeze.
+  retrieval-time and used for nothing; posts selected by recency only). No Alpaca/Benzinga store (not synced).
 - Forward returns from the 799-symbol daily kline store.
 
 ## 4. Pre-run validity probes (pilot, two dev weeks, STOP on fail)
@@ -84,6 +89,9 @@ reported); Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronolo
 The former "no debate" ablation is replaced by the paired contrast in §5.
 
 ## 6a. Execution order and budget truncation (declared before the freeze)
+- Exposed before the freeze (disclosed, cached, not gate-computed): pilot weeks 2022-01-07 and 2022-01-14 and the
+  smoke week 2022-09-30 on earlier builder/agent versions; the agents v2.4 live check 2024-12-27 and the descriptive
+  preview weeks 2022-05-13, 2022-11-11, 2024-06-28 on v2.8 (research/multiagent-v2/preview_4weeks.json).
 - Weeks are processed newest-first (2024-12-27 backwards to 2022-01-07). The run stops only when the registered
   spend cap is reached or the window is complete; no interim gate value is computed or inspected before the stop.
 - If the cap stops the run early, all gates in §5 are evaluated on the completed contiguous window and the number
@@ -93,10 +101,12 @@ The former "no debate" ablation is replaced by the paired contrast in §5.
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.
-- Spend cap: $400 for the dev run (agents v2.3 measured $2.48 per week; v2.4 adds 12 paired judge calls and removes
-  one debate turn per order and the PM call, projected ≈ $2.5 per week, 156 weeks ≈ $390; a cost overrun truncates the
-  oldest weeks under §6a); Flash typing and the identification probe are separate, ≈ $12; ablations ≈ $130. Realized
-  funding (Binance public history) is charged to the rule-twin book.
+- Spend cap: **$140** for the dev run (funded credit at the freeze; agents v2.4 measured $2.22–2.45 per week on four
+  weeks). Under the newest-first rule of §6a this covers about 57 new weeks plus the 4 cached preview weeks, i.e. all
+  52 weeks of 2024 and roughly the last 9 weeks of 2023; the older weeks of the manifest stay frozen and unexposed and
+  may be run under a separately registered continuation if funded later. Flash typing and the probe sample are
+  separate (≈ $10); ablations (§6, ≈ $130) are deferred until funded. Realized funding (Binance public history) is
+  charged to the rule-twin book.
 - Family: `llm-multiagent-v2` (new mechanism: dossier-fed debate on anonymized cross-section), attempt budget 6,
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.
