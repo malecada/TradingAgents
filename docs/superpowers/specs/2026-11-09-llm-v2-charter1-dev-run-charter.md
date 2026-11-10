@@ -43,21 +43,45 @@ quant-only cross-sectional model fed identical cards?
 | Measured cost per asset-week | $0.041 (pilot, 2 weeks); budget set at 1.2× projection |
 
 ## 5. Gates (dev window, forecast quality before any portfolio claim)
+Panels (all recorded for every asset-week): `p_quant` = ridge rank percentile; `p_judge` = LLM-only probability
+(judge who never sees the quant section; debate where the asset was in the random debate subset, judge without
+debate otherwise); `p_hybrid` = deployed probability, sigmoid(w·logit(q) + (1−w)·logit(p_judge)) with w the
+forecast interpreter's weight; `p_judge_nd` / `p_hybrid_nd` = the uniform judge-without-debate panels;
+`p_analyst_mean` = secondary. The gates apply to the deployed `p_hybrid` panel; the hybrid question is answered
+by the encompassing test on `p_judge`.
+
 | Gate | Floor |
 |---|---|
-| Residualized weekly rank IC (controls: vol_ewma20, ret_4w, size_rank), Newey-West lag 4 | t ≥ 2.0 |
-| Brier skill vs base rate 0.5 | > 0 |
-| Calibration slope (quintiles) | within [0.7, 1.3] |
-| Incremental: system IC ≥ quant-only ridge IC on common weeks | required |
+| Residualized weekly rank IC of `p_hybrid` (controls: vol_ewma20, ret_4w, dvol_30d), Newey-West lag 4 | t ≥ 2.0 |
+| Brier skill of `p_hybrid` after walk-forward logistic recalibration (training weeks < t, first 52 weeks training only) | > 0 |
+| Forecast encompassing: Fama–MacBeth weekly regression of the residualized return rank on residualized `p_quant` rank and `p_judge` rank; NW-t of the mean `p_judge` coefficient | t ≥ 2.0 |
 | Sub-periods (2022, 2023, 2024) | same sign of mean IC in ≥ 2 of 3 |
 
-Portfolio gates (only if all forecast gates pass): the rule-twin book is primary (the PM prompt violated its constraints in both pilot weeks and is kept as an ablation with its violation rate reported), taker costs 5 bp per side plus
-funding, net SR ≥ 0.8, dual-family placebo (shuffled dates, shuffled assets) p ≤ 0.05, DSR at the declared
-trial count (1 configuration; ablations are descriptive).
+Reported, not gated (design review finding 3: with probability sd ≈ 0.05 a slope near 1 would require an IC
+far above the detection floor, so the slope measures dispersion, not skill): raw Brier skill, weekly-centered
+Brier skill, Cox calibration intercept and slope (logistic regression of the outcome on logit p), quintile
+slope, `p_judge` and `p_quant` IC side by side, mean and sd of the interpreter's weight.
+
+Portfolio gates (only if all forecast gates pass): the rule-twin book keyed by symbol is primary
+(score (p−0.5)/vol demeaned to net 0, gross 1, |w| ≤ 0.10; abstentions flat), taker costs 5 bp per side plus
+realized funding, net SR ≥ 0.8, dual-family placebo (shuffled dates, shuffled assets) p ≤ 0.05, DSR at the
+declared trial count (1 configuration; ablations are descriptive). Books with `p_judge` (LLM-only), `p_judge_nd`
+and the confidence-weighted variant are reported alongside.
+
+Paired debate contrast (reported): for the 12 randomly debated assets per week, Δ rank IC and the mean absolute
+shift between `p_judge_debate` and `p_judge_nd` (≈ 1,870 pairs over 156 weeks).
+
+Mechanical validity (reported, computed from outputs at no cost): cited-item existence rate per role (≥ 0.98
+expected), number-grounding rate of evidence bullets, abstention rate, schema-valid rate.
 
 ## 6. Ablations (10% stratified subsample, descriptive, no gate)
-Leave-one-analyst-out (3); no debate; named vs anonymized dossiers; text-free (numeric only); Flash in all roles;
-Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological control on 2025-12 → 2026-12.
+Single-call baseline (judge on the dossier, no analysts, no debate; ≈ $16); leave-one-analyst-out (3; analysts
+now receive disjoint dossier slices, so this is informative); quant section hidden from the interpreter too
+(pure LLM arm; ≈ $25); thinking enabled for analysts and debaters (≈ $50; paired ΔIC, citation validity, share of
+changed decisions); contested instead of random debate selection; named vs anonymized dossiers; text-free
+(numeric only); Flash in all roles; LLM portfolio manager as an overlay with week-unique ids (violation rate
+reported); Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological control on 2025-12 → 2026-12.
+The former "no debate" ablation is replaced by the paired contrast in §5.
 
 ## 6a. Execution order and budget truncation (declared before the freeze)
 - Weeks are processed newest-first (2024-12-27 backwards to 2022-01-07). The run stops only when the registered
@@ -69,9 +93,10 @@ Claude Opus 5.5 in judgment roles (optional, ≤ $120); V3.2 chronological contr
 ## 7. Stop rules, budget, attribution
 - One configuration; prompts, schemas, builder version and model pins frozen at registration; any change after
   the first dev call is a new charter.
-- Spend cap: $400 for the dev run (measured $2.48 per week with 12 debates and a judge call for every other asset,
-  so 156 weeks ≈ $387; a cost overrun truncates the oldest weeks under §6a); Flash typing and the identification probe
-  are separate, ≈ $12. Realized funding (Binance public history) is charged to the rule-twin book.
+- Spend cap: $400 for the dev run (agents v2.3 measured $2.48 per week; v2.4 adds 12 paired judge calls and removes
+  one debate turn per order and the PM call, projected ≈ $2.5 per week, 156 weeks ≈ $390; a cost overrun truncates the
+  oldest weeks under §6a); Flash typing and the identification probe are separate, ≈ $12; ablations ≈ $130. Realized
+  funding (Binance public history) is charged to the rule-twin book.
 - Family: `llm-multiagent-v2` (new mechanism: dossier-fed debate on anonymized cross-section), attempt budget 6,
   prior attempts 0. The legacy multi-agent cells (THESIS §23, §48) are a different mechanism (tool-fetching
   agents on named daily BTC/ETH) and are cited as history.

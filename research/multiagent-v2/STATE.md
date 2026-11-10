@@ -149,3 +149,23 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Fetch 21,800/47,502 (~1,416/h); 2024-02→2024-06 now fully fetched (2024-01 at 80 %, 2022-12 at 16 %).
 - Batch B started detached (log /tmp/build_v27_b.log): Fridays 2024-03-01→2024-07-26 (22 weeks, ≈1,100 dossiers).
 - OpenRouter $45 total, $26.12 used → $18.88 available.
+
+## 2026-11-10 05:10 UTC — design review of the agent framework (independent reviewer, read-only) → agents v2.4
+- 12 findings; design-critical: (1) dossier aliases collide across a week (50 assets, 20–22 aliases) and the
+  runner/book were keyed by alias → every portfolio number of the smoke/pilot was corrupt (forecast gates were
+  keyed by symbol and unaffected); (2) "system IC ≥ quant IC" gate mis-specified for a hybrid whose LLM discounts
+  a 0.09-IC signal; (3) calibration-slope gate is a dispersion test under compression and ties.
+- Implemented (commit 14d192547, 54 tests): symbol-keyed runner/book; analysts get physically different dossier
+  slices (market n2/n3/n4/n7/n8 + calendar; fundamental n1/n5/n6 + event-typed items; news text + calendar); quant
+  section only to the forecast interpreter; debaters/judges see the dossier without it → p_judge = LLM-only;
+  deployed p_hybrid = sigmoid(w·logit(q) + (1−w)·logit(p_judge)); judge-without-debate for ALL assets (uniform
+  panel) + seeded-random 12-asset debate with its own judges (paired within-asset contrast); symmetric two-turn
+  debate (−2 calls per order); confidence out of the primary book; abstain → p 0.5, weight 0; PM dropped from the
+  main run (ablation with week-unique ids C01..); citation-existence and number-grounding rates per role;
+  evaluation adds encompassing (Fama–MacBeth, NW t), Cox calibration, walk-forward recalibrated Brier, centered Brier.
+- Builder v2.8: percentiles rendered "pct K, higher than K% of the universe"; COMMON defines pct and states that
+  half the universe beats the median; quant forecasts computed over the full card history so the trailing record
+  never resets at a build-batch boundary. Batch A+B (91 weeks, 4,550 dossiers, v2.7) deleted and rebuilding as
+  v2.8 detached (log /tmp/build_v28_a.log; typing cached).
+- Cost per week changes: +12 paired judge calls, −4 debate calls per debated asset, −1 PM call → ≈ $2.5/week.
+- Fetch 25,400/47,502 at 05:03 UTC (~15.5 h left).

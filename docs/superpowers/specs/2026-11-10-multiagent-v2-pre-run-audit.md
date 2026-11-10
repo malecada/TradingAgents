@@ -1,7 +1,7 @@
 # Pre-run audit of the multi-agent v2 pipeline (before Charter 1 registration)
 
-**Date:** 2026-11-09/10. **Status:** fixes applied and tested (sections E–F); re-verification on the fresh v2.6
-rebuild is the remaining step before registration. Two sources: a checklist review by the author of the code and an independent reviewer (fresh
+**Date:** 2026-11-09/10. **Status:** mechanics audit (A–F) and design review (H) applied and tested; the v2.8
+rebuild, the full identification probe and a one-week live check of agents v2.4 remain before registration. Two sources: a checklist review by the author of the code and an independent reviewer (fresh
 agent, read-only, no API access) briefed on the same files and questions. Nothing is registered until every
 critical finding is fixed and re-tested.
 
@@ -86,6 +86,30 @@ available.
 - Realized funding: `scripts/dossier_funding_fetch.py` stores Binance USDT-M funding history per symbol;
   `realized_funding` sums the settlements in (Friday, Friday+7] and the book charges longs / credits shorts.
   `portfolio.json` reports the book with and without funding and the funding coverage.
+
+## H. Design review of the agent framework (independent reviewer, 2026-11-10) and the resulting agents v2.4
+
+Sections A–F audited mechanics; a second independent reviewer was briefed on the DESIGN of the roles, debate,
+aggregation, information flow and gates (read-only, no API access, same files plus the smoke run). Twelve
+findings; all implemented in commit 14d192547 except the ablations, which are registered in charter §6.
+
+| # | Finding (condensed) | Severity | Change |
+|---|---|---|---|
+| 1 | Dossier aliases are unique within a dossier but not across the week (50 assets, 20–22 aliases); runner and book were keyed by alias, so every portfolio number of the pilot and smoke was corrupt (forecast panels keyed by symbol were unaffected). | design-critical | Runner, candidates and book keyed by symbol; aliases appear only inside prompts; assertion on unique keys; the PM (ablation) sees week-unique ids C01..C50. |
+| 2 | "System IC ≥ quant IC" gate mis-specified: the interpreter's weight (modal 0.15) was consumed nowhere and an LLM that discounts a 0.09-IC signal fails the gate regardless of content. | design-critical | Structural hybrid p_hybrid = sigmoid(w·logit(q) + (1−w)·logit(p_judge)); p_quant, p_judge, p_hybrid recorded; gate replaced by a forecast-encompassing test (Fama–MacBeth, NW t ≥ 2 on the p_judge coefficient). |
+| 3 | Calibration-slope gate is a dispersion test under compression (sd 0.05) and ties; quintile binning on tied ranks is unstable. | design-critical | Gate = IC t ≥ 2 plus Brier skill after walk-forward logistic recalibration; Cox slope and quintile slope reported as diagnostics. |
+| 4 | Debate subset chosen on conviction, not randomized; the debated/judge-only sd gap was restricted range, not a debate effect. | material | Seeded random subset per week; judge-without-debate for every asset (uniform panel) plus debate judges on the subset → paired within-asset contrast (≈ 1,870 pairs); the no-debate ablation is dropped. |
+| 5 | Analysts differ by instruction only; all see the full dossier; 19/50 identical probability triples. | material | Physical input partition: market = n2/n3/n4/n7/n8 + calendar; fundamental = n1/n5/n6 + event-typed items; news = text + calendar; quant line only to the interpreter. Cuts analyst tokens ≈ 30 %. |
+| 6 | Percentiles misread by non-thinking roles ("pct 5" read as extreme volatility). | material | Rendered "pct K, higher than K% of the universe"; COMMON defines the convention. Builder v2.8. |
+| 7 | Mean p below 0.5 on a relative target (agents forecast market direction). | material | COMMON states that exactly half the universe beats the median; weekly-centered Brier reported. |
+| 8 | LLM-only arm not separable (every role restated the quant line); the trailing calibration record shown to agents reset at build-batch boundaries. | material | Debaters and judges never see the quant section (p_judge is LLM-only); quant forecasts computed over the full card history before any build; quant-hidden ablation registered. |
+| 9 | Self-reported confidence sized positions without validation and double-counted |p − 0.5|; abstain asymmetric between arms. | material | Primary book (p − 0.5)/vol; confidence-weighted book reported; abstain → p 0.5 in both arms, weight 0. |
+| 10 | Debate asymmetric (opener had two turns) and inert; thinking-off cost argument sound but untested. | material | Symmetric two-turn debate (open; opponent opens and rebuts), judge sees both; thinking-on ablation registered. |
+| 11 | No citation validity check; cited ids detached from claims. | material | Parse-time citation-existence and number-grounding rates per role, reported per asset-week and in the evaluation summary. |
+| 12 | PM violated constraints in every run; single-call baseline missing; omissions vs the original TradingAgents not justified. | material | PM removed from the main run (ablation overlay only); single-call baseline registered; the design chapter is to justify each omission with its §2 root cause. |
+
+Cost consequence: +12 judge calls and −4 debate calls per debated asset and −1 PM call per week → ≈ $2.5 per week,
+unchanged from the §F2 measurement within noise; ablations ≈ $130 (registered, separate from the $400 cap).
 
 ## G. Remaining before registration
 
