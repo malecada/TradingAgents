@@ -85,7 +85,7 @@ def main() -> int:
     r_nocost = book_returns(weights, fwd, cost_per_side=0.0)
     out["book"] = {"weekly_net_return_pct": {str(k.date()): round(float(v * 100), 3) for k, v in r_book.items()},
                    "weekly_gross_return_pct": {str(k.date()): round(float(v * 100), 3) for k, v in r_nocost.items()},
-                   "funding_coverage": round(float(len(funding) / max(len(panel), 1)), 3)}
+                   "funding_coverage": round(float(panel.merge(funding, on=["date", "symbol"], how="left")["funding_week"].notna().mean()), 3)}
     text = json.dumps(out, indent=1, default=str)
     if args.out:
         Path(args.out).write_text(text)

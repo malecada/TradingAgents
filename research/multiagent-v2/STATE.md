@@ -180,3 +180,16 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   failures ≈ 1.4 % overall, not retried).
 - Batch C started detached (log /tmp/build_v28_b.log): Fridays 2023-09-01→2024-02-23 (26 weeks).
 - OpenRouter $45 total, $30.09 used → $14.91 available (live check $2.45 + rebuild typing).
+
+## 2026-11-10 ~12:30 UTC — descriptive preview, 4 weeks (NOT a gate computation; weeks chosen as regime extremes)
+- Weeks 2022-05-13 (LUNA), 2022-11-11 (FTX), 2024-06-28, 2024-12-27; 200 asset-weeks; $6.83 for the three new weeks;
+  cache data/agents_v2/runs/charter1-preview (agents v2.4 config sha; reused by the registered run).
+- Residualized weekly IC (quant / LLM-only judge / hybrid / deployed / analyst mean): mean −0.095 / +0.118 / −0.024 /
+  −0.020 / +0.055; the judge is positive in 3 of 4 weeks, the ridge negative in 3 of 4 (its trailing record is +0.09;
+  these four weeks are extreme). Hybrid follows the ridge at interpreter weights 0.23–0.62 (mean 0.43).
+- Paired debate shift 0.028 (48 pairs); citation existence 1.00; number grounding 0.91; 0 failures; 0 delisted rows.
+- Rule-twin book (deployed hybrid) weekly net: −2.98, −0.67, +4.76, −2.91 %.
+- Reading: suggestive that the LLM-only panel carries information the ridge does not (encompassing t on 4 weeks is not
+  interpretable); no change to prompts or design follows from this (pre-registration discipline). File:
+  research/multiagent-v2/preview_4weeks.json.
+- Credit after preview: ≈ $153.9 available. Registered run cap stays $140.
