@@ -211,3 +211,37 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   NO commits/checkouts in this checkout while the run is active.
 - Probe sample: 1,560 dossiers (20 % per week), V4-Pro non-thinking, $2.46, 0 failures: asset identified 48.0 %
   (2022 52.5 %, 2023 47.7 %, 2024 43.8 %), month within ±6 months 58.1 %. Balance at freeze ≈ $151.
+
+## 2026-11-11 12:14 UTC — Charter 1 attempt 1 INTERRUPTED (failed receipt); Charter 1b DRAFTED, NOT FROZEN
+- System review during the run (`docs/superpowers/specs/2026-11-11-multiagent-v2-system-review.md`): the evaluation
+  tail could not complete. `write_json` rejects NaN and the identified-subset block always yields NaN (ten flagged
+  assets per week), so the attempt would have spent the cap and failed after writing `forecasts.json` (B1). Further
+  evaluation defects B6, B8, B9, B10, B11, B13 and the run-loop failure path A14. Source files are hash-checked at
+  every write, so nothing could be patched in the running attempt.
+- Run interrupted by SIGINT at 12:14 UTC. Receipt `research_runs/llm-v2c1-dev-run-20261111/failed.json`
+  (KeyboardInterrupt), log copy `research/multiagent-v2/charter1_attempt1_run_log.txt`. No output written, no
+  forecast joined with a forward return. Family `llm-multiagent-v2`: 1 of 6 attempts used.
+- Cache `data/agents_v2/runs/charter1-preview`: 61 complete weeks 2024-12-27 → 2023-11-03 (3,050 asset-weeks) and
+  part of 2023-10-27 (50 assets without debate, 2 of 12 debates). Spend: client tally $127.49 at the last complete
+  week + $1.58 cached calls of the interrupted week = $129.07 recorded. Account balance $21.16.
+- Decisions 2026-11-11: stop the run; Path A (same dossiers, agents and cached calls, corrected evaluation tail);
+  the three registered gate families and thresholds stay, only defects are fixed; no top-up.
+- Charter 1b draft: `docs/superpowers/specs/2026-11-11-llm-v2-charter1b-dev-run-charter.md` (marked DRAFT, three
+  open decisions in §9). Code: `tradingagents/agents_v2/charter1b.py` (cache admission, panel assembly, gate
+  statistics, verdict by code, `json_safe`), `evaluate.py` (sub-period rule, subset-gap estimator with week-block
+  bootstrap), `portfolio_eval.py` (funding window on the holding period, funded headline Sharpe, funded placebos
+  with +1 correction, probabilistic Sharpe), scripts `llm_v2c1b_{manifest,register,run,dryrun}.py`.
+  Manifests `data/agents_v2/charter1b/{cache_manifest,funding_digest}.json` (3,111 cached files pinned by sha256,
+  347 funding files).
+- Verification: 35 tests in `tests/research/test_agents_v2*.py` pass, including the lifecycle run end to end in a
+  temporary repository with a stub client. Dry run on the real 61-week forecast panel with SYNTHETIC outcomes
+  (`research/multiagent-v2/charter1b_dryrun.json`): noise FAIL, planted signal PASS, zero returns FAIL, three weeks
+  FAIL, no descriptive block raised, tail ≈ 90 s. `llm_v2c1b_register.py --date 20261111 --check` validates
+  (18 source files, 8 inputs, 6 outputs, 4 cells) and writes nothing.
+- To freeze after approval: resolve §9 in the charter and remove the draft marker; commit; then
+  `PYTHONPATH=. .venv/bin/python scripts/llm_v2c1b_register.py --date <date>`; commit `gates.json`; run
+  `llm_v2c1b_run.py --registration research/llm-v2-charter1b-<date>/gates.json --experiment llm-v2c1b-dev-run-<date>
+  --cost-cap 10.43` (or `--cost-cap 0 --no-new-weeks`) at that HEAD. The run is one-shot: it unblinds the dev
+  outcomes and consumes attempt 2 of 6. NO commits/checkouts in this checkout while it is active.
+- Open: stray `uv` build process PID 48318 in `TradingAgents-onchain-b` (since 2026-10-23) still alive; ending it
+  needs a manual `kill 48318`.

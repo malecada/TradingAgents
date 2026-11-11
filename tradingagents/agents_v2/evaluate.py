@@ -187,3 +187,114 @@ def evaluate_panel(panel: pd.DataFrame, prob_col: str = "p_outperform") -> dict:
         c = panel.assign(_c=centered(panel, prob_col))
         out["brier_centered"] = brier(c, "_c")
     return out
+
+
+# ---------------------------------------------------------------- Charter 1b additions
+def subperiod_sign_gate(ic: pd.Series, required: int = 2) -> dict:
+    """Sub-period gate of Charter 1 (§5, §6a): the mean weekly IC per calendar year present in the completed
+    window; passes when at least ``min(required, years present)`` years share the sign of their mean IC. With
+    three years present the rule cannot fail (two of three signs always agree); with two years present both must
+    agree; with one year present it is passed by construction. The result records which case applies."""
+    ic = ic.dropna()
+    means = {str(y): float(g.mean()) for y, g in ic.groupby(ic.index.year)} if len(ic) else {}
+    weeks = {str(y): int(len(g)) for y, g in ic.groupby(ic.index.year)} if len(ic) else {}
+    pos, neg = sum(v > 0 for v in means.values()), sum(v < 0 for v in means.values())
+    need = min(required, len(means))
+    return {"mean_ic_by_year": means, "weeks_by_year": weeks, "years_present": len(means), "n_positive": int(pos),
+            "n_negative": int(neg), "required_same_sign": int(need),
+            "binding": bool(1 < len(means) < 2 * required - 1),
+            "pass": bool(len(means) > 0 and max(pos, neg) >= need)}
+
+
+def _residual_pairs(panel: pd.DataFrame, col: str, ret_col: str = "fwd_ret") -> pd.DataFrame:
+    """Per row: residual rank of ``col`` and of the return, both computed within the week on the FULL cross-section
+    (every row with a forecast and a return), the raw value of ``col`` and the outcome against the week's
+    full-cross-section median. Indexed like ``panel``."""
+    parts = []
+    for d, day in panel.groupby("date"):
+        day = day.dropna(subset=[col, ret_col])
+        if len(day) < 10:
+            continue
+        parts.append(pd.DataFrame({"date": d, "rp": residualize(day, col).to_numpy(), "rr": residualize(day, ret_col).to_numpy(),
+                                   "p": day[col].to_numpy(dtype=float),
+                                   "y": (day[ret_col] > day[ret_col].median()).astype(float).to_numpy()}, index=day.index))
+    return pd.concat(parts) if parts else pd.DataFrame(columns=["date", "rp", "rr", "p", "y"])
+
+
+def _corr(a: np.ndarray, b: np.ndarray) -> float:
+    if len(a) < 3 or a.std() == 0 or b.std() == 0:
+        return float("nan")
+    return float(np.corrcoef(a, b)[0, 1])
+
+
+def _skill(p: np.ndarray, y: np.ndarray) -> float:
+    base = float(((0.5 - y) ** 2).mean()) if len(y) else 0.0
+    return float(1 - ((p - y) ** 2).mean() / base) if base > 0 else float("nan")
+
+
+def subset_gaps(panel: pd.DataFrame, cols=("p_hybrid", "p_judge", "p_quant"), flag_col: str = "identified",
+                ret_col: str = "fwd_ret", contrast: tuple[str, str] = ("p_judge", "p_quant"), n_boot: int = 2000,
+                seed: int = 20261111, min_rows: int = 30) -> dict:
+    """Identified-subset estimator (Charter 1 §4, fixed in Charter 1b before unblinding). Rows with
+    ``flag_col`` True form the identified subset, rows with False the not-identified subset, rows without a flag
+    are in neither. Per forecast column: the pooled correlation of the within-week residual ranks (forecast vs
+    return, both residualized on the full cross-section) inside each subset, the gap identified minus
+    not-identified, and the Brier skill of the raw value per subset with the outcome defined on the full
+    cross-section median. Intervals and two-sided p-values come from a week-block bootstrap. ``contrast``
+    reports the gap of the first column minus the gap of the second (difference-in-differences: a memorization
+    effect should load on the LLM column and not on the quant column)."""
+    flag = panel[flag_col]
+    fields = ("rp", "rr", "p", "y", "flag")
+    frames = {}
+    for c in cols:
+        fr = _residual_pairs(panel, c, ret_col).join(flag.rename("flag"), how="left")
+        fr = fr[fr["flag"].notna()]
+        frames[c] = fr.assign(flag=fr["flag"].astype(bool))
+    weeks = sorted(set().union(*[set(fr["date"]) for fr in frames.values()])) if frames else []
+    nan_stats = {"ic_identified": float("nan"), "ic_not_identified": float("nan"), "gap": float("nan"),
+                 "brier_skill_identified": float("nan"), "brier_skill_not_identified": float("nan"), "brier_gap": float("nan")}
+
+    def _stats(rp, rr, p, y, flag) -> dict:
+        a, b = flag, ~flag
+        if a.sum() < min_rows or b.sum() < min_rows:
+            return dict(nan_stats)
+        ia, ib = _corr(rp[a], rr[a]), _corr(rp[b], rr[b])
+        sa, sb = _skill(p[a], y[a]), _skill(p[b], y[b])
+        return {"ic_identified": ia, "ic_not_identified": ib, "gap": ia - ib,
+                "brier_skill_identified": sa, "brier_skill_not_identified": sb, "brier_gap": sa - sb}
+
+    def _arrays(fr: pd.DataFrame) -> tuple:
+        return tuple(fr[k].to_numpy(dtype=bool if k == "flag" else float) for k in fields)
+
+    point = {c: _stats(*_arrays(fr)) for c, fr in frames.items()}
+    by_week = {c: {d: _arrays(g) for d, g in fr.groupby("date")} for c, fr in frames.items()}
+    rng = np.random.default_rng(seed)
+    draws = {c: {"gap": [], "brier_gap": []} for c in cols}
+    did = []
+    for _ in range(n_boot if weeks else 0):
+        pick = rng.integers(0, len(weeks), len(weeks))
+        stat = {}
+        for c in cols:
+            parts = [by_week[c][weeks[i]] for i in pick if weeks[i] in by_week[c]]
+            stat[c] = _stats(*[np.concatenate([part[j] for part in parts]) for j in range(len(fields))]) if parts else dict(nan_stats)
+            draws[c]["gap"].append(stat[c]["gap"]); draws[c]["brier_gap"].append(stat[c]["brier_gap"])
+        if contrast[0] in stat and contrast[1] in stat:
+            did.append(stat[contrast[0]]["gap"] - stat[contrast[1]]["gap"])
+
+    def _interval(values) -> dict:
+        v = np.asarray(values, dtype=float)
+        v = v[np.isfinite(v)]
+        if len(v) < 100:
+            return {"ci95": None, "p_two_sided": None, "draws": int(len(v))}
+        p = 2 * min((1 + np.sum(v <= 0)) / (len(v) + 1), (1 + np.sum(v >= 0)) / (len(v) + 1))
+        return {"ci95": [float(np.quantile(v, 0.025)), float(np.quantile(v, 0.975))], "p_two_sided": float(min(1.0, p)),
+                "draws": int(len(v))}
+
+    out = {"weeks": len(weeks), "n_boot": n_boot, "seed": seed, "columns": {}}
+    for c, fr in frames.items():
+        out["columns"][c] = {"n_identified": int(fr["flag"].sum()), "n_not_identified": int((~fr["flag"]).sum()), **point[c],
+                             "gap_bootstrap": _interval(draws[c]["gap"]), "brier_gap_bootstrap": _interval(draws[c]["brier_gap"])}
+    if contrast[0] in point and contrast[1] in point:
+        out["difference_in_differences"] = {"columns": list(contrast), "gap_difference": point[contrast[0]]["gap"] - point[contrast[1]]["gap"],
+                                            **_interval(did)}
+    return out

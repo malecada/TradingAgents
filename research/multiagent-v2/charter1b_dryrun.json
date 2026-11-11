@@ -1,0 +1,183 @@
+{
+ "bootstrap_draws": 2000,
+ "frozen_weeks": 61,
+ "funding_rows": 7987,
+ "funding_settlements_per_week_histogram": {
+  "1": 1,
+  "12": 1,
+  "15": 4,
+  "16": 1,
+  "21": 5108,
+  "22": 1,
+  "23": 1,
+  "24": 1,
+  "26": 1,
+  "27": 9,
+  "28": 4,
+  "29": 1,
+  "3": 3,
+  "33": 1,
+  "39": 1,
+  "4": 3,
+  "40": 1,
+  "42": 2835,
+  "9": 10
+ },
+ "outcomes": "SYNTHETIC (no real forward return or funding payment was joined with a forecast)",
+ "placebo_draws": 500,
+ "rows": 3050,
+ "scenarios": [
+  {
+   "descriptive_errors": [],
+   "failed_gates": [
+    "hybrid_ic_nw_t",
+    "hybrid_brier_skill_recalibrated",
+    "encompassing_llm_nw_t",
+    "subperiod_sign"
+   ],
+   "funding_coverage": 1.0,
+   "identified": {
+    "flagged_rows": 610,
+    "identified_rows": 263
+   },
+   "outcomes": "SYNTHETIC",
+   "output_bytes": {
+    "books.json": 588951,
+    "cost.json": 56,
+    "evaluation.json": 22561,
+    "forecasts.json": 2958944,
+    "portfolio.json": 5021,
+    "verdict.json": 1592
+   },
+   "panel_structure": {
+    "abstain": 221,
+    "debate_failed": 1,
+    "debated": 731,
+    "delisted_rows": 2,
+    "deployed_equals_hybrid": true,
+    "failed": 4,
+    "missing_fwd_ret": 0,
+    "primary_provider_rows": 2685,
+    "rows": 3050
+   },
+   "portfolio_gates_evaluated": false,
+   "scenario": "noise",
+   "seconds": 88.2,
+   "verdict": "FAIL",
+   "weeks": 61
+  },
+  {
+   "descriptive_errors": [],
+   "failed_gates": [],
+   "funding_coverage": 1.0,
+   "identified": {
+    "flagged_rows": 610,
+    "identified_rows": 263
+   },
+   "outcomes": "SYNTHETIC",
+   "output_bytes": {
+    "books.json": 588444,
+    "cost.json": 56,
+    "evaluation.json": 22305,
+    "forecasts.json": 2959296,
+    "portfolio.json": 4858,
+    "verdict.json": 1373
+   },
+   "panel_structure": {
+    "abstain": 221,
+    "debate_failed": 1,
+    "debated": 731,
+    "delisted_rows": 2,
+    "deployed_equals_hybrid": true,
+    "failed": 4,
+    "missing_fwd_ret": 0,
+    "primary_provider_rows": 2685,
+    "rows": 3050
+   },
+   "portfolio_gates_evaluated": true,
+   "scenario": "planted",
+   "seconds": 90.4,
+   "verdict": "PASS",
+   "weeks": 61
+  },
+  {
+   "descriptive_errors": [],
+   "failed_gates": [
+    "hybrid_ic_nw_t",
+    "encompassing_llm_nw_t",
+    "subperiod_sign"
+   ],
+   "funding_coverage": 1.0,
+   "identified": {
+    "flagged_rows": 610,
+    "identified_rows": 263
+   },
+   "outcomes": "SYNTHETIC",
+   "output_bytes": {
+    "books.json": 585071,
+    "cost.json": 56,
+    "evaluation.json": 21648,
+    "forecasts.json": 2907867,
+    "portfolio.json": 4907,
+    "verdict.json": 1540
+   },
+   "panel_structure": {
+    "abstain": 221,
+    "debate_failed": 1,
+    "debated": 731,
+    "delisted_rows": 2,
+    "deployed_equals_hybrid": true,
+    "failed": 4,
+    "missing_fwd_ret": 0,
+    "primary_provider_rows": 2685,
+    "rows": 3050
+   },
+   "portfolio_gates_evaluated": false,
+   "scenario": "zero",
+   "seconds": 87.2,
+   "verdict": "FAIL",
+   "weeks": 61
+  },
+  {
+   "descriptive_errors": [],
+   "failed_gates": [
+    "hybrid_ic_nw_t",
+    "hybrid_brier_skill_recalibrated",
+    "encompassing_llm_nw_t"
+   ],
+   "funding_coverage": 1.0,
+   "identified": {
+    "flagged_rows": 30,
+    "identified_rows": 22
+   },
+   "outcomes": "SYNTHETIC",
+   "output_bytes": {
+    "books.json": 29994,
+    "cost.json": 56,
+    "evaluation.json": 17257,
+    "forecasts.json": 144608,
+    "portfolio.json": 4260,
+    "verdict.json": 1504
+   },
+   "panel_structure": {
+    "abstain": 1,
+    "debate_failed": 0,
+    "debated": 36,
+    "delisted_rows": 0,
+    "deployed_equals_hybrid": true,
+    "failed": 0,
+    "missing_fwd_ret": 0,
+    "primary_provider_rows": 149,
+    "rows": 150
+   },
+   "portfolio_gates_evaluated": false,
+   "scenario": "three_weeks_noise",
+   "seconds": 10.7,
+   "verdict": "FAIL",
+   "weeks": 3
+  }
+ ],
+ "seconds_prepare": 3.4,
+ "seconds_return_and_funding_sources": 6.4,
+ "symbols": 150
+}
