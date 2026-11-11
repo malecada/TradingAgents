@@ -1,0 +1,84 @@
+2024-12-27: calls 0 spent $0.00
+2024-12-20: calls 322 spent $1.05
+2024-12-13: calls 644 spent $2.11
+2024-12-06: calls 966 spent $3.10
+2024-11-29: calls 1288 spent $3.98
+2024-11-22: calls 1610 spent $4.91
+2024-11-15: calls 1932 spent $6.62
+2024-11-08: calls 2254 spent $8.80
+2024-11-01: calls 2576 spent $11.04
+2024-10-25: calls 2898 spent $13.20
+2024-10-18: calls 3220 spent $14.98
+2024-10-11: calls 3542 spent $17.20
+2024-10-04: calls 3864 spent $19.32
+2024-09-27: calls 4185 spent $21.61
+2024-09-20: calls 4507 spent $23.99
+2024-09-13: calls 4829 spent $26.27
+2024-09-06: calls 5151 spent $28.30
+2024-08-30: calls 5473 spent $30.45
+2024-08-23: calls 5795 spent $32.72
+2024-08-16: calls 6117 spent $35.01
+2024-08-09: calls 6439 spent $37.20
+2024-08-02: calls 6761 spent $39.38
+2024-07-26: calls 7083 spent $41.66
+2024-07-19: calls 7405 spent $44.03
+2024-07-12: calls 7727 spent $46.41
+2024-07-05: calls 8049 spent $48.79
+2024-06-28: calls 8049 spent $48.79
+2024-06-21: calls 8371 spent $51.10
+2024-06-14: calls 8693 spent $53.53
+2024-06-07: calls 9015 spent $56.03
+2024-05-31: calls 9337 spent $58.44
+2024-05-24: calls 9659 spent $60.81
+2024-05-17: calls 9981 spent $63.08
+2024-05-10: calls 10303 spent $65.49
+2024-05-03: calls 10625 spent $67.90
+2024-04-26: calls 10947 spent $70.25
+2024-04-19: calls 11269 spent $72.60
+2024-04-12: calls 11591 spent $75.06
+2024-04-05: calls 11913 spent $77.47
+2024-03-29: calls 12235 spent $79.89
+2024-03-22: calls 12551 spent $82.10
+2024-03-15: calls 12872 spent $84.52
+2024-03-08: calls 13194 spent $86.96
+2024-03-01: calls 13516 spent $89.27
+2024-02-23: calls 13838 spent $91.42
+2024-02-16: calls 14160 spent $93.49
+2024-02-09: calls 14482 spent $95.71
+2024-02-02: calls 14804 spent $97.86
+2024-01-26: calls 15126 spent $100.06
+2024-01-19: calls 15448 spent $102.19
+2024-01-12: calls 15770 spent $104.39
+2024-01-05: calls 16092 spent $106.62
+2023-12-29: calls 16414 spent $108.91
+2023-12-22: calls 16736 spent $111.30
+2023-12-15: calls 17058 spent $113.52
+2023-12-08: calls 17380 spent $115.93
+2023-12-01: calls 17702 spent $118.14
+2023-11-24: calls 18024 spent $120.47
+2023-11-17: calls 18346 spent $122.80
+2023-11-10: calls 18668 spent $125.14
+2023-11-03: calls 18990 spent $127.49
+Traceback (most recent call last):
+  File "/home/dev/master_thesis/TradingAgents/scripts/llm_v2c1_run.py", line 167, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/dev/master_thesis/TradingAgents/scripts/llm_v2c1_run.py", line 72, in main
+    out = run_week(pd.Timestamp(day, tz="UTC"), by_day[day], client, runs_dir=runs_dir)
+  File "/home/dev/master_thesis/TradingAgents/tradingagents/agents_v2/runner.py", line 122, in run_week
+    for sym, run, err in pool.map(stage2, todo):
+                         ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/dev/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/dev/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/home/dev/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 451, in result
+    self._condition.wait(timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/dev/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/threading.py", line 359, in wait
+    waiter.acquire()
+    ~~~~~~~~~~~~~~^^
+KeyboardInterrupt
+exit 130
