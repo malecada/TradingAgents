@@ -1,0 +1,399 @@
+{
+ "schema_version": 1,
+ "program_id": "llm-v2-charter2-20261112",
+ "families": {
+  "llm-multiagent-v2": {
+   "mechanism_id": "dossier-fed-anonymized-debate-cross-section",
+   "attempt_budget": 6,
+   "prior_attempts": 0,
+   "history_reference": "New mechanism: deterministic anonymized dossiers feeding schema-constrained analysts, an order-swapped debate and a judge, weekly over the top-50 perp cross-section. The legacy tool-fetching multi-agent cells on named daily BTC/ETH (THESIS_FINDINGS 23, 48) are a different mechanism and are cited as history only."
+  }
+ },
+ "datasets": {
+  "dev-dossiers-2022-2024": {
+   "identity": "multiagent-v2-dev-dossiers-dossier-v2.8",
+   "history_reference": "Dossiers built from Wayback news, Arctic Shift Reddit and the card panel (builder v2.8). Exposed before registration: pilot weeks 2022-01-07/14 and the smoke week 2022-09-30 on earlier builder versions; the agents v2.4 live check 2024-12-27 and the descriptive preview weeks 2022-05-13, 2022-11-11, 2024-06-28 on v2.8 (cached calls reused by the run); the re-identification probe inspected a 20 % stratified sample (research/multiagent-v2/STATE.md). First registered attempt llm-v2c1-dev-run-20261111 (started 2026-11-10, interrupted 2026-11-11 12:14 UTC, failed receipt): the agent forecasts of the 61 newest weeks (2023-11-03 to 2024-12-27) and part of week 2023-10-27 were generated and cached; its evaluation tail never ran, no forecast was joined with a forward return and no gate statistic was computed. The replacement reuses those cached calls.",
+   "exposures": [
+    {
+     "start": "2022-01-01T00:00:00Z",
+     "end": "2022-01-22T00:00:00Z",
+     "state": "exposed"
+    },
+    {
+     "start": "2022-05-13T00:00:00Z",
+     "end": "2022-05-20T00:00:00Z",
+     "state": "exposed"
+    },
+    {
+     "start": "2022-09-30T00:00:00Z",
+     "end": "2022-10-07T00:00:00Z",
+     "state": "exposed"
+    },
+    {
+     "start": "2022-11-11T00:00:00Z",
+     "end": "2022-11-18T00:00:00Z",
+     "state": "exposed"
+    },
+    {
+     "start": "2024-06-28T00:00:00Z",
+     "end": "2024-07-05T00:00:00Z",
+     "state": "exposed"
+    },
+    {
+     "start": "2024-12-27T00:00:00Z",
+     "end": "2025-01-03T00:00:00Z",
+     "state": "exposed"
+    }
+   ]
+  },
+  "dev-reader-2022-2024": {
+   "identity": "multiagent-v2-dev-reader-records-v1",
+   "history_reference": "Fact records of two reader agents and an adjudicator over the typed news and community items of the weekly top-50 perp universe 2022-01 to 2024-12 (reader store data/reader, record schema and instructions of Charter 2), joined with the same card panel, forward returns and funding as the dossier dataset of the family. The whole window is exposed: the forward returns of 66 of its weeks were joined with agent forecasts in llm-v2c1b-dev-run-20261112 (verdict FAIL), the quant forecast and the card features were developed on the window, and earlier programs used the same returns. Before this registration the records were read only by code that never joins an outcome (extraction quality, coverage); no text feature was joined with a forward return and no gate statistic was computed.",
+   "exposures": [
+    {
+     "start": "2022-01-01T00:00:00Z",
+     "end": "2025-01-08T00:00:00Z",
+     "state": "exposed"
+    }
+   ]
+  }
+ },
+ "experiments": {
+  "llm-v2c1-dev-run-20261111": {
+   "family": "llm-multiagent-v2",
+   "parent": null,
+   "question": "Does the dossier-fed anonymized multi-agent system produce weekly cross-sectional forecasts with detectable skill on 2022-01 to 2024-12, and does it add skill over the quant-only ridge twin?",
+   "charter": {
+    "path": "docs/superpowers/specs/2026-11-09-llm-v2-charter1-dev-run-charter.md",
+    "sha256": "920c3f9cb9a04c35bc6fc83a91239284c546099eee50a76e78728657f19b21ca"
+   },
+   "stage": "development",
+   "reuse": "exploratory",
+   "selection": null,
+   "source_files": {
+    "tradingagents/agents_v2/__init__.py": "8cbcf00b8ad4a04470fe5fc773c8d7bacf0cc76656f747893030b44c8b815852",
+    "tradingagents/agents_v2/schemas.py": "b5629aad4e93686e72fdc80224f378a96ea7bcc5109e496442d898cacfa85168",
+    "tradingagents/agents_v2/roles.py": "f841ed58a9c8c26c6acba5153e5ac8d4e98a1cb17f452b2a4ed32ef3c57aff58",
+    "tradingagents/agents_v2/graph.py": "2511961a7f701e2cdbf6962c1624fa1bddfe339cefc5bc7b11cec307c577cf76",
+    "tradingagents/agents_v2/runner.py": "84d4029f31a1fbe24db01bad23e0a07c863767eed17988b27a3e0e7c5bd40b97",
+    "tradingagents/agents_v2/evaluate.py": "ebd25ef1802c25a13e1cc0a21283b9420bc17f3c489ed1f6b95cc45194f7b4df",
+    "tradingagents/agents_v2/portfolio_eval.py": "d42e3ed3406e31a4fcad40961df6de5c57233235952e9b7f64ba35615cb30697",
+    "tradingagents/dossier/or_client.py": "54bd168a6545846232a3d487faa4ea0a66e84d2e4465232b4186f84d10fec29e",
+    "tradingagents/dossier/quant_forecast.py": "23d92de92743012de0e1503c3dbcd27c9f4fd81bd57a23a993d3030b501b949b",
+    "tradingagents/dossier/numeric_card.py": "4506c1bf6b2eba988a95f2dc6a2e312072cb59829af7828fb3d008b709b293e2",
+    "tradingagents/dossier/universe.py": "a4bcba29f0d43944f398fdeccf512bbd97f1cb8e801eabf8ef6a2511f9aa56a3",
+    "scripts/llm_v2c1_run.py": "94161aaeb11b299ea6c329f644b4b56d2366e1187498cd048d232d7948f0a379",
+    "scripts/llm_v2c1_manifest.py": "c1b21d10f92dfcc4d472e9e19bce79f33d931bc873e7093575b130c979637d6f",
+    "scripts/llm_v2c0_client.py": "abc20afc0c1c43ee2aface18aff512c91fc0a8f8750bc85d3e15f6a3085ec29e",
+    "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5"
+   },
+   "runtime_hashes": {
+    "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+    "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+    "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+    "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+    "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+    "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+    "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+   },
+   "windows": [
+    {
+     "dataset": "dev-dossiers-2022-2024",
+     "start": "2022-01-01T00:00:00Z",
+     "end": "2025-01-08T00:00:00Z",
+     "availability": "existing"
+    }
+   ],
+   "inputs": {
+    "dossier_manifest": {
+     "path": "data/agents_v2/charter1/dossier_manifest.json",
+     "sha256": "0b18eb059a732803b72059133d2bc51bea95c9a94f0c3d7ea0d2b00efe5fe009",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "klines_digest": {
+     "path": "data/agents_v2/charter1/klines_digest.json",
+     "sha256": "f0988b52829fa5624f14612641d1ea7f2fa17947bb0a8768f9337d47a9a056fc",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "agent_config": {
+     "path": "data/agents_v2/charter1/agent_config.json",
+     "sha256": "32c2e6ca7bfae27c13dd5832216bbf10fca39bcf901ba639abf643568188ddbd",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "cards": {
+     "path": "data/llm_rank_xs/cards.parquet",
+     "sha256": "0bbdb69212b90437d97e8d263a42b052e49898dc5008e8445313bdfea7f72046",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "quant_forecasts": {
+     "path": "data/dossier/quant_forecasts.parquet",
+     "sha256": "2a0012d4a424a0cd23d932ea52d8ee9e71fafedec794fce9f47481d825963dcf",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "reid_flags_path": {
+     "path": "data/agents_v2/charter1/reid_flags_path.json",
+     "sha256": "c998c85698fb3a49471fa8119724cc9b2c29b61bd2064580f37b8822b4c3ccd7",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "reid_flags": {
+     "path": "data/dossier/reid_flags_v26.parquet",
+     "sha256": "3efc7ecb5843b2021147c752d9da0b3a01bd349851e993bf2cba9326b05be94c",
+     "dataset": "dev-dossiers-2022-2024"
+    }
+   },
+   "cells": [
+    "agent-run",
+    "forecast-gates",
+    "portfolio-gates",
+    "identified-subsets"
+   ],
+   "outputs": [
+    "forecasts.json",
+    "evaluation.json",
+    "portfolio.json",
+    "cost.json"
+   ]
+  },
+  "llm-v2c1b-dev-run-20261112": {
+   "family": "llm-multiagent-v2",
+   "parent": "llm-v2c1-dev-run-20261111",
+   "question": "Does the dossier-fed anonymized multi-agent system produce weekly cross-sectional forecasts with detectable skill on the completed weeks of 2022-01 to 2024-12 (newest first under the Charter 1 spend cap), and does it add skill over the quant-only ridge twin? Replacement of the first attempt with a corrected evaluation tail; agents, prompts, dossiers and gate thresholds unchanged.",
+   "charter": {
+    "path": "docs/superpowers/specs/2026-11-11-llm-v2-charter1b-dev-run-charter.md",
+    "sha256": "44549314c86b93eb639e07821ae8127413b3664ba14281e57ecb5b453dd098d8"
+   },
+   "stage": "development",
+   "reuse": "exploratory",
+   "selection": null,
+   "source_files": {
+    "tradingagents/agents_v2/__init__.py": "8cbcf00b8ad4a04470fe5fc773c8d7bacf0cc76656f747893030b44c8b815852",
+    "tradingagents/agents_v2/schemas.py": "b5629aad4e93686e72fdc80224f378a96ea7bcc5109e496442d898cacfa85168",
+    "tradingagents/agents_v2/roles.py": "f841ed58a9c8c26c6acba5153e5ac8d4e98a1cb17f452b2a4ed32ef3c57aff58",
+    "tradingagents/agents_v2/graph.py": "2511961a7f701e2cdbf6962c1624fa1bddfe339cefc5bc7b11cec307c577cf76",
+    "tradingagents/agents_v2/runner.py": "84d4029f31a1fbe24db01bad23e0a07c863767eed17988b27a3e0e7c5bd40b97",
+    "tradingagents/dossier/or_client.py": "54bd168a6545846232a3d487faa4ea0a66e84d2e4465232b4186f84d10fec29e",
+    "tradingagents/dossier/quant_forecast.py": "23d92de92743012de0e1503c3dbcd27c9f4fd81bd57a23a993d3030b501b949b",
+    "tradingagents/dossier/numeric_card.py": "4506c1bf6b2eba988a95f2dc6a2e312072cb59829af7828fb3d008b709b293e2",
+    "tradingagents/dossier/universe.py": "a4bcba29f0d43944f398fdeccf512bbd97f1cb8e801eabf8ef6a2511f9aa56a3",
+    "scripts/llm_v2c0_client.py": "abc20afc0c1c43ee2aface18aff512c91fc0a8f8750bc85d3e15f6a3085ec29e",
+    "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+    "tradingagents/agents_v2/evaluate.py": "4e394b820aa9ff25fa7c7f2a174d6e38b9c637910f436a9f79c9f1ce3088eec4",
+    "tradingagents/agents_v2/portfolio_eval.py": "b0c32d9092d6abf8d555e3e7f568d3d9cb94b29181152eaaa773316f905b3fa7",
+    "tradingagents/agents_v2/charter1b.py": "bc29fab4b4e1a143996eed52ded435eb05e61c86e320dcdd0fe2384f43743095",
+    "scripts/llm_v2c1b_run.py": "e88cdbaafca74c4b7b38be4262879a0e551c58b077753b9d0d47557c0a6b3b06",
+    "scripts/llm_v2c1b_manifest.py": "92df6675eab1c6c2386c71c844f4b36e31681abbb4cb25327a13dab20bec2e47",
+    "scripts/llm_v2c1b_register.py": "b25333dbe4ce762ee13a9296bd2c2efc992209644d466030bf4695883ccbbbe2"
+   },
+   "runtime_hashes": {
+    "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+    "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+    "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+    "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+    "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+    "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+    "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+   },
+   "windows": [
+    {
+     "dataset": "dev-dossiers-2022-2024",
+     "start": "2022-01-01T00:00:00Z",
+     "end": "2025-01-08T00:00:00Z",
+     "availability": "existing"
+    }
+   ],
+   "inputs": {
+    "dossier_manifest": {
+     "path": "data/agents_v2/charter1/dossier_manifest.json",
+     "sha256": "0b18eb059a732803b72059133d2bc51bea95c9a94f0c3d7ea0d2b00efe5fe009",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "klines_digest": {
+     "path": "data/agents_v2/charter1/klines_digest.json",
+     "sha256": "f0988b52829fa5624f14612641d1ea7f2fa17947bb0a8768f9337d47a9a056fc",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "agent_config": {
+     "path": "data/agents_v2/charter1/agent_config.json",
+     "sha256": "32c2e6ca7bfae27c13dd5832216bbf10fca39bcf901ba639abf643568188ddbd",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "cards": {
+     "path": "data/llm_rank_xs/cards.parquet",
+     "sha256": "0bbdb69212b90437d97e8d263a42b052e49898dc5008e8445313bdfea7f72046",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "quant_forecasts": {
+     "path": "data/dossier/quant_forecasts.parquet",
+     "sha256": "2a0012d4a424a0cd23d932ea52d8ee9e71fafedec794fce9f47481d825963dcf",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "reid_flags": {
+     "path": "data/dossier/reid_flags_v26.parquet",
+     "sha256": "3efc7ecb5843b2021147c752d9da0b3a01bd349851e993bf2cba9326b05be94c",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "cache_manifest": {
+     "path": "data/agents_v2/charter1b/cache_manifest.json",
+     "sha256": "285c2c53b2e024a3e1369aa299510f7b84a8ae57b1bca0903c99dc211d2b7c92",
+     "dataset": "dev-dossiers-2022-2024"
+    },
+    "funding_digest": {
+     "path": "data/agents_v2/charter1b/funding_digest.json",
+     "sha256": "b4000b87ed870ab695de3c8d9e1dd0a9d73a156d9d6b6fa724275c1545bea50c",
+     "dataset": "dev-dossiers-2022-2024"
+    }
+   },
+   "cells": [
+    "agent-run",
+    "forecast-gates",
+    "portfolio-gates",
+    "identified-subsets"
+   ],
+   "outputs": [
+    "forecasts.json",
+    "evaluation.json",
+    "portfolio.json",
+    "books.json",
+    "cost.json",
+    "verdict.json"
+   ]
+  },
+  "llm-v2c2-reader-dev-run-20261112": {
+   "family": "llm-multiagent-v2",
+   "parent": "llm-v2c1b-dev-run-20261112",
+   "question": "Do asset-week features built by code from de-identified fact records of two reader agents and an adjudicator carry weekly cross-sectional forecast information beyond the existing quant forecast on the 104 test weeks 2023-01 to 2024-12, when a fitted walk-forward ridge model, not an agent, makes the forecast? Gate: encompassing coefficient of the text-only score next to the quant forecast, t at least 2.0 and positive in both years.",
+   "charter": {
+    "path": "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md",
+    "sha256": "0d575313cd5ff738c75808e6b4ddeca3979a6ae834aec1cbfaa45eff41a537d7"
+   },
+   "stage": "development",
+   "reuse": "exploratory",
+   "selection": null,
+   "source_files": {
+    "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+    "tradingagents/reader/__init__.py": "8d86699f6299c8eadb57efdc0cbce832028574793f46a1ae87f5bf9e1e2e36ac",
+    "tradingagents/reader/schema.py": "1af09793c1c6c9e50311833e0e7ec04124618e77f51eeb5d3325f80e8b6594f5",
+    "tradingagents/reader/reading.py": "0b7126e4b5ab27d1f8148f0207e30c9cf4513a62226152c81b93f799bf06fb6c",
+    "tradingagents/reader/extract.py": "f156dff50f8e45f857b5c2e89f0edcdf749379ccfe4e7a66734e6bd7dd07a3ae",
+    "tradingagents/reader/consensus.py": "d1e97d56c05f8afef13e140c9cf9c8e694174a831944fc81971cac64e34db38e",
+    "tradingagents/reader/features.py": "d0c2be2a3488ba33a030ff874e2691f75846b859456ad0658ae12d88898b8d89",
+    "tradingagents/reader/model.py": "e1d31c7bfa5e1579d7150465cc71ce8cf3c20a850e00a9ae301c9c71893630ba",
+    "tradingagents/reader/charter2.py": "5c48898aab55326416dc54a9212cb7a6653e70cb215dedcf0bc81a2d659593d0",
+    "tradingagents/reader/items.py": "710beb90d082b14c2e51b2beacea87bc507a9dec7ff3b59a73e645c1b2ede80d",
+    "tradingagents/agents_v2/__init__.py": "8cbcf00b8ad4a04470fe5fc773c8d7bacf0cc76656f747893030b44c8b815852",
+    "tradingagents/agents_v2/charter1b.py": "bc29fab4b4e1a143996eed52ded435eb05e61c86e320dcdd0fe2384f43743095",
+    "tradingagents/agents_v2/evaluate.py": "4e394b820aa9ff25fa7c7f2a174d6e38b9c637910f436a9f79c9f1ce3088eec4",
+    "tradingagents/agents_v2/portfolio_eval.py": "b0c32d9092d6abf8d555e3e7f568d3d9cb94b29181152eaaa773316f905b3fa7",
+    "tradingagents/agents_v2/graph.py": "2511961a7f701e2cdbf6962c1624fa1bddfe339cefc5bc7b11cec307c577cf76",
+    "tradingagents/agents_v2/roles.py": "f841ed58a9c8c26c6acba5153e5ac8d4e98a1cb17f452b2a4ed32ef3c57aff58",
+    "tradingagents/agents_v2/schemas.py": "b5629aad4e93686e72fdc80224f378a96ea7bcc5109e496442d898cacfa85168",
+    "tradingagents/dossier/__init__.py": "81ee36b5e4e1018707504912eceb00305780cf6c7bea6e4edaad18a668b4d3f6",
+    "tradingagents/dossier/or_client.py": "54bd168a6545846232a3d487faa4ea0a66e84d2e4465232b4186f84d10fec29e",
+    "tradingagents/dossier/quant_forecast.py": "23d92de92743012de0e1503c3dbcd27c9f4fd81bd57a23a993d3030b501b949b",
+    "tradingagents/dossier/universe.py": "a4bcba29f0d43944f398fdeccf512bbd97f1cb8e801eabf8ef6a2511f9aa56a3",
+    "tradingagents/dossier/builder.py": "a8e278a769687dcac2b4dfc26d68ca3eabe7f7d359cbec4bb5f607511e06b953",
+    "tradingagents/dossier/anonymizer.py": "3b895da854bdc5044e2caeda1d3e8bee9ac2978e9ed90343aa8d77e0fca084b9",
+    "tradingagents/dossier/calendar.py": "5b786fdaddc86d94ebdb7a2deb45a2fadd30de3c03b0056c8ef098a0d8b52702",
+    "tradingagents/dossier/entities.py": "d74726ac89c13b988e138d9e507477d8e5d8f6e485007a6aef5ce09568681783",
+    "tradingagents/dossier/llm_text.py": "2c6ef072b2e686b84d817c16c298ea2dd12d9faeec6a80b26f9357238c68be58",
+    "tradingagents/dossier/numeric_card.py": "4506c1bf6b2eba988a95f2dc6a2e312072cb59829af7828fb3d008b709b293e2",
+    "tradingagents/dossier/store.py": "472c4ea1f632ca5eeb491da5326dc14bf9169acf22c358716efc59915f96b990",
+    "scripts/reader_extract.py": "247f9da3b5a2f8097db241e8d0f07c09818e04b42c8c0fed69909a6be2f31a80",
+    "scripts/reader_charter2_run.py": "5103cd33bd3a85dff43ac6f754a094ff35af1f4866a647921c86c146e5e3e59f",
+    "scripts/reader_charter2_register.py": "292b61ee242c19f5f94db88b471cd3ea2185371209674d96b12584dc6db22d48",
+    "scripts/reader_items_build.py": "8ab62966cd4665291f42e99af7aa7644f45b80626bb7a1eddac1801337817aef",
+    "scripts/llm_v2c0_client.py": "abc20afc0c1c43ee2aface18aff512c91fc0a8f8750bc85d3e15f6a3085ec29e",
+    "scripts/llm_v2c0_prompt.py": "2713b4c2e64cb96702d3bcfc9c4d294a4492457b81f1f50713e544f79e8dab9f",
+    "scripts/llm_event_xs_extract.py": "2c0d5b0c2578da38d4e985b1dd1cae8d477be7534cd6c1dec15af574bd5f6f32",
+    "scripts/llm_jev_questions.py": "4efa5565cd751f1b41ec2abb3e7ce94d37b628adb77084125649edc45989a82c",
+    "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+   },
+   "runtime_hashes": {
+    "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+    "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+    "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+    "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+    "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+    "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+    "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+   },
+   "windows": [
+    {
+     "dataset": "dev-reader-2022-2024",
+     "start": "2022-01-01T00:00:00Z",
+     "end": "2025-01-08T00:00:00Z",
+     "availability": "existing"
+    }
+   ],
+   "inputs": {
+    "items": {
+     "path": "data/reader/items.parquet",
+     "sha256": "8aad34005703d4e853adea6ed09298271c1b1bb6e756fe287192b6aa28ae153a",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "docs": {
+     "path": "data/reader/docs.parquet",
+     "sha256": "00dbab8940c735c04f2f558a1c95756516d7149d8fa1bb485d39500a6bb8431e",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "cards": {
+     "path": "data/llm_rank_xs/cards.parquet",
+     "sha256": "0bbdb69212b90437d97e8d263a42b052e49898dc5008e8445313bdfea7f72046",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "calls": {
+     "path": "data/reader/calls.jsonl",
+     "sha256": "c6bf4c59e839718c4eb2cc3d010bfc69603f3ffdb31c5a9bf74ddd983155ee87",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "records": {
+     "path": "data/reader/records.parquet",
+     "sha256": "dffc450a2f1e04f00ce1f2dd43ac7fc99839f97455f3d9408d9829dd74a78040",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "extraction_manifest": {
+     "path": "data/reader/extraction_manifest.json",
+     "sha256": "c53e1483c0f6d2e672542aec5e6234fef13c365012c7b1677028f201287a0ffb",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "quant_forecasts": {
+     "path": "data/dossier/quant_forecasts.parquet",
+     "sha256": "2a0012d4a424a0cd23d932ea52d8ee9e71fafedec794fce9f47481d825963dcf",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "reid_flags": {
+     "path": "data/dossier/reid_flags_v26.parquet",
+     "sha256": "3efc7ecb5843b2021147c752d9da0b3a01bd349851e993bf2cba9326b05be94c",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "klines_digest": {
+     "path": "data/agents_v2/charter1/klines_digest.json",
+     "sha256": "f0988b52829fa5624f14612641d1ea7f2fa17947bb0a8768f9337d47a9a056fc",
+     "dataset": "dev-reader-2022-2024"
+    },
+    "funding_digest": {
+     "path": "data/agents_v2/charter1b/funding_digest.json",
+     "sha256": "b4000b87ed870ab695de3c8d9e1dd0a9d73a156d9d6b6fa724275c1545bea50c",
+     "dataset": "dev-reader-2022-2024"
+    }
+   },
+   "cells": [
+    "text-features",
+    "fitted-forecasts",
+    "encompassing-gate",
+    "descriptive-panels",
+    "rule-book"
+   ],
+   "outputs": [
+    "forecasts.json",
+    "evaluation.json",
+    "portfolio.json",
+    "books.json",
+    "reader.json",
+    "verdict.json"
+   ]
+  }
+ }
+}
