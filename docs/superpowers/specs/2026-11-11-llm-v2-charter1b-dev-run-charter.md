@@ -1,7 +1,9 @@
-# Charter 1b — Multi-agent v2 development run, replacement registration (`llm-v2-charter1b`) — DRAFT, NOT FROZEN
+# Charter 1b — Multi-agent v2 development run, replacement registration (`llm-v2-charter1b`) — FROZEN 2026-11-12
 
-**Status:** drafted 2026-11-11 after the first registered attempt of Charter 1 was interrupted. Not frozen, not
-registered, not run. Three items await a decision and are marked **OPEN** (§9).
+**Status:** FROZEN 2026-11-12. Drafted 2026-11-11 after the first registered attempt of Charter 1 was interrupted
+(draft at commit `11f2a27d7`). The three decisions that the draft left open were taken on 2026-11-12, before the
+registration and before any outcome was opened (§9). No code, estimator or threshold changed between the draft
+and the freeze.
 **Parent charter:** `docs/superpowers/specs/2026-11-09-llm-v2-charter1-dev-run-charter.md` (frozen 2026-11-11).
 **Parent attempt:** `llm-v2c1-dev-run-20261111`, registration `research/llm-v2-charter1-20261111/gates.json`,
 receipt `research_runs/llm-v2c1-dev-run-20261111/failed.json`.
@@ -126,8 +128,8 @@ Portfolio gates count only if all four forecast gates pass. Verdict PASS require
 Known weaknesses of the registered gates, stated before unblinding and not repaired:
 - **Sub-periods.** With three years present the rule cannot fail. With the expected window (2023 and 2024
   present, 2023 with about 10 to 14 weeks) it is binding: both yearly means must share a sign. A short year has
-  a noisy mean, so this gate can fail by chance. **OPEN (§9):** literal reading as above, or declare the gate
-  not evaluable with fewer than three years.
+  a noisy mean, so this gate can fail by chance. Decided (§9): the literal reading applies and the gate binds
+  with two years present.
 - **Brier gate.** Test weeks are the completed weeks minus 52, about 13, all at the new end of the window. There
   is no significance requirement. Simulated pass probability is 0.39 without skill and 0.59 at hybrid IC 0.05.
 - **Power.** At 61 weeks, 80 % power needs a true IC of about 0.054 for the encompassing gate and about 0.090
@@ -171,11 +173,11 @@ Known weaknesses of the registered gates, stated before unblinding and not repai
   $140.6.
 - Expected use: about $0.70 for the ten missing debates of 2023-10-27, then about $2.35 per week. That is three
   to four further weeks, 65 to 66 weeks in total, ending at 2023-10-06 or 2023-09-29. Account balance $21.16.
-- **OPEN (§9):** spend the remainder as above, or evaluate the 61 cached weeks at zero spend
-  (`--cost-cap 0 --no-new-weeks`).
+- Decided (§9): the remainder is spent as above. The zero-spend variant (`--cost-cap 0 --no-new-weeks`) is not
+  used.
 
 ## 8. Registration and execution
-- Program `llm-v2-charter1b-<date>`, experiment `llm-v2c1b-dev-run-<date>`, parent `llm-v2c1-dev-run-20261111`
+- Program `llm-v2-charter1b-20261112`, experiment `llm-v2c1b-dev-run-20261112`, parent `llm-v2c1-dev-run-20261111`
   (copied verbatim, failed receipt), stage development, reuse exploratory, same window and dataset as the parent
   with the first attempt added to the dataset history.
 - Source files: the parent's agent and dossier files with identical hashes, plus `agents_v2/evaluate.py`,
@@ -183,21 +185,25 @@ Known weaknesses of the registered gates, stated before unblinding and not repai
   `scripts/llm_v2c1b_manifest.py`, `scripts/llm_v2c1b_register.py`.
 - Outputs: `forecasts.json`, `evaluation.json`, `portfolio.json`, `books.json`, `cost.json`, `verdict.json`.
   Cells: agent-run, forecast-gates, portfolio-gates, identified-subsets.
-- Command: `scripts/llm_v2c1b_run.py --registration research/llm-v2-charter1b-<date>/gates.json --experiment
-  llm-v2c1b-dev-run-<date> --cost-cap 10.43`.
+- Command: `scripts/llm_v2c1b_run.py --registration research/llm-v2-charter1b-20261112/gates.json --experiment
+  llm-v2c1b-dev-run-20261112 --cost-cap 10.43`.
 - Tests: `tests/research/test_agents_v2_charter1b.py` (cache tamper detection, store verification, verdict
   rules, the evaluation tail on synthetic panels, the lifecycle run end to end in a temporary repository with a
   stub client: resumed week, cap inside a week, failing provider, zero-spend variant, defects caught before the
   claim), `test_agents_v2_portfolio.py` (funding window boundaries with jitter, funded headline, placebo
   basis), `test_agents_v2_eval.py` (sub-period rule, subset estimator).
 
-## 9. Open decisions before the freeze
-1. Spend the remaining $10.43 for three to four more weeks (recommended), or evaluate 61 weeks at zero spend.
-2. Sub-period gate: literal reading, binding with two years present (recommended, it is what Charter 1 §6a
-   says), or not evaluable below three years.
-3. Whether a rebuilt design (dossier v2.9, corrected quant reference class, one provider, full 156 weeks) will
-   be attempted later on the same window. If so, its charter has to be frozen before the outputs of this run
-   are opened, otherwise it is conditioned on them.
+## 9. Decisions taken before the freeze (2026-11-12)
+1. **Budget.** The remaining $10.43 is spent: the interrupted week 2023-10-27 is completed and three to four
+   older weeks are run. The alternative, evaluating the 61 cached weeks at zero spend, is not used.
+2. **Sub-period gate.** Literal reading of Charter 1 §6a: the rule applies to the years present and binds with
+   two years. The alternative, declaring the gate not evaluable below three years, is not used.
+3. **Rebuilt design.** A rebuild on the same window (dossier v2.9, corrected quant reference class, one provider,
+   full 156 weeks) is not planned and not funded: it needs about $94 against a balance of $21. This run is not
+   held for it. The design changes of such a rebuild are the ones listed in the system review, which was
+   committed before this run (`b8de33576`); that list was made before any output of this run existed. If
+   a rebuild is run later, its results on the weeks evaluated here count as conditioned on the outputs of this
+   run and are disclosed as such. The weeks not evaluated here and the sealed windows are not affected.
 
 ## 10. After the run
 - The verdict is the one in `verdict.json`. No re-run, no re-estimation and no change of estimator on this
