@@ -1,8 +1,9 @@
-# Charter 2 — Reader configuration (`llm-v2-charter2`) — DRAFT, NOT FROZEN
+# Charter 2 — Reader configuration (`llm-v2-charter2`)
 
-**Status:** draft, second revision, 2026-11-12. The decisions on the first draft are recorded in §10. Stage R0
-(code, tests, synthetic dry run) is complete. Stage R1 (pilot) is reported in §4.1. Nothing is registered
-and no outcome has been joined under this document. The freeze (R2) needs approval.
+**Status:** frozen on 2026-11-12 (R2), with approval given after the pilot report. The decisions on the first
+draft are recorded in §10. Stage R0 (code, tests, synthetic dry run) is complete. Stage R1 (pilot) is reported
+in §4.1. At the freeze nothing is registered and no outcome has been joined under this document. From this
+commit the document stays byte-identical (§4).
 **Family:** `llm-multiagent-v2`, attempts used 2 of 6 (Charter 1 interrupted with a failed receipt, Charter 1b
 FAIL). This charter is attempt 3.
 **Predecessor:** `docs/superpowers/specs/2026-11-11-llm-v2-charter1b-dev-run-charter.md`, run

@@ -372,3 +372,14 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Charter draft revision 2 now carries the pilot result (§4.1), the measured budget (§8) and the route (§3.2).
 - Balance about $10.55. Waiting for the approval of the freeze (R2). After it: freeze commit, extraction with
   `--cost-cap 10.00` (about 3 hours), registration, pre-flight, registered run with the single outcome join.
+
+## 2026-11-12 — Charter 2 stage R2: charter FROZEN with approval (byte-final from this commit)
+
+The freeze was approved on 2026-11-12 after the pilot report (provider order changed after the pilot, noise pass
+rate of the gates about 3.3 %, expected extraction cost $6.3 under a spend limit of $10.00 were stated in the
+request). The draft mark is removed from the title and the status line is changed; nothing else in the charter
+changed. 102 offline tests pass on the frozen text. From this commit the charter is not edited: results of the
+extraction and of the registered run are recorded here.
+
+Next, in this order: full extraction `scripts/reader_extract.py --cost-cap 10.00` (about 3 hours, no outcome),
+registration, pre-flight, registered run with the single outcome join (attempt 3 of 6).
