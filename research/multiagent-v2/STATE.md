@@ -477,10 +477,11 @@ Reading of the result, as far as the registered outputs carry it:
   features have twice the IC of the registered `p_quant` (0.045 and 0.055 against 0.021). The window is
   exposed and these fits were not gated, so this is a lead for the quant side and no finding.
 
-Checks on the negative result: the planted-signal test of the gate code passes (`test_planted_signal_passes_
-and_a_noise_draw_fails`), the pre-flight rehearsed the whole evaluation on synthetic outcomes before the
-claim, the record table equals the rebuild from the registered cache, feature coverage is as in the preview
-(a subject record within 7 days for 48 % of the test asset-weeks, within 30 days for 72 %).
+Checks on the negative result: the planted-signal test of the gate code passes (test
+`test_planted_signal_passes_and_a_noise_draw_fails`), the pre-flight rehearsed the whole evaluation on synthetic outcomes before the
+claim, the record table equals the rebuild from the registered cache, and a record about the asset as subject exists within 7 days
+for 48 % of the test asset-weeks and within 30 days for 72 % (the preview counted any readable item: 55 % and
+77 %).
 
 Budget: $5.75 spent under Charter 2, balance about $4.86. Family `llm-multiagent-v2`: 3 of 6 attempts used.
 Sealed-A and Sealed-B untouched. No run active.
