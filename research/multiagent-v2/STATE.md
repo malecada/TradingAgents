@@ -290,3 +290,35 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   Sealed-B untouched. A later rebuild evaluated on these 66 weeks counts as conditioned on these outputs.
 - Open: direction after the FAIL (user). Stray `uv` build process PID 48318 still alive; needs a manual
   `kill 48318`.
+
+## 2026-11-12 — direction after the FAIL: reader configuration (Charter 2 DRAFT, nothing frozen, nothing spent)
+- Direction (user, 2026-11-12): explore four changes, first the one in which the language model is not the
+  forecaster and a fitted model forecasts. The other three: different target, fresher information, direct
+  comparison of assets.
+- Ledger check done after the four changes were named (it belonged before): direct comparison was largely
+  tested (`llm_c3_rank_xs`, `llm_c3p_pair_xs`, t 1.01 on 222 weeks, numeric cards only); the reader idea was
+  started as `llm_c1_event_xs` (Aug 2026) and stopped at extraction quality, its forecast value was never
+  tested; sentiment as a feature failed for BTC/ETH daily (§33); event-time trading was a no-go; news →
+  volatility is untried.
+- Draft charter `docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md`: two reader agents and
+  an adjudicator turn each de-identified summary into a fact record (class, status, direction, materiality,
+  verbatim evidence); code aggregates eight asset-week features; the walk-forward ridge of the quant model
+  forecasts with and without them. Primary gate: encompassing t of the text score next to the quant forecast
+  ≥ 2.0 on 104 test weeks (2023-01-06 → 2024-12-27), positive in both years. PASS only licenses the sealed
+  windows. Proposed cap $7.00 from the $10.61 balance.
+- Built at zero cost: `tradingagents/reader/items.py` (uncapped reading list, `FastLinker` with identical
+  output to `Linker` at about 14× the speed), `scripts/reader_items_build.py`, `scripts/reader_coverage_preview.py`,
+  `tests/research/test_reader_items.py` (3 tests). Outputs under `data/reader/` (git-ignored): `items.parquet`
+  520,434 rows over 353,739 documents, `docs.parquet` 101,099 typed documents (0 leaks), `work_list.parquet`
+  50,362 documents and 58,958 records, `coverage_panel.parquet`.
+- Coverage on the 7,800 asset-weeks (no outcome joined): any linked item in 7 days 78.2 %; a readable item in
+  7 days 55.4 % (median 1), in 30 days 76.8 % (median 5); 16 to 39 assets per week with a readable 7-day item.
+  The 25-item dossier cap of Charter 1b was binding in 26 % of asset-weeks; the reading list has no cap for
+  news. Community posts stay on the 25-newest rule (96,431 of 96,433 such posts are typed); typing the other
+  192,848 primary posts (BTC 153,345, ETH 35,876) would cost about $25 and is not proposed.
+- Cost estimate: one reader pass $2.13; two readers plus adjudication $4.9 to $6.0. Confirmation on the sealed
+  windows (only after a PASS) about $12, top-up about $10 at that point.
+- Not done and not allowed before approval: reader prompts and client code beyond the draft wording, pilot,
+  registration, freeze, any paid call, any outcome join.
+- Open (user): pipeline order versus the assignment wording, cap $7.00, attempt 3 of 6, forecaster class,
+  community-text rule. Stray `uv` process PID 48318 still needs a manual `kill 48318`.
