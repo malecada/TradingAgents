@@ -383,3 +383,36 @@ extraction and of the registered run are recorded here.
 
 Next, in this order: full extraction `scripts/reader_extract.py --cost-cap 10.00` (about 3 hours, no outcome),
 registration, pre-flight, registered run with the single outcome join (attempt 3 of 6).
+
+## 2026-11-12 — Charter 2 stage R3a: full extraction COMPLETE ($5.75 spent in total, no outcome read)
+
+Run at commit `6f8b6213b` under the frozen charter (sha256 `0d575313…a537d7`), 13:38 to 15:43 UTC, 124 minutes
+with 16 workers, one pass, no stop and no failed unit. Manifest copy:
+`research/multiagent-v2/charter2_extraction_manifest.json`.
+
+| Quantity | Value |
+|---|---|
+| Units (documents) and records | 48,261 and 53,330 |
+| Units without a cached call | 0 |
+| Calls in the cache, pilot included | 104,254 (A 45,567, B 45,490, J 13,197) |
+| Cost, pilot included | $5.749 (limit $10.00) |
+| Providers | DeepInfra 104,111, Baidu 143 (all in the pilot) |
+| Latency per call | median 1.05 s, 90th percentile 1.53 s |
+| Valid reading after the re-read | A 99.89 %, B 99.90 % |
+| Evidence grounding, first reads of A and B | 0.988 (A 0.987, B 0.989) |
+| Agreement on relevance, class, status | 0.947, 0.941, 0.976 |
+| Agreement on direction | 0.799 (48,329 records both about the asset) |
+| Materiality equal, within one | 0.727, 0.999 |
+| Records agreed, adjudicated, unresolved | 72.50 %, 27.46 %, 0.03 % (18 records) |
+| Documents with an adjudication | 28.6 % |
+| Final relevance | subject 40,274, side mention 9,378, not about 3,660 |
+| Final direction of the subject records | favourable 14,975, neutral 12,432, unfavourable 8,725, mixed 4,142 |
+| Final materiality of the subject records | 1: 23,693, 2: 15,300, 3: 1,281 |
+
+- The offline rebuild from the cache equals the stored record table (`reader_extract.py --offline`).
+- Hashes: cache `c6bf4c59…55ee87`, record table `dffc450a…a78040`.
+- Agreement on direction is lower than in the pilot (0.844) and above the pilot minimum (0.70); the stop rule
+  applied to the pilot only and nothing is changed.
+- Balance after the extraction about $4.86 of $10.61.
+
+Next: registration, pre-flight, registered run with the single outcome join (attempt 3 of 6).

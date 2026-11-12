@@ -1,0 +1,199 @@
+{
+ "charter": {
+  "path": "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md",
+  "sha256": "0d575313cd5ff738c75808e6b4ddeca3979a6ae834aec1cbfaa45eff41a537d7"
+ },
+ "prompt_sha256": "7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f",
+ "model": {
+  "id": "deepseek/deepseek-v4.1-flash",
+  "providers": [
+   "DeepInfra",
+   "Baidu"
+  ],
+  "quantization": "fp8",
+  "reasoning": "disabled",
+  "temperature": 0,
+  "max_tokens": 1500
+ },
+ "universe": {
+  "n": 50,
+  "start": "2022-01-07",
+  "end": "2024-12-27"
+ },
+ "units": 48261,
+ "records": 53330,
+ "units_call_missing": [],
+ "quality": {
+  "records": 53330,
+  "documents": 48261,
+  "valid_reading_a": 0.9989499343708982,
+  "valid_reading_b": 0.9990249390586912,
+  "agreement": {
+   "relevance": 0.9470698722764839,
+   "event_class": 0.9405739824949824,
+   "status": 0.9764116782883983,
+   "direction": 0.799354424879472,
+   "materiality_exact": 0.7268927559022533,
+   "materiality_within_one": 0.99944132922262,
+   "rows_both_valid": 53240,
+   "rows_both_about": 48329
+  },
+  "resolution": {
+   "agreed": 0.7250140633789612,
+   "adjudicated": 0.27464841552597036,
+   "unresolved": 0.0003375210950684418
+  },
+  "documents_adjudicated": 0.2855100391620563,
+  "final": {
+   "relevance": {
+    "subject": 40274,
+    "side_mention": 9378,
+    "not_about": 3660
+   },
+   "direction": {
+    "favourable": 14975,
+    "neutral": 12432,
+    "unfavourable": 8725,
+    "mixed": 4142
+   },
+   "materiality": {
+    "1": 23693,
+    "2": 15300,
+    "3": 1281
+   },
+   "event_class": {
+    "opinion_or_forecast": 15553,
+    "adoption_or_product": 6241,
+    "legal_regulatory": 3858,
+    "protocol_upgrade_or_launch": 3338,
+    "security_incident": 2020,
+    "partnership_or_integration": 1804,
+    "distress_or_outage": 1509,
+    "funding_or_treasury": 1253,
+    "token_supply_increase": 1059,
+    "governance_or_team": 1021,
+    "exchange_listing": 692,
+    "other": 652,
+    "token_supply_reduction": 525,
+    "market_wide_or_macro": 437,
+    "exchange_delisting": 312
+   }
+  }
+ },
+ "readings": {
+  "first_read": {
+   "A": {
+    "ok": 52672,
+    "absent": 15,
+    "malformed": 0,
+    "evidence": 643
+   },
+   "B": {
+    "ok": 52773,
+    "absent": 2,
+    "malformed": 0,
+    "evidence": 555
+   },
+   "J": {
+    "ok": 14641,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 6
+   }
+  },
+  "reread": {
+   "A": {
+    "ok": 602,
+    "absent": 1,
+    "malformed": 0,
+    "evidence": 55
+   },
+   "B": {
+    "ok": 505,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 52
+   },
+   "J": {
+    "ok": 6,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 0
+   }
+  }
+ },
+ "evidence_grounding": {
+  "A": 0.9869152031908183,
+  "B": 0.9886787834281868,
+  "J": 0.9995881383855024,
+  "readers": 0.9877959333360499
+ },
+ "calls": {
+  "calls": 104254,
+  "cost_usd": 5.749114825992088,
+  "by_role": {
+   "A": {
+    "calls": 45567,
+    "cost": 2.622214012616046,
+    "prompt_tokens": 30974268,
+    "completion_tokens": 3472769
+   },
+   "B": {
+    "calls": 45490,
+    "cost": 2.220185537948043,
+    "prompt_tokens": 32282937,
+    "completion_tokens": 3933972
+   },
+   "J": {
+    "calls": 13197,
+    "cost": 0.9067152754279991,
+    "prompt_tokens": 11334167,
+    "completion_tokens": 1109618
+   }
+  },
+  "providers": {
+   "Baidu": 143,
+   "DeepInfra": 104111
+  },
+  "latency_s": {
+   "median": 1.0542287430725992,
+   "q90": 1.534140327014029
+  }
+ },
+ "cache": {
+  "path": "data/reader/calls.jsonl",
+  "sha256": "c6bf4c59e839718c4eb2cc3d010bfc69603f3ffdb31c5a9bf74ddd983155ee87",
+  "calls": 104254,
+  "paid_usd": 5.749332721992167
+ },
+ "inputs": {
+  "items": {
+   "path": "data/reader/items.parquet",
+   "sha256": "8aad34005703d4e853adea6ed09298271c1b1bb6e756fe287192b6aa28ae153a"
+  },
+  "docs": {
+   "path": "data/reader/docs.parquet",
+   "sha256": "00dbab8940c735c04f2f558a1c95756516d7149d8fa1bb485d39500a6bb8431e"
+  },
+  "cards": {
+   "path": "data/llm_rank_xs/cards.parquet",
+   "sha256": "0bbdb69212b90437d97e8d263a42b052e49898dc5008e8445313bdfea7f72046"
+  }
+ },
+ "records_file": {
+  "path": "data/reader/records.parquet",
+  "sha256": "dffc450a2f1e04f00ce1f2dd43ac7fc99839f97455f3d9408d9829dd74a78040"
+ },
+ "source_files": {
+  "tradingagents/reader/schema.py": "1af09793c1c6c9e50311833e0e7ec04124618e77f51eeb5d3325f80e8b6594f5",
+  "tradingagents/reader/extract.py": "f156dff50f8e45f857b5c2e89f0edcdf749379ccfe4e7a66734e6bd7dd07a3ae",
+  "tradingagents/reader/consensus.py": "d1e97d56c05f8afef13e140c9cf9c8e694174a831944fc81971cac64e34db38e",
+  "tradingagents/reader/reading.py": "0b7126e4b5ab27d1f8148f0207e30c9cf4513a62226152c81b93f799bf06fb6c",
+  "tradingagents/reader/charter2.py": "5c48898aab55326416dc54a9212cb7a6653e70cb215dedcf0bc81a2d659593d0",
+  "tradingagents/dossier/or_client.py": "54bd168a6545846232a3d487faa4ea0a66e84d2e4465232b4186f84d10fec29e",
+  "tradingagents/dossier/universe.py": "a4bcba29f0d43944f398fdeccf512bbd97f1cb8e801eabf8ef6a2511f9aa56a3",
+  "tradingagents/dossier/builder.py": "a8e278a769687dcac2b4dfc26d68ca3eabe7f7d359cbec4bb5f607511e06b953",
+  "scripts/reader_extract.py": "247f9da3b5a2f8097db241e8d0f07c09818e04b42c8c0fed69909a6be2f31a80"
+ },
+ "head": "6f8b6213b289c02c36ded717240221026e215323"
+}
