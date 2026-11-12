@@ -1,0 +1,72 @@
+2023-10-27: calls 60 spent $0.67
+2023-10-20: calls 382 spent $2.92
+2023-10-13: calls 704 spent $5.15
+2023-10-06: calls 1026 spent $7.42
+2023-09-29: calls 1348 spent $9.63
+2023-09-22: spend cap reached, week excluded; stopping
+{
+ "charter": "llm-v2 Charter 1b",
+ "weeks": 66,
+ "forecast_gates": {
+  "hybrid_ic_nw_t": {
+   "value": 0.8131076405052384,
+   "rule": ">= 2.0",
+   "pass": false
+  },
+  "hybrid_brier_skill_recalibrated": {
+   "value": 0.02662974008730412,
+   "rule": "> 0.0",
+   "test_weeks": 14,
+   "pass": true
+  },
+  "encompassing_llm_nw_t": {
+   "value": -0.01808749178229207,
+   "rule": ">= 2.0",
+   "pass": false
+  },
+  "subperiod_sign": {
+   "value": {
+    "2023": 0.04513805522208884,
+    "2024": 0.01701704388437222
+   },
+   "rule": "mean IC of the same sign in >= min(2, years present) years",
+   "years_present": 2,
+   "binding": true,
+   "pass": true
+  }
+ },
+ "forecast_gates_pass": false,
+ "portfolio_gates_evaluated": false,
+ "portfolio_gates": {
+  "net_sharpe": {
+   "value": 0.371011947773636,
+   "rule": ">= 0.8",
+   "pass": null,
+   "descriptive": true
+  },
+  "placebo_date_shuffle_p": {
+   "value": 0.041916167664670656,
+   "rule": "<= 0.05",
+   "pass": null,
+   "descriptive": true
+  },
+  "placebo_asset_shuffle_p": {
+   "value": 0.26147704590818366,
+   "rule": "<= 0.05",
+   "pass": null,
+   "descriptive": true
+  }
+ },
+ "portfolio_gates_pass": null,
+ "deflated_sharpe_trial_count_1": {
+  "value": 0.6612109675718999,
+  "rule": "reported, no registered threshold"
+ },
+ "failed_gates": [
+  "hybrid_ic_nw_t",
+  "encompassing_llm_nw_t"
+ ],
+ "descriptive_errors": [],
+ "verdict": "FAIL"
+}
+exit 0

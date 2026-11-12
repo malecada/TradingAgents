@@ -1,0 +1,65 @@
+{
+  "charter": "llm-v2 Charter 1b",
+  "deflated_sharpe_trial_count_1": {
+    "rule": "reported, no registered threshold",
+    "value": 0.6612109675718999
+  },
+  "descriptive_errors": [],
+  "failed_gates": [
+    "hybrid_ic_nw_t",
+    "encompassing_llm_nw_t"
+  ],
+  "forecast_gates": {
+    "encompassing_llm_nw_t": {
+      "pass": false,
+      "rule": ">= 2.0",
+      "value": -0.01808749178229207
+    },
+    "hybrid_brier_skill_recalibrated": {
+      "pass": true,
+      "rule": "> 0.0",
+      "test_weeks": 14,
+      "value": 0.02662974008730412
+    },
+    "hybrid_ic_nw_t": {
+      "pass": false,
+      "rule": ">= 2.0",
+      "value": 0.8131076405052384
+    },
+    "subperiod_sign": {
+      "binding": true,
+      "pass": true,
+      "rule": "mean IC of the same sign in >= min(2, years present) years",
+      "value": {
+        "2023": 0.04513805522208884,
+        "2024": 0.01701704388437222
+      },
+      "years_present": 2
+    }
+  },
+  "forecast_gates_pass": false,
+  "portfolio_gates": {
+    "net_sharpe": {
+      "descriptive": true,
+      "pass": null,
+      "rule": ">= 0.8",
+      "value": 0.371011947773636
+    },
+    "placebo_asset_shuffle_p": {
+      "descriptive": true,
+      "pass": null,
+      "rule": "<= 0.05",
+      "value": 0.26147704590818366
+    },
+    "placebo_date_shuffle_p": {
+      "descriptive": true,
+      "pass": null,
+      "rule": "<= 0.05",
+      "value": 0.041916167664670656
+    }
+  },
+  "portfolio_gates_evaluated": false,
+  "portfolio_gates_pass": null,
+  "verdict": "FAIL",
+  "weeks": 66
+}

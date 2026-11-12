@@ -245,3 +245,48 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   outcomes and consumes attempt 2 of 6. NO commits/checkouts in this checkout while it is active.
 - Open: stray `uv` build process PID 48318 in `TradingAgents-onchain-b` (since 2026-10-23) still alive; ending it
   needs a manual `kill 48318`.
+
+## 2026-11-12 02:53 UTC — Charter 1b FROZEN and RUN: verdict FAIL (family attempt 2 of 6)
+- Decisions before the freeze (charter §9): the remaining $10.43 under the $140 cap is spent on further weeks;
+  the sub-period gate keeps its literal reading (binding with two calendar years); the rebuilt design (review
+  Path B, about $94) is not planned and not funded, and the run was not held for it.
+- Frozen charter `docs/superpowers/specs/2026-11-11-llm-v2-charter1b-dev-run-charter.md`, registration
+  `research/llm-v2-charter1b-20261112/gates.json`, both at `6a3a25ec6`. Run `llm-v2c1b-dev-run-20261112`,
+  01:50 → 02:53 UTC, exit 0, `complete.json` with 4 cells, `verify_run` status complete. Log copy
+  `research/multiagent-v2/charter1b_run_log.txt`.
+- Panel: 66 contiguous weeks 2024-12-27 → 2023-09-29 (61 frozen from the cache, 5 new: 2023-10-27 completed with
+  60 calls, 2023-10-20 to 2023-09-29 with 322 calls each, 0 failed assets). 3,300 asset-weeks, 233 abstentions,
+  4 failed, 791 debated, 2 delisted rows. Stopped by the spend cap inside week 2023-09-22 (discarded).
+- Spend: $10.548 in this run (cap $10.43, overshoot $0.118 inside the declared $0.15 allowance), 1,519 calls.
+  Cumulative recorded $139.616 of $140. Account balance after the run $10.61.
+- VERDICT by code (`outputs/verdict.json`): FAIL. Failed gates: hybrid IC, encompassing.
+  | gate | rule | value | result |
+  |---|---|---|---|
+  | hybrid residual rank IC, NW(4) t | ≥ 2.0 | 0.813 (mean IC 0.0230, hit rate 0.530) | fail |
+  | encompassing, t of `p_judge` next to `p_quant` | ≥ 2.0 | −0.018 (beta −0.0004) | fail |
+  | recalibrated Brier skill, 14 test weeks | > 0 | +0.0266 | pass |
+  | sub-period sign, 2 years | same sign in 2 | 2023 +0.0451, 2024 +0.0170 | pass |
+  Portfolio gates not evaluated (forecast gates failed); descriptive: rule-twin net Sharpe 0.371 (rule ≥ 0.8),
+  asset-shuffle p 0.261, date-shuffle p 0.042, PSR vs 0 0.661, max drawdown −19.2 %, 2023 Sharpe −4.14 (14 weeks),
+  2024 +1.29 (52 weeks), funding coverage 1.0.
+- Descriptive reading (no gate, not tuned on):
+  - Quant twin alone IC 0.0176 (t 0.59); LLM-only judge IC 0.0119 (t 0.75); analyst mean IC 0.0302 (t 1.96, hit
+    rate 0.591), the strongest single column and below the 2.0 mark without any multiplicity allowance.
+  - Debate did not help the judge: paired delta IC −0.0100 (t −0.60), mean absolute shift 0.021 on 791 pairs.
+  - Calibration: raw Brier skill of the hybrid −0.055, slope 0.32; the recalibrated pass rests on 14 test weeks and
+    was declared weak beforehand (P(pass | no skill) ≈ 0.39).
+  - Sensitivities agree: abstentions excluded IC t 1.02, encompassing t −0.25; primary-provider rows (64 weeks) IC
+    t 0.61, encompassing t +0.16.
+  - Identification: on the flagged rows the judge's IC is +0.039 where the asset was identified and −0.113 where
+    not (gap 0.152, week-block bootstrap p 0.044); the quant column shows no such gap (0.028, p 0.72); the
+    difference-in-differences is not significant (0.123, p 0.28). Weak evidence that the LLM's ranking depends on
+    recognising the asset; one of several descriptive tests.
+  - `encompassing_hybrid_vs_quant` (hybrid next to quant, t 2.11) is not the registered LLM test: `p_hybrid`
+    contains `p_quant` (Spearman 0.95), so the pair is near-collinear and the registered isolation is `p_judge`.
+- Power statement of the charter stands: 80 % power needed IC ≈ 0.054 (encompassing) and ≈ 0.090 (hybrid IC) at
+  61 weeks. The FAIL rules out a large LLM contribution; it says little about an IC between 0.02 and 0.05.
+- Closed by charter §10: this configuration on this window. No re-run, no re-estimation, no change of estimator.
+  Family `llm-multiagent-v2`: 2 of 6 attempts used, four remain and each needs its own charter. Sealed-A and
+  Sealed-B untouched. A later rebuild evaluated on these 66 weeks counts as conditioned on these outputs.
+- Open: direction after the FAIL (user). Stray `uv` build process PID 48318 still alive; needs a manual
+  `kill 48318`.
