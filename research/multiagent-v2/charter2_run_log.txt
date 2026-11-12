@@ -1,0 +1,43 @@
+# Charter 2 registered run, 2026-11-12
+
+## Pre-flight (no claim, no outcome), 15:46 UTC
+pre-flight passed: inputs verified, records rebuilt from the cache, rehearsal on synthetic outcomes complete
+
+real	1m40.088s
+user	1m51.408s
+sys	0m2.810s
+
+## Registered run llm-v2c2-reader-dev-run-20261112, started 15:48:31 UTC, claim 15:50:22 UTC, complete 15:55:55 UTC
+## stdout (verdict.json as printed by the runner)
+{
+ "charter": "llm-v2 Charter 2 (reader configuration)",
+ "test_weeks": 104,
+ "gates": {
+  "text_encompassing": {
+   "value": {
+    "nw_t": 1.388263540165905,
+    "mean_coefficient": 0.02625719226657306,
+    "weeks": 104
+   },
+   "rule": "Newey-West t >= 2.0 and mean coefficient > 0",
+   "pass": false
+  },
+  "text_coefficient_sign_by_year": {
+   "value": {
+    "2023": 0.010559154306623325,
+    "2024": 0.0419552302265228
+   },
+   "weeks": {
+    "2023": 52,
+    "2024": 52
+   },
+   "rule": "mean weekly coefficient > 0 in 2023 and in 2024",
+   "pass": true
+  }
+ },
+ "failed_gates": [
+  "text_encompassing"
+ ],
+ "descriptive_errors": [],
+ "verdict": "FAIL"
+}

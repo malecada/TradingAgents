@@ -1,0 +1,32 @@
+{
+  "charter": "llm-v2 Charter 2 (reader configuration)",
+  "descriptive_errors": [],
+  "failed_gates": [
+    "text_encompassing"
+  ],
+  "gates": {
+    "text_coefficient_sign_by_year": {
+      "pass": true,
+      "rule": "mean weekly coefficient > 0 in 2023 and in 2024",
+      "value": {
+        "2023": 0.010559154306623325,
+        "2024": 0.0419552302265228
+      },
+      "weeks": {
+        "2023": 52,
+        "2024": 52
+      }
+    },
+    "text_encompassing": {
+      "pass": false,
+      "rule": "Newey-West t >= 2.0 and mean coefficient > 0",
+      "value": {
+        "mean_coefficient": 0.02625719226657306,
+        "nw_t": 1.388263540165905,
+        "weeks": 104
+      }
+    }
+  },
+  "test_weeks": 104,
+  "verdict": "FAIL"
+}

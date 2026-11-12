@@ -416,3 +416,71 @@ with 16 workers, one pass, no stop and no failed unit. Manifest copy:
 - Balance after the extraction about $4.86 of $10.61.
 
 Next: registration, pre-flight, registered run with the single outcome join (attempt 3 of 6).
+
+## 2026-11-12 — Charter 2 stage R3b: registered run COMPLETE, verdict FAIL (family attempt 3 of 6 used)
+
+Registration `research/llm-v2-charter2-20261112/gates.json` (commit `7804af8cc`), pre-flight passed, run
+`llm-v2c2-reader-dev-run-20261112` claimed 15:50 UTC and completed 15:55 UTC at source `7804af8cc`, five cells
+complete, no fit error, no descriptive error, no missing forward return in the test weeks (5,200 rows, 104
+weeks). The forward returns were joined once. Run log: `research/multiagent-v2/charter2_run_log.txt`. Outputs:
+`research_runs/llm-v2c2-reader-dev-run-20261112/outputs/`.
+
+| Gate | Value | Rule | Result |
+|---|---|---|---|
+| G1 text score next to the quant forecast | t 1.39, mean coefficient +0.026 (104 weeks) | t at least 2.0 and coefficient above 0 | fail |
+| G2 mean coefficient by year | 2023 +0.011, 2024 +0.042 | above 0 in both years | pass |
+| Verdict | | G1 and G2 | **FAIL** |
+
+The verdict is the one in `verdict.json`. No re-run, no re-estimation and no change of estimator on this
+window under this charter. FAIL closes the reader configuration for weekly relative returns (charter §5); the
+records stay as the input of the target-change charter (§9).
+
+Descriptive results (no gate, no claim):
+
+| Score | Weekly IC on the 104 test weeks | Newey-West t | 2023, 2024 |
+|---|---|---|---|
+| `p_quant` (registered quant forecast) | 0.021 | 1.07 | 0.021, 0.021 |
+| `s_text` (ridge on the 8 text features, the gate score) | 0.028 | 1.78 | 0.016, 0.040 |
+| `s_block_a` (attention counts only) | 0.031 | 2.09 | 0.016, 0.045 |
+| `s_block_b` (reader judgements only) | 0.012 | 0.93 | 0.012, 0.013 |
+| `s_text_class` (no reader judgement of direction) | 0.031 | 2.13 | 0.020, 0.042 |
+| `s_quant` (ridge on the card features) | 0.045 | 2.06 | 0.045, 0.045 |
+| `s_full` (ridge on card and text features) | 0.043 | 2.14 | 0.039, 0.046 |
+| `g_text`, `g_quant`, `g_full` (boosted trees) | 0.035, 0.055, 0.049 | 2.36, 3.39, 3.24 | |
+
+| Comparison | Value |
+|---|---|
+| Paired IC `s_full − s_quant` | −0.002 (t −0.19) |
+| Paired IC `g_full − g_quant` | −0.005 (t −0.44) |
+| Paired IC `s_full − p_quant` | +0.022 (t 1.38) |
+| Encompassing next to `p_quant`: `s_block_a`, `s_block_b`, `s_text_class` | t 1.55, 0.79, 1.68 |
+| Encompassing next to `p_quant`: `s_full`, `g_text`, `g_full` | t 1.57, 1.76, 2.56 |
+| Encompassing next to the fitted twin: `s_text` with `s_quant`, `g_text` with `g_quant` | t 1.21, 1.61 |
+| Cross-fit text score next to `p_quant` (156 weeks, uses later weeks) | t 3.04 |
+| Book of `s_text`, after costs and funding | Sharpe 0.79 (2023 −0.58, 2024 +1.86), asset-shuffle p 0.058 |
+| Books of `s_quant`, `s_full`, `g_full`, `p_quant` | Sharpe 0.17, 0.21, 0.13, 0.01 |
+| Identified against not identified assets, `s_text` IC | 0.013 against 0.029, gap p 0.81 |
+
+Reading of the result, as far as the registered outputs carry it:
+- The text score has a positive coefficient in both years and an IC of 0.028, which is in the range where the
+  charter states a pass rate of about one run in five (§5, power). The gate is not met and nothing is claimed.
+- What relation there is sits in the attention counts (block A: number of items, built by code from the
+  reading list), not in the judgements of the reader agents (block B: IC 0.012, t 0.93). The class-only
+  variant, which drops the readers' direction, does no worse than the full text score.
+- The mean ridge coefficient of `unfav_7d` is positive in every test week (+0.048 in `s_text`, +0.114 in
+  block B alone), the same sign as `attn_7d` (+0.085) and `tone_7d` (+0.008). The fitted model uses favourable
+  and unfavourable counts alike as more attention; the direction read by the agents does not separate winners
+  from losers.
+- Next to a model fitted on the card features the text adds nothing: `s_full − s_quant` is −0.002 and
+  `g_full − g_quant` is −0.005 in weekly IC.
+- A side result outside the question of this charter: the ridge and the boosted trees fitted on the card
+  features have twice the IC of the registered `p_quant` (0.045 and 0.055 against 0.021). The window is
+  exposed and these fits were not gated, so this is a lead for the quant side and no finding.
+
+Checks on the negative result: the planted-signal test of the gate code passes (`test_planted_signal_passes_
+and_a_noise_draw_fails`), the pre-flight rehearsed the whole evaluation on synthetic outcomes before the
+claim, the record table equals the rebuild from the registered cache, feature coverage is as in the preview
+(a subject record within 7 days for 48 % of the test asset-weeks, within 30 days for 72 %).
+
+Budget: $5.75 spent under Charter 2, balance about $4.86. Family `llm-multiagent-v2`: 3 of 6 attempts used.
+Sealed-A and Sealed-B untouched. No run active.
