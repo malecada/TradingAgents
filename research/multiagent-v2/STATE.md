@@ -322,3 +322,34 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
   registration, freeze, any paid call, any outcome join.
 - Open (user): pipeline order versus the assignment wording, cap $7.00, attempt 3 of 6, forecaster class,
   community-text rule. Stray `uv` process PID 48318 still needs a manual `kill 48318`.
+
+## 2026-11-12 — Charter 2: five decisions taken, stage R0 complete (draft revision 2, nothing frozen, nothing spent)
+- Decisions (user, 2026-11-12) on the five open points of the first draft: (1) pipeline order accepted, the
+  thesis presents Charter 1b as the literal configuration and the reader configuration as the corrected one;
+  (2) the available balance ($10.61) may be spent and is topped up if needed; (3) attempt 3 of 6; (4) boosted
+  trees are added as descriptive columns, the gate stays on the ridge; (5) the 25-newest community rule is kept.
+- R0 code (no paid call, no real outcome): `tradingagents/reader/{reading,schema,extract,consensus,features,
+  model,charter2}.py`, `scripts/reader_extract.py` (pilot and full extraction), `scripts/reader_charter2_register.py`,
+  `scripts/reader_charter2_run.py`, `scripts/reader_charter2_null_gate.py`. Tests: 102 offline tests in
+  `tests/research/test_reader_{items,extract,charter2}.py`, among them a dry run of the whole registered run on
+  synthetic inputs and a test that the charter quotes the instructions, the prompt hash and the constants of
+  the code. The earlier suites (dossier, agents v2) still pass (72).
+- Prompt hash `7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f`. Model pin
+  `deepseek/deepseek-v4.1-flash`, Baidu and DeepInfra, fp8, reasoning disabled, temperature 0.
+- Corrected figures (final reading rule on the registered weekly top 50): work list 48,261 documents and
+  53,330 records (the first draft counted 50,362 and 58,958 before the universe restriction); a read item in
+  the last 7 days in 55.1 % of asset-weeks, in 30 days in 76.7 %. Cost estimate of the extraction $5.9 to
+  $6.8. Spend limit of the extraction `--cost-cap 10.00`, cap of the charter $10.61.
+- Corrected family line: the two attempts used in `llm-multiagent-v2` are Charter 1 (interrupted, failed
+  receipt) and Charter 1b (FAIL). Charter 0 belongs to the family `llm-news-event-extraction`.
+- Pass rate of the gates on noise (`scripts/reader_charter2_null_gate.py`, synthetic panels, draws in
+  `charter2_null_gate.jsonl` and `charter2_null_gate_persistent.jsonl`): 88 of 2,700 draws pass both gates,
+  3.26 % (95 % interval 2.6 % to 3.9 %); with persistent features (AR(1) 0.9) 29 of 900, 3.22 %. The nominal
+  rate of t ≥ 2.0 is 2.3 %; the 97.5 % quantile of the Newey-West t on 104 weeks under noise is 2.13. The
+  threshold stays at 2.0 for comparability with Charter 1b and the rate is stated in the charter (§5,
+  Appendix B). An early check on 400 draws had given 1.0 %, a favourable sample.
+- Order fixed in the charter: freeze, then extraction (the manifest records the charter hash), then
+  registration, pre-flight, claim and the single outcome join. The charter is not edited after the extraction.
+- Next: pilot on 300 units (about $0.04), result into §4.1, then the freeze request. Not allowed before
+  approval: freeze, full extraction, registration, any outcome join.
+- Stray `uv` process PID 48318 still needs a manual `kill 48318`.
