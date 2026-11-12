@@ -716,7 +716,8 @@ def test_charter_quotes_the_instructions_and_the_registered_constants():
     for quoted in (schema.INSTRUCTION, schema.REVIEWER, schema.ADJUDICATOR, schema.RETRY_LINE, schema.prompt_sha256()):
         assert quoted in text
     assert text.count(rx.DRAFT_MARK) == int(text.splitlines()[0].endswith(rx.DRAFT_MARK))     # in the title or nowhere
-    provider_list = " and ".join(rx.PINS[rx.PIN][1])
+    provider_list = " and ".join(rx.PROVIDER_ORDER)
+    assert sorted(rx.PROVIDER_ORDER) == sorted(rx.PINS[rx.PIN][1])                             # the providers of the typing
     for stated in (f"`{rx.PINS[rx.PIN][0]}`", f"providers {provider_list} only", f"t at least {c2.GATE_TEXT_T}",
                    f"seed {rx.PILOT_SEED}", f"below {rx.PILOT_GROUNDING}", f"below {rx.PILOT_DIRECTION:.2f}",
                    f"{model.GBM_ROUNDS} rounds", f"penalty {RIDGE_ALPHA:g}", *c2.SCORES, *c2.TEXT):

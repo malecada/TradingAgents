@@ -1,8 +1,8 @@
 # Charter 2 — Reader configuration (`llm-v2-charter2`) — DRAFT, NOT FROZEN
 
 **Status:** draft, second revision, 2026-11-12. The decisions on the first draft are recorded in §10. Stage R0
-(code, tests, synthetic dry run) is complete. Stage R1 (pilot) has not run. Nothing is registered and no outcome has been
-joined under this document. The freeze (R2) needs approval.
+(code, tests, synthetic dry run) is complete. Stage R1 (pilot) is reported in §4.1. Nothing is registered
+and no outcome has been joined under this document. The freeze (R2) needs approval.
 **Family:** `llm-multiagent-v2`, attempts used 2 of 6 (Charter 1 interrupted with a failed receipt, Charter 1b
 FAIL). This charter is attempt 3.
 **Predecessor:** `docs/superpowers/specs/2026-11-11-llm-v2-charter1b-dev-run-charter.md`, run
@@ -152,10 +152,12 @@ This is the debate and the consensus of the configuration: two independent readi
 code and a third agent that decides the disputed records. It is about what the text says, not about what the
 price will do.
 
-**Model.** `deepseek/deepseek-v4.1-flash` through OpenRouter, providers Baidu and DeepInfra only,
+**Model.** `deepseek/deepseek-v4.1-flash` through OpenRouter, providers DeepInfra and Baidu only,
 quantisation fp8, reasoning disabled, temperature 0, at most 1,500 output tokens, strict JSON schema. This is
-the route used for the typing. The model was released in September 2026. The role is extraction, so recall of
-later prices has a narrow path into the output (§6).
+the model and the pair of providers of the typing. DeepInfra is tried first and Baidu serves what DeepInfra
+does not; the typing and the pilot listed Baidu first, and the order was changed after the pilot on cost and
+evidence grounding alone (§4.1). The model was released in September 2026. The role is extraction, so recall
+of later prices has a narrow path into the output (§6).
 
 **Cache.** Every call is stored under the hash of model, system prompt and user prompt in an append-only
 file (`data/reader/calls.jsonl`). The record table is rebuilt from that file alone, so an interrupted
@@ -246,7 +248,7 @@ books are descriptive (§5).
 | Stage | Content | Cost | Opens outcomes |
 |---|---|---|---|
 | R0 | Reading list, reader, feature, model and evaluation code, tests, synthetic dry run, noise pass rate of the gate | 0 | no |
-| R1 | Extraction pilot on 300 units | about $0.04 | no |
+| R1 | Extraction pilot on 300 units | $0.05 | no |
 | R2 | Freeze of this document (needs approval) | 0 | no |
 | R3a | Full extraction into the call cache and the record table | §8 | no |
 | R3b | Registration, pre-flight, registered run with the single outcome join and the verdict | 0 | yes, once |
@@ -305,7 +307,39 @@ them first would condition the design of block B on an outcome of the same windo
 
 ### 4.1 Pilot result (R1)
 
-Not run at the time of this revision.
+Run on 2026-11-12 at commit `8677b27f0` with the instructions of Appendix A: 300 units, 339 records, 687 calls
+in 1.2 minutes, $0.0546. No outcome was read. Report: `research/multiagent-v2/charter2_pilot_report.json`.
+
+| Quantity | Value | Stop rule |
+|---|---|---|
+| Evidence grounding, first reads of readers A and B | 0.981 (A 0.984, B 0.978) | at least 0.95: passed |
+| Agreement on direction | 0.844 (259 of 307 records) | at least 0.70: passed |
+| Valid reading after the re-read | A 100 %, B 99.7 % | |
+| Agreement on relevance, class, status | 0.953, 0.945, 0.971 | |
+| Materiality equal, within one | 0.811, 1.000 | |
+| Records agreed, adjudicated, unresolved | 75.5 %, 24.5 %, 0 | |
+| Documents with an adjudication | 25.0 % | |
+| Final relevance | subject 248, side mention 68, not about 23 | |
+| Final direction of the subject records | favourable 102, neutral 74, unfavourable 48, mixed 24 | |
+| Final materiality of the subject records | 1: 138, 2: 106, 3: 4 | |
+| Calls by provider | DeepInfra 544, Baidu 143 | |
+| Latency per call | median 1.5 s, 90th percentile 2.1 s | |
+| Cost | $0.000182 per unit, 2.29 calls per unit | |
+
+- The stop rule passed and the instructions stay as they are.
+- Direction. No pair of readings had opposite signs. Of the 48 disagreements, 45 are a signed or mixed
+  reading of reader A that the reviewer set to neutral, 2 are the reverse and 1 is unfavourable against mixed.
+- Focus-only records (61 in the sample): 38 subject, 22 not about the asset, 1 side mention.
+- Cost by provider. The same prompts cost $0.000057 per call at DeepInfra and $0.000167 at Baidu, which
+  counts more prompt tokens (median 1,109 against 696) at a higher price. Projection for the 48,261 units:
+  $6.26 with DeepInfra alone, $8.78 with the provider mix of the pilot, $18.27 with Baidu alone.
+- Quality by provider (first reads). Evidence grounding 0.992 at DeepInfra (506 of 510 records) and 0.930 at
+  Baidu (107 of 115). Agreement on direction over the units with both first reads at DeepInfra: 0.843 (204 of
+  242).
+- Consequence, decided on cost and evidence grounding and with no outcome: DeepInfra is tried first in the
+  extraction and Baidu second (§3.2). Model, weights, quantisation and instructions are unchanged, and the
+  cache key does not depend on the provider, so the calls of the pilot are reused. The stop rule above was
+  evaluated on the pilot as it ran, with Baidu listed first.
 
 ## 5. Gates
 
@@ -404,19 +438,20 @@ Appendix A), the model pin, the source files, the gates of §5 and every constan
 
 Decision 2 of §10: the available balance may be spent and is topped up if needed.
 
-| Item | Basis | Estimate |
+| Item | Basis | Amount |
 |---|---|---|
-| R1 pilot | 300 documents, two readers, adjudication | $0.04 |
-| R3a extraction, two readers | 48,261 documents, about 72.6 M tokens in and 8.4 M out at $0.05 / $0.20 per million | $5.3 |
-| R3a extraction, adjudication | 20 %, 35 % or 50 % of documents | $0.6, $1.1 or $1.5 |
-| R3a total | | $5.9 to $6.8 |
+| R1 pilot (spent) | 300 units, 687 calls | $0.055 |
+| R3a extraction, expected | 48,261 units at the DeepInfra cost of the pilot, $0.000130 per unit | $6.3 |
+| R3a extraction, provider mix of the pilot | $0.000182 per unit (21 % of the calls served by Baidu) | $8.8 |
+| R3a extraction, Baidu alone | $0.000379 per unit | $18.3, stopped by the spend limit |
 | Features, model, evaluation, registered run | local, no call | 0 |
-| **Cap of this charter** | account balance | **$10.61** |
+| **Cap of this charter** | account balance before the pilot | **$10.61** |
 
-- Planned spend limit of the extraction: `--cost-cap 10.00`, cumulative with the pilot.
-- Token counts are estimates (instruction of about 650 tokens per call, 4 characters per token, 70 output
-  tokens per record). The pilot measures the unit cost (§4.1). A projection above $10.00 holds the freeze for
-  a top-up.
+- Spend limit of the extraction: `--cost-cap 10.00`, cumulative with the pilot. The run stops at the limit,
+  writes no record table and resumes from the cache after a top-up.
+- The first draft estimated $5.9 to $6.8 from token counts. The pilot measured 2.29 calls per unit and a
+  cost per call of $0.000057 at DeepInfra and $0.000167 at Baidu (§4.1). A projection above $10.00 would have
+  held the freeze for a top-up; the projections of the expected route and of the pilot mix are below it.
 - The cap of Charters 1 and 1b ($140, recorded $139.62) is closed; this charter carries its own cap.
 - Confirmation on the sealed windows is outside this charter and only follows a PASS: Wayback news fetch for
   2025 and 2026 (free, about a week at the polite request rate), cards rebuilt to December 2026, typing about
@@ -459,6 +494,8 @@ Changes since the first draft, none of them made with an outcome in view:
   instruction length (§8).
 - The pass rate of the gates on noise is measured and stated (§5, Appendix B).
 - The family line named Charter 0 by mistake; the two attempts used are Charter 1 and Charter 1b.
+- After the pilot: DeepInfra is tried before Baidu (§3.2, §4.1) and the budget table carries the measured
+  cost (§8). The instructions and the prompt hash are those of the pilot.
 
 ## Appendix A. Instructions (fixed at the freeze)
 

@@ -353,3 +353,22 @@ News fetch at 24,214 of ~74,000 URLs, ~1,260/h after overlapping requests; ETA �
 - Next: pilot on 300 units (about $0.04), result into §4.1, then the freeze request. Not allowed before
   approval: freeze, full extraction, registration, any outcome join.
 - Stray `uv` process PID 48318 still needs a manual `kill 48318`.
+
+## 2026-11-12 — Charter 2 stage R1: pilot PASSED the stop rule ($0.055 spent, nothing frozen, no outcome read)
+- `scripts/reader_extract.py --pilot 300 --cost-cap 0.25` at commit `8677b27f0`: 300 units, 339 records, 687
+  calls, 1.2 minutes, $0.0546. Report copied to `research/multiagent-v2/charter2_pilot_report.json`; the calls
+  are in `data/reader/calls.jsonl` (git-ignored) and are reused by the full extraction.
+- Stop rule: evidence grounding 0.981 (minimum 0.95), agreement on direction 0.844 (minimum 0.70). Passed, the
+  instructions stay (prompt hash unchanged).
+- Other quality: valid readings A 100 %, B 99.7 %; agreement on relevance 0.953, class 0.945, status 0.971,
+  materiality within one 1.000; 75.5 % of records agreed, 24.5 % adjudicated, none unresolved; no pair of
+  readings with opposite signs (45 of the 48 direction disagreements are the reviewer setting neutral).
+- Cost: $0.000182 per unit, 2.29 calls per unit. Per call $0.000057 at DeepInfra (544 calls) and $0.000167 at
+  Baidu (143 calls). Projection for 48,261 units: $6.26 DeepInfra alone, $8.78 pilot mix, $18.27 Baidu alone.
+  Evidence grounding by provider: DeepInfra 0.992, Baidu 0.930.
+- Change after the pilot (cost and evidence grounding only, no outcome): the reader tries DeepInfra first and
+  Baidu second (`PROVIDER_ORDER` in `scripts/reader_extract.py`). Same model, weights, quantisation and
+  instructions; cache keys do not depend on the provider.
+- Charter draft revision 2 now carries the pilot result (§4.1), the measured budget (§8) and the route (§3.2).
+- Balance about $10.55. Waiting for the approval of the freeze (R2). After it: freeze commit, extraction with
+  `--cost-cap 10.00` (about 3 hours), registration, pre-flight, registered run with the single outcome join.

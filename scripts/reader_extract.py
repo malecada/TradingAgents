@@ -34,7 +34,8 @@ from tradingagents.reader.reading import Unit, units  # noqa: E402
 
 CHARTER = "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md"
 DRAFT_MARK = "DRAFT, NOT FROZEN"
-PIN = "flash"
+PIN = "flash"                                      # model and quantisation of the typing
+PROVIDER_ORDER = ("DeepInfra", "Baidu")            # its two providers; DeepInfra first since the pilot (cost per call)
 PILOT_SEED = 20261112
 PILOT_GROUNDING, PILOT_DIRECTION = 0.95, 0.70      # stop rule of stage R1
 MAX_CONSECUTIVE_FAILURES = 50
@@ -202,8 +203,8 @@ def main(argv=None, root: Path | None = None, client=None) -> dict:
             from llm_v2c0_client import load_api_key
             session = requests.Session()
             session.mount("https://", requests.adapters.HTTPAdapter(pool_connections=4, pool_maxsize=args.workers + 4))
-            client = StructuredClient.pinned(PIN, load_api_key(), cost_cap_usd=remaining, reasoning_enabled=False,
-                                             max_tokens=MAX_TOKENS, session=session)
+            client = StructuredClient(api_key=load_api_key(), model=model, provider=list(PROVIDER_ORDER), quantization=PINS[PIN][2],
+                                      cost_cap_usd=remaining, reasoning_enabled=False, max_tokens=MAX_TOKENS, session=session)
         filled = fill(Reader(client, cache, model=model), unit_list, workers=args.workers, passes=args.passes)
         print(json.dumps({"phase_1": filled}))
 
@@ -238,7 +239,7 @@ def main(argv=None, root: Path | None = None, client=None) -> dict:
         raise SystemExit("extraction incomplete: no record table written; run again to resume")
     frame.to_parquet(records_path, index=False)
     manifest = {"charter": {"path": args.charter, "sha256": sha256_file(charter)}, "prompt_sha256": schema.prompt_sha256(),
-                "model": {"id": model, "providers": list(PINS[PIN][1]), "quantization": PINS[PIN][2], "reasoning": "disabled",
+                "model": {"id": model, "providers": list(PROVIDER_ORDER), "quantization": PINS[PIN][2], "reasoning": "disabled",
                           "temperature": 0, "max_tokens": MAX_TOKENS},
                 "universe": {"n": UNIVERSE_N, "start": PANEL_START, "end": PANEL_END}, **summary,
                 "cache": {"path": CACHE, "sha256": sha256_file(root / CACHE), "calls": len(cache), "paid_usd": cache.paid_usd},

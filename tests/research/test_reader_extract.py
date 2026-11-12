@@ -852,7 +852,7 @@ def test_full_extraction_resumes_and_writes_records_and_manifest(tmp_path, capsy
     assert cache.paid_usd == pytest.approx(len(cache) * COST) and manifest["calls"]["cost_usd"] == pytest.approx(len(cache) * COST)
     assert manifest["charter"] == {"path": "charter.md", "sha256": sha(tmp_path / "charter.md")}
     assert manifest["prompt_sha256"] == schema.prompt_sha256()
-    assert manifest["model"] == {"id": "fake/model", "providers": list(rx.PINS[rx.PIN][1]), "quantization": rx.PINS[rx.PIN][2],
+    assert manifest["model"] == {"id": "fake/model", "providers": list(rx.PROVIDER_ORDER), "quantization": rx.PINS[rx.PIN][2],
                                  "reasoning": "disabled", "temperature": 0, "max_tokens": rx.MAX_TOKENS}
     assert manifest["universe"] == {"n": c2.UNIVERSE_N, "start": c2.PANEL_START, "end": c2.PANEL_END}
     assert manifest["inputs"] == {name: {"path": path, "sha256": sha(tmp_path / path)} for name, path in rx.INPUTS.items()}

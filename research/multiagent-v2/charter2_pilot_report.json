@@ -1,0 +1,165 @@
+{
+ "stage": "R1 pilot",
+ "seed": 20261112,
+ "prompt_sha256": "7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f",
+ "model": "deepseek/deepseek-v4.1-flash",
+ "phase_1": {
+  "unfinished_units": 0,
+  "stopped": null,
+  "new_calls": 687,
+  "new_cost_usd": 0.05458733559199997,
+  "minutes": 1.185428092329918
+ },
+ "units": 300,
+ "records": 339,
+ "units_call_missing": [],
+ "quality": {
+  "records": 339,
+  "documents": 300,
+  "valid_reading_a": 1.0,
+  "valid_reading_b": 0.9970501474926253,
+  "agreement": {
+   "relevance": 0.9526627218934911,
+   "event_class": 0.9446254071661238,
+   "status": 0.9706840390879479,
+   "direction": 0.8436482084690554,
+   "materiality_exact": 0.8110749185667753,
+   "materiality_within_one": 1.0,
+   "rows_both_valid": 338,
+   "rows_both_about": 307
+  },
+  "resolution": {
+   "agreed": 0.7551622418879056,
+   "adjudicated": 0.2448377581120944,
+   "unresolved": 0.0
+  },
+  "documents_adjudicated": 0.25,
+  "final": {
+   "relevance": {
+    "subject": 248,
+    "side_mention": 68,
+    "not_about": 23
+   },
+   "direction": {
+    "favourable": 102,
+    "neutral": 74,
+    "unfavourable": 48,
+    "mixed": 24
+   },
+   "materiality": {
+    "1": 138,
+    "2": 106,
+    "3": 4
+   },
+   "event_class": {
+    "opinion_or_forecast": 101,
+    "adoption_or_product": 43,
+    "legal_regulatory": 20,
+    "security_incident": 14,
+    "protocol_upgrade_or_launch": 12,
+    "funding_or_treasury": 11,
+    "partnership_or_integration": 10,
+    "token_supply_increase": 10,
+    "distress_or_outage": 8,
+    "token_supply_reduction": 5,
+    "governance_or_team": 4,
+    "exchange_listing": 4,
+    "market_wide_or_macro": 4,
+    "other": 2
+   }
+  }
+ },
+ "readings": {
+  "first_read": {
+   "A": {
+    "ok": 334,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 5
+   },
+   "B": {
+    "ok": 332,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 7
+   },
+   "J": {
+    "ok": 83,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 0
+   }
+  },
+  "reread": {
+   "A": {
+    "ok": 5,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 0
+   },
+   "B": {
+    "ok": 6,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 1
+   },
+   "J": {
+    "ok": 0,
+    "absent": 0,
+    "malformed": 0,
+    "evidence": 0
+   }
+  }
+ },
+ "evidence_grounding": {
+  "A": 0.9839743589743589,
+  "B": 0.9776357827476039,
+  "J": 1.0,
+  "readers": 0.9808
+ },
+ "calls": {
+  "calls": 687,
+  "cost_usd": 0.054587335592000005,
+  "by_role": {
+   "A": {
+    "calls": 305,
+    "cost": 0.026808103016000014,
+    "prompt_tokens": 232972,
+    "completion_tokens": 22902
+   },
+   "B": {
+    "calls": 307,
+    "cost": 0.019861159947999994,
+    "prompt_tokens": 242813,
+    "completion_tokens": 25601
+   },
+   "J": {
+    "calls": 75,
+    "cost": 0.007918072628000001,
+    "prompt_tokens": 71723,
+    "completion_tokens": 6281
+   }
+  },
+  "providers": {
+   "Baidu": 143,
+   "DeepInfra": 544
+  },
+  "latency_s": {
+   "median": 1.4787715720012784,
+   "q90": 2.1336351570207626
+  }
+ },
+ "stop_rule": {
+  "evidence_grounding": 0.9808,
+  "minimum_grounding": 0.95,
+  "direction_agreement": 0.8436482084690554,
+  "minimum_direction_agreement": 0.7,
+  "passed": true
+ },
+ "cost": {
+  "per_unit_usd": 0.00018195778530666668,
+  "work_list_units": 48261,
+  "projected_full_usd": 8.78146467668504,
+  "cache_paid_usd": 0.05458733559199997
+ }
+}
