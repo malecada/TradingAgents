@@ -533,3 +533,15 @@ Evidence: draws in `research/multiagent-v2/charter3_null_gate*.jsonl`, design ch
 Next: freeze approval by the user, then freeze (status line), commit, registration, pre-flight, one registered
 run. Family `llm-multiagent-v2` stays at 3 of 6 attempts until the claim. Sealed-A and Sealed-B untouched. No
 run active.
+
+## Charter 3: frozen (2026-11-13, V1)
+
+Freeze approved by the user on the draft ("Go ahead"), with the implemented option on all six points of §10:
+gate on the reader block beyond price history and attention counts, two-step removal of the controls,
+threshold t at least 2.0, size as a reading rule at 0.07, realised variance as the gate target, attempt 4 of 6.
+
+- The draft mark is removed and the status line changed. The document is byte-final from this commit:
+  sha256 `ffdfeda7bc61bd4d0a98e8dd0555fc4b0d46401844db13f15228859460c330e4`.
+- Results of the run go into this file, never into the charter.
+- At the freeze nothing is registered, no attempt is claimed and no text feature has been joined with a
+  volatility outcome. 79 offline tests pass on the frozen text.

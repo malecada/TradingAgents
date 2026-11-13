@@ -1,10 +1,11 @@
-# Charter 3 — Target change: next-week volatility (`llm-v2-charter3`) — DRAFT, NOT FROZEN
+# Charter 3 — Target change: next-week volatility (`llm-v2-charter3`)
 
-**Status:** draft of 2026-11-13, written for freeze approval. Nothing is registered, no attempt is claimed and
-no feature built from the reader records has been joined with a volatility outcome. Stage V0 (code, tests,
-synthetic dry run, pass rate and power of the gates on synthetic targets) is complete. It changed the gate:
-the first design passed too often on targets that hold no reader information and was hardened before any
-outcome was opened (§3.2, §4.1). The points that need a decision before the freeze are listed in §10.
+**Status:** frozen on 2026-11-13 (V1), with approval given on the draft. Stage V0 (code, tests, synthetic dry
+run, pass rate and power of the gates on synthetic targets) is complete. It changed the gate: the first
+design passed too often on targets that hold no reader information and was hardened before any outcome was
+opened (§3.2, §4.1). The decisions on the draft are recorded in §10. At the freeze nothing is registered, no
+attempt is claimed and no feature built from the reader records has been joined with a volatility outcome.
+From this commit the document stays byte-identical (§4).
 **Family:** `llm-multiagent-v2`, attempts used 3 of 6 (Charter 1 interrupted with a failed receipt, Charter 1b
 FAIL, Charter 2 FAIL). This charter is attempt 4.
 **Predecessor:** `docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md`, run
@@ -393,11 +394,11 @@ match the calibration on the bars of 2021, which shows neither persistence nor c
 (Appendix C). When the part of the target that no control sees persists within an asset, the gates pass more
 often: in 4.30 % and 4.95 % of the draws at a weekly persistence of 0.3 and in 7.50 % at 0.6. The run reports
 the autocorrelation of the target residual within an asset. In the simulations that value is 0.00 at one
-week without persistence, 0.21 to 0.22 at persistence 0.3 and 0.43 at 0.6, so the reported value states which row of
-the noise table applies to the result. In real data a persistent part of an asset's volatility enters the
-price history of the following weeks and is controlled there. The simulation withholds it from the controls
-on purpose, so the persistent rows are stress cases. No noise draw at a persistence of 0 or 0.3 was read as
-visible (0 of 10,000), and 3 of 2,000 at 0.6.
+week without persistence, 0.21 to 0.22 at persistence 0.3 and 0.43 at 0.6, so the reported value states
+which row of the noise table applies to the result. In real data a persistent part of an asset's volatility
+enters the price history of the following weeks and is controlled there. The simulation withholds it from
+the controls on purpose, so the persistent rows are stress cases. No noise draw at a persistence of 0 or 0.3
+was read as visible (0 of 10,000), and 3 of 2,000 at 0.6.
 
 ## 6. Leakage and exposure
 
@@ -507,12 +508,13 @@ Three attempts remain in the family and each change consumes one. After this cha
 
 ## 10. Decisions
 
-Open at this draft. The first column of options is the one the draft implements.
+The six points were open at the draft. All were decided on 2026-11-13 together with the freeze approval:
+the option of the column "Implemented" stands in every row. The alternatives are recorded as considered.
 
-| # | Point | Implemented in the draft | Alternative |
+| # | Point | Implemented | Alternative |
 |---|---|---|---|
-| 1 | What the gate tests | The reader block beyond price history and attention counts (`s_reader`). Attention counts need no reader agent, and Charter 2 found the return relation there. | All text beyond price history (`s_text`). Easier to pass, but a pass could rest on item counts alone and would say nothing on the agents. In the draft this is a descriptive row. |
-| 2 | Removal of the controls (changed in stage V0) | Two steps on both sides: a flexible fit on earlier weeks, then the linear step within the week (§3.2). Pass rate on noise 2.60 % and 2.75 % without persistence. | The first design, the within-week step alone. It passes on noise in 4.8 % to 14.7 % of the draws (§4.1). In the draft it is the descriptive row `s_reader_lin`. |
+| 1 | What the gate tests | The reader block beyond price history and attention counts (`s_reader`). Attention counts need no reader agent, and Charter 2 found the return relation there. | All text beyond price history (`s_text`). Easier to pass, but a pass could rest on item counts alone and would say nothing on the agents. In this charter it is a descriptive row. |
+| 2 | Removal of the controls (changed in stage V0) | Two steps on both sides: a flexible fit on earlier weeks, then the linear step within the week (§3.2). Pass rate on noise 2.60 % and 2.75 % without persistence. | The first design, the within-week step alone. It passes on noise in 4.8 % to 14.7 % of the draws (§4.1). In this charter it is the descriptive row `s_reader_lin`. |
 | 3 | Threshold of G1 | t at least 2.0, as in Charter 1b and Charter 2. Pass rate on noise 2.60 % and 2.75 % without persistence, 4.30 % and 4.95 % at a persistence of 0.3. | t at least 2.3. Pass rate on noise 1.1 % to 1.5 % without persistence and 2.3 % at a persistence of 0.3. Power falls from 78 % to 69 % at a partial correlation of 0.045 and from 48 % to 37 % at 0.031 (Appendix B). |
 | 4 | Size of a pass | Reading rule at 0.07, written by code, no gate. | A third gate with that floor. No noise draw at a persistence of 0 or 0.3 would pass (0 of 10,000). Power would fall from 99 % to 61 % at a partial correlation of 0.074 and from 78 % to 7 % at 0.045, because the estimate of a visible effect scatters around the floor. |
 | 5 | Gate target | Realised variance of the next seven days. Tail measures are descriptive variants. | A tail measure as the gate target. Noisier, and the one earlier tail programme found tail days not led by news. |
@@ -597,8 +599,9 @@ Noise (no planted effect), registered gates applied by the registered code:
 - The rows with `noise` 1.0 and 1.3 share their seeds. They are close to the same draws and are not
   independent evidence.
 - Scale of `rho` (`charter3_design/check3.json`, 20 seeds): the autocorrelation of the target residual
-  within an asset is 0.00 at every lag for `rho` 0; 0.21 to 0.22, 0.06 and 0.01 at 1, 2 and 4 weeks for `rho` 0.3;
-  0.43, 0.25, 0.08 and 0.01 at 1, 2, 4 and 8 weeks for `rho` 0.6. The run reports the same quantity.
+  within an asset is 0.00 at every lag for `rho` 0; 0.21 to 0.22, 0.06 and 0.01 at 1, 2 and 4 weeks for
+  `rho` 0.3; 0.43, 0.25, 0.08 and 0.01 at 1, 2, 4 and 8 weeks for `rho` 0.6. The run reports the same
+  quantity.
 
 Power (planted effect of the given strength):
 
