@@ -485,3 +485,51 @@ for 48 % of the test asset-weeks and within 30 days for 72 % (the preview counte
 
 Budget: $5.75 spent under Charter 2, balance about $4.86. Family `llm-multiagent-v2`: 3 of 6 attempts used.
 Sealed-A and Sealed-B untouched. No run active.
+
+## Charter 3 (target change: next-week volatility): draft, not frozen (2026-11-13)
+
+Charter draft: `docs/superpowers/specs/2026-11-13-llm-v2-charter3-volatility-charter.md`. Attempt 4 of 6 when
+registered. Nothing is registered, no attempt is claimed, and no feature built from the reader records has been
+joined with a volatility outcome of the window. The freeze needs the user's approval; the open decisions are in
+§10 of the draft.
+
+Design in short:
+- Same 53,330 records, no model call, cap $0.
+- Target: realised variance of the next seven days, ranked within the week. Tail measures are descriptive.
+- Question: do the six reader features (block V) carry information beyond 12 price-history controls and 2
+  attention counts? Attention counts need no reader agent and carried the return relation of Charter 2.
+- Gate: weekly partial correlation of a walk-forward ridge score with the target residual on 104 test weeks.
+  G1: Newey-West t at least 2.0 and mean above 0. G2: mean above 0 in 2023 and in 2024. A pass is read as
+  "visible" at a mean of at least 0.07 and as "thin" below (no gate).
+
+Stage V0 is complete (code, 79 offline tests, synthetic dry run, pass rate and power on synthetic targets). It
+changed the gate before any outcome was opened:
+- The first design removed the controls by a linear regression within the week. On synthetic targets without
+  reader information, built on the real decision-time regressors, it passed in 4.8 % to 14.7 % of 2,000 draws
+  per cell. About 3 % is expected of an unbiased gate of this form.
+- Two channels: the reader features and the target can both be curved functions of the controls, and an
+  unseen persistent part of an asset's volatility lets the score learn the asset.
+- Registered design: controls removed in two steps on both sides. First a flexible fit on earlier weeks only
+  (boosted trees for the features, a quadratic surface for the target), then the linear step within the week.
+
+| Synthetic target, 2,000 draws per cell | First design | Registered design |
+|---|---|---|
+| linear, no persistence | 4.80 % | 2.60 % |
+| curved, no persistence | 11.00 % | 2.75 % |
+| linear, persistence 0.3 | 6.70 % | 4.30 % |
+| curved, persistence 0.3 | 12.20 % | 4.95 % |
+| curved, persistence 0.6 | 14.65 % | 7.50 % |
+
+- Persistence is not removed. The run reports the autocorrelation of the target residual, which states the row
+  that applies. Bars of 2021 (before the window, price only) show neither persistence nor curvature.
+- Power of the registered design (1,000 draws per cell): 20 % at a mean weekly partial correlation of 0.017,
+  48 % at 0.031, 78 % at 0.045, 99 % at 0.074. A FAIL excludes a visible relation and not a thin one.
+- The first design stays in the outputs as the descriptive score `s_reader_lin` with no weight in the verdict.
+
+Evidence: draws in `research/multiagent-v2/charter3_null_gate*.jsonl`, design checks in
+`research/multiagent-v2/charter3_design/` (README there). Check of the registration builder
+(`scripts/reader_charter3_register.py --check --date 20261113`): 41 source files, 7 inputs, nothing written.
+
+Next: freeze approval by the user, then freeze (status line), commit, registration, pre-flight, one registered
+run. Family `llm-multiagent-v2` stays at 3 of 6 attempts until the claim. Sealed-A and Sealed-B untouched. No
+run active.
