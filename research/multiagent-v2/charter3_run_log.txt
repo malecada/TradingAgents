@@ -1,0 +1,47 @@
+# Charter 3 registered run, 2026-11-13
+
+## Pre-flight (no claim, no outcome), 07:07 UTC
+pre-flight passed: inputs verified, records rebuilt from the cache, rehearsal on synthetic targets complete
+
+real	1m40.251s
+user	1m36.855s
+sys	0m3.271s
+
+## Registered run llm-v2c3-volatility-dev-run-20261113, started 07:09:26 UTC, claim 07:11:21 UTC, complete 07:15:20 UTC
+## stdout (verdict.json as printed by the runner)
+{
+ "charter": "llm-v2 Charter 3 (target change: next-week volatility)",
+ "test_weeks": 104,
+ "gates": {
+  "reader_partial_ic": {
+   "value": {
+    "nw_t": -0.7152607285794967,
+    "mean": -0.008997516524177403,
+    "weeks": 104
+   },
+   "rule": "Newey-West t >= 2.0 and mean weekly partial correlation > 0",
+   "pass": false
+  },
+  "reader_partial_ic_sign_by_year": {
+   "value": {
+    "2023": -0.030061416642703495,
+    "2024": 0.012066383594348685
+   },
+   "weeks": {
+    "2023": 52,
+    "2024": 52
+   },
+   "rule": "mean weekly partial correlation > 0 in 2023 and in 2024",
+   "pass": false
+  }
+ },
+ "failed_gates": [
+  "reader_partial_ic",
+  "reader_partial_ic_sign_by_year"
+ ],
+ "size_reading": null,
+ "descriptive_errors": [],
+ "verdict": "FAIL"
+}
+
+## stderr: empty

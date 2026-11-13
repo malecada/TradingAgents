@@ -1,0 +1,34 @@
+{
+  "charter": "llm-v2 Charter 3 (target change: next-week volatility)",
+  "descriptive_errors": [],
+  "failed_gates": [
+    "reader_partial_ic",
+    "reader_partial_ic_sign_by_year"
+  ],
+  "gates": {
+    "reader_partial_ic": {
+      "pass": false,
+      "rule": "Newey-West t >= 2.0 and mean weekly partial correlation > 0",
+      "value": {
+        "mean": -0.008997516524177403,
+        "nw_t": -0.7152607285794967,
+        "weeks": 104
+      }
+    },
+    "reader_partial_ic_sign_by_year": {
+      "pass": false,
+      "rule": "mean weekly partial correlation > 0 in 2023 and in 2024",
+      "value": {
+        "2023": -0.030061416642703495,
+        "2024": 0.012066383594348685
+      },
+      "weeks": {
+        "2023": 52,
+        "2024": 52
+      }
+    }
+  },
+  "size_reading": null,
+  "test_weeks": 104,
+  "verdict": "FAIL"
+}

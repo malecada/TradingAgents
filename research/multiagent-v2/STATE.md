@@ -545,3 +545,82 @@ threshold t at least 2.0, size as a reading rule at 0.07, realised variance as t
 - Results of the run go into this file, never into the charter.
 - At the freeze nothing is registered, no attempt is claimed and no text feature has been joined with a
   volatility outcome. 79 offline tests pass on the frozen text.
+
+## Charter 3 run: complete, verdict FAIL (2026-11-13)
+
+Registration `research/llm-v2-charter3-20261113/gates.json` (commit c8746c15c), experiment
+`llm-v2c3-volatility-dev-run-20261113`, attempt 4 of 6. Pre-flight passed at 07:07 UTC (inputs verified,
+records rebuilt from the cache, rehearsal on synthetic targets). Run started 07:09 UTC, claim 07:11 UTC,
+complete 07:15 UTC. One outcome join, no model call. Outputs in
+`research_runs/llm-v2c3-volatility-dev-run-20261113/outputs/`, log in `charter3_run_log.txt`.
+
+| Gate | Value | Rule | Result |
+|---|---|---|---|
+| G1 weekly partial correlation of `s_reader` with `e_reader` | mean −0.009, t −0.72 (104 weeks) | t at least 2.0 and mean above 0 | fail |
+| G2 mean by year | 2023 −0.030, 2024 +0.012 | above 0 in both years | fail |
+| Verdict | | G1 and G2 | **FAIL** |
+
+The verdict is the one in `verdict.json`. No re-run, no re-estimation and no change of estimator on this
+window under this charter. FAIL closes weekly relative volatility from the reader records (charter §5). The
+records stay as an input of the two remaining changes (§9).
+
+Descriptive results (no gate, no claim):
+
+| Partial score | Mean weekly partial correlation | Newey-West t, lag 4 and lag 12 | 2023, 2024 |
+|---|---|---|---|
+| `s_reader` (reader block beyond history and attention, the gate score) | −0.009 | −0.72, −0.73 | −0.030, +0.012 |
+| `s_reader_lin` (same, first design: within-week step only) | +0.016 | 1.13, 1.09 | −0.005, +0.037 |
+| `s_reader_sq` (same, squares of the bar history in the within-week step) | −0.014 | −0.92, −0.99 | −0.029, +0.001 |
+| `s_reader_hist` (reader block beyond history, attention not controlled) | +0.041 | 3.24, 3.94 | +0.057, +0.026 |
+| `s_attn` (attention counts beyond history) | +0.056 | 3.00, 2.65 | +0.106, +0.007 |
+| `s_text` (attention counts and reader block beyond history) | +0.050 | 3.24, 3.13 | +0.083, +0.016 |
+
+| Panel | Value |
+|---|---|
+| Forecast of the variance rank from history alone (`v_hist`) | rank IC 0.813 |
+| Loss of `v_hist` minus loss of `v_full` (all text added) | 0.52 % of the loss, t 2.04 |
+| Loss of `v_hist` minus loss of `v_hist_attn` (attention added) | 0.40 %, t 1.68 |
+| Loss of `v_hist_attn` minus loss of `v_full` (reader block added) | 0.12 %, t 1.00 |
+| Boosted trees: loss of `g_hist_attn` minus loss of `g_full` (reader block added) | −0.15 %, t −1.24 |
+| Gate statistic with another target: log variance, `fwd_absret`, `fwd_drawdown`, `fwd_maxday` | −0.008 (t −0.61), +0.030 (t 1.95), +0.010 (t 0.64), −0.013 (t −0.76) |
+| Permutation placebo, 500 draws | t mean −0.05, sd 1.01, 97.5 % quantile 1.89; 75.6 % of the draws at or above the observed t |
+| Shift placebo, features from 13, 26, 52 weeks earlier | t −0.41, +2.14, −0.01 |
+| Shift placebo, features from 13, 26, 52 weeks later | t +0.99, −0.94, +0.22 |
+| Autocorrelation of the target residual within an asset at 1, 2, 4, 8 weeks | −0.009, +0.006, −0.023, +0.002 |
+| Share of the target rank variance the controls leave on the test weeks | 0.200 after the within-week step alone, 0.199 after both steps |
+| Target coverage on the test weeks | 0 of 5,200 rows missing, 3 rows with a short forward week |
+| Share of test asset-weeks with a non-zero reader feature | `evt_7d` 37 %, `evt_30d` 56 %, `unfav_7d` 17 %, `sched_30d` 32 %, `rumour_30d` 14 %, `split_7d` 8 % |
+
+Reading of the result, as far as the registered outputs carry it:
+- The judgements of the reader agents carry no information on next week's relative volatility beyond price
+  history and attention counts. The mean is negative, and negative in 2023.
+- The hardening of stage V0 did not decide the verdict. The first design (`s_reader_lin`) reaches t 1.13 with
+  a negative 2023 and fails both gates as well.
+- Without the attention control the reader block looks strong (`s_reader_hist`: t 3.24). With the two
+  attention counts among the controls nothing is left. The reader features stand in for the number of items.
+  This is the pattern of Charter 2 on a second target.
+- The attention counts relate to next week's volatility beyond price history (`s_attn`: +0.056, t 3.00). The
+  ridge coefficient of `attn_7d` is negative in every test week (mean −0.058): assets with more items in the
+  last seven days had a lower variance in the following week than their price history implied. The relation
+  sits in 2023 (+0.106) and is absent in 2024 (+0.007). It needs no language model, the row was not gated and
+  the window is exposed, so nothing is claimed from it.
+- Price history forecasts the rank of next week's variance with a rank IC of 0.813. All text together lowers
+  the loss of that forecast by half a percent, most of it through the attention counts.
+- The autocorrelation of the target residual is zero at every lag, so the rows of the noise table without
+  persistence apply (pass rate on noise 2.60 % and 2.75 %, charter Appendix B).
+- One of six shift placebos reaches t 2.14 (features of the same asset from 26 weeks earlier). The other five
+  lie between −0.94 and +0.99. A placebo carries no claim; the value shows the scatter of the statistic.
+
+Checks on the negative result:
+- The gate code passes a planted effect and fails a noise draw
+  (`test_planted_signal_passes_and_a_noise_draw_fails`), and the placebos break a planted link
+  (`test_placebos_break_the_planted_link`).
+- The pre-flight rehearsed the whole evaluation on synthetic targets before the claim, and the record table
+  equals the rebuild from the registered cache.
+- Power (charter §5): the gates pass in 99 % of the draws at a mean weekly partial correlation of 0.074 and in
+  78 % at 0.045. The observed mean is −0.009 with a Newey-West standard error of 0.013. A relation of the
+  visible size is excluded. A thin positive relation below about 0.02 is not.
+- No descriptive error and no fit error is listed in `verdict.json` and `evaluation.json`.
+
+Budget: $0 spent under Charter 3, balance about $4.86. Family `llm-multiagent-v2`: 4 of 6 attempts used.
+Sealed-A and Sealed-B untouched. No run active.
