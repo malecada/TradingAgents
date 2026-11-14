@@ -624,3 +624,63 @@ Checks on the negative result:
 
 Budget: $0 spent under Charter 3, balance about $4.86. Family `llm-multiagent-v2`: 4 of 6 attempts used.
 Sealed-A and Sealed-B untouched. No run active.
+
+## Charter 4 (fresher information: daily decision, next-day return): draft, not frozen (2026-11-14)
+
+Charter draft: `docs/superpowers/specs/2026-11-14-llm-v2-charter4-fresh-news-charter.md`. Attempt 5 of 6 when
+registered. Nothing is registered, no attempt is claimed, and no feature built from the reader records has been
+joined with a return or price quantity dated at or after its decision. The freeze needs the user's approval;
+the ten open decisions are in §10 of the draft, each with the implemented and recommended option.
+
+Design in short:
+- Same 53,330 records, no model call, cap $0.
+- One decision per day at 00:00 UTC, 2022-01-08 to 2024-12-28 (1,086 days, 54,300 rows, 222 contracts). The
+  members of a day are the top 50 of the last Friday before it.
+- Target: return of the next day relative to the other assets of the day (`fwd_ret_1d`). The size of the
+  move, the daily variance and the three-day return are descriptive variants.
+- Capture-time audit (`charter4_design/capture_time_audit.json`): a news item has a publication date without
+  a time of day and a capture time. It enters a feature at the first midnight after its capture, and only when
+  it was captured on its publication date or on the day after. The median time from capture to decision is 9.9
+  hours.
+  The charter therefore tests a continuation over the day after the news day, not the reaction to the news.
+  Community posts enter the counts only.
+- Question: does the reader tone (`tone_1d`, `tone_prev6`) carry information beyond 11 price-history controls
+  and 4 attention counts?
+- Gate: daily partial correlation of a walk-forward ridge score with the target residual on 722 test days
+  (2023-01-07 to 2024-12-28). Controls removed in two steps on both sides, as in Charter 3. G1: Newey-West t
+  (lag 7) at least 2.0 and mean above 0. G2: mean above 0 in 2023 and in 2024. With a PASS the net return of a
+  score book after 5 bp per side is read as "above cost" or "below cost" (no gate).
+
+Stage V0 is complete (code, 85 offline tests, synthetic dry run, pass rate and power on synthetic targets,
+calibration on bars of 2021). Two choices were made by rules written before their draws:
+- Rule 1, form of the daily statistic: correlation and covariance are within 10 passes of 800. The
+  correlation form of Charters 2 and 3 stays.
+- Rule 2, features of the gate score: the two tone features pass 421 of 800 planted draws, the six reader
+  features 325, the four features of the last day 197. The gate score uses the two tone features. Both planted
+  effects are defined on the tone, so the rule favours them by construction; the six-feature score stays in
+  the run as the descriptive `s_block_r`.
+
+| Synthetic target, registered score | size per directed asset-day | PASS |
+|---|---|---|
+| no reader information, six cells (400 draws each) | none | 1.5 % to 2.5 % (51 of 2,400) |
+| effect of the last day (200 draws) | about 18 bp | 22 % |
+| effect of the last day | about 37 bp | 77 % |
+| effect of the last day | about 55 bp | 98.5 % |
+| effect over the week (200 draws) | about 13 bp | 29.5 % |
+| effect over the week | about 27 bp | 87 % |
+| effect over the week | about 45 bp | 100 % |
+
+- These sizes are large for a liquid market one day after public news. A FAIL is the expected outcome. It
+  would speak against a drift or reversal of about 40 bp and more per directed asset-day and would not exclude
+  a smaller one.
+- Turnover of the score book on the test days is 1.6 to 2.8 per day, which costs about 8 to 14 bp per day.
+- A `stress` cell was added after the comparison with the bars of 2021 and before any outcome was opened. Its
+  pass rate is 2.5 %.
+
+Evidence: draws and design checks in `research/multiagent-v2/charter4_design/` (README there). Check of the
+registration builder (`scripts/reader_charter4_register.py --date 20261114 --check`): 45 source files, 7
+inputs, nothing written. The builder refuses to write while the draft mark is in the charter.
+
+Next: freeze approval by the user, then freeze (draft mark removed, sha256 recorded), commit, registration,
+pre-flight, one registered run. Family `llm-multiagent-v2` stays at 4 of 6 attempts until the claim. Sealed-A
+and Sealed-B untouched. No run active.
