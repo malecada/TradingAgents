@@ -907,6 +907,12 @@ Coverage on the 722 test days of Charter 4 (203 assets, 50 per day):
 - The store captures an article a median of 16.8 hours after its publication (quartiles 11.9 and 22.1). The
   decision of Charter 4 follows the capture by a median of 9.9 hours. A news item is about one day old at the
   decision.
+  **Correction (2026-11-14, source audit):** the 16.8 hours are wrong. The store keeps the publication date
+  without a time of day, and the figure was measured from 00:00 UTC of that date. Measured against the
+  publication time, the first capture follows the publication by a median of 0.2 to 0.3 hours (section
+  "Source audit" below). A news item is about ten hours old at the decision, and that age comes from the
+  fixed decision time 00:00 UTC and not from the source. "About one day old" in the reading below is
+  corrected in the same way.
 - For the weekly charters the coverage was wider: 55 % of asset-weeks had a read item in the last 7 days
   (Charter 2 §3.1), with the community posts included.
 
@@ -923,3 +929,154 @@ Reading:
   −3.5 bp on the next day for the asset-days with a positive and a negative tone.
 - No change of sources is drafted or decided. A wider source set would be a design input of the last
   charter and needs a check against the closed-programmes ledger and a point-in-time audit first.
+
+## Source audit: what could be added to the text material (2026-11-14, no outcome, no model call)
+
+Question after the material audit: which point-in-time text sources could be added for 2022 to 2024, what
+they cost, and whether an earlier closed programme already covers them. Scripts and results are in
+`source_audit/` (`README.md` there lists every probe). Only the columns `date` and `base` of the Charter 4
+decision panel are read: 728 decision days from 2023-01-01, 203 assets, 50 per day. No charter is drafted
+and nothing is registered.
+
+### Correction of the material audit: the news is fresh, the decision time sets its age
+
+- The store keeps a publication date without a time of day. The lag of 16.8 hours in the material audit was
+  measured from 00:00 UTC of the publication date and is wrong.
+- Check 1 (`pubtime_probe.py`): the publication time was read from the first capture of 90 stored articles
+  (30 per outlet, 2023 to 2024, seeded sample). First capture after publication: median 0.32 hours, quartiles
+  0.16 and 2.07, 90th percentile 10.9. Within one hour 69 %, within six hours 81 %. No capture precedes its
+  stated publication. By outlet the median is 0.24 hours (CoinDesk), 0.21 (Cointelegraph), 1.46 (The Block).
+- Check 2 (`agg_news_audit.py`): 13,396 stored articles were joined by URL to a public archive with
+  publication times to the second. First capture after publication: median 0.23 hours, quartiles 0.09 and
+  0.85, 90th percentile 6.0. Within one hour 76 %, within 24 hours 94 %.
+- Publication hours cluster between 10:00 and 19:00 UTC. The decision of Charter 4 at 00:00 UTC follows the
+  capture by a median of 9.9 hours. A news item is therefore about ten hours old at the decision, not one day.
+- Consequence: a faster source cannot make the material fresher under a daily decision at a fixed hour. Only
+  a different decision schedule could. The FAIL verdict of Charter 4 is not affected: the registered
+  features used the capture times, which were correct.
+
+### Sources probed
+
+| Source | History 2022 to 2024 | Time stamp | Access and cost | Covered by an earlier programme |
+|---|---|---|---|---|
+| Public news archive on Hugging Face (`maryamfakhari/crypto-news-coindesk-2020-2025`, the CoinDesk Data news feed, 70 outlets) | 198,294 articles, 181 per day | to the second, after conversion from Iran local time | free download, 240 MB, CC-BY-NC-4.0 with attribution | no |
+| The same feed through the CoinDesk Data API (formerly CryptoCompare) | complete feed | to the second | key required (401 from the devbox); free tier retired on 2026-05-21 according to third-party reports, paid plans through sales only | no |
+| Binance announcements (public content endpoint) | 3,140 in five catalogues: listing 739, news 1,828, delisting 232, maintenance 316, airdrop 25 | milliseconds | free | partly: new listings (`nlst`, 0 of 11) and event-driven news trading (minutes scale, no-go) are closed |
+| Bybit announcements | 9,139 items, from 2022-06-08 only | milliseconds | free | as above |
+| OKX announcements | from 2023-03-03 only | milliseconds | free | as above |
+| Upbit notices | not reachable (blocked, error 1015) | | | |
+| Snapshot governance (GraphQL) | 22 to 344 proposals per space in nine spaces | seconds | free | no; token unlocks are closed (`unlock-xs`), governance text was not tested |
+| Project subreddits (Arctic Shift, existing fetcher) | 1,300 to 12,100 posts per year and project in seven probed | seconds | free; needs a map of about 200 assets to forums; typing and reading of roughly a million posts | no; the present store holds three general forums |
+| Further outlets through the Wayback Machine (Decrypt, CryptoSlate, U.Today, BeInCrypto, CryptoPotato, Blockworks, The Defiant) | 176 to 1,737 article pages captured per outlet in one probed week | capture time | free, 2.5 seconds per page: weeks of fetching for full text | no; mostly the outlets already in the archive above |
+| GDELT headlines | 351 thousand title-only rows in the laptop store, not on the devbox | 15 minutes | free; heavy rate limiting from the devbox (one success in the probe) | yes: `pit-sentiment-p2` (noise hurt BTC), `llm-c1-event-xs` (extraction FAIL) |
+| Alpaca news (Benzinga) | 33 thousand rows in the laptop store | seconds | key in a file that is not read here | yes: `sentiment-early-warning` (majors only, wide text sorts infeasible) |
+| Public tweet dataset on Hugging Face (`StephanAkkerman/financial-tweets-crypto`) | 68,945 tweets of 153 trader accounts | seconds | free, MIT | no |
+| X API | full archive | seconds | no free archive; third-party reports give about $0.005 per post read and closed or enterprise tiers for the full archive | no |
+| CryptoPanic | free API serves recent posts only; history not confirmed | | | no |
+
+Not probed: CoinMarketCal, Telegram channel previews, project blogs, GitHub releases.
+
+### Coverage of the universe
+
+An item counts for a decision when it is linked to the asset by the alias dictionary of the project and
+became available in the window before the 00:00 UTC decision. "Primary" means the asset is named in the title
+or at least twice in the body. The present store is counted with the same rule, so the rows are comparable.
+The figures differ slightly from the material audit, which used the panel features on 722 days.
+
+| Material | Window | Share of asset-days | Other assets, median | Other assets, 90th pct | Assets with none | Assets of 50 per day, median |
+|---|---|---|---|---|---|---|
+| Present news (3 outlets), any link | 1 day | 34.5 % | 4.5 % | 45.7 % | 72 | 19 |
+| Present news, primary | 1 day | 26.0 % | 0.9 % | 31.0 % | 93 | 14 |
+| Present news and posts, any link | 1 day | 48.3 % | 11.0 % | 72.7 % | 47 | 25 |
+| Archive alone, any link | 1 day | 40.4 % | 4.6 % | 61.5 % | 68 | 20 |
+| Present news plus the new outlets of the archive, any link | 1 day | 49.6 % | 8.2 % | 74.6 % | 53 | 25 |
+| Present news plus the new outlets, primary | 1 day | 42.0 % | 4.2 % | 64.0 % | 68 | 21 |
+| Present news, any link | 7 days | 66.9 % | 25.7 % | 97.1 % | 71 | 33 |
+| Present news plus the new outlets, any link | 7 days | 76.5 % | 50.0 % | 100 % | 50 | 38 |
+| Present news plus the new outlets, primary | 7 days | 70.1 % | 28.6 % | 100 % | 65 | 35 |
+| Binance announcements, asset in the title | 1 day | 1.05 % | 0 % | 1.6 % | 128 | 0 |
+| Binance announcements, asset in the title | 7 days | 6.7 % | 0 % | 11.1 % | 120 | 3 |
+| Tweet dataset, ticker field | 1 day | 16.8 % | 5.9 % | 25.0 % | 62 | 9 |
+| Tweet dataset, ticker field | 7 days | 43.5 % | 28.6 % | 67.7 % | 47 | 25 |
+
+"Other assets" are all assets except BTC and ETH; the share is taken over each asset's own days in the top 50.
+In Charter 4 a median of 3 of the 50 assets carried a tone per day, against 19 with a linked news item and 14
+as primary subject: a tone needs a read record about the asset and a direction given by the reader.
+
+### The public news archive in detail
+
+- 229,158 rows from 2019-10-28 to 2025-02-01. In 2022 to 2024: 198,294 rows, by year 26,044, 47,771 and
+  124,479, from 46, 58 and 62 outlets. The volume is uneven over the years.
+- 7.1 % of the rows come from the three outlets already in the store. The new outlets give 184,169
+  documents, of which 176,966 link to an asset of the universe and 49,532 have an asset other than BTC or ETH
+  as primary subject. The largest new outlets are coinotag, coinpedia, cointurken, newsbtc, coingape,
+  cryptopolitan, utoday and ambcrypto.
+- Every row carries the tag BTC or ETH. The dataset is the part of the feed that was tagged with one of the
+  two. Articles about another asset are present only when the feed also tagged them BTC or ETH. An article
+  about a small asset alone is missing, and that is the material the cross-section lacks.
+- The body is the feed summary: median 329 characters, 10th and 90th percentile 111 and 625, 7.4 % title
+  only. The agents see a summary of at most two sentences in the present design, so the short body costs
+  less than it seems, but the typing call has less to work with.
+- Time stamps: `published_on` is Iran local time. Read as UTC, the first captures of the store would precede
+  the publication by up to 3.49 hours (4.49 hours in the summer of 2022). After conversion with the
+  `Asia/Tehran` rules the monthly floor (1st percentile) is 0.00 to 0.05 hours in 24 of 36 months
+  (`agg_news_tz.json`). In the other months the lowest 1 % are items with a publication time later than
+  the first capture (presumably republished or updated, 0.75 % of the joined articles over the whole window),
+  which errs to the late side.
+- Order of ingestion: 0.2 % of the rows were published more than one hour before their neighbours in id
+  order, none more than 24 hours. The archive was collected as the articles appeared, not filled in later.
+- Kind of content, keyword rule on titles (`agg_news_titles.json`): 36.5 % of the titles of the new outlets
+  are price commentary, against 28.8 % for the three present outlets (CoinDesk 22.8 %, The Block 17.5 %,
+  newsbtc 61.1 %, coinpedia 54.6 %). In the present store the typing call labels 13 % of the news as price
+  recap and 31 % as analysis or opinion.
+
+### The other candidates in short
+
+- Exchange announcements have exact times and are rare: 1 % of asset-days. 62.5 % of the Binance
+  announcements appear between 00:00 and 08:00 UTC, so most are 16 to 24 hours old at the next 00:00 UTC
+  decision. The earlier programmes found the price reaction to such events within minutes.
+- The tweet dataset reaches more small assets per day than the news (median 5.9 % of an asset's days) but
+  has no tweet at all on 270 of the 731 days of 2023 to 2024 (January 2024 is empty). The content is chart
+  commentary of 153 trader accounts, median 127 characters. The gaps rule it out as a daily source.
+- Governance proposals exist for DeFi and layer-2 tokens only. Project forums are the widest free text for
+  small assets but need a forum map and typing of roughly a million posts; in the present store 26 % of the
+  typed posts are unrelated and 14 % promotional.
+- Full text of further outlets through the Wayback Machine repeats the outlets of the archive at a cost of
+  weeks of fetching.
+- The X archive and the complete news feed are not available at the present budget.
+
+### Cost of adding the archive (measured rates, estimates)
+
+| Scope | Documents | Typing ($0.06 to $0.13 per 1,000) | Reading ($0.119 per 1,000, Charter 2 rate) | Total |
+|---|---|---|---|---|
+| New outlets, an asset other than BTC or ETH as primary subject | 49,532 | $3.0 to $6.4 | $5.9 | about $9 to $12 |
+| New outlets, any link to the universe | 176,966 | $10.6 to $23.0 | $21.1 | about $32 to $44 |
+
+The typing rate measured on the present store is $0.130 per 1,000 documents ($12.90 for 99,166 documents with
+bodies of up to 6,000 characters). The summaries of the archive are about a tenth as long; the lower figure is
+an estimate.
+
+The balance is about $4.86. Either scope needs a top-up. The calls of a direct comparison come on top and
+are costed in the charter draft.
+
+### Reading
+
+- No free source gives wide daily text for the small assets of the cross-section in 2022 to 2024. The best
+  addition is the public archive. It raises the share of asset-days with a linked news item from 34.5 % to
+  49.6 % on the day before the decision and from 66.9 % to 76.5 % over seven days. For the median small
+  asset the seven-day share rises from 25.7 % to 50.0 %.
+- A daily direct comparison of assets on text has little to compare: 3 of 50 assets with a tone per day in
+  Charter 4, and the archive raises the assets with a primary news item from 14 to 21 of 50, so roughly 4 to
+  5 with a tone if the same ratio holds (extrapolated, not measured). A weekly comparison has material: a
+  linked news item for a median of 33 of 50 assets now and 38 with the archive.
+- Freshness is not a property of the source here. It is set by the decision schedule.
+- The added outlets are of a lower tier and carry more price commentary. Charters 2 to 4 found the signal in
+  the attention counts and nothing in the reader judgements. Wider material of this kind adds mainly counts.
+  A FAIL remains the expected result of a last attempt with or without the archive. The gain of the archive
+  is that the negative result could no longer be put down to thin material.
+- Options for the last attempt (attempt 6 of 6), none drafted: (A) weekly direct comparison with the archive
+  added, (B) weekly direct comparison on the present material, (C) no last attempt. A daily variant is not
+  supported by the coverage figures.
+
+Nothing is drafted, registered or decided. The last charter needs the go to draft, the top-up for option A
+and the freeze approval before any registration or outcome join.
