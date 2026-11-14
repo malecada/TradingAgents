@@ -684,3 +684,17 @@ inputs, nothing written. The builder refuses to write while the draft mark is in
 Next: freeze approval by the user, then freeze (draft mark removed, sha256 recorded), commit, registration,
 pre-flight, one registered run. Family `llm-multiagent-v2` stays at 4 of 6 attempts until the claim. Sealed-A
 and Sealed-B untouched. No run active.
+
+## Charter 4: frozen (2026-11-14, V1)
+
+Freeze approved by the user on the draft ("Approved"), with the implemented option on all ten points of §10:
+next-day relative return as the gate target, gate on the reader tone beyond price history and attention
+counts, fitted sign, threshold t at least 2.0, correlation form, size as a reading rule on the net return of
+the score book, items without a judgement as no record, community posts in counts only, daily decision at
+00:00 UTC, attempt 5 of 6.
+
+- The draft mark is removed and the status line changed. The document is byte-final from this commit:
+  sha256 `e90b8f866215585dc09b38cdd4b447ef1f8fc3eb1cad4c5353abcf1d2b0e00b0`.
+- Results of the run go into this file, never into the charter.
+- At the freeze nothing is registered, no attempt is claimed and no reader feature has been joined with a
+  return or price quantity dated at or after its decision. 85 offline tests pass on the frozen text.

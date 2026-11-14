@@ -1,11 +1,11 @@
-# Charter 4 — Fresher information: daily decision, next-day return (`llm-v2-charter4`) — DRAFT, NOT FROZEN
+# Charter 4 — Fresher information: daily decision, next-day return (`llm-v2-charter4`)
 
-**Status:** draft. Stage V0 (code, tests, capture-time audit, synthetic dry run, pass rate and power of the
-gates on synthetic targets, calibration on bars before the window) is complete. Two design choices were made
-in V0 by rules written before their draws (§4.1). The open decisions are listed in §10, each with the option
-that is implemented. Nothing is registered, no attempt is claimed and no feature built from the reader records
-has been joined with a return or any other price quantity dated at or after its decision. The freeze needs
-approval.
+**Status:** frozen on 2026-11-14 (V1), with approval given on the draft. Stage V0 (code, tests, capture-time
+audit, synthetic dry run, pass rate and power of the gates on synthetic targets, calibration on bars before
+the window) is complete. Two design choices were made in V0 by rules written before their draws (§4.1). The
+decisions on the draft are recorded in §10. At the freeze nothing is registered, no attempt is claimed and no
+feature built from the reader records has been joined with a return or any other price quantity dated at or
+after its decision. From this commit the document stays byte-identical (§4).
 **Family:** `llm-multiagent-v2`, attempts used 4 of 6 (Charter 1 interrupted with a failed receipt, Charter 1b
 FAIL, Charter 2 FAIL, Charter 3 FAIL). This charter is attempt 5.
 **Predecessor:** `docs/superpowers/specs/2026-11-13-llm-v2-charter3-volatility-charter.md`, run
@@ -574,12 +574,10 @@ Two attempts remain in the family and each change consumes one. After this chart
 
 ## 10. Decisions
 
-The points below are open at the draft. The column "Implemented" holds the option that the code and this
-document carry and that is recommended. An approval of the freeze without remark takes that option in every
-row. Any row can be changed before the freeze. A change of row 1, 2, 3 or 4 needs new draws on synthetic
-targets before the freeze.
+The ten points were open at the draft. All were decided on 2026-11-14 together with the freeze approval:
+the option of the column "Implemented" stands in every row. The alternatives are recorded as considered.
 
-| # | Point | Implemented (recommended) | Alternative |
+| # | Point | Implemented | Alternative |
 |---|---|---|---|
 | 1 | Gate target | Relative return of the next day (`fwd_ret_1d`). The reader records carry a direction, and the weekly volatility target has failed. | Size of the move of the next day, or the three-day return. Both are descriptive variants here. A volatility gate would repeat Charter 3 at a shorter horizon, where own history is again the baseline to beat. |
 | 2 | What the gate tests | The reader tone beyond price history and attention counts (`s_reader`, two features, chosen by rule 2 of §4.1). | The whole reader block (`s_block_r`): covers unfavourable events and opinion stance, with less power on a tone effect (325 against 421 passes of 800). Or all text beyond price history (`s_text`): easier to pass, but a pass could rest on item counts alone and would say nothing on the agents. |
