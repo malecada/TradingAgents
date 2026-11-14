@@ -868,3 +868,58 @@ draft and a freeze approval, and it would use the last attempt of the family.
 
 Budget: $0 spent under Charter 4, balance about $4.86. Family `llm-multiagent-v2`: 5 of 6 attempts used.
 Sealed-A and Sealed-B untouched. No run active.
+
+## Text material of the reader agents: audit (2026-11-14, no outcome, no model call)
+
+Question raised after the Charter 4 verdict: is the material given to the agents sufficient, and which sources
+do the agents read. Facts from `material_audit.py` (`material_audit.json`), the text store, the reading list
+and the decision-time panel of Charter 4. No outcome is involved.
+
+Sources (2022 to 2024):
+
+| Source | Documents in the store | Linked to an asset | Read by the agents |
+|---|---|---|---|
+| News through the Wayback Machine: Cointelegraph, CoinDesk, The Block | 71,768 articles (65 per day) | 54,258 | 26,476 documents |
+| Reddit: r/CryptoCurrency, r/Bitcoin, r/ethereum | 860,540 posts, 82 % with a title only | 299,481 | 21,785 documents (weekly charters); counts only in Charter 4 |
+
+Nothing else is read: no exchange announcements, no project or governance channels, no X, Telegram or
+Discord, no on-chain or derivatives data, no macro calendar. The price history, funding and the quant forecast
+go to the fitted model and not to the agents.
+
+What an agent sees of a document: the item type, the source kind, the asset tokens and a de-identified
+summary of at most two sentences (median 41 words, 90th percentile 62). The summary was written by the typing
+call from the title and the first 6,000 characters of the body (median body 2,656 characters). Names, dates
+and the outlet are removed and magnitudes are rounded. An agent reads one document at a time. It sees no other
+item, no history of the asset and no price.
+
+Coverage on the 722 test days of Charter 4 (203 assets, 50 per day):
+
+| Quantity | BTC | ETH | Other assets, median | Other assets, 90th percentile |
+|---|---|---|---|---|
+| Share of the asset's days with a fresh news item | 98.3 % | 97.9 % | 3.6 % | 43.6 % |
+| Share with a fresh record about the asset | 95.3 % | 86.4 % | 0 % | 6.3 % |
+| Share with a non-zero tone | 67.7 % | 59.4 % | 0 % | 3.6 % |
+
+- 132 of the 203 assets have no fresh record about them on any test day. 28 assets have one on at least 5 %
+  of their days.
+- On a median day 3 of the 50 assets carry a tone. BTC and ETH hold 44 % of the 2,080 asset-days with a tone.
+- News item rows by asset: BTC and ETH hold 41 %, the ten most covered assets 62 %.
+- The store captures an article a median of 16.8 hours after its publication (quartiles 11.9 and 22.1). The
+  decision of Charter 4 follows the capture by a median of 9.9 hours. A news item is about one day old at the
+  decision.
+- For the weekly charters the coverage was wider: 55 % of asset-weeks had a read item in the last 7 days
+  (Charter 2 §3.1), with the community posts included.
+
+Reading:
+- The material is thin in three ways: few sources, almost no coverage outside the largest assets, and a
+  two-sentence view of each document without context.
+- The de-identification is deliberate. The model was released in September 2026 and the window is 2022 to
+  2024, so names and dates would let the model recall what happened afterwards. Richer material for the
+  agents and protection against recall pull in opposite directions on this window.
+- The three FAIL verdicts therefore hold for this material: public articles of three outlets and posts of
+  three forums, read as short de-identified summaries, about one day old. They do not close agents with
+  wider or faster sources. For most assets of the cross-section the test was a test without text.
+- Where material existed, the measured effect was small: the event study of Charter 4 gives +2.4 bp and
+  −3.5 bp on the next day for the asset-days with a positive and a negative tone.
+- No change of sources is drafted or decided. A wider source set would be a design input of the last
+  charter and needs a check against the closed-programmes ledger and a point-in-time audit first.
