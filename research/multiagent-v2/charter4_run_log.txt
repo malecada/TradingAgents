@@ -1,0 +1,42 @@
+# Charter 4 registered run, 2026-11-14
+
+## Pre-flight (no claim, no outcome), passed 09:50 UTC
+pre-flight passed: inputs verified, records rebuilt from the cache, rehearsal on synthetic targets complete
+
+## Registered run llm-v2c4-fresh-news-dev-run-20261114, started 09:50:36 UTC, claim 09:54:40 UTC, complete 10:01:07 UTC
+## stdout (verdict.json as printed by the runner)
+{
+ "charter": "llm-v2 Charter 4 (fresher information: daily decision, next-day return)",
+ "test_days": 722,
+ "gates": {
+  "reader_partial": {
+   "value": {
+    "nw_t": -2.4873393336420766,
+    "mean": -0.01451289648971411,
+    "days": 722,
+    "form": "corr"
+   },
+   "rule": "Newey-West t >= 2.0 and mean daily statistic > 0",
+   "pass": false
+  },
+  "reader_partial_sign_by_year": {
+   "value": {
+    "2023": -0.015360748808065088,
+    "2024": -0.013674386896634222
+   },
+   "days": {
+    "2023": 359,
+    "2024": 363
+   },
+   "rule": "mean daily statistic > 0 in 2023 and in 2024",
+   "pass": false
+  }
+ },
+ "failed_gates": [
+  "reader_partial",
+  "reader_partial_sign_by_year"
+ ],
+ "size_reading": null,
+ "descriptive_errors": [],
+ "verdict": "FAIL"
+}

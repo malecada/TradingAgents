@@ -698,3 +698,173 @@ the score book, items without a judgement as no record, community posts in count
 - Results of the run go into this file, never into the charter.
 - At the freeze nothing is registered, no attempt is claimed and no reader feature has been joined with a
   return or price quantity dated at or after its decision. 85 offline tests pass on the frozen text.
+
+## Charter 4 run: complete, verdict FAIL (2026-11-14)
+
+Registration `research/llm-v2-charter4-20261114/gates.json` (commit a5abc31f2), experiment
+`llm-v2c4-fresh-news-dev-run-20261114`, attempt 5 of 6. Pre-flight passed at 09:50 UTC (inputs verified,
+records rebuilt from the cache, rehearsal on synthetic targets). Run started 09:50 UTC, claim 09:54 UTC,
+complete 10:01 UTC. One outcome join, no model call. Outputs in
+`research_runs/llm-v2c4-fresh-news-dev-run-20261114/outputs/`, log in `charter4_run_log.txt`.
+
+| Gate | Value | Rule | Result |
+|---|---|---|---|
+| G1 daily partial correlation of `s_reader` with `e_reader` | mean −0.0145, t −2.49 (722 days) | t at least 2.0 and mean above 0 | fail |
+| G2 mean by year | 2023 −0.0154, 2024 −0.0137 | above 0 in both years | fail |
+| Verdict | | G1 and G2 | **FAIL** |
+
+The verdict is the one in `verdict.json`. No re-run, no re-estimation and no change of estimator on this
+window under this charter. FAIL closes the next-day relative return from the reader tone at a daily decision
+(charter §5). With Charters 2 and 3 it shows that the weekly horizon was not the reason for the earlier
+failures, within what the stores can time. The records stay as an input of the last change (§9). The size
+reading is empty, because it is read only with a PASS.
+
+Descriptive results (no gate, no claim):
+
+| Partial score | Mean daily partial correlation | Newey-West t (lag 7) | 2023, 2024 |
+|---|---|---|---|
+| `s_reader` (tone beyond history and attention, the gate score) | −0.0145 | −2.49 | −0.0154, −0.0137 |
+| `s_reader_lin` (same, within-day step only) | −0.0102 | −1.77 | −0.0128, −0.0075 |
+| `s_reader_hist` (tone beyond history, attention not removed) | −0.0008 | −0.17 | −0.0053, +0.0037 |
+| `s_block_r` (whole reader block, six features) | +0.0020 | 0.36 | +0.0054, −0.0012 |
+| `s_fresh` (the four features of the last day) | +0.0061 | 1.08 | +0.0133, −0.0009 |
+| `s_attn` (attention counts beyond history, no reader agent) | +0.0027 | 0.43 | −0.0069, +0.0121 |
+| `s_text` (attention counts and reader block beyond history) | +0.0032 | 0.54 | −0.0056, +0.0120 |
+
+The share of the residual variance explained out of sample is slightly negative for every score.
+
+| Single feature, fixed sign (residual correlation with the target residual) | Mean | t | 2023, 2024 |
+|---|---|---|---|
+| `tone_1d` | +0.0062 | 1.15 | +0.0021, +0.0102 |
+| `tone_prev6` | −0.0020 | −0.32 | −0.0051, +0.0010 |
+| `evt_1d` | −0.0128 | −2.29 | −0.0244, −0.0014 |
+| `stance_1d` | −0.0042 | −0.92 | |
+| `unfav_1d` | −0.0059 | −1.16 | |
+| `tone_1d`, history as the only control | +0.0080 | 1.69 | |
+
+| Panel | Value |
+|---|---|
+| Ridge weights of the gate score over the test days | `tone_1d` mean +0.0006 (sd 0.0029, positive on 56 % of the days), `tone_prev6` mean −0.0002 (sd 0.0025, positive on 42 %) |
+| Weights at the first test day (learned on 2022) | `tone_1d` −0.0054, `tone_prev6` +0.0064 |
+| Other form of the gate statistic (daily covariance) | t −3.22, share of positive days 45.6 % |
+| Permutation placebo, 500 draws | t mean +0.07, sd 0.96, 97.5 % quantile 1.96; 99.4 % of the draws at or above the observed t |
+| Shift placebo, features from 28, 91, 182 days earlier | t −1.58, −1.70, +0.75 |
+| Shift placebo, features from 28, 91, 182 days later | t +0.37, −0.64, +2.01 |
+| Autocorrelation of the target residual within an asset at 1, 2, 7 days | +0.003, +0.001, +0.003 |
+| Share of the target rank variance the controls leave on the test days | 0.553 after the within-day step alone, 0.554 after both steps |
+| Gate statistic with another target: `fwd_absret_1d`, `fwd_rv_1d`, `fwd_ret_3d` | −0.0020 (t −0.37), −0.0200 (t −3.59), −0.0005 (t −0.08) |
+| Gate without the rows of BTC and ETH (2,172 rows dropped) | −0.0069, t −1.07 (2023 −0.0103, 2024 −0.0034) |
+| Gate without the rows with `gap_7d` above zero (180 rows dropped) | −0.0157, t −2.72 |
+| Score book at 5 bp per side | turnover 2.08 per day; gross −11.0 bp per day (t −2.66); net −21.4 bp per day (t −5.17) |
+| Target coverage on the test days | 6 of 36,100 rows missing, 86 rows with a zero return, 36,094 rows scored |
+| Share of test asset-days with a non-zero feature | `tone_1d` 5.8 %, `tone_prev6` 17.7 %, `evt_1d` 7.4 %, `unfav_1d` 3.2 %, `news_1d` 32.8 %, `posts_1d` 36.6 %, `attn_7d` 76.1 %, `gap_7d` 0.2 % |
+| Timing of the news rows (`reader.json`) | 88.0 % timely; median 9.9 hours from capture to decision (quartiles 5.3 and 15.0); usable one day after publication 81.0 %, two days 6.9 % |
+
+| Event study: next-day return minus the mean of the day | Pooled mean (bp) | Mean of day means (bp) | t | Rows, days |
+|---|---|---|---|---|
+| Positive tone | +2.4 | +7.1 | 0.87 | 1,309, 540 |
+| Negative tone | −3.5 | −4.1 | −0.35 | 771, 474 |
+| Event with zero tone | −0.7 | −1.4 | −0.07 | 608, 412 |
+| Unfavourable event | −3.3 | −0.6 | −0.06 | 1,148, 580 |
+| Record without event | +25.8 | +26.8 | 1.72 | 506, 355 |
+| No record | −0.4 | −0.4 | −0.67 | 32,900, 722 |
+
+| Forecast of the target rank | Rank IC | t | 2023, 2024 |
+|---|---|---|---|
+| `v_hist` (history, ridge) | 0.1085 | 11.5 | 0.104, 0.113 |
+| `v_hist_attn` (history and attention, ridge) | 0.1085 | 11.6 | 0.101, 0.116 |
+| `v_full` (all text added, ridge) | 0.1094 | 11.8 | 0.103, 0.116 |
+| `g_hist_attn` (history and attention, boosted trees) | 0.1147 | 12.7 | 0.115, 0.114 |
+| `g_full` (all text added, boosted trees) | 0.1141 | 12.6 | 0.115, 0.114 |
+
+Loss differences of the nested pairs, as a share of the loss: `v_hist` against `v_hist_attn` 0.011 % (t 0.35),
+`v_hist_attn` against `v_full` 0.008 % (t 0.41), `v_hist` against `v_full` 0.019 % (t 0.49), `g_hist_attn`
+against `g_full` 0.007 % (t 0.58).
+
+Reading of the result, as far as the registered outputs carry it:
+- The tone that the reader agents assign to fresh news carries no usable information on the next-day
+  relative return beyond price history and attention counts. Both gates fail, with a negative mean in both
+  years.
+- The negative value of the gate is a statement about the fitted score, not a reversal effect of the tone.
+  The score is fitted walk-forward, so a stable relation of either sign would give a positive gate value.
+  The weights learned on 2022 (`tone_1d` negative, `tone_prev6` positive) did not hold on the test days. The
+  weights stay near zero and change sign: `tone_1d` is positive on 56 % of the test days, `tone_prev6` on
+  42 %. With a fixed sign the fresh tone has a small positive relation that is not significant (`tone_1d`
+  +0.006, t 1.15).
+- The gate is one-sided and the window is exposed. Nothing is claimed from the negative value. Reversing the
+  score would be a choice made after the outcome was seen.
+- The observed t lies in the lowest 0.6 % of the 500 permuted draws. This is unusual for noise and is noted.
+  A reading that agrees with the weight path is that the relation of 2022 had the opposite sign of the
+  relation of 2023 and 2024, so that the score kept following signs that no longer held. This reading was
+  not tested and nothing is claimed from it. One of six shift placebos reaches t 2.01 (features from 182 days
+  later) and two lie near −1.6 and −1.7, which shows the scatter of the statistic.
+- The event study shows the sizes directly. Asset-days with a positive tone returned +2.4 bp above the mean
+  of the day on the next day (t 0.87), asset-days with a negative tone −3.5 bp (t −0.35). The signs agree
+  with the tone and the sizes are a few basis points, far below the 37 bp at which the gates pass in 77 % of
+  the planted draws and below the cost of 5 bp per side.
+- Counting items carries no next-day information either (`s_attn` t 0.43, `s_text` t 0.54, every attention
+  feature below 0.9 in absolute t). The attention relation of Charter 3 belonged to volatility, not to
+  return.
+- Text adds nothing to a history forecast of the next-day return rank: the loss falls by 0.02 % with all
+  text (t 0.49), and the boosted trees agree (0.007 %, t 0.58).
+- Three descriptive rows have |t| above 2 with a negative sign: the gate statistic with next-day realised
+  variance as the target (t −3.59), `evt_1d` with a fixed sign (t −2.29, in 2023 only), and the gross return
+  of the score book (t −2.66, which is the gate result in return units). The row "record without event"
+  shows +25.8 bp on 506 rows (t 1.72). None was gated, the window is exposed and nothing is claimed.
+- The controls leave 55 % of the rank variance of the real target on the test days. The synthetic cells of
+  stage V0 left 69 % to 82 %. Price history therefore explains more of the next-day return rank within a day
+  than any cell assumed. The residual autocorrelation is zero at every lag, as in the noise cells, so the
+  noise pass rate of 1.5 % to 2.5 % applies. The power figures of the charter were computed on cells with a
+  larger residual. A smaller residual is not expected to lower the power for a planted size in basis points.
+  The power was not computed again.
+
+History forecast (post-run diagnostic, outside the registered outputs, no gate, no re-estimation):
+- The history forecast `v_hist` reaches a rank IC of 0.11 for the next-day return rank (t 11.5, both years).
+  A value of this size for a daily return was checked for look-ahead. The code holds none:
+  `history_features` uses the bars up to the bar of day D−1, which closes at the decision, and
+  `forward_targets` uses close(D)/close(D−1) − 1.
+- `charter4_design/post_run_history_diagnostic.py` joins the outcome column already written into
+  `forecasts.json` with the decision-time panel and gives the daily Spearman correlation of every history
+  feature with the next-day return on the 722 test days (`post_run_history_diagnostic.json`):
+
+| History feature | Mean daily rank correlation | t | 2023, 2024 |
+|---|---|---|---|
+| `rv_7d` | −0.095 | −8.5 | −0.094, −0.097 |
+| `rv_1d` | −0.090 | −8.7 | −0.087, −0.093 |
+| `rv_30d` | −0.088 | −7.6 | −0.078, −0.097 |
+| `age_weeks` | +0.077 | 7.0 | +0.061, +0.093 |
+| `ret_7d` | −0.047 | −5.5 | −0.050, −0.043 |
+| `beta_60d` | −0.039 | −3.7 | −0.040, −0.038 |
+| `vsurge_1d` | −0.032 | −4.5 | −0.043, −0.021 |
+| `ret_1d` | −0.031 | −3.6 | −0.030, −0.032 |
+| `ret_30d` | −0.027 | −3.2 | −0.033, −0.022 |
+| `funding_3d` | −0.023 | −3.3 | −0.007, −0.039 |
+| `dvol_30d` | +0.002 | 0.3 | −0.006, +0.010 |
+
+- The rank IC is carried by volatility and contract age: contracts with a higher recent volatility and
+  younger contracts have a lower next-day return rank, in both years. It is a statement about ranks, that
+  is about the median of right-skewed returns, not about mean returns or a tradable spread, and it was not
+  tested at cost. It needs no text. The partial design removes it from both sides of the gate, so it does
+  not enter the verdict. It is recorded as a fact about the control set, and nothing is claimed from it.
+
+Checks on the negative result:
+- The gate code passes a planted effect and fails a noise draw
+  (`test_planted_signal_passes_and_a_noise_draw_fails`), and the placebos break a planted link
+  (`test_placebos_break_the_planted_link`). 85 offline tests passed on the frozen text.
+- The pre-flight rehearsed the whole evaluation on synthetic targets before the claim, and the record table
+  equals the rebuild from the registered cache.
+- Power (charter §5): for an effect of the last day the gates pass in 22 % of the draws at about 18 bp, in
+  77 % at about 37 bp and in 98.5 % at about 55 bp per directed asset-day. A drift or reversal of about
+  40 bp and more is excluded, firmly from about 55 bp. A smaller one is not, and the event study puts the
+  visible size at a few basis points.
+- No descriptive error and no fit error is listed in `verdict.json` and `evaluation.json`.
+- Reader records (`reader.json`): 53,330 records from 48,261 documents, 99.9 % valid first readings, 72.5 %
+  agreed between the two readers, 27.5 % adjudicated, 0.03 % unresolved; evidence grounding 98.8 %.
+
+Across Charters 2, 3 and 4 the reader judgements have now failed on the weekly return, on the weekly
+volatility and on the next-day return, each time beyond price history and attention counts. One change of
+the four is left: agents compare assets directly, text variant. It needs its own charter, the user's go to
+draft and a freeze approval, and it would use the last attempt of the family.
+
+Budget: $0 spent under Charter 4, balance about $4.86. Family `llm-multiagent-v2`: 5 of 6 attempts used.
+Sealed-A and Sealed-B untouched. No run active.

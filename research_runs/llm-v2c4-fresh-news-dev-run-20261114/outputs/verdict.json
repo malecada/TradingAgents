@@ -1,0 +1,35 @@
+{
+  "charter": "llm-v2 Charter 4 (fresher information: daily decision, next-day return)",
+  "descriptive_errors": [],
+  "failed_gates": [
+    "reader_partial",
+    "reader_partial_sign_by_year"
+  ],
+  "gates": {
+    "reader_partial": {
+      "pass": false,
+      "rule": "Newey-West t >= 2.0 and mean daily statistic > 0",
+      "value": {
+        "days": 722,
+        "form": "corr",
+        "mean": -0.01451289648971411,
+        "nw_t": -2.4873393336420766
+      }
+    },
+    "reader_partial_sign_by_year": {
+      "days": {
+        "2023": 359,
+        "2024": 363
+      },
+      "pass": false,
+      "rule": "mean daily statistic > 0 in 2023 and in 2024",
+      "value": {
+        "2023": -0.015360748808065088,
+        "2024": -0.013674386896634222
+      }
+    }
+  },
+  "size_reading": null,
+  "test_days": 722,
+  "verdict": "FAIL"
+}

@@ -1,0 +1,248 @@
+{
+  "extraction": {
+    "cache": {
+      "calls": 104254,
+      "paid_usd": 5.749332721992167,
+      "path": "data/reader/calls.jsonl",
+      "sha256": "c6bf4c59e839718c4eb2cc3d010bfc69603f3ffdb31c5a9bf74ddd983155ee87"
+    },
+    "calls": {
+      "by_role": {
+        "A": {
+          "calls": 45567,
+          "completion_tokens": 3472769,
+          "cost": 2.622214012616046,
+          "prompt_tokens": 30974268
+        },
+        "B": {
+          "calls": 45490,
+          "completion_tokens": 3933972,
+          "cost": 2.220185537948043,
+          "prompt_tokens": 32282937
+        },
+        "J": {
+          "calls": 13197,
+          "completion_tokens": 1109618,
+          "cost": 0.9067152754279991,
+          "prompt_tokens": 11334167
+        }
+      },
+      "calls": 104254,
+      "cost_usd": 5.749114825992088,
+      "latency_s": {
+        "median": 1.0542287430725992,
+        "q90": 1.534140327014029
+      },
+      "providers": {
+        "Baidu": 143,
+        "DeepInfra": 104111
+      }
+    },
+    "charter": {
+      "path": "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md",
+      "sha256": "0d575313cd5ff738c75808e6b4ddeca3979a6ae834aec1cbfaa45eff41a537d7"
+    },
+    "evidence_grounding": {
+      "A": 0.9869152031908183,
+      "B": 0.9886787834281868,
+      "J": 0.9995881383855024,
+      "readers": 0.9877959333360499
+    },
+    "head": "6f8b6213b289c02c36ded717240221026e215323",
+    "model": {
+      "id": "deepseek/deepseek-v4.1-flash",
+      "max_tokens": 1500,
+      "providers": [
+        "DeepInfra",
+        "Baidu"
+      ],
+      "quantization": "fp8",
+      "reasoning": "disabled",
+      "temperature": 0
+    },
+    "prompt_sha256": "7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f",
+    "readings": {
+      "first_read": {
+        "A": {
+          "absent": 15,
+          "evidence": 643,
+          "malformed": 0,
+          "ok": 52672
+        },
+        "B": {
+          "absent": 2,
+          "evidence": 555,
+          "malformed": 0,
+          "ok": 52773
+        },
+        "J": {
+          "absent": 0,
+          "evidence": 6,
+          "malformed": 0,
+          "ok": 14641
+        }
+      },
+      "reread": {
+        "A": {
+          "absent": 1,
+          "evidence": 55,
+          "malformed": 0,
+          "ok": 602
+        },
+        "B": {
+          "absent": 0,
+          "evidence": 52,
+          "malformed": 0,
+          "ok": 505
+        },
+        "J": {
+          "absent": 0,
+          "evidence": 0,
+          "malformed": 0,
+          "ok": 6
+        }
+      }
+    },
+    "records": 53330,
+    "units": 48261,
+    "units_call_missing": [],
+    "universe": {
+      "end": "2024-12-27",
+      "n": 50,
+      "start": "2022-01-07"
+    }
+  },
+  "quality": {
+    "agreement": {
+      "direction": 0.799354424879472,
+      "event_class": 0.9405739824949824,
+      "materiality_exact": 0.7268927559022533,
+      "materiality_within_one": 0.99944132922262,
+      "relevance": 0.9470698722764839,
+      "rows_both_about": 48329,
+      "rows_both_valid": 53240,
+      "status": 0.9764116782883983
+    },
+    "documents": 48261,
+    "documents_adjudicated": 0.2855100391620563,
+    "final": {
+      "direction": {
+        "favourable": 14975,
+        "mixed": 4142,
+        "neutral": 12432,
+        "unfavourable": 8725
+      },
+      "event_class": {
+        "adoption_or_product": 6241,
+        "distress_or_outage": 1509,
+        "exchange_delisting": 312,
+        "exchange_listing": 692,
+        "funding_or_treasury": 1253,
+        "governance_or_team": 1021,
+        "legal_regulatory": 3858,
+        "market_wide_or_macro": 437,
+        "opinion_or_forecast": 15553,
+        "other": 652,
+        "partnership_or_integration": 1804,
+        "protocol_upgrade_or_launch": 3338,
+        "security_incident": 2020,
+        "token_supply_increase": 1059,
+        "token_supply_reduction": 525
+      },
+      "materiality": {
+        "1": 23693,
+        "2": 15300,
+        "3": 1281
+      },
+      "relevance": {
+        "not_about": 3660,
+        "side_mention": 9378,
+        "subject": 40274
+      }
+    },
+    "records": 53330,
+    "resolution": {
+      "adjudicated": 0.27464841552597036,
+      "agreed": 0.7250140633789612,
+      "unresolved": 0.0003375210950684418
+    },
+    "valid_reading_a": 0.9989499343708982,
+    "valid_reading_b": 0.9990249390586912
+  },
+  "timing": {
+    "by_year": {
+      "2022": {
+        "hours_from_observation_to_decision": {
+          "median": 9.647777777777778,
+          "q25": 4.854722222222223,
+          "q75": 14.458333333333334
+        },
+        "rows": 48017,
+        "timely_share": 0.8036320469833601,
+        "usable_days_after_publication": {
+          "1": 0.7681029635337485,
+          "2": 0.035529083449611594,
+          "3_or_more": 0.19636795301663995
+        }
+      },
+      "2023": {
+        "hours_from_observation_to_decision": {
+          "median": 9.945,
+          "q25": 5.433888888888889,
+          "q75": 15.323055555555555
+        },
+        "rows": 41634,
+        "timely_share": 0.9249411538646298,
+        "usable_days_after_publication": {
+          "1": 0.8491617428063601,
+          "2": 0.07577941105826969,
+          "3_or_more": 0.07505884613537013
+        }
+      },
+      "2024": {
+        "hours_from_observation_to_decision": {
+          "median": 10.334444444444445,
+          "q25": 5.562916666666666,
+          "q75": 15.497083333333332
+        },
+        "rows": 48699,
+        "timely_share": 0.9158093595351033,
+        "usable_days_after_publication": {
+          "1": 0.8191133288157868,
+          "2": 0.09669603071931662,
+          "3_or_more": 0.0841906404648966
+        }
+      },
+      "2025": {
+        "hours_from_observation_to_decision": {
+          "median": 15.33,
+          "q25": 2.6519444444444447,
+          "q75": 18.39666666666667
+        },
+        "rows": 78,
+        "timely_share": 0.9358974358974359,
+        "usable_days_after_publication": {
+          "1": 0.5769230769230769,
+          "2": 0.358974358974359,
+          "3_or_more": 0.0641025641025641
+        }
+      }
+    },
+    "community_rows": 382006,
+    "news_rows": {
+      "hours_from_observation_to_decision": {
+        "median": 9.919722222222223,
+        "q25": 5.291666666666667,
+        "q75": 15.047013888888888
+      },
+      "rows": 138428,
+      "timely_share": 0.8796558499725489,
+      "usable_days_after_publication": {
+        "1": 0.8103201664403156,
+        "2": 0.06933568353223336,
+        "3_or_more": 0.1203441500274511
+      }
+    },
+    "timely_days": 2
+  }
+}

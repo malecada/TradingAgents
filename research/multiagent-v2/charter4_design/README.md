@@ -140,3 +140,7 @@ equals the stored one that fed every draw above: 54,300 rows, 29 columns, no for
 - `history_calibration.json`: the `history` kind (bars before 2022-01-01 only).
 - `shape_cells.json`: the `shapes` kind on the six synthetic cells.
 - `decision_facts.py`, `decision_facts.json`: facts of the daily panel on the registered builders (no price outcome).
+- `post_run_history_diagnostic.py`, `post_run_history_diagnostic.json`: written after the registered run, not a
+  registered output. Daily rank correlation of every price-history feature with the next-day return on the
+  722 test days, from the outcome column of the registered `forecasts.json` and the decision-time panel. No
+  gate and no re-estimation (STATE.md, "Charter 4 run").
