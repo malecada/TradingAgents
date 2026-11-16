@@ -1132,3 +1132,14 @@ Changes at the freeze: draft mark removed, status and §10 record the decisions,
 store digest lives under `data/` and is pinned by its hash in the registration, row 11 lets the steps that the
 balance covers run before the top-up. Balance at the freeze: $4.65; top-up of $10 still needed for the rest of
 D3a.
+
+## Charter 5 D3a: typing done, reading 77 %, waiting for the top-up (2026-11-16 05:55 UTC)
+
+- Typing (`cmp_type.py --cap 4.00`): 32,369 scope documents, 267 too short, 31,275 new calls, no failure,
+  $2.80 ($0.089 per 1,000; masked text 987 characters on average against 801 in the pilot).
+- Link tables rebuilt (`cmp_items_build.py`): 308,502 links, 32,108 typed archive documents.
+- Reading (`cmp_read.py --cap 1.70`, below the charter cap of $3.00 because of the balance): 13,742
+  documents in the weekly sets, 10,566 read, 3,176 left when the limit was reached as designed; no record table
+  written yet. Cache paid $1.70 including the pilot. Remaining reading about $0.55.
+- Balance $0.21. Remaining D3a about $3.0 (reading $0.55, comparisons about $2.2, probe about $0.2). The top-up of
+  $10 decided in §10 is needed before the next step. No outcome read, nothing registered.
