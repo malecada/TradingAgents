@@ -1,12 +1,13 @@
-# Charter 5 — Direct comparison of assets on text, with a news archive (`llm-v2-charter5`) — DRAFT, NOT FROZEN
+# Charter 5 — Direct comparison of assets on text, with a news archive (`llm-v2-charter5`)
 
-**Status:** draft of 2026-11-16 for the last attempt of the family. Option A of the source audit was chosen on
-2026-11-15: a weekly direct comparison of assets on text, with the public news archive added in the small
-scope. Stage D0 (code, tests, pass rate and power of the gate on synthetic returns) and stage D1 (a paid
+**Status:** frozen on 2026-11-16 (D2), with approval given on the draft. Option A of the source audit was
+chosen on 2026-11-15: a weekly direct comparison of assets on text, with the public news archive added in the
+small scope. Stage D0 (code, tests, pass rate and power of the gate on synthetic returns) and stage D1 (a paid
 pilot of typing, reading, comparison and identification probe on three seeded test weeks, no outcome) are
-complete. Nothing is registered, no attempt is claimed and no dossier, comparison result or comparison score
-has been joined with a return or any other price quantity dated at or after its decision. The decisions of
-§10 are open. The full run needs the freeze approval and a top-up of the account (§8).
+complete. The decisions of §10 were taken on 2026-11-16 together with the freeze approval. At the freeze
+nothing is registered, no attempt is claimed and no dossier, comparison result or comparison score has been
+joined with a return or any other price quantity dated at or after its decision. From this commit the
+document stays byte-identical (§4).
 **Family:** `llm-multiagent-v2`, attempts used 5 of 6 (Charter 1 interrupted with a failed receipt, Charters
 1b, 2, 3 and 4 FAIL). This charter is attempt 6, the last.
 **Predecessor:** `docs/superpowers/specs/2026-11-14-llm-v2-charter4-fresh-news-charter.md`, run
@@ -227,9 +228,10 @@ is reported. The flag changes no score and no gate.
   a row.
 - D3a commands, in order: `cmp_type.py --cap 4.00`, `cmp_items_build.py`, `cmp_read.py --cap 3.00`,
   `cmp_dossiers.py`, `cmp_duels.py --cap 3.00`, `cmp_probe.py --cap 0.30`. No outcome is read in D3a.
-- D3b: `cmp_charter5_register.py --check`, the commit of the tables' digest and of the registration
-  (`research/llm-v2-charter5-<date>/gates.json`, parent `llm-v2c4-fresh-news-dev-run-20261114`), then
-  `cmp_charter5_run.py --preflight-only` and the run. Before the claim the runner checks the bytes of every
+- D3b: `cmp_charter5_register.py --check`, then the registration: it writes the digest of the archive store
+  once (`data/compare/text_digest.json`, outside version control, pinned by its hash like every table) and
+  `research/llm-v2-charter5-<date>/gates.json` (parent `llm-v2c4-fresh-news-dev-run-20261114`), which is
+  committed; then `cmp_charter5_run.py --preflight-only` and the run. Before the claim the runner checks the bytes of every
   registered input, rebuilds the present records from the Charter 2 cache, the archive link tables from the
   store and the typing cache, the archive records, the dossiers, the comparison results and scores and the
   identification flags from their caches, compares each with its registered table, and runs the whole
@@ -430,8 +432,9 @@ with their verdicts.
 
 ## 10. Decisions
 
-Open at the draft. The column "Recommended" is what the code implements now; an alternative changes code and
-this text before the freeze.
+The twelve points were open at the draft. All were decided on 2026-11-16 together with the freeze approval:
+the option of the column "Recommended" stands in every row and is what the code implements. The alternatives
+are recorded as considered.
 
 | # | Point | Recommended | Alternative |
 |---|---|---|---|
@@ -445,7 +448,7 @@ this text before the freeze.
 | 8 | Threshold of G1 | t at least 2.0, as in Charters 1b to 4. Pass rate on noise 3.0 % to 3.5 %. | t at least 2.3: a lower pass rate on noise and less power (not drawn for this design). |
 | 9 | Identified dossiers | Descriptive split; the gate uses every dossier. | Leave identified dossiers out of the gate: about a third of the dossiers, mostly large assets, less power. |
 | 10 | Pilot | Accept the pilot: the stop rule passed and no revision was made. | Revise the comparison instruction once and rerun on other weeks (allowed by the stop rule, not needed). |
-| 11 | Top-up | $10 before D3a. | About $5.50, which covers the caps with no margin. |
+| 11 | Top-up | $10. Steps of D3a that the balance covers may run before it. | About $5.50, which covers the caps with no margin. |
 | 12 | Attempt accounting | Attempt 6 of 6; a FAIL closes the family. | No last attempt (option C): the thesis reports five attempts and the design of this one as not run. |
 
 ## Appendix A. Instructions

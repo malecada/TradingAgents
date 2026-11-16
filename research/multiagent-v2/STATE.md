@@ -1123,3 +1123,12 @@ Open: the decisions of §10 of the draft, the freeze approval and the top-up. Af
 reading, dossiers, comparisons, probe), D3b (store digest, registration with parent
 `llm-v2c4-fresh-news-dev-run-20261114`, pre-flight, claim, single outcome join, verdict). Sealed-A and
 Sealed-B untouched.
+
+## Charter 5: frozen (2026-11-16, D2)
+
+The user approved the freeze and the recommended option in every row of §10 ("Do what you recommend and
+approved"). Charter text sha256 `05618db8175991d09774b867cf35e8170b125ea66c9855b9ec2d838306748cd2`; from this commit it stays byte-identical, results go here.
+Changes at the freeze: draft mark removed, status and §10 record the decisions, the D3b bullet states that the
+store digest lives under `data/` and is pinned by its hash in the registration, row 11 lets the steps that the
+balance covers run before the top-up. Balance at the freeze: $4.65; top-up of $10 still needed for the rest of
+D3a.
