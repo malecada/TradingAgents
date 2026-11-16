@@ -1080,3 +1080,46 @@ are costed in the charter draft.
 
 Nothing is drafted, registered or decided. The last charter needs the go to draft, the top-up for option A
 and the freeze approval before any registration or outcome join.
+
+## Charter 5 (direct comparison of assets on text, with the news archive): draft, not frozen (2026-11-16)
+
+Option A of the source audit was chosen on 2026-11-15: a weekly direct comparison with the public news archive
+added in the small scope, attempt 6 of 6 of the family. Draft:
+`docs/superpowers/specs/2026-11-15-llm-v2-charter5-direct-comparison-charter.md` (marked DRAFT, NOT FROZEN).
+Nothing is registered, no attempt is claimed, no dossier, comparison or score has been joined with a return.
+
+Stage D0 (no model call, no outcome):
+
+- Archive store `data/compare/text` (git-ignored): 184,022 documents of 67 new outlets, 2022 to 2024, times
+  converted from Iran local time, availability by the feed clock (live articles one hour after publication,
+  late ones 24 hours after the clock; 3.3 % late in the test window; the feed is backfill before July 2022).
+  308,502 links to universe assets. Typing scope: 32,369 documents with a primary link to an asset other than
+  BTC and ETH in a test week (3,049 of 4,992 asset-weeks).
+- Code: `tradingagents/compare/` (archive, scope, dossier, duel, charter5), drivers `scripts/cmp_*.py`,
+  registration and runner `scripts/cmp_charter5_register.py`, `scripts/cmp_charter5_run.py`, tests
+  `tests/research/test_compare.py` (97 tests, including a registered run end to end on a synthetic checkout).
+- Pass rate of the gate on noise (400 draws, real panel structure, synthetic scores and returns): 3.0 % with
+  the present dossier pattern, 3.5 % with a denser one; confounders 1.75 % to 4.0 %; attention ten times the
+  measured size 7.5 % to 10.25 %. Power at ρ 0.03: 22 % to 28 %; at ρ 0.06: 62 % to 74 %.
+
+Stage D1, pilot on 2023-01-27, 2023-09-29 and 2024-03-01 (no outcome; run under the grant "spend what is
+available and I will top up if needed", cap $0.50):
+
+| Step | Result |
+|---|---|
+| Typing | 784 documents, $0.075 ($0.096 per 1,000), no failure |
+| Reading | 327 documents, 559 records, 776 calls, none missing, $0.055 |
+| Dossiers | 93 of 150 universe rows (83 from the present store alone), 55 with an archive line, no name left |
+| Comparisons | 460 comparisons, 1,066 calls, decided 68.5 %, adjudicated 31.7 %, first-shown pick 44.8 %, same asset 90 %, none invalid, $0.076 |
+| Probe | asset named in 35.5 % (chance 0.49 %), month within six months 23.7 %, $0.005 |
+| Total | $0.20 by the account balance, $4.8594 to $4.6596 |
+
+The stop rule fixed before the pilot passed in every check; the comparison instruction was not revised.
+
+Projected full run: typing $3.0, reading $2.2, comparisons $2.2, probe $0.2, about $7.6. Driver caps
+$10.30 over the caches including the pilot. Balance $4.66; a top-up of $10 covers every cap.
+
+Open: the decisions of §10 of the draft, the freeze approval and the top-up. After both: D3a (full typing,
+reading, dossiers, comparisons, probe), D3b (store digest, registration with parent
+`llm-v2c4-fresh-news-dev-run-20261114`, pre-flight, claim, single outcome join, verdict). Sealed-A and
+Sealed-B untouched.
