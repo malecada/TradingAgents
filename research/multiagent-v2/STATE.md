@@ -1180,7 +1180,7 @@ Descriptive panels (no gate; weekly coefficient, Newey-West t, means 2023 / 2024
 - Top third minus bottom third of the dossier assets by score: −0.08 % per week, t −0.15.
 - Identified split: coefficient +0.045 on the 1,126 identified dossiers, −0.022 on the others, difference
   +0.067 (90 % bootstrap interval +0.003 to +0.131). The direction is the memorisation signature seen in
-  Charter 1 (+0.039 against −0.113); it is descriptive, rests on look-ahead the model may carry, and does not
+  Charter 1b (judge IC +0.039 identified against −0.113 not identified); it is descriptive, rests on look-ahead the model may carry, and does not
   qualify as a signal.
 - Reading: the direct comparison of text dossiers carries no information on the next-week return rank beyond
   the quant forecast, price controls and attention, with or without those controls. The attention counts again
