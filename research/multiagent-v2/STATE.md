@@ -1143,3 +1143,49 @@ D3a.
   written yet. Cache paid $1.70 including the pilot. Remaining reading about $0.55.
 - Balance $0.21. Remaining D3a about $3.0 (reading $0.55, comparisons about $2.2, probe about $0.2). The top-up of
   $10 decided in §10 is needed before the next step. No outcome read, nothing registered.
+
+## Charter 5 run: complete, verdict FAIL (2026-11-17)
+
+Run `llm-v2c5-direct-comparison-dev-run-20261117`, registration `research/llm-v2-charter5-20261117/gates.json`
+(commit `642a6d8eb`), receipt in `research_runs/` (verified complete). Pre-flight passed before the claim; one
+outcome join. Attempt 6 of 6: the family `llm-multiagent-v2` is closed. The verdict is the one in
+`verdict.json`. No re-run, no re-estimation and no change of estimator on this window under this charter.
+
+D3a after the top-up: reading finished (13,742 documents, 23,062 records, none missing, $2.21 in total);
+dossiers 2,892 of 5,200 asset-weeks (55.6 %, 20 to 36 per week, 1,782 with an archive line, no name left);
+comparisons 14,200 (32,811 calls, decided 73.7 %, adjudicated 31.1 %, first-shown pick 47.5 % for analyst A and
+42.8 % for the reviewer, same asset 88.3 %, none invalid, $2.37); probe on every dossier (asset named 38.9 %,
+chance 0.49 %; month within six months 44.0 %; $0.16; one transient provider failure, answered on the rerun).
+Charter 5 spent $7.61 by the account balance (projection $7.6). Balance $22.24.
+
+| Gate | Value | Threshold | Result |
+|---|---|---|---|
+| G1 Newey-West t of the mean weekly coefficient | −0.08 (mean −0.0016, 104 weeks) | ≥ 2.0 | FAIL |
+| G2 mean by year | 2023 −0.020, 2024 +0.017 | both > 0 | FAIL |
+
+Descriptive panels (no gate; weekly coefficient, Newey-West t, means 2023 / 2024):
+
+| Panel | Mean | t | 2023 | 2024 |
+|---|---|---|---|---|
+| Score without attention controls | +0.0035 | +0.22 | +0.001 | +0.006 |
+| Score without the quant forecast | −0.0020 | −0.11 | −0.018 | +0.015 |
+| Score without BTC and ETH | −0.0052 | −0.28 | −0.021 | +0.011 |
+| Score within asset | −0.0128 | −0.70 | −0.045 | +0.020 |
+| Net wins | −0.0040 | −0.22 | −0.018 | +0.010 |
+| Code tone of the same lines | −0.0132 | −0.83 | −0.033 | +0.007 |
+| Score beyond code tone | +0.0029 | +0.14 | −0.006 | +0.012 |
+| Attention beyond everything | +0.0533 | +1.89 | +0.064 | +0.042 |
+| Quant forecast beyond everything | +0.0288 | +0.57 | +0.051 | +0.007 |
+
+- Top third minus bottom third of the dossier assets by score: −0.08 % per week, t −0.15.
+- Identified split: coefficient +0.045 on the 1,126 identified dossiers, −0.022 on the others, difference
+  +0.067 (90 % bootstrap interval +0.003 to +0.131). The direction is the memorisation signature seen in
+  Charter 1 (+0.039 against −0.113); it is descriptive, rests on look-ahead the model may carry, and does not
+  qualify as a signal.
+- Reading: the direct comparison of text dossiers carries no information on the next-week return rank beyond
+  the quant forecast, price controls and attention, with or without those controls. The attention counts again
+  carry the only relation (t 1.89 beyond everything, both years positive), below the threshold and ungated.
+  The archive raised coverage from 48 % to 56 % of the asset-weeks; thin material does not explain the result.
+
+Family `llm-multiagent-v2`: six attempts used (Charter 1 interrupted, Charters 1b, 2, 3, 4, 5 FAIL). Sealed-A
+and Sealed-B untouched; no sealed run is licensed.

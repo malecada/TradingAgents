@@ -1,0 +1,222 @@
+{
+  "archive": {
+    "documents_linked": 175573,
+    "documents_typed": 32108,
+    "records": 23062,
+    "store_files": 36,
+    "units_call_missing": 0,
+    "units_read": 13742
+  },
+  "calls": {
+    "by_role": {
+      "A": {
+        "calls": 14200,
+        "completion_tokens": 626282,
+        "cost": 0.9682590428000073,
+        "prompt_tokens": 10554944
+      },
+      "B": {
+        "calls": 14200,
+        "completion_tokens": 649489,
+        "cost": 1.0054674392000031,
+        "prompt_tokens": 11009344
+      },
+      "J": {
+        "calls": 4411,
+        "completion_tokens": 197885,
+        "cost": 0.40087520479999944,
+        "prompt_tokens": 3889779
+      }
+    },
+    "calls": 32811,
+    "cost_usd": 2.37460168680001,
+    "latency_s": {
+      "median": 1.2098859138786793,
+      "q90": 1.6657370431348681
+    },
+    "providers": {
+      "DeepInfra": 32811
+    }
+  },
+  "dossiers": {
+    "chars": {
+      "max": 4286,
+      "mean": 1093.5573997233748,
+      "median": 719.0
+    },
+    "dossier_share": 0.5561538461538461,
+    "dossiers": 2892,
+    "dossiers_dropped_for_a_name": 0,
+    "dossiers_per_week": {
+      "max": 36,
+      "median": 28.0,
+      "min": 20
+    },
+    "dossiers_with_an_archive_line": 1782,
+    "lead_report_source": {
+      "ccnews": 4028,
+      "reddit": 4721,
+      "wayback": 3005
+    },
+    "leaky_rows": 0,
+    "lines": 11754,
+    "lines_per_dossier": {
+      "mean": 4.064315352697095,
+      "median": 3.0
+    },
+    "read_rows": 54452,
+    "subject_rows": 37255,
+    "universe_rows": 5200,
+    "unresolved": 21,
+    "weeks": 104,
+    "weeks_below_minimum": 0,
+    "without_record": 0
+  },
+  "invalid_answers": {
+    "A": 0,
+    "B": 0,
+    "J": 0
+  },
+  "k_rounds": 10,
+  "model": "deepseek/deepseek-v4.1-flash",
+  "present_extraction": {
+    "cache": {
+      "calls": 104254,
+      "paid_usd": 5.749332721992167,
+      "path": "data/reader/calls.jsonl",
+      "sha256": "c6bf4c59e839718c4eb2cc3d010bfc69603f3ffdb31c5a9bf74ddd983155ee87"
+    },
+    "calls": {
+      "by_role": {
+        "A": {
+          "calls": 45567,
+          "completion_tokens": 3472769,
+          "cost": 2.622214012616046,
+          "prompt_tokens": 30974268
+        },
+        "B": {
+          "calls": 45490,
+          "completion_tokens": 3933972,
+          "cost": 2.220185537948043,
+          "prompt_tokens": 32282937
+        },
+        "J": {
+          "calls": 13197,
+          "completion_tokens": 1109618,
+          "cost": 0.9067152754279991,
+          "prompt_tokens": 11334167
+        }
+      },
+      "calls": 104254,
+      "cost_usd": 5.749114825992088,
+      "latency_s": {
+        "median": 1.0542287430725992,
+        "q90": 1.534140327014029
+      },
+      "providers": {
+        "Baidu": 143,
+        "DeepInfra": 104111
+      }
+    },
+    "charter": {
+      "path": "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md",
+      "sha256": "0d575313cd5ff738c75808e6b4ddeca3979a6ae834aec1cbfaa45eff41a537d7"
+    },
+    "evidence_grounding": {
+      "A": 0.9869152031908183,
+      "B": 0.9886787834281868,
+      "J": 0.9995881383855024,
+      "readers": 0.9877959333360499
+    },
+    "head": "6f8b6213b289c02c36ded717240221026e215323",
+    "model": {
+      "id": "deepseek/deepseek-v4.1-flash",
+      "max_tokens": 1500,
+      "providers": [
+        "DeepInfra",
+        "Baidu"
+      ],
+      "quantization": "fp8",
+      "reasoning": "disabled",
+      "temperature": 0
+    },
+    "prompt_sha256": "7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f",
+    "readings": {
+      "first_read": {
+        "A": {
+          "absent": 15,
+          "evidence": 643,
+          "malformed": 0,
+          "ok": 52672
+        },
+        "B": {
+          "absent": 2,
+          "evidence": 555,
+          "malformed": 0,
+          "ok": 52773
+        },
+        "J": {
+          "absent": 0,
+          "evidence": 6,
+          "malformed": 0,
+          "ok": 14641
+        }
+      },
+      "reread": {
+        "A": {
+          "absent": 1,
+          "evidence": 55,
+          "malformed": 0,
+          "ok": 602
+        },
+        "B": {
+          "absent": 0,
+          "evidence": 52,
+          "malformed": 0,
+          "ok": 505
+        },
+        "J": {
+          "absent": 0,
+          "evidence": 0,
+          "malformed": 0,
+          "ok": 6
+        }
+      }
+    },
+    "records": 53330,
+    "units": 48261,
+    "units_call_missing": [],
+    "universe": {
+      "end": "2024-12-27",
+      "n": 50,
+      "start": "2022-01-07"
+    }
+  },
+  "probe": {
+    "candidate_tickers": 203,
+    "chance": 0.0049261083743842365,
+    "dossiers": 2892,
+    "identified_share": 0.3893499308437068,
+    "month_within_6_share": 0.44017980636237897
+  },
+  "prompt_sha256": {
+    "comparison": "4b1b66c1f625230f871b04c5ba078d9f474e65c13c1515ae149c107c04647e8f",
+    "probe": "9dc83719c68bb223a6956195374da1eaa3474da29936b24d7a0a6d0ec3a18b2c",
+    "reader": "7cf96c2fa147208c2e22e9efb7439caa3e216ba066f382e161c26de26721a07f"
+  },
+  "quality": {
+    "a_no_basis": 0.1462676056338028,
+    "adjudicated": 0.3106338028169014,
+    "b_first_shown": 0.42825827022718216,
+    "b_no_basis": 0.2932394366197183,
+    "both_named": 9427,
+    "comparisons": 14200,
+    "decided": 0.736830985915493,
+    "first_shown": 0.47504743050400067,
+    "resolution": {
+      "adjudicated": 4411,
+      "agreed": 9789
+    },
+    "same_asset": 0.8826774159329586
+  }
+}
