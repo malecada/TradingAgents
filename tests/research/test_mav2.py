@@ -108,6 +108,78 @@ def test_diff_bool_is_not_number():
     assert replay.diff({"pass": True}, {"pass": 1}) != []
 
 
+def test_known_differences_are_split_off_by_prefix():
+    known = {"evaluation.json.partial_scores.s_lin.": "rounding noise"}
+    diffs = ["evaluation.json.partial_scores.s_lin.mean: stored 1 != replay 2",
+             "evaluation.json.partial_scores.s_other.mean: stored 1 != replay 2"]
+    unexplained, explained = replay.split_known(diffs, known)
+    assert unexplained == diffs[1:] and explained == diffs[:1]
+    result = replay.ReplayResult("T", compared={"evaluation.json": []}, known={"evaluation.json": diffs[:1]},
+                                 verdict_stored="FAIL", verdict_replay="FAIL")
+    assert result.ok
+    result.compared["evaluation.json"] = diffs[1:]
+    assert not result.ok
+
+
+def test_known_differences_exist_only_for_v4_lin_panel():
+    assert set(replay.KNOWN_DIFFERENCES) == {"V4"}
+    assert list(replay.KNOWN_DIFFERENCES["V4"]) == ["evaluation.json.partial_scores.s_reader_lin."]
+
+
+def _cache_tree(tmp_path: Path) -> tuple[Path, dict, dict, dict]:
+    """A per-asset cache with one frozen week (2023-11-03), one interrupted week the run then completed
+    (2023-10-27) and one older manifested week the run never reached (2023-10-20)."""
+    runs = tmp_path / "runs"
+    files = {"2023-11-03/AAA.json": b'{"a": 1}', "2023-11-03/_portfolio.json": b"{}",
+             "2023-10-27/AAA.json": b'{"partial": 1}'}
+    for rel, data in files.items():
+        (runs / rel).parent.mkdir(parents=True, exist_ok=True)
+        (runs / rel).write_bytes(data)
+    sha = {rel: hashlib.sha256(data).hexdigest() for rel, data in files.items()}
+    cache = {"config_sha": "cfg", "complete_weeks": ["2023-11-03"],
+             "files": {k: v for k, v in sha.items() if k.startswith("2023-11-03")},
+             "pinned_other": {"2023-10-27/AAA.json": sha["2023-10-27/AAA.json"]}}
+    by_day = {"2023-11-03": {}, "2023-10-27": {}, "2023-10-20": {}}
+    # the run completes the interrupted week: the pinned partial file is rewritten and a book is added
+    (runs / "2023-10-27/AAA.json").write_bytes(b'{"complete": 1}')
+    (runs / "2023-10-27/_portfolio.json").write_bytes(b"{}")
+    new_weeks = {"2023-10-27": {"cache_digest": replay.week_digest(runs / "2023-10-27")}}
+    return runs, cache, by_day, new_weeks
+
+
+def test_post_run_cache_accepts_the_state_the_run_recorded(tmp_path):
+    runs, cache, by_day, new_weeks = _cache_tree(tmp_path)
+    assert replay.post_run_cache(runs, cache, by_day, "cfg", new_weeks) == {"2023-11-03"}
+
+
+def test_post_run_cache_accepts_partial_files_of_the_truncated_week_only(tmp_path):
+    """The spend cap stopped the run inside 2023-10-20: some assets were cached, the week was excluded."""
+    runs, cache, by_day, new_weeks = _cache_tree(tmp_path)
+    (runs / "2023-10-20").mkdir()
+    (runs / "2023-10-20/BBB.json").write_bytes(b"{}")
+    assert replay.post_run_cache(runs, cache, by_day, "cfg", new_weeks, truncated_week="2023-10-20") == {"2023-11-03"}
+    (runs / "2023-10-20/_portfolio.json").write_bytes(b"{}")         # a completed book there was never recorded
+    with pytest.raises(replay.ReplayError, match="truncated"):
+        replay.post_run_cache(runs, cache, by_day, "cfg", new_weeks, truncated_week="2023-10-20")
+
+
+@pytest.mark.parametrize("damage", ["frozen", "new_week", "stray", "config"])
+def test_post_run_cache_rejects_any_other_change(tmp_path, damage):
+    runs, cache, by_day, new_weeks = _cache_tree(tmp_path)
+    config = "cfg"
+    if damage == "frozen":
+        (runs / "2023-11-03/AAA.json").write_bytes(b'{"a": 2}')
+    elif damage == "new_week":
+        (runs / "2023-10-27/AAA.json").write_bytes(b'{"complete": 2}')
+    elif damage == "stray":
+        (runs / "2023-10-20").mkdir()
+        (runs / "2023-10-20/BBB.json").write_bytes(b"{}")
+    else:
+        config = "other"
+    with pytest.raises(replay.ReplayError):
+        replay.post_run_cache(runs, cache, by_day, config, new_weeks)
+
+
 def test_replay_rejects_runs_without_verdict():
     for label in ("C0", "V1"):
         with pytest.raises(replay.ReplayError):
@@ -123,5 +195,6 @@ def test_replay_reproduces_stored_outputs(label):
     if replay.missing_inputs(run, ROOT):
         pytest.skip(f"{label}: registered inputs not on this machine")
     result = replay.replay(label, ROOT)
+    assert result.ok, result.compared
     assert result.verdict_replay == result.verdict_stored
     assert {k: v for k, v in result.compared.items() if v} == {}

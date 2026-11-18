@@ -71,13 +71,18 @@ def cmd_replay(args) -> int:
             continue
         failed |= not res.ok
         results[label] = {"ok": res.ok, "verdict_stored": res.verdict_stored, "verdict_replay": res.verdict_replay,
-                          "differences": res.compared, "skipped": res.skipped}
+                          "differences": res.compared, "known_differences": res.known, "skipped": res.skipped}
         if not args.json:
             print(f"{label}: {'reproduced' if res.ok else 'DIFFERS'} (verdict stored {res.verdict_stored}, "
                   f"replay {res.verdict_replay}; outputs compared {len(res.compared)}, skipped {res.skipped or 'none'})")
             for d in res.compared.values():
                 for line in d:
                     print(f"    {line}")
+            n_known = sum(len(d) for d in res.known.values())
+            if n_known:
+                print(f"    {n_known} known platform-dependent differences, cause in replay.KNOWN_DIFFERENCES:")
+                for reason in replay.KNOWN_DIFFERENCES[label].values():
+                    print(f"      {reason}")
     if args.json:
         print(json.dumps(results, indent=1))
     return 1 if failed else 0

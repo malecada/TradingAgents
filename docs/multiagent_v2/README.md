@@ -179,6 +179,42 @@ A replay therefore shows that the stored outputs follow from the registered inpu
 re-test the hypothesis and cannot change a verdict. For V1b the cost tally (`cost.json`) is process state and is not
 compared; the five other outputs are.
 
+### Replay results (2026-11-18, laptop)
+
+| Run | Outputs compared | Result | Time |
+| --- | --- | --- | --- |
+| V1b | forecasts, evaluation, portfolio, books, verdict | identical | — |
+| V2 | forecasts, evaluation, portfolio, books, reader, verdict | identical | 108 s |
+| V3 | forecasts, evaluation, reader, verdict | identical | 104 s |
+| V4 | forecasts, evaluation, reader, verdict | identical except one descriptive panel (known cause below) | 155 s |
+| V5 | scores, evaluation, comparison, verdict | identical | 242 s |
+
+"Identical" means equal values, with floats equal to a relative 1e-9. Every verdict and every gate statistic
+reproduces.
+
+Two runs needed a replay-specific step, both traced to their cause:
+
+- **V1b, the agent cache after the run.** The runner's cache check (`charter1b.verify_cache`) describes the cache
+  before the run and cannot pass afterwards. The run completed the week V1 was interrupted in (2023-10-27,
+  rewriting 50 pinned partial files) and wrote four older weeks. The spend cap then stopped it inside
+  2023-09-22, leaving 32 per-asset files and no book for that excluded week. The replay checks the state the run
+  left (`replay.post_run_cache`): all 3,111 frozen-week files against the registration, the five written weeks
+  against the digests the run recorded in `cost.json`, and partial files only in the truncated week.
+- **V4, the linear partial score panel `s_reader_lin`.** On 15 test days `tone_1d` is zero for every asset, and on
+  2024-10-18 to 2024-10-20 both tone features are. The within-day OLS residual of a feature that is constant
+  within the day is zero in exact arithmetic and rounding noise in floating point. Whether that noise is constant
+  depends on the BLAS kernel of the CPU, and the exact variation test (`np.ptp(x) > 0`) then admits or drops the
+  day. The univariate `tone_1d` panel has 722 days from the run machine and 707 on the laptop. On the three days
+  without any tone the whole linear score is noise of order 1e-21, whose daily correlation is arbitrary
+  (−0.0101 against −0.0103 mean). The panel is descriptive and listed in `replay.KNOWN_DIFFERENCES`; any other
+  difference fails the replay.
+
+**Observation on the V4 gate (post hoc, verdict unchanged).** The gate score `s_reader` also counts the three days
+without any tone (daily correlations −0.04, +0.08, +0.33). With no tone to read, those values come from the
+boosted-tree step on the price and attention controls, not from text. Without the three days the gate statistic
+is −0.0151 with t −2.59 over 719 days, against −0.0145 with t −2.49 over 722 days as registered. Both years stay
+negative, and the registered verdict stands as computed.
+
 ## Changing the code
 
 The receipts pin 93 files by sha256 (`scripts/mav2.py pinned`): the four packages above, the runners and their
