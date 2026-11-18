@@ -19,6 +19,7 @@ All commands are offline. None calls a model, writes into `research_runs/` or re
 .venv/bin/python scripts/mav2.py replay V3    # recompute one run from its registered inputs, compare with stored outputs
 .venv/bin/python scripts/mav2.py replay all   # every completed run (V1b, V2–V5)
 .venv/bin/python scripts/mav2.py pinned       # files pinned by any receipt: never edit them
+.venv/bin/python scripts/mav2.py table        # thesis table T_8_1 (../thesis-latex) against the receipts
 .venv/bin/python -m pytest -q tests/research/test_mav2.py           # fast checks, including the pin guard
 .venv/bin/python -m pytest -q -m slow tests/research/test_mav2.py   # full replay of every run (needs data/)
 ```
@@ -214,6 +215,25 @@ without any tone (daily correlations −0.04, +0.08, +0.33). With no tone to rea
 boosted-tree step on the price and attention controls, not from text. Without the three days the gate statistic
 is −0.0151 with t −2.59 over 719 days, against −0.0145 with t −2.49 over 722 days as registered. Both years stay
 negative, and the registered verdict stands as computed.
+
+## Thesis table
+
+`scripts/mav2.py table [PATH]` (module `tradingagents/mav2/thesis.py`) reads the thesis table of the attempts,
+by default `../thesis-latex/tables/T_8_1_v2_attempts.tex`, and compares every cell that carries evidence with the
+receipts: test sample, each `$t=…$` of the gate column (two decimals), verdict and cost. The role column is prose
+and is not compared. Exit 1 lists each difference.
+
+Cost is the recorded cost of model calls (`mav2.py status` names the source per run). For V5 that is $4.74 from the
+call caches; the account balance fell by $7.61 because the typing cache records no cost
+(`research/multiagent-v2/STATE.md`). A table typesetting $7.61 under a caption that says "recorded cost" is flagged.
+
+## Tests in CI
+
+The fast tests run in the existing offline workflow (`.github/workflows/research-offline.yml`, `tests/research`).
+The CI checkout is shallow, so receipt verification, which reads the run commit, cannot run there:
+`test_receipts_verify` skips with that reason, and `mav2.py status` reports the receipt as `unverifiable`. The pin
+guard, stored-output reads and thesis-table logic need no history and run in CI. The full replay needs `data/` and
+is marked slow.
 
 ## Changing the code
 

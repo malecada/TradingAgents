@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tradingagents.mav2 import pins, registry, replay
+from tradingagents.mav2 import pins, registry, replay, thesis
 from tradingagents.mav2.registry import Run
 
 ROOT = registry.ROOT
@@ -31,15 +31,22 @@ def test_expected_drift_is_still_drift():
 
 
 def test_status_reads_every_completed_verdict():
-    rows = {r["label"]: r for r in registry.status(ROOT)}
+    rows = {r["label"]: r for r in registry.status(ROOT, verify=False)}
     assert [r.label for r in registry.RUNS] == list(rows)
     for label in replay.ADAPTERS:
         row = rows[label]
-        assert row["receipt"] == "complete" and row["verdict"] in ("PASS", "FAIL")
+        assert row["receipt"] == "not checked" and row["verdict"] in ("PASS", "FAIL")
         assert isinstance(row["value"], float) and math.isfinite(row["value"])
         assert row["sample"]
-    assert rows["V1"]["receipt"] == "failed" and rows["V1"]["verdict"] == "interrupted"
+    assert rows["V1"]["verdict"] == "interrupted"
     assert rows["V3"]["cost_usd"] == rows["V4"]["cost_usd"] == 0.0
+
+
+def test_receipts_verify():
+    rows = {r["label"]: r["receipt"] for r in registry.status(ROOT)}
+    if registry.NO_HISTORY in rows.values():
+        pytest.skip("receipt verification needs the run commits; shallow checkout without git history")
+    assert rows == {"C0": "complete", "V1": "failed", **{label: "complete" for label in ("V1b", "V2", "V3", "V4", "V5")}}
 
 
 def test_charter_paths_exist():
@@ -198,3 +205,40 @@ def test_replay_reproduces_stored_outputs(label):
     assert result.ok, result.compared
     assert result.verdict_replay == result.verdict_stored
     assert {k: v for k, v in result.compared.items() if v} == {}
+
+
+# --- thesis table check ---------------------------------------------------------------------------------------------
+
+def _table(rows: list[thesis.Expected]) -> str:
+    def gate(e):
+        return " ; ".join(f"$t={v}$" for v in e.t_values) or "not reached"
+    body = "\n".join(f"{e.label} & prose & {e.sample} & {gate(e)} & {e.verdict} & {e.cost}\\\\" for e in rows)
+    return "\\begin{tabular}{llllll}\n\\toprule\n\\textbf{Att.} & a & b & c & d & e\\\\\n\\midrule\n" + body + \
+        "\n\\bottomrule\n\\end{tabular}\n"
+
+
+def test_thesis_expected_rows_come_from_receipts():
+    rows = {e.label: e for e in thesis.expected(ROOT)}
+    assert list(rows) == list(thesis.LABELS)
+    assert rows["V1"].t_values == () and rows["V1"].verdict == "interrupted"
+    assert len(rows["V1b"].t_values) == 2 and rows["V1b"].sample.endswith("weeks")
+    assert rows["V4"].sample.endswith("days") and rows["V3"].cost == rows["V4"].cost == "\\$0"
+
+
+def test_thesis_table_check_flags_each_evidence_cell():
+    exp = thesis.expected(ROOT)
+    tex = _table(exp)
+    assert thesis.check_table(tex, exp) == []
+    v2 = next(e for e in exp if e.label == "V2")
+    wrong = tex.replace(f"V2 & prose & {v2.sample} & $t={v2.t_values[0]}$ & {v2.verdict} & {v2.cost}",
+                        "V2 & prose & 1 weeks & $t=9.99$ & PASS & \\$1.00")
+    problems = thesis.check_table(wrong, exp)
+    assert len(problems) == 4 and all(p.startswith("V2:") for p in problems)
+    missing = "\n".join(line for line in tex.splitlines() if not line.startswith("V3 "))
+    assert thesis.check_table(missing, exp) == ["V3: row missing from the table"]
+
+
+def test_thesis_table_t_values_compared_at_typeset_precision():
+    e = thesis.Expected("V2", "104 weeks", ("1.39",), "FAIL", "\\$5.75")
+    assert thesis.check_table(_table([e]).replace("1.39", "1.390"), [e]) == []
+    assert thesis.check_table(_table([e]).replace("1.39", "1.4"), [e]) != []

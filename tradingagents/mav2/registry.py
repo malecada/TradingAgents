@@ -160,13 +160,30 @@ def cost(run: Run, root: Path = ROOT) -> Cost:
 
 # --- status ---------------------------------------------------------------------------------------------------------
 
-def status(root: Path = ROOT) -> list[dict]:
-    """One row per run: receipt state, verdict, headline gate, test sample, cost. Read-only."""
+NO_HISTORY = "unverifiable"   # receipt verification reads the run commit; a shallow checkout (CI) does not hold it
+
+
+def _receipt(run: Run, root: Path) -> str:
     from tradingagents.research.verify import verify_run
 
+    if not run.run_dir(root).is_dir():
+        return "missing"
+    try:
+        return verify_run(run.run_dir(root))["status"]
+    except ValueError as exc:
+        if "provenance cannot be verified" in str(exc):
+            return NO_HISTORY
+        raise
+
+
+def status(root: Path = ROOT, verify: bool = True) -> list[dict]:
+    """One row per run: receipt state, verdict, headline gate, test sample, cost. Read-only.
+
+    ``verify=False`` skips receipt verification (receipt reported as 'not checked'); the stored outputs are still read.
+    """
     rows = []
     for run in RUNS:
-        receipt = verify_run(run.run_dir(root))["status"] if run.run_dir(root).is_dir() else "missing"
+        receipt = _receipt(run, root) if verify else "not checked"
         verdict = _json(run.outputs(root) / "verdict.json")
         gate, value = HEADLINE[run.label](verdict) if verdict and run.label in HEADLINE else (None, None)
         c = cost(run, root)

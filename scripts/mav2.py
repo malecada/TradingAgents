@@ -5,6 +5,7 @@
   mav2.py replay V2 V5      recompute the outputs of the given runs from their registered inputs and compare
   mav2.py replay all        the same for every completed run (V1b, V2-V5); tens of minutes, mostly V5
   mav2.py pinned            the files pinned by any receipt: never edit them, add new files instead
+  mav2.py table [PATH]      compare the thesis table of the attempts (sample, t, verdict, cost) with the receipts
 
 Add --json for machine-readable output. Nothing is written into research_runs/, no sealed window is read.
 """
@@ -94,6 +95,23 @@ def cmd_pinned(args) -> int:
     return 0
 
 
+def cmd_table(args) -> int:
+    from tradingagents.mav2 import thesis
+
+    path = Path(args.path) if args.path else thesis.DEFAULT_TABLE
+    if not path.is_file():
+        print(f"thesis table not found: {path}")
+        return 1
+    problems = thesis.check_file(path)
+    if args.json:
+        print(json.dumps({"table": str(path), "problems": problems}, indent=1))
+    else:
+        print(f"{path}: {'agrees with the receipts' if not problems else 'DIFFERS from the receipts'}")
+        for p in problems:
+            print(f"  {p}")
+    return 1 if problems else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0], formatter_class=argparse.RawDescriptionHelpFormatter,
                                  epilog="\n".join(__doc__.splitlines()[1:]))
@@ -105,6 +123,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("runs", nargs="+", help="labels (V1b V2 V3 V4 V5) or 'all'")
     p.set_defaults(fn=cmd_replay)
     sub.add_parser("pinned").set_defaults(fn=cmd_pinned)
+    p = sub.add_parser("table")
+    p.add_argument("path", nargs="?", help="thesis table (default ../thesis-latex/tables/T_8_1_v2_attempts.tex)")
+    p.set_defaults(fn=cmd_table)
     args = ap.parse_args(argv)
     return args.fn(args)
 

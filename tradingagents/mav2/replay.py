@@ -163,7 +163,7 @@ def _v1b_context(run: Run, root: Path, new_weeks: dict, truncated_week: str | No
 def _v1b(run: Run, root: Path) -> dict:
     import pandas as pd
 
-    m = _runner(run)
+    _runner(run)                     # puts scripts/ on sys.path, as the runner module expects
     from tradingagents.agents_v2.charter1b import (
         BOOK_KEYS,
         asset_rows,
