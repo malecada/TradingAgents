@@ -17,6 +17,9 @@ program is linked from current state.
    [script map](research/SCRIPT_INDEX.md), [engine contracts](research/ENGINE_INDEX.md)
    and [data/retention catalogue](research/DATA_CATALOG.md). Avoid loading every
    historical report or source file.
+   The closed second multi-agent framework (family `llm-multiagent-v2`, runs
+   V1–V5) has its own [engineering guide](multiagent_v2/README.md) with offline
+   status, pin check and replay (`scripts/mav2.py`).
 4. Research can start under the user's separate launch instruction using the
    [saved phase prompt](PROMPT_STRATEGY_RESEARCH_PHASE_2026-09-10.md). That prompt
    calls for repeated learning, not one attempt. The historical closure and

@@ -1189,3 +1189,19 @@ Descriptive panels (no gate; weekly coefficient, Newey-West t, means 2023 / 2024
 
 Family `llm-multiagent-v2`: six attempts used (Charter 1 interrupted, Charters 1b, 2, 3, 4, 5 FAIL). Sealed-A
 and Sealed-B untouched; no sealed run is licensed.
+
+## 2026-11-18: offline replay of every verdict (engineering, no new outcome)
+
+`scripts/mav2.py replay all` (branch `eng/multiagent-v2-consolidation`, guide `docs/multiagent_v2/README.md`)
+recomputed V1b and V2–V5 on the laptop from the registered inputs and call caches, with no model call. Every
+verdict and gate statistic reproduces. One descriptive V4 panel (`s_reader_lin`) differs because of
+CPU-dependent rounding on days when a tone feature is constant; the cause is recorded in the guide.
+
+Post-hoc observation on Charter 4, verdict unchanged: on 2024-10-18 to 2024-10-20 no asset has a tone value,
+yet the gate score counts these days through the tree step on the controls (daily correlations −0.04, +0.08,
++0.33). Without them the gate statistic is −0.0151, t −2.59 (719 days; 2023 −0.0154, 2024 −0.0148), against
+−0.0145, t −2.49 as registered. The registered FAIL stands.
+
+Recorded model cost of Charter 5: the call caches hold $4.74 (archive reading $2.21, comparisons $2.37, probe
+$0.16). The document-typing cache stores no cost; the $7.61 above is the fall in the account balance.
+
