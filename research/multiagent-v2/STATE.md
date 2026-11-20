@@ -1301,8 +1301,8 @@ Availability (web research and endpoint probes, generic user agent, no account):
 - **Official sources.** EDGAR filings (second, UTC) and SEC releases have exact times and about 800 crypto
   items; they concern BTC and the market as a whole, which the BTC-relative outcome removes.
 - **Telegram.** Public previews of six fast headline channels reach back past 2023 with second-level times
-  for about 1,800 page requests. Telegram's content terms prohibit scraping; nothing was fetched and the
-  question is left to the owner.
+  for about 1,800 page requests. Telegram's content terms prohibit scraping and the use of its data with
+  machine-learning models (page read on 2026-11-20); nothing was fetched.
 - **Others.** Exchange notices of KuCoin (15 items on the gate assets), Upbit, Coinbase and Kraken are
   listing events only; governance forums on Discourse have full history with exact times for an estimated
   quarter to a third of the universe and were never tested; project blogs, Discord and paid feeds have no

@@ -65,7 +65,7 @@ cross-sectional event set; they would serve a market-level event study, which no
 
 | Source | Measured for 2023 to 2024 | Time stamp | Cost and terms | Share of the universe | Verdict |
 |---|---|---|---|---|---|
-| Telegram public channel previews (fast headline channels: Wu Blockchain, Watcher Guru, Tree News, unfolded, infinityhedge, BWEnews; exchange channels) | 12 channels reachable back past 2023-01-01 without login, 2 to 16 posts per day each; about 1,800 page requests for the six headline channels | second, original post time | free; no robots file; Telegram's content licensing terms prohibit scraping and aggregation (read through a summary; to be checked on the page). Edited posts keep the first time, deleted posts are gone | majors-heavy | best timing among the free sources; **not fetched: the terms question is the owner's decision** |
+| Telegram public channel previews (fast headline channels: Wu Blockchain, Watcher Guru, Tree News, unfolded, infinityhedge, BWEnews; exchange channels) | 12 channels reachable back past 2023-01-01 without login, 2 to 16 posts per day each; about 1,800 page requests for the six headline channels | second, original post time | free; no robots file; Telegram's terms for content licensing (https://telegram.org/tos/content-licensing, read on 2026-11-20) prohibit access to user content beyond ordinary use of the platform and, expressly, scraping or use of its data in the development, benchmarking or deployment of machine-learning models. Edited posts keep the first time, deleted posts are gone | majors-heavy | best timing among the free sources; **not fetched: reading the posts with a language model falls under the prohibition** |
 | KuCoin announcements (public interface) | 858 listing and delisting notices fetched; 15 name one of the 54 assets of the gate events | millisecond | free | listings only | too rare for these assets |
 | Upbit notices | interface answered today (blocked on 11-14); about 110 to 120 trade notices | second, Korean time | free, undocumented | listings only | narrow |
 | Coinbase exchange status history | about 110 market openings | minute | free | listings only | time of trading start, not of the announcement |
@@ -127,7 +127,7 @@ Reading:
 | Option | What it tests | Cost | Blocker |
 |---|---|---|---|
 | A. Posts of fast news accounts through the official X API as events; reader records on them; event-time test from the post (second attempt of `llm-event-time`, own charter) | whether a direction read within minutes of the first public report carries a return | X data about $100 to $300 after a count for a few dollars; reading about $5 to $10; two to three days | budget; the contest of speed at this scale was closed as a no-go on 2026-07-14 from published studies |
-| B. The same with the Telegram channels of these accounts | as A | $0 | terms prohibit scraping; needs the owner's decision or permission of the channels |
+| B. The same with the Telegram channels of these accounts | as A | $0 | prohibited by Telegram's terms without the consent they require |
 | C. Governance forum posts as events | proposals before votes, DeFi and layer-2 tokens | $0 data, reading about $5 | a third of the universe; new source needs a charter |
 | D. No further run; the exploration is the stated limit in the thesis | | $0 | |
 
