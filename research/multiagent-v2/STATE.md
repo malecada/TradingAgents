@@ -1205,3 +1205,81 @@ yet the gate score counts these days through the tree step on the controls (dail
 Recorded model cost of Charter 5: the call caches hold $4.74 (archive reading $2.21, comparisons $2.37, probe
 $0.16). The document-typing cache stores no cost; the $7.61 above is the fall in the account balance.
 
+
+## Event-time study (new family `llm-event-time`): frozen, registered and run, verdict FAIL (2026-11-20)
+
+Purpose: the six attempts of `llm-multiagent-v2` decided about ten hours or more after the news, and "the
+information was already priced" had been taken from published studies only. This study measures it: the
+reader records of Charters 2 and 5 are placed at the publication time of their document (to the second) and
+joined with minute bars of the perpetual contracts. No model call, $0. The closed family stays closed; its
+verdicts are not reopened.
+
+Charter `docs/superpowers/specs/2026-11-20-llm-event-time-charter.md` (draft `24c1301ef`, frozen `8ae617a31`
+with the approval of the eight decisions of §8), registration `research/llm-event-time-20261120/gates.json`
+(commit `46509e873`), run `llm-event-time-run-20261120`, receipt in `research_runs/` (verified complete).
+Admission check and pre-flight passed before the claim; one outcome join. Family `llm-event-time`, attempt 1
+of 2. The verdict is the one in `verdict.json`. No re-run, no re-estimation and no change of estimator on
+this window under this charter.
+
+Gate: lead events (asset-specific news classes, publication clock, non-overlapping per asset, assets other
+than BTC), outcome = simple return of the contract minus BTC from 5 minutes after the publication to 4 hours
+later, slope on the sign with one intercept per year, standard error clustered by day. 3,375 lead events,
+3,316 with minute bars (54 assets, 689 days; the count of 77 assets in `verdict.json` includes the 23 assets
+without bars).
+
+| Gate | Value | Threshold | Result |
+|---|---|---|---|
+| G1 clustered t of the slope | −0.13 (slope −0.42 bp, standard error 3.23 bp) | ≥ 2.0, slope > 0 | FAIL |
+| G2 slope by year | 2023 +2.28 bp (t 0.52), 2024 −2.77 bp (t −0.59) | both > 0 | FAIL |
+| Size reading (no gate) | below cost (10 bp) | | |
+
+The upper end of a 95 % interval of the slope is +5.9 bp, below the cost of one round trip. In the noise and
+power table of the charter the gate passes with 74.8 % at a planted 10 bp and 96.2 % at 15 bp.
+
+Descriptive tables (no gate, no multiplicity allowance). Slope of the market-relative return on the sign,
+gate events:
+
+| Window | Slope (bp) | t |
+|---|---|---|
+| 24 hours before the publication | +39.2 | 4.69 |
+| 4 hours before | +11.0 | 3.60 |
+| 1 hour before | +4.8 | 3.10 |
+| 15 minutes before | +2.4 | 2.65 |
+| First 5 minutes after | +0.5 | 1.10 |
+| From 5 minutes after, 15 minutes | +0.3 | 0.45 |
+| From 5 minutes after, 1 hour | −2.0 | −1.22 |
+| From 5 minutes after, 4 hours (the gate) | −0.4 | −0.13 |
+| From 5 minutes after, 24 hours | +5.5 | 0.77 |
+
+- No cell after the publication reaches |t| 2: entry lags of 0, 1, 5, 15 and 60 minutes with horizons of 15
+  minutes to 24 hours give t between −1.22 and +1.31. An entry at the publication second itself gives +0.06 bp
+  over 4 hours (t 0.02).
+- Mean outcome by sign: in the 24 hours before the article +36.4 bp (t 3.22) for favourable and −42.0 bp
+  (t −2.72) for unfavourable records; in the gate window −4.4 bp (t −1.27) and −3.6 bp (t −0.66).
+- Share of the move from one day before to one day after that is done before the entry: 88 % (point estimate;
+  its denominator contains the 24-hour cell after the entry, which is not distinguishable from zero).
+- Splits of the gate cell: fresh +4.3 bp (t 0.38, 593 events), not fresh −1.6 (t −0.49); materiality 2 to 3
+  −3.7 (t −0.92), materiality 1 +7.2 (t 1.67); status occurred −0.5 (t −0.16); unopposed −0.8 (t −0.22);
+  page-archive outlets +0.3 (t 0.08), feed outlets −0.6 (t −0.15); without ETH −0.6 (t −0.12).
+- Event classes with at least 30 events: no |t| of 2; the largest are exchange listing +23.4 bp (t 1.55, 159
+  events), distress or outage +19.0 (t 1.16, 131) and governance or team +24.5 (t 1.17, 35).
+- Records outside the gate: opinions and forecasts +1.4 bp (t 0.62, 5,753 records); all signed records on the
+  publication clock +1.3 (t 0.75, 10,426); records on the capture clock +7.7 (t 2.13, 3,212). The last is one
+  of 24 descriptive cells, includes opinions and is placed at the first page capture; it carries no claim.
+- BTC events, raw return: 24 hours before +15.4 bp (t 2.02), gate window −0.4 (t −0.11), 2,212 events.
+- Plain signed mean without the intercept −1.9 bp (t −0.63). Signs shuffled within the day: 34 % of 1,000
+  draws give a t at or above the observed one.
+
+Reading. The direction given by the reader agents agrees with the price move of the day before the article
+and with nothing after it. Five minutes after the publication the record carries no information on the next
+15 minutes to 24 hours, and none at the publication second either. Three explanations of the move before the
+article cannot be separated with these data: the event reached the market earlier through other channels;
+the article was written after and partly about the price move; the reader model recalls what followed. None
+of them leaves a move to trade after the publication. The first shortfall of the closed family ("already
+priced at the decision time") is therefore a measurement and no longer a citation: it holds at five minutes,
+not only at ten hours, for news articles of these 70 outlets. A change of the agents, of their layers or of
+the decision time cannot recover a signal from this material; only a source that precedes the articles
+could, and that is the speed contest closed by the no-go of 2026-07-14.
+
+Family `llm-event-time`: one attempt of two used. The second is reserved under its own charter; none is
+proposed. Sealed-A and Sealed-B untouched; no sealed run is licensed.

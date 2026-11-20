@@ -19,7 +19,9 @@ program is linked from current state.
    historical report or source file.
    The closed second multi-agent framework (family `llm-multiagent-v2`, runs
    V1–V5) has its own [engineering guide](multiagent_v2/README.md) with offline
-   status, pin check and replay (`scripts/mav2.py`).
+   status, pin check and replay (`scripts/mav2.py`). The event-time study of
+   its reader records (family `llm-event-time`, run of 2026-11-20, FAIL) is
+   recorded at the end of [the state file](../research/multiagent-v2/STATE.md).
 4. Research can start under the user's separate launch instruction using the
    [saved phase prompt](PROMPT_STRATEGY_RESEARCH_PHASE_2026-09-10.md). That prompt
    calls for repeated learning, not one attempt. The historical closure and

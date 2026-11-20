@@ -1,0 +1,152 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "46509e873ed870065052a4e7b0aaafee6fe029f9",
+  "effective_attempt_budget": 2,
+  "experiment": {
+    "cells": [
+      "event-table",
+      "slope-gate",
+      "descriptive-tables"
+    ],
+    "charter": {
+      "path": "docs/superpowers/specs/2026-11-20-llm-event-time-charter.md",
+      "sha256": "f51d93e4e93f1f8b1bcf8a3a3b04b479d1839cebac647d86254e2586ccb693a6"
+    },
+    "family": "llm-event-time",
+    "inputs": {
+      "feed_items": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/compare/items.parquet",
+        "sha256": "d049cad77b8117a5e581abc77741edb61c35d8016d15cd8a96850ff9a86fd6d4"
+      },
+      "feed_records": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/compare/records.parquet",
+        "sha256": "8223b7ef9ba194a581b9136178ba3ce536895ae2a3914c8f9e756d9a0f74a4b8"
+      },
+      "klines_digest": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/eventtime/klines_1m_digest.json",
+        "sha256": "99deea5356277f346e0fb3fc56fb92df10948bd1eb130a7f7757f84fd567ae3f"
+      },
+      "page_items": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/reader/items.parquet",
+        "sha256": "8aad34005703d4e853adea6ed09298271c1b1bb6e756fe287192b6aa28ae153a"
+      },
+      "page_records": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/reader/records.parquet",
+        "sha256": "dffc450a2f1e04f00ce1f2dd43ac7fc99839f97455f3d9408d9829dd74a78040"
+      },
+      "pub_times": {
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "path": "data/eventtime/pub_times.parquet",
+        "sha256": "65662d135c72cd370514ed56df0e4c4d1414d0ad3252eb732c435fe2813fcab7"
+      }
+    },
+    "outputs": [
+      "verdict.json",
+      "evaluation.json"
+    ],
+    "parent": null,
+    "question": "Does the direction that the reader agents give to an asset-specific news event (favourable or unfavourable) separate the market-relative return of the asset's perpetual contract from 5 minutes after the publication to 4 hours later, on the lead events of 2023 and 2024? Gate: slope of the return on the sign with one intercept per year, standard error clustered by day, t at least 2.0 with a positive slope, and a positive slope in both years. The descriptive tables show how much of the move happens before the publication and in the first minutes.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+      "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+      "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+    },
+    "selection": null,
+    "source_files": {
+      "docs/superpowers/specs/2026-11-12-llm-v2-charter2-reader-charter.md": "0d575313cd5ff738c75808e6b4ddeca3979a6ae834aec1cbfaa45eff41a537d7",
+      "scripts/evt_events_build.py": "207a98ef51da9f4596dce49a9662f694fc759963a8b97581c9d8cc8eb70ee58a",
+      "scripts/evt_null_gate.py": "cd9d3c79d4dd210a0292221acdc6be28ab3cc35efa48012161b98b787fabe0ee",
+      "scripts/evt_register.py": "c62d9e22ef9f0e0cd1281a99f44567ef1443cf8a0d77b9fb100ce4835b592218",
+      "scripts/evt_run.py": "b4af37fbacf61ec7e6660a6ba84784c0b9e3c2bf10def3543de1b3058cbc3821",
+      "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+      "tradingagents/compare/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tradingagents/compare/archive.py": "925149672fc24d36005b35e3edf76119faf5b8ca666dd2611adb6bad6a5e1a99",
+      "tradingagents/eventtime/__init__.py": "bce146c6b21b4a358a7e3621515353a05efbaf37cb30ea743c71b204eacdc1cf",
+      "tradingagents/eventtime/study.py": "f43fd204341bde40ad7ace0f43f60e25179e43f7605bf2ae61bbe8caed57a7ad",
+      "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "reader-records-minute-bars-2023-2024",
+        "end": "2025-01-03T00:00:00Z",
+        "start": "2022-12-31T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "llm-event-time-run-20261120",
+  "family": {
+    "attempt_budget": 2,
+    "history_reference": "New mechanism: the direction of single fact records of the reader agents, placed at the publication time of the news document, against the market-relative return of the asset's perpetual contract from minutes after the publication. Family llm-multiagent-v2 (six attempts, all FAIL, closed 2026-11-17) tested the same agents and partly the same records at decisions once a week or once a day, about ten hours or more after the news, as a ranking of the cross-section; it is a different mechanism and is cited as history. Its records are reused here. The earlier no-go on event-driven news trading (2026-07-14) rested on published studies, not on a test in this repository.",
+    "mechanism_id": "reader-record-event-time-reaction",
+    "prior_attempts": 0
+  },
+  "inputs": {
+    "feed_items": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/compare/items.parquet",
+      "sha256": "d049cad77b8117a5e581abc77741edb61c35d8016d15cd8a96850ff9a86fd6d4"
+    },
+    "feed_records": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/compare/records.parquet",
+      "sha256": "8223b7ef9ba194a581b9136178ba3ce536895ae2a3914c8f9e756d9a0f74a4b8"
+    },
+    "klines_digest": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/eventtime/klines_1m_digest.json",
+      "sha256": "99deea5356277f346e0fb3fc56fb92df10948bd1eb130a7f7757f84fd567ae3f"
+    },
+    "page_items": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/reader/items.parquet",
+      "sha256": "8aad34005703d4e853adea6ed09298271c1b1bb6e756fe287192b6aa28ae153a"
+    },
+    "page_records": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/reader/records.parquet",
+      "sha256": "dffc450a2f1e04f00ce1f2dd43ac7fc99839f97455f3d9408d9829dd74a78040"
+    },
+    "pub_times": {
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "path": "data/eventtime/pub_times.parquet",
+      "sha256": "65662d135c72cd370514ed56df0e4c4d1414d0ad3252eb732c435fe2813fcab7"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-01-03T00:00:00Z",
+      "identity": "reader-records-charter2-charter5-minute-bars-event-clock-v1",
+      "start": "2022-12-31T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "llm-event-time-20261120",
+  "registration": "research/llm-event-time-20261120/gates.json",
+  "registration_sha256": "32a7fbfc062a2332c6fef946d2346b750ba22dc4c90ff5d6e043edf84c0f05a1",
+  "schema_version": 1,
+  "source": "46509e873ed870065052a4e7b0aaafee6fe029f9",
+  "started_at": "2026-11-20T16:11:47.852539+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "reader-records-minute-bars-2023-2024",
+      "end": "2025-01-03T00:00:00Z",
+      "identity": "reader-records-charter2-charter5-minute-bars-event-clock-v1",
+      "start": "2022-12-31T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
