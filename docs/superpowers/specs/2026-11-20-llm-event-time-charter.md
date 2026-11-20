@@ -1,10 +1,11 @@
-# Event-time study of the reader records (`llm-event-time`) — DRAFT, NOT FROZEN
+# Event-time study of the reader records (`llm-event-time`)
 
-**Status:** draft of 2026-11-20. Stage V0 is complete: code, 12 offline tests, the event table built from text
-stores only, and the pass rate and power of the gate measured on events moved to a time at which their news
-did not exist. Nothing is registered, no attempt is claimed, and no record has been joined with a price at or
-around its publication time. The open decisions are in §8. The registration script refuses to write while the
-title carries the draft mark.
+**Status:** frozen on 2026-11-20 (V1), with approval given on the draft. Stage V0 is complete: code, 12
+offline tests, the event table built from text stores only, and the pass rate and power of the gate measured
+on events moved to a time at which their news did not exist. The decisions of §8 were taken on 2026-11-20
+together with the freeze approval. At the freeze nothing is registered, no attempt is claimed, and no record
+has been joined with a price at or around its publication time. From this commit the document stays
+byte-identical (§4).
 **Family:** new family `llm-event-time`, attempt 1 of 2 (§8, decision 1).
 **History:** family `llm-multiagent-v2`, six attempts, all FAIL, closed on 2026-11-17
 (`research/multiagent-v2/STATE.md`). Its records are reused; its verdicts are not reopened.
@@ -126,7 +127,7 @@ that drift. The plain mean is reported descriptively.
 | Stage | Content | State |
 |---|---|---|
 | V0 | Code (`tradingagents/eventtime/study.py`, `scripts/evt_*.py`), tests, event table, noise pass rate and power | done |
-| V1 | Decisions of §8, draft mark removed, commit; from then on this text stays byte-identical | open |
+| V1 | Decisions of §8, draft mark removed, commit; from then on this text stays byte-identical | this commit |
 | V2 | Digest of the minute bar store, registration, pre-flight with a rehearsal on synthetic returns | open |
 | V3 | One registered run: the single join of events with minute bars, verdict by code | open |
 
@@ -197,10 +198,10 @@ join with minute bars.
 
 ## 8. Decisions
 
-The first option of every row is implemented and recommended. A change of rows 2 to 6 needs new draws for the
-table of §5 before the freeze.
+Taken on 2026-11-20 with the freeze approval: the implemented option stands in every row. The table of §5
+was drawn under these options.
 
-| # | Decision | Implemented | Alternative |
+| # | Decision | Decided (implemented) | Alternative, not taken |
 |---|---|---|---|
 | 1 | Family | New family `llm-event-time`, 2 attempts; the closed family stays closed and is cited | No new run; shortfall 1 stays a cited explanation in the thesis |
 | 2 | Registered cell | Entry 5 minutes after publication, exit 4 hours later | 1 minute and 1 hour; 15 minutes and 24 hours |
