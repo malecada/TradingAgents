@@ -1283,3 +1283,48 @@ could, and that is the speed contest closed by the no-go of 2026-07-14.
 
 Family `llm-event-time`: one attempt of two used. The second is reserved under its own charter; none is
 proposed. Sealed-A and Sealed-B untouched; no sealed run is licensed.
+
+## Sources that precede the articles: exploration (2026-11-20, no outcome, no model call)
+
+Full record: `research/multiagent-v2/source_lead/README.md`. Exploratory; nothing registered, no attempt
+claimed, no price read. Question after the event-time FAIL: which sources appear before the articles, can
+they be had for 2023 to 2024 with exact times, and at what cost.
+
+Availability (web research and endpoint probes, generic user agent, no account):
+
+- **X.** The official interface sells full-archive search per use at $0.005 per post (since 2026-02-06);
+  $100 to $300 buys 20,000 to 60,000 posts, enough for a handful of fast news accounts and not for 200
+  project accounts. The earlier note "closed or enterprise tiers only" is corrected. No free dataset holds
+  the text of 2023 to 2024; a public set of cashtag post IDs covers 2024 with millisecond times and no text.
+- **Truth Social.** The archive of Donald Trump's posts has no crypto text in 2022 to 2023 and 19 posts in
+  2024, none before 2024-05-25; the posts that mattered lie in Sealed-A. Not a source for the test window.
+- **Official sources.** EDGAR filings (second, UTC) and SEC releases have exact times and about 800 crypto
+  items; they concern BTC and the market as a whole, which the BTC-relative outcome removes.
+- **Telegram.** Public previews of six fast headline channels reach back past 2023 with second-level times
+  for about 1,800 page requests. Telegram's content terms prohibit scraping; nothing was fetched and the
+  question is left to the owner.
+- **Others.** Exchange notices of KuCoin (15 items on the gate assets), Upbit, Coinbase and Kraken are
+  listing events only; governance forums on Discourse have full history with exact times for an estimated
+  quarter to a third of the universe and were never tested; project blogs, Discord and paid feeds have no
+  usable free history.
+
+Measurement on time stamps (`lead_probe.py`): items of a source naming the asset around the publication
+time of the 3,316 gate articles, against the same asset at placebo weeks.
+
+| Source | 24 to 4 h before | 4 to 1 h before | last 15 min | first 15 min after |
+|---|---|---|---|---|
+| Stored news of the 70 outlets | +10.9 % (t 9.6) | +4.5 % (4.4) | +1.3 % (2.0) | +2.9 % (4.1) |
+| Reddit, three forums | +9.4 % (6.9) | +4.5 % (4.1) | +1.0 % (2.0) | +2.7 % (5.0) |
+| X cashtag posts, 2024 (1,647 events) | +5.4 % (1.9) | +7.9 % (2.9) | +3.5 % (1.4) | +5.8 % (2.4) |
+| X trader accounts | +5.2 % (2.2) | +2.1 % (2.2) | +0.4 % (1.4) | +0.7 % (2.6) |
+
+Every source is more active on the asset from about a day before the article and stays so after it: the
+article falls inside an episode that began hours earlier everywhere, including in the other outlets. No
+source rises sharply just before the article. X shows the only hint of running ahead (largest excess 4 to
+1 hours before), and it is weak. Counts measure attention, which also follows the price. Where the primary
+source is known, it leads: in the 10 listing articles with a matching Binance announcement, the
+announcement came first by a median of 158 minutes.
+
+Open decision (options A to D in the record): a paid event-time test on X posts of fast news accounts
+(about $100 to $300 of data, second attempt of `llm-event-time`, own charter), the same on Telegram
+channels (terms), governance forum posts (free), or no further run.
