@@ -131,6 +131,8 @@ Reading:
 | C. Governance forum posts as events | proposals before votes, DeFi and layer-2 tokens | $0 data, reading about $5 | a third of the universe; new source needs a charter |
 | D. No further run; the exploration is the stated limit in the thesis | | $0 | |
 
+Decision of 2026-11-20: option D. No further run is made; this exploration is the stated limit.
+
 ## Files
 
 | File | Content |

@@ -1328,3 +1328,12 @@ announcement came first by a median of 158 minutes.
 Open decision (options A to D in the record): a paid event-time test on X posts of fast news accounts
 (about $100 to $300 of data, second attempt of `llm-event-time`, own charter), the same on Telegram
 channels (terms), governance forum posts (free), or no further run.
+
+## Decision after the source exploration: option D, no further run (2026-11-20)
+
+The owner chose option D of the source exploration. No test on a source that precedes the articles is run:
+not the paid test on X posts (A), not the Telegram channels (B, nothing fetched), not the governance forums
+(C). The exploration is the stated limit of the result: the event-time verdict holds for articles of the 70
+outlets, every obtainable source is already more active on the asset about a day before the article, and
+whether a direction read at the first public report carries a return stays untested. Family `llm-event-time`
+keeps one unused attempt; none is proposed. The work on text sources for the cross-section ends here.
