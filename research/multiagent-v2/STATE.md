@@ -1357,11 +1357,15 @@ owner's decision of 2026-11-21 is to open no work on the other five. Reasons, fr
 No charter is drafted and no attempt is claimed. Families: `llm-multiagent-v2` closed 6 of 6;
 `llm-event-time` 1 of 2 used, the second not proposed. Sealed-A and Sealed-B untouched.
 
-## Thesis results freeze (2026-11-21)
+## Correction: no results freeze; research continues (2026-11-21)
 
-The owner froze the results of the thesis on 2026-11-21 at the research revision of 2026-11-20. No result
-of this repository obtained after that date enters the thesis; a later result would need a new dated
-revision of the manuscript. The state of this branch at the freeze carries the tag
-`thesis-results-freeze-2026-11-21`; the thesis repository carries the same tag. Inputs of the event-time
-run that are not in version control are archived under `laptop-archive/2026-11-21/` on the storage server
+An entry of this date recorded a freeze of the thesis results. That was a misreading of the owner's
+instruction and is withdrawn (commit `deb8310df` and the tag `thesis-results-freeze-2026-11-21` in both
+repositories; the tag is deleted). The thesis is kept current with the findings to date, and development,
+research and testing continue until about the first week of December 2026. The closures recorded above
+(option D of the source exploration, the review of the shortfalls) describe the state on their dates and
+do not bar new work that the owner opens.
+
+Inputs of the event-time run that are not in version control, the data of the source exploration and the
+store of one-minute bars are archived under `laptop-archive/2026-11-21/` on the storage server
 (checksum-verified copy; receipt in `~/storage-box-archive/2026-11-21/README.md`).
