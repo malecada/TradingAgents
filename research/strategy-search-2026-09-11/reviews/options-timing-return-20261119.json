@@ -1,0 +1,138 @@
+{
+  "data_unchanged_by_prepare": true,
+  "journal_seals_present": 0,
+  "manifest": {
+    "bytes": 100953662,
+    "files": 16600,
+    "nonregular": 0,
+    "path": "research/strategy-search-2026-09-11/reviews/options-timing-return-manifest-20261119.sha256",
+    "sha256": "b0b0e67ce3d84dbd9b37d49743bc9afb6a9c551308255acd4ff2d81587b90cf6",
+    "symlinks": 0
+  },
+  "prepare": {
+    "assignment_sha256": "375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3",
+    "evaluate_kwargs": null,
+    "intended_slot_count": 17144,
+    "inventory_sha256": "3865db496c01ad3bf40da4c15d5a2fa2fc9eadc9628887288789adb94f290315",
+    "journal_reports": {
+      "bootstrap": {
+        "logical_bytes": 5178466,
+        "members": 43,
+        "slots": 3,
+        "states": {
+          "received": 3
+        }
+      },
+      "daily": {
+        "logical_bytes": 78890560,
+        "members": 708,
+        "slots": 225,
+        "states": {
+          "future_or_unattempted": 150,
+          "received": 75
+        }
+      },
+      "final": {
+        "logical_bytes": 1750,
+        "members": 2,
+        "slots": 4,
+        "states": {
+          "future_or_unattempted": 4
+        }
+      },
+      "known": {
+        "logical_bytes": 8203858,
+        "members": 8155,
+        "slots": 8456,
+        "states": {
+          "future_or_unattempted": 5728,
+          "received": 2728
+        }
+      },
+      "selected": {
+        "logical_bytes": 8673232,
+        "members": 7687,
+        "slots": 8456,
+        "states": {
+          "future_or_unattempted": 5728,
+          "missed": 224,
+          "received": 2504
+        }
+      }
+    },
+    "logical_bytes": 100951651,
+    "member_count": 16599,
+    "original_data_root": "/opt/thesis-research/options-timing-20260915/data",
+    "original_host": "pck-preds-1",
+    "reasons": [
+      "Source is not sealed; no analysis-source admission."
+    ],
+    "source_status": "incomplete",
+    "unavailable_cells": [
+      {
+        "id": "btc-1000-base",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "btc-1000-stress",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "btc-10000-base",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "btc-10000-stress",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "eth-1000-base",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "eth-1000-stress",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "eth-10000-base",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      },
+      {
+        "id": "eth-10000-stress",
+        "reason": "Source is not sealed; no analysis-source admission.",
+        "status": "unavailable"
+      }
+    ]
+  },
+  "returned_at": "2026-11-19",
+  "scope": "Returned raw source inventory and protocol preparation only; selection facts and receipt bodies not reproduced; no financial quantity computed.",
+  "slots": {
+    "intended": 17144,
+    "missed": 224,
+    "never_attempted": 11610,
+    "received": 5310
+  },
+  "source_seal_present": false,
+  "staged_root": "/home/malecada/master_thesis/research-deployment/options-timing-20260915/return-20261119",
+  "supervisor_exit": {
+    "assignment_sha256": "375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3",
+    "child_exit_code": -9,
+    "child_pid": 722352,
+    "ended_ms": 1790697040531,
+    "reason": "wall/monotonic discontinuity",
+    "sampled_peak_aggregate_rss": 305594368,
+    "scope": "Supervisor exit evidence; raw journal admission remains separate.",
+    "stderr_base64": "",
+    "stderr_bytes_observed": 0,
+    "stderr_truncated": false
+  },
+  "supervisor_exit_utc": "2026-09-29T15:50:40.531+00:00",
+  "target": "options-timing-20260915"
+}
