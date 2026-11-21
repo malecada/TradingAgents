@@ -11,7 +11,36 @@ the non-options discovery/design results for those sessions, but do not start
 new branches from this task. This routes work between sessions; it does not
 change shared family budgets or authorize another options episode.
 
-## Current status: timing successor collecting after successful initial selection
+## Closure of the timing successor — 2026-11-21
+
+options-timing-20260915 is terminal: `failed`, eight cases unavailable, no financial
+output. There are 21 identities: 16 complete, 5 failed, none active. Effective allowance 6
+is consumed; no seventh allowance exists and none is requested here.
+
+What happened: the supervisor's clock guard (wall/monotonic discontinuity) stopped the
+worker on 2026-09-29 15:50:40 UTC, 340 hours into the 1,056-hour window. The protocol
+forbids an automatic restart, so the source was never sealed; the lease expired on
+2026-10-30 11:01 UTC. The returned journal (copied 2026-11-19) holds 5,310 received and
+224 missed slots of 17,144; 11,610 were never attempted. The exit of both books
+(hour 381) lies after the last collected hour.
+
+The failure concerns source operability only. Nothing follows about the economics of
+option selling; no cash book, return or cost was computed.
+
+Records: `research_runs/options-timing-20260915/failed.json`
+(sha256 5d2935f5…4f5c); `reviews/options-timing-failure-close-20261121.json` (prior and
+terminal verification, where and why the control code was run at the claim commit);
+`reviews/options-timing-source-failure-review-20261121.md` (independent source and
+quiescence review, with what could not be verified);
+`reviews/options-timing-return-20261119.json` and the manifest next to it;
+`options-timing-quiescence-review-20261121.json` (mode lease-expired). Evidence commit
+ff75b51fd. Returned data:
+`/home/malecada/master_thesis/research-deployment/options-timing-20260915/return-20261119/`.
+
+The sections below are the state of 2026-09-15 and are kept as history. Never call
+`Episode.start` or a launcher for this target.
+
+## Status on 2026-09-15: timing successor collecting after successful initial selection
 
 There are21identities:16complete,4failed,1active. The active target is
 options-timing-20260915, claimed at2026-09-15T10:02:56.191462+00:00 from

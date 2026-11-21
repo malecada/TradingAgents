@@ -1,5 +1,13 @@
 # Current research state — September 15, 2026
 
+**Update 2026-11-21.** options-timing-20260915 is closed as `failed`: the worker was
+stopped by its clock guard on 2026-09-29 after 340 of 1,056 hours, the source was never
+sealed and the lease expired on 2026-10-30. Eight cases are unavailable; no financial
+output exists and nothing follows about the economics. 21 identities: 16 complete,
+5 failed, none active. See the closure section at the top of the
+[active program state](../../research/strategy-search-2026-09-11/STATE.md). The text
+below is the state of 2026-09-15.
+
 **Current task scope: continue the existing options study; broader exploration belongs to the user’s other sessions. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
 pause-after-setup instruction. The first prospective options episode failed initial source freshness and is

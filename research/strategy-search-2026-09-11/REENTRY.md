@@ -11,6 +11,10 @@ Read AGENTS.md, docs/RESEARCH_START.md, current STATE.md, CHARTER.md, MAP.md,
 BACKLOG.md, decision-20.md and linked independent reviews. Research remains
 resumed under “lets keep going then”. Inspect Git and actual claims first.
 
+Update 2026-11-21: options-timing-20260915 is terminal (`failed`, source never
+sealed, eight cases unavailable); 21 claims, 16 complete, 5 failed, none active. See
+the closure section of STATE.md. The paragraph below is the state of 2026-09-15.
+
 There are21claims:16complete/4failed/1active. options-timing-20260915 is the
 active exact11:00UTC September15 prospective episode, source22bdf6c, effective6
 consumed. Full offline1709+58, resource and claim/release reviews passed. Read

@@ -1,0 +1,61 @@
+{
+  "active_identities": 0,
+  "analysis_intent": false,
+  "cell_count": 8,
+  "checked_at": "2026-11-21T10:15:46.809655+00:00",
+  "closure": {
+    "status": "failed",
+    "terminal": true
+  },
+  "complete_identities": 16,
+  "control_terminal_verification": {
+    "authority": "local-master-only",
+    "cell_count": 0,
+    "experiment": "options-timing-20260915",
+    "new_protocol": "grant/future/source/control bindings checked; no scientific validation",
+    "output_count": 0,
+    "status": "failed",
+    "unavailable_count": 0,
+    "verification": "structural hashes and denominators; v1/v2 certificates at their closed inventories, book grant against complete live inventory; no scientific validation"
+  },
+  "execution": {
+    "reason": "At the branch head the frozen runtime-hash pin refuses (runtime source changed): commit 713501b48 later changed tradingagents/research_amended/admission.py. The unchanged control and verification code was therefore run in a checkout of the claim commit, with the evidence files of commit ff75b51fd present as byte-identical copies.",
+    "resource_guard": "not used; no analyzer or financial computation ran",
+    "restored_empty_directories": [
+      "research_runs/options-timing-20260915/control",
+      "research_runs/options-timing-20260915/outputs",
+      "research_runs/dated-book-20260911/outputs",
+      "research_runs/dated-book-resource-correction-20260911/outputs",
+      "research_runs/options-episode-20260911/outputs"
+    ],
+    "restored_note": "Git does not keep empty directories; they were recreated empty as in the original checkout before verification.",
+    "tree": "dca15f51a (claim commit; the runtime the claim pins)"
+  },
+  "failed_identities": 5,
+  "financial_output_count": 0,
+  "legacy_count_note": "control_terminal_verification cell_count/unavailable_count 0 come from the legacy structural check, which does not read episode cells; the terminal itself holds 8 cells, 8 unavailable.",
+  "predecessors_preserved": 20,
+  "prior_verification": {
+    "claim_sha256": "550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73",
+    "history_count": 20,
+    "quiescence": "externally-reviewed",
+    "scientific_validation": false,
+    "status": "active"
+  },
+  "quiescence_evidence": {
+    "commit": "ff75b51fdd8def8ab544bf8e1992aa452d47e7b6",
+    "path": "research/strategy-search-2026-09-11/options-timing-quiescence-review-20261121.json",
+    "sha256": "d11d9b349475dcd87c7cfddc0faee6380580d75eeaacfeee729bf1e96d6883d2"
+  },
+  "scope": "source failure-only closure; source operability only, no economic rejection of either asset or strategy family",
+  "terminal_sha256": "5d2935f5dbf3a2f5e83b73b6a364c81234b3cae4dd822a189782ca53418b4f5c",
+  "terminal_verification": {
+    "claim_sha256": "550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73",
+    "history_count": 20,
+    "quiescence": "externally-reviewed",
+    "scientific_validation": false,
+    "status": "failed"
+  },
+  "total_identities": 21,
+  "unavailable_count": 8
+}
