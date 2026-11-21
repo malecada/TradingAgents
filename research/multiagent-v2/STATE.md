@@ -1337,3 +1337,22 @@ not the paid test on X posts (A), not the Telegram channels (B, nothing fetched)
 outlets, every obtainable source is already more active on the asset about a day before the article, and
 whether a direction read at the first public report carries a return stays untested. Family `llm-event-time`
 keeps one unused attempt; none is proposed. The work on text sources for the cross-section ends here.
+
+## Review of the shortfalls of the closed family: closed (2026-11-21)
+
+The review of 2026-11-20 listed seven shortfalls of family `llm-multiagent-v2`. Two were worked on: the
+first by the event-time study (FAIL), the fifth by the source exploration (option D, no further run). The
+owner's decision of 2026-11-21 is to open no work on the other five. Reasons, from the event-time result:
+
+| # | Shortfall | Standing after the event-time result |
+|---|---|---|
+| 1 | Information already priced at the decision | Measured: nothing after the publication at any tested lag |
+| 2 | Agent layers lose information | Nothing remains after the publication for a layer to lose; the layer comparison of V1b stands as recorded |
+| 3 | Direction reading carries nothing | The direction agrees with the move of the day before the article (t 4.7), so the reading reflects the event; it does not forecast |
+| 4 | De-identification against recall | Decides how far a positive result can be trusted; no positive result exists to validate |
+| 5 | Thin material | Explored; every obtainable source is active about a day before the article; no further run |
+| 6 | Low power | The event-time gate had 75 % power at an effect of the size of the cost; the 95 % interval ends at 5.9 bp |
+| 7 | Low-cost model configuration | Not tested. The agreement with the earlier move shows that the present reader identifies the direction of the event; a stronger reader would read the same articles at the same time |
+
+No charter is drafted and no attempt is claimed. Families: `llm-multiagent-v2` closed 6 of 6;
+`llm-event-time` 1 of 2 used, the second not proposed. Sealed-A and Sealed-B untouched.
